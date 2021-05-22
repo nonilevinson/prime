@@ -29,6 +29,9 @@ echo
 	$this->Pedir( "CNPJ" ),
 	$this->Pedir( "Email" ),
 	$this->Pedir( "Site" ),
+	$this->Pular1Linha(2),
+	$this->Pedir( "Desmarcações",
+		[ "", QtasDesmar, " (quantas desmarcações um paciente pode efetuar)" ] ),
 "</table>",
 
 CriarForms(
