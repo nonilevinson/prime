@@ -1,0 +1,591 @@
+/*
+	#000000 PRETO
+	#ffffff BRANCO
+	#006400 VERDE ESCURO
+	#90EE90 VERDE CLARO
+	#440000 MARROM
+	#0000ff AZUL ROYAL
+	#00ffff AZUL CLARO
+	#000044 AZUL ESCURO
+	#ffff00 AMARELO
+	#ff0000 VERMELHO
+	#ff4500 LARANJA
+	#7f00ff ROXO
+	#ff00ff ROSA
+	#2f4f4f CINZA ARDOSIA
+	#a9a9a9 CINZA ESCURO
+	#7f7f7f CINZA CLARO
+	#D2691E CHOCOLATE
+	#FF7F50 CORAL
+	#FA8072	SALMÃO
+	#A0522D	SIENA
+	#EE82EE	VIOLETA
+	#FFD700	DOURADO
+	#FF69B4	ROSA ESCURO
+	#ff00ff FUCSIA
+*/
+
+:root {
+  --corCliente: #0271AF;
+}
+.cabecalhoBody
+{
+   font-family : Tahoma,Verdana,Geneva,Arial,Helvetica,sans-serif;
+   font-weight : bold;
+   font-size : 10px;
+   color : #ffffff;
+   background-color : var(--corCliente); /* colocar a cor do cliente */
+   margin : 0px;
+   text-align : center;
+   padding-top : 6px;
+}
+.cabecalhoBody a:hover
+{
+	background-color : #99ccdd;
+}
+.botaoBody
+{
+   font-family      : Tahoma,Verdana,Geneva,Arial,Helvetica,sans-serif;
+   color            : #ffffff;
+   background-color : var(--corCliente); /* colocar a cor do cliente */
+   margin           : 0px;
+   padding			: 0px;
+   text-align		: center;
+   font-size 		: 10px;
+}
+.botaoBody a:hover
+{
+	color			: #ffffff;
+	background-color: var(--corCliente); /* colocar a cor do cliente */
+	text-decoration	: none;
+	font-weight		: bold;
+}
+.umBotao_over
+{
+	background-color: #99ccdd;
+}
+
+.Excelente{
+	color:#ffffff;
+	background-color: #004499;
+	text-align: left;
+	font-weight:bold
+}
+.Bom{
+	color:#004499;
+	text-align: left;
+	font-weight:bold
+}
+.Regular{
+	color:red;
+	text-align: left;
+	font-weight:bold
+}
+.Insuficiente{
+	color: #ffffff;
+	background-color: #ff0000;
+	text-align: left;
+	font-weight:bold
+}
+.CorAtivo{
+	color:#ffffff;
+	background-color: #008400;
+	text-align: center;
+	font-weight:bold
+}
+.CorInativo{
+	color:red;
+	text-align: center;
+	font-weight:bold
+}
+.CorInativoLeft{
+	color:red;
+	text-align: left;
+	font-weight:bold
+}
+.Padrao{
+	text-align: center;
+}
+.PadraoDir{
+	text-align: right;
+}
+.PadraoVermelho{
+	color: #ffffff;
+	background-color: #ff0000;
+}
+.PadraoAzulEscuro{
+	color: #ffffff;
+	background-color: #000044;
+}
+.PadraoAzulRoyal{
+	color: #ffffff;
+	background-color: #0000ff;
+}
+.VermelhoFundoCentro{
+	color: #ffffff;
+	background-color: #ff0000;
+	text-align: center;
+}
+.VermelhoFundoDir{
+	color: #ffffff;
+	background-color: #ff0000;
+	text-align: right;
+}
+.VermelhoFundoEsq{
+	text-align: left;
+	color: #ffffff;
+	background-color: #ff0000;
+}
+.VermelhoDirBold{
+	color: #ff0000;
+	font-weight: BOLD;
+	text-align: right;
+}
+.VermelhoDir{
+	color: #ff0000;
+	text-align: right;
+}
+.VermelhoEsq{
+	color: #ff0000;
+	text-align: left;
+}
+.VermelhoEsqBold{
+	color: #ff0000;
+	font-weight: BOLD;
+	text-align: left;
+}
+.AzulFundoCentro{
+	color: #000000;
+	background-color: #0077ff;
+	font-weight: BOLD;
+	text-align: center;
+}
+.AzulFundoDir{
+	color: #000000;
+	background-color: #0077ff;
+	font-weight: BOLD;
+	text-align: right;
+}
+.AzulFundoEsq{
+	color: #000000;
+	background-color: #0077ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.AzulCentro{
+	color: #0077ff;
+	font-weight: BOLD;
+	text-align: center;
+}
+.AzulDir{
+	color: #0077ff;
+	text-align: right;
+}
+.AzulEsq{
+	color: #0077ff;
+	text-align: left;
+}
+.AzulDirBold{
+	color: #0077ff;
+	font-weight: BOLD;
+	text-align: right;
+}
+.AzulEsqBold{
+	color: #0077ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.AzulRoyalEsq{
+	color: #0000ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LaranjaEsq{
+	color: #ff4500;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LaranjaEsqBold{
+	color: #ff4500;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LaranjaDir{
+	color: #ff4500;
+	text-align: right;
+}
+.LaranjaDirBold{
+	color: #ff4500;
+	font-weight: BOLD;
+	text-align: right;
+}
+.LaranjaFundoCentro{
+	color: #ffffff;
+	background-color: #ff4500;
+	text-align: center;
+}
+.LaranjaFundoDir{
+	color: #ffffff;
+	background-color: #ff4500;
+	text-align: right;
+}
+.LaranjaFundoEsq{
+	text-align: left;
+	color: #ffffff;
+	background-color: #ff4500;
+}
+.VerdeEscuroEsq{
+	color: #006400;
+	text-align: left;
+}
+.VerdeEscuroEsqBold{
+	color: #006400;
+	font-weight: BOLD;
+	text-align: left;
+}
+.CinzaArdosiaDir{
+	color: #2f4f4f;
+	text-align: right;
+}
+.CinzaArdosiaEsq{
+	color: #2f4f4f;
+	text-align: left;
+}
+.CinzaArdosiaEsqBold{
+	color: #2f4f4f;
+	font-weight: BOLD;
+	text-align: left;
+}
+.CinzaFundoEsq{
+	text-align: left;
+	color: #ffffff;
+	background-color: #2f4f4f;
+}
+.AmareloEsq{
+	color: #ffff00;
+	font-weight: BOLD;
+	text-align: left;
+}
+.AmareloEsqBold{
+	color: #ffff00;
+	font-weight: BOLD;
+	text-align: left;
+}
+.AmareloFundoCentro{
+	color: #ffffff;
+	background-color: #ffff00;
+	text-align: center;
+}
+.AmareloFundoDir{
+	color: #ffffff;
+	background-color: #ffff00;
+	text-align: right;
+}
+.AmareloFundoEsq{
+	text-align: left;
+	color: #ffffff;
+	background-color: #ffff00;
+}
+.ChocolateDir{
+	color: #D2691E;
+	text-align: right;
+}
+.ChocolateEsq{
+	color: #D2691E;
+	text-align: left;
+}
+.ChocolateEsqBold{
+	color: #D2691E;
+	font-weight: BOLD;
+	text-align: left;
+}
+.CoralEsqBold{
+	color: #FF7F50;
+	font-weight: BOLD;
+	text-align: left;
+}
+.SalmaoEsqBold{
+	color: #FA8072;
+	font-weight: BOLD;
+	text-align: left;
+}
+.DouradoEsqBold{
+	color: #FFD700;
+	font-weight: BOLD;
+	text-align: left;
+}
+.FucsiaEsqBold{
+	color: #ff00ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.ContaReceber{
+	color: #0077ff;
+	font-weight: BOLD;
+}
+.DataAtrasada{
+	color: #ffffff;
+	background-color: #ff0000;
+	font-weight: BOLD;
+	text-align: center;
+}
+.DataHoje{
+	color: #ffffff;
+	background-color: #0077ff;
+	font-weight: BOLD;
+	text-align: center;
+}
+.DataEstimada{
+	color: #ffffff;
+	background-color: #000077;
+	text-align: center;
+}
+.DataFutura{
+	color: #0077ff;
+	font-weight: BOLD;
+	text-align: center;
+}
+.ValorNegrito{
+	color: #000000;
+	font-weight: BOLD;
+	text-align: right;
+}
+.ValorAzulNegrito{
+	color: #000077;
+	font-weight: BOLD;
+	text-align: right;
+}
+.ValorVermelhoNegrito{
+	color: red;
+	font-weight: BOLD;
+	text-align: right;
+}
+.CadeiaEsqPretoNegrito{
+	color: #000000;
+	font-weight: BOLD;
+	text-align: left;
+}
+.CadeiaEsqAzulNegrito{
+	color: #000077;
+	font-weight: BOLD;
+	text-align: left;
+}
+.prior1{
+	background-color: #ffff00;
+}
+.prior2{
+	background-color: #ffffff;
+}
+.cabAviso{
+	margin-left:25%;
+	margin-right:25%;
+	margin-bottom:20px;
+	color: #ff0000;
+	font-weight: bold;
+	background-color: #f0f0f0;
+	font-size: 14px;
+	padding: 10px;
+	text-align:center;
+	border: 2px outset;
+}
+.campoAviso{
+	color: #000044;
+	font-weight: bold;
+}
+.txtAviso{
+	color: #000000;
+}
+.lerAviso{
+	text-align: right;
+}
+.submeterAviso{
+	text-align: center;
+	padding-bottom:10px;
+}
+.resultEmail{
+	text-align:center;
+}
+.emailNaoOk{
+	background-color: #ff0000;
+	color: #ffffff;
+}
+.LetraVM{
+	color: #ff0000;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraAM{
+	color: #ffff00;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraVDc{
+	color: #90EE90;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraVDe{
+	color: #004400;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraAZc{
+	color: #0000ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraAZe{
+	color: #000044;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraLJ{
+	color: #ff4500;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraCZ{
+	color: #7f7f7f;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraPT{
+	color: #000000;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraPTsB{
+	color: #000000;
+	text-align: left;
+}
+.LetraBR{
+	color: #ffffff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraMR{
+	color: #440000;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraRS{
+	color: #ff00ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.LetraRX{
+	color: #7f00ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra15{
+	color: #D2691E;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra16{
+	color: #a9a9a9;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra17{
+	color: #7f00ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra18{
+	color: #FA8072;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra19{
+	color: #A0522D;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra20{
+	color: #EE82EE;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra21{
+	color: #FFD700;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra22{
+	color: #FF69B4;
+	font-weight: BOLD;
+	text-align: left;
+}
+.Letra23{
+	color: #ff00ff;
+	font-weight: BOLD;
+	text-align: left;
+}
+.FundoVM{
+	background-color: #ff0000;
+}
+.FundoAM{
+	background-color: #ffff00;
+}
+.FundoVDc{
+	background-color: #90EE90;
+}
+.FundoVDe{
+	background-color: #004400;
+}
+.FundoAZc{
+	background-color: #0000ff;
+}
+.FundoAZe{
+	background-color: #000044;
+}
+.FundoLJ{
+	background-color: #ff4500;
+}
+.FundoCZ{
+	background-color: #7f7f7f;
+}
+.FundoPT{
+	background-color: #000000;
+}
+.FundoBR{
+	background-color: #ffffff;
+}
+.FundoMR{
+	background-color: #440000;
+}
+.FundoRS{
+	background-color: #ff00ff;
+}
+.FundoRX{
+	background-color: #7f00ff;
+}
+.Fundo15{
+	background-color: #D2691E;
+}
+.Fundo16{
+	background-color: #a9a9a9;
+}
+.Fundo17{
+	background-color: #FF7F50;
+}
+.Fundo18{
+	background-color: #FA8072;
+}
+.Fundo19{
+	background-color: #A0522D;
+}
+.Fundo20{
+	background-color: #EE82EE;
+}
+.Fundo21{
+	background-color: #FFD700;
+}
+.Fundo22{
+	background-color: #FF69B4;
+}
+.Fundo23{
+	background-color: #ff00ff;
+}

@@ -1,0 +1,128 @@
+<?php
+
+$op = ultimaLigOpcao();
+
+echo 	"<table class='tabFormulario'>";
+
+if( $op == 19 ) //* envio de teste de ação de email
+{
+	echo
+	$this->Pedir( "Destinatário",
+		[ "", Cadeia100, "<br>(obrigatório)" ] ),
+	$this->Pedir( "Pessoa",
+		[ "", Cliente, "<br>" . brHtml(1) . "O teste usará os dados deste cliente para montar a ação. O email <b>NÃO</b> será enviado a ele." ] ),
+	$this->Pedir( "Remetente", EmailRemet );
+}
+
+if( $op == 28 ) //* relatório log acesso
+{
+	echo
+	$this->Pedir( "Usuário", Usuario ),
+	$this->Pedir( "Operação", StatusLog ),
+	$this->Pedir( "IdPrimario do registro", Gran13 ),
+	$this->Pedir( "Entre as datas",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Entre o horário",
+		[ "", HoraIni,
+		[ brHtml(1) . "e ", HoraFim ] ] );
+}
+
+if( $op == 38 )
+{
+	echo
+	$this->Pedir( "Entre os avisos",
+		[ "", Gran6,
+		[ brHtml(1) . "e ", Gran6Fim, "" ] ] ),
+	$this->Pedir( "Entre as datas",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
+if( $op == 39 ) //* relatório de avisos lidos
+{
+	echo
+	$this->Pedir( "Entre os avisos",
+		[ "", Gran6,
+		[ brHtml(1) . "e ", Gran6Fim, "" ] ] ),
+	$this->Pedir( "Usuário", Usuario ),
+	$this->Pedir( "Entre as datas",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Lidos entre",
+		[ "", DataIni1,
+		[ brHtml(1) . "e ", DataFim1 ] ] );
+}
+
+if( $op == 53 ) //* Programar envio de ações
+{
+	echo
+	$this->Cabecalhos( [ "Se quiser enviar para todos os pessoas, deixe os campos da seção Seleção dos pessoas em branco.<br>Prencha somente os campos da seção Dados da ação", "FormCab alinhaMeio", "2" ] ),
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Seleção dos pessoas", "FormCab alinhaMeio", "2" ] ),
+	$this->Pedir( "Pessoa", Cliente  ),
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Dados da ação", "FormCab alinhaMeio", "2" ] ),
+	$this->Pedir( "Título da ação",
+		[ "", AcaoEmail_Titulo, brHtml(2) . "(obrigatório)" ] ),
+	$this->Pedir( "Versão da ação",
+		[ "", AcaoEmail_Versao,
+		[ "", AcaoEmail, brHtml(2) . "(obrigatório)" ] ] ),
+	$this->Pedir( "Remetente", EmailRemet ),
+	$this->Pedir( "Data para envio",
+		[ "", DataIni,
+		[ brHtml(4) . "Hora ", HoraIni, brHtml(1) . "(obrigatórios)<br>" .
+			brHtml(2) . "(se o envio for hoje, a hora programada precisa ser no mínimo 10 minutos a mais que a hora atual)" ] ] );
+}
+
+if( $op == 56 ) //* relatório resumido de ações enviadas
+{
+	echo
+	$this->Pedir( "Título da ação", AcaoEmail_Titulo ),
+	$this->Pedir( "Versão da ação",
+		[ "", AcaoEmail_Versao,
+		[ "", AcaoEmail ] ] ),
+	$this->Pedir( "Entre as datas",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
+if( $op == 68 ) //* alterar senha usuario
+{
+	sql_abrirBD(false);
+
+	switch( $op )
+	{
+		case 68:
+			$campo     = "Usuario";
+			$from      = "arqUsuario";
+			$navegouDe = navegouDe( 'arqUsuario' );
+			break;
+	}
+
+	$select = "Select " . $campo . " as nomeUsuario
+		From " . $from .
+		" Where idPrimario = " . $navegouDe;
+	$nomeUsuario = sql_lerUmRegistro( $select )->NOMEUSUARIO;
+//echo '<br><b>S=</b> '.$select.' <b>USU=</b> '.$nomeUsuario;
+	sql_fecharBD();
+	echo
+		javaScriptIni(),
+			"var g_nomeUsuario= '", str_replace( "'", "''", $nomeUsuario ), "';",
+		javaScriptFim();
+
+	echo
+		$this->PedirZerando( "Digite a nova senha", Senha1 ),
+		$this->PedirZerando( "Redigite a nova senha", Senha2 );
+}
+
+if( in_array( $op, [73,74] ) ) //* r_log_interacao e r_log_interacao_resumido
+{
+	echo
+	$this->Pedir( "Entre",
+		[ "", MesIni,
+		[ brHtml(1) . "e ", MesFim, "" ] ] );
+}
+
+//==================================================================================
+echo 	"</table>";

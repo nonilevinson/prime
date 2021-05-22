@@ -1,0 +1,43 @@
+<?php
+	$setup["SISTEMA"] = array(
+		"NOME"						=> "Sistema",	// Nome do Sistema
+		"SESSAO"						=> "",	// Variáveis de Sessão
+		"LOGO_ABERTURA"			=> SISTEMA_DIR . "km.gif",	// Imagem do logotipo do sistema
+		"LOGO_PEQUENO" 			=> SISTEMA_DIR . "km.gif",	// Imagem do logotipo pequeno do sistema
+		"LOGO_FUNDONORMAL"		=> SISTEMA_DIR . "km.gif",	// Imagem para pano de fundo do sistema
+		"LOGO_FUNDONORMAL_POS"	=> "bottom center",	// Posição onde a imagem aparecerá nas telas
+		"LOGO_FUNDOSUAVE"			=> SISTEMA_DIR . "km_suave.gif",	// Imagem para pano de fundo suavizado
+		"LOGO_FUNDOSUAVE_POS"	=> "bottom center",	// Posição onde a imagem aparecerá nas telas
+		"PARAMETRO"			=> "",	// Parâmetro com informações do sistema
+		"LATERALPDF"		=> "www.swsm.com.br" );	// Texto que aparecerá na lateral dos relatórios
+
+	$setup["BANCO"] = array(
+		"TIPO"				=> "firebird",	// Tipo
+		"NOME"				=> "dado100.fdb",	// Nome
+		"LOGINLOCAL"		=> "SYSDBA",	// Login Local
+		"SENHALOCAL"		=> "masterkey",	// Senha
+		"CAMINHOLOCAL"		=> "",	// Caminho
+		"LOGINSERV"			=> "SYSDBA",	// Login para Servidor
+		"SENHASERV"			=> "masterkey",	// Senha
+		"CAMINHOSERV"		=> "j:/www.swsm.com.br/firebird",	// Caminho
+		"ACENTO"				=> "ISO8859_1" );	// Acentuação do banco
+
+	$txtRodape = '<a href="http://www.kogumelo.com.br" target="_blank" class="Rodape">&copy; Kogumelo Informática</a>';
+
+
+	global $g_vetPerfil;
+	$g_vetPerfil = array(
+		array( 'Usuários', 'arqUsuario', 'Usuario', 'Senha', 'Grupo', '', 'Ativo', 'Email', 'Versao', 'principa' )	);
+
+	$versoes = array(
+		"1.00"	=> "" );
+
+	$vetDependencia = array(
+		array( "a_pessoa", "a_endere" ),
+		array( "a_xempre", "a_endere" ) );
+
+include_once( SISTEMA_DIR_ABSOLUTO . 'cores.php' );
+include_once( CLIENTE_DIR_ABSOLUTO . 'cores.php' );
+require_once( CLIENTE_DIR_ABSOLUTO . 'setup.php' );
+
+?>

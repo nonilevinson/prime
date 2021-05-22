@@ -1,0 +1,42 @@
+<?php
+
+echo
+"<table class='tabFormulario' >",
+	$this->Pedir( "Banco",
+		[ "", Banco_Num,
+		[ brHtml(2), Banco ] ] ),
+	$this->Pedir( "Agência",
+		[ '', Agencia,
+		[ brHtml(4) . "DV ", DvAgencia, brHtml(1) . "(opcional)" ] ]),
+	$this->Pedir( "Conta ",
+		[ "", Conta,
+		[ brHtml(4) . "DV ", DvConta ] ] ),
+	$this->Pedir( "Ativa?", Ativo ),
+
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Chaves PIX", 'FormCab alinhaMeio', '2' ] ),
+	$this->Cabecalhos(
+		[ "Tipo", 'FormCab alinhaMeio' ],
+		[ "Chave", 'FormCab alinhaMeio' ] ),
+	$this->Pedir( "", TPix1, Pix1 ),
+	$this->Pedir( "", TPix2, Pix2 ),
+	$this->Pedir( "", TPix3, Pix3 ),
+	$this->Pedir( "", TPix4, Pix4 ),
+	$this->Pedir( "", TPix5, Pix5 ),
+
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Dados para cobrança por boleto", 'FormCab alinhaMeio', '2' ] ),
+	$this->Pedir( "Carteira",
+		[ "", Carteira,
+		[ brHtml(4) . "Código cedente ", CodCedente, brHtml(3) . "Opcional. Para BBrasil informe o convênio" ] ] ),
+	$this->Pedir( "Multa %",
+		[ "", Multa,
+		[ brHtml(6) . "% Juros ao mês ", Juros,
+		[ brHtml(6) . "Custo do boleto ", CBoleto ] ] ] ),
+	$this->Pedir( "Última remessa",
+		[ "", UltRemessa,
+		[ brHtml(4) . "Convênio ", Convenio,
+		[ brHtml(4) . "Variação ", Variacao ] ] ] ),
+	$this->Cabecalhos( [ "Instruções para o boleto bancário (impresso no corpo do boleto)", "FormCab alinhaMeio", "2" ] ),
+	$this->Pedir( "", [ "", Instrucoes, "", "FormValor alinhaMeio", "2" ] ),
+"</table>";
