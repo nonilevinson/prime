@@ -86,3 +86,17 @@ update cnfXConfig set LOGACESSO = 1, LOGACESSOS = 1, CNPJ = '25297392000123', CP
 	ENDE_CEP = '', ENDE_ENDERECO = '', ENDE_TELEFONE = '', ENDE_DDDCELULAR =0, ENDE_CELULAR = '',
   QtasDesmar=3, Declinar=15;
 commit;
+
+/***********************************************
+	TRIGGER ARQCONTA_TRANSACAO
+************************************************/
+
+SET TERM ^^ ;
+CREATE TRIGGER ARQCONTA_TRANSACAO FOR ARQCONTA ACTIVE BEFORE INSERT POSITION 1 AS
+
+begin
+  select coalesce( max( Transacao ) + 1, 1 ) from ARQCONTA into NEW.Transacao;
+end ^^
+SET TERM ; ^^
+
+commit;
