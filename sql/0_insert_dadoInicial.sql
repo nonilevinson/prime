@@ -60,20 +60,29 @@ commit;
 
 --* ARQGRUPO
 INSERT INTO ARQGRUPO (IDPRIMARIO, GRUPO) VALUES ( 1, 'Diretoria' );
+INSERT INTO ARQGRUPO (IDPRIMARIO, GRUPO) VALUES ( 2, 'Call center' );
+INSERT INTO ARQGRUPO (IDPRIMARIO, GRUPO) VALUES ( 3, 'Admnistrativo' );
 commit;
 
 --*	ARQUSUARIO
 INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, EMAIL, EMAILACES, EMAILACESS )
 	VALUES (1, 'NONI', 'Noni', 'AOPNG75', NULL, '1.00', 1, 'noni@kogumelo.com', 0, 0);
 INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, EMAIL, EMAILACES, EMAILACESS )
-	VALUES (2, 'XXX', 'Xxx', 'SWSM@153', 1, '1.00', 1, 'xxx', 1, 1);
+	VALUES (2, 'DANIEL', 'Daniel Tomaz Duarte', 'SWSM@153', 1, '1.00', 1, 'danieltduarte01@gmail.com', 1, 1);
+INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, EMAIL, EMAILACES, EMAILACESS )
+	VALUES (3, 'LEONARDO', 'Leonardo Ribeiro', 'SWSM@153', 1, '1.00', 1, 'administracao@primemedicalcenter.com.br', 1, 1);
+INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, EMAIL, EMAILACES, EMAILACESS )
+	VALUES (4, 'JACYANI.SILVA', 'Jacyani Silva', 'SWSM@153', 2, '1.00', 1, 'jacyanisilva@hotmail.com', 1, 1);
+INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, EMAIL, EMAILACES, EMAILACESS )
+	VALUES (5, 'PATRICIA.TRAJANO', 'Patricia Trajano', 'SWSM@153', 1, '1.00', 3, 'patriciatrajano.primemedical@gmail.com', 1, 1);
 commit;
 
 --* Parâmetro Config
-update cnfConfig set Email=1, Aviso=1, DocMod=1;
+update cnfConfig set Email=1, Aviso=1, DocMod=0;
 commit;
 
 --* Parâmetro XConfig
-update cnfXConfig set LOGACESSO = 1, LOGACESSOS = 1, CNPJ = , CPF='', Empresa = '',
-	ENDE_CEP = '', ENDE_ENDERECO = '', ENDE_TELEFONE = '', ENDE_DDDCELULAR =0, ENDE_CELULAR = '';
+update cnfXConfig set LOGACESSO = 1, LOGACESSOS = 1, CNPJ = '25297392000123', CPF='', Empresa = 'Niterói Serviços de Saúde Ltda',
+	ENDE_CEP = '', ENDE_ENDERECO = '', ENDE_TELEFONE = '', ENDE_DDDCELULAR =0, ENDE_CELULAR = '',
+  QtasDesmar=3, Declinar=15;
 commit;

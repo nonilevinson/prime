@@ -32,6 +32,8 @@ echo
 	$this->Pular1Linha(2),
 	$this->Pedir( "Desmarcações",
 		[ "", QtasDesmar, " (quantas desmarcações um paciente pode efetuar)" ] ),
+	$this->Pedir( "Declinar",
+		[ "", Declinar, " % (qual a taxa percentual mensal que um médico pode declinar de pacientes)" ] ),
 "</table>",
 
 CriarForms(

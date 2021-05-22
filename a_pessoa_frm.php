@@ -7,10 +7,11 @@ echo
 	$this->Pedir( "Nome" ),
 	$this->Pedir( "Apelido",
 		[ "", Apelido, brHtml(1) . "(será usado em emails para evitar SPAM. <b>Não use caixa alta</b> em todo o apelido)" ] ),
-	$this->Pedir( "Pessoa",
-		[ "", TPFPJ,
+	$this->Pedir( "Tipo",
+		[ "", TPessoa,
+		[ brHtml(4) . "Pessoa ", TPFPJ,
 		[ brHtml(4) . "Ativo? ", Ativo,
-		[ brHtml(4) . "Desde ", Desde ] ] ] ),
+		[ brHtml(4) . "Desde ", Desde ] ] ] ] ),
 "</table>",
 
 CriarForms(
@@ -35,6 +36,7 @@ CriarForms(
 
 //* Dados Física
 "<table id='P' class='tabFormulario' style='display:none'>",
+	$this->Pedir( "Mídia", Midia ),
 	$this->Pedir( "Nascimento",
 		[ "", Nascimento,
 		[ brHtml(4) . "Sexo ", Sexo,
@@ -48,6 +50,8 @@ CriarForms(
 
 //* Observações
 "<table id='O' class='tabFormulario' style='display:none'>",
+	$this->Pedir( "Desmarcações",
+		[ "", QtoDesmar, " (quantas desmarcações, se cliente, efetuou)" ] ),
 	$this->Cabecalhos( [ "Observações", "FormCab alinhaMeio", "2" ] ),
 	$this->Pedir( "", [ "", Obs, "", "FormValor alinhaMeio", "2" ] ),
 "</table>",
