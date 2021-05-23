@@ -163,6 +163,19 @@ class campo_parQSelecao_AcaoEmail_Versao extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo TSimNao
+//======================================================
+
+class campo_parQSelecao_TSimNao extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TSimNao", "TSimNao", "TSimNao", 0, "tabTSimNao", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Cadeia100
 //======================================================
 
@@ -380,6 +393,9 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_AcaoEmail(),
 			new campo_parQSelecao_AcaoEmail_Titulo(),
 			new campo_parQSelecao_AcaoEmail_Versao(),
+			new campo_parQSelecao_TSimNao(),
+			new Lance_CampoCadeia( "TSimNao_Chave", "TSimNao_Chave", "Chave", 1, "x", EH_CHAVE, TSimNao ),
+			new Lance_CampoCadeia( "TSimNao_Descritor", "TSimNao_Descritor", "Descritor", 3, "xxx", EH_DESCRITOR, TSimNao ),
 			new campo_parQSelecao_Cadeia100(),
 			new campo_parQSelecao_Logico1(),
 			new campo_parQSelecao_DataIni(),

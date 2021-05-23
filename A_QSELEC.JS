@@ -135,6 +135,39 @@ function Campo_parQSelecao_AcaoEmail_Versao()
 var AcaoEmail_Versao = new Campo_parQSelecao_AcaoEmail_Versao;
 
 //------------------------------------------------------------
+Campo_parQSelecao_TSimNao.prototype = new Lance_CampoLigado;
+
+function Campo_parQSelecao_TSimNao()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TSimNao", "TSimNao", "TSimNao", "tabTSimNao", "t_tsimna", null, "",0);
+}
+
+var TSimNao = new Campo_parQSelecao_TSimNao;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TSimNao_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TSimNao_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TSimNao_Chave", "TSimNao_Chave", "TSimNao", TSimNao, 1, "u", false);
+}
+
+var TSimNao_Chave = new Campo_parQSelecao_TSimNao_Chave;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TSimNao_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TSimNao_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TSimNao_Descritor", "TSimNao_Descritor", "TSimNao", TSimNao, 3, "xxx", false);
+}
+
+var TSimNao_Descritor = new Campo_parQSelecao_TSimNao_Descritor;
+
+//------------------------------------------------------------
 Campo_parQSelecao_Cadeia100.prototype = new Lance_CampoCadeia;
 
 function Campo_parQSelecao_Cadeia100()
@@ -300,6 +333,14 @@ function Campo_parQSelecao_Senha2()
 var Senha2 = new Campo_parQSelecao_Senha2;
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parQSelecao_Usuario.prototype.FiltroPai = function()
+{
+			return( "A.Grupo is not null" );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_parQSelecao_Usuario_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
@@ -378,6 +419,8 @@ Campo_parQSelecao_AcaoEmail_Versao.prototype.ObrigatorioEspecial = function( p_c
 }
 
 AcaoEmail_Versao.TipoCampo |= CAMPO_CHAVE_PAI;
+TSimNao_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TSimNao_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -410,6 +453,10 @@ Campo_parQSelecao_DataIni.prototype.Obrigatorio = function( p_comMsg )
 Campo_parQSelecao_DataFim.prototype.Sugeriu = function()
 {
 {
+		if( !tem( DataIni1 ) )
+	return( this.AtribuiuSemCritica(  ) );
+}
+{
 		if( quantosDias( DataFim, DataIni ) < 0 )
 	return( this.AtribuiuSemCritica( DataIni ) );
 }
@@ -417,9 +464,7 @@ Campo_parQSelecao_DataFim.prototype.Sugeriu = function()
 		if( quantosDias( DataFim, DataIni ) > 0 )
 	return( this.AtribuiuSemCritica( DataFim ) );
 }
-{
-	return( this.AtribuiuSemCritica( DataIni ) );
-}
+		return( true );
 }
 
 //-------------------------------------------------------------
@@ -429,7 +474,7 @@ Campo_parQSelecao_DataFim.prototype.TemErro = function()
 {
 		if( tem(this) && ( quantosDias( DataFim, DataIni ) < 0 ) )
 	{
-		alert( "A data final tem de ser posterior a inicial" );
+		alert( "A data final precisa ser posterior a inicial" );
 		return( true );
 	}
 	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
@@ -449,6 +494,10 @@ Campo_parQSelecao_DataFim.prototype.Existencia = function()
 Campo_parQSelecao_DataFim1.prototype.Sugeriu = function()
 {
 {
+		if( !tem( DataFim1 ) )
+	return( this.AtribuiuSemCritica(  ) );
+}
+{
 		if( quantosDias( DataFim1, DataIni1 ) < 0 )
 	return( this.AtribuiuSemCritica( DataIni1 ) );
 }
@@ -456,9 +505,7 @@ Campo_parQSelecao_DataFim1.prototype.Sugeriu = function()
 		if( quantosDias( DataFim1, DataIni1 ) > 0 )
 	return( this.AtribuiuSemCritica( DataFim1 ) );
 }
-{
-	return( this.AtribuiuSemCritica( DataIni1 ) );
-}
+		return( true );
 }
 
 //-------------------------------------------------------------
@@ -468,7 +515,7 @@ Campo_parQSelecao_DataFim1.prototype.TemErro = function()
 {
 		if( tem(this) && ( quantosDias( DataFim1, DataIni1 ) < 0 ) )
 	{
-		alert( "A data final tem ser posterior a inicial" );
+		alert( "A data final precisa ser posterior a inicial" );
 		return( true );
 	}
 	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
@@ -666,7 +713,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2 ]	);
+		[ Usuario, Usuario_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2 ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );
