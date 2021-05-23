@@ -39,7 +39,9 @@ $umXConfig = sql_lerUmRegistro( $select );
 $qtasDesmar = $umXConfig->QTASDESMAR;
 
 define( 'G_QTASDESMAR', $qtasDesmar );
-if( $g_debugProcesso ) echo '<br><b>GR0 lance_executar_sempre G_QTASDESMAR=</b> '.G_QTASDESMAR;
+// if( $g_debugProcesso ) echo '<br><b>GR0 lance_executar_sempre G_QTASDESMAR=</b> '.G_QTASDESMAR;
+
+//=============================================================================================
 echo
 javaScriptIni(),
 	'var g_vetIdClinica = [', implode( ',', $vetIdClinica ), '];',
