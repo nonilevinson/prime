@@ -4,10 +4,10 @@
 **********************************************/
 ##calcularIdade##
 ( cast(
-   datediff( year, (Select P.Nascimento From arqPessoa P), current_date ) -
+   datediff( year, Nascimento, current_date ) -
    iif(
       current_date <
-      extract( day from (Select P.Nascimento From arqPessoa P) ) ||
-      extract( month from (Select P.Nascimento From arqPessoa P) ) ||
-      extract( year from (Select P.Nascimento From arqPessoa P) ), 1, 0 ) as smallint )
+      lpad( extract( day from Nascimento ), 2, '0' ) || '.' ||
+      lpad( extract( month from Nascimento ), 2, '0' ) || '.' ||
+      extract( year from current_date ), 1, 0 ) as smallint )
 )

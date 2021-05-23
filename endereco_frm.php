@@ -34,7 +34,7 @@ function btnWhatsApp()
 
 function frmEndereco( $p_inicial, $p_prefixo )
 {
-	global $g_arquivoAtual, $g_prefixo;
+	global $g_debugProcesso, $g_arquivoAtual, $g_prefixo;
 
 	echo javaScriptSrc( LANCE_JS . 'lance_ajax.js' );
 
@@ -66,7 +66,8 @@ function frmEndereco( $p_inicial, $p_prefixo )
 			[ "", DDDCelular,
 			[ brHtml(2), Celular,
 			[ brHtml(4) . "WhatsApp? ", WhatsApp, btnWhatsApp() ] ] ] );
-//echo '<br>'.$tela;
+
+// echo '<br>tela= '.$tela;
 	$g_prefixo = $prefixo;
 	return( $tela );
 }

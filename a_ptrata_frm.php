@@ -2,7 +2,7 @@
 
 echo
 "<table class='tabFormulario'>",
-	$this->Pedir( "Plano", PTraata ),
+	$this->Pedir( "Plano", PTrata ),
    $this->Pedir( "Valor" ),
    $this->Pedir( "Ativo?", Ativo ),
 "</table>

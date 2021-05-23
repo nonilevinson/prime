@@ -23,6 +23,15 @@ class campo_arqPessoa_Nome extends Lance_CampoCadeia
 		parent::__construct( "Nome", "Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
 	}
 
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->QTODESMAR >= G_QTASDESMAR )
+			return( "VermelhoFundoEsq" );
+		return( parent::Estilo() );
+	}
+
 }
 
 //======================================================
@@ -347,10 +356,52 @@ class campo_arqPessoa_QtoDesmar extends Lance_CampoNumerico
 	}
 
 	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->QTODESMAR >= G_QTASDESMAR )
+			return( "VermelhoFundoCentro" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
 			return( "Qtas<br>Desmarcações" );
+	}
+
+}
+
+//======================================================
+//	Campo Midia
+//======================================================
+
+class campo_arqPessoa_Midia extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Midia", "Midia", "Midia", 0, "arqMidia", "arqMidia.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Midia_Midia
+//======================================================
+
+class campo_arqPessoa_Midia_Midia extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Midia_Midia", "Midia_Midia", "Midia", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Midia", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Mídia" );
 	}
 
 }
@@ -398,7 +449,9 @@ function listaCampos_arqPessoa( $p_prefixo )
 			new campo_arqPessoa_Ativo(),
 			new campo_arqPessoa_Obs(),
 			new campo_arqPessoa_Desde(),
-			new campo_arqPessoa_QtoDesmar() )
+			new campo_arqPessoa_QtoDesmar(),
+			new campo_arqPessoa_Midia(),
+			new campo_arqPessoa_Midia_Midia() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -487,6 +540,7 @@ class arqPessoa extends Lance_Arquivo
 			array_push( $vetAux, array( Obs ) );
 			array_push( $vetAux, array( Desde ) );
 			array_push( $vetAux, array( QtoDesmar ) );
+			array_push( $vetAux, array( Midia_Midia ) );
 		return( $vetAux );
 	}
 

@@ -1585,6 +1585,24 @@ commit;
 
 
 /************************************************************
+	Arquivo Midia     
+************************************************************/
+
+CREATE TABLE arqMidia
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	MIDIA VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqMidia_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqMidia_UK UNIQUE ( Midia )
+);
+commit;
+
+CREATE DESC INDEX arqMidia_IdPrimario_Desc ON arqMidia (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	Arquivo Profissao 
 ************************************************************/
 
@@ -1598,36 +1616,6 @@ CREATE TABLE arqProfissao
 commit;
 
 CREATE DESC INDEX arqProfissao_IdPrimario_Desc ON arqProfissao (IDPRIMARIO);
-commit;
-
-
-/************************************************************
-	Arquivo Usuario   
-************************************************************/
-
-CREATE TABLE arqUsuario
-(
-	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	USUARIO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
-	/*  4*/	SENHA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = ? */
-	/*  5*/	GRUPO ligadoComArquivo, /* Ligado com o Arquivo Grupo */
-	/*  6*/	VERSAO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
-	/*  7*/	EMAIL VARCHAR( 70 ) COLLATE PT_BR, /* Máscara = X */
-	/*  8*/	MEDICO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  9*/	CRM VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
-	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 11*/	NASCIMENTO DATE, /* Máscara = 4ano */
-	/* 12*/	FOTO campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 13*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
-	/* 14*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 15*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
-);
-commit;
-
-CREATE DESC INDEX arqUsuario_IdPrimario_Desc ON arqUsuario (IDPRIMARIO);
 commit;
 
 
@@ -1699,36 +1687,6 @@ commit;
 
 
 /************************************************************
-	Arquivo Clinica   
-************************************************************/
-
-CREATE TABLE arqClinica
-(
-	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	CLINICA VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	RAZAO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
-	/*  4*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
-	/*  5*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
-	/*  6*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
-	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
-	/*  8*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
-	/*  9*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
-	/* 10*/	/* ENDE_DDD */
-	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
-	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
-	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
-	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 15*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqClinica_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqClinica_UK UNIQUE ( Clinica )
-);
-commit;
-
-CREATE DESC INDEX arqClinica_IdPrimario_Desc ON arqClinica (IDPRIMARIO);
-commit;
-
-
-/************************************************************
 	Arquivo Pessoa    
 ************************************************************/
 
@@ -1766,6 +1724,7 @@ CREATE TABLE arqPessoa
 	/* 30*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	/* 31*/	DESDE DATE, /* Máscara = 4ano */
 	/* 32*/	QTODESMAR SMALLINT, /* Máscara = N */
+	/* 33*/	MIDIA ligadoComArquivo, /* Ligado com o Arquivo Midia */
 	CONSTRAINT arqPessoa_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqPessoa_UK UNIQUE ( Nome )
 );
@@ -1776,43 +1735,62 @@ commit;
 
 
 /************************************************************
-	Arquivo CCor      
+	Arquivo Clinica   
 ************************************************************/
 
-CREATE TABLE arqCCor
+CREATE TABLE arqClinica
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
-	/*  3*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
-	/*  4*/	DVAGENCIA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
-	/*  5*/	CONTA VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
-	/*  6*/	DVCONTA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
-	/*  7*/	CARTEIRA INTEGER, /* Máscara = N */
-	/*  8*/	CODCEDENTE VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = M */
-	/*  9*/	MULTA NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 10*/	JUROS NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 11*/	CBOLETO NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 12*/	INSTRUCOES BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 13*/	ULTREMESSA NUMERIC(18,0), /* Máscara = N */
-	/* 14*/	CONVENIO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = N */
-	/* 15*/	VARIACAO NUMERIC(18,0), /* Máscara = N */
-	/* 16*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 17*/	TPIX1 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 18*/	PIX1 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 19*/	TPIX2 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 20*/	PIX2 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 21*/	TPIX3 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 22*/	PIX3 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 23*/	TPIX4 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 24*/	PIX4 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 25*/	TPIX5 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 26*/	PIX5 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	CONSTRAINT arqCCor_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqCCor_UK UNIQUE ( Banco, Agencia, Conta )
+	/*  2*/	CLINICA VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	RAZAO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  4*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
+	/*  5*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
+	/*  6*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
+	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  8*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
+	/*  9*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
+	/* 10*/	/* ENDE_DDD */
+	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
+	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
+	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 15*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqClinica_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqClinica_UK UNIQUE ( Clinica )
 );
 commit;
 
-CREATE DESC INDEX arqCCor_IdPrimario_Desc ON arqCCor (IDPRIMARIO);
+CREATE DESC INDEX arqClinica_IdPrimario_Desc ON arqClinica (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo Usuario   
+************************************************************/
+
+CREATE TABLE arqUsuario
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	USUARIO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  4*/	SENHA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = ? */
+	/*  5*/	GRUPO ligadoComArquivo, /* Ligado com o Arquivo Grupo */
+	/*  6*/	VERSAO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
+	/*  7*/	EMAIL VARCHAR( 70 ) COLLATE PT_BR, /* Máscara = X */
+	/*  8*/	MEDICO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  9*/	CRM VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
+	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 11*/	NASCIMENTO DATE, /* Máscara = 4ano */
+	/* 12*/	FOTO campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
+	/* 13*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
+	/* 14*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 15*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
+);
+commit;
+
+CREATE DESC INDEX arqUsuario_IdPrimario_Desc ON arqUsuario (IDPRIMARIO);
 commit;
 
 
@@ -1940,6 +1918,26 @@ commit;
 
 
 /************************************************************
+	Arquivo EmailRemet
+************************************************************/
+
+CREATE TABLE arqEmailRemet
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
+	/*  3*/	NOMEEMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
+	/*  4*/	PADRAO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqEmailRemet_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqEmailRemet_UK UNIQUE ( Email )
+);
+commit;
+
+CREATE DESC INDEX arqEmailRemet_IdPrimario_Desc ON arqEmailRemet (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	Arquivo Conta     
 ************************************************************/
 
@@ -1974,50 +1972,43 @@ commit;
 
 
 /************************************************************
-	Arquivo EmailRemet
+	Arquivo CCor      
 ************************************************************/
 
-CREATE TABLE arqEmailRemet
+CREATE TABLE arqCCor
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/*  3*/	NOMEEMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
-	/*  4*/	PADRAO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqEmailRemet_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqEmailRemet_UK UNIQUE ( Email )
+	/*  2*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
+	/*  3*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
+	/*  4*/	DVAGENCIA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
+	/*  5*/	CONTA VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
+	/*  6*/	DVCONTA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
+	/*  7*/	CARTEIRA INTEGER, /* Máscara = N */
+	/*  8*/	CODCEDENTE VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = M */
+	/*  9*/	MULTA NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 10*/	JUROS NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 11*/	CBOLETO NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 12*/	INSTRUCOES BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 13*/	ULTREMESSA NUMERIC(18,0), /* Máscara = N */
+	/* 14*/	CONVENIO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = N */
+	/* 15*/	VARIACAO NUMERIC(18,0), /* Máscara = N */
+	/* 16*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 17*/	TPIX1 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 18*/	PIX1 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 19*/	TPIX2 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 20*/	PIX2 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 21*/	TPIX3 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 22*/	PIX3 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 23*/	TPIX4 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 24*/	PIX4 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 25*/	TPIX5 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 26*/	PIX5 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	CONSTRAINT arqCCor_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqCCor_UK UNIQUE ( Banco, Agencia, Conta )
 );
 commit;
 
-CREATE DESC INDEX arqEmailRemet_IdPrimario_Desc ON arqEmailRemet (IDPRIMARIO);
-commit;
-
-
-/************************************************************
-	Arquivo ContPessoa
-************************************************************/
-
-CREATE TABLE arqContPessoa
-(
-	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  3*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
-	/*  4*/	APELIDO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
-	/*  5*/	FUNCAO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
-	/*  6*/	CELULAR VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/*  7*/	TELEFONE VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/*  8*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
-	/*  9*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 10*/	NASCIMENTO DATE, /* Máscara = 4ano */
-	/* 11*/	SEXO ligadoComTabela, /* Ligado com a Tabela Sexo */
-	/* 12*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 13*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqContPessoa_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqContPessoa_UK UNIQUE ( Pessoa, Nome )
-);
-commit;
-
-CREATE DESC INDEX arqContPessoa_IdPrimario_Desc ON arqContPessoa (IDPRIMARIO);
+CREATE DESC INDEX arqCCor_IdPrimario_Desc ON arqCCor (IDPRIMARIO);
 commit;
 
 
@@ -2122,24 +2113,6 @@ commit;
 
 
 /************************************************************
-	Arquivo Midia     
-************************************************************/
-
-CREATE TABLE arqMidia
-(
-	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	MIDIA VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqMidia_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqMidia_UK UNIQUE ( Midia )
-);
-commit;
-
-CREATE DESC INDEX arqMidia_IdPrimario_Desc ON arqMidia (IDPRIMARIO);
-commit;
-
-
-/************************************************************
 	Parâmetro XConfig   
 ************************************************************/
 
@@ -2192,6 +2165,28 @@ CREATE TABLE arqPTrata
 commit;
 
 CREATE DESC INDEX arqPTrata_IdPrimario_Desc ON arqPTrata (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo ItLogEmail
+************************************************************/
+
+CREATE TABLE arqItLogEmail
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	LOGEMAIL ligadoComArquivo, /* Ligado com o Arquivo LogEmail */
+	/*  3*/	CLIENTE ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  4*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
+	/*  5*/	ENVIADO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	LIDO DATE, /* Máscara = 4ano */
+	/*  7*/	LINKEMP DATE, /* Máscara = 4ano */
+	/*  8*/	LINKKM DATE, /* Máscara = 4ano */
+	CONSTRAINT arqItLogEmail_PK PRIMARY KEY ( IDPRIMARIO )
+);
+commit;
+
+CREATE DESC INDEX arqItLogEmail_IdPrimario_Desc ON arqItLogEmail (IDPRIMARIO);
 commit;
 
 
@@ -2254,24 +2249,30 @@ commit;
 
 
 /************************************************************
-	Arquivo ItLogEmail
+	Arquivo ContPessoa
 ************************************************************/
 
-CREATE TABLE arqItLogEmail
+CREATE TABLE arqContPessoa
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	LOGEMAIL ligadoComArquivo, /* Ligado com o Arquivo LogEmail */
-	/*  3*/	CLIENTE ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  4*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/*  5*/	ENVIADO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	LIDO DATE, /* Máscara = 4ano */
-	/*  7*/	LINKEMP DATE, /* Máscara = 4ano */
-	/*  8*/	LINKKM DATE, /* Máscara = 4ano */
-	CONSTRAINT arqItLogEmail_PK PRIMARY KEY ( IDPRIMARIO )
+	/*  2*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  3*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  4*/	APELIDO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
+	/*  5*/	FUNCAO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  6*/	CELULAR VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/*  7*/	TELEFONE VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/*  8*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
+	/*  9*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 10*/	NASCIMENTO DATE, /* Máscara = 4ano */
+	/* 11*/	SEXO ligadoComTabela, /* Ligado com a Tabela Sexo */
+	/* 12*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 13*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqContPessoa_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqContPessoa_UK UNIQUE ( Pessoa, Nome )
 );
 commit;
 
-CREATE DESC INDEX arqItLogEmail_IdPrimario_Desc ON arqItLogEmail (IDPRIMARIO);
+CREATE DESC INDEX arqContPessoa_IdPrimario_Desc ON arqContPessoa (IDPRIMARIO);
 commit;
 
 
@@ -2354,12 +2355,12 @@ ALTER TABLE arqClinica ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT 
 ALTER TABLE arqClinica ALTER ENDE_DDD POSITION 10;
 ALTER TABLE arqPessoa ADD IDADE INTEGER computed by ( CASE
 	WHEN( Nascimento is not null ) THEN( ( cast(
-   datediff( year, (Select P.Nascimento From arqPessoa P), current_date ) -
+   datediff( year, Nascimento, current_date ) -
    iif(
       current_date <
-      extract( day from (Select P.Nascimento From arqPessoa P) ) ||
-      extract( month from (Select P.Nascimento From arqPessoa P) ) ||
-      extract( year from (Select P.Nascimento From arqPessoa P) ), 1, 0 ) as smallint )
+      lpad( extract( day from Nascimento ), 2, '0' ) || '.' ||
+      lpad( extract( month from Nascimento ), 2, '0' ) || '.' ||
+      extract( year from current_date ), 1, 0 ) as smallint )
 )
  )
 	END  ); 
@@ -2415,7 +2416,7 @@ RECREATE VIEW V_arqUsuario AS
 commit;
 
 RECREATE VIEW V_arqPessoa AS 
-	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.TPESSOA, A1.CHAVE as TPessoa_CHAVE, A1.DESCRITOR as TPessoa_DESCRITOR, A0.TPFPJ, A2.CHAVE as TPFPJ_CHAVE, A2.DESCRITOR as TPFPJ_DESCRITOR, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A3.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A4.UF as ENDE_CIDADE_UF, A5.CHAVE as ENDE_CIDADE_UF_CHAVE, A5.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A4.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.INSCESTAD, A0.INSCMUNIC, A0.NASCIMENTO, A0.IDADE, A0.SEXO, A6.CHAVE as Sexo_CHAVE, A6.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A7.CHAVE as EstCivil_CHAVE, A7.DESCRITOR as EstCivil_DESCRITOR, A0.PROFISSAO, A8.PROFISSAO as PROFISSAO_PROFISSAO, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR
+	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.TPESSOA, A1.CHAVE as TPessoa_CHAVE, A1.DESCRITOR as TPessoa_DESCRITOR, A0.TPFPJ, A2.CHAVE as TPFPJ_CHAVE, A2.DESCRITOR as TPFPJ_DESCRITOR, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A3.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A4.UF as ENDE_CIDADE_UF, A5.CHAVE as ENDE_CIDADE_UF_CHAVE, A5.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A4.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.INSCESTAD, A0.INSCMUNIC, A0.NASCIMENTO, A0.IDADE, A0.SEXO, A6.CHAVE as Sexo_CHAVE, A6.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A7.CHAVE as EstCivil_CHAVE, A7.DESCRITOR as EstCivil_DESCRITOR, A0.PROFISSAO, A8.PROFISSAO as PROFISSAO_PROFISSAO, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR, A0.MIDIA, A9.MIDIA as MIDIA_MIDIA
 	FROM arqPessoa A0
 	left join tabTPessoa A1 on A1.IDPRIMARIO=A0.TPESSOA
 	left join tabTPFPJ A2 on A2.IDPRIMARIO=A0.TPFPJ
@@ -2424,7 +2425,8 @@ RECREATE VIEW V_arqPessoa AS
 	left join tabUF A5 on A5.IDPRIMARIO=A4.UF
 	left join tabSexo A6 on A6.IDPRIMARIO=A0.SEXO
 	left join tabEstCivil A7 on A7.IDPRIMARIO=A0.ESTCIVIL
-	left join arqProfissao A8 on A8.IDPRIMARIO = A0.PROFISSAO;
+	left join arqProfissao A8 on A8.IDPRIMARIO = A0.PROFISSAO
+	left join arqMidia A9 on A9.IDPRIMARIO = A0.MIDIA;
 commit;
 
 RECREATE VIEW V_arqTemplate AS 
@@ -2583,7 +2585,7 @@ RECREATE VIEW V_arqConta AS
 commit;
 
 RECREATE VIEW V_arqParcela AS 
-	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, (Select V.Clinica_Clinica From v_arqConta V Where V.idPrimario=A0.Clinica) as VCLINICA, (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario=A0.Conta) as VTPGREC, (Select V.Pessoa_Nome From v_arqConta V Where V.idPrimario=A0.Conta) as VPESSOA, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.BANCO as CCOR_BANCO, A4.NUM as CCOR_BANCO_NUM, A4.BANCO as CCOR_BANCO_BANCO, A3.AGENCIA as CCOR_AGENCIA, A3.CONTA as CCOR_CONTA, A0.SUBPLANO, A5.PLANO as SUBPLANO_PLANO, A6.CODPLANO as SUBPLANO_PLANO_CODPLANO, A6.PLANO as SUBPLANO_PLANO_PLANO, A5.CODIGO as SUBPLANO_CODIGO, A5.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A7.CHAVE as TFPagto_CHAVE, A7.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A8.CHAVE as TDetPg_CHAVE, A8.DESCRITOR as TDetPg_DESCRITOR, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM
+	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, (Select V.Clinica_Clinica From v_arqConta V Where V.idPrimario=A0.Conta) as VCLINICA, (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario=A0.Conta) as VTPGREC, (Select V.Pessoa_Nome From v_arqConta V Where V.idPrimario=A0.Conta) as VPESSOA, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.BANCO as CCOR_BANCO, A4.NUM as CCOR_BANCO_NUM, A4.BANCO as CCOR_BANCO_BANCO, A3.AGENCIA as CCOR_AGENCIA, A3.CONTA as CCOR_CONTA, A0.SUBPLANO, A5.PLANO as SUBPLANO_PLANO, A6.CODPLANO as SUBPLANO_PLANO_CODPLANO, A6.PLANO as SUBPLANO_PLANO_PLANO, A5.CODIGO as SUBPLANO_CODIGO, A5.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A7.CHAVE as TFPagto_CHAVE, A7.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A8.CHAVE as TDetPg_CHAVE, A8.DESCRITOR as TDetPg_DESCRITOR, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM
 	FROM arqParcela A0
 	left join arqConta A1 on A1.IDPRIMARIO = A0.CONTA
 	left join tabTFCobra A2 on A2.IDPRIMARIO=A0.TFCOBRA
@@ -2808,6 +2810,7 @@ ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Pessoa FOREIGN KEY ( PESSO
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assesor FOREIGN KEY ( ASSESOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Mkt FOREIGN KEY ( MKT ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Recepcao FOREIGN KEY ( RECEPCAO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_Midia FOREIGN KEY ( MIDIA ) REFERENCES arqMidia ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 
@@ -3005,6 +3008,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Desde', OLD.Desde, NEW.Desde );
 	execute procedure set_log( 12, NEW.idPrimario, 'QtoDesmar', OLD.QtoDesmar, NEW.QtoDesmar );
+	execute procedure set_log( 12, NEW.idPrimario, 'Midia', OLD.Midia, NEW.Midia );
 end
 end^
 

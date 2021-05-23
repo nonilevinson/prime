@@ -80,5 +80,6 @@ g_arquivoCampos = ListaDeCampos_arqMidia( '' );
 g_idOperacao = 30;
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"Pessoas","","P",127,"","",1,"","1","a_pessoa","arqPessoa","Folhear","Midia","?","","", "","", 0,7,[],[7]);
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }

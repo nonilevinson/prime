@@ -36,11 +36,13 @@ CriarForms(
 
 //* Dados Física
 "<table id='P' class='tabFormulario' style='display:none'>",
-	$this->Pedir( "Mídia", Midia ),
+// "<table class='tabFormulario'>",
 	$this->Pedir( "Nascimento",
 		[ "", Nascimento,
+		[ brHtml(4) . "Idade ", Idade,
 		[ brHtml(4) . "Sexo ", Sexo,
-		[ brHtml(4) . "Estado civil ", EstCivil ] ] ] ),
+		[ brHtml(4) . "Estado civil ", EstCivil ] ] ] ] ),
+	$this->Pedir( "Profissão", Profissao ),
 	$this->Pedir( "CPF" ),
 	$this->Pedir( "Identidade",
 		[ "", Identidade,
@@ -50,6 +52,7 @@ CriarForms(
 
 //* Observações
 "<table id='O' class='tabFormulario' style='display:none'>",
+	$this->Pedir( "Mídia", Midia ),
 	$this->Pedir( "Desmarcações",
 		[ "", QtoDesmar, " (quantas desmarcações, se cliente, efetuou)" ] ),
 	$this->Cabecalhos( [ "Observações", "FormCab alinhaMeio", "2" ] ),

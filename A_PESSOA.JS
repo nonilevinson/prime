@@ -347,6 +347,28 @@ function Campo_arqPessoa_QtoDesmar()
 
 var QtoDesmar = new Campo_arqPessoa_QtoDesmar;
 
+//------------------------------------------------------------
+Campo_arqPessoa_Midia.prototype = new Lance_CampoHidden;
+
+function Campo_arqPessoa_Midia()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Midia", "Midia", "Midia", "arqMidia", "a_midia", null, "",30);
+}
+
+var Midia = new Campo_arqPessoa_Midia;
+
+//------------------------------------------------------------
+Campo_arqPessoa_Midia_Midia.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqPessoa_Midia_Midia()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Midia_Midia", "Midia_Midia", "Midia", Midia, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var Midia_Midia = new Campo_arqPessoa_Midia_Midia;
+
 Nome.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
@@ -367,7 +389,7 @@ Campo_arqPessoa_Apelido.prototype.TemAdvertencia = function()
 	{
 		return( !confirm( "Usar CAIXA ALTA em todo o apelido clasificará a empresa como SPAMMER" ) );
 	}
-	return( Lance_CampoNumerico.prototype.TemAdvertencia.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemAdvertencia.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -421,7 +443,7 @@ Campo_arqPessoa_CNPJ.prototype.TemErro = function()
 		alert( "CNPJ inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -524,7 +546,7 @@ Campo_arqPessoa_CPF.prototype.TemErro = function()
 		alert( "CPF inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -569,7 +591,7 @@ Campo_arqPessoa_Email.prototype.TemErro = function()
 		alert( "Email inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -659,11 +681,38 @@ Campo_arqPessoa_QtoDesmar.prototype.Cabecalho = function()
 }
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqPessoa_Midia.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Midia_Midia.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Midia.Obrigatorio( p_comMsg ) );
+}
+
+Midia_Midia.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqPessoa_Profissao.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Profissao_Profissao.Obrigatorio( false ) || tem(Profissao_Profissao) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Midia.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Midia_Midia.Obrigatorio( false ) || tem(Midia_Midia) ) );
 }
 
 function IniciarDependencias_arqPessoa()
@@ -673,8 +722,11 @@ TPFPJ.ExistenciasDependentes= [ CNPJ,InscEstad,InscMunic,Nascimento,Sexo,EstCivi
 Profissao_Profissao.ExistenciasDependentes= [ Profissao ];
 Identidade.ExistenciasDependentes= [ Orgao,Emissao ];
 Email.ExistenciasDependentes= [ RecEmail ];
+Midia_Midia.ExistenciasDependentes= [ Midia ];
 Profissao_Profissao.ErrosDependentes= [ Profissao ];
+Midia_Midia.ErrosDependentes= [ Midia ];
 Profissao.CamposChave= [ Profissao_Profissao ];
+Midia.CamposChave= [ Midia_Midia ];
 }
 
 
@@ -694,7 +746,7 @@ function ListaDeCampos_arqPessoa( p_prefixo )
 
 		[ Nome, Apelido, TPessoa, TPessoa_Chave, TPessoa_Descritor, TPFPJ, TPFPJ_Chave, TPFPJ_Descritor ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ CNPJ, InscEstad, InscMunic, Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar ]	);
+		[ CNPJ, InscEstad, InscMunic, Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar, Midia, Midia_Midia ]	);
 	IniciarDependencias_arqPessoa();
 	g_prefixo = l_prefixo;
 	return( l_lista );

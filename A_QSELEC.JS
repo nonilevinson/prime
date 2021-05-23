@@ -371,7 +371,7 @@ Campo_parQSelecao_TStCon_Chave.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_TStCon_Chave()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Chave", "TStCon_Chave", "TStCon", TStCon, 1, "u", false);
+	this.superClass( "TStCon_Chave", "TStCon_Chave", "TStCon", TStCon, 2, "uu", false);
 }
 
 var TStCon_Chave = new Campo_parQSelecao_TStCon_Chave;
@@ -382,7 +382,7 @@ Campo_parQSelecao_TStCon_Descritor.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_TStCon_Descritor()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 18, "xxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 21, "xxxxxxxxxxxxxxxxxxxxx", false);
 }
 
 var TStCon_Descritor = new Campo_parQSelecao_TStCon_Descritor;
@@ -419,6 +419,39 @@ function Campo_parQSelecao_TMov_Descritor()
 }
 
 var TMov_Descritor = new Campo_parQSelecao_TMov_Descritor;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TPgRec.prototype = new Lance_CampoLigado;
+
+function Campo_parQSelecao_TPgRec()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TPgRec", "TPgRec", "TPgRec", "tabTPgRec", "t_tpgre", null, "",0);
+}
+
+var TPgRec = new Campo_parQSelecao_TPgRec;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TPgRec_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TPgRec_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TPgRec_Chave", "TPgRec_Chave", "TPgRec", TPgRec, 1, "u", false);
+}
+
+var TPgRec_Chave = new Campo_parQSelecao_TPgRec_Chave;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TPgRec_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TPgRec_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TPgRec_Descritor", "TPgRec_Descritor", "TPgRec", TPgRec, 7, "xxxxxxx", false);
+}
+
+var TPgRec_Descritor = new Campo_parQSelecao_TPgRec_Descritor;
 
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
@@ -741,6 +774,8 @@ TStCon_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TStCon_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 TMov_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TMov_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+TPgRec_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TPgRec_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
@@ -825,7 +860,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor ]	);
+		[ Usuario, Usuario_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

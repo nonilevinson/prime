@@ -129,7 +129,7 @@ if( $op == 92 ) //* selecao arqConta
 	echo
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Pessoa" ),
+	$this->Pedir( "Pessoa", Cliente ),
 	$this->Pedir( "Trecho do<br>histórico", Cadeia30 );
 }
 
@@ -138,7 +138,7 @@ if( $op == 94 ) //* selecao arqParcela
 	echo
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Pessoa" ),
+	$this->Pedir( "Pessoa", Cliente ),
 	$this->Pedir( "Vencimento entre",
 		[ "", DataIni,
 		[ brHtml(1) . "e ", DataFim ] ] ),
@@ -152,7 +152,7 @@ if( $op == 95 ) //* selecao Hoje arqParcela
 	echo
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Pessoa" ),
+	$this->Pedir( "Pessoa", Cliente ),
 	$this->Pedir( "Pagamento entre",
 		[ "", DataIni1,
 		[ brHtml(1) . "e ", DataFim1 ] ] );

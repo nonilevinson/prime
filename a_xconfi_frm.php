@@ -11,7 +11,7 @@ if( GrupoAtualEm() )
 	$this->Cabecalhos( [ "Grupo 0", "FormCab alinhaMeio", "2" ] ),
 	$this->Pedir( "CPF" ),
 	$this->Pedir( "Quantidades<br>mínimas",
-		[ "Qtd 1 ", Qtd1,
+		[ "Qtd 1 ", Qtd,
 		[ brHtml(4) . "Qtd 2 ", Qtd2, " (esses campos tem relação com os de mesmo nome no WebGestão/Cobrança KM)" ] ] ),
 	$this->Pedir( "Email de log de acesso para supervisores",
 		[ "Diário? ", LogAcesso,
