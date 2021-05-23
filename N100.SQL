@@ -2331,7 +2331,7 @@ CREATE TABLE arqConsulta
 	/*  6*/	HORACHEGA TIME, /* Máscara = Hhmm */
 	/*  7*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/*  8*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  9*/	ASSESOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  9*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 10*/	MKT ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 11*/	RECEPCAO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
@@ -2624,12 +2624,12 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.PROTOCOLO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.MEDICO, A2.USUARIO as MEDICO_USUARIO, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.ASSESOR, A4.USUARIO as ASSESOR_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.RECEPCAO, A6.USUARIO as RECEPCAO_USUARIO
+	SELECT A0.IDPRIMARIO, A0.PROTOCOLO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.MEDICO, A2.USUARIO as MEDICO_USUARIO, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.ASSESSOR, A4.USUARIO as ASSESSOR_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.RECEPCAO, A6.USUARIO as RECEPCAO_USUARIO
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join arqUsuario A2 on A2.IDPRIMARIO = A0.MEDICO
 	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
-	left join arqUsuario A4 on A4.IDPRIMARIO = A0.ASSESOR
+	left join arqUsuario A4 on A4.IDPRIMARIO = A0.ASSESSOR
 	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MKT
 	left join arqUsuario A6 on A6.IDPRIMARIO = A0.RECEPCAO;
 commit;
@@ -2807,7 +2807,7 @@ ALTER TABLE arqHorario ADD CONSTRAINT arqHorario_FK_TDiaSem FOREIGN KEY ( TDIASE
 ALTER TABLE arqDuracao ADD CONSTRAINT arqDuracao_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE NO ACTION ON UPDATE CASCADE;
-ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assesor FOREIGN KEY ( ASSESOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Mkt FOREIGN KEY ( MKT ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Recepcao FOREIGN KEY ( RECEPCAO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_Midia FOREIGN KEY ( MIDIA ) REFERENCES arqMidia ON DELETE NO ACTION ON UPDATE CASCADE;
@@ -3964,7 +3964,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'HoraChega', OLD.HoraChega, NEW.HoraChega );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
 	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
-	execute procedure set_log( 12, NEW.idPrimario, 'Assesor', OLD.Assesor, NEW.Assesor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
 	execute procedure set_log( 12, NEW.idPrimario, 'Mkt', OLD.Mkt, NEW.Mkt );
 	execute procedure set_log( 12, NEW.idPrimario, 'Recepcao', OLD.Recepcao, NEW.Recepcao );
 end

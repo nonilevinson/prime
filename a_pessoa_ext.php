@@ -1,7 +1,7 @@
 <?php
 
 //----------------------------------------------------------
-
+/*
 sql_abrirBD( false );
 
 $select = "Select X.QtasDesmar
@@ -14,5 +14,6 @@ define( 'G_QTASDESMAR', $qtasDesmar );
 
 echo
 javaScriptIni(),
-	'var g_$qtasDesmar = ', $qtasDesmar , ';',
+	'var g_qtasDesmar = ', $qtasDesmar , ';',
 javaScriptFim();
+*/

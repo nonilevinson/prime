@@ -160,30 +160,39 @@ class campo_arqConsulta_Pessoa_Nome extends Lance_CampoCadeia
 		parent::__construct( "Pessoa_Nome", "Pessoa_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Pessoa", false );
 	}
 
-}
-
-//======================================================
-//	Campo Assesor
-//======================================================
-
-class campo_arqConsulta_Assesor extends Lance_CampoLigado
-{
-	function __construct()
+	//--------------------------------------------------
+	function Estilo()
 	{
-		parent::__construct( "Assesor", "Assesor", "Assesor", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+		global $g_regAtual;
+		if( $g_regAtual->PESSOA_QTODESMAR >= G_QTASDESMAR )
+			return( "VermelhoFundoEsq" );
+		return( parent::Estilo() );
 	}
 
 }
 
 //======================================================
-//	Campo Assesor_Usuario
+//	Campo Assessor
 //======================================================
 
-class campo_arqConsulta_Assesor_Usuario extends Lance_CampoCadeia
+class campo_arqConsulta_Assessor extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Assesor_Usuario", "Assesor_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Assesor", false );
+		parent::__construct( "Assessor", "Assessor", "Assessor", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Assessor_Usuario
+//======================================================
+
+class campo_arqConsulta_Assessor_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Assessor_Usuario", "Assessor_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Assessor", false );
 	}
 
 	//--------------------------------------------------
@@ -282,8 +291,8 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_Medico_Usuario(),
 			new campo_arqConsulta_Pessoa(),
 			new campo_arqConsulta_Pessoa_Nome(),
-			new campo_arqConsulta_Assesor(),
-			new campo_arqConsulta_Assesor_Usuario(),
+			new campo_arqConsulta_Assessor(),
+			new campo_arqConsulta_Assessor_Usuario(),
 			new campo_arqConsulta_Mkt(),
 			new campo_arqConsulta_Mkt_Usuario(),
 			new campo_arqConsulta_Recepcao(),
@@ -328,7 +337,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( HoraChega ) );
 			array_push( $vetAux, array( Medico_Usuario ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Assesor_Usuario ) );
+			array_push( $vetAux, array( Assessor_Usuario ) );
 			array_push( $vetAux, array( Mkt_Usuario ) );
 			array_push( $vetAux, array( Recepcao_Usuario ) );
 		return( $vetAux );
@@ -339,7 +348,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( Medico ), array( Pessoa ), array( Assesor ), array( Mkt ), array( Recepcao ) ) );
+		return( array( array( Clinica ), array( Medico ), array( Pessoa ), array( Assessor ), array( Mkt ), array( Recepcao ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -356,7 +365,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( HoraChega ) );
 			array_push( $vetAux, array( Medico_Usuario ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Assesor_Usuario ) );
+			array_push( $vetAux, array( Assessor_Usuario ) );
 			array_push( $vetAux, array( Mkt_Usuario ) );
 			array_push( $vetAux, array( Recepcao_Usuario ) );
 		return( $vetAux );

@@ -25,6 +25,28 @@ function Campo_parQSelecao_Usuario_Usuario()
 var Usuario_Usuario = new Campo_parQSelecao_Usuario_Usuario;
 
 //------------------------------------------------------------
+Campo_parQSelecao_Medico.prototype = new Lance_CampoHidden;
+
+function Campo_parQSelecao_Medico()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Medico", "Medico", "Medico", "arqUsuario", "a_usuari", null, "",5);
+}
+
+var Medico = new Campo_parQSelecao_Medico;
+
+//------------------------------------------------------------
+Campo_parQSelecao_Medico_Usuario.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_Medico_Usuario()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Medico_Usuario", "Medico_Usuario", "Usuario", Medico, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var Medico_Usuario = new Campo_parQSelecao_Medico_Usuario;
+
+//------------------------------------------------------------
 Campo_parQSelecao_StatusLog.prototype = new Lance_CampoLigado;
 
 function Campo_parQSelecao_StatusLog()
@@ -470,6 +492,23 @@ Campo_parQSelecao_Usuario_Usuario.prototype.ObrigatorioEspecial = function( p_co
 }
 
 Usuario_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parQSelecao_Medico.prototype.FiltroPai = function()
+{
+			return( "A.Grupo is not null and Medico = 1" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Medico_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Medico.Obrigatorio( p_comMsg ) );
+}
+
+Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 StatusLog_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 StatusLog_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
@@ -787,6 +826,14 @@ Campo_parQSelecao_Usuario.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_parQSelecao_Medico.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Medico_Usuario.Obrigatorio( false ) || tem(Medico_Usuario) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_parQSelecao_Cliente.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) );
@@ -819,6 +866,7 @@ Campo_parQSelecao_Clinica.prototype.ExistenciaEspecial = function()
 function IniciarDependencias_parQSelecao()
 {
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
+Medico_Usuario.ExistenciasDependentes= [ Medico ];
 Cliente_Nome.ExistenciasDependentes= [ Cliente ];
 EmailRemet_Email.ExistenciasDependentes= [ EmailRemet ];
 AcaoEmail_Titulo.ExistenciasDependentes= [ AcaoEmail ];
@@ -830,6 +878,7 @@ Gran6.ExistenciasDependentes= [ Gran6Fim ];
 Real6.ExistenciasDependentes= [ Real6Fim ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
+Medico_Usuario.ErrosDependentes= [ Medico ];
 Cliente_Nome.ErrosDependentes= [ Cliente ];
 EmailRemet_Email.ErrosDependentes= [ EmailRemet ];
 AcaoEmail_Versao.ErrosDependentes= [ AcaoEmail ];
@@ -839,6 +888,7 @@ HoraIni.ErrosDependentes= [ HoraFim ];
 Senha1.ErrosDependentes= [ Senha2 ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Usuario.CamposChave= [ Usuario_Usuario ];
+Medico.CamposChave= [ Medico_Usuario ];
 Cliente.CamposChave= [ Cliente_Nome ];
 EmailRemet.CamposChave= [ EmailRemet_Email ];
 AcaoEmail.CamposChave= [ AcaoEmail_Titulo,AcaoEmail_Versao ];
@@ -860,7 +910,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -402,7 +402,7 @@ g_idOperacao = 5;
 
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Consultas","","u",122,"","",1,"","6", "", "", "", "", "", "", "", "", "", 4, 18,[],[39,39,39,39] );
-var Menu_1_1 = new Array( 1,"Assessor","","s",118,"","",1,"","1","a_consul","arqConsulta","Folhear","Assesor","?","","", "","", 0,9,[],[39]);
+var Menu_1_1 = new Array( 1,"Assessor","","s",118,"","",1,"","1","a_consul","arqConsulta","Folhear","Assessor","?","","", "","", 0,9,[],[39]);
 var Menu_1_2 = new Array( 1,"Marketing","","k",119,"","",1,"","1","a_consul","arqConsulta","Folhear","Mkt","?","","", "","", 0,9,[],[39]);
 var Menu_1_3 = new Array( 1,"Recepção","","p",120,"","",1,"","1","a_consul","arqConsulta","Folhear","Recepcao","?","","", "","", 0,9,[],[39]);
 var Menu_1_4 = new Array( 1,"Médico","","M",121,"","",1,"","1","a_consul","arqConsulta","Folhear","Medico","?","","", "","", 0,9,[],[39]);

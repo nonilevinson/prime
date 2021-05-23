@@ -158,5 +158,16 @@ if( $op == 95 ) //* selecao Hoje arqParcela
 		[ brHtml(1) . "e ", DataFim1 ] ] );
 }
 
+if( $op == 110 ) //* selecao arqConsulta
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Pessoa", Cliente ),
+	$this->Pedir( "Médico", Medico ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
 //==================================================================================
 echo 	"</table>";

@@ -27,15 +27,24 @@ if( $regUsuCen )
 	define( 'SQL_VETIDCLINICA', "( " . implode( ",", $vetIdClinica ) . " )" );
 }
 else //* NÃO TEM ESPECÍFICO MONTA VETOR VAZIO
-{
 	define( 'SQL_VETIDCLINICA', "" );
-}
+
 if( $g_debugProcesso ) echo '<br><b>GR0 lance_executar_sempre vetIdClinica Size=</b> '.sizeof( $vetIdClinica ).' <b>VETIDCLINICA=</b> '.SQL_VETIDCLINICA;
 
+//=============================================================================================
+//* sobre desmarcações
+$select = "Select X.QtasDesmar
+   From cnfXConfig X";
+$umXConfig = sql_lerUmRegistro( $select );
+$qtasDesmar = $umXConfig->QTASDESMAR;
+
+define( 'G_QTASDESMAR', $qtasDesmar );
+if( $g_debugProcesso ) echo '<br><b>GR0 lance_executar_sempre G_QTASDESMAR=</b> '.G_QTASDESMAR;
 echo
 javaScriptIni(),
 	'var g_vetIdClinica = [', implode( ',', $vetIdClinica ), '];',
 	'var g_temMaisDeUmClinica = ', ( sizeof( $vetIdClinica ) >= 2 ? 'true' : 'false' ), ';',
+	'var g_qtasDesmar = ', $qtasDesmar , ';',
 javaScriptFim();
 
 sql_fecharBD();

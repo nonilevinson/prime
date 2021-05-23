@@ -113,26 +113,26 @@ function Campo_arqConsulta_Pessoa_Nome()
 var Pessoa_Nome = new Campo_arqConsulta_Pessoa_Nome;
 
 //------------------------------------------------------------
-Campo_arqConsulta_Assesor.prototype = new Lance_CampoHidden;
+Campo_arqConsulta_Assessor.prototype = new Lance_CampoHidden;
 
-function Campo_arqConsulta_Assesor()
+function Campo_arqConsulta_Assessor()
 {
 	this.superClass = Lance_CampoHidden;
-	this.superClass( "Assesor", "Assesor", "Assesor", "arqUsuario", "a_usuari", null, "",5);
+	this.superClass( "Assessor", "Assessor", "Assessor", "arqUsuario", "a_usuari", null, "",5);
 }
 
-var Assesor = new Campo_arqConsulta_Assesor;
+var Assessor = new Campo_arqConsulta_Assessor;
 
 //------------------------------------------------------------
-Campo_arqConsulta_Assesor_Usuario.prototype = new Lance_CampoCadeiaLigado;
+Campo_arqConsulta_Assessor_Usuario.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqConsulta_Assesor_Usuario()
+function Campo_arqConsulta_Assessor_Usuario()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Assesor_Usuario", "Assesor_Usuario", "Usuario", Assesor, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "Assessor_Usuario", "Assessor_Usuario", "Usuario", Assessor, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
-var Assesor_Usuario = new Campo_arqConsulta_Assesor_Usuario;
+var Assessor_Usuario = new Campo_arqConsulta_Assessor_Usuario;
 
 //------------------------------------------------------------
 Campo_arqConsulta_Mkt.prototype = new Lance_CampoHidden;
@@ -267,6 +267,14 @@ Campo_arqConsulta_Medico_Usuario.prototype.ObrigatorioEspecial = function( p_com
 
 Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_Pessoa.prototype.FiltroPai = function()
+{
+			return( "A.QtoDesmar < " + g_qtasDesmar + "" );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_Pessoa_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
@@ -278,7 +286,7 @@ Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
-Campo_arqConsulta_Assesor.prototype.FiltroPai = function()
+Campo_arqConsulta_Assessor.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
 			return( "A.Grupo is not null and A.Ativo == 1" );
@@ -288,12 +296,12 @@ Campo_arqConsulta_Assesor.prototype.FiltroPai = function()
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqConsulta_Assesor_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqConsulta_Assessor_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
-	return( Assesor.Obrigatorio( p_comMsg ) );
+	return( Assessor.Obrigatorio( p_comMsg ) );
 }
 
-Assesor_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
+Assessor_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -375,9 +383,9 @@ Campo_arqConsulta_Pessoa.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_arqConsulta_Assesor.prototype.ExistenciaEspecial = function()
+Campo_arqConsulta_Assessor.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Assesor_Usuario.Obrigatorio( false ) || tem(Assesor_Usuario) ) );
+	return( ( !Assessor_Usuario.Obrigatorio( false ) || tem(Assessor_Usuario) ) );
 }
 
 //-------------------------------------------------------------
@@ -401,19 +409,19 @@ function IniciarDependencias_arqConsulta()
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Medico_Usuario.ExistenciasDependentes= [ Medico ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
-Assesor_Usuario.ExistenciasDependentes= [ Assesor ];
+Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
 Mkt_Usuario.ExistenciasDependentes= [ Mkt ];
 Recepcao_Usuario.ExistenciasDependentes= [ Recepcao ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
 Pessoa_Nome.ErrosDependentes= [ Pessoa ];
-Assesor_Usuario.ErrosDependentes= [ Assesor ];
+Assessor_Usuario.ErrosDependentes= [ Assessor ];
 Mkt_Usuario.ErrosDependentes= [ Mkt ];
 Recepcao_Usuario.ErrosDependentes= [ Recepcao ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Medico.CamposChave= [ Medico_Usuario ];
 Pessoa.CamposChave= [ Pessoa_Nome ];
-Assesor.CamposChave= [ Assesor_Usuario ];
+Assessor.CamposChave= [ Assessor_Usuario ];
 Mkt.CamposChave= [ Mkt_Usuario ];
 Recepcao.CamposChave= [ Recepcao_Usuario ];
 }
@@ -433,7 +441,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Protocolo, Clinica, Clinica_Clinica, Data, Hora, HoraChega, Medico, Medico_Usuario, Pessoa, Pessoa_Nome, Assesor, Assesor_Usuario, Mkt, Mkt_Usuario, Recepcao, Recepcao_Usuario ]	);
+		[ Protocolo, Clinica, Clinica_Clinica, Data, Hora, HoraChega, Medico, Medico_Usuario, Pessoa, Pessoa_Nome, Assessor, Assessor_Usuario, Mkt, Mkt_Usuario, Recepcao, Recepcao_Usuario ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -45,6 +45,39 @@ class campo_parQSelecao_Usuario_Usuario extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Medico
+//======================================================
+
+class campo_parQSelecao_Medico extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Medico", "Medico", "Medico", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Medico_Usuario
+//======================================================
+
+class campo_parQSelecao_Medico_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Medico_Usuario", "Medico_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Medico", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Usuário" );
+	}
+
+}
+
+//======================================================
 //	Campo StatusLog
 //======================================================
 
@@ -79,6 +112,15 @@ class campo_parQSelecao_Cliente_Nome extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Cliente_Nome", "Cliente_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Cliente", false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->CLIENTE_QTODESMAR >= G_QTASDESMAR )
+			return( "VermelhoFundoEsq" );
+		return( parent::Estilo() );
 	}
 
 }
@@ -455,6 +497,8 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_parQSelecao_Usuario(),
 			new campo_parQSelecao_Usuario_Usuario(),
+			new campo_parQSelecao_Medico(),
+			new campo_parQSelecao_Medico_Usuario(),
 			new campo_parQSelecao_StatusLog(),
 			new Lance_CampoCadeia( "StatusLog_Chave", "StatusLog_Chave", "Chave", 2, "xx", EH_CHAVE, StatusLog ),
 			new Lance_CampoCadeia( "StatusLog_Descritor", "StatusLog_Descritor", "Descritor", 13, "xxxxxxxxxxxxx", EH_DESCRITOR, StatusLog ),
