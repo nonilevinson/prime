@@ -332,6 +332,94 @@ function Campo_parQSelecao_Senha2()
 
 var Senha2 = new Campo_parQSelecao_Senha2;
 
+//------------------------------------------------------------
+Campo_parQSelecao_Clinica.prototype = new Lance_CampoHidden;
+
+function Campo_parQSelecao_Clinica()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Clinica", "Clinica", "Clinica", "arqClinica", "a_clini", null, "",31);
+}
+
+var Clinica = new Campo_parQSelecao_Clinica;
+
+//------------------------------------------------------------
+Campo_parQSelecao_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_Clinica_Clinica()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var Clinica_Clinica = new Campo_parQSelecao_Clinica_Clinica;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TStCon.prototype = new Lance_CampoLigado;
+
+function Campo_parQSelecao_TStCon()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TStCon", "TStCon", "TStCon", "tabTStCon", "t_tstcon", null, "",0);
+}
+
+var TStCon = new Campo_parQSelecao_TStCon;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TStCon_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TStCon_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TStCon_Chave", "TStCon_Chave", "TStCon", TStCon, 1, "u", false);
+}
+
+var TStCon_Chave = new Campo_parQSelecao_TStCon_Chave;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TStCon_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TStCon_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 18, "xxxxxxxxxxxxxxxxxx", false);
+}
+
+var TStCon_Descritor = new Campo_parQSelecao_TStCon_Descritor;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TMov.prototype = new Lance_CampoLigado;
+
+function Campo_parQSelecao_TMov()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TMov", "TMov", "TMov", "tabTMov", "t_tmov", null, "",0);
+}
+
+var TMov = new Campo_parQSelecao_TMov;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TMov_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TMov_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TMov_Chave", "TMov_Chave", "TMov", TMov, 1, "u", false);
+}
+
+var TMov_Chave = new Campo_parQSelecao_TMov_Chave;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TMov_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TMov_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TMov_Descritor", "TMov_Descritor", "TMov", TMov, 14, "xxxxxxxxxxxxxx", false);
+}
+
+var TMov_Descritor = new Campo_parQSelecao_TMov_Descritor;
+
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -477,7 +565,7 @@ Campo_parQSelecao_DataFim.prototype.TemErro = function()
 		alert( "A data final precisa ser posterior a inicial" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -518,7 +606,7 @@ Campo_parQSelecao_DataFim1.prototype.TemErro = function()
 		alert( "A data final precisa ser posterior a inicial" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -552,7 +640,7 @@ Campo_parQSelecao_HoraIni.prototype.TemErro = function()
 		alert( "Hora inválida" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -565,7 +653,7 @@ Campo_parQSelecao_HoraFim.prototype.TemErro = function()
 		alert( "A hora final deve ser igual ou superior a inicial" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -613,7 +701,7 @@ Campo_parQSelecao_Senha1.prototype.TemErro = function()
 		alert( "Senha fraca!" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -637,9 +725,22 @@ Campo_parQSelecao_Senha2.prototype.TemErro = function()
 		alert( "A senha foi redigitada de forma diferente" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Clinica.Obrigatorio( p_comMsg ) );
+}
+
+Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
+TStCon_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TStCon_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+TMov_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TMov_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
@@ -672,6 +773,14 @@ Campo_parQSelecao_AcaoEmail.prototype.ExistenciaEspecial = function()
 	return( ( !AcaoEmail_Titulo.Obrigatorio( false ) || tem(AcaoEmail_Titulo) ) && ( !AcaoEmail_Versao.Obrigatorio( false ) || tem(AcaoEmail_Versao) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Clinica.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Clinica_Clinica.Obrigatorio( false ) || tem(Clinica_Clinica) ) );
+}
+
 function IniciarDependencias_parQSelecao()
 {
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
@@ -684,6 +793,7 @@ DataIni1.ExistenciasDependentes= [ DataFim1 ];
 HoraIni.ExistenciasDependentes= [ HoraFim ];
 Gran6.ExistenciasDependentes= [ Gran6Fim ];
 Real6.ExistenciasDependentes= [ Real6Fim ];
+Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
 Cliente_Nome.ErrosDependentes= [ Cliente ];
 EmailRemet_Email.ErrosDependentes= [ EmailRemet ];
@@ -692,10 +802,12 @@ DataIni.ErrosDependentes= [ DataFim,HoraIni ];
 DataIni1.ErrosDependentes= [ DataFim1 ];
 HoraIni.ErrosDependentes= [ HoraFim ];
 Senha1.ErrosDependentes= [ Senha2 ];
+Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Usuario.CamposChave= [ Usuario_Usuario ];
 Cliente.CamposChave= [ Cliente_Nome ];
 EmailRemet.CamposChave= [ EmailRemet_Email ];
 AcaoEmail.CamposChave= [ AcaoEmail_Titulo,AcaoEmail_Versao ];
+Clinica.CamposChave= [ Clinica_Clinica ];
 }
 
 
@@ -713,7 +825,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2 ]	);
+		[ Usuario, Usuario_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

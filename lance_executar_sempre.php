@@ -7,7 +7,7 @@ sql_abrirBD( false );
 //=============================================================================================
 //* verificar que clínicas o usuario pode manipular
 $select = "Select C.idPrimario as idClinica, C.Clinica
-	From arqUsuCen U
+	From arqUsuCli U
 		join arqClinica C on C.idPrimario=U.Clinica
 	Where U.Usuario = " . USUARIO_ATUAL;
 // if( $g_debugProcesso ) echo '<br><b>GR0 lance_executar_sempre arqUsuCen S=</b> '.$select;

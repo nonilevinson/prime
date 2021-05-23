@@ -131,6 +131,19 @@ class campo_arqPessoa_Nascimento extends Lance_CampoData
 }
 
 //======================================================
+//	Campo Idade
+//======================================================
+
+class campo_arqPessoa_Idade extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Idade", "Idade", "Idade", 3, "##z", "", "", EH_CALCULADO, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Sexo
 //======================================================
 
@@ -152,6 +165,39 @@ class campo_arqPessoa_EstCivil extends Lance_CampoLigado
 	function __construct()
 	{
 		parent::__construct( "EstCivil", "EstCivil", "EstCivil", 0, "tabEstCivil", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Profissao
+//======================================================
+
+class campo_arqPessoa_Profissao extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Profissao", "Profissao", "Profissao", 0, "arqProfissao", "arqProfissao.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Profissao_Profissao
+//======================================================
+
+class campo_arqPessoa_Profissao_Profissao extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Profissao_Profissao", "Profissao_Profissao", "Profissao", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Profissao", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Profissão" );
 	}
 
 }
@@ -334,12 +380,15 @@ function listaCampos_arqPessoa( $p_prefixo )
 			new campo_arqPessoa_InscEstad(),
 			new campo_arqPessoa_InscMunic(),
 			new campo_arqPessoa_Nascimento(),
+			new campo_arqPessoa_Idade(),
 			new campo_arqPessoa_Sexo(),
 			new Lance_CampoCadeia( "Sexo_Chave", "Sexo_Chave", "Chave", 1, "x", EH_CHAVE, Sexo ),
 			new Lance_CampoCadeia( "Sexo_Descritor", "Sexo_Descritor", "Descritor", 9, "xxxxxxxxx", EH_DESCRITOR, Sexo ),
 			new campo_arqPessoa_EstCivil(),
 			new Lance_CampoCadeia( "EstCivil_Chave", "EstCivil_Chave", "Chave", 1, "x", EH_CHAVE, EstCivil ),
 			new Lance_CampoCadeia( "EstCivil_Descritor", "EstCivil_Descritor", "Descritor", 13, "xxxxxxxxxxxxx", EH_DESCRITOR, EstCivil ),
+			new campo_arqPessoa_Profissao(),
+			new campo_arqPessoa_Profissao_Profissao(),
 			new campo_arqPessoa_CPF(),
 			new campo_arqPessoa_Identidade(),
 			new campo_arqPessoa_Orgao(),
@@ -424,8 +473,10 @@ class arqPessoa extends Lance_Arquivo
 			array_push( $vetAux, array( InscEstad ) );
 			array_push( $vetAux, array( InscMunic ) );
 			array_push( $vetAux, array( Nascimento ) );
+			array_push( $vetAux, array( Idade ) );
 			array_push( $vetAux, array( Sexo_Descritor ) );
 			array_push( $vetAux, array( EstCivil_Descritor ) );
+			array_push( $vetAux, array( Profissao_Profissao ) );
 			array_push( $vetAux, array( CPF ) );
 			array_push( $vetAux, array( Identidade ) );
 			array_push( $vetAux, array( Orgao ) );

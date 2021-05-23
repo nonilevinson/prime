@@ -139,6 +139,17 @@ function Campo_arqPessoa_Nascimento()
 var Nascimento = new Campo_arqPessoa_Nascimento;
 
 //------------------------------------------------------------
+Campo_arqPessoa_Idade.prototype = new Lance_CampoNumerico;
+
+function Campo_arqPessoa_Idade()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Idade", "Idade", "Idade", 3, "##z", true,"", "");
+}
+
+var Idade = new Campo_arqPessoa_Idade;
+
+//------------------------------------------------------------
 Campo_arqPessoa_Sexo.prototype = new Lance_CampoLigado;
 
 function Campo_arqPessoa_Sexo()
@@ -203,6 +214,28 @@ function Campo_arqPessoa_EstCivil_Descritor()
 }
 
 var EstCivil_Descritor = new Campo_arqPessoa_EstCivil_Descritor;
+
+//------------------------------------------------------------
+Campo_arqPessoa_Profissao.prototype = new Lance_CampoHidden;
+
+function Campo_arqPessoa_Profissao()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Profissao", "Profissao", "Profissao", "arqProfissao", "a_profis", null, "",36);
+}
+
+var Profissao = new Campo_arqPessoa_Profissao;
+
+//------------------------------------------------------------
+Campo_arqPessoa_Profissao_Profissao.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqPessoa_Profissao_Profissao()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Profissao_Profissao", "Profissao_Profissao", "Profissao", Profissao, 40, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var Profissao_Profissao = new Campo_arqPessoa_Profissao_Profissao;
 
 //------------------------------------------------------------
 Campo_arqPessoa_CPF.prototype = new Lance_CampoCadeia;
@@ -424,6 +457,19 @@ Campo_arqPessoa_Nascimento.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Idade.prototype.Calculou = function()
+{
+{
+		if( tem( Nascimento ) )
+	return( this.Atribuiu( idade( Nascimento ) ) );
+}
+		return( true );
+}
+
+Idade.EhCalculado = true;
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqPessoa_Sexo.prototype.Existencia = function()
@@ -443,6 +489,31 @@ Campo_arqPessoa_EstCivil.prototype.Existencia = function()
 
 EstCivil_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 EstCivil_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Profissao.prototype.Existencia = function()
+{
+	return( TPFPJ == 1 );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Profissao_Profissao.prototype.Existencia = function()
+{
+	return( TPFPJ == 1 );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Profissao_Profissao.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Profissao.Obrigatorio( p_comMsg ) );
+}
+
+Profissao_Profissao.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição de erro do campo
 //-------------------------------------------------------------
@@ -587,11 +658,23 @@ Campo_arqPessoa_QtoDesmar.prototype.Cabecalho = function()
 		return( "Qtas<br>Desmarcações" );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Profissao.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Profissao_Profissao.Obrigatorio( false ) || tem(Profissao_Profissao) ) );
+}
+
 function IniciarDependencias_arqPessoa()
 {
-TPFPJ.ExistenciasDependentes= [ CNPJ,InscEstad,InscMunic,Nascimento,Sexo,EstCivil,CPF,Identidade ];
+Nascimento.CalculosDependentes= [ Idade ];
+TPFPJ.ExistenciasDependentes= [ CNPJ,InscEstad,InscMunic,Nascimento,Sexo,EstCivil,Profissao,Profissao_Profissao,CPF,Identidade ];
+Profissao_Profissao.ExistenciasDependentes= [ Profissao ];
 Identidade.ExistenciasDependentes= [ Orgao,Emissao ];
 Email.ExistenciasDependentes= [ RecEmail ];
+Profissao_Profissao.ErrosDependentes= [ Profissao ];
+Profissao.CamposChave= [ Profissao_Profissao ];
 }
 
 
@@ -611,7 +694,7 @@ function ListaDeCampos_arqPessoa( p_prefixo )
 
 		[ Nome, Apelido, TPessoa, TPessoa_Chave, TPessoa_Descritor, TPFPJ, TPFPJ_Chave, TPFPJ_Descritor ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ CNPJ, InscEstad, InscMunic, Nascimento, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar ]	);
+		[ CNPJ, InscEstad, InscMunic, Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar ]	);
 	IniciarDependencias_arqPessoa();
 	g_prefixo = l_prefixo;
 	return( l_lista );
@@ -621,10 +704,11 @@ g_arquivoCampos = ListaDeCampos_arqPessoa( '' );
 g_idOperacao = 7;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 8,[],[12,13] );
+var Menu_1 = new Array( 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 9,[],[12,13] );
 var Menu_1_1 = new Array( 1,"Programado","","P",26,"","",1,"","1","a_logema","arqLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[12]);
 var Menu_1_2 = new Array( 1,"Recebeu","","R",25,"","",1,"","1","a_itloge","arqItLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[13]);
-var Menu_2 = new Array( 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,8,[],[21]);
-var Menu_3 = new Array( 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,8,[],[33]);
-parent.navegacao.MenuPrincQtdOpcoes=3;
+var Menu_2 = new Array( 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,9,[],[21]);
+var Menu_3 = new Array( 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,9,[],[33]);
+var Menu_4 = new Array( 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,9,[],[39]);
+parent.navegacao.MenuPrincQtdOpcoes=4;
 }

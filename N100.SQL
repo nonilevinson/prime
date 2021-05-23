@@ -1468,7 +1468,7 @@ commit;
 CREATE TABLE tabTStCon
 (
 	IDPRIMARIO chavePrimariaTab,
-	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	CHAVE VARCHAR( 2 ) COLLATE PT_BR,
 	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
 	CONSTRAINT tabTStCon_PK PRIMARY KEY( IDPRIMARIO ),
 	CONSTRAINT tabTStCon_UK UNIQUE( CHAVE )
@@ -1477,11 +1477,39 @@ commit;
 
 INSERT INTO tabTStCon VALUES ( 1, '1', 'Agendado' );
 INSERT INTO tabTStCon VALUES ( 2, '2', 'Chegou' );
-INSERT INTO tabTStCon VALUES ( 3, '3', 'Em consulta' );
-INSERT INTO tabTStCon VALUES ( 4, '4', 'Com vendedor' );
-INSERT INTO tabTStCon VALUES ( 5, '5', 'Clínica desmarcou' );
-INSERT INTO tabTStCon VALUES ( 6, '6', 'Paciente desmarcou' );
-INSERT INTO tabTStCon VALUES ( 7, '7', 'Médico desmarcou' );
+INSERT INTO tabTStCon VALUES ( 3, '3', 'Preencheno prontuário' );
+INSERT INTO tabTStCon VALUES ( 4, '4', 'Médico' );
+INSERT INTO tabTStCon VALUES ( 5, '5', 'Teste' );
+INSERT INTO tabTStCon VALUES ( 6, '6', 'Com assessor' );
+INSERT INTO tabTStCon VALUES ( 7, '7', 'Atendido' );
+INSERT INTO tabTStCon VALUES ( 8, '8', 'Liberado' );
+INSERT INTO tabTStCon VALUES ( 9, '9', 'Clínica desmarcou' );
+INSERT INTO tabTStCon VALUES ( 10, '10', 'Paciente desmarcou' );
+INSERT INTO tabTStCon VALUES ( 11, '11', 'Médico desmarcou' );
+commit;
+
+
+/************************************************************
+	TABELA tabTDiaSem
+************************************************************/
+
+CREATE TABLE tabTDiaSem
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTDiaSem_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTDiaSem_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTDiaSem VALUES ( 1, 'D', 'Domingo' );
+INSERT INTO tabTDiaSem VALUES ( 2, '2', '2ª feira' );
+INSERT INTO tabTDiaSem VALUES ( 3, '3', '3ª feira' );
+INSERT INTO tabTDiaSem VALUES ( 4, '4', '4ª feira' );
+INSERT INTO tabTDiaSem VALUES ( 5, '5', '5ª feira' );
+INSERT INTO tabTDiaSem VALUES ( 6, '6', '6ª feira' );
+INSERT INTO tabTDiaSem VALUES ( 7, 'S', 'Sábado' );
 commit;
 
 
@@ -1557,47 +1585,19 @@ commit;
 
 
 /************************************************************
-	Arquivo Pessoa    
+	Arquivo Profissao 
 ************************************************************/
 
-CREATE TABLE arqPessoa
+CREATE TABLE arqProfissao
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	APELIDO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
-	/*  4*/	TPESSOA ligadoComTabela, /* Ligado com a Tabela TPessoa */
-	/*  5*/	TPFPJ ligadoComTabela, /* Ligado com a Tabela TPFPJ */
-	/*  6*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
-	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
-	/*  8*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
-	/*  9*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
-	/* 10*/	/* ENDE_DDD */
-	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
-	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
-	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
-	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 15*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
-	/* 16*/	INSCESTAD VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
-	/* 17*/	INSCMUNIC VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
-	/* 18*/	NASCIMENTO DATE, /* Máscara = 4ano */
-	/* 19*/	SEXO ligadoComTabela, /* Ligado com a Tabela Sexo */
-	/* 20*/	ESTCIVIL ligadoComTabela, /* Ligado com a Tabela EstCivil */
-	/* 21*/	CPF VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = nnn.nnn.nnn-nn */
-	/* 22*/	IDENTIDADE VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = X */
-	/* 23*/	ORGAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = X */
-	/* 24*/	EMISSAO DATE, /* Máscara = 4ano */
-	/* 25*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/* 26*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 27*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 28*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 29*/	DESDE DATE, /* Máscara = 4ano */
-	/* 30*/	QTODESMAR SMALLINT, /* Máscara = N */
-	CONSTRAINT arqPessoa_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqPessoa_UK UNIQUE ( Nome )
+	/*  2*/	PROFISSAO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = I */
+	CONSTRAINT arqProfissao_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqProfissao_UK UNIQUE ( Profissao )
 );
 commit;
 
-CREATE DESC INDEX arqPessoa_IdPrimario_Desc ON arqPessoa (IDPRIMARIO);
+CREATE DESC INDEX arqProfissao_IdPrimario_Desc ON arqProfissao (IDPRIMARIO);
 commit;
 
 
@@ -1729,22 +1729,49 @@ commit;
 
 
 /************************************************************
-	Arquivo EmailRemet
+	Arquivo Pessoa    
 ************************************************************/
 
-CREATE TABLE arqEmailRemet
+CREATE TABLE arqPessoa
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/*  3*/	NOMEEMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
-	/*  4*/	PADRAO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqEmailRemet_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqEmailRemet_UK UNIQUE ( Email )
+	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	APELIDO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  4*/	TPESSOA ligadoComTabela, /* Ligado com a Tabela TPessoa */
+	/*  5*/	TPFPJ ligadoComTabela, /* Ligado com a Tabela TPFPJ */
+	/*  6*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
+	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  8*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
+	/*  9*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
+	/* 10*/	/* ENDE_DDD */
+	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
+	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
+	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 15*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
+	/* 16*/	INSCESTAD VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
+	/* 17*/	INSCMUNIC VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
+	/* 18*/	NASCIMENTO DATE, /* Máscara = 4ano */
+	/* 19*/	/* IDADE */
+	/* 20*/	SEXO ligadoComTabela, /* Ligado com a Tabela Sexo */
+	/* 21*/	ESTCIVIL ligadoComTabela, /* Ligado com a Tabela EstCivil */
+	/* 22*/	PROFISSAO ligadoComArquivo, /* Ligado com o Arquivo Profissao */
+	/* 23*/	CPF VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = nnn.nnn.nnn-nn */
+	/* 24*/	IDENTIDADE VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = X */
+	/* 25*/	ORGAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = X */
+	/* 26*/	EMISSAO DATE, /* Máscara = 4ano */
+	/* 27*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
+	/* 28*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 29*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 30*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 31*/	DESDE DATE, /* Máscara = 4ano */
+	/* 32*/	QTODESMAR SMALLINT, /* Máscara = N */
+	CONSTRAINT arqPessoa_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqPessoa_UK UNIQUE ( Nome )
 );
 commit;
 
-CREATE DESC INDEX arqEmailRemet_IdPrimario_Desc ON arqEmailRemet (IDPRIMARIO);
+CREATE DESC INDEX arqPessoa_IdPrimario_Desc ON arqPessoa (IDPRIMARIO);
 commit;
 
 
@@ -1947,24 +1974,22 @@ commit;
 
 
 /************************************************************
-	Arquivo ItLogEmail
+	Arquivo EmailRemet
 ************************************************************/
 
-CREATE TABLE arqItLogEmail
+CREATE TABLE arqEmailRemet
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	LOGEMAIL ligadoComArquivo, /* Ligado com o Arquivo LogEmail */
-	/*  3*/	CLIENTE ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  4*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/*  5*/	ENVIADO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	LIDO DATE, /* Máscara = 4ano */
-	/*  7*/	LINKEMP DATE, /* Máscara = 4ano */
-	/*  8*/	LINKKM DATE, /* Máscara = 4ano */
-	CONSTRAINT arqItLogEmail_PK PRIMARY KEY ( IDPRIMARIO )
+	/*  2*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
+	/*  3*/	NOMEEMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
+	/*  4*/	PADRAO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqEmailRemet_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqEmailRemet_UK UNIQUE ( Email )
 );
 commit;
 
-CREATE DESC INDEX arqItLogEmail_IdPrimario_Desc ON arqItLogEmail (IDPRIMARIO);
+CREATE DESC INDEX arqEmailRemet_IdPrimario_Desc ON arqEmailRemet (IDPRIMARIO);
 commit;
 
 
@@ -2211,6 +2236,113 @@ commit;
 
 
 /************************************************************
+	Arquivo UsuCli    
+************************************************************/
+
+CREATE TABLE arqUsuCli
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	CONSTRAINT arqUsuCli_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqUsuCli_UK UNIQUE ( Usuario, Clinica )
+);
+commit;
+
+CREATE DESC INDEX arqUsuCli_IdPrimario_Desc ON arqUsuCli (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo ItLogEmail
+************************************************************/
+
+CREATE TABLE arqItLogEmail
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	LOGEMAIL ligadoComArquivo, /* Ligado com o Arquivo LogEmail */
+	/*  3*/	CLIENTE ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  4*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
+	/*  5*/	ENVIADO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	LIDO DATE, /* Máscara = 4ano */
+	/*  7*/	LINKEMP DATE, /* Máscara = 4ano */
+	/*  8*/	LINKKM DATE, /* Máscara = 4ano */
+	CONSTRAINT arqItLogEmail_PK PRIMARY KEY ( IDPRIMARIO )
+);
+commit;
+
+CREATE DESC INDEX arqItLogEmail_IdPrimario_Desc ON arqItLogEmail (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo Horario   
+************************************************************/
+
+CREATE TABLE arqHorario
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  4*/	TDIASEM ligadoComTabela, /* Ligado com a Tabela TDiaSem */
+	/*  5*/	HORAINI TIME, /* Máscara = Hhmm */
+	/*  6*/	HORAFIM TIME, /* Máscara = Hhmm */
+	/*  7*/	DIAINI DATE, /* Máscara = 4ano */
+	/*  8*/	DIAFIM DATE, /* Máscara = 4ano */
+	CONSTRAINT arqHorario_PK PRIMARY KEY ( IDPRIMARIO )
+);
+commit;
+
+CREATE DESC INDEX arqHorario_IdPrimario_Desc ON arqHorario (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo Duracao   
+************************************************************/
+
+CREATE TABLE arqDuracao
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  3*/	INICIO DATE, /* Máscara = 4ano */
+	/*  4*/	DURACAO SMALLINT, /* Máscara = N */
+	/*  5*/	MAXAGENDA INTEGER, /* Máscara = N */
+	CONSTRAINT arqDuracao_PK PRIMARY KEY ( IDPRIMARIO )
+);
+commit;
+
+CREATE DESC INDEX arqDuracao_IdPrimario_Desc ON arqDuracao (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo Consulta  
+************************************************************/
+
+CREATE TABLE arqConsulta
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	PROTOCOLO NUMERIC(18,0), /* Máscara = N */
+	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  4*/	DATA DATE, /* Máscara = 4ano */
+	/*  5*/	HORA TIME, /* Máscara = Hhmm */
+	/*  6*/	HORACHEGA TIME, /* Máscara = Hhmm */
+	/*  7*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  8*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  9*/	ASSESOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 10*/	MKT ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 11*/	RECEPCAO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqConsulta_UK UNIQUE ( Protocolo )
+);
+commit;
+
+CREATE DESC INDEX arqConsulta_IdPrimario_Desc ON arqConsulta (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -2220,6 +2352,18 @@ ALTER TABLE cnfXConfig ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT 
 ALTER TABLE cnfXConfig ALTER ENDE_DDD POSITION 12;
 ALTER TABLE arqClinica ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( arqClinica.Ende_Cidade )  ), 0 ) ) ); 
 ALTER TABLE arqClinica ALTER ENDE_DDD POSITION 10;
+ALTER TABLE arqPessoa ADD IDADE INTEGER computed by ( CASE
+	WHEN( Nascimento is not null ) THEN( ( cast(
+   datediff( year, (Select P.Nascimento From arqPessoa P), current_date ) -
+   iif(
+      current_date <
+      extract( day from (Select P.Nascimento From arqPessoa P) ) ||
+      extract( month from (Select P.Nascimento From arqPessoa P) ) ||
+      extract( year from (Select P.Nascimento From arqPessoa P) ), 1, 0 ) as smallint )
+)
+ )
+	END  ); 
+ALTER TABLE arqPessoa ALTER IDADE POSITION 19;
 ALTER TABLE arqLogEmail ADD TOTAL INTEGER computed by ( Enviados + NEnviados ); 
 ALTER TABLE arqLogEmail ALTER TOTAL POSITION 8;
 ALTER TABLE arqLogEmail ADD PERCLIDOS NUMERIC( 5, 2 ) computed by ( CASE
@@ -2271,7 +2415,7 @@ RECREATE VIEW V_arqUsuario AS
 commit;
 
 RECREATE VIEW V_arqPessoa AS 
-	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.TPESSOA, A1.CHAVE as TPessoa_CHAVE, A1.DESCRITOR as TPessoa_DESCRITOR, A0.TPFPJ, A2.CHAVE as TPFPJ_CHAVE, A2.DESCRITOR as TPFPJ_DESCRITOR, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A3.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A4.UF as ENDE_CIDADE_UF, A5.CHAVE as ENDE_CIDADE_UF_CHAVE, A5.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A4.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.INSCESTAD, A0.INSCMUNIC, A0.NASCIMENTO, A0.SEXO, A6.CHAVE as Sexo_CHAVE, A6.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A7.CHAVE as EstCivil_CHAVE, A7.DESCRITOR as EstCivil_DESCRITOR, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR
+	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.TPESSOA, A1.CHAVE as TPessoa_CHAVE, A1.DESCRITOR as TPessoa_DESCRITOR, A0.TPFPJ, A2.CHAVE as TPFPJ_CHAVE, A2.DESCRITOR as TPFPJ_DESCRITOR, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A3.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A4.UF as ENDE_CIDADE_UF, A5.CHAVE as ENDE_CIDADE_UF_CHAVE, A5.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A4.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.INSCESTAD, A0.INSCMUNIC, A0.NASCIMENTO, A0.IDADE, A0.SEXO, A6.CHAVE as Sexo_CHAVE, A6.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A7.CHAVE as EstCivil_CHAVE, A7.DESCRITOR as EstCivil_DESCRITOR, A0.PROFISSAO, A8.PROFISSAO as PROFISSAO_PROFISSAO, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR
 	FROM arqPessoa A0
 	left join tabTPessoa A1 on A1.IDPRIMARIO=A0.TPESSOA
 	left join tabTPFPJ A2 on A2.IDPRIMARIO=A0.TPFPJ
@@ -2279,7 +2423,8 @@ RECREATE VIEW V_arqPessoa AS
 	left join arqCidade A4 on A4.IDPRIMARIO = A0.ENDE_CIDADE
 	left join tabUF A5 on A5.IDPRIMARIO=A4.UF
 	left join tabSexo A6 on A6.IDPRIMARIO=A0.SEXO
-	left join tabEstCivil A7 on A7.IDPRIMARIO=A0.ESTCIVIL;
+	left join tabEstCivil A7 on A7.IDPRIMARIO=A0.ESTCIVIL
+	left join arqProfissao A8 on A8.IDPRIMARIO = A0.PROFISSAO;
 commit;
 
 RECREATE VIEW V_arqTemplate AS 
@@ -2450,6 +2595,43 @@ RECREATE VIEW V_arqParcela AS
 	left join tabTDetPg A8 on A8.IDPRIMARIO=A0.TDETPG;
 commit;
 
+RECREATE VIEW V_arqUsuCli AS 
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A1.USUARIO as USUARIO_USUARIO, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA
+	FROM arqUsuCli A0
+	left join arqUsuario A1 on A1.IDPRIMARIO = A0.USUARIO
+	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA;
+commit;
+
+RECREATE VIEW V_arqProfissao AS 
+	SELECT A0.IDPRIMARIO, A0.PROFISSAO
+	FROM arqProfissao A0;
+commit;
+
+RECREATE VIEW V_arqHorario AS 
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A1.USUARIO as USUARIO_USUARIO, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.TDIASEM, A3.CHAVE as TDiaSem_CHAVE, A3.DESCRITOR as TDiaSem_DESCRITOR, A0.HORAINI, A0.HORAFIM, A0.DIAINI, A0.DIAFIM
+	FROM arqHorario A0
+	left join arqUsuario A1 on A1.IDPRIMARIO = A0.USUARIO
+	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA
+	left join tabTDiaSem A3 on A3.IDPRIMARIO=A0.TDIASEM;
+commit;
+
+RECREATE VIEW V_arqDuracao AS 
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A1.USUARIO as USUARIO_USUARIO, A0.INICIO, A0.DURACAO, A0.MAXAGENDA
+	FROM arqDuracao A0
+	left join arqUsuario A1 on A1.IDPRIMARIO = A0.USUARIO;
+commit;
+
+RECREATE VIEW V_arqConsulta AS 
+	SELECT A0.IDPRIMARIO, A0.PROTOCOLO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.MEDICO, A2.USUARIO as MEDICO_USUARIO, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.ASSESOR, A4.USUARIO as ASSESOR_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.RECEPCAO, A6.USUARIO as RECEPCAO_USUARIO
+	FROM arqConsulta A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join arqUsuario A2 on A2.IDPRIMARIO = A0.MEDICO
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
+	left join arqUsuario A4 on A4.IDPRIMARIO = A0.ASSESOR
+	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MKT
+	left join arqUsuario A6 on A6.IDPRIMARIO = A0.RECEPCAO;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -2520,6 +2702,11 @@ insert into arqLanceOperacao values(100031,1,'Cadastro das clínicas','arqClinica
 insert into arqLanceOperacao values(100032,1,'Cadastro de planos de tratamento','arqPTrata',32,1,0,'');
 insert into arqLanceOperacao values(100033,1,'cadastro de contas a pagar e a receber','arqConta',33,10,0,'');
 insert into arqLanceOperacao values(100034,1,'Cadastro de parcelas de contas a pagar e a reecber','arqParcela',34,10,0,'');
+insert into arqLanceOperacao values(100035,1,'Cadastro da relação entre usuários e clínicas','arqUsuCli',35,90,0,'');
+insert into arqLanceOperacao values(100036,1,'Cadastro de profissões','arqProfissao',36,1,0,'');
+insert into arqLanceOperacao values(100037,1,'Cadastro de horários de médicos','arqHorario',37,1,0,'');
+insert into arqLanceOperacao values(100038,1,'Cadastro de duração de uma consulta do médico','arqDuracao',38,1,0,'');
+insert into arqLanceOperacao values(100039,1,'Cadastro de consultas','arqConsulta',39,1,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
 insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de grupos de acesso','',11,90,0,'');
@@ -2540,11 +2727,12 @@ insert into arqLanceOperacao values(200054,2,'Rotina de envio de email para clie
 insert into arqLanceOperacao values(200048,2,'Rotina de envio de email Funcionário Niver Dia','',48,99,1,'');
 insert into arqLanceOperacao values(200049,2,'Rotina de envio de email Avisa Niver Dia','',49,99,1,'');
 insert into arqLanceOperacao values(200028,2,'Relatório de log de acessos ao sistema','',28,90,0,'');
+insert into arqLanceOperacao values(200107,2,'Rotina para alterar as senhas dos usuários','',107,null,0,'');
 insert into arqLanceOperacao values(200083,2,'Rotina para reindexar os índices','',83,99,1,'');
 insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm()');
-insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos usuários','',68,90,0,'');
 insert into arqLanceOperacao values(200073,2,'Relatório analítico de interações no sistema','',73,90,0,'');
 insert into arqLanceOperacao values(200074,2,'Relatório resumido de interações no sistema','',74,90,0,'');
+insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos usuários','',68,90,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -2566,6 +2754,7 @@ ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_TPessoa FOREIGN KEY ( TPESSOA 
 ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_TPFPJ FOREIGN KEY ( TPFPJ ) REFERENCES tabTPFPJ ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_Sexo FOREIGN KEY ( SEXO ) REFERENCES tabSexo ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_EstCivil FOREIGN KEY ( ESTCIVIL ) REFERENCES tabEstCivil ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_Profissao FOREIGN KEY ( PROFISSAO ) REFERENCES arqProfissao ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqAcaoEmail ADD CONSTRAINT arqAcaoEmail_FK_TipoAcao FOREIGN KEY ( TIPOACAO ) REFERENCES tabTipoAcao ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqAcaoEmail ADD CONSTRAINT arqAcaoEmail_FK_Template FOREIGN KEY ( TEMPLATE ) REFERENCES arqTemplate ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqAcaoEmail ADD CONSTRAINT arqAcaoEmail_FK_PadraoAcao FOREIGN KEY ( PADRAOACAO ) REFERENCES tabPadraoAcao ON DELETE SET NULL ON UPDATE CASCADE;
@@ -2607,6 +2796,18 @@ ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_CCor FOREIGN KEY ( CCOR ) RE
 ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_SubPlano FOREIGN KEY ( SUBPLANO ) REFERENCES arqSubPlano ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_TFPagto FOREIGN KEY ( TFPAGTO ) REFERENCES tabTFPagto ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_TDetPg FOREIGN KEY ( TDETPG ) REFERENCES tabTDetPg ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqUsuCli ADD CONSTRAINT arqUsuCli_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqUsuCli ADD CONSTRAINT arqUsuCli_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqHorario ADD CONSTRAINT arqHorario_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqHorario ADD CONSTRAINT arqHorario_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqHorario ADD CONSTRAINT arqHorario_FK_TDiaSem FOREIGN KEY ( TDIASEM ) REFERENCES tabTDiaSem ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqDuracao ADD CONSTRAINT arqDuracao_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assesor FOREIGN KEY ( ASSESOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Mkt FOREIGN KEY ( MKT ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Recepcao FOREIGN KEY ( RECEPCAO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 
@@ -2793,6 +2994,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Nascimento', OLD.Nascimento, NEW.Nascimento );
 	execute procedure set_log( 12, NEW.idPrimario, 'Sexo', OLD.Sexo, NEW.Sexo );
 	execute procedure set_log( 12, NEW.idPrimario, 'EstCivil', OLD.EstCivil, NEW.EstCivil );
+	execute procedure set_log( 12, NEW.idPrimario, 'Profissao', OLD.Profissao, NEW.Profissao );
 	execute procedure set_log( 12, NEW.idPrimario, 'CPF', OLD.CPF, NEW.CPF );
 	execute procedure set_log( 12, NEW.idPrimario, 'Identidade', OLD.Identidade, NEW.Identidade );
 	execute procedure set_log( 12, NEW.idPrimario, 'Orgao', OLD.Orgao, NEW.Orgao );
@@ -3591,6 +3793,176 @@ else begin
 		( NEW.Remessa is distinct from OLD.Remessa )  OR 
 		( NEW.DataRem is distinct from OLD.DataRem )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqUsuCli
+************************************************************/
+
+set term ^;
+
+recreate trigger arqUsuCli_LOG for arqUsuCli
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Usuario_Usuario, ' ' ) || '-' || coalesce( Clinica_Clinica, ' ' ) from v_arqUsuCli where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100035 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqProfissao
+************************************************************/
+
+set term ^;
+
+recreate trigger arqProfissao_LOG for arqProfissao
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Profissao,'' );
+else
+	valorChave = coalesce( NEW.Profissao,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100036 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Profissao', OLD.Profissao, NEW.Profissao );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqHorario
+************************************************************/
+
+set term ^;
+
+recreate trigger arqHorario_LOG for arqHorario
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+	valorChave='';
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100037 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TDiaSem', OLD.TDiaSem, NEW.TDiaSem );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraIni', OLD.HoraIni, NEW.HoraIni );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraFim', OLD.HoraFim, NEW.HoraFim );
+	execute procedure set_log( 12, NEW.idPrimario, 'DiaIni', OLD.DiaIni, NEW.DiaIni );
+	execute procedure set_log( 12, NEW.idPrimario, 'DiaFim', OLD.DiaFim, NEW.DiaFim );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqDuracao
+************************************************************/
+
+set term ^;
+
+recreate trigger arqDuracao_LOG for arqDuracao
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+	valorChave='';
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100038 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
+	execute procedure set_log( 12, NEW.idPrimario, 'Inicio', OLD.Inicio, NEW.Inicio );
+	execute procedure set_log( 12, NEW.idPrimario, 'Duracao', OLD.Duracao, NEW.Duracao );
+	execute procedure set_log( 12, NEW.idPrimario, 'MaxAgenda', OLD.MaxAgenda, NEW.MaxAgenda );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqConsulta
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConsulta_LOG for arqConsulta
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Protocolo,'' );
+else
+	valorChave = coalesce( NEW.Protocolo,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100039 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Protocolo', OLD.Protocolo, NEW.Protocolo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraChega', OLD.HoraChega, NEW.HoraChega );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assesor', OLD.Assesor, NEW.Assesor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Mkt', OLD.Mkt, NEW.Mkt );
+	execute procedure set_log( 12, NEW.idPrimario, 'Recepcao', OLD.Recepcao, NEW.Recepcao );
 end
 end^
 

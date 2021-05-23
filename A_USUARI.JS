@@ -401,11 +401,19 @@ g_arquivoCampos = ListaDeCampos_arqUsuario( '' );
 g_idOperacao = 5;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Avisos","","A",67,"","",cnfConfig["AVISO"] == 1,"","6", "", "", "", "", "", "", "", "", "", 3, 13,[],[14,16,15] );
-var Menu_1_1 = new Array( 1,"Avisos criados","","A",29,"","",1,"","1","a_avisos","arqAvisos","Folhear","Quem","?","","", "","", 0,14,[],[14]);
-var Menu_1_2 = new Array( 1,"Avisos lidos","","v",33,"","",1,"","1","a_lido","arqLido","Folhear","Usuario","?","","", "","", 0,14,[],[16]);
-var Menu_1_3 = new Array( 1,"Para grupo","","P",35,"","",1,"","1","a_paragr","arqParaGrupo","Folhear","Usuario","?","","", "","", 0,14,[],[15]);
-var Menu_2 = new Array( 1,"Emails enviou","","E",23,"","",cnfConfig["EMAIL"] == 1,"","1","a_logema","arqLogEmail","Folhear","Usuario","?","","", "","", 0,13,[],[12]);
-var Menu_3 = new Array( 1,"Alterar senha","","h",68,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_usuario_senha^^^^^^^^^^^^^^^^^^", "", 0,13,[68],[]);
-parent.navegacao.MenuPrincQtdOpcoes=3;
+var Menu_1 = new Array( 1,"Consultas","","u",122,"","",1,"","6", "", "", "", "", "", "", "", "", "", 4, 18,[],[39,39,39,39] );
+var Menu_1_1 = new Array( 1,"Assessor","","s",118,"","",1,"","1","a_consul","arqConsulta","Folhear","Assesor","?","","", "","", 0,9,[],[39]);
+var Menu_1_2 = new Array( 1,"Marketing","","k",119,"","",1,"","1","a_consul","arqConsulta","Folhear","Mkt","?","","", "","", 0,9,[],[39]);
+var Menu_1_3 = new Array( 1,"Recepção","","p",120,"","",1,"","1","a_consul","arqConsulta","Folhear","Recepcao","?","","", "","", 0,9,[],[39]);
+var Menu_1_4 = new Array( 1,"Médico","","M",121,"","",1,"","1","a_consul","arqConsulta","Folhear","Medico","?","","", "","", 0,9,[],[39]);
+var Menu_2 = new Array( 1,"Horários","","o",123,"","",1,"Medico == 1","1","a_horari","arqHorario","Folhear","Usuario","?","","", "","", 0,18,[],[37]);
+var Menu_3 = new Array( 1,"Duração","","D",124,"","",1,"Medico == 1","1","a_duraca","arqDuracao","Folhear","Usuario","?","","", "","", 0,18,[],[38]);
+var Menu_4 = new Array( 1,"Clínicas Permissão","","l",105,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Usuario","?","","", "","", 0,18,[],[35]);
+var Menu_5 = new Array( 1,"Avisos","","A",67,"","",cnfConfig["AVISO"] == 1,"","6", "", "", "", "", "", "", "", "", "", 3, 18,[],[14,16,15] );
+var Menu_5_1 = new Array( 1,"Avisos criados","","A",29,"","",1,"","1","a_avisos","arqAvisos","Folhear","Quem","?","","", "","", 0,14,[],[14]);
+var Menu_5_2 = new Array( 1,"Avisos lidos","","v",33,"","",1,"","1","a_lido","arqLido","Folhear","Usuario","?","","", "","", 0,14,[],[16]);
+var Menu_5_3 = new Array( 1,"Para grupo","","P",35,"","",1,"","1","a_paragr","arqParaGrupo","Folhear","Usuario","?","","", "","", 0,14,[],[15]);
+var Menu_6 = new Array( 1,"Emails enviou","","E",23,"","",cnfConfig["EMAIL"] == 1,"","1","a_logema","arqLogEmail","Folhear","Usuario","?","","", "","", 0,18,[],[12]);
+var Menu_7 = new Array( 1,"Alterar senha","","h",68,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_usuario_senha^^^^^^^^^^^^^^^^^^", "", 0,18,[68],[]);
+parent.navegacao.MenuPrincQtdOpcoes=7;
 }

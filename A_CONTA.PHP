@@ -512,5 +512,13 @@ class arqConta extends Lance_Arquivo
 	return( "" . ext_filtrarSelecao() . "" );
 	}
 
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilTodas  
+	//-------------------------------------------------------------
+	function FilTodas()
+	{
+	return( "" . ext_filtrarTodas() . "" );
+	}
+
 }
 ?>

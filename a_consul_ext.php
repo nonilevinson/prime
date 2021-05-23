@@ -7,8 +7,7 @@ function ext_filtrarSelecao()
 
    return( substr(
       ( SQL_VETIDCLINICA ? "A.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
-      ( $parQSelecao->CADEIA30 != '' ? filtrarPorUpper( "A.Historico", $parQSelecao->CADEIA30 ) : '' ) .
-      filtrarPorLig( "A.TPgRec", $parQSelecao->TPGREC ) .
+      filtrarPorLig( "A.TStCon", $parQSelecao->TSTCON ) .
       filtrarPorLig( "A.Clinica", $parQSelecao->CLINICA ) .
       filtrarPorLig( "A.Pessoa", $parQSelecao->PESSOA ), 0, -4 )
    );

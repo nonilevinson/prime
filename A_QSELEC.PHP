@@ -371,6 +371,65 @@ class campo_parQSelecao_Senha2 extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Clinica
+//======================================================
+
+class campo_parQSelecao_Clinica extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Clinica", "Clinica", "Clinica", 0, "arqClinica", "arqClinica.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Clinica_Clinica
+//======================================================
+
+class campo_parQSelecao_Clinica_Clinica extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Clinica_Clinica", "Clinica_Clinica", "Clinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Clinica", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Clínica" );
+	}
+
+}
+
+//======================================================
+//	Campo TStCon
+//======================================================
+
+class campo_parQSelecao_TStCon extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "tabTStCon", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo TMov
+//======================================================
+
+class campo_parQSelecao_TMov extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TMov", "TMov", "TMov", 0, "tabTMov", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQSelecao
 //======================================================
 function listaCampos_parQSelecao( $p_prefixo )
@@ -410,7 +469,15 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Real6Fim(),
 			new campo_parQSelecao_Gran13(),
 			new campo_parQSelecao_Senha1(),
-			new campo_parQSelecao_Senha2() )
+			new campo_parQSelecao_Senha2(),
+			new campo_parQSelecao_Clinica(),
+			new campo_parQSelecao_Clinica_Clinica(),
+			new campo_parQSelecao_TStCon(),
+			new Lance_CampoCadeia( "TStCon_Chave", "TStCon_Chave", "Chave", 1, "x", EH_CHAVE, TStCon ),
+			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 18, "xxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
+			new campo_parQSelecao_TMov(),
+			new Lance_CampoCadeia( "TMov_Chave", "TMov_Chave", "Chave", 1, "x", EH_CHAVE, TMov ),
+			new Lance_CampoCadeia( "TMov_Descritor", "TMov_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TMov ) )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

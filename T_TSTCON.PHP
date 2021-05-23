@@ -19,7 +19,7 @@ class tabTStCon extends Lance_Tabela
 {
 	function __construct()
 	{
-		parent::__construct( "tabTStCon", "t_tstcon", "TStCon", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
+		parent::__construct( "tabTStCon", "t_tstcon", "TStCon", 2, "uu", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
 ?>

@@ -100,3 +100,38 @@ end ^^
 SET TERM ; ^^
 
 commit;
+
+/***********************************************
+	TRIGGER ARQCONSULTA_PROTOCOLO
+************************************************/
+
+SET TERM ^^ ;
+CREATE TRIGGER ARQCONSULTA_PROTOCOLO FOR ARQCONSULTA ACTIVE BEFORE INSERT POSITION 1 AS
+
+begin
+  select coalesce( max( Protocolo ) + 1, 1 ) from ARQCONSULTA into NEW.Protocolo;
+end ^^
+SET TERM ; ^^
+
+commit;
+
+--* arqMidia
+insert into arqMidia values( 1, 'Clovis', 1 );
+insert into arqMidia values( 2, 'Heleno', 1 );
+insert into arqMidia values( 3, 'Apolinho', 1 );
+insert into arqMidia values( 4, 'Nova Brasil', 1 );
+insert into arqMidia values( 5, 'Meia Hora', 1 );
+insert into arqMidia values( 6, 'Google', 1 );
+insert into arqMidia values( 7, 'Banner', 1 );
+insert into arqMidia values( 8, 'Rádio', 1 );
+insert into arqMidia values( 9, 'TV', 1 );
+commit;
+
+--* arqProsissao
+insert into arqProsissao values( 1, 'Aposentado' );
+insert into arqProsissao values( 2, 'Pedereiro' );
+insert into arqProsissao values( 3, 'Músico' );
+insert into arqProsissao values( 4, 'Motorista' );
+insert into arqProsissao values( 5, 'Militar' );
+commit;
+

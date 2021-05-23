@@ -871,5 +871,13 @@ class arqParcela extends Lance_Arquivo
 	return( "DataPagto is null" );
 	}
 
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilTodas  
+	//-------------------------------------------------------------
+	function FilTodas()
+	{
+	return( "" . ext_filtrarTodas() . "" );
+	}
+
 }
 ?>
