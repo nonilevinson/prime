@@ -2,11 +2,11 @@
 
 require_once( 'ext_email_para_usuario.php' );
 
-class EmailUsuario extends EmailParaUsuario 
+class EmailUsuario extends EmailParaUsuario
 {
 	//------------------------------------------------------------------------
 	function Inicio()
-	{	
+	{
         $this->segunda = formatarData( incDia( $this->hoje, -7 ) );
         $this->terca   = formatarData( incDia( $this->hoje, -6 ) );
         $this->quarta  = formatarData( incDia( $this->hoje, -5 ) );
@@ -17,9 +17,9 @@ class EmailUsuario extends EmailParaUsuario
 
 		$this->msgEmail .=
 			"<tr>
-                <td colspan='8' align='center'>" . $this->tituloEmail . " entre " . 
+                <td colspan='8' align='center'>" . $this->tituloEmail . " entre " .
 				    formatarData( incDia( $this->hoje, -7 ) ) . " e " .
-                    formatarData( incDia( $this->hoje, -1 ) ) . 
+                    formatarData( incDia( $this->hoje, -1 ) ) .
                 "</td>
             </tr>
 			<tr class='" . $this->estilo . "'>
@@ -33,7 +33,7 @@ class EmailUsuario extends EmailParaUsuario
                 <td align='center'>Domingo<br>" . $this->domingo . "</td>
                 <td align='right'>Total</td>
 			</tr>";
-			
+
 		parent::Inicio();
 	}
 
@@ -55,7 +55,7 @@ class EmailUsuario extends EmailParaUsuario
         $tot7 = $this->ValorTotal( "tot7" );
         $tot = $tot1 + $tot2 + $tot3 + $tot4 + $tot5 + $tot6 + $tot7;
 
-        $this->msgEmail .= 
+        $this->msgEmail .=
             "<tr class='" . $this->estilo . "'><td>" . $p_cabTotal . "</td>
                 <td align='center'>" . ( $tot7 > 0 ? formatarNum( $tot7 ) : " " ) . "</td>
                 <td align='center'>" . ( $tot6 > 0 ? formatarNum( $tot6 ) : " " ) . "</td>
@@ -66,7 +66,7 @@ class EmailUsuario extends EmailParaUsuario
                 <td align='center'>" . ( $tot1 > 0 ? formatarNum( $tot1 ) : " " ) . "</td>
                 <td align='right'>" . formatarNum( $tot ) . "</td>
             </tr>";
-            
+
         $this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );
     }
 
@@ -80,7 +80,7 @@ class EmailUsuario extends EmailParaUsuario
 	//	Quebra por Login
 	//------------------------------------------------------------------------
 	function QuebraPorLogin()
-	{ 
+	{
 		return( $this->regAtual->LOGIN );
 	}
 
@@ -116,26 +116,26 @@ if( diaDaSemana( $proc->hoje ) == 1 )
 
     sql_abrirBD( false );
 
-    $proc->campoHabilitado = "EmailAcesS"; 
-    $proc->tituloEmail     = CLIENTE_NOME . ": Acessos na semana";
- 
+    $proc->campoHabilitado = "EmailAcesS";
+    $proc->tituloEmail     = CLIENTE_NOME . ": Interações na semana";
+
     $select = "Select LogAcessoS
         From cnfXConfig";
     $logAcessoS = sql_lerUmRegistro( $select )->LOGACESSOS;
     $proc->comSupervisor = $logAcessoS;
 
-    $proc->DefinirQuebras( 
+    $proc->DefinirQuebras(
         [ 'QuebraPorLogin', NAO, NAO, SIM ] );
 
     $proc->DefinirTotais( "tot1", "tot2", "tot3", "tot4", "tot5", "tot6", "tot7" );
 
-    $select = "Select L.Login, L.Data, 
+    $select = "Select L.Login, L.Data,
             ( current_date - L.Data ) as Qtos,
             count(*) as Qtd
         From arqLanceLogAcesso L
         Where L.Data < current_date and
             ( current_date - L.Data ) < 7
-            and ( L.Login not like '%Noni%' and L.Login not like '%Kogut%' and L.Login != 'null' )
+            and ( L.Login not starting 'Noni' and L.Login not starting 'Kogut' and L.Login != 'null' )
         Group by 1,2,3";
     $reg = sql_lerRegistros( $select );
 if( $g_debugProcesso ) echo '<br><b>GR0 arqLanceLogAcesso S=</b> '.$select;

@@ -51,7 +51,7 @@ global $g_debugProcesso, $g_horaIni;
 $g_horaIni = AGORA();
 
 $proc->campoHabilitado = "EmailAces";
-$proc->tituloEmail     = CLIENTE_NOME . ": Acessos ao sistema";
+$proc->tituloEmail     = CLIENTE_NOME . ": Interações no sistema";
 
 sql_abrirBD( false );
 
@@ -62,7 +62,7 @@ $proc->comSupervisor = sql_lerUmRegistro( $select )->LOGACESSO;
 $select = "Select L.Login, count(*) as Qtd
 	From arqLanceLogAcesso L
 	Where ( current_date - L.Data ) = 1
-		and ( L.Login not like '%Noni%' and L.Login not like '%Kogut%' and L.Login != 'null' )
+		and ( L.Login not starting 'Noni' and L.Login not starting 'Kogut' and L.Login != 'null' )
 	group by 1";
 $reg = sql_lerRegistros( $select );
 
