@@ -72,9 +72,9 @@ INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, 
 INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, EMAIL, EMAILACES, EMAILACESS )
 	VALUES (3, 'LEONARDO', 'Leonardo Ribeiro', 'SWSM@153', 1, '1.00', 1, 'administracao@primemedicalcenter.com.br', 1, 1);
 INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, EMAIL, EMAILACES, EMAILACESS )
-	VALUES (4, 'JACYANI.SILVA', 'Jacyani Silva', 'SWSM@153', 2, '1.00', 1, 'jacyanisilva@hotmail.com', 1, 1);
+	VALUES (4, 'JACYANI.SILVA', 'Jacyani Silva', 'SWSM@153', 2, '1.00', 1, 'jacyanisilva@hotmail.com', 0, 0);
 INSERT INTO ARQUSUARIO (IDPRIMARIO, USUARIO, NOME, SENHA, GRUPO, VERSAO, ATIVO, EMAIL, EMAILACES, EMAILACESS )
-	VALUES (5, 'PATRICIA.TRAJANO', 'Patricia Trajano', 'SWSM@153', 1, '1.00', 3, 'patriciatrajano.primemedical@gmail.com', 1, 1);
+	VALUES (5, 'PATRICIA.TRAJANO', 'Patricia Trajano', 'SWSM@153', 1, '1.00', 3, 'patriciatrajano.primemedical@gmail.com', 0, 0);
 commit;
 
 --* arqLancePermissao
