@@ -28,7 +28,7 @@ $select = 'Select
    From arqParcela P
       join arqConta C on C.idPrimario=P.Conta';
 $regBloco  = sql_lerUmRegistro( $select );
-if( $g_debugProcesso ) echo '<br><b>*** arqParcela S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>*** arqParcela S=</b> '.$select;
 
 $blocos = [];
 
