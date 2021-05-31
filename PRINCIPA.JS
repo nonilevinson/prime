@@ -12,14 +12,15 @@ var Menu_2_4_3 = new Array( 1,"Profissões","","f",107,"","",1,"","1","a_profis",
 var Menu_2_4_4 = new Array( 1,"Bancos","","B",59,"","",1,"","1","a_banco","arqBanco","Folhear","","?","","", "","", 0,21,[],[19]);
 var Menu_2_4_5 = new Array( 1,"Contas correntes","","t",72,"","",1,"","1","a_ccor","arqCCor","Folhear","","?","","", "","", 0,21,[],[20]);
 var Menu_2_4_6 = new Array( 1,"Modelos de documentos","","M",66,"","",cnfConfig["DOCMOD"] == 1,"","1","a_docmod","arqDocMod","Folhear","","?","","", "","", 0,21,[],[22]);
-var Menu_3 = new Array( 1,"Financeiro","","F",90,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 10,[],[33,33,34,34,34] );
-var Menu_3_1 = new Array( 1,"Contas","","C",125,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 8,[],[33,33] );
+var Menu_3 = new Array( 1,"Financeiro","","F",90,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 10,[],[33,33,34,34,34,27] );
+var Menu_3_1 = new Array( 1,"Contas","","C",125,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 15,[],[33,33] );
 var Menu_3_1_1 = new Array( 1,"Todas","","T",91,"","",1,"","1","a_conta","arqConta","Folhear","","?","FilTodas","", "","", 0,7,[],[33]);
 var Menu_3_1_2 = new Array( 1,"Seleção","","S",92,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_conta^^^arqConta^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[33]);
-var Menu_3_2 = new Array( 1,"Parcelas","","P",126,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 8,[],[34,34,34] );
+var Menu_3_2 = new Array( 1,"Parcelas","","P",126,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 15,[],[34,34,34] );
 var Menu_3_2_1 = new Array( 1,"Hoje","","H",95,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_parcel^^^arqParcela^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[34]);
 var Menu_3_2_2 = new Array( 1,"Todas","","T",93,"","",1,"","1","a_parcel","arqParcela","Folhear","","?","FilTodas","", "","", 0,7,[],[34]);
 var Menu_3_2_3 = new Array( 1,"Seleção","","S",94,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_parcel^^^arqParcela^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[34]);
+var Menu_3_3 = new Array( 1,"Plano de contas","","l",128,"","",1,"","1","a_plano","arqPlano","Folhear","","?","","", "","", 0,15,[],[27]);
 var Menu_4 = new Array( 1,"Emails","","E",42,"","",cnfConfig["EMAIL"] == 1 || GrupoAtualEm(),"","6", "", "", "", "", "", "", "", "", "", 6, 10,[53,55,47,71,52,54,48,49],[10,12,8,9] );
 var Menu_4_1 = new Array( 1,"Ações","","A",43,"","",1,"","1","a_aemail","arqAcaoEmail","Folhear","","?","","", "","", 0,22,[],[10]);
 var Menu_4_2 = new Array( 1,"Programar envio","","P",53,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_programar_acao^^^^^^^^^^^^^^^^^^", "", 0,22,[53],[]);

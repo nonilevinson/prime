@@ -65,21 +65,14 @@ class campo_arqParcela_Conta_Transacao extends Lance_CampoNumerico
 }
 
 //======================================================
-//	Campo VClinica
+//	Campo ClinicaCal
 //======================================================
 
-class campo_arqParcela_VClinica extends Lance_CampoCadeia
+class campo_arqParcela_ClinicaCal extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "VClinica", "VClinica", "VClinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_VIEW, 0, false );
-	}
-
-	//--------------------------------------------------
-	function EhForm()
-	{
-		global $g_regAtual;
-		return( (NAO) );
+		parent::__construct( "ClinicaCal", "ClinicaCal", "ClinicaCal", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CALCULADO, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -99,28 +92,21 @@ class campo_arqParcela_VClinica extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo VTpgRec
+//	Campo TPgRecCal
 //======================================================
 
-class campo_arqParcela_VTpgRec extends Lance_CampoCadeia
+class campo_arqParcela_TPgRecCal extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "VTpgRec", "VTpgRec", "VTpgRec", 7, "xxxxxxx", EH_VIEW, 0, false );
-	}
-
-	//--------------------------------------------------
-	function EhForm()
-	{
-		global $g_regAtual;
-		return( (NAO) );
+		parent::__construct( "TPgRecCal", "TPgRecCal", "TPgRecCal", 7, "xxxxxxx", EH_CALCULADO, 0, false );
 	}
 
 	//--------------------------------------------------
 	function Estilo()
 	{
 		global $g_regAtual;
-		if( $g_regAtual->VTPGREC == 'Receber' )
+		if( TipoConta == 'Receber' )
 			return( "ContaReceber" );
 		return( parent::Estilo() );
 	}
@@ -135,21 +121,14 @@ class campo_arqParcela_VTpgRec extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo VPessoa
+//	Campo PessoaCal
 //======================================================
 
-class campo_arqParcela_VPessoa extends Lance_CampoCadeia
+class campo_arqParcela_PessoaCal extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "VPessoa", "VPessoa", "VPessoa", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_VIEW, 0, false );
-	}
-
-	//--------------------------------------------------
-	function EhForm()
-	{
-		global $g_regAtual;
-		return( (NAO) );
+		parent::__construct( "PessoaCal", "PessoaCal", "PessoaCal", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CALCULADO, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -702,9 +681,9 @@ function listaCampos_arqParcela( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqParcela_Conta(),
 			new campo_arqParcela_Conta_Transacao(),
-			new campo_arqParcela_VClinica(),
-			new campo_arqParcela_VTpgRec(),
-			new campo_arqParcela_VPessoa(),
+			new campo_arqParcela_ClinicaCal(),
+			new campo_arqParcela_TPgRecCal(),
+			new campo_arqParcela_PessoaCal(),
 			new campo_arqParcela_Parcela(),
 			new campo_arqParcela_Vencimento(),
 			new campo_arqParcela_VencEst(),
@@ -777,9 +756,9 @@ class arqParcela extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Conta_Transacao ) );
-			array_push( $vetAux, array( VClinica ) );
-			array_push( $vetAux, array( VTpgRec ) );
-			array_push( $vetAux, array( VPessoa ) );
+			array_push( $vetAux, array( ClinicaCal ) );
+			array_push( $vetAux, array( TPgRecCal ) );
+			array_push( $vetAux, array( PessoaCal ) );
 			array_push( $vetAux, array( Parcela ) );
 			array_push( $vetAux, array( Vencimento ) );
 			array_push( $vetAux, array( Valor ) );
@@ -805,9 +784,9 @@ class arqParcela extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Conta_Transacao ) );
-			array_push( $vetAux, array( VClinica ) );
-			array_push( $vetAux, array( VTpgRec ) );
-			array_push( $vetAux, array( VPessoa ) );
+			array_push( $vetAux, array( ClinicaCal ) );
+			array_push( $vetAux, array( TPgRecCal ) );
+			array_push( $vetAux, array( PessoaCal ) );
 			array_push( $vetAux, array( Parcela ) );
 			array_push( $vetAux, array( Vencimento ) );
 			array_push( $vetAux, array( VencEst ) );
@@ -848,11 +827,83 @@ class arqParcela extends Lance_Arquivo
 	}
 
 	//-------------------------------------------------------------
+	// Visões do Arquivo: EhHoje    
+	//-------------------------------------------------------------
+	function EhHoje()
+	{
+	return( "Vencimento = current_date" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: PgHoje    
+	//-------------------------------------------------------------
+	function PgHoje()
+	{
+	return( "" . $this->ContaPg() . "and ". $this->EhHoje() . "" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: RecHoje   
+	//-------------------------------------------------------------
+	function RecHoje()
+	{
+	return( "" . $this->ContaRec() . "and ". $this->EhHoje() . "" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: PgAtras   
+	//-------------------------------------------------------------
+	function PgAtras()
+	{
+	return( "". $this->ContaPg() . " and A.Vencimento < current_date and A.DataPagto is null" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: RecAtras  
+	//-------------------------------------------------------------
+	function RecAtras()
+	{
+	return( "". $this->ContaRec() . " and A.Vencimento < current_date and A.DataPagto is null" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: PgFuturo  
+	//-------------------------------------------------------------
+	function PgFuturo()
+	{
+	return( "". $this->ContaPg() . " and A.Vencimento > current_date and A.DataPagto is null" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: RecFuturo 
+	//-------------------------------------------------------------
+	function RecFuturo()
+	{
+	return( "". $this->ContaRec() . " and A.Vencimento > current_date and A.DataPagto is null" );
+	}
+
+	//-------------------------------------------------------------
 	// Visões do Arquivo: FilSel    
 	//-------------------------------------------------------------
 	function FilSel()
 	{
 	return( "" . ext_filtrarSelecao() . "" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilTodas  
+	//-------------------------------------------------------------
+	function FilTodas()
+	{
+	return( "" . ext_filtrarTodas() . "" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: ContaPg   
+	//-------------------------------------------------------------
+	function ContaPg()
+	{
+	return( "(Select V.TPgRec From arqConta V Where V.idPrimario=A.Conta)=1" );
 	}
 
 	//-------------------------------------------------------------
@@ -869,14 +920,6 @@ class arqParcela extends Lance_Arquivo
 	function PagoNeg()
 	{
 	return( "DataPagto is null" );
-	}
-
-	//-------------------------------------------------------------
-	// Visões do Arquivo: FilTodas  
-	//-------------------------------------------------------------
-	function FilTodas()
-	{
-	return( "" . ext_filtrarTodas() . "" );
 	}
 
 }

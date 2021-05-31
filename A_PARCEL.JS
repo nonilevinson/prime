@@ -25,37 +25,37 @@ function Campo_arqParcela_Conta_Transacao()
 var Conta_Transacao = new Campo_arqParcela_Conta_Transacao;
 
 //------------------------------------------------------------
-Campo_arqParcela_VClinica.prototype = new Lance_CampoCadeia;
+Campo_arqParcela_ClinicaCal.prototype = new Lance_CampoCadeia;
 
-function Campo_arqParcela_VClinica()
+function Campo_arqParcela_ClinicaCal()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "VClinica", "VClinica", "VClinica", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "ClinicaCal", "ClinicaCal", "ClinicaCal", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var VClinica = new Campo_arqParcela_VClinica;
+var ClinicaCal = new Campo_arqParcela_ClinicaCal;
 
 //------------------------------------------------------------
-Campo_arqParcela_VTpgRec.prototype = new Lance_CampoCadeia;
+Campo_arqParcela_TPgRecCal.prototype = new Lance_CampoCadeia;
 
-function Campo_arqParcela_VTpgRec()
+function Campo_arqParcela_TPgRecCal()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "VTpgRec", "VTpgRec", "VTpgRec", 7, "uxxxxxx", false);
+	this.superClass( "TPgRecCal", "TPgRecCal", "TPgRecCal", 7, "uxxxxxx", false);
 }
 
-var VTpgRec = new Campo_arqParcela_VTpgRec;
+var TPgRecCal = new Campo_arqParcela_TPgRecCal;
 
 //------------------------------------------------------------
-Campo_arqParcela_VPessoa.prototype = new Lance_CampoCadeia;
+Campo_arqParcela_PessoaCal.prototype = new Lance_CampoCadeia;
 
-function Campo_arqParcela_VPessoa()
+function Campo_arqParcela_PessoaCal()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "VPessoa", "VPessoa", "VPessoa", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "PessoaCal", "PessoaCal", "PessoaCal", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var VPessoa = new Campo_arqParcela_VPessoa;
+var PessoaCal = new Campo_arqParcela_PessoaCal;
 
 //------------------------------------------------------------
 Campo_arqParcela_Parcela.prototype = new Lance_CampoNumerico;
@@ -506,60 +506,72 @@ Conta_Transacao.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
-Campo_arqParcela_VClinica.prototype.Calculou = function()
+Campo_arqParcela_ClinicaCal.prototype.Calculou = function()
 {
 {
-	return( this.Atribuiu( '' ) );
+{
+	if( !Conta.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Clinica FROM arqClinica WHERE arqClinica.IdPrimario=( COALESCE( ( SELECT Clinica FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "ClinicaCal" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
 }
 }
 
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqParcela_VClinica.prototype.Cabecalho = function()
+Campo_arqParcela_ClinicaCal.prototype.Cabecalho = function()
 {
 		return( "Clínica" );
 }
 
-VClinica.EhCalculado = true;
+ClinicaCal.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
-Campo_arqParcela_VTpgRec.prototype.Calculou = function()
+Campo_arqParcela_TPgRecCal.prototype.Calculou = function()
 {
 {
-	return( this.Atribuiu( '' ) );
+	return( this.Atribuiu( Conta_TPgRec ) );
 }
 }
 
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqParcela_VTpgRec.prototype.Cabecalho = function()
+Campo_arqParcela_TPgRecCal.prototype.Cabecalho = function()
 {
 		return( "Tipo" );
 }
 
-VTpgRec.EhCalculado = true;
+TPgRecCal.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
-Campo_arqParcela_VPessoa.prototype.Calculou = function()
+Campo_arqParcela_PessoaCal.prototype.Calculou = function()
 {
 {
-	return( this.Atribuiu( '' ) );
+{
+	if( !Conta.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "PessoaCal" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
 }
 }
 
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqParcela_VPessoa.prototype.Cabecalho = function()
+Campo_arqParcela_PessoaCal.prototype.Cabecalho = function()
 {
 		return( "Pessoa" );
 }
 
-VPessoa.EhCalculado = true;
+PessoaCal.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -1083,6 +1095,7 @@ Campo_arqParcela_SubPlano_Nome.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_arqParcela()
 {
+Conta.CalculosDependentes= [ ClinicaCal,TPgRecCal,PessoaCal ];
 Emissao.CalculosDependentes= [ NumBoleto ];
 Conta_Transacao.ExistenciasDependentes= [ Conta ];
 TFCobra.ExistenciasDependentes= [ Emissao,LinhaDig,NomePdf,TFPagto,TDetPg,StRetorno,Remessa ];
@@ -1133,7 +1146,7 @@ function ListaDeCampos_arqParcela( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Conta, Conta_Transacao, VClinica, VTpgRec, VPessoa, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Banco, CCor_Banco_Num, CCor_Banco_Banco, CCor_Agencia, CCor_Conta, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, Cheque, Arq1, StRetorno, Remessa, DataRem ]	);
+		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Banco, CCor_Banco_Num, CCor_Banco_Banco, CCor_Agencia, CCor_Conta, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, Cheque, Arq1, StRetorno, Remessa, DataRem ]	);
 	IniciarDependencias_arqParcela();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -258,7 +258,7 @@ Transacao.TipoCampo |= CAMPO_CHAVE;
 Campo_arqConta_Clinica.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
-			return( "Ativo == 1" );
+			return( "Ativo = 1" );
 		return( "" );
 }
 
@@ -309,7 +309,7 @@ TPgRec_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 Campo_arqConta_Pessoa.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
-			return( "A.Ativo == 1" );
+			return( "A.Ativo = 1" );
 		return( "" );
 }
 

@@ -19,8 +19,8 @@ echo
          [ '', Transacao, '', '', '','', 'FormCalculado' ] );
 
    echo
-	$this->Pedir( "Centro",
-      [ "", Centro,
+	$this->Pedir( "Clínica",
+      [ "", Clinica,
       [ brHtml(4) . "Tipo ", TPgRec ] ] ),
    $this->Pedir( "Pessoa" ),
    $this->Pedir( "Emissão",
@@ -36,7 +36,7 @@ echo
       [ brHtml(4) . "Pago ", TrgPago,
       [ brHtml(4) . "Saldo ", Saldo ] ] ] ] ),
    $this->Pedir( "Parcelas",
-      [ "", TrgQParc,
+      [ "", TrgQtdParc,
       [ brHtml(4) . "Pagas ", TrgQParcPg,
       [ brHtml(4) . "Próximo vencimento ", ProxVenc ] ] ] ),
 "</table>
