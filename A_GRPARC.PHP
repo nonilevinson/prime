@@ -12,6 +12,39 @@ include_once( SISTEMA_DIR_ABSOLUTO . "a_grparc_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
 
 //======================================================
+//	Campo Clinica
+//======================================================
+
+class campo_parGeraParc_Clinica extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Clinica", "Clinica", "Clinica", 0, "arqClinica", "arqClinica.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Clinica_Clinica
+//======================================================
+
+class campo_parGeraParc_Clinica_Clinica extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Clinica_Clinica", "Clinica_Clinica", "Clinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Clinica", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Clínica" );
+	}
+
+}
+
+//======================================================
 //	Campo Pessoa
 //======================================================
 
@@ -33,6 +66,28 @@ class campo_parGeraParc_Pessoa_Nome extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Pessoa_Nome", "Pessoa_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Pessoa", false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->PESSOA_QTODESMAR >= G_QTASDESMAR )
+			return( "VermelhoFundoEsq" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo Documento
+//======================================================
+
+class campo_parGeraParc_Documento extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Documento", "Documento", "Documento", 13, "#.###.###.###.##z", "", "", 0, 0, false );
 	}
 
 }
@@ -417,7 +472,7 @@ class campo_parGeraParc_Perc1 extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "Perc1", "Perc1", "Perc1", 5, "##z,zz", "", "", 0, 0, false );
+		parent::__construct( "Perc1", "Perc1", "Perc1", 3, "##z", "", "", 0, 0, false );
 	}
 
 }
@@ -770,7 +825,7 @@ class campo_parGeraParc_Valor3 extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "Valor3", "Valor3", "Valor3", 5, "##z,zz", "", "", 0, 0, false );
+		parent::__construct( "Valor3", "Valor3", "Valor3", 11, "###.###.##z,zz", "", "", 0, 0, false );
 	}
 
 }
@@ -2551,8 +2606,11 @@ function listaCampos_parGeraParc( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
+			new campo_parGeraParc_Clinica(),
+			new campo_parGeraParc_Clinica_Clinica(),
 			new campo_parGeraParc_Pessoa(),
 			new campo_parGeraParc_Pessoa_Nome(),
+			new campo_parGeraParc_Documento(),
 			new campo_parGeraParc_TPgRec(),
 			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
 			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ),

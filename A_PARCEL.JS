@@ -1156,5 +1156,6 @@ g_arquivoCampos = ListaDeCampos_arqParcela( '' );
 g_idOperacao = 34;
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"Baixar","","x",129,"","",1,"temMarcados()","1", "a_qbaixa", "parQBaixa", "Alterar", "", "", "", "", "5^^^p_parcela_baixar^^^^^^^^^^^^^^^^^^", "", 0,6,[129],[]);
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }

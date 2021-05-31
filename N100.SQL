@@ -1514,6 +1514,47 @@ commit;
 
 
 /************************************************************
+	TABELA tabTMotivo
+************************************************************/
+
+CREATE TABLE tabTMotivo
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTMotivo_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTMotivo_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTMotivo VALUES ( 1, '1', 'Dificuldade de obter uma ereção' );
+INSERT INTO tabTMotivo VALUES ( 2, '2', 'Dificuldade de manter uma ereção' );
+INSERT INTO tabTMotivo VALUES ( 3, '3', 'Libido' );
+INSERT INTO tabTMotivo VALUES ( 4, '4', 'Ejaculação precoce' );
+commit;
+
+
+/************************************************************
+	TABELA tabTPrograma
+************************************************************/
+
+CREATE TABLE tabTPrograma
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 2 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTPrograma_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTPrograma_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTPrograma VALUES ( 1, '6', '6 meses' );
+INSERT INTO tabTPrograma VALUES ( 2, '9', '9 meses' );
+INSERT INTO tabTPrograma VALUES ( 3, '12', '12 meses' );
+commit;
+
+
+/************************************************************
 	Arquivo Bairro    
 ************************************************************/
 
@@ -2327,7 +2368,7 @@ commit;
 CREATE TABLE arqConsulta
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	PROTOCOLO NUMERIC(18,0), /* Máscara = N */
+	/*  2*/	PRONTUARIO NUMERIC(18,0), /* Máscara = N */
 	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
 	/*  4*/	DATA DATE, /* Máscara = 4ano */
 	/*  5*/	HORA TIME, /* Máscara = Hhmm */
@@ -2337,8 +2378,13 @@ CREATE TABLE arqConsulta
 	/*  9*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 10*/	MKT ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 11*/	RECEPCAO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 12*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 13*/	TMOTIVO ligadoComTabela, /* Ligado com a Tabela TMotivo */
+	/* 14*/	TPROGRAMA ligadoComTabela, /* Ligado com a Tabela TPrograma */
+	/* 15*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 16*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqConsulta_UK UNIQUE ( Protocolo )
+	CONSTRAINT arqConsulta_UK UNIQUE ( Prontuario )
 );
 commit;
 
@@ -2633,14 +2679,16 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.PROTOCOLO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.MEDICO, A2.USUARIO as MEDICO_USUARIO, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.ASSESSOR, A4.USUARIO as ASSESSOR_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.RECEPCAO, A6.USUARIO as RECEPCAO_USUARIO
+	SELECT A0.IDPRIMARIO, A0.PRONTUARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.MEDICO, A2.USUARIO as MEDICO_USUARIO, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.ASSESSOR, A4.USUARIO as ASSESSOR_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.RECEPCAO, A6.USUARIO as RECEPCAO_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join arqUsuario A2 on A2.IDPRIMARIO = A0.MEDICO
 	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
 	left join arqUsuario A4 on A4.IDPRIMARIO = A0.ASSESSOR
 	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MKT
-	left join arqUsuario A6 on A6.IDPRIMARIO = A0.RECEPCAO;
+	left join arqUsuario A6 on A6.IDPRIMARIO = A0.RECEPCAO
+	left join tabTMotivo A7 on A7.IDPRIMARIO=A0.TMOTIVO
+	left join tabTPrograma A8 on A8.IDPRIMARIO=A0.TPROGRAMA;
 commit;
 
 
@@ -2711,7 +2759,7 @@ insert into arqLanceOperacao values(100029,1,'Cadastro de atualizações de índice
 insert into arqLanceOperacao values(100030,1,'Cadastro de mídias','arqMidia',30,1,0,'');
 insert into arqLanceOperacao values(100031,1,'Cadastro das clínicas','arqClinica',31,1,0,'');
 insert into arqLanceOperacao values(100032,1,'Cadastro de planos de tratamento','arqPTrata',32,1,0,'');
-insert into arqLanceOperacao values(100033,1,'cadastro de contas a pagar e a receber','arqConta',33,10,0,'');
+insert into arqLanceOperacao values(100033,1,'Cadastro de contas a pagar e a receber','arqConta',33,10,0,'');
 insert into arqLanceOperacao values(100034,1,'Cadastro de parcelas de contas a pagar e a reecber','arqParcela',34,10,0,'');
 insert into arqLanceOperacao values(100035,1,'Cadastro da relação entre usuários e clínicas','arqUsuCli',35,90,0,'');
 insert into arqLanceOperacao values(100036,1,'Cadastro de profissões','arqProfissao',36,1,0,'');
@@ -2744,6 +2792,8 @@ insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm
 insert into arqLanceOperacao values(200073,2,'Relatório analítico de interações no sistema','',73,90,0,'');
 insert into arqLanceOperacao values(200074,2,'Relatório resumido de interações no sistema','',74,90,0,'');
 insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos usuários','',68,90,0,'');
+insert into arqLanceOperacao values(200129,2,'Rotina para baixar parcelas','',129,10,0,'');
+insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -2820,6 +2870,8 @@ ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assessor FOREIGN KEY ( ASS
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Mkt FOREIGN KEY ( MKT ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Recepcao FOREIGN KEY ( RECEPCAO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_Midia FOREIGN KEY ( MIDIA ) REFERENCES arqMidia ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TMotivo FOREIGN KEY ( TMOTIVO ) REFERENCES tabTMotivo ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TPrograma FOREIGN KEY ( TPROGRAMA ) REFERENCES tabTPrograma ON DELETE SET NULL ON UPDATE CASCADE;
 commit;
 
 
@@ -3955,9 +4007,9 @@ as
 	declare variable valorChave varchar(1000);
 begin
 if( deleting ) then
-	valorChave = coalesce( OLD.Protocolo,'' );
+	valorChave = coalesce( OLD.Prontuario,'' );
 else
-	valorChave = coalesce( NEW.Protocolo,'' );
+	valorChave = coalesce( NEW.Prontuario,'' );
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100039 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
@@ -3966,7 +4018,7 @@ else
 if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
-	execute procedure set_log( 12, NEW.idPrimario, 'Protocolo', OLD.Protocolo, NEW.Protocolo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Prontuario', OLD.Prontuario, NEW.Prontuario );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
 	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
@@ -3976,6 +4028,11 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
 	execute procedure set_log( 12, NEW.idPrimario, 'Mkt', OLD.Mkt, NEW.Mkt );
 	execute procedure set_log( 12, NEW.idPrimario, 'Recepcao', OLD.Recepcao, NEW.Recepcao );
+	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'TMotivo', OLD.TMotivo, NEW.TMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPrograma', OLD.TPrograma, NEW.TPrograma );
+	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
 end
 end^
 

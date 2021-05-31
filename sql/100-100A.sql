@@ -1,108 +1,86 @@
 --*
 --* 1.00 para 1.00A
-
+/*
 delete from ARQLANCELOGACESSO where STATUS is null;
 delete from ARQLANCELOGACESSO where datediff(year, Data, current_date) > 5;
 commit;
 execute procedure reindexartudo;
 commit;
-
+*/
 /************************************************************
-	Arquivo Parcela
+	Arquivo Consulta
 ************************************************************/
-drop trigger arqParcela_log;
-drop view v_arqParcela;
+drop trigger arqConsulta_log;
+drop view v_arqConsulta;
+drop TABLE arqConsulta;
 commit;
 
-drop table arqParcela;
-commit;
-
-CREATE TABLE arqParcela
+CREATE TABLE arqConsulta
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	CONTA ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/*  3*/	/* CLINICACAL */
-	/*  4*/	/* TPGRECCAL */
-	/*  5*/	/* PESSOACAL */
-	/*  6*/	PARCELA SMALLINT, /* Máscara = N */
-	/*  7*/	VENCIMENTO DATE, /* Máscara = 4ano */
-	/*  8*/	VENCEST campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  9*/	VALOR NUMERIC( 11, 2 ), /* Máscara = N */
-	/* 10*/	VALORLIQ NUMERIC( 11, 2 ), /* Máscara = N */
-	/* 11*/	ESTIMADO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 12*/	TFCOBRA ligadoComTabela, /* Ligado com a Tabela TFCobra */
-	/* 13*/	EMISSAO DATE, /* Máscara = 4ano */
-	/* 14*/	/* NUMBOLETO */
-	/* 15*/	LINHADIG VARCHAR( 54 ) COLLATE PT_BR, /* Máscara = X */
-	/* 16*/	NOMEPDF VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
-	/* 17*/	CCOR ligadoComArquivo, /* Ligado com o Arquivo CCor */
-	/* 18*/	SUBPLANO ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
-	/* 19*/	DATAPAGTO DATE, /* Máscara = 4ano */
-	/* 20*/	DATACOMP DATE, /* Máscara = 4ano */
-	/* 21*/	TFPAGTO ligadoComTabela, /* Ligado com a Tabela TFPagto */
-	/* 22*/	TDETPG ligadoComTabela, /* Ligado com a Tabela TDetPg */
-	/* 23*/	CHEQUE NUMERIC(18,0), /* Máscara = Z */
-	/* 24*/	ARQ1 VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 25*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
-	/* 26*/	STRETORNO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
-	/* 27*/	REMESSA NUMERIC(18,0), /* Máscara = N */
-	/* 28*/	DATAREM DATE, /* Máscara = 4ano */
-	CONSTRAINT arqParcela_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqParcela_UK UNIQUE ( Conta, Parcela )
+	/*  2*/	PRONTUARIO NUMERIC(18,0), /* Máscara = N */
+	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  4*/	DATA DATE, /* Máscara = 4ano */
+	/*  5*/	HORA TIME, /* Máscara = Hhmm */
+	/*  6*/	HORACHEGA TIME, /* Máscara = Hhmm */
+	/*  7*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  8*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  9*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 10*/	MKT ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 11*/	RECEPCAO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 12*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 13*/	TMOTIVO ligadoComTabela, /* Ligado com a Tabela TMotivo */
+	/* 14*/	TPROGRAMA ligadoComTabela, /* Ligado com a Tabela TPrograma */
+	/* 15*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 16*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqConsulta_UK UNIQUE ( PRONTUARIO )
 );
 commit;
 
-CREATE DESC INDEX arqParcela_IdPrimario_Desc ON arqParcela (IDPRIMARIO);
+CREATE DESC INDEX arqConsulta_IdPrimario_Desc ON arqConsulta (IDPRIMARIO);
 commit;
 
-ALTER TABLE arqParcela ADD CLINICACAL VARCHAR( 30 ) computed by ( ( COALESCE( ( SELECT Clinica FROM arqClinica WHERE arqClinica.IdPrimario=( COALESCE( ( SELECT Clinica FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) );
-ALTER TABLE arqParcela ALTER CLINICACAL POSITION 3;
-ALTER TABLE arqParcela ADD TPGRECCAL VARCHAR( 7 ) computed by ( (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = arqParcela.Conta) );
-ALTER TABLE arqParcela ALTER TPGRECCAL POSITION 4;
-ALTER TABLE arqParcela ADD PESSOACAL VARCHAR( 60 ) computed by ( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) );
-ALTER TABLE arqParcela ALTER PESSOACAL POSITION 5;
-ALTER TABLE arqParcela ADD NUMBOLETO NUMERIC(18,0) computed by ( CASE
-	WHEN( Emissao is not null ) THEN( IdPrimario )
-	ELSE ( 0 )
-	END  );
-ALTER TABLE arqParcela ALTER NUMBOLETO POSITION 14;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Mkt FOREIGN KEY ( MKT ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Recepcao FOREIGN KEY ( RECEPCAO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TMotivo FOREIGN KEY ( TMOTIVO ) REFERENCES tabTMotivo ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TPrograma FOREIGN KEY ( TPROGRAMA ) REFERENCES tabTPrograma ON DELETE SET NULL ON UPDATE CASCADE;
 commit;
 
-ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_Conta FOREIGN KEY ( CONTA ) REFERENCES arqConta ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_TFCobra FOREIGN KEY ( TFCOBRA ) REFERENCES tabTFCobra ON DELETE SET NULL ON UPDATE CASCADE;
-ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_CCor FOREIGN KEY ( CCOR ) REFERENCES arqCCor ON DELETE NO ACTION ON UPDATE CASCADE;
-ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_SubPlano FOREIGN KEY ( SUBPLANO ) REFERENCES arqSubPlano ON DELETE NO ACTION ON UPDATE CASCADE;
-ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_TFPagto FOREIGN KEY ( TFPAGTO ) REFERENCES tabTFPagto ON DELETE SET NULL ON UPDATE CASCADE;
-ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_TDetPg FOREIGN KEY ( TDETPG ) REFERENCES tabTDetPg ON DELETE SET NULL ON UPDATE CASCADE;
-commit;
-
-RECREATE VIEW V_arqParcela AS
-	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, A0.CLINICACAL, A0.TPGRECCAL, A0.PESSOACAL, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.BANCO as CCOR_BANCO, A4.NUM as CCOR_BANCO_NUM, A4.BANCO as CCOR_BANCO_BANCO, A3.AGENCIA as CCOR_AGENCIA, A3.CONTA as CCOR_CONTA, A0.SUBPLANO, A5.PLANO as SUBPLANO_PLANO, A6.CODPLANO as SUBPLANO_PLANO_CODPLANO, A6.PLANO as SUBPLANO_PLANO_PLANO, A5.CODIGO as SUBPLANO_CODIGO, A5.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A7.CHAVE as TFPagto_CHAVE, A7.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A8.CHAVE as TDetPg_CHAVE, A8.DESCRITOR as TDetPg_DESCRITOR, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM
-	FROM arqParcela A0
-	left join arqConta A1 on A1.IDPRIMARIO = A0.CONTA
-	left join tabTFCobra A2 on A2.IDPRIMARIO=A0.TFCOBRA
-	left join arqCCor A3 on A3.IDPRIMARIO = A0.CCOR
-	left join arqBanco A4 on A4.IDPRIMARIO = A3.BANCO
-	left join arqSubPlano A5 on A5.IDPRIMARIO = A0.SUBPLANO
-	left join arqPlano A6 on A6.IDPRIMARIO = A5.PLANO
-	left join tabTFPagto A7 on A7.IDPRIMARIO=A0.TFPAGTO
-	left join tabTDetPg A8 on A8.IDPRIMARIO=A0.TDETPG;
+RECREATE VIEW V_arqConsulta AS
+	SELECT A0.IDPRIMARIO, A0.PRONTUARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.MEDICO, A2.USUARIO as MEDICO_USUARIO, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.ASSESSOR, A4.USUARIO as ASSESSOR_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.RECEPCAO, A6.USUARIO as RECEPCAO_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO
+	FROM arqConsulta A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join arqUsuario A2 on A2.IDPRIMARIO = A0.MEDICO
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
+	left join arqUsuario A4 on A4.IDPRIMARIO = A0.ASSESSOR
+	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MKT
+	left join arqUsuario A6 on A6.IDPRIMARIO = A0.RECEPCAO
+	left join tabTMotivo A7 on A7.IDPRIMARIO=A0.TMOTIVO
+	left join tabTPrograma A8 on A8.IDPRIMARIO=A0.TPROGRAMA;
 commit;
 
 /************************************************************
-	Trigger para Log de arqParcela
+	Trigger para Log de arqConsulta
 ************************************************************/
 
 set term ^;
 
-recreate trigger arqParcela_LOG for arqParcela
+recreate trigger arqConsulta_LOG for arqConsulta
 active after Insert or Delete or Update
 position 999
 as
 	declare variable valorChave varchar(1000);
 begin
-select coalesce( Conta_Transacao, ' ' ) || '-' || coalesce( Parcela, ' ' ) from v_arqParcela where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
-rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100034 );
+if( deleting ) then
+	valorChave = coalesce( OLD.PRONTUARIO,'' );
+else
+	valorChave = coalesce( NEW.PRONTUARIO,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100039 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
 	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
@@ -110,30 +88,21 @@ else
 if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
-	execute procedure set_log( 12, NEW.idPrimario, 'Conta', OLD.Conta, NEW.Conta );
-	execute procedure set_log( 12, NEW.idPrimario, 'Parcela', OLD.Parcela, NEW.Parcela );
-	execute procedure set_log( 12, NEW.idPrimario, 'Vencimento', OLD.Vencimento, NEW.Vencimento );
-	execute procedure set_log( 12, NEW.idPrimario, 'VencEst', OLD.VencEst, NEW.VencEst );
-	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
-	execute procedure set_log( 12, NEW.idPrimario, 'ValorLiq', OLD.ValorLiq, NEW.ValorLiq );
-	execute procedure set_log( 12, NEW.idPrimario, 'Estimado', OLD.Estimado, NEW.Estimado );
-	execute procedure set_log( 12, NEW.idPrimario, 'TFCobra', OLD.TFCobra, NEW.TFCobra );
-	execute procedure set_log( 12, NEW.idPrimario, 'Emissao', OLD.Emissao, NEW.Emissao );
-	execute procedure set_log( 12, NEW.idPrimario, 'CCor', OLD.CCor, NEW.CCor );
-	execute procedure set_log( 12, NEW.idPrimario, 'SubPlano', OLD.SubPlano, NEW.SubPlano );
-	execute procedure set_log( 12, NEW.idPrimario, 'DataPagto', OLD.DataPagto, NEW.DataPagto );
-	execute procedure set_log( 12, NEW.idPrimario, 'DataComp', OLD.DataComp, NEW.DataComp );
-	execute procedure set_log( 12, NEW.idPrimario, 'TFPagto', OLD.TFPagto, NEW.TFPagto );
-	execute procedure set_log( 12, NEW.idPrimario, 'TDetPg', OLD.TDetPg, NEW.TDetPg );
-	execute procedure set_log( 12, NEW.idPrimario, 'Cheque', OLD.Cheque, NEW.Cheque );
-	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
-		( NEW.LinhaDig is distinct from OLD.LinhaDig )  OR
-		( NEW.NomePdf is distinct from OLD.NomePdf )  OR
-		( NEW.Arq1 is distinct from OLD.Arq1 )  OR
-		( NEW.StRetorno is distinct from OLD.StRetorno )  OR
-		( NEW.Remessa is distinct from OLD.Remessa )  OR
-		( NEW.DataRem is distinct from OLD.DataRem )  ) ) then
-	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+	execute procedure set_log( 12, NEW.idPrimario, 'PRONTUARIO', OLD.PRONTUARIO, NEW.PRONTUARIO );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraChega', OLD.HoraChega, NEW.HoraChega );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Mkt', OLD.Mkt, NEW.Mkt );
+	execute procedure set_log( 12, NEW.idPrimario, 'Recepcao', OLD.Recepcao, NEW.Recepcao );
+	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'TMotivo', OLD.TMotivo, NEW.TMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPrograma', OLD.TPrograma, NEW.TPrograma );
+	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
 end
 end^
 

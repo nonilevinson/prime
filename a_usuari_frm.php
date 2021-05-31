@@ -19,7 +19,9 @@ echo
 	echo
 	$this->Pedir( "Grupo de acesso",
 		[ "", Grupo, " (obrigatório)" ] ),
-	$this->Pedir( "Nascimento" ),
+	$this->Pedir( "Nascimento",
+		[ "", Nascimento,
+		[ brHtml(4) . "É médico? ", Medico ] ] ),
 	$this->Pedir( "Ativo?",
 		[ "", Ativo,
 		[ brHtml(4) . "Versão ", Versao, "", "", "", "", "FormCalculado" ] ] ),

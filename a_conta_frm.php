@@ -4,6 +4,7 @@ global $g_debugProcesso, $g_acaoAtual;
 
 echo
 "<table class='tabFormulario'>";
+
 	if( $g_acaoAtual == INSERINDO )
 	{
 		echo

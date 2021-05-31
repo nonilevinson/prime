@@ -143,6 +143,16 @@ INSERT INTO ARQLANCEPERMISSAO (IDPRIMARIO, OPERACAO, GRUPO, USUARIO, PODECONSULT
 INSERT INTO ARQLANCEPERMISSAO (IDPRIMARIO, OPERACAO, GRUPO, USUARIO, PODECONSULTAR, PODEVERFRM, PODEINCLUIR, PODEALTERAR, PODEEXCLUIR, PODEMARCAR, PODEIMPRIMIR, PODEEXPORTAR) VALUES (138, 200011, 1, NULL, 1, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO ARQLANCEPERMISSAO (IDPRIMARIO, OPERACAO, GRUPO, USUARIO, PODECONSULTAR, PODEVERFRM, PODEINCLUIR, PODEALTERAR, PODEEXCLUIR, PODEMARCAR, PODEIMPRIMIR, PODEEXPORTAR) VALUES (139, 200041, 1, NULL, 1, 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO ARQLANCEPERMISSAO (IDPRIMARIO, OPERACAO, GRUPO, USUARIO, PODECONSULTAR, PODEVERFRM, PODEINCLUIR, PODEALTERAR, PODEEXCLUIR, PODEMARCAR, PODEIMPRIMIR, PODEEXPORTAR) VALUES (140, 300002, 1, NULL, 1, 0, 0, 0, 0, 0, 0, 0);
+
+insert into arqLancePermissao (idPrimario, Operacao, Grupo, Usuario, Podeconsultar, Podeverfrm, Podeincluir, Podealterar, Podeexcluir, Podemarcar, Podeimprimir, Podeexportar)
+  Values (gen_id( genIdPrimario, 1 ), 200129, 1, null,1,0,0,0,0,0,0,0);
+insert into arqLancePermissao (idPrimario, Operacao, Grupo, Usuario, Podeconsultar, Podeverfrm, Podeincluir, Podealterar, Podeexcluir, Podemarcar, Podeimprimir, Podeexportar)
+  Values (gen_id( genIdPrimario, 1 ), 200130, 1, null,1,0,0,0,0,0,0,0);
+insert into arqLancePermissao (idPrimario, Operacao, Grupo, Usuario, Podeconsultar, Podeverfrm, Podeincluir, Podealterar, Podeexcluir, Podemarcar, Podeimprimir, Podeexportar)
+  Values (gen_id( genIdPrimario, 1 ), 200129, 3, null,1,0,0,0,0,0,0,0);
+insert into arqLancePermissao (idPrimario, Operacao, Grupo, Usuario, Podeconsultar, Podeverfrm, Podeincluir, Podealterar, Podeexcluir, Podemarcar, Podeimprimir, Podeexportar)
+  Values (gen_id( genIdPrimario, 1 ), 200130, 3, null,1,0,0,0,0,0,0,0);
+
 COMMIT WORK;
 
 --* Parâmetro Config
@@ -170,14 +180,14 @@ SET TERM ; ^^
 commit;
 
 /***********************************************
-	TRIGGER ARQCONSULTA_PROTOCOLO
+	TRIGGER ARQCONSULTA_PRONTUARIO
 ************************************************/
 
 SET TERM ^^ ;
-CREATE TRIGGER ARQCONSULTA_PROTOCOLO FOR ARQCONSULTA ACTIVE BEFORE INSERT POSITION 1 AS
+CREATE TRIGGER ARQCONSULTA_PRONTUARIO FOR ARQCONSULTA ACTIVE BEFORE INSERT POSITION 1 AS
 
 begin
-  select coalesce( max( Protocolo ) + 1, 1 ) from ARQCONSULTA into NEW.Protocolo;
+  select coalesce( max( Prontuario ) + 1, 1 ) from ARQCONSULTA into NEW.Prontuario;
 end ^^
 SET TERM ; ^^
 

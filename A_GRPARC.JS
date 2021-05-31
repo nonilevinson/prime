@@ -3,6 +3,28 @@
 =========================================================================*/
 
 //------------------------------------------------------------
+Campo_parGeraParc_Clinica.prototype = new Lance_CampoHidden;
+
+function Campo_parGeraParc_Clinica()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Clinica", "Clinica", "Clinica", "arqClinica", "a_clini", null, "",31);
+}
+
+var Clinica = new Campo_parGeraParc_Clinica;
+
+//------------------------------------------------------------
+Campo_parGeraParc_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parGeraParc_Clinica_Clinica()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var Clinica_Clinica = new Campo_parGeraParc_Clinica_Clinica;
+
+//------------------------------------------------------------
 Campo_parGeraParc_Pessoa.prototype = new Lance_CampoHidden;
 
 function Campo_parGeraParc_Pessoa()
@@ -23,6 +45,17 @@ function Campo_parGeraParc_Pessoa_Nome()
 }
 
 var Pessoa_Nome = new Campo_parGeraParc_Pessoa_Nome;
+
+//------------------------------------------------------------
+Campo_parGeraParc_Documento.prototype = new Lance_CampoNumerico;
+
+function Campo_parGeraParc_Documento()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Documento", "Documento", "Documento", 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Documento = new Campo_parGeraParc_Documento;
 
 //------------------------------------------------------------
 Campo_parGeraParc_TPgRec.prototype = new Lance_CampoLigado;
@@ -415,7 +448,7 @@ Campo_parGeraParc_Perc1.prototype = new Lance_CampoNumerico;
 function Campo_parGeraParc_Perc1()
 {
 	this.superClass = Lance_CampoNumerico;
-	this.superClass( "Perc1", "Perc1", "Perc1", 5, "##z,zz", true,"", "");
+	this.superClass( "Perc1", "Perc1", "Perc1", 3, "##z", true,"", "");
 }
 
 var Perc1 = new Campo_parGeraParc_Perc1;
@@ -690,7 +723,7 @@ Campo_parGeraParc_Valor3.prototype = new Lance_CampoNumerico;
 function Campo_parGeraParc_Valor3()
 {
 	this.superClass = Lance_CampoNumerico;
-	this.superClass( "Valor3", "Valor3", "Valor3", 5, "##z,zz", true,"", "");
+	this.superClass( "Valor3", "Valor3", "Valor3", 11, "###.###.##z,zz", true,"", "");
 }
 
 var Valor3 = new Campo_parGeraParc_Valor3;
@@ -2070,6 +2103,36 @@ function Campo_parGeraParc_Cc12_Nome()
 
 var Cc12_Nome = new Campo_parGeraParc_Cc12_Nome;
 
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parGeraParc_Clinica.prototype.FiltroPai = function()
+{
+			return( "A.Ativo = 1" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parGeraParc_Clinica.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 130 ) )
+	{
+		if( p_comMsg ) alert( "A clínica é obrigatória" );
+		return( true );
+	}
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Clinica.Obrigatorio( p_comMsg ) );
+}
+
+Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
@@ -4773,7 +4836,7 @@ Campo_parGeraParc_Est11.prototype.Existencia = function()
 Campo_parGeraParc_Valor11.prototype.Sugeriu = function()
 {
 {
-	return( this.AtribuiuSemCritica( (Valor-Valor1-Valor2-Valor3-Valor4-Valor5-Valor6-Valor7-Valor8-Valor9-Valor10)/(Parcelas-10)· ) );
+	return( this.AtribuiuSemCritica( (Valor-Valor1-Valor2-Valor3-Valor4-Valor5-Valor6-Valor7-Valor8-Valor9-Valor10)/(Parcelas-10) ) );
 }
 }
 
@@ -5136,6 +5199,14 @@ Cc12_Nome.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_parGeraParc_Clinica.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Clinica_Clinica.Obrigatorio( false ) || tem(Clinica_Clinica) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_parGeraParc_Pessoa.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) );
@@ -5383,6 +5454,7 @@ Venc9.CalculosDependentes= [ Semana9 ];
 Venc10.CalculosDependentes= [ Semana10 ];
 Venc11.CalculosDependentes= [ Semana11 ];
 Venc12.CalculosDependentes= [ Semana12 ];
+Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 TFCobra.ExistenciasDependentes= [ TFPagto ];
 TFPagto.ExistenciasDependentes= [ TDetPg,CCor,CCor_Banco,CCor_Banco_Num,CCor_Agencia,CCor_Conta,Cheque,Pg1,Pg2,Pg3,Pg4,Pg5,Pg6,Pg7,Pg8,Pg9,Pg10,Pg11,Dia12,Venc12,Valor12,Perc12,Pg12,Cc12,Cc12_Plano,Cc12_Plano_CodPlano,Cc12_Codigo ];
@@ -5427,6 +5499,7 @@ Cc11_Plano.ExistenciasDependentes= [ Cc11_Plano_Plano ];
 Venc12.ExistenciasDependentes= [ Semana12,Est12 ];
 Cc12_Plano_CodPlano.ExistenciasDependentes= [ Cc12_Plano ];
 Cc12_Plano.ExistenciasDependentes= [ Cc12_Plano_Plano ];
+Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Pessoa_Nome.ErrosDependentes= [ Pessoa ];
 CCor_Banco_Num.ErrosDependentes= [ CCor_Banco ];
 CCor_Conta.ErrosDependentes= [ CCor ];
@@ -5469,6 +5542,7 @@ Cc9_Plano.DescritoresDependentes= [ Cc9_Plano_Plano ];
 Cc10_Plano.DescritoresDependentes= [ Cc10_Plano_Plano ];
 Cc11_Plano.DescritoresDependentes= [ Cc11_Plano_Plano ];
 Cc12_Plano.DescritoresDependentes= [ Cc12_Plano_Plano ];
+Clinica.CamposChave= [ Clinica_Clinica ];
 Pessoa.CamposChave= [ Pessoa_Nome ];
 CCor.CamposChave= [ CCor_Banco,CCor_Agencia,CCor_Conta ];
 CCor_Banco.CamposChave= [ CCor_Banco_Num ];
@@ -5501,7 +5575,7 @@ function ListaDeCampos_parGeraParc( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Pessoa, Pessoa_Nome, TPgRec, TPgRec_Chave, TPgRec_Descritor, Emissao, RecEnvia, Compete, Historico, Valor, Estimado, Condicao, Parcelas, Iguais, Intervalo, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Banco, CCor_Banco_Num, CCor_Banco_Banco, CCor_Agencia, CCor_Conta, Cheque, TotValor, Dia1, Venc1, Semana1, Est1, Valor1, Perc1, Pg1, Cc1, Cc1_Plano, Cc1_Plano_CodPlano, Cc1_Plano_Plano, Cc1_Codigo, Cc1_Nome, Dia2, Venc2, Semana2, Est2, Valor2, Perc2, Pg2, Cc2, Cc2_Plano, Cc2_Plano_CodPlano, Cc2_Plano_Plano, Cc2_Codigo, Cc2_Nome, Dia3, Venc3, Semana3, Est3, Valor3, Perc3, Pg3, Cc3, Cc3_Plano, Cc3_Plano_CodPlano, Cc3_Plano_Plano, Cc3_Codigo, Cc3_Nome, Dia4, Venc4, Semana4, Est4, Valor4, Perc4, Pg4, Cc4, Cc4_Plano, Cc4_Plano_CodPlano, Cc4_Plano_Plano, Cc4_Codigo, Cc4_Nome, Dia5, Venc5, Semana5, Est5, Valor5, Perc5, Pg5, Cc5, Cc5_Plano, Cc5_Plano_CodPlano, Cc5_Plano_Plano, Cc5_Codigo, Cc5_Nome, Dia6, Venc6, Semana6, Est6, Valor6, Perc6, Pg6, Cc6, Cc6_Plano, Cc6_Plano_CodPlano, Cc6_Plano_Plano, Cc6_Codigo, Cc6_Nome, Dia7, Venc7, Semana7, Est7, Valor7, Perc7, Pg7, Cc7, Cc7_Plano, Cc7_Plano_CodPlano, Cc7_Plano_Plano, Cc7_Codigo, Cc7_Nome, Dia8, Venc8, Semana8, Est8, Valor8, Perc8, Pg8, Cc8, Cc8_Plano, Cc8_Plano_CodPlano, Cc8_Plano_Plano, Cc8_Codigo, Cc8_Nome, Dia9, Venc9, Semana9, Est9, Valor9, Perc9, Pg9, Cc9, Cc9_Plano, Cc9_Plano_CodPlano, Cc9_Plano_Plano, Cc9_Codigo, Cc9_Nome, Dia10, Venc10, Semana10, Est10, Valor10, Perc10, Pg10, Cc10, Cc10_Plano, Cc10_Plano_CodPlano, Cc10_Plano_Plano, Cc10_Codigo, Cc10_Nome, Dia11, Venc11, Semana11, Est11, Valor11, Perc11, Pg11, Cc11, Cc11_Plano, Cc11_Plano_CodPlano, Cc11_Plano_Plano, Cc11_Codigo, Cc11_Nome, Dia12, Venc12, Semana12, Est12, Valor12, Perc12, Pg12, Cc12, Cc12_Plano, Cc12_Plano_CodPlano, Cc12_Plano_Plano, Cc12_Codigo, Cc12_Nome ]	);
+		[ Clinica, Clinica_Clinica, Pessoa, Pessoa_Nome, Documento, TPgRec, TPgRec_Chave, TPgRec_Descritor, Emissao, RecEnvia, Compete, Historico, Valor, Estimado, Condicao, Parcelas, Iguais, Intervalo, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Banco, CCor_Banco_Num, CCor_Banco_Banco, CCor_Agencia, CCor_Conta, Cheque, TotValor, Dia1, Venc1, Semana1, Est1, Valor1, Perc1, Pg1, Cc1, Cc1_Plano, Cc1_Plano_CodPlano, Cc1_Plano_Plano, Cc1_Codigo, Cc1_Nome, Dia2, Venc2, Semana2, Est2, Valor2, Perc2, Pg2, Cc2, Cc2_Plano, Cc2_Plano_CodPlano, Cc2_Plano_Plano, Cc2_Codigo, Cc2_Nome, Dia3, Venc3, Semana3, Est3, Valor3, Perc3, Pg3, Cc3, Cc3_Plano, Cc3_Plano_CodPlano, Cc3_Plano_Plano, Cc3_Codigo, Cc3_Nome, Dia4, Venc4, Semana4, Est4, Valor4, Perc4, Pg4, Cc4, Cc4_Plano, Cc4_Plano_CodPlano, Cc4_Plano_Plano, Cc4_Codigo, Cc4_Nome, Dia5, Venc5, Semana5, Est5, Valor5, Perc5, Pg5, Cc5, Cc5_Plano, Cc5_Plano_CodPlano, Cc5_Plano_Plano, Cc5_Codigo, Cc5_Nome, Dia6, Venc6, Semana6, Est6, Valor6, Perc6, Pg6, Cc6, Cc6_Plano, Cc6_Plano_CodPlano, Cc6_Plano_Plano, Cc6_Codigo, Cc6_Nome, Dia7, Venc7, Semana7, Est7, Valor7, Perc7, Pg7, Cc7, Cc7_Plano, Cc7_Plano_CodPlano, Cc7_Plano_Plano, Cc7_Codigo, Cc7_Nome, Dia8, Venc8, Semana8, Est8, Valor8, Perc8, Pg8, Cc8, Cc8_Plano, Cc8_Plano_CodPlano, Cc8_Plano_Plano, Cc8_Codigo, Cc8_Nome, Dia9, Venc9, Semana9, Est9, Valor9, Perc9, Pg9, Cc9, Cc9_Plano, Cc9_Plano_CodPlano, Cc9_Plano_Plano, Cc9_Codigo, Cc9_Nome, Dia10, Venc10, Semana10, Est10, Valor10, Perc10, Pg10, Cc10, Cc10_Plano, Cc10_Plano_CodPlano, Cc10_Plano_Plano, Cc10_Codigo, Cc10_Nome, Dia11, Venc11, Semana11, Est11, Valor11, Perc11, Pg11, Cc11, Cc11_Plano, Cc11_Plano_CodPlano, Cc11_Plano_Plano, Cc11_Codigo, Cc11_Nome, Dia12, Venc12, Semana12, Est12, Valor12, Perc12, Pg12, Cc12, Cc12_Plano, Cc12_Plano_CodPlano, Cc12_Plano_Plano, Cc12_Codigo, Cc12_Nome ]	);
 	IniciarDependencias_parGeraParc();
 	g_prefixo = l_prefixo;
 	return( l_lista );

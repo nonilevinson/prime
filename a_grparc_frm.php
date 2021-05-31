@@ -26,10 +26,11 @@ echo
 "<table class='Formulario' >
    <table class='tabFormulario'>";
 
-if( ultimaLigOpcaoEm( 157 ) ) //* menu Finaneiro
+//* 31/05/2021 o sistema ainda não tem outra opção
+// if( ultimaLigOpcaoEm( 130 ) ) //* menu Finaneiro
 {
    echo
-   $this->PedirZerando( "Centro de custo", Centro ),
+   $this->PedirZerando( "Clínica", Clinica ),
    $this->PedirZerando( "Pessoa" ),
    $this->PedirZerando( "Tipo",
       [ "", TPgRec,
@@ -63,11 +64,14 @@ if( ultimaLigOpcaoEm( 157 ) ) //* menu Finaneiro
       [ brHtml(4) . "Conta ", CCor ] ] ),
    $this->PedirZerando( "Cheque" );
 }
-else //* op 159 pelo menu da navegação de arqVenda
+
+//* 31/05/2021 o sistema ainda não tem outra opção
+/*
+else
 {
    echo
-   $this->Pedir( "Centro de custo",
-      [ "", Centro, '','','','','FormCalculado' ] ),
+   $this->Pedir( "Clínica",
+      [ "", Clinica, '','','','','FormCalculado' ] ),
    $this->Pedir( "Pessoa",
       [ "", Pessoa, '','','','','FormCalculado' ] ),
    $this->Pedir( "Tipo",
@@ -91,7 +95,7 @@ else //* op 159 pelo menu da navegação de arqVenda
       [ "", TFCobra,
       [ brHtml(4) . "Bandeira ", Bandeira, '','','','','FormCalculado' ],'','','','FormCalculado' ] );
 }
-
+*/
    echo
    "</table>
    <br>

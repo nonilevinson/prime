@@ -5,35 +5,35 @@ $op = ultimaLigOpcao();
 echo 	"<table class='tabFormulario'>";
 //====================================================================
 
-if( $op == 154 ) //* baixar parcelas
+if( $op == 129 ) //* baixar parcelas
 {
 	global $g_debugProcesso;
 
-	$select = "Select distinct C.Centro
+	$select = "Select distinct C.Clinica
 		From arqParcela P
-			join arqConta C on C.idPrimario=P.Conta
+			join arqClinica C on C.idPrimario=P.Conta
 		Where P.IdPrimario IN ( SELECT MARCADOS.Registro FROM " . FromMarcados( "arqParcela", "P" ) .
 			" where " . WhereMarcados() . " )";
 	$regQtos = sql_lerRegistros( $select );
 // if( $g_debugProcesso ) echo '<br><b>GR0 arqParcela S=</b> '.$select.' <b>sizeOf=</b> '.sizeOf($regQtos);
 
 	if( sizeOf( $regQtos ) > 1 )
-		tecleAlgoVolta( 'Foram marcadas parcelas de mais de um centro de custo.\n Marque parcelas de somente um por vez.', true );
+		tecleAlgoVolta( 'Foram marcadas parcelas de mais de uma clínica.\n Marque parcelas de somente uma por vez.', true );
 
-	$select = "Select P.ValorLiq, P.Parcela, C.Transacao, E.Nome, T.Descritor as TPgRec, N.Centro,
+	$select = "Select P.ValorLiq, P.Parcela, C.Transacao, E.Nome, T.Descritor as TPgRec, N.Clinica,
 				(Select count(*)
 					From arqParcela P
 					Where P.IdPrimario IN ( SELECT MARCADOS.Registro FROM " . FromMarcados( "arqParcela", "P" ) .
 						" where " . WhereMarcados() . " ) and P.DataPagto is null
 				) as Qtas
 			From arqParcela P
-				join arqConta 	C on C.idPrimario=P.Conta
-				join tabTPgRec T on T.idPrimario=C.TPgRec
-				join arqCentro	N on N.idPrimario=C.Centro
-				join arqPessoa	E on E.idPrimario=C.Pessoa
+				join arqConta  	C on C.idPrimario=P.Conta
+				join tabTPgRec 	T on T.idPrimario=C.TPgRec
+				join arqClinica	N on N.idPrimario=C.Clinica
+				join arqPessoa		E on E.idPrimario=C.Pessoa
 			Where P.idPrimario IN ( SELECT MARCADOS.Registro FROM " . FromMarcados( "arqParcela", "P" ) .
 				" where " . WhereMarcados() . " ) and P.DataPagto is null
-			Order by C.Centro, T.Descritor, E.Nome";
+			Order by C.Clinica, T.Descritor, E.Nome";
 	$reg = sql_lerRegistros( $select );
 // if( $g_debugProcesso ) echo '<br><br><b>GR0 arqParcela S=</b> '.$select;
 
@@ -56,7 +56,7 @@ if( $op == 154 ) //* baixar parcelas
 		foreach( $reg as $umReg )
 		{
 			echo "<tr>
-				<td class='FormValor'>" . $umReg->CENTRO . "</td>
+				<td class='FormValor'>" . $umReg->CLINICA . "</td>
 				<td class='FormValor'>" . $umReg->NOME . "</td>
 				<td class='FormValor'>" . $umReg->TPGREC . "</td>
 				<td class='FormValor alinhaDir'>" . formatarNum( $umReg->TRANSACAO ) . "</td>
@@ -71,6 +71,7 @@ if( $op == 154 ) //* baixar parcelas
 
 	echo
 	"</table></center></td></tr>",
+
 	$this->Pular1Linha(2),
    $this->PedirZerando( "Forma", TFPagto ),
    $this->PedirZerando( "Detalhe", TDetPg ),

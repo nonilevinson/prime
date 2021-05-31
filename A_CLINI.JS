@@ -137,7 +137,7 @@ g_idOperacao = 31;
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,18,[],[33]);
 var Menu_2 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,18,[],[35]);
-var Menu_3 = new Array( 1,"Consultas","","l",112,"","",1,"","1","a_consul","arqConsulta","Folhear","Clinica","?","","", "","", 0,18,[],[37]);
-var Menu_4 = new Array( 1,"Horários Médicos","","H",114,"","",1,"","1","a_horari","arqHorario","Folhear","Clinica","?","","", "","", 0,18,[],[38]);
+var Menu_3 = new Array( 1,"Consultas","","l",112,"","",1,"","1","a_consul","arqConsulta","Folhear","Clinica","?","","", "","", 0,18,[],[39]);
+var Menu_4 = new Array( 1,"Horários Médicos","","H",114,"","",1,"","1","a_horari","arqHorario","Folhear","Clinica","?","","", "","", 0,18,[],[37]);
 parent.navegacao.MenuPrincQtdOpcoes=4;
 }
