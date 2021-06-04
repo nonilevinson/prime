@@ -368,9 +368,7 @@ Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqConsulta_Medico.prototype.FiltroPai = function()
 {
-		if( g_inserindo )
-			return( "A.Grupo is not null and A.Ativo = 1 and A.Medico = 1" );
-			return( "A.Grupo is not null and A.Medico = 1" );
+			return( "A.Grupo is not null" );
 }
 
 //-------------------------------------------------------------
@@ -396,7 +394,7 @@ Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 Campo_arqConsulta_Recepcao.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
-			return( "A.Grupo is not null and A.Ativo == 1" );
+			return( "A.Grupo is not null and A.Ativo = 1" );
 			return( "A.Grupo is not null" );
 }
 
@@ -423,7 +421,7 @@ Recepcao_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 Campo_arqConsulta_Mkt.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
-			return( "A.Grupo is not null and A.Ativo == 1" );
+			return( "A.Grupo is not null and A.Ativo = 1" );
 			return( "A.Grupo is not null" );
 }
 

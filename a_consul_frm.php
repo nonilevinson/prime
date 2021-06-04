@@ -24,11 +24,11 @@ echo
          [ " h " . brHtml(2) . "Chegada ", HoraChega, " h" ] ] ], '', '','', 'FormCalculado' ] );
 
    echo
+   $this->NaoPedir( Recepcao ),
 	$this->Pedir( "Clínica", Clinica ),
    $this->Pedir( "Paciente", Pessoa ),
    $this->Pedir( "Médico", Medico ),
    $this->Pedir( "Marketing", Mkt ),
-   $this->Pedir( "Recepção", Recepcao ),
    $this->Pedir( "Assessor" ),
 "</table>",
 
