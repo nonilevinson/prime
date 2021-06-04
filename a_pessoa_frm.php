@@ -36,7 +36,6 @@ CriarForms(
 
 //* Dados Física
 "<table id='P' class='tabFormulario' style='display:none'>",
-// "<table class='tabFormulario'>",
 	$this->Pedir( "Nascimento",
 		[ "", Nascimento,
 		[ brHtml(4) . "Idade ", Idade,
