@@ -61,6 +61,50 @@ function Campo_arqClinica_Ativo()
 
 var Ativo = new Campo_arqClinica_Ativo;
 
+//------------------------------------------------------------
+Campo_arqClinica_HoraIni.prototype = new Lance_CampoHora;
+
+function Campo_arqClinica_HoraIni()
+{
+	this.superClass = Lance_CampoHora;
+	this.superClass( "HoraIni", "HoraIni", "HoraIni", 4, "hh:mm", true);
+}
+
+var HoraIni = new Campo_arqClinica_HoraIni;
+
+//------------------------------------------------------------
+Campo_arqClinica_HoraFim.prototype = new Lance_CampoHora;
+
+function Campo_arqClinica_HoraFim()
+{
+	this.superClass = Lance_CampoHora;
+	this.superClass( "HoraFim", "HoraFim", "HoraFim", 4, "hh:mm", true);
+}
+
+var HoraFim = new Campo_arqClinica_HoraFim;
+
+//------------------------------------------------------------
+Campo_arqClinica_ConsSab.prototype = new Lance_CampoLogico;
+
+function Campo_arqClinica_ConsSab()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "ConsSab", "ConsSab", "ConsSab");
+}
+
+var ConsSab = new Campo_arqClinica_ConsSab;
+
+//------------------------------------------------------------
+Campo_arqClinica_ConsDom.prototype = new Lance_CampoLogico;
+
+function Campo_arqClinica_ConsDom()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "ConsDom", "ConsDom", "ConsDom");
+}
+
+var ConsDom = new Campo_arqClinica_ConsDom;
+
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -104,8 +148,39 @@ Campo_arqClinica_Ativo.prototype.Cabecalho = function()
 		return( "Ativa?" );
 }
 
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqClinica_HoraIni.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O horário inicial é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqClinica_HoraFim.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O horário final é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqClinica_HoraFim.prototype.Existencia = function()
+{
+	return( tem( HoraIni ) );
+}
+
 function IniciarDependencias_arqClinica()
 {
+HoraIni.ExistenciasDependentes= [ HoraFim ];
 }
 
 
@@ -125,7 +200,7 @@ function ListaDeCampos_arqClinica( p_prefixo )
 
 		[ Clinica, Razao, Email, CNPJ ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ Ativo ]	);
+		[ Ativo, HoraIni, HoraFim, ConsSab, ConsDom ]	);
 	IniciarDependencias_arqClinica();
 	g_prefixo = l_prefixo;
 	return( l_lista );
@@ -135,9 +210,10 @@ g_arquivoCampos = ListaDeCampos_arqClinica( '' );
 g_idOperacao = 31;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,18,[],[33]);
-var Menu_2 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,18,[],[35]);
-var Menu_3 = new Array( 1,"Consultas","","l",112,"","",1,"","1","a_consul","arqConsulta","Folhear","Clinica","?","","", "","", 0,18,[],[39]);
-var Menu_4 = new Array( 1,"Horários Médicos","","H",114,"","",1,"","1","a_horari","arqHorario","Folhear","Clinica","?","","", "","", 0,18,[],[37]);
-parent.navegacao.MenuPrincQtdOpcoes=4;
+var Menu_1 = new Array( 1,"Consultas","","l",112,"","",1,"","1","a_consul","arqConsulta","Folhear","Clinica","?","","", "","", 0,19,[],[39]);
+var Menu_2 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,19,[],[33]);
+var Menu_3 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,19,[],[35]);
+var Menu_4 = new Array( 1,"Duração Consulta","","r",133,"","",1,"","1","a_duraca","arqDuracao","Folhear","Clinica","?","","", "","", 0,19,[],[38]);
+var Menu_5 = new Array( 1,"Horários Bloqueados","","q",114,"","",1,"","1","a_horabl","arqHoraBloq","Folhear","Clinica","?","","", "","", 0,19,[],[37]);
+parent.navegacao.MenuPrincQtdOpcoes=5;
 }

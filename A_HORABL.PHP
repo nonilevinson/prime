@@ -1,54 +1,21 @@
 <?php
 
 /*=========================================================================
-  a_horari - Horario
+  a_horabl - HoraBloq
 =========================================================================*/
 
-if( DEF_a_horari == 1 )
+if( DEF_a_horabl == 1 )
   return;
-define( "DEF_a_horari", 1 );
+define( "DEF_a_horabl", 1 );
 
-include_once( SISTEMA_DIR_ABSOLUTO . "a_horari_ext.php" );
+include_once( SISTEMA_DIR_ABSOLUTO . "a_horabl_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
-
-//======================================================
-//	Campo Usuario
-//======================================================
-
-class campo_arqHorario_Usuario extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "Usuario", "Usuario", "Usuario", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Médico" );
-	}
-
-}
-
-//======================================================
-//	Campo Usuario_Usuario
-//======================================================
-
-class campo_arqHorario_Usuario_Usuario extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "Usuario_Usuario", "Usuario_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Usuario", false );
-	}
-
-}
 
 //======================================================
 //	Campo Clinica
 //======================================================
 
-class campo_arqHorario_Clinica extends Lance_CampoLigado
+class campo_arqHoraBloq_Clinica extends Lance_CampoLigado
 {
 	function __construct()
 	{
@@ -61,7 +28,7 @@ class campo_arqHorario_Clinica extends Lance_CampoLigado
 //	Campo Clinica_Clinica
 //======================================================
 
-class campo_arqHorario_Clinica_Clinica extends Lance_CampoCadeia
+class campo_arqHoraBloq_Clinica_Clinica extends Lance_CampoCadeia
 {
 	function __construct()
 	{
@@ -78,34 +45,27 @@ class campo_arqHorario_Clinica_Clinica extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo TDiaSem
+//	Campo Nome
 //======================================================
 
-class campo_arqHorario_TDiaSem extends Lance_CampoLigado
+class campo_arqHoraBloq_Nome extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "TDiaSem", "TDiaSem", "TDiaSem", 0, "tabTDiaSem", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Dia" );
+		parent::__construct( "Nome", "Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
 	}
 
 }
 
 //======================================================
-//	Campo HoraIni
+//	Campo DataIni
 //======================================================
 
-class campo_arqHorario_HoraIni extends Lance_CampoHora
+class campo_arqHoraBloq_DataIni extends Lance_CampoData
 {
 	function __construct()
 	{
-		parent::__construct( "HoraIni", "HoraIni", "HoraIni", 4, "hh:mm", 0, 0, false );
+		parent::__construct( "DataIni", "DataIni", "DataIni", 8, "dd/mm/aaaa", 0, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -118,10 +78,50 @@ class campo_arqHorario_HoraIni extends Lance_CampoHora
 }
 
 //======================================================
+//	Campo HoraIni
+//======================================================
+
+class campo_arqHoraBloq_HoraIni extends Lance_CampoHora
+{
+	function __construct()
+	{
+		parent::__construct( "HoraIni", "HoraIni", "HoraIni", 4, "hh:mm", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "das" );
+	}
+
+}
+
+//======================================================
+//	Campo DataFim
+//======================================================
+
+class campo_arqHoraBloq_DataFim extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "DataFim", "DataFim", "DataFim", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Final" );
+	}
+
+}
+
+//======================================================
 //	Campo HoraFim
 //======================================================
 
-class campo_arqHorario_HoraFim extends Lance_CampoHora
+class campo_arqHoraBloq_HoraFim extends Lance_CampoHora
 {
 	function __construct()
 	{
@@ -138,49 +138,9 @@ class campo_arqHorario_HoraFim extends Lance_CampoHora
 }
 
 //======================================================
-//	Campo DiaIni
+//	Arquivo arqHoraBloq
 //======================================================
-
-class campo_arqHorario_DiaIni extends Lance_CampoData
-{
-	function __construct()
-	{
-		parent::__construct( "DiaIni", "DiaIni", "DiaIni", 8, "dd/mm/aaaa", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Válido de" );
-	}
-
-}
-
-//======================================================
-//	Campo DiaFim
-//======================================================
-
-class campo_arqHorario_DiaFim extends Lance_CampoData
-{
-	function __construct()
-	{
-		parent::__construct( "DiaFim", "DiaFim", "DiaFim", 8, "dd/mm/aaaa", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Até" );
-	}
-
-}
-
-//======================================================
-//	Arquivo arqHorario
-//======================================================
-function listaCampos_arqHorario( $p_prefixo )
+function listaCampos_arqHoraBloq( $p_prefixo )
 {
 	global $g_prefixo;
 	$prefixoAnt = $g_prefixo;
@@ -188,32 +148,28 @@ function listaCampos_arqHorario( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
-			new campo_arqHorario_Usuario(),
-			new campo_arqHorario_Usuario_Usuario(),
-			new campo_arqHorario_Clinica(),
-			new campo_arqHorario_Clinica_Clinica(),
-			new campo_arqHorario_TDiaSem(),
-			new Lance_CampoCadeia( "TDiaSem_Chave", "TDiaSem_Chave", "Chave", 1, "x", EH_CHAVE, TDiaSem ),
-			new Lance_CampoCadeia( "TDiaSem_Descritor", "TDiaSem_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TDiaSem ),
-			new campo_arqHorario_HoraIni(),
-			new campo_arqHorario_HoraFim(),
-			new campo_arqHorario_DiaIni(),
-			new campo_arqHorario_DiaFim() )
+			new campo_arqHoraBloq_Clinica(),
+			new campo_arqHoraBloq_Clinica_Clinica(),
+			new campo_arqHoraBloq_Nome(),
+			new campo_arqHoraBloq_DataIni(),
+			new campo_arqHoraBloq_HoraIni(),
+			new campo_arqHoraBloq_DataFim(),
+			new campo_arqHoraBloq_HoraFim() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
 }
 
 //------------------------------------------------------------
-class arqHorario extends Lance_Arquivo
+class arqHoraBloq extends Lance_Arquivo
 {
 	function __construct()
 	{
 		parent::__construct(
-			"arqHorario",  // Nome Interno do arquivo
-			"a_horari",  // Nome deste arquivo Php que contém o arquivo
-			"Horario",  // Nome do arquivo acentuado-se
-			listaCampos_arqHorario( "" ), 37
+			"arqHoraBloq",  // Nome Interno do arquivo
+			"a_horabl",  // Nome deste arquivo Php que contém o arquivo
+			"HoraBloq",  // Nome do arquivo acentuado-se
+			listaCampos_arqHoraBloq( "" ), 37
 		);
 	}
 
@@ -232,13 +188,12 @@ class arqHorario extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( Usuario_Usuario ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( TDiaSem_Descritor ) );
+			array_push( $vetAux, array( Nome ) );
+			array_push( $vetAux, array( DataIni ) );
 			array_push( $vetAux, array( HoraIni ) );
+			array_push( $vetAux, array( DataFim ) );
 			array_push( $vetAux, array( HoraFim ) );
-			array_push( $vetAux, array( DiaIni ) );
-			array_push( $vetAux, array( DiaFim ) );
 		return( $vetAux );
 	}
 
@@ -247,7 +202,7 @@ class arqHorario extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Usuario ), array( Clinica ), array( TDiaSem ), array( TDiaSem_Chave ), array( TDiaSem_Descritor ) ) );
+		return( array( array( Clinica ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -257,13 +212,12 @@ class arqHorario extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( Usuario_Usuario ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( TDiaSem_Descritor ) );
+			array_push( $vetAux, array( Nome ) );
+			array_push( $vetAux, array( DataIni ) );
 			array_push( $vetAux, array( HoraIni ) );
+			array_push( $vetAux, array( DataFim ) );
 			array_push( $vetAux, array( HoraFim ) );
-			array_push( $vetAux, array( DiaIni ) );
-			array_push( $vetAux, array( DiaFim ) );
 		return( $vetAux );
 	}
 
@@ -272,7 +226,7 @@ class arqHorario extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function NomeCompleto()
 	{
-		return( 'Horários' );
+		return( 'Horários bloqueados' );
 	}
 
 }

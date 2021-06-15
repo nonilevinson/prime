@@ -12,7 +12,17 @@ echo
 "</table>",
 
 CriarForms(
-	[ 'Endereço', 'E', true ] ),
+	[ 'Horário', 'H', true ],
+   [ 'Endereço', 'E', true ] ),
+
+//* Horario
+"<table id='H' class='tabFormulario' style='display:none'>",
+   $this->Pedir( "Horário",
+      [ "", HoraIni,
+      [ " h às ", HoraFim, " h" ] ] ),
+   $this->Pedir( "Sábado?", ConsSab ),
+   $this->Pedir( "Domingo?", ConsDom ),
+"</table>",
 
 //* Endereço
 "<table id='E' class='tabFormulario' style='display:none'>",

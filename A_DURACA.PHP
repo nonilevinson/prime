@@ -12,34 +12,34 @@ include_once( SISTEMA_DIR_ABSOLUTO . "a_duraca_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
 
 //======================================================
-//	Campo Usuario
+//	Campo Clinica
 //======================================================
 
-class campo_arqDuracao_Usuario extends Lance_CampoLigado
+class campo_arqDuracao_Clinica extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Usuario", "Usuario", "Usuario", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+		parent::__construct( "Clinica", "Clinica", "Clinica", 0, "arqClinica", "arqClinica.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
 }
 
 //======================================================
-//	Campo Usuario_Usuario
+//	Campo Clinica_Clinica
 //======================================================
 
-class campo_arqDuracao_Usuario_Usuario extends Lance_CampoCadeia
+class campo_arqDuracao_Clinica_Clinica extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Usuario_Usuario", "Usuario_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Usuario", false );
+		parent::__construct( "Clinica_Clinica", "Clinica_Clinica", "Clinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Clinica", false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Usuário" );
+			return( "Clínica" );
 	}
 
 }
@@ -115,8 +115,8 @@ function listaCampos_arqDuracao( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
-			new campo_arqDuracao_Usuario(),
-			new campo_arqDuracao_Usuario_Usuario(),
+			new campo_arqDuracao_Clinica(),
+			new campo_arqDuracao_Clinica_Clinica(),
 			new campo_arqDuracao_Inicio(),
 			new campo_arqDuracao_Duracao(),
 			new campo_arqDuracao_MaxAgenda() )
@@ -153,7 +153,7 @@ class arqDuracao extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( Usuario_Usuario ) );
+			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Inicio ) );
 			array_push( $vetAux, array( Duracao ) );
 			array_push( $vetAux, array( MaxAgenda ) );
@@ -165,7 +165,7 @@ class arqDuracao extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Usuario ) ) );
+		return( array( array( Clinica ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -175,7 +175,7 @@ class arqDuracao extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( Usuario_Usuario ) );
+			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Inicio ) );
 			array_push( $vetAux, array( Duracao ) );
 			array_push( $vetAux, array( MaxAgenda ) );

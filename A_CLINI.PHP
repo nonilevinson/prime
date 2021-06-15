@@ -101,6 +101,58 @@ class campo_arqClinica_Ativo extends Lance_CampoLogico
 }
 
 //======================================================
+//	Campo HoraIni
+//======================================================
+
+class campo_arqClinica_HoraIni extends Lance_CampoHora
+{
+	function __construct()
+	{
+		parent::__construct( "HoraIni", "HoraIni", "HoraIni", 4, "hh:mm", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo HoraFim
+//======================================================
+
+class campo_arqClinica_HoraFim extends Lance_CampoHora
+{
+	function __construct()
+	{
+		parent::__construct( "HoraFim", "HoraFim", "HoraFim", 4, "hh:mm", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo ConsSab
+//======================================================
+
+class campo_arqClinica_ConsSab extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "ConsSab", "ConsSab", "ConsSab", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo ConsDom
+//======================================================
+
+class campo_arqClinica_ConsDom extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "ConsDom", "ConsDom", "ConsDom", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqClinica
 //======================================================
 function listaCampos_arqClinica( $p_prefixo )
@@ -117,7 +169,11 @@ function listaCampos_arqClinica( $p_prefixo )
 			new campo_arqClinica_CNPJ() ),
 		listaCampos_domEndereco( "Ende_" ),
 		array( 
-			new campo_arqClinica_Ativo() )
+			new campo_arqClinica_Ativo(),
+			new campo_arqClinica_HoraIni(),
+			new campo_arqClinica_HoraFim(),
+			new campo_arqClinica_ConsSab(),
+			new campo_arqClinica_ConsDom() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -178,6 +234,10 @@ class arqClinica extends Lance_Arquivo
 			array_push( $vetAux, array( Ende_Celular ) );
 			array_push( $vetAux, array( Ende_WhatsApp ) );
 			array_push( $vetAux, array( Ativo ) );
+			array_push( $vetAux, array( HoraIni ) );
+			array_push( $vetAux, array( HoraFim ) );
+			array_push( $vetAux, array( ConsSab ) );
+			array_push( $vetAux, array( ConsDom ) );
 		return( $vetAux );
 	}
 

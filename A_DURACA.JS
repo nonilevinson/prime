@@ -3,26 +3,26 @@
 =========================================================================*/
 
 //------------------------------------------------------------
-Campo_arqDuracao_Usuario.prototype = new Lance_CampoHidden;
+Campo_arqDuracao_Clinica.prototype = new Lance_CampoHidden;
 
-function Campo_arqDuracao_Usuario()
+function Campo_arqDuracao_Clinica()
 {
 	this.superClass = Lance_CampoHidden;
-	this.superClass( "Usuario", "Usuario", "Usuario", "arqUsuario", "a_usuari", null, "",5);
+	this.superClass( "Clinica", "Clinica", "Clinica", "arqClinica", "a_clini", null, "",31);
 }
 
-var Usuario = new Campo_arqDuracao_Usuario;
+var Clinica = new Campo_arqDuracao_Clinica;
 
 //------------------------------------------------------------
-Campo_arqDuracao_Usuario_Usuario.prototype = new Lance_CampoCadeiaLigado;
+Campo_arqDuracao_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqDuracao_Usuario_Usuario()
+function Campo_arqDuracao_Clinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Usuario_Usuario", "Usuario_Usuario", "Usuario", Usuario, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var Usuario_Usuario = new Campo_arqDuracao_Usuario_Usuario;
+var Clinica_Clinica = new Campo_arqDuracao_Clinica_Clinica;
 
 //------------------------------------------------------------
 Campo_arqDuracao_Inicio.prototype = new Lance_CampoData;
@@ -60,12 +60,12 @@ var MaxAgenda = new Campo_arqDuracao_MaxAgenda;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqDuracao_Usuario_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqDuracao_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
-	return( Usuario.Obrigatorio( p_comMsg ) );
+	return( Clinica.Obrigatorio( p_comMsg ) );
 }
 
-Usuario_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
+Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -133,16 +133,16 @@ Campo_arqDuracao_MaxAgenda.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_arqDuracao_Usuario.prototype.ExistenciaEspecial = function()
+Campo_arqDuracao_Clinica.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Usuario_Usuario.Obrigatorio( false ) || tem(Usuario_Usuario) ) );
+	return( ( !Clinica_Clinica.Obrigatorio( false ) || tem(Clinica_Clinica) ) );
 }
 
 function IniciarDependencias_arqDuracao()
 {
-Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
-Usuario_Usuario.ErrosDependentes= [ Usuario ];
-Usuario.CamposChave= [ Usuario_Usuario ];
+Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
+Clinica_Clinica.ErrosDependentes= [ Clinica ];
+Clinica.CamposChave= [ Clinica_Clinica ];
 }
 
 
@@ -160,7 +160,7 @@ function ListaDeCampos_arqDuracao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Inicio, Duracao, MaxAgenda ]	);
+		[ Clinica, Clinica_Clinica, Inicio, Duracao, MaxAgenda ]	);
 	IniciarDependencias_arqDuracao();
 	g_prefixo = l_prefixo;
 	return( l_lista );
