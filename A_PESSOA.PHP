@@ -88,6 +88,26 @@ class campo_arqPessoa_TPFPJ extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo Prontuario
+//======================================================
+
+class campo_arqPessoa_Prontuario extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Prontuario", "Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Prontuário" );
+	}
+
+}
+
+//======================================================
 //	Campo CNPJ
 //======================================================
 
@@ -424,7 +444,8 @@ function listaCampos_arqPessoa( $p_prefixo )
 			new Lance_CampoCadeia( "TPessoa_Descritor", "TPessoa_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TPessoa ),
 			new campo_arqPessoa_TPFPJ(),
 			new Lance_CampoCadeia( "TPFPJ_Chave", "TPFPJ_Chave", "Chave", 1, "x", EH_CHAVE, TPFPJ ),
-			new Lance_CampoCadeia( "TPFPJ_Descritor", "TPFPJ_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TPFPJ ) ),
+			new Lance_CampoCadeia( "TPFPJ_Descritor", "TPFPJ_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TPFPJ ),
+			new campo_arqPessoa_Prontuario() ),
 		listaCampos_domEndereco( "Ende_" ),
 		array( 
 			new campo_arqPessoa_CNPJ(),
@@ -486,19 +507,24 @@ class arqPessoa extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Nome ) );
+		if( ultimaLigOpcaoEm( 15,136 ) )
+ {
 			array_push( $vetAux, array( TPessoa_Descritor ) );
+ }
+		if( ultimaLigOpcaoEm( 15,136 ) )
+ {
 			array_push( $vetAux, array( TPFPJ_Descritor ) );
+ }
+		if( ultimaLigOpcaoEm( 15,135 ) )
+ {
+			array_push( $vetAux, array( Prontuario ) );
+ }
 			array_push( $vetAux, array( Ativo ) );
+		if( ultimaLigOpcaoEm( 15,135 ) )
+ {
 			array_push( $vetAux, array( QtoDesmar ) );
+ }
 		return( $vetAux );
-	}
-
-	//-------------------------------------------------------------
-	// Complemento para os Campos Folheaveis do Arquivo
-	//-------------------------------------------------------------
-	function ComplementoFolheamento()
-	{
-		return( array( array( TPessoa ), array( TPessoa_Chave ), array( TPessoa_Descritor ), array( TPFPJ ), array( TPFPJ_Chave ), array( TPFPJ_Descritor ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -512,6 +538,7 @@ class arqPessoa extends Lance_Arquivo
 			array_push( $vetAux, array( Apelido ) );
 			array_push( $vetAux, array( TPessoa_Descritor ) );
 			array_push( $vetAux, array( TPFPJ_Descritor ) );
+			array_push( $vetAux, array( Prontuario ) );
 			array_push( $vetAux, array( Ende_CEP ) );
 			array_push( $vetAux, array( Ende_Endereco ) );
 			array_push( $vetAux, array( Ende_Bairro_Bairro ) );
@@ -550,6 +577,22 @@ class arqPessoa extends Lance_Arquivo
 	function NomeCompleto()
 	{
 		return( 'Pessoas' );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: EhPaciente
+	//-------------------------------------------------------------
+	function EhPaciente()
+	{
+	return( "TPessoa = 2" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: NaoPacien 
+	//-------------------------------------------------------------
+	function NaoPacien()
+	{
+	return( "TPessoa != 2" );
 	}
 
 }

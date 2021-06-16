@@ -1738,34 +1738,35 @@ CREATE TABLE arqPessoa
 	/*  3*/	APELIDO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
 	/*  4*/	TPESSOA ligadoComTabela, /* Ligado com a Tabela TPessoa */
 	/*  5*/	TPFPJ ligadoComTabela, /* Ligado com a Tabela TPFPJ */
-	/*  6*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
-	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
-	/*  8*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
-	/*  9*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
-	/* 10*/	/* ENDE_DDD */
-	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
-	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
-	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
-	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 15*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
-	/* 16*/	INSCESTAD VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
-	/* 17*/	INSCMUNIC VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
-	/* 18*/	NASCIMENTO DATE, /* Máscara = 4ano */
-	/* 19*/	/* IDADE */
-	/* 20*/	SEXO ligadoComTabela, /* Ligado com a Tabela Sexo */
-	/* 21*/	ESTCIVIL ligadoComTabela, /* Ligado com a Tabela EstCivil */
-	/* 22*/	PROFISSAO ligadoComArquivo, /* Ligado com o Arquivo Profissao */
-	/* 23*/	CPF VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = nnn.nnn.nnn-nn */
-	/* 24*/	IDENTIDADE VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = X */
-	/* 25*/	ORGAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = X */
-	/* 26*/	EMISSAO DATE, /* Máscara = 4ano */
-	/* 27*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/* 28*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 29*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 30*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 31*/	DESDE DATE, /* Máscara = 4ano */
-	/* 32*/	QTODESMAR SMALLINT, /* Máscara = N */
-	/* 33*/	MIDIA ligadoComArquivo, /* Ligado com o Arquivo Midia */
+	/*  6*/	PRONTUARIO NUMERIC(18,0), /* Máscara = N */
+	/*  7*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
+	/*  8*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  9*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
+	/* 10*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
+	/* 11*/	/* ENDE_DDD */
+	/* 12*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 13*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
+	/* 14*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
+	/* 15*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 16*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
+	/* 17*/	INSCESTAD VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
+	/* 18*/	INSCMUNIC VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
+	/* 19*/	NASCIMENTO DATE, /* Máscara = 4ano */
+	/* 20*/	/* IDADE */
+	/* 21*/	SEXO ligadoComTabela, /* Ligado com a Tabela Sexo */
+	/* 22*/	ESTCIVIL ligadoComTabela, /* Ligado com a Tabela EstCivil */
+	/* 23*/	PROFISSAO ligadoComArquivo, /* Ligado com o Arquivo Profissao */
+	/* 24*/	CPF VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = nnn.nnn.nnn-nn */
+	/* 25*/	IDENTIDADE VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = X */
+	/* 26*/	ORGAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = X */
+	/* 27*/	EMISSAO DATE, /* Máscara = 4ano */
+	/* 28*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
+	/* 29*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 30*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 31*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 32*/	DESDE DATE, /* Máscara = 4ano */
+	/* 33*/	QTODESMAR SMALLINT, /* Máscara = N */
+	/* 34*/	MIDIA ligadoComArquivo, /* Ligado com o Arquivo Midia */
 	CONSTRAINT arqPessoa_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqPessoa_UK UNIQUE ( Nome )
 );
@@ -2371,14 +2372,14 @@ commit;
 CREATE TABLE arqConsulta
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	PRONTUARIO NUMERIC(18,0), /* Máscara = N */
+	/*  2*/	NUM NUMERIC(18,0), /* Máscara = N */
 	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  4*/	DATA DATE, /* Máscara = 4ano */
-	/*  5*/	HORA TIME, /* Máscara = Hhmm */
-	/*  6*/	HORACHEGA TIME, /* Máscara = Hhmm */
-	/*  7*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  8*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/*  9*/	RECEPCAO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  4*/	TSTCON ligadoComTabela, /* Ligado com a Tabela TStCon */
+	/*  5*/	DATA DATE, /* Máscara = 4ano */
+	/*  6*/	HORA TIME, /* Máscara = Hhmm */
+	/*  7*/	HORACHEGA TIME, /* Máscara = Hhmm */
+	/*  8*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  9*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 10*/	MKT ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 11*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 12*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
@@ -2387,7 +2388,7 @@ CREATE TABLE arqConsulta
 	/* 15*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	/* 16*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqConsulta_UK UNIQUE ( Prontuario )
+	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
 commit;
 
@@ -2400,7 +2401,7 @@ commit;
 ************************************************************/
 
 ALTER TABLE arqPessoa ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( arqPessoa.Ende_Cidade )  ), 0 ) ) ); 
-ALTER TABLE arqPessoa ALTER ENDE_DDD POSITION 10;
+ALTER TABLE arqPessoa ALTER ENDE_DDD POSITION 11;
 ALTER TABLE cnfXConfig ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( cnfXConfig.Ende_Cidade )  ), 0 ) ) ); 
 ALTER TABLE cnfXConfig ALTER ENDE_DDD POSITION 12;
 ALTER TABLE arqClinica ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( arqClinica.Ende_Cidade )  ), 0 ) ) ); 
@@ -2416,7 +2417,7 @@ ALTER TABLE arqPessoa ADD IDADE INTEGER computed by ( CASE
 )
  )
 	END  ); 
-ALTER TABLE arqPessoa ALTER IDADE POSITION 19;
+ALTER TABLE arqPessoa ALTER IDADE POSITION 20;
 ALTER TABLE arqLogEmail ADD TOTAL INTEGER computed by ( Enviados + NEnviados ); 
 ALTER TABLE arqLogEmail ALTER TOTAL POSITION 8;
 ALTER TABLE arqLogEmail ADD PERCLIDOS NUMERIC( 5, 2 ) computed by ( CASE
@@ -2474,7 +2475,7 @@ RECREATE VIEW V_arqUsuario AS
 commit;
 
 RECREATE VIEW V_arqPessoa AS 
-	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.TPESSOA, A1.CHAVE as TPessoa_CHAVE, A1.DESCRITOR as TPessoa_DESCRITOR, A0.TPFPJ, A2.CHAVE as TPFPJ_CHAVE, A2.DESCRITOR as TPFPJ_DESCRITOR, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A3.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A4.UF as ENDE_CIDADE_UF, A5.CHAVE as ENDE_CIDADE_UF_CHAVE, A5.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A4.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.INSCESTAD, A0.INSCMUNIC, A0.NASCIMENTO, A0.IDADE, A0.SEXO, A6.CHAVE as Sexo_CHAVE, A6.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A7.CHAVE as EstCivil_CHAVE, A7.DESCRITOR as EstCivil_DESCRITOR, A0.PROFISSAO, A8.PROFISSAO as PROFISSAO_PROFISSAO, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR, A0.MIDIA, A9.MIDIA as MIDIA_MIDIA
+	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.TPESSOA, A1.CHAVE as TPessoa_CHAVE, A1.DESCRITOR as TPessoa_DESCRITOR, A0.TPFPJ, A2.CHAVE as TPFPJ_CHAVE, A2.DESCRITOR as TPFPJ_DESCRITOR, A0.PRONTUARIO, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A3.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A4.UF as ENDE_CIDADE_UF, A5.CHAVE as ENDE_CIDADE_UF_CHAVE, A5.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A4.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.INSCESTAD, A0.INSCMUNIC, A0.NASCIMENTO, A0.IDADE, A0.SEXO, A6.CHAVE as Sexo_CHAVE, A6.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A7.CHAVE as EstCivil_CHAVE, A7.DESCRITOR as EstCivil_DESCRITOR, A0.PROFISSAO, A8.PROFISSAO as PROFISSAO_PROFISSAO, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR, A0.MIDIA, A9.MIDIA as MIDIA_MIDIA
 	FROM arqPessoa A0
 	left join tabTPessoa A1 on A1.IDPRIMARIO=A0.TPESSOA
 	left join tabTPFPJ A2 on A2.IDPRIMARIO=A0.TPFPJ
@@ -2680,12 +2681,12 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.PRONTUARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A2.NOME as PESSOA_NOME, A0.MEDICO, A3.USUARIO as MEDICO_USUARIO, A0.RECEPCAO, A4.USUARIO as RECEPCAO_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.MEDICO, A4.USUARIO as MEDICO_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
-	left join arqPessoa A2 on A2.IDPRIMARIO = A0.PESSOA
-	left join arqUsuario A3 on A3.IDPRIMARIO = A0.MEDICO
-	left join arqUsuario A4 on A4.IDPRIMARIO = A0.RECEPCAO
+	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
+	left join arqUsuario A4 on A4.IDPRIMARIO = A0.MEDICO
 	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MKT
 	left join arqUsuario A6 on A6.IDPRIMARIO = A0.ASSESSOR
 	left join tabTMotivo A7 on A7.IDPRIMARIO=A0.TMOTIVO
@@ -2863,9 +2864,9 @@ ALTER TABLE arqUsuCli ADD CONSTRAINT arqUsuCli_FK_Clinica FOREIGN KEY ( CLINICA 
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqHoraBloq ADD CONSTRAINT arqHoraBloq_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqDuracao ADD CONSTRAINT arqDuracao_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TStCon FOREIGN KEY ( TSTCON ) REFERENCES tabTStCon ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
-ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Recepcao FOREIGN KEY ( RECEPCAO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Mkt FOREIGN KEY ( MKT ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_Midia FOREIGN KEY ( MIDIA ) REFERENCES arqMidia ON DELETE NO ACTION ON UPDATE CASCADE;
@@ -3043,6 +3044,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Apelido', OLD.Apelido, NEW.Apelido );
 	execute procedure set_log( 12, NEW.idPrimario, 'TPessoa', OLD.TPessoa, NEW.TPessoa );
 	execute procedure set_log( 12, NEW.idPrimario, 'TPFPJ', OLD.TPFPJ, NEW.TPFPJ );
+	execute procedure set_log( 12, NEW.idPrimario, 'Prontuario', OLD.Prontuario, NEW.Prontuario );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_CEP', OLD.Ende_CEP, NEW.Ende_CEP );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Endereco', OLD.Ende_Endereco, NEW.Ende_Endereco );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Bairro', OLD.Ende_Bairro, NEW.Ende_Bairro );
@@ -4009,9 +4011,9 @@ as
 	declare variable valorChave varchar(1000);
 begin
 if( deleting ) then
-	valorChave = coalesce( OLD.Prontuario,'' );
+	valorChave = coalesce( OLD.Num,'' );
 else
-	valorChave = coalesce( NEW.Prontuario,'' );
+	valorChave = coalesce( NEW.Num,'' );
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100039 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
@@ -4020,14 +4022,14 @@ else
 if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
-	execute procedure set_log( 12, NEW.idPrimario, 'Prontuario', OLD.Prontuario, NEW.Prontuario );
+	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TStCon', OLD.TStCon, NEW.TStCon );
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
 	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
 	execute procedure set_log( 12, NEW.idPrimario, 'HoraChega', OLD.HoraChega, NEW.HoraChega );
 	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
-	execute procedure set_log( 12, NEW.idPrimario, 'Recepcao', OLD.Recepcao, NEW.Recepcao );
 	execute procedure set_log( 12, NEW.idPrimario, 'Mkt', OLD.Mkt, NEW.Mkt );
 	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
 	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );

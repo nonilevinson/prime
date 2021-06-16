@@ -92,6 +92,17 @@ function Campo_arqPessoa_TPFPJ_Descritor()
 var TPFPJ_Descritor = new Campo_arqPessoa_TPFPJ_Descritor;
 
 //------------------------------------------------------------
+Campo_arqPessoa_Prontuario.prototype = new Lance_CampoNumerico;
+
+function Campo_arqPessoa_Prontuario()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Prontuario", "Prontuario", "Prontuario", 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Prontuario = new Campo_arqPessoa_Prontuario;
+
+//------------------------------------------------------------
 IniciarPrefixos_domEndereco( "Ende_" );
 
 //------------------------------------------------------------
@@ -434,6 +445,32 @@ Campo_arqPessoa_TPFPJ.prototype.Cabecalho = function()
 TPFPJ_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TPFPJ_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqPessoa_Prontuario.prototype.PodeAlterar = function()
+{
+		if( GrupoAtualEm() )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Prontuario.prototype.Cabecalho = function()
+{
+		return( "Prontuário" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqPessoa_Prontuario.prototype.Existencia = function()
+{
+	return( TPessoa == 2 );
+}
+
+//-------------------------------------------------------------
 // Condição de erro do campo
 //-------------------------------------------------------------
 Campo_arqPessoa_CNPJ.prototype.TemErro = function()
@@ -718,6 +755,7 @@ Campo_arqPessoa_Midia.prototype.ExistenciaEspecial = function()
 function IniciarDependencias_arqPessoa()
 {
 Nascimento.CalculosDependentes= [ Idade ];
+TPessoa.ExistenciasDependentes= [ Prontuario ];
 TPFPJ.ExistenciasDependentes= [ CNPJ,InscEstad,InscMunic,Nascimento,Sexo,EstCivil,Profissao,Profissao_Profissao,CPF,Identidade ];
 Profissao_Profissao.ExistenciasDependentes= [ Profissao ];
 Identidade.ExistenciasDependentes= [ Orgao,Emissao ];
@@ -744,7 +782,7 @@ function ListaDeCampos_arqPessoa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Nome, Apelido, TPessoa, TPessoa_Chave, TPessoa_Descritor, TPFPJ, TPFPJ_Chave, TPFPJ_Descritor ], 
+		[ Nome, Apelido, TPessoa, TPessoa_Chave, TPessoa_Descritor, TPFPJ, TPFPJ_Chave, TPFPJ_Descritor, Prontuario ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
 		[ CNPJ, InscEstad, InscMunic, Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar, Midia, Midia_Midia ]	);
 	IniciarDependencias_arqPessoa();

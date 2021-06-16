@@ -12,21 +12,21 @@ include_once( SISTEMA_DIR_ABSOLUTO . "a_consul_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
 
 //======================================================
-//	Campo Prontuario
+//	Campo Num
 //======================================================
 
-class campo_arqConsulta_Prontuario extends Lance_CampoNumerico
+class campo_arqConsulta_Num extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "Prontuario", "Prontuario", "Prontuario", 6, "###.##z", "", "", EH_CHAVE, 0, false );
+		parent::__construct( "Num", "Num", "Num", 6, "###.##z", "", "", EH_CHAVE, 0, false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Prontuário" );
+			return( "N°" );
 	}
 
 }
@@ -60,6 +60,26 @@ class campo_arqConsulta_Clinica_Clinica extends Lance_CampoCadeia
 	{
 		global $g_regAtual;
 			return( "Clínica" );
+	}
+
+}
+
+//======================================================
+//	Campo TStCon
+//======================================================
+
+class campo_arqConsulta_TStCon extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "tabTStCon", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Status" );
 	}
 
 }
@@ -174,39 +194,6 @@ class campo_arqConsulta_Medico_Usuario extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Medico_Usuario", "Medico_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Medico", false );
-	}
-
-}
-
-//======================================================
-//	Campo Recepcao
-//======================================================
-
-class campo_arqConsulta_Recepcao extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "Recepcao", "Recepcao", "Recepcao", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Recepção" );
-	}
-
-}
-
-//======================================================
-//	Campo Recepcao_Usuario
-//======================================================
-
-class campo_arqConsulta_Recepcao_Usuario extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "Recepcao_Usuario", "Recepcao_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Recepcao", false );
 	}
 
 }
@@ -367,9 +354,12 @@ function listaCampos_arqConsulta( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
-			new campo_arqConsulta_Prontuario(),
+			new campo_arqConsulta_Num(),
 			new campo_arqConsulta_Clinica(),
 			new campo_arqConsulta_Clinica_Clinica(),
+			new campo_arqConsulta_TStCon(),
+			new Lance_CampoCadeia( "TStCon_Chave", "TStCon_Chave", "Chave", 2, "xx", EH_CHAVE, TStCon ),
+			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 22, "xxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
 			new campo_arqConsulta_Data(),
 			new campo_arqConsulta_Hora(),
 			new campo_arqConsulta_HoraChega(),
@@ -377,8 +367,6 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_Pessoa_Nome(),
 			new campo_arqConsulta_Medico(),
 			new campo_arqConsulta_Medico_Usuario(),
-			new campo_arqConsulta_Recepcao(),
-			new campo_arqConsulta_Recepcao_Usuario(),
 			new campo_arqConsulta_Mkt(),
 			new campo_arqConsulta_Mkt_Usuario(),
 			new campo_arqConsulta_Assessor(),
@@ -415,7 +403,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Prontuario) );
+		return( array( Num) );
 	}
 
 	//-------------------------------------------------------------
@@ -425,14 +413,14 @@ class arqConsulta extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( Prontuario ) );
+			array_push( $vetAux, array( Num ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
+			array_push( $vetAux, array( TStCon_Descritor ) );
 			array_push( $vetAux, array( Data ) );
 			array_push( $vetAux, array( Hora ) );
 			array_push( $vetAux, array( HoraChega ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
 			array_push( $vetAux, array( Medico_Usuario ) );
-			array_push( $vetAux, array( Recepcao_Usuario ) );
 			array_push( $vetAux, array( Mkt_Usuario ) );
 			array_push( $vetAux, array( Assessor_Usuario ) );
 			array_push( $vetAux, array( TMotivo_Descritor ) );
@@ -445,7 +433,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( Pessoa ), array( Medico ), array( Recepcao ), array( Mkt ), array( Assessor ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( TPrograma ), array( TPrograma_Chave ), array( TPrograma_Descritor ) ) );
+		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( Pessoa ), array( Medico ), array( Mkt ), array( Assessor ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( TPrograma ), array( TPrograma_Chave ), array( TPrograma_Descritor ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -455,14 +443,14 @@ class arqConsulta extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( Prontuario ) );
+			array_push( $vetAux, array( Num ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
+			array_push( $vetAux, array( TStCon_Descritor ) );
 			array_push( $vetAux, array( Data ) );
 			array_push( $vetAux, array( Hora ) );
 			array_push( $vetAux, array( HoraChega ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
 			array_push( $vetAux, array( Medico_Usuario ) );
-			array_push( $vetAux, array( Recepcao_Usuario ) );
 			array_push( $vetAux, array( Mkt_Usuario ) );
 			array_push( $vetAux, array( Assessor_Usuario ) );
 			array_push( $vetAux, array( MedicaAtua ) );

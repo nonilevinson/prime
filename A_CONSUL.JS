@@ -3,15 +3,15 @@
 =========================================================================*/
 
 //------------------------------------------------------------
-Campo_arqConsulta_Prontuario.prototype = new Lance_CampoNumerico;
+Campo_arqConsulta_Num.prototype = new Lance_CampoNumerico;
 
-function Campo_arqConsulta_Prontuario()
+function Campo_arqConsulta_Num()
 {
 	this.superClass = Lance_CampoNumerico;
-	this.superClass( "Prontuario", "Prontuario", "Prontuario", 6, "###.##z", true,"", "");
+	this.superClass( "Num", "Num", "Num", 6, "###.##z", true,"", "");
 }
 
-var Prontuario = new Campo_arqConsulta_Prontuario;
+var Num = new Campo_arqConsulta_Num;
 
 //------------------------------------------------------------
 Campo_arqConsulta_Clinica.prototype = new Lance_CampoHidden;
@@ -34,6 +34,39 @@ function Campo_arqConsulta_Clinica_Clinica()
 }
 
 var Clinica_Clinica = new Campo_arqConsulta_Clinica_Clinica;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TStCon.prototype = new Lance_CampoLigado;
+
+function Campo_arqConsulta_TStCon()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TStCon", "TStCon", "TStCon", "tabTStCon", "t_tstcon", null, "",0);
+}
+
+var TStCon = new Campo_arqConsulta_TStCon;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TStCon_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_TStCon_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TStCon_Chave", "TStCon_Chave", "TStCon", TStCon, 2, "uu", false);
+}
+
+var TStCon_Chave = new Campo_arqConsulta_TStCon_Chave;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TStCon_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_TStCon_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 22, "xxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var TStCon_Descritor = new Campo_arqConsulta_TStCon_Descritor;
 
 //------------------------------------------------------------
 Campo_arqConsulta_Data.prototype = new Lance_CampoData;
@@ -111,28 +144,6 @@ function Campo_arqConsulta_Medico_Usuario()
 }
 
 var Medico_Usuario = new Campo_arqConsulta_Medico_Usuario;
-
-//------------------------------------------------------------
-Campo_arqConsulta_Recepcao.prototype = new Lance_CampoHidden;
-
-function Campo_arqConsulta_Recepcao()
-{
-	this.superClass = Lance_CampoHidden;
-	this.superClass( "Recepcao", "Recepcao", "Recepcao", "arqUsuario", "a_usuari", null, "",5);
-}
-
-var Recepcao = new Campo_arqConsulta_Recepcao;
-
-//------------------------------------------------------------
-Campo_arqConsulta_Recepcao_Usuario.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqConsulta_Recepcao_Usuario()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Recepcao_Usuario", "Recepcao_Usuario", "Usuario", Recepcao, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
-}
-
-var Recepcao_Usuario = new Campo_arqConsulta_Recepcao_Usuario;
 
 //------------------------------------------------------------
 Campo_arqConsulta_Mkt.prototype = new Lance_CampoHidden;
@@ -280,7 +291,7 @@ var Medicacao = new Campo_arqConsulta_Medicacao;
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
-Campo_arqConsulta_Prontuario.prototype.PodeAlterar = function()
+Campo_arqConsulta_Num.prototype.PodeAlterar = function()
 {
 		if( GrupoAtualEm() )
 		return( true );
@@ -290,12 +301,12 @@ Campo_arqConsulta_Prontuario.prototype.PodeAlterar = function()
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqConsulta_Prontuario.prototype.Cabecalho = function()
+Campo_arqConsulta_Num.prototype.Cabecalho = function()
 {
-		return( "Prontuário" );
+		return( "N°" );
 }
 
-Prontuario.TipoCampo |= CAMPO_CHAVE;
+Num.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -316,6 +327,37 @@ Campo_arqConsulta_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_co
 }
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TStCon.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 1 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_TStCon.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O sttaus é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TStCon.prototype.Cabecalho = function()
+{
+		return( "Status" );
+}
+
+TStCon_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TStCon_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -388,33 +430,6 @@ Campo_arqConsulta_Medico_Usuario.prototype.ObrigatorioEspecial = function( p_com
 }
 
 Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Fitro para selecionar registros do pai
-//-------------------------------------------------------------
-Campo_arqConsulta_Recepcao.prototype.FiltroPai = function()
-{
-		if( g_inserindo )
-			return( "A.Grupo is not null and A.Ativo = 1" );
-			return( "A.Grupo is not null" );
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqConsulta_Recepcao.prototype.Cabecalho = function()
-{
-		return( "Recepção" );
-}
-
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_Recepcao_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( Recepcao.Obrigatorio( p_comMsg ) );
-}
-
-Recepcao_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -516,14 +531,6 @@ Campo_arqConsulta_Medico.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_arqConsulta_Recepcao.prototype.ExistenciaEspecial = function()
-{
-	return( ( !Recepcao_Usuario.Obrigatorio( false ) || tem(Recepcao_Usuario) ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
 Campo_arqConsulta_Mkt.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Mkt_Usuario.Obrigatorio( false ) || tem(Mkt_Usuario) ) );
@@ -542,19 +549,16 @@ function IniciarDependencias_arqConsulta()
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 Medico_Usuario.ExistenciasDependentes= [ Medico ];
-Recepcao_Usuario.ExistenciasDependentes= [ Recepcao ];
 Mkt_Usuario.ExistenciasDependentes= [ Mkt ];
 Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Pessoa_Nome.ErrosDependentes= [ Pessoa ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
-Recepcao_Usuario.ErrosDependentes= [ Recepcao ];
 Mkt_Usuario.ErrosDependentes= [ Mkt ];
 Assessor_Usuario.ErrosDependentes= [ Assessor ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Pessoa.CamposChave= [ Pessoa_Nome ];
 Medico.CamposChave= [ Medico_Usuario ];
-Recepcao.CamposChave= [ Recepcao_Usuario ];
 Mkt.CamposChave= [ Mkt_Usuario ];
 Assessor.CamposChave= [ Assessor_Usuario ];
 }
@@ -574,7 +578,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Prontuario, Clinica, Clinica_Clinica, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Medico, Medico_Usuario, Recepcao, Recepcao_Usuario, Mkt, Mkt_Usuario, Assessor, Assessor_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, TPrograma, TPrograma_Chave, TPrograma_Descritor, Conduta, Medicacao ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Medico, Medico_Usuario, Mkt, Mkt_Usuario, Assessor, Assessor_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, TPrograma, TPrograma_Chave, TPrograma_Descritor, Conduta, Medicacao ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

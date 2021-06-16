@@ -9,7 +9,7 @@ echo
 	{
 		echo
 		$this->NaoPedir( Prontuario ),
-		$this->Pedir( "Prontuário Nº",
+		$this->Pedir( "Consulta Nº",
 			[ " ", '',
 			[ "(será atribuido pelo sistema )" . brHtml(2) . "Data ", Data,
 			[ brHtml(2) . "Hora ", Hora,
@@ -17,14 +17,14 @@ echo
 
 	}
 	else
-		echo $this->Pedir( "Prontuário Nº",
-         [ '', Prontuario,
+		echo $this->Pedir( "Consulta Nº",
+         [ '', Num,
          [ brHtml(4) . "Data ", Data,
          [ brHtml(4) . "Hora ", Hora,
          [ " h " . brHtml(2) . "Chegada ", HoraChega, " h" ] ] ], '', '','', 'FormCalculado' ] );
 
    echo
-   $this->NaoPedir( Recepcao ),
+	$this->Pedir( "Status", TStCon ),
 	$this->Pedir( "Clínica", Clinica ),
    $this->Pedir( "Paciente", Pessoa ),
    $this->Pedir( "Médico", Medico ),
