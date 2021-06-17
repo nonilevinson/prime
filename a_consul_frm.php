@@ -12,7 +12,7 @@ echo
 			[ " ", '',
 			[ "(será atribuido pelo sistema )" . brHtml(2) . "Data ", Data,
 			[ brHtml(2) . "Hora ", Hora,
-         [ " h " . brHtml(2) . "Chegada ", HoraChega, " h" ] ] ] ] );
+         [ " h " . brHtml(2) . "Chegada ", HoraChega, " h",'','','','FormCalculado' ] ] ] ] );
 
 	}
 	else
@@ -20,7 +20,7 @@ echo
          [ '', Num,
          [ brHtml(4) . "Data ", Data,
          [ brHtml(4) . "Hora ", Hora,
-         [ " h " . brHtml(2) . "Chegada ", HoraChega, " h" ] ] ], '', '','', 'FormCalculado' ] );
+         [ " h " . brHtml(2) . "Chegada ", HoraChega, " h",'','','','FormCalculado' ] ] ], '', '','', 'FormCalculado' ] );
 
    echo
 	$this->Pedir( "Status", TStCon ),

@@ -794,11 +794,12 @@ g_arquivoCampos = ListaDeCampos_arqPessoa( '' );
 g_idOperacao = 7;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 9,[],[12,13] );
-var Menu_1_1 = new Array( 1,"Programado","","P",26,"","",1,"","1","a_logema","arqLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[12]);
-var Menu_1_2 = new Array( 1,"Recebeu","","R",25,"","",1,"","1","a_itloge","arqItLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[13]);
-var Menu_2 = new Array( 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,9,[],[21]);
-var Menu_3 = new Array( 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,9,[],[33]);
-var Menu_4 = new Array( 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,9,[],[39]);
-parent.navegacao.MenuPrincQtdOpcoes=4;
+var Menu_1 = new Array( 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,18,[],[39]);
+var Menu_2 = new Array( 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,18,[],[21]);
+var Menu_3 = new Array( 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,18,[],[33]);
+var Menu_4 = new Array( 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 18,[],[12,13] );
+var Menu_4_1 = new Array( 1,"Programado","","P",26,"","",1,"","1","a_logema","arqLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[12]);
+var Menu_4_2 = new Array( 1,"Recebeu","","R",25,"","",1,"","1","a_itloge","arqItLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[13]);
+var Menu_5 = new Array( 1,"Alterar Prontuário","","u",138,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_pessoa_prontuario^^^^^^^^^^^^^^^^^^", "", 0,18,[138],[]);
+parent.navegacao.MenuPrincQtdOpcoes=5;
 }
