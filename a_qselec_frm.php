@@ -169,5 +169,17 @@ if( $op == 110 ) //* selecao arqConsulta
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
+if( $op == 137 ) //* p_consulta_alterar
+{
+	echo
+	$this->Pedir( "Chegada às", HoraIni );
+}
+
+if( $op == 138 ) //* p_pessoa_prontuario
+{
+	echo
+	$this->Pedir( "Prontuário Nº", Gran13 );
+}
+
 //==================================================================================
 echo 	"</table>";

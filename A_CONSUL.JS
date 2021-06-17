@@ -381,6 +381,16 @@ Campo_arqConsulta_Hora.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqConsulta_HoraChega.prototype.PodeAlterar = function()
+{
+		if( GrupoAtualEm() )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqConsulta_HoraChega.prototype.Cabecalho = function()
@@ -588,5 +598,6 @@ g_arquivoCampos = ListaDeCampos_arqConsulta( '' );
 g_idOperacao = 39;
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,16,[137],[]);
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }

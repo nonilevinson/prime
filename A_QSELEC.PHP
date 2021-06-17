@@ -531,7 +531,7 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Clinica_Clinica(),
 			new campo_parQSelecao_TStCon(),
 			new Lance_CampoCadeia( "TStCon_Chave", "TStCon_Chave", "Chave", 2, "xx", EH_CHAVE, TStCon ),
-			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 21, "xxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
+			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 22, "xxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
 			new campo_parQSelecao_TMov(),
 			new Lance_CampoCadeia( "TMov_Chave", "TMov_Chave", "Chave", 1, "x", EH_CHAVE, TMov ),
 			new Lance_CampoCadeia( "TMov_Descritor", "TMov_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TMov ),

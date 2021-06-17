@@ -404,7 +404,7 @@ Campo_parQSelecao_TStCon_Descritor.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_TStCon_Descritor()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 21, "xxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 22, "xxxxxxxxxxxxxxxxxxxxxx", false);
 }
 
 var TStCon_Descritor = new Campo_parQSelecao_TStCon_Descritor;
@@ -694,7 +694,7 @@ Campo_parQSelecao_DataFim1.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_parQSelecao_HoraIni.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( ultimaLigOpcaoEm( 53 ) )
+		if( ultimaLigOpcaoEm( 53,137 ) )
 	{
 		if( p_comMsg ) alert( "A hora é obrigatória" );
 		return( true );
@@ -750,6 +750,19 @@ Campo_parQSelecao_Gran6Fim.prototype.Existencia = function()
 Campo_parQSelecao_Real6Fim.prototype.Existencia = function()
 {
 	return( tem( Real6 ) );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parQSelecao_Gran13.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 138 ) )
+	{
+		if( p_comMsg ) alert( "O número do prontuário é obrigatório" );
+		return( true );
+	}
+	return( false );
 }
 
 //-------------------------------------------------------------
