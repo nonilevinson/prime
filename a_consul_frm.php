@@ -8,7 +8,10 @@ echo
 	if( $g_acaoAtual == INSERINDO )
 	{
 		echo
+<<<<<<< HEAD
 		$this->NaoPedir( Num ),
+=======
+>>>>>>> bd1922a5fa9011f593b3054dfa9951f4662288ed
 		$this->Pedir( "Consulta Nº",
 			[ " ", '',
 			[ "(será atribuido pelo sistema )" . brHtml(2) . "Data ", Data,
