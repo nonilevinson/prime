@@ -8,7 +8,7 @@ echo
 	if( $g_acaoAtual == INSERINDO )
 	{
 		echo
-		$this->NaoPedir( Prontuario ),
+		$this->NaoPedir( Num ),
 		$this->Pedir( "Consulta Nº",
 			[ " ", '',
 			[ "(será atribuido pelo sistema )" . brHtml(2) . "Data ", Data,
