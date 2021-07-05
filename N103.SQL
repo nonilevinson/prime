@@ -1476,11 +1476,11 @@ CREATE TABLE tabTStCon
 commit;
 
 INSERT INTO tabTStCon VALUES ( 1, '1', 'Agendado' );
-INSERT INTO tabTStCon VALUES ( 2, '2', 'Chegou' );
-INSERT INTO tabTStCon VALUES ( 3, '3', 'Preenchendo prontuário' );
-INSERT INTO tabTStCon VALUES ( 4, '4', 'Médico' );
-INSERT INTO tabTStCon VALUES ( 5, '5', 'Teste' );
-INSERT INTO tabTStCon VALUES ( 6, '6', 'Com assessor' );
+INSERT INTO tabTStCon VALUES ( 2, '2', 'Recepção' );
+INSERT INTO tabTStCon VALUES ( 3, '3', 'Médico' );
+INSERT INTO tabTStCon VALUES ( 4, '4', 'Teste' );
+INSERT INTO tabTStCon VALUES ( 5, '5', 'Ag. Assessor' );
+INSERT INTO tabTStCon VALUES ( 6, '6', 'Assessor' );
 INSERT INTO tabTStCon VALUES ( 7, '7', 'Atendido' );
 INSERT INTO tabTStCon VALUES ( 8, '8', 'Liberado' );
 INSERT INTO tabTStCon VALUES ( 9, '9', 'Clínica desmarcou' );
