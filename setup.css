@@ -65,6 +65,72 @@
 	background-color: #99ccdd;
 }
 
+.StAgendado{
+	color:#ffffff;
+	background-color: #52a3ff;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StRecepcao{
+	color:#ffffff;
+	background-color: #004499;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StMedico{
+	color:#ffffff;
+	background-color: #49b13a;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StTeste{
+	color:#ffffff;
+	background-color: #ec8f0d;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StAgAssessor{
+	color:#ffffff;
+	background-color: #949394;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StAssessor{
+	color:#ffffff;
+	background-color: #a4bcd4;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StAtendido{
+	color:#ffffff;
+	background-color: #f01010;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StLiberado{
+	color:#ffffff;
+	background-color: #147901;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StClinicaDesmarcou{
+	color:#ffffff;
+	background-color: #918600;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StPacienteDesmarcou{
+	color:#ffffff;
+	background-color: #00ff88;
+	text-align: left;
+	/* font-weight:bold */
+}
+.StMedicoDesmarcou{
+	color:#ffffff;
+	background-color: #ff3388;
+	text-align: left;
+	/* font-weight:bold */
+}
 .Excelente{
 	color:#ffffff;
 	background-color: #004499;

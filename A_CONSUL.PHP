@@ -76,6 +76,35 @@ class campo_arqConsulta_TStCon extends Lance_CampoLigado
 	}
 
 	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->TSTCON == 1 )
+			return( "StAgendado" );
+		if( $g_regAtual->TSTCON == 2 )
+			return( "StRecepcao" );
+		if( $g_regAtual->TSTCON == 3 )
+			return( "StMedico" );
+		if( $g_regAtual->TSTCON == 4 )
+			return( "StTeste" );
+		if( $g_regAtual->TSTCON == 5 )
+			return( "StAgAssessor" );
+		if( $g_regAtual->TSTCON == 6 )
+			return( "StAssessor" );
+		if( $g_regAtual->TSTCON == 7 )
+			return( "StAtendido" );
+		if( $g_regAtual->TSTCON == 8 )
+			return( "StLiberado" );
+		if( $g_regAtual->TSTCON == 9 )
+			return( "StClinicaDesmarcou" );
+		if( $g_regAtual->TSTCON == 10 )
+			return( "StPacienteDesmarcou" );
+		if( $g_regAtual->TSTCON == 11 )
+			return( "StMedicoDesmarcou" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
@@ -359,7 +388,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_Clinica_Clinica(),
 			new campo_arqConsulta_TStCon(),
 			new Lance_CampoCadeia( "TStCon_Chave", "TStCon_Chave", "Chave", 2, "xx", EH_CHAVE, TStCon ),
-			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 22, "xxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
+			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 18, "xxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
 			new campo_arqConsulta_Data(),
 			new campo_arqConsulta_Hora(),
 			new campo_arqConsulta_HoraChega(),
