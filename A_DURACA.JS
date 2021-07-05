@@ -78,6 +78,19 @@ Campo_arqDuracao_Inicio.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqDuracao_Inicio.prototype.TemErro = function()
+{
+		if( tem(this) && ( diaDaSemana( Inicio ) != 0 ) )
+	{
+		alert( "O dia incial precisa ser um domingo" );
+		return( true );
+	}
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqDuracao_Inicio.prototype.Cabecalho = function()
