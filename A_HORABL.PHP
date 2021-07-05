@@ -92,7 +92,7 @@ class campo_arqHoraBloq_HoraIni extends Lance_CampoHora
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "das" );
+			return( "Das" );
 	}
 
 }
@@ -132,7 +132,7 @@ class campo_arqHoraBloq_HoraFim extends Lance_CampoHora
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Fim" );
+			return( "Às" );
 	}
 
 }

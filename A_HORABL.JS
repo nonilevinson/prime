@@ -145,7 +145,7 @@ Campo_arqHoraBloq_HoraIni.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_arqHoraBloq_HoraIni.prototype.Cabecalho = function()
 {
-		return( "das" );
+		return( "Das" );
 }
 
 //-------------------------------------------------------------
@@ -196,7 +196,7 @@ Campo_arqHoraBloq_HoraFim.prototype.TemErro = function()
 //-------------------------------------------------------------
 Campo_arqHoraBloq_HoraFim.prototype.Cabecalho = function()
 {
-		return( "Fim" );
+		return( "Às" );
 }
 
 //-------------------------------------------------------------
