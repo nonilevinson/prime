@@ -403,7 +403,20 @@ Campo_arqConsulta_HoraChega.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_Pessoa.prototype.FiltroPai = function()
 {
+		if( g_inserindo )
 			return( "A.TPessoa = 2 and A.QtoDesmar < " + g_qtasDesmar + "" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_Pessoa.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O paciente é obrigatório" );
+		return( true );
+	}
 }
 
 //-------------------------------------------------------------
