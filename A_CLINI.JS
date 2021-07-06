@@ -212,8 +212,8 @@ g_idOperacao = 31;
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Consultas","","l",112,"","",1,"","1","a_consul","arqConsulta","Folhear","Clinica","?","","", "","", 0,19,[],[39]);
 var Menu_2 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,19,[],[33]);
-var Menu_3 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,19,[],[35]);
-var Menu_4 = new Array( 1,"Duração Consulta","","r",133,"","",1,"","1","a_duraca","arqDuracao","Folhear","Clinica","?","","", "","", 0,19,[],[38]);
-var Menu_5 = new Array( 1,"Horários Bloqueados","","q",114,"","",1,"","1","a_horabl","arqHoraBloq","Folhear","Clinica","?","","", "","", 0,19,[],[37]);
+var Menu_3 = new Array( 1,"Horários/Duração","","r",133,"","",1,"","1","a_duraca","arqDuracao","Folhear","Clinica","?","","", "","", 0,19,[],[38]);
+var Menu_4 = new Array( 1,"Horários Bloqueados","","q",114,"","",1,"","1","a_horabl","arqHoraBloq","Folhear","Clinica","?","","", "","", 0,19,[],[37]);
+var Menu_5 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,19,[],[35]);
 parent.navegacao.MenuPrincQtdOpcoes=5;
 }

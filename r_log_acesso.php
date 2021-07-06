@@ -18,8 +18,9 @@ class RelLog extends Relatorios
 		$this->DefinirCabColunas(
 			[ "Hora",    	 15, ALINHA_CEN ],
 			[ "Status", 	 20, ALINHA_ESQ ],
-			[ "Operação",	 45, ALINHA_ESQ ],
-			[ "Quem",   	100, ALINHA_ESQ ],
+			[ "O Que",   	100, ALINHA_ESQ ],
+			[ "Chave", 		 45, ALINHA_ESQ ],
+			[ "idPrimario", 45, ALINHA_DIR ],
 			[ 'IP', 		  	 27, ALINHA_CEN ] );
 
 		$this->DefinirQuebras(
@@ -81,11 +82,10 @@ class RelLog extends Relatorios
 	//------------------------------------------------------------------------
 	function Basico()
 	{
-		$regA = &$this->regAtual;
+		$regA   = &$this->regAtual;
 		$acesso = $regA->ACESSO == "(Master)" ? "MASTER => " : "";
-		$quem = $regA->QUEM == null ? "ID= " . $regA->IDQUEM : $regA->QUEM;
-		$barra = $regA->OPERACAO && $regA->OBSERVACAO ? " / " : "";
-		$obs = $regA->OBSERVACAO ? $regA->OBSERVACAO : "";
+		$barra  = $regA->OPERACAO && $regA->OBSERVACAO ? " / " : "";
+		$obs    = $regA->OBSERVACAO ? $regA->OBSERVACAO : "";
 
 		switch( $regA->STATUS )
 		{
@@ -99,8 +99,9 @@ class RelLog extends Relatorios
 		$this->valores = [
 			formatarHora( $regA->HORA, "hh:mm" ),
 			$status,
-			$acesso . $quem,
 			$regA->OPERACAO . $barra . $obs,
+			$regA->QUEM,
+			$acesso . $regA->IDQUEM,
 			$regA->IP ];
 
 		$this->ImprimirValorColunas();
@@ -131,7 +132,7 @@ $trecho = $parQSelecao->TRECHO ? "L.Quem containing '" . $parQSelecao->TRECHO . 
 $select = "Select L.Login, L.Data, L.Hora, L.Status, L.Quem, L.idQuem, L.Observacao, L.IP,
 		L.Usuario, L.Acesso, O.Operacao
 	From arqLanceLogAcesso L
-		left join arqLanceOperacao		O on O.idPrimario=L.Operacao
+		left join arqLanceOperacao	O on O.idPrimario=L.Operacao
 	Where " . $trecho . $statusLog .
 		filtrarPorNum( "L.idquem", $parQSelecao->GRAN13 ) .
 		filtrarPorLig( 'L.Usuario', $parQSelecao->USUARIO ) .

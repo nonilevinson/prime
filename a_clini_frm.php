@@ -17,6 +17,10 @@ CriarForms(
 
 //* Horario
 "<table id='H' class='tabFormulario' style='display:none'>",
+/*
+   $this->Pedir( "Agendamento disponível para até",
+      [ " ", MaxAgenda, " dias a partir de hoje" ] ),
+*/
    $this->Pedir( "Horário",
       [ "", HoraIni,
       [ " h às ", HoraFim, " h" ] ] ),

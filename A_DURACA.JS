@@ -36,6 +36,50 @@ function Campo_arqDuracao_Inicio()
 var Inicio = new Campo_arqDuracao_Inicio;
 
 //------------------------------------------------------------
+Campo_arqDuracao_HoraIni.prototype = new Lance_CampoHora;
+
+function Campo_arqDuracao_HoraIni()
+{
+	this.superClass = Lance_CampoHora;
+	this.superClass( "HoraIni", "HoraIni", "HoraIni", 4, "hh:mm", true);
+}
+
+var HoraIni = new Campo_arqDuracao_HoraIni;
+
+//------------------------------------------------------------
+Campo_arqDuracao_HoraFim.prototype = new Lance_CampoHora;
+
+function Campo_arqDuracao_HoraFim()
+{
+	this.superClass = Lance_CampoHora;
+	this.superClass( "HoraFim", "HoraFim", "HoraFim", 4, "hh:mm", true);
+}
+
+var HoraFim = new Campo_arqDuracao_HoraFim;
+
+//------------------------------------------------------------
+Campo_arqDuracao_ConsSab.prototype = new Lance_CampoLogico;
+
+function Campo_arqDuracao_ConsSab()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "ConsSab", "ConsSab", "ConsSab");
+}
+
+var ConsSab = new Campo_arqDuracao_ConsSab;
+
+//------------------------------------------------------------
+Campo_arqDuracao_ConsDom.prototype = new Lance_CampoLogico;
+
+function Campo_arqDuracao_ConsDom()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "ConsDom", "ConsDom", "ConsDom");
+}
+
+var ConsDom = new Campo_arqDuracao_ConsDom;
+
+//------------------------------------------------------------
 Campo_arqDuracao_Duracao.prototype = new Lance_CampoNumerico;
 
 function Campo_arqDuracao_Duracao()
@@ -45,17 +89,6 @@ function Campo_arqDuracao_Duracao()
 }
 
 var Duracao = new Campo_arqDuracao_Duracao;
-
-//------------------------------------------------------------
-Campo_arqDuracao_MaxAgenda.prototype = new Lance_CampoNumerico;
-
-function Campo_arqDuracao_MaxAgenda()
-{
-	this.superClass = Lance_CampoNumerico;
-	this.superClass( "MaxAgenda", "MaxAgenda", "MaxAgenda", 3, "##z", true,"", "");
-}
-
-var MaxAgenda = new Campo_arqDuracao_MaxAgenda;
 
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
@@ -101,6 +134,80 @@ Campo_arqDuracao_Inicio.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
+Campo_arqDuracao_HoraIni.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O horário inicial é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqDuracao_HoraIni.prototype.Cabecalho = function()
+{
+		return( "Início" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqDuracao_HoraFim.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O horário final é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqDuracao_HoraFim.prototype.Cabecalho = function()
+{
+		return( "Fim" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqDuracao_ConsSab.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqDuracao_ConsSab.prototype.Cabecalho = function()
+{
+		return( "Sábado?" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqDuracao_ConsDom.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqDuracao_ConsDom.prototype.Cabecalho = function()
+{
+		return( "Domingo?" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
 Campo_arqDuracao_Duracao.prototype.Obrigatorio = function( p_comMsg )
 {
 	{
@@ -136,14 +243,6 @@ Campo_arqDuracao_Duracao.prototype.Cabecalho = function()
 }
 
 //-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqDuracao_MaxAgenda.prototype.Cabecalho = function()
-{
-		return( "Max Agenda" );
-}
-
-//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqDuracao_Clinica.prototype.ExistenciaEspecial = function()
@@ -173,7 +272,7 @@ function ListaDeCampos_arqDuracao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, Inicio, Duracao, MaxAgenda ]	);
+		[ Clinica, Clinica_Clinica, Inicio, HoraIni, HoraFim, ConsSab, ConsDom, Duracao ]	);
 	IniciarDependencias_arqDuracao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

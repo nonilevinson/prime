@@ -65,6 +65,86 @@ class campo_arqDuracao_Inicio extends Lance_CampoData
 }
 
 //======================================================
+//	Campo HoraIni
+//======================================================
+
+class campo_arqDuracao_HoraIni extends Lance_CampoHora
+{
+	function __construct()
+	{
+		parent::__construct( "HoraIni", "HoraIni", "HoraIni", 4, "hh:mm", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Início" );
+	}
+
+}
+
+//======================================================
+//	Campo HoraFim
+//======================================================
+
+class campo_arqDuracao_HoraFim extends Lance_CampoHora
+{
+	function __construct()
+	{
+		parent::__construct( "HoraFim", "HoraFim", "HoraFim", 4, "hh:mm", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Fim" );
+	}
+
+}
+
+//======================================================
+//	Campo ConsSab
+//======================================================
+
+class campo_arqDuracao_ConsSab extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "ConsSab", "ConsSab", "ConsSab", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Sábado?" );
+	}
+
+}
+
+//======================================================
+//	Campo ConsDom
+//======================================================
+
+class campo_arqDuracao_ConsDom extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "ConsDom", "ConsDom", "ConsDom", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Domingo?" );
+	}
+
+}
+
+//======================================================
 //	Campo Duracao
 //======================================================
 
@@ -85,26 +165,6 @@ class campo_arqDuracao_Duracao extends Lance_CampoNumerico
 }
 
 //======================================================
-//	Campo MaxAgenda
-//======================================================
-
-class campo_arqDuracao_MaxAgenda extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "MaxAgenda", "MaxAgenda", "MaxAgenda", 3, "##z", "", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Max Agenda" );
-	}
-
-}
-
-//======================================================
 //	Arquivo arqDuracao
 //======================================================
 function listaCampos_arqDuracao( $p_prefixo )
@@ -118,8 +178,11 @@ function listaCampos_arqDuracao( $p_prefixo )
 			new campo_arqDuracao_Clinica(),
 			new campo_arqDuracao_Clinica_Clinica(),
 			new campo_arqDuracao_Inicio(),
-			new campo_arqDuracao_Duracao(),
-			new campo_arqDuracao_MaxAgenda() )
+			new campo_arqDuracao_HoraIni(),
+			new campo_arqDuracao_HoraFim(),
+			new campo_arqDuracao_ConsSab(),
+			new campo_arqDuracao_ConsDom(),
+			new campo_arqDuracao_Duracao() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -155,8 +218,11 @@ class arqDuracao extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Inicio ) );
+			array_push( $vetAux, array( HoraIni ) );
+			array_push( $vetAux, array( HoraFim ) );
+			array_push( $vetAux, array( ConsSab ) );
+			array_push( $vetAux, array( ConsDom ) );
 			array_push( $vetAux, array( Duracao ) );
-			array_push( $vetAux, array( MaxAgenda ) );
 		return( $vetAux );
 	}
 
@@ -177,8 +243,11 @@ class arqDuracao extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Inicio ) );
+			array_push( $vetAux, array( HoraIni ) );
+			array_push( $vetAux, array( HoraFim ) );
+			array_push( $vetAux, array( ConsSab ) );
+			array_push( $vetAux, array( ConsDom ) );
 			array_push( $vetAux, array( Duracao ) );
-			array_push( $vetAux, array( MaxAgenda ) );
 		return( $vetAux );
 	}
 

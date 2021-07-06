@@ -2355,8 +2355,11 @@ CREATE TABLE arqDuracao
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
 	/*  3*/	INICIO DATE, /* Máscara = 4ano */
-	/*  4*/	DURACAO SMALLINT, /* Máscara = N */
-	/*  5*/	MAXAGENDA INTEGER, /* Máscara = N */
+	/*  4*/	HORAINI TIME, /* Máscara = Hhmm */
+	/*  5*/	HORAFIM TIME, /* Máscara = Hhmm */
+	/*  6*/	CONSSAB campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  7*/	CONSDOM campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  8*/	DURACAO SMALLINT, /* Máscara = N */
 	CONSTRAINT arqDuracao_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
@@ -2675,7 +2678,7 @@ RECREATE VIEW V_arqHoraBloq AS
 commit;
 
 RECREATE VIEW V_arqDuracao AS 
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.INICIO, A0.DURACAO, A0.MAXAGENDA
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.INICIO, A0.HORAINI, A0.HORAFIM, A0.CONSSAB, A0.CONSDOM, A0.DURACAO
 	FROM arqDuracao A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA;
 commit;
@@ -3991,8 +3994,11 @@ if( deleting ) then
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'Inicio', OLD.Inicio, NEW.Inicio );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraIni', OLD.HoraIni, NEW.HoraIni );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraFim', OLD.HoraFim, NEW.HoraFim );
+	execute procedure set_log( 12, NEW.idPrimario, 'ConsSab', OLD.ConsSab, NEW.ConsSab );
+	execute procedure set_log( 12, NEW.idPrimario, 'ConsDom', OLD.ConsDom, NEW.ConsDom );
 	execute procedure set_log( 12, NEW.idPrimario, 'Duracao', OLD.Duracao, NEW.Duracao );
-	execute procedure set_log( 12, NEW.idPrimario, 'MaxAgenda', OLD.MaxAgenda, NEW.MaxAgenda );
 end
 end^
 
