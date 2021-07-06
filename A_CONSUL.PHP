@@ -170,6 +170,13 @@ class campo_arqConsulta_Pessoa extends Lance_CampoLigado
 		parent::__construct( "Pessoa", "Pessoa", "Pessoa", 0, "arqPessoa", "arqPessoa.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Paciente" );
+	}
+
 }
 
 //======================================================

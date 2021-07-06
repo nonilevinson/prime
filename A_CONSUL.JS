@@ -403,7 +403,15 @@ Campo_arqConsulta_HoraChega.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_Pessoa.prototype.FiltroPai = function()
 {
-			return( "A.QtoDesmar < " + g_qtasDesmar + "" );
+			return( "A.TPessoa = 2 and A.QtoDesmar < " + g_qtasDesmar + "" );
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_Pessoa.prototype.Cabecalho = function()
+{
+		return( "Paciente" );
 }
 
 //-------------------------------------------------------------
@@ -420,7 +428,9 @@ Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqConsulta_Medico.prototype.FiltroPai = function()
 {
-			return( "A.Grupo is not null" );
+		if( g_inserindo )
+			return( "A.Medico = 1 and A.Ativo = 1 and A.Grupo is not null" );
+			return( "A.Medico = 1 and A.Grupo is not null" );
 }
 
 //-------------------------------------------------------------

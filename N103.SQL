@@ -1797,10 +1797,7 @@ CREATE TABLE arqClinica
 	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
 	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 15*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 16*/	HORAINI TIME, /* Máscara = Hhmm */
-	/* 17*/	HORAFIM TIME, /* Máscara = Hhmm */
-	/* 18*/	CONSSAB campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 19*/	CONSDOM campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 16*/	MAXAGENDA INTEGER, /* Máscara = N */
 	CONSTRAINT arqClinica_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqClinica_UK UNIQUE ( Clinica )
 );
@@ -2626,7 +2623,7 @@ RECREATE VIEW V_arqMidia AS
 commit;
 
 RECREATE VIEW V_arqClinica AS 
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.ATIVO, A0.HORAINI, A0.HORAFIM, A0.CONSSAB, A0.CONSDOM
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.ATIVO, A0.MAXAGENDA
 	FROM arqClinica A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
@@ -3734,10 +3731,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Celular', OLD.Ende_Celular, NEW.Ende_Celular );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_WhatsApp', OLD.Ende_WhatsApp, NEW.Ende_WhatsApp );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
-	execute procedure set_log( 12, NEW.idPrimario, 'HoraIni', OLD.HoraIni, NEW.HoraIni );
-	execute procedure set_log( 12, NEW.idPrimario, 'HoraFim', OLD.HoraFim, NEW.HoraFim );
-	execute procedure set_log( 12, NEW.idPrimario, 'ConsSab', OLD.ConsSab, NEW.ConsSab );
-	execute procedure set_log( 12, NEW.idPrimario, 'ConsDom', OLD.ConsDom, NEW.ConsDom );
+	execute procedure set_log( 12, NEW.idPrimario, 'MaxAgenda', OLD.MaxAgenda, NEW.MaxAgenda );
 end
 end^
 
