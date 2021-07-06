@@ -1,5 +1,6 @@
 /*=========================================================================
   t_tdiase - TDiaSem
+	usa a_endere
 =========================================================================*/
 
 //======================================================
@@ -11,5 +12,6 @@ g_arquivoAtual = "tabTDiaSem";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"Plantao","","P",141,"","",1,"","1","a_planta","arqPlantao","Folhear","TDiaSem","?","","", "","", 0,7,[],[41]);
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }
