@@ -12,7 +12,7 @@ echo
       [ " ", MaxAgenda, " dias a partir de hoje" ] ),
    $this->Pedir( "Período de atividade",
       [ "", DataIni,
-      [ " até ", DataFim ] ] ),
+      [ " até ", DataFim, " (opcional)" ] ] ),
    $this->Pedir( "Ativa?", Ativo ),
 "</table>",
 
