@@ -194,9 +194,9 @@ CREATE TABLE arqPlantao
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
 	/*  3*/	DATAINI DATE, /* Máscara = 4ano */
-	/*  4*/	TDIASEM ligadoComTabela, /* Ligado com a Tabela TDiaSem */
-	/*  5*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	DATAFIM DATE, /* Máscara = 4ano */
+	/*  5*/	TDIASEM ligadoComTabela, /* Ligado com a Tabela TDiaSem */
+	/*  6*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	CONSTRAINT arqPlantao_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
@@ -210,7 +210,7 @@ ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Usuario FOREIGN KEY ( USUARI
 commit;
 
 RECREATE VIEW V_arqPlantao AS
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATAINI, A0.TDIASEM, A2.CHAVE as TDiaSem_CHAVE, A2.DESCRITOR as TDiaSem_DESCRITOR, A0.USUARIO, A3.USUARIO as USUARIO_USUARIO, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATAINI, A0.DATAFIM, A0.TDIASEM, A2.CHAVE as TDiaSem_CHAVE, A2.DESCRITOR as TDiaSem_DESCRITOR, A0.USUARIO, A3.USUARIO as USUARIO_USUARIO
 	FROM arqPlantao A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTDiaSem A2 on A2.IDPRIMARIO=A0.TDIASEM
@@ -240,9 +240,9 @@ if( deleting ) then
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'DataIni', OLD.DataIni, NEW.DataIni );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataFim', OLD.DataFim, NEW.DataFim );
 	execute procedure set_log( 12, NEW.idPrimario, 'TDiaSem', OLD.TDiaSem, NEW.TDiaSem );
 	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
-	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end
 end^
 
@@ -250,9 +250,9 @@ set term ;^
 
 commit;
 
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, TDIASEM, USUARIO, ATIVO) VALUES (1, 1, '2021-07-01', 2, 400, 1);
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, TDIASEM, USUARIO, ATIVO) VALUES (2, 1, '2021-07-01', 3, 400, 1);
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, TDIASEM, USUARIO, ATIVO) VALUES (3, 1, '2021-07-01', 4, 401, 1);
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, TDIASEM, USUARIO, ATIVO) VALUES (4, 1, '2021-07-01', 5, 400, 1);
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, TDIASEM, USUARIO, ATIVO) VALUES (5, 1, '2021-07-01', 6, 400, 1);
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (1, 1, '2021-07-01', '2021-12-31', 2, 400;
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (2, 1, '2021-07-01', '2021-12-31', 3, 400;
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (3, 1, '2021-07-01', '2021-12-31', 4, 401;
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (4, 1, '2021-07-01', '2021-12-31', 5, 400;
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (5, 1, '2021-07-01', '2021-12-31', 6, 400;
 COMMIT WORK;

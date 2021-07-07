@@ -65,6 +65,19 @@ class campo_arqPlantao_DataIni extends Lance_CampoData
 }
 
 //======================================================
+//	Campo DataFim
+//======================================================
+
+class campo_arqPlantao_DataFim extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "DataFim", "DataFim", "DataFim", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo TDiaSem
 //======================================================
 
@@ -118,35 +131,6 @@ class campo_arqPlantao_Usuario_Usuario extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Ativo
-//======================================================
-
-class campo_arqPlantao_Ativo extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "Ativo", "Ativo", "Ativo", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( $g_regAtual->ATIVO == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Ativo?" );
-	}
-
-}
-
-//======================================================
 //	Arquivo arqPlantao
 //======================================================
 function listaCampos_arqPlantao( $p_prefixo )
@@ -160,12 +144,12 @@ function listaCampos_arqPlantao( $p_prefixo )
 			new campo_arqPlantao_Clinica(),
 			new campo_arqPlantao_Clinica_Clinica(),
 			new campo_arqPlantao_DataIni(),
+			new campo_arqPlantao_DataFim(),
 			new campo_arqPlantao_TDiaSem(),
 			new Lance_CampoCadeia( "TDiaSem_Chave", "TDiaSem_Chave", "Chave", 1, "x", EH_CHAVE, TDiaSem ),
 			new Lance_CampoCadeia( "TDiaSem_Descritor", "TDiaSem_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TDiaSem ),
 			new campo_arqPlantao_Usuario(),
-			new campo_arqPlantao_Usuario_Usuario(),
-			new campo_arqPlantao_Ativo() )
+			new campo_arqPlantao_Usuario_Usuario() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -201,9 +185,9 @@ class arqPlantao extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( DataIni ) );
+			array_push( $vetAux, array( DataFim ) );
 			array_push( $vetAux, array( TDiaSem_Descritor ) );
 			array_push( $vetAux, array( Usuario_Usuario ) );
-			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
 
@@ -224,9 +208,9 @@ class arqPlantao extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( DataIni ) );
+			array_push( $vetAux, array( DataFim ) );
 			array_push( $vetAux, array( TDiaSem_Descritor ) );
 			array_push( $vetAux, array( Usuario_Usuario ) );
-			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
 

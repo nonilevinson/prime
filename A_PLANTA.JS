@@ -36,6 +36,17 @@ function Campo_arqPlantao_DataIni()
 var DataIni = new Campo_arqPlantao_DataIni;
 
 //------------------------------------------------------------
+Campo_arqPlantao_DataFim.prototype = new Lance_CampoData;
+
+function Campo_arqPlantao_DataFim()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "DataFim", "DataFim", "DataFim", 8, "dd/mm/aaaa", true);
+}
+
+var DataFim = new Campo_arqPlantao_DataFim;
+
+//------------------------------------------------------------
 Campo_arqPlantao_TDiaSem.prototype = new Lance_CampoLigado;
 
 function Campo_arqPlantao_TDiaSem()
@@ -90,17 +101,6 @@ function Campo_arqPlantao_Usuario_Usuario()
 
 var Usuario_Usuario = new Campo_arqPlantao_Usuario_Usuario;
 
-//------------------------------------------------------------
-Campo_arqPlantao_Ativo.prototype = new Lance_CampoLogico;
-
-function Campo_arqPlantao_Ativo()
-{
-	this.superClass = Lance_CampoLogico;
-	this.superClass( "Ativo", "Ativo", "Ativo");
-}
-
-var Ativo = new Campo_arqPlantao_Ativo;
-
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -148,6 +148,19 @@ Campo_arqPlantao_DataIni.prototype.Obrigatorio = function( p_comMsg )
 Campo_arqPlantao_DataIni.prototype.Cabecalho = function()
 {
 		return( "Início" );
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqPlantao_DataFim.prototype.TemErro = function()
+{
+		if( tem(this) && ( quantosDias( DataFim, DataIni ) < 0 ) )
+	{
+		alert( "A data final precisa ser posterior a inicial" );
+		return( true );
+	}
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -210,24 +223,6 @@ Campo_arqPlantao_Usuario_Usuario.prototype.ObrigatorioEspecial = function( p_com
 
 Usuario_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
-Campo_arqPlantao_Ativo.prototype.Sugeriu = function()
-{
-{
-	return( this.AtribuiuSemCritica( 1 ) );
-}
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqPlantao_Ativo.prototype.Cabecalho = function()
-{
-		return( "Ativo?" );
-}
-
-//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqPlantao_Clinica.prototype.ExistenciaEspecial = function()
@@ -248,6 +243,7 @@ function IniciarDependencias_arqPlantao()
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
+DataIni.ErrosDependentes= [ DataFim ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Usuario.CamposChave= [ Usuario_Usuario ];
@@ -268,7 +264,7 @@ function ListaDeCampos_arqPlantao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, DataIni, TDiaSem, TDiaSem_Chave, TDiaSem_Descritor, Usuario, Usuario_Usuario, Ativo ]	);
+		[ Clinica, Clinica_Clinica, DataIni, DataFim, TDiaSem, TDiaSem_Chave, TDiaSem_Descritor, Usuario, Usuario_Usuario ]	);
 	IniciarDependencias_arqPlantao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

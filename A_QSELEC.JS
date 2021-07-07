@@ -404,7 +404,7 @@ Campo_parQSelecao_TStCon_Descritor.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_TStCon_Descritor()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 22, "xxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 18, "xxxxxxxxxxxxxxxxxx", false);
 }
 
 var TStCon_Descritor = new Campo_parQSelecao_TStCon_Descritor;

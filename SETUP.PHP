@@ -30,7 +30,7 @@
 		array( 'Usuários', 'arqUsuario', 'Usuario', 'Senha', 'Grupo', '', 'Ativo', 'Email', 'Versao', 'principa' )	);
 
 	$versoes = array(
-		"1.03"	=> "05/07/2021",
+		"1.03"	=> "07/07/2021",
 		"1.02"	=> "18/06/2021",
 		"1.01"	=> "15/06/2021",
 		"1.00"	=> "25/05/2021" );
