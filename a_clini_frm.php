@@ -10,6 +10,9 @@ echo
    $this->Pedir( "CNPJ" ),
    $this->Pedir( "Agendamento disponível para até",
       [ " ", MaxAgenda, " dias a partir de hoje" ] ),
+   $this->Pedir( "Período de atividade",
+      [ "", DataIni,
+      [ " até ", DataFim ] ] ),
    $this->Pedir( "Ativa?", Ativo ),
 "</table>",
 
@@ -18,7 +21,6 @@ CriarForms(
 
 //* Endereço
 "<table id='E' class='tabFormulario' style='display:none'>",
-   // $this->Pedir( "Ende_Endereco" ),
 	frmEndereco( "E", "Ende_" ),
 "</table>",
 

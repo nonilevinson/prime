@@ -51,6 +51,28 @@ var CNPJ = new Campo_arqClinica_CNPJ;
 IniciarPrefixos_domEndereco( "Ende_" );
 
 //------------------------------------------------------------
+Campo_arqClinica_DataIni.prototype = new Lance_CampoData;
+
+function Campo_arqClinica_DataIni()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "DataIni", "DataIni", "DataIni", 8, "dd/mm/aaaa", true);
+}
+
+var DataIni = new Campo_arqClinica_DataIni;
+
+//------------------------------------------------------------
+Campo_arqClinica_DataFim.prototype = new Lance_CampoData;
+
+function Campo_arqClinica_DataFim()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "DataFim", "DataFim", "DataFim", 8, "dd/mm/aaaa", true);
+}
+
+var DataFim = new Campo_arqClinica_DataFim;
+
+//------------------------------------------------------------
 Campo_arqClinica_Ativo.prototype = new Lance_CampoLogico;
 
 function Campo_arqClinica_Ativo()
@@ -108,6 +130,37 @@ Campo_arqClinica_CNPJ.prototype.TemErro = function()
 }
 
 //-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqClinica_DataFim.prototype.TemErro = function()
+{
+		if( tem(this) && ( quantosDias( DataFim, DataIni ) < 0 ) )
+	{
+		alert( "A data final precisa ser posterior a inicial" );
+		return( true );
+	}
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqClinica_Ativo.prototype.Calculou = function()
+{
+{
+		if( !tem( DataFim ) )
+	return( this.Atribuiu( 1 ) );
+}
+{
+		if( quantosDias( DataIni, HOJE ) > 0 || quantosDias( DataFim, HOJE ) < 0 )
+	return( this.Atribuiu( 0 ) );
+}
+{
+	return( this.Atribuiu( 1 ) );
+}
+}
+
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqClinica_Ativo.prototype.Cabecalho = function()
@@ -115,8 +168,12 @@ Campo_arqClinica_Ativo.prototype.Cabecalho = function()
 		return( "Ativa?" );
 }
 
+Ativo.EhCalculado = true;
 function IniciarDependencias_arqClinica()
 {
+DataFim.CalculosDependentes= [ Ativo ];
+DataIni.CalculosDependentes= [ Ativo ];
+DataIni.ErrosDependentes= [ DataFim ];
 }
 
 
@@ -136,7 +193,7 @@ function ListaDeCampos_arqClinica( p_prefixo )
 
 		[ Clinica, Razao, Email, CNPJ ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ Ativo, MaxAgenda ]	);
+		[ DataIni, DataFim, Ativo, MaxAgenda ]	);
 	IniciarDependencias_arqClinica();
 	g_prefixo = l_prefixo;
 	return( l_lista );

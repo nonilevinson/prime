@@ -75,6 +75,13 @@ class campo_arqPlantao_DataFim extends Lance_CampoData
 		parent::__construct( "DataFim", "DataFim", "DataFim", 8, "dd/mm/aaaa", 0, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Fim" );
+	}
+
 }
 
 //======================================================

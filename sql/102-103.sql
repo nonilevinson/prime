@@ -7,6 +7,8 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+insert into arqLanceOperacao values(300004,3,'Gravação pelo Portal da Agenda','',4,99,1,'');
+
 insert into arqLanceOperacao values(100041,1,'Cadastro de plantonistas nas clínicas','arqPlantao',41,1,0,'');
 commit;
 
@@ -122,18 +124,30 @@ drop trigger arqClinica_log;
 drop view v_arqClinica;
 commit;
 
-ALTER TABLE arqClinica drop HoraIni, drop HoraFim, drop ConsSab, drop ConsDom;
+ALTER TABLE arqClinica drop HoraIni, drop HoraFim, drop ConsSab, drop ConsDom, drop Ativo;
+commit;
+
+ALTER TABLE arqClinica
+add /* 15*/	DATAINI DATE, /* Máscara = 4ano */
+add /* 16*/	DATAFIM DATE; /* Máscara = 4ano */
+commit;
+
+ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
+	WHEN( DataFim is null ) THEN( 1 )
+	WHEN( current_date between DataIni and DataFim ) THEN( 1 )
+	ELSE ( 0 )
+	END  );
 commit;
 
 ALTER TABLE arqClinica
 add /* 16*/	MAXAGENDA INTEGER; /* Máscara = N */
 commit;
 
-update arqClinica set MaxAgenda=60;
+update arqClinica set DataIni='2021-01-01', MaxAgenda=60;
 commit;
 
 RECREATE VIEW V_arqClinica AS
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.ATIVO, A0.MAXAGENDA
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.DATAINI, A0.DATAFIM, A0.ATIVO, A0.MAXAGENDA
 	FROM arqClinica A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
@@ -176,7 +190,8 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_DDDCelular', OLD.Ende_DDDCelular, NEW.Ende_DDDCelular );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Celular', OLD.Ende_Celular, NEW.Ende_Celular );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_WhatsApp', OLD.Ende_WhatsApp, NEW.Ende_WhatsApp );
-	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataIni', OLD.DataIni, NEW.DataIni );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataFim', OLD.DataFim, NEW.DataFim );
 	execute procedure set_log( 12, NEW.idPrimario, 'MaxAgenda', OLD.MaxAgenda, NEW.MaxAgenda );
 end
 end^
@@ -250,9 +265,9 @@ set term ;^
 
 commit;
 
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (1, 1, '2021-07-01', '2021-12-31', 2, 400;
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (2, 1, '2021-07-01', '2021-12-31', 3, 400;
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (3, 1, '2021-07-01', '2021-12-31', 4, 401;
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (4, 1, '2021-07-01', '2021-12-31', 5, 400;
-INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (5, 1, '2021-07-01', '2021-12-31', 6, 400;
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (1, 1, '2021-07-01', '2021-12-31', 2, 400);
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (2, 1, '2021-07-01', '2021-12-31', 3, 400);
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (3, 1, '2021-07-01', '2021-12-31', 4, 401);
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (4, 1, '2021-07-01', '2021-12-31', 5, 400);
+INSERT INTO ARQPLANTAO (IDPRIMARIO, CLINICA, DATAINI, DATAFIM, TDIASEM, USUARIO) VALUES (5, 1, '2021-07-01', '2021-12-31', 6, 400);
 COMMIT WORK;

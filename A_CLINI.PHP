@@ -72,6 +72,32 @@ class campo_arqClinica_CNPJ extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo DataIni
+//======================================================
+
+class campo_arqClinica_DataIni extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "DataIni", "DataIni", "DataIni", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo DataFim
+//======================================================
+
+class campo_arqClinica_DataFim extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "DataFim", "DataFim", "DataFim", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Ativo
 //======================================================
 
@@ -79,7 +105,7 @@ class campo_arqClinica_Ativo extends Lance_CampoLogico
 {
 	function __construct()
 	{
-		parent::__construct( "Ativo", "Ativo", "Ativo", "", 0, 0, false );
+		parent::__construct( "Ativo", "Ativo", "Ativo", "", EH_CALCULADO, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -130,6 +156,8 @@ function listaCampos_arqClinica( $p_prefixo )
 			new campo_arqClinica_CNPJ() ),
 		listaCampos_domEndereco( "Ende_" ),
 		array( 
+			new campo_arqClinica_DataIni(),
+			new campo_arqClinica_DataFim(),
 			new campo_arqClinica_Ativo(),
 			new campo_arqClinica_MaxAgenda() )
 	);
@@ -191,6 +219,8 @@ class arqClinica extends Lance_Arquivo
 			array_push( $vetAux, array( Ende_DDDCelular ) );
 			array_push( $vetAux, array( Ende_Celular ) );
 			array_push( $vetAux, array( Ende_WhatsApp ) );
+			array_push( $vetAux, array( DataIni ) );
+			array_push( $vetAux, array( DataFim ) );
 			array_push( $vetAux, array( Ativo ) );
 			array_push( $vetAux, array( MaxAgenda ) );
 		return( $vetAux );

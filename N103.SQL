@@ -1796,8 +1796,10 @@ CREATE TABLE arqClinica
 	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
 	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
 	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 15*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 16*/	MAXAGENDA INTEGER, /* Máscara = N */
+	/* 15*/	DATAINI DATE, /* Máscara = 4ano */
+	/* 16*/	DATAFIM DATE, /* Máscara = 4ano */
+	/* 17*/	/* ATIVO */
+	/* 18*/	MAXAGENDA INTEGER, /* Máscara = N */
 	CONSTRAINT arqClinica_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqClinica_UK UNIQUE ( Clinica )
 );
@@ -2464,6 +2466,12 @@ ALTER TABLE arqParcela ADD NUMBOLETO NUMERIC(18,0) computed by ( CASE
 ALTER TABLE arqParcela ALTER NUMBOLETO POSITION 14;
 ALTER TABLE arqConta ADD SALDO NUMERIC( 11, 2 ) computed by ( TrgValLiq - TrgPago ); 
 ALTER TABLE arqConta ALTER SALDO POSITION 12;
+ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
+	WHEN( DataFim is not null ) THEN( 1 )
+	WHEN( current_date between DataIni and DataFim ) THEN( 1 )
+	ELSE ( 0 )
+	END  ); 
+ALTER TABLE arqClinica ALTER ATIVO POSITION 17;
 commit;
 
 
@@ -2643,7 +2651,7 @@ RECREATE VIEW V_arqMidia AS
 commit;
 
 RECREATE VIEW V_arqClinica AS 
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.ATIVO, A0.MAXAGENDA
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.DATAINI, A0.DATAFIM, A0.ATIVO, A0.MAXAGENDA
 	FROM arqClinica A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
@@ -2830,6 +2838,7 @@ insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos 
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
+insert into arqLanceOperacao values(300004,3,'Gravação pelo Portal da Agenda','',4,99,1,'');
 
 
 /************************************************************
@@ -3762,7 +3771,8 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_DDDCelular', OLD.Ende_DDDCelular, NEW.Ende_DDDCelular );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Celular', OLD.Ende_Celular, NEW.Ende_Celular );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_WhatsApp', OLD.Ende_WhatsApp, NEW.Ende_WhatsApp );
-	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataIni', OLD.DataIni, NEW.DataIni );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataFim', OLD.DataFim, NEW.DataFim );
 	execute procedure set_log( 12, NEW.idPrimario, 'MaxAgenda', OLD.MaxAgenda, NEW.MaxAgenda );
 end
 end^

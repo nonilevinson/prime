@@ -164,6 +164,14 @@ Campo_arqPlantao_DataFim.prototype.TemErro = function()
 }
 
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqPlantao_DataFim.prototype.Cabecalho = function()
+{
+		return( "Fim" );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqPlantao_TDiaSem.prototype.Obrigatorio = function( p_comMsg )
