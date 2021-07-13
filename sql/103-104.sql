@@ -211,4 +211,206 @@ set term ;^
 
 commit;
 
+/***********************************************
+   PROCEDURE PESSOA_PRONTUARIO
+************************************************/
 
+SET TERM ^;
+RECREATE PROCEDURE PESSOA_PRONTUARIO
+AS
+   declare variable idPessoa bigInt;
+   declare variable prontuario bigInt;
+begin
+   for
+		Select P.idPrimario as idPessoa, P.Prontuario
+      From arqPessoa P
+      Where P.Prontuario = 0
+      	into :idPessoa, :prontuario
+   do begin
+      Select gen_id( genProntuario, 1 ) as Prontuario
+      From cnfXConfig
+      	into :prontuario;
+
+      Update arqPessoa set Prontuario = :prontuario
+         Where idPrimario = :idPessoa;
+    end
+end^
+
+SET TERM ;^
+
+commit;
+
+execute procedure PESSOA_PRONTUARIO;
+commit;
+
+drop procedure PESSOA_PRONTUARIO ;
+commit;
+
+/************************************************************
+	Arquivo ContPessoa
+************************************************************/
+drop trigger arqContPessoa_log;
+drop view v_arqContPessoa;
+commit;
+
+ALTER TABLE arqContPessoa drop CONSTRAINT arqContPessoa_UK;
+commit;
+
+ALTER TABLE arqContPessoa
+add /*  2*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+alter Fornecedor position 2;
+commit;
+
+ALTER TABLE arqContPessoa ADD CONSTRAINT arqContPessoa_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE CASCADE ON UPDATE CASCADE;
+commit;
+
+RECREATE VIEW V_arqContPessoa AS
+	SELECT A0.IDPRIMARIO, A0.FORNECEDOR, A1.NOME as FORNECEDOR_NOME, A0.PESSOA, A2.NOME as PESSOA_NOME, A2.PRONTUARIO as PESSOA_PRONTUARIO, A0.NOME, A0.APELIDO, A0.FUNCAO, A0.CELULAR, A0.TELEFONE, A0.EMAIL, A0.RECEMAIL, A0.NASCIMENTO, A0.SEXO, A3.CHAVE as Sexo_CHAVE, A3.DESCRITOR as Sexo_DESCRITOR, A0.OBS, A0.ATIVO
+	FROM arqContPessoa A0
+	left join arqFornecedor A1 on A1.IDPRIMARIO = A0.FORNECEDOR
+	left join arqPessoa A2 on A2.IDPRIMARIO = A0.PESSOA
+	left join tabSexo A3 on A3.IDPRIMARIO=A0.SEXO;
+commit;
+
+/************************************************************
+	Trigger para Log de arqContPessoa
+************************************************************/
+
+set term ^;
+
+recreate trigger arqContPessoa_LOG for arqContPessoa
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+	valorChave='';
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100021 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Fornecedor', OLD.Fornecedor, NEW.Fornecedor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
+	execute procedure set_log( 12, NEW.idPrimario, 'Apelido', OLD.Apelido, NEW.Apelido );
+	execute procedure set_log( 12, NEW.idPrimario, 'Funcao', OLD.Funcao, NEW.Funcao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Celular', OLD.Celular, NEW.Celular );
+	execute procedure set_log( 12, NEW.idPrimario, 'Telefone', OLD.Telefone, NEW.Telefone );
+	execute procedure set_log( 12, NEW.idPrimario, 'Email', OLD.Email, NEW.Email );
+	execute procedure set_log( 12, NEW.idPrimario, 'RecEmail', OLD.RecEmail, NEW.RecEmail );
+	execute procedure set_log( 12, NEW.idPrimario, 'Nascimento', OLD.Nascimento, NEW.Nascimento );
+	execute procedure set_log( 12, NEW.idPrimario, 'Sexo', OLD.Sexo, NEW.Sexo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Arquivo Conta
+************************************************************/
+drop trigger arqParcela_log;
+drop view v_arqParcela;
+commit;
+
+drop trigger arqConta_log;
+drop view v_arqConta;
+commit;
+
+ALTER TABLE arqConta
+add /*  6*/	FORNECEDOR ligadoComArquivo; /* Ligado com o Arquivo Fornecedor */
+commit;
+
+ALTER TABLE arqConta ADD NOME VARCHAR( 60 ) computed by ( CASE
+	WHEN( Pessoa > 0 )
+	THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqConta.Pessoa )  ), '' ) ) )
+	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqConta.Fornecedor )  ), '' ) ) )
+	END  );
+commit;
+
+ALTER TABLE arqConta ADD CONSTRAINT arqConta_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE NO ACTION ON UPDATE CASCADE;
+commit;
+
+RECREATE VIEW V_arqConta AS
+	SELECT A0.IDPRIMARIO, A0.TRANSACAO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TPGREC, A2.CHAVE as TPgRec_CHAVE, A2.DESCRITOR as TPgRec_DESCRITOR, A0.FORNECEDOR, A3.NOME as FORNECEDOR_NOME, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.PRONTUARIO as PESSOA_PRONTUARIO, A0.NOME, A0.TRGVALOR, A0.TRGVALLIQ, A0.TRGQTDPARC, A0.TRGQPARCPG, A0.PROXVENC, A0.TRGPAGO, A0.SALDO, A0.DOCUMENTO, A0.EMISSAO, A0.RECENVIA, A0.COMPETE, A0.HISTORICO, A0.ARQ1, A0.Arq1_ARQUIVO
+	FROM arqConta A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join tabTPgRec A2 on A2.IDPRIMARIO=A0.TPGREC
+	left join arqFornecedor A3 on A3.IDPRIMARIO = A0.FORNECEDOR
+	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA;
+commit;
+
+/************************************************************
+	Trigger para Log de arqConta
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConta_LOG for arqConta
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Transacao,'' );
+else
+	valorChave = coalesce( NEW.Transacao,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100033 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Transacao', OLD.Transacao, NEW.Transacao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPgRec', OLD.TPgRec, NEW.TPgRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'Fornecedor', OLD.Fornecedor, NEW.Fornecedor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Documento', OLD.Documento, NEW.Documento );
+	execute procedure set_log( 12, NEW.idPrimario, 'Emissao', OLD.Emissao, NEW.Emissao );
+	execute procedure set_log( 12, NEW.idPrimario, 'RecEnvia', OLD.RecEnvia, NEW.RecEnvia );
+	execute procedure set_log( 12, NEW.idPrimario, 'Compete', OLD.Compete, NEW.Compete );
+	execute procedure set_log( 12, NEW.idPrimario, 'Historico', OLD.Historico, NEW.Historico );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.Arq1 is distinct from OLD.Arq1 )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqConta
+alter IDPRIMARIO position 1,
+alter TRANSACAO position 2,
+alter CLINICA position 3,
+alter TPGREC position 4,
+alter FORNECEDOR position 5,
+alter PESSOA position 6,
+alter NOME position 7,
+alter TRGVALOR position 8,
+alter TRGVALLIQ position 9,
+alter TRGQTDPARC position 10,
+alter TRGQPARCPG position 11,
+alter PROXVENC position 12,
+alter TRGPAGO position 13,
+alter SALDO position 14,
+alter DOCUMENTO position 15,
+alter EMISSAO position 16,
+alter RECENVIA position 17,
+alter COMPETE position 18,
+alter HISTORICO position 19,
+alter ARQ1 position 20,
+alter ARQ1_ARQUIVO position 21;
+commit;

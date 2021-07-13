@@ -94,6 +94,32 @@ class campo_arqConta_TPgRec extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo Fornecedor
+//======================================================
+
+class campo_arqConta_Fornecedor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor", "Fornecedor", "Fornecedor", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor_Nome
+//======================================================
+
+class campo_arqConta_Fornecedor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Fornecedor", false );
+	}
+
+}
+
+//======================================================
 //	Campo Pessoa
 //======================================================
 
@@ -144,6 +170,26 @@ class campo_arqConta_Pessoa_Prontuario extends Lance_CampoNumerico
 	{
 		global $g_regAtual;
 			return( "Prontuário" );
+	}
+
+}
+
+//======================================================
+//	Campo Nome
+//======================================================
+
+class campo_arqConta_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Nome", "Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CALCULADO, 0, false );
+	}
+
+	//--------------------------------------------------
+	function EhForm()
+	{
+		global $g_regAtual;
+		return( (NAO) );
 	}
 
 }
@@ -428,9 +474,12 @@ function listaCampos_arqConta( $p_prefixo )
 			new campo_arqConta_TPgRec(),
 			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
 			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ),
+			new campo_arqConta_Fornecedor(),
+			new campo_arqConta_Fornecedor_Nome(),
 			new campo_arqConta_Pessoa(),
 			new campo_arqConta_Pessoa_Nome(),
 			new campo_arqConta_Pessoa_Prontuario(),
+			new campo_arqConta_Nome(),
 			new campo_arqConta_TrgValor(),
 			new campo_arqConta_TrgValLiq(),
 			new campo_arqConta_TrgQtdParc(),
@@ -480,8 +529,7 @@ class arqConta extends Lance_Arquivo
 			array_push( $vetAux, array( Transacao ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( TPgRec_Descritor ) );
-			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_Prontuario ) );
+			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( TrgValor ) );
 			array_push( $vetAux, array( TrgValLiq ) );
 			array_push( $vetAux, array( TrgQtdParc ) );
@@ -497,7 +545,7 @@ class arqConta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TPgRec ), array( TPgRec_Chave ), array( TPgRec_Descritor ), array( Pessoa ) ) );
+		return( array( array( Clinica ), array( TPgRec ), array( TPgRec_Chave ), array( TPgRec_Descritor ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -510,6 +558,7 @@ class arqConta extends Lance_Arquivo
 			array_push( $vetAux, array( Transacao ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( TPgRec_Descritor ) );
+			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
 			array_push( $vetAux, array( Pessoa_Prontuario ) );
 			array_push( $vetAux, array( TrgValor ) );

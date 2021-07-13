@@ -505,6 +505,32 @@ class campo_parQSelecao_TPgRec extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo Fornecedor
+//======================================================
+
+class campo_parQSelecao_Fornecedor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor", "Fornecedor", "Fornecedor", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor_Nome
+//======================================================
+
+class campo_parQSelecao_Fornecedor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Fornecedor", false );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQSelecao
 //======================================================
 function listaCampos_parQSelecao( $p_prefixo )
@@ -558,7 +584,9 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new Lance_CampoCadeia( "TMov_Descritor", "TMov_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TMov ),
 			new campo_parQSelecao_TPgRec(),
 			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
-			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ) )
+			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ),
+			new campo_parQSelecao_Fornecedor(),
+			new campo_parQSelecao_Fornecedor_Nome() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

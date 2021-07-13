@@ -69,6 +69,28 @@ function Campo_arqConta_TPgRec_Descritor()
 var TPgRec_Descritor = new Campo_arqConta_TPgRec_Descritor;
 
 //------------------------------------------------------------
+Campo_arqConta_Fornecedor.prototype = new Lance_CampoHidden;
+
+function Campo_arqConta_Fornecedor()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Fornecedor", "Fornecedor", "Fornecedor", "arqFornecedor", "a_fornec", null, "",42);
+}
+
+var Fornecedor = new Campo_arqConta_Fornecedor;
+
+//------------------------------------------------------------
+Campo_arqConta_Fornecedor_Nome.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConta_Fornecedor_Nome()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var Fornecedor_Nome = new Campo_arqConta_Fornecedor_Nome;
+
+//------------------------------------------------------------
 Campo_arqConta_Pessoa.prototype = new Lance_CampoHidden;
 
 function Campo_arqConta_Pessoa()
@@ -100,6 +122,17 @@ function Campo_arqConta_Pessoa_Prontuario()
 }
 
 var Pessoa_Prontuario = new Campo_arqConta_Pessoa_Prontuario;
+
+//------------------------------------------------------------
+Campo_arqConta_Nome.prototype = new Lance_CampoCadeia;
+
+function Campo_arqConta_Nome()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "Nome", "Nome", "Nome", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var Nome = new Campo_arqConta_Nome;
 
 //------------------------------------------------------------
 Campo_arqConta_TrgValor.prototype = new Lance_CampoNumerico;
@@ -315,6 +348,15 @@ Campo_arqConta_TPgRec.prototype.Cabecalho = function()
 TPgRec_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TPgRec_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConta_Fornecedor_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Fornecedor.Obrigatorio( p_comMsg ) );
+}
+
+Fornecedor_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
 Campo_arqConta_Pessoa.prototype.FiltroPai = function()
@@ -325,14 +367,40 @@ Campo_arqConta_Pessoa.prototype.FiltroPai = function()
 }
 
 //-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
+// Condição de erro do campo
 //-------------------------------------------------------------
-Campo_arqConta_Pessoa.prototype.Obrigatorio = function( p_comMsg )
+Campo_arqConta_Pessoa.prototype.TemErro = function()
 {
+		if( !tem( Pessoa_Nome ) && !tem( Fornecedor_Nome ) )
 	{
-		if( p_comMsg ) alert( "A pessoa é obrigatória" );
+		alert( "Informe um paciente ou um fornecedor" );
 		return( true );
 	}
+	return( Lance_CampoArquivo.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConta_Pessoa.prototype.Existencia = function()
+{
+	return( !tem( Fornecedor_Nome ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConta_Pessoa_Nome.prototype.Existencia = function()
+{
+	return( !tem( Fornecedor_Nome ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConta_Pessoa_Prontuario.prototype.Existencia = function()
+{
+	return( !tem( Fornecedor_Nome ) );
 }
 
 //-------------------------------------------------------------
@@ -353,6 +421,33 @@ Campo_arqConta_Pessoa_Prontuario.prototype.ObrigatorioEspecial = function( p_com
 }
 
 Pessoa_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqConta_Nome.prototype.Calculou = function()
+{
+{
+		if( tem( Pessoa ) )
+{
+	if( !Pessoa.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( " + Pessoa + " )  )" + LANCE_SEPARADOR + this.Prefixo + "Nome" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
+{
+{
+	if( !Fornecedor.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( " + Fornecedor + " )  )" + LANCE_SEPARADOR + this.Prefixo + "Nome" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
+}
+
+Nome.EhCalculado = true;
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -466,6 +561,14 @@ Campo_arqConta_Clinica.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_arqConta_Fornecedor.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Fornecedor_Nome.Obrigatorio( false ) || tem(Fornecedor_Nome) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_arqConta_Pessoa.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_Prontuario.Obrigatorio( false ) || tem(Pessoa_Prontuario) ) );
@@ -473,14 +576,21 @@ Campo_arqConta_Pessoa.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_arqConta()
 {
+Pessoa.CalculosDependentes= [ Nome ];
+Fornecedor.CalculosDependentes= [ Nome ];
 TrgValLiq.CalculosDependentes= [ Saldo ];
 TrgPago.CalculosDependentes= [ Saldo ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
+Fornecedor_Nome.ExistenciasDependentes= [ Fornecedor ];
+Fornecedor.ExistenciasDependentes= [ Pessoa,Pessoa_Nome,Pessoa_Prontuario ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
+Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
+Fornecedor.ErrosDependentes= [ Pessoa ];
 Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
 Clinica.CamposChave= [ Clinica_Clinica ];
+Fornecedor.CamposChave= [ Fornecedor_Nome ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
 }
 
@@ -499,7 +609,7 @@ function ListaDeCampos_arqConta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Transacao, Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Pessoa, Pessoa_Nome, Pessoa_Prontuario, TrgValor, TrgValLiq, TrgQtdParc, TrgQParcPg, ProxVenc, TrgPago, Saldo, Documento, Emissao, RecEnvia, Compete, Historico, Arq1 ]	);
+		[ Transacao, Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_Prontuario, Nome, TrgValor, TrgValLiq, TrgQtdParc, TrgQParcPg, ProxVenc, TrgPago, Saldo, Documento, Emissao, RecEnvia, Compete, Historico, Arq1 ]	);
 	IniciarDependencias_arqConta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

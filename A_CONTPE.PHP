@@ -12,6 +12,32 @@ include_once( SISTEMA_DIR_ABSOLUTO . "a_contpe_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
 
 //======================================================
+//	Campo Fornecedor
+//======================================================
+
+class campo_arqContPessoa_Fornecedor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor", "Fornecedor", "Fornecedor", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor_Nome
+//======================================================
+
+class campo_arqContPessoa_Fornecedor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Fornecedor", false );
+	}
+
+}
+
+//======================================================
 //	Campo Pessoa
 //======================================================
 
@@ -19,7 +45,7 @@ class campo_arqContPessoa_Pessoa extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Pessoa", "Pessoa", "Pessoa", EH_CHAVE, "arqPessoa", "arqPessoa.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+		parent::__construct( "Pessoa", "Pessoa", "Pessoa", 0, "arqPessoa", "arqPessoa.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
 }
@@ -74,7 +100,7 @@ class campo_arqContPessoa_Nome extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Nome", "Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
+		parent::__construct( "Nome", "Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
 	}
 
 }
@@ -243,6 +269,8 @@ function listaCampos_arqContPessoa( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
+			new campo_arqContPessoa_Fornecedor(),
+			new campo_arqContPessoa_Fornecedor_Nome(),
 			new campo_arqContPessoa_Pessoa(),
 			new campo_arqContPessoa_Pessoa_Nome(),
 			new campo_arqContPessoa_Pessoa_Prontuario(),
@@ -282,7 +310,7 @@ class arqContPessoa extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Pessoa_Nome, Pessoa_Prontuario, Nome) );
+		return( array( ) );
 	}
 
 	//-------------------------------------------------------------
@@ -292,8 +320,15 @@ class arqContPessoa extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
+		if( ultimaLigOpcaoEm( 143 ) )
+ {
+			array_push( $vetAux, array( Fornecedor_Nome ) );
+ }
+		if( ultimaLigOpcaoEm( 75 ) )
+ {
 			array_push( $vetAux, array( Pessoa_Nome ) );
 			array_push( $vetAux, array( Pessoa_Prontuario ) );
+ }
 			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( Funcao ) );
 			array_push( $vetAux, array( Celular ) );
@@ -304,20 +339,13 @@ class arqContPessoa extends Lance_Arquivo
 	}
 
 	//-------------------------------------------------------------
-	// Complemento para os Campos Folheaveis do Arquivo
-	//-------------------------------------------------------------
-	function ComplementoFolheamento()
-	{
-		return( array( array( Pessoa ) ) );
-	}
-
-	//-------------------------------------------------------------
 	// Campos Exportaveis do Arquivo
 	//-------------------------------------------------------------
 	function Exportacao()
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
+			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
 			array_push( $vetAux, array( Pessoa_Prontuario ) );
 			array_push( $vetAux, array( Nome ) );

@@ -486,6 +486,28 @@ function Campo_parQSelecao_TPgRec_Descritor()
 
 var TPgRec_Descritor = new Campo_parQSelecao_TPgRec_Descritor;
 
+//------------------------------------------------------------
+Campo_parQSelecao_Fornecedor.prototype = new Lance_CampoHidden;
+
+function Campo_parQSelecao_Fornecedor()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Fornecedor", "Fornecedor", "Fornecedor", "arqFornecedor", "a_fornec", null, "",42);
+}
+
+var Fornecedor = new Campo_parQSelecao_Fornecedor;
+
+//------------------------------------------------------------
+Campo_parQSelecao_Fornecedor_Nome.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_Fornecedor_Nome()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var Fornecedor_Nome = new Campo_parQSelecao_Fornecedor_Nome;
+
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -849,6 +871,15 @@ TMov_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 TPgRec_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TPgRec_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Fornecedor_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Fornecedor.Obrigatorio( p_comMsg ) );
+}
+
+Fornecedor_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_parQSelecao_Usuario.prototype.ExistenciaEspecial = function()
@@ -896,6 +927,14 @@ Campo_parQSelecao_Clinica.prototype.ExistenciaEspecial = function()
 	return( ( !Clinica_Clinica.Obrigatorio( false ) || tem(Clinica_Clinica) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Fornecedor.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Fornecedor_Nome.Obrigatorio( false ) || tem(Fornecedor_Nome) ) );
+}
+
 function IniciarDependencias_parQSelecao()
 {
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
@@ -911,6 +950,7 @@ HoraIni.ExistenciasDependentes= [ HoraFim ];
 Gran6.ExistenciasDependentes= [ Gran6Fim ];
 Real6.ExistenciasDependentes= [ Real6Fim ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
+Fornecedor_Nome.ExistenciasDependentes= [ Fornecedor ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
 Cliente_Prontuario.ErrosDependentes= [ Cliente ];
@@ -921,12 +961,14 @@ DataIni1.ErrosDependentes= [ DataFim1 ];
 HoraIni.ErrosDependentes= [ HoraFim ];
 Senha1.ErrosDependentes= [ Senha2 ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
+Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
 Usuario.CamposChave= [ Usuario_Usuario ];
 Medico.CamposChave= [ Medico_Usuario ];
 Cliente.CamposChave= [ Cliente_Nome,Cliente_Prontuario ];
 EmailRemet.CamposChave= [ EmailRemet_Email ];
 AcaoEmail.CamposChave= [ AcaoEmail_Titulo,AcaoEmail_Versao ];
 Clinica.CamposChave= [ Clinica_Clinica ];
+Fornecedor.CamposChave= [ Fornecedor_Nome ];
 }
 
 
@@ -944,7 +986,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_Prontuario, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_Prontuario, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

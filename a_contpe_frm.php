@@ -38,8 +38,20 @@ function btnWhatsApp()
 //----------------------------------------------------------------------------------
 
 echo
-"<table class='tabFormulario' >",
-	$this->Pedir( "Pessoa" ),
+"<table class='tabFormulario' >";
+
+	if( ultimaLigOpcaoEm( 143 ) )
+	{
+		echo
+		$this->Pedir( "Fornecedor" );
+	}
+	else
+	{
+		echo
+		$this->Pedir( "Pessoa" );
+	}
+
+	echo
 	$this->Pedir( "Nome" ),
 	$this->Pedir( "Apelido" ),
 	$this->Pedir( "Função", Funcao ),

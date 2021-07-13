@@ -308,5 +308,7 @@ g_arquivoCampos = ListaDeCampos_arqFornecedor( '' );
 g_idOperacao = 42;
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"Conatos","","C",143,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Fornecedor","?","","", "","", 0,7,[],[21]);
+var Menu_2 = new Array( 1,"Contas","","t",144,"","",1,"","1","a_conta","arqConta","Folhear","Fornecedor","?","","", "","", 0,7,[],[33]);
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }
