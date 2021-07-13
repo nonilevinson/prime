@@ -80,6 +80,26 @@ class campo_parGeraParc_Pessoa_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Pessoa_Prontuario
+//======================================================
+
+class campo_parGeraParc_Pessoa_Prontuario extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Pessoa", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Prontuário" );
+	}
+
+}
+
+//======================================================
 //	Campo Documento
 //======================================================
 
@@ -2610,6 +2630,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Clinica_Clinica(),
 			new campo_parGeraParc_Pessoa(),
 			new campo_parGeraParc_Pessoa_Nome(),
+			new campo_parGeraParc_Pessoa_Prontuario(),
 			new campo_parGeraParc_Documento(),
 			new campo_parGeraParc_TPgRec(),
 			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),

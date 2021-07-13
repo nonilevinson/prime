@@ -202,6 +202,26 @@ class campo_arqConsulta_Pessoa_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Pessoa_Prontuario
+//======================================================
+
+class campo_arqConsulta_Pessoa_Prontuario extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Pessoa", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Prontuário" );
+	}
+
+}
+
+//======================================================
 //	Campo Medico
 //======================================================
 
@@ -401,6 +421,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_HoraChega(),
 			new campo_arqConsulta_Pessoa(),
 			new campo_arqConsulta_Pessoa_Nome(),
+			new campo_arqConsulta_Pessoa_Prontuario(),
 			new campo_arqConsulta_Medico(),
 			new campo_arqConsulta_Medico_Usuario(),
 			new campo_arqConsulta_Mkt(),
@@ -456,6 +477,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( Hora ) );
 			array_push( $vetAux, array( HoraChega ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
+			array_push( $vetAux, array( Pessoa_Prontuario ) );
 			array_push( $vetAux, array( Medico_Usuario ) );
 			array_push( $vetAux, array( Mkt_Usuario ) );
 			array_push( $vetAux, array( Assessor_Usuario ) );
@@ -486,6 +508,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( Hora ) );
 			array_push( $vetAux, array( HoraChega ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
+			array_push( $vetAux, array( Pessoa_Prontuario ) );
 			array_push( $vetAux, array( Medico_Usuario ) );
 			array_push( $vetAux, array( Mkt_Usuario ) );
 			array_push( $vetAux, array( Assessor_Usuario ) );

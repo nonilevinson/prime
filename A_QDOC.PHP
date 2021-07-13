@@ -61,6 +61,35 @@ class campo_parQDoc_Pessoa_Nome extends Lance_CampoCadeia
 		parent::__construct( "Pessoa_Nome", "Pessoa_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Pessoa", false );
 	}
 
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->PESSOA_QTODESMAR >= G_QTASDESMAR )
+			return( "VermelhoFundoEsq" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo Pessoa_Prontuario
+//======================================================
+
+class campo_parQDoc_Pessoa_Prontuario extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Pessoa", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Prontuário" );
+	}
+
 }
 
 //======================================================
@@ -182,6 +211,7 @@ function listaCampos_parQDoc( $p_prefixo )
 			new campo_parQDoc_DocMod_Documento(),
 			new campo_parQDoc_Pessoa(),
 			new campo_parQDoc_Pessoa_Nome(),
+			new campo_parQDoc_Pessoa_Prontuario(),
 			new campo_parQDoc_Cad1(),
 			new campo_parQDoc_Cad2(),
 			new campo_parQDoc_Cad3(),

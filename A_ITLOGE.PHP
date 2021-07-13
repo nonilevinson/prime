@@ -138,6 +138,35 @@ class campo_arqItLogEmail_Cliente_Nome extends Lance_CampoCadeia
 		parent::__construct( "Cliente_Nome", "Cliente_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Cliente", false );
 	}
 
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->CLIENTE_QTODESMAR >= G_QTASDESMAR )
+			return( "VermelhoFundoEsq" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo Cliente_Prontuario
+//======================================================
+
+class campo_arqItLogEmail_Cliente_Prontuario extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Cliente_Prontuario", "Cliente_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Cliente", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Prontuário" );
+	}
+
 }
 
 //======================================================
@@ -261,6 +290,7 @@ function listaCampos_arqItLogEmail( $p_prefixo )
 			new campo_arqItLogEmail_LogEmail_Hora(),
 			new campo_arqItLogEmail_Cliente(),
 			new campo_arqItLogEmail_Cliente_Nome(),
+			new campo_arqItLogEmail_Cliente_Prontuario(),
 			new campo_arqItLogEmail_Email(),
 			new campo_arqItLogEmail_Enviado(),
 			new campo_arqItLogEmail_Lido(),
@@ -305,6 +335,7 @@ class arqItLogEmail extends Lance_Arquivo
 			array_push( $vetAux, array( LogEmail_Data ) );
 			array_push( $vetAux, array( LogEmail_Hora ) );
 			array_push( $vetAux, array( Cliente_Nome ) );
+			array_push( $vetAux, array( Cliente_Prontuario ) );
 			array_push( $vetAux, array( Email ) );
 			array_push( $vetAux, array( Enviado ) );
 			array_push( $vetAux, array( Lido ) );
@@ -336,6 +367,7 @@ class arqItLogEmail extends Lance_Arquivo
 			array_push( $vetAux, array( LogEmail_Data ) );
 			array_push( $vetAux, array( LogEmail_Hora ) );
 			array_push( $vetAux, array( Cliente_Nome ) );
+			array_push( $vetAux, array( Cliente_Prontuario ) );
 			array_push( $vetAux, array( Email ) );
 			array_push( $vetAux, array( Enviado ) );
 			array_push( $vetAux, array( Lido ) );

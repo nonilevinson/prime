@@ -91,6 +91,17 @@ function Campo_arqItLogEmail_Cliente_Nome()
 var Cliente_Nome = new Campo_arqItLogEmail_Cliente_Nome;
 
 //------------------------------------------------------------
+Campo_arqItLogEmail_Cliente_Prontuario.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_arqItLogEmail_Cliente_Prontuario()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "Cliente_Prontuario", "Cliente_Prontuario", "Prontuario", Cliente, 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Cliente_Prontuario = new Campo_arqItLogEmail_Cliente_Prontuario;
+
+//------------------------------------------------------------
 Campo_arqItLogEmail_Email.prototype = new Lance_CampoCadeia;
 
 function Campo_arqItLogEmail_Email()
@@ -208,6 +219,15 @@ Campo_arqItLogEmail_Cliente_Nome.prototype.ObrigatorioEspecial = function( p_com
 
 Cliente_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqItLogEmail_Cliente_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Cliente.Obrigatorio( p_comMsg ) );
+}
+
+Cliente_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqItLogEmail_Enviado.prototype.Obrigatorio = function( p_comMsg )
@@ -263,7 +283,7 @@ Campo_arqItLogEmail_LogEmail_Titulo.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqItLogEmail_Cliente.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) );
+	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) && ( !Cliente_Prontuario.Obrigatorio( false ) || tem(Cliente_Prontuario) ) );
 }
 
 function IniciarDependencias_arqItLogEmail()
@@ -274,12 +294,13 @@ LogEmail_Titulo_Versao.ExistenciasDependentes= [ LogEmail_Titulo ];
 LogEmail_Data.ExistenciasDependentes= [ LogEmail ];
 LogEmail_Hora.ExistenciasDependentes= [ LogEmail ];
 Cliente_Nome.ExistenciasDependentes= [ Cliente ];
+Cliente_Prontuario.ExistenciasDependentes= [ Cliente ];
 LogEmail_Titulo_Versao.ErrosDependentes= [ LogEmail_Titulo ];
 LogEmail_Hora.ErrosDependentes= [ LogEmail ];
-Cliente_Nome.ErrosDependentes= [ Cliente ];
+Cliente_Prontuario.ErrosDependentes= [ Cliente ];
 LogEmail.CamposChave= [ LogEmail_Titulo,LogEmail_Data,LogEmail_Hora ];
 LogEmail_Titulo.CamposChave= [ LogEmail_Titulo_Titulo,LogEmail_Titulo_Versao ];
-Cliente.CamposChave= [ Cliente_Nome ];
+Cliente.CamposChave= [ Cliente_Nome,Cliente_Prontuario ];
 }
 	//=========================================================================
 	function AcionaTecla( p_tecla )
@@ -308,7 +329,7 @@ function ListaDeCampos_arqItLogEmail( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ LogEmail, LogEmail_Titulo, LogEmail_Titulo_Titulo, LogEmail_Titulo_Versao, LogEmail_Data, LogEmail_Hora, Cliente, Cliente_Nome, Email, Enviado, Lido, LinkEmp, LinkKm ]	);
+		[ LogEmail, LogEmail_Titulo, LogEmail_Titulo_Titulo, LogEmail_Titulo_Versao, LogEmail_Data, LogEmail_Hora, Cliente, Cliente_Nome, Cliente_Prontuario, Email, Enviado, Lido, LinkEmp, LinkKm ]	);
 	IniciarDependencias_arqItLogEmail();
 	g_prefixo = l_prefixo;
 	return( l_lista );

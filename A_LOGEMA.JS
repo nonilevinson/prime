@@ -222,6 +222,17 @@ function Campo_arqLogEmail_Cliente_Nome()
 
 var Cliente_Nome = new Campo_arqLogEmail_Cliente_Nome;
 
+//------------------------------------------------------------
+Campo_arqLogEmail_Cliente_Prontuario.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_arqLogEmail_Cliente_Prontuario()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "Cliente_Prontuario", "Cliente_Prontuario", "Prontuario", Cliente, 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Cliente_Prontuario = new Campo_arqLogEmail_Cliente_Prontuario;
+
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -259,7 +270,7 @@ Campo_arqLogEmail_Data.prototype.TemErro = function()
 		alert( "Data não pode ser passada" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
 }
 
 Data.TipoCampo |= CAMPO_CHAVE;
@@ -273,7 +284,7 @@ Campo_arqLogEmail_Hora.prototype.TemErro = function()
 		alert( "Hora inválida" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
 }
 
 Hora.TipoCampo |= CAMPO_CHAVE;
@@ -468,6 +479,15 @@ Campo_arqLogEmail_Cliente_Nome.prototype.ObrigatorioEspecial = function( p_comMs
 
 Cliente_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqLogEmail_Cliente_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Cliente.Obrigatorio( p_comMsg ) );
+}
+
+Cliente_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqLogEmail_Titulo.prototype.ExistenciaEspecial = function()
@@ -488,7 +508,7 @@ Campo_arqLogEmail_Usuario.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqLogEmail_Cliente.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) );
+	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) && ( !Cliente_Prontuario.Obrigatorio( false ) || tem(Cliente_Prontuario) ) );
 }
 
 function IniciarDependencias_arqLogEmail()
@@ -500,14 +520,15 @@ Titulo_Titulo.ExistenciasDependentes= [ Titulo ];
 Titulo_Versao.ExistenciasDependentes= [ Titulo ];
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
 Cliente_Nome.ExistenciasDependentes= [ Cliente ];
+Cliente_Prontuario.ExistenciasDependentes= [ Cliente ];
 Titulo_Versao.ErrosDependentes= [ Titulo ];
 HoraIni.ErrosDependentes= [ Data,Hora ];
 Data.ErrosDependentes= [ Hora ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
-Cliente_Nome.ErrosDependentes= [ Cliente ];
+Cliente_Prontuario.ErrosDependentes= [ Cliente ];
 Titulo.CamposChave= [ Titulo_Titulo,Titulo_Versao ];
 Usuario.CamposChave= [ Usuario_Usuario ];
-Cliente.CamposChave= [ Cliente_Nome ];
+Cliente.CamposChave= [ Cliente_Nome,Cliente_Prontuario ];
 }
 
 
@@ -525,7 +546,7 @@ function ListaDeCampos_arqLogEmail( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Titulo, Titulo_Titulo, Titulo_Versao, Data, Hora, Usuario, Usuario_Usuario, Enviados, NEnviados, Total, Lidos, PercLidos, EmailRemet, HoraIni, HoraFim, HoraReenv, Enviou, Opcao, Cliente, Cliente_Nome ]	);
+		[ Titulo, Titulo_Titulo, Titulo_Versao, Data, Hora, Usuario, Usuario_Usuario, Enviados, NEnviados, Total, Lidos, PercLidos, EmailRemet, HoraIni, HoraFim, HoraReenv, Enviou, Opcao, Cliente, Cliente_Nome, Cliente_Prontuario ]	);
 	IniciarDependencias_arqLogEmail();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -26,72 +26,6 @@ function Campo_arqPessoa_Apelido()
 var Apelido = new Campo_arqPessoa_Apelido;
 
 //------------------------------------------------------------
-Campo_arqPessoa_TPessoa.prototype = new Lance_CampoLigado;
-
-function Campo_arqPessoa_TPessoa()
-{
-	this.superClass = Lance_CampoLigado;
-	this.superClass( "TPessoa", "TPessoa", "TPessoa", "tabTPessoa", "t_tpesso", null, "",0);
-}
-
-var TPessoa = new Campo_arqPessoa_TPessoa;
-
-//------------------------------------------------------------
-Campo_arqPessoa_TPessoa_Chave.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqPessoa_TPessoa_Chave()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TPessoa_Chave", "TPessoa_Chave", "TPessoa", TPessoa, 1, "u", false);
-}
-
-var TPessoa_Chave = new Campo_arqPessoa_TPessoa_Chave;
-
-//------------------------------------------------------------
-Campo_arqPessoa_TPessoa_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqPessoa_TPessoa_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TPessoa_Descritor", "TPessoa_Descritor", "TPessoa", TPessoa, 10, "xxxxxxxxxx", false);
-}
-
-var TPessoa_Descritor = new Campo_arqPessoa_TPessoa_Descritor;
-
-//------------------------------------------------------------
-Campo_arqPessoa_TPFPJ.prototype = new Lance_CampoLigado;
-
-function Campo_arqPessoa_TPFPJ()
-{
-	this.superClass = Lance_CampoLigado;
-	this.superClass( "TPFPJ", "TPFPJ", "TPFPJ", "tabTPFPJ", "t_tpfpj", null, "",0);
-}
-
-var TPFPJ = new Campo_arqPessoa_TPFPJ;
-
-//------------------------------------------------------------
-Campo_arqPessoa_TPFPJ_Chave.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqPessoa_TPFPJ_Chave()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TPFPJ_Chave", "TPFPJ_Chave", "TPFPJ", TPFPJ, 1, "u", false);
-}
-
-var TPFPJ_Chave = new Campo_arqPessoa_TPFPJ_Chave;
-
-//------------------------------------------------------------
-Campo_arqPessoa_TPFPJ_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqPessoa_TPFPJ_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TPFPJ_Descritor", "TPFPJ_Descritor", "TPFPJ", TPFPJ, 8, "xxxxxxxx", false);
-}
-
-var TPFPJ_Descritor = new Campo_arqPessoa_TPFPJ_Descritor;
-
-//------------------------------------------------------------
 Campo_arqPessoa_Prontuario.prototype = new Lance_CampoNumerico;
 
 function Campo_arqPessoa_Prontuario()
@@ -104,39 +38,6 @@ var Prontuario = new Campo_arqPessoa_Prontuario;
 
 //------------------------------------------------------------
 IniciarPrefixos_domEndereco( "Ende_" );
-
-//------------------------------------------------------------
-Campo_arqPessoa_CNPJ.prototype = new Lance_CampoCadeia;
-
-function Campo_arqPessoa_CNPJ()
-{
-	this.superClass = Lance_CampoCadeia;
-	this.superClass( "CNPJ", "CNPJ", "CNPJ", 14, "##.###.###/####-##", true);
-}
-
-var CNPJ = new Campo_arqPessoa_CNPJ;
-
-//------------------------------------------------------------
-Campo_arqPessoa_InscEstad.prototype = new Lance_CampoCadeia;
-
-function Campo_arqPessoa_InscEstad()
-{
-	this.superClass = Lance_CampoCadeia;
-	this.superClass( "InscEstad", "InscEstad", "InscEstad", 25, "xxxxxxxxxxxxxxxxxxxxxxxxx", false);
-}
-
-var InscEstad = new Campo_arqPessoa_InscEstad;
-
-//------------------------------------------------------------
-Campo_arqPessoa_InscMunic.prototype = new Lance_CampoCadeia;
-
-function Campo_arqPessoa_InscMunic()
-{
-	this.superClass = Lance_CampoCadeia;
-	this.superClass( "InscMunic", "InscMunic", "InscMunic", 25, "xxxxxxxxxxxxxxxxxxxxxxxxx", false);
-}
-
-var InscMunic = new Campo_arqPessoa_InscMunic;
 
 //------------------------------------------------------------
 Campo_arqPessoa_Nascimento.prototype = new Lance_CampoData;
@@ -404,47 +305,6 @@ Campo_arqPessoa_Apelido.prototype.TemAdvertencia = function()
 }
 
 //-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqPessoa_TPessoa.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "O tipo da pessoa é obrigatório" );
-		return( true );
-	}
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqPessoa_TPessoa.prototype.Cabecalho = function()
-{
-		return( "Tipo" );
-}
-
-TPessoa_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TPessoa_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
-//-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_TPFPJ.prototype.Sugeriu = function()
-{
-{
-	return( this.AtribuiuSemCritica( 1 ) );
-}
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqPessoa_TPFPJ.prototype.Cabecalho = function()
-{
-		return( "PF/PJ" );
-}
-
-TPFPJ_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TPFPJ_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
-//-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
 Campo_arqPessoa_Prontuario.prototype.PodeAlterar = function()
@@ -462,59 +322,7 @@ Campo_arqPessoa_Prontuario.prototype.Cabecalho = function()
 		return( "Prontuário" );
 }
 
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_Prontuario.prototype.Existencia = function()
-{
-	return( TPessoa == 2 );
-}
-
-//-------------------------------------------------------------
-// Condição de erro do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_CNPJ.prototype.TemErro = function()
-{
-		if( tem(this) && ( !CnpjOk( CNPJ ) ) )
-	{
-		alert( "CNPJ inválido" );
-		return( true );
-	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_CNPJ.prototype.Existencia = function()
-{
-	return( TPFPJ == 2 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_InscEstad.prototype.Existencia = function()
-{
-	return( TPFPJ == 2 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_InscMunic.prototype.Existencia = function()
-{
-	return( TPFPJ == 2 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_Nascimento.prototype.Existencia = function()
-{
-	return( TPFPJ == 1 );
-}
-
+Prontuario.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
@@ -528,42 +336,10 @@ Campo_arqPessoa_Idade.prototype.Calculou = function()
 }
 
 Idade.EhCalculado = true;
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_Sexo.prototype.Existencia = function()
-{
-	return( TPFPJ == 1 );
-}
-
 Sexo_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 Sexo_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_EstCivil.prototype.Existencia = function()
-{
-	return( TPFPJ == 1 );
-}
-
 EstCivil_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 EstCivil_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_Profissao.prototype.Existencia = function()
-{
-	return( TPFPJ == 1 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_Profissao_Profissao.prototype.Existencia = function()
-{
-	return( TPFPJ == 1 );
-}
-
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
@@ -584,22 +360,6 @@ Campo_arqPessoa_CPF.prototype.TemErro = function()
 		return( true );
 	}
 	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_CPF.prototype.Existencia = function()
-{
-	return( TPFPJ == 1 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_Identidade.prototype.Existencia = function()
-{
-	return( TPFPJ == 1 );
 }
 
 //-------------------------------------------------------------
@@ -755,8 +515,6 @@ Campo_arqPessoa_Midia.prototype.ExistenciaEspecial = function()
 function IniciarDependencias_arqPessoa()
 {
 Nascimento.CalculosDependentes= [ Idade ];
-TPessoa.ExistenciasDependentes= [ Prontuario ];
-TPFPJ.ExistenciasDependentes= [ CNPJ,InscEstad,InscMunic,Nascimento,Sexo,EstCivil,Profissao,Profissao_Profissao,CPF,Identidade ];
 Profissao_Profissao.ExistenciasDependentes= [ Profissao ];
 Identidade.ExistenciasDependentes= [ Orgao,Emissao ];
 Email.ExistenciasDependentes= [ RecEmail ];
@@ -782,9 +540,9 @@ function ListaDeCampos_arqPessoa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Nome, Apelido, TPessoa, TPessoa_Chave, TPessoa_Descritor, TPFPJ, TPFPJ_Chave, TPFPJ_Descritor, Prontuario ], 
+		[ Nome, Apelido, Prontuario ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ CNPJ, InscEstad, InscMunic, Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar, Midia, Midia_Midia ]	);
+		[ Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar, Midia, Midia_Midia ]	);
 	IniciarDependencias_arqPessoa();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -91,6 +91,17 @@ function Campo_arqConta_Pessoa_Nome()
 var Pessoa_Nome = new Campo_arqConta_Pessoa_Nome;
 
 //------------------------------------------------------------
+Campo_arqConta_Pessoa_Prontuario.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_arqConta_Pessoa_Prontuario()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", Pessoa, 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Pessoa_Prontuario = new Campo_arqConta_Pessoa_Prontuario;
+
+//------------------------------------------------------------
 Campo_arqConta_TrgValor.prototype = new Lance_CampoNumerico;
 
 function Campo_arqConta_TrgValor()
@@ -334,6 +345,15 @@ Campo_arqConta_Pessoa_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
 
 Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConta_Pessoa_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Pessoa.Obrigatorio( p_comMsg ) );
+}
+
+Pessoa_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqConta_TrgValor.prototype.Cabecalho = function()
@@ -448,7 +468,7 @@ Campo_arqConta_Clinica.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqConta_Pessoa.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) );
+	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_Prontuario.Obrigatorio( false ) || tem(Pessoa_Prontuario) ) );
 }
 
 function IniciarDependencias_arqConta()
@@ -457,10 +477,11 @@ TrgValLiq.CalculosDependentes= [ Saldo ];
 TrgPago.CalculosDependentes= [ Saldo ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
+Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
-Pessoa_Nome.ErrosDependentes= [ Pessoa ];
+Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
 Clinica.CamposChave= [ Clinica_Clinica ];
-Pessoa.CamposChave= [ Pessoa_Nome ];
+Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
 }
 
 
@@ -478,7 +499,7 @@ function ListaDeCampos_arqConta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Transacao, Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Pessoa, Pessoa_Nome, TrgValor, TrgValLiq, TrgQtdParc, TrgQParcPg, ProxVenc, TrgPago, Saldo, Documento, Emissao, RecEnvia, Compete, Historico, Arq1 ]	);
+		[ Transacao, Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Pessoa, Pessoa_Nome, Pessoa_Prontuario, TrgValor, TrgValLiq, TrgQtdParc, TrgQParcPg, ProxVenc, TrgPago, Saldo, Documento, Emissao, RecEnvia, Compete, Historico, Arq1 ]	);
 	IniciarDependencias_arqConta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

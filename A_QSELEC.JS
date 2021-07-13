@@ -102,6 +102,17 @@ function Campo_parQSelecao_Cliente_Nome()
 var Cliente_Nome = new Campo_parQSelecao_Cliente_Nome;
 
 //------------------------------------------------------------
+Campo_parQSelecao_Cliente_Prontuario.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_parQSelecao_Cliente_Prontuario()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "Cliente_Prontuario", "Cliente_Prontuario", "Prontuario", Cliente, 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Cliente_Prontuario = new Campo_parQSelecao_Cliente_Prontuario;
+
+//------------------------------------------------------------
 Campo_parQSelecao_EmailRemet.prototype = new Lance_CampoHidden;
 
 function Campo_parQSelecao_EmailRemet()
@@ -521,6 +532,15 @@ Campo_parQSelecao_Cliente_Nome.prototype.ObrigatorioEspecial = function( p_comMs
 
 Cliente_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Cliente_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Cliente.Obrigatorio( p_comMsg ) );
+}
+
+Cliente_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_parQSelecao_EmailRemet.prototype.Obrigatorio = function( p_comMsg )
@@ -849,7 +869,7 @@ Campo_parQSelecao_Medico.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_parQSelecao_Cliente.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) );
+	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) && ( !Cliente_Prontuario.Obrigatorio( false ) || tem(Cliente_Prontuario) ) );
 }
 
 //-------------------------------------------------------------
@@ -881,6 +901,7 @@ function IniciarDependencias_parQSelecao()
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
 Medico_Usuario.ExistenciasDependentes= [ Medico ];
 Cliente_Nome.ExistenciasDependentes= [ Cliente ];
+Cliente_Prontuario.ExistenciasDependentes= [ Cliente ];
 EmailRemet_Email.ExistenciasDependentes= [ EmailRemet ];
 AcaoEmail_Titulo.ExistenciasDependentes= [ AcaoEmail ];
 AcaoEmail_Versao.ExistenciasDependentes= [ AcaoEmail ];
@@ -892,7 +913,7 @@ Real6.ExistenciasDependentes= [ Real6Fim ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
-Cliente_Nome.ErrosDependentes= [ Cliente ];
+Cliente_Prontuario.ErrosDependentes= [ Cliente ];
 EmailRemet_Email.ErrosDependentes= [ EmailRemet ];
 AcaoEmail_Versao.ErrosDependentes= [ AcaoEmail ];
 DataIni.ErrosDependentes= [ DataFim,HoraIni ];
@@ -902,7 +923,7 @@ Senha1.ErrosDependentes= [ Senha2 ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Usuario.CamposChave= [ Usuario_Usuario ];
 Medico.CamposChave= [ Medico_Usuario ];
-Cliente.CamposChave= [ Cliente_Nome ];
+Cliente.CamposChave= [ Cliente_Nome,Cliente_Prontuario ];
 EmailRemet.CamposChave= [ EmailRemet_Email ];
 AcaoEmail.CamposChave= [ AcaoEmail_Titulo,AcaoEmail_Versao ];
 Clinica.CamposChave= [ Clinica_Clinica ];
@@ -923,7 +944,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_Prontuario, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

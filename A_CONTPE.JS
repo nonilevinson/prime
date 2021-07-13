@@ -25,6 +25,17 @@ function Campo_arqContPessoa_Pessoa_Nome()
 var Pessoa_Nome = new Campo_arqContPessoa_Pessoa_Nome;
 
 //------------------------------------------------------------
+Campo_arqContPessoa_Pessoa_Prontuario.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_arqContPessoa_Pessoa_Prontuario()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", Pessoa, 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Pessoa_Prontuario = new Campo_arqContPessoa_Pessoa_Prontuario;
+
+//------------------------------------------------------------
 Campo_arqContPessoa_Nome.prototype = new Lance_CampoCadeia;
 
 function Campo_arqContPessoa_Nome()
@@ -177,6 +188,15 @@ Campo_arqContPessoa_Pessoa_Nome.prototype.ObrigatorioEspecial = function( p_comM
 }
 
 Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqContPessoa_Pessoa_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Pessoa.Obrigatorio( p_comMsg ) );
+}
+
+Pessoa_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
 Nome.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
@@ -252,15 +272,16 @@ Campo_arqContPessoa_Ativo.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqContPessoa_Pessoa.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) );
+	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_Prontuario.Obrigatorio( false ) || tem(Pessoa_Prontuario) ) );
 }
 
 function IniciarDependencias_arqContPessoa()
 {
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
+Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
 Email.ExistenciasDependentes= [ RecEmail ];
-Pessoa_Nome.ErrosDependentes= [ Pessoa ];
-Pessoa.CamposChave= [ Pessoa_Nome ];
+Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
+Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
 }
 
 
@@ -278,7 +299,7 @@ function ListaDeCampos_arqContPessoa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Pessoa, Pessoa_Nome, Nome, Apelido, Funcao, Celular, Telefone, Email, RecEmail, Nascimento, Sexo, Sexo_Chave, Sexo_Descritor, Obs, Ativo ]	);
+		[ Pessoa, Pessoa_Nome, Pessoa_Prontuario, Nome, Apelido, Funcao, Celular, Telefone, Email, RecEmail, Nascimento, Sexo, Sexo_Chave, Sexo_Descritor, Obs, Ativo ]	);
 	IniciarDependencias_arqContPessoa();
 	g_prefixo = l_prefixo;
 	return( l_lista );

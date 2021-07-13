@@ -48,46 +48,6 @@ class campo_arqPessoa_Apelido extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo TPessoa
-//======================================================
-
-class campo_arqPessoa_TPessoa extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "TPessoa", "TPessoa", "TPessoa", 0, "tabTPessoa", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Tipo" );
-	}
-
-}
-
-//======================================================
-//	Campo TPFPJ
-//======================================================
-
-class campo_arqPessoa_TPFPJ extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "TPFPJ", "TPFPJ", "TPFPJ", 0, "tabTPFPJ", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "PF/PJ" );
-	}
-
-}
-
-//======================================================
 //	Campo Prontuario
 //======================================================
 
@@ -95,7 +55,7 @@ class campo_arqPessoa_Prontuario extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "Prontuario", "Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", 0, 0, false );
+		parent::__construct( "Prontuario", "Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -103,45 +63,6 @@ class campo_arqPessoa_Prontuario extends Lance_CampoNumerico
 	{
 		global $g_regAtual;
 			return( "Prontuário" );
-	}
-
-}
-
-//======================================================
-//	Campo CNPJ
-//======================================================
-
-class campo_arqPessoa_CNPJ extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CNPJ", "CNPJ", "CNPJ", 14, "##.###.###/####-##", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo InscEstad
-//======================================================
-
-class campo_arqPessoa_InscEstad extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "InscEstad", "InscEstad", "InscEstad", 25, "xxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo InscMunic
-//======================================================
-
-class campo_arqPessoa_InscMunic extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "InscMunic", "InscMunic", "InscMunic", 25, "xxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
 	}
 
 }
@@ -439,18 +360,9 @@ function listaCampos_arqPessoa( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqPessoa_Nome(),
 			new campo_arqPessoa_Apelido(),
-			new campo_arqPessoa_TPessoa(),
-			new Lance_CampoCadeia( "TPessoa_Chave", "TPessoa_Chave", "Chave", 1, "x", EH_CHAVE, TPessoa ),
-			new Lance_CampoCadeia( "TPessoa_Descritor", "TPessoa_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TPessoa ),
-			new campo_arqPessoa_TPFPJ(),
-			new Lance_CampoCadeia( "TPFPJ_Chave", "TPFPJ_Chave", "Chave", 1, "x", EH_CHAVE, TPFPJ ),
-			new Lance_CampoCadeia( "TPFPJ_Descritor", "TPFPJ_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TPFPJ ),
 			new campo_arqPessoa_Prontuario() ),
 		listaCampos_domEndereco( "Ende_" ),
 		array( 
-			new campo_arqPessoa_CNPJ(),
-			new campo_arqPessoa_InscEstad(),
-			new campo_arqPessoa_InscMunic(),
 			new campo_arqPessoa_Nascimento(),
 			new campo_arqPessoa_Idade(),
 			new campo_arqPessoa_Sexo(),
@@ -496,7 +408,7 @@ class arqPessoa extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Nome) );
+		return( array( Nome, Prontuario) );
 	}
 
 	//-------------------------------------------------------------
@@ -507,14 +419,6 @@ class arqPessoa extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Nome ) );
-		if( ultimaLigOpcaoEm( 15,136 ) )
- {
-			array_push( $vetAux, array( TPessoa_Descritor ) );
- }
-		if( ultimaLigOpcaoEm( 15,136 ) )
- {
-			array_push( $vetAux, array( TPFPJ_Descritor ) );
- }
 		if( ultimaLigOpcaoEm( 15,135 ) )
  {
 			array_push( $vetAux, array( Prontuario ) );
@@ -536,8 +440,6 @@ class arqPessoa extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( Apelido ) );
-			array_push( $vetAux, array( TPessoa_Descritor ) );
-			array_push( $vetAux, array( TPFPJ_Descritor ) );
 			array_push( $vetAux, array( Prontuario ) );
 			array_push( $vetAux, array( Ende_CEP ) );
 			array_push( $vetAux, array( Ende_Endereco ) );
@@ -549,9 +451,6 @@ class arqPessoa extends Lance_Arquivo
 			array_push( $vetAux, array( Ende_DDDCelular ) );
 			array_push( $vetAux, array( Ende_Celular ) );
 			array_push( $vetAux, array( Ende_WhatsApp ) );
-			array_push( $vetAux, array( CNPJ ) );
-			array_push( $vetAux, array( InscEstad ) );
-			array_push( $vetAux, array( InscMunic ) );
 			array_push( $vetAux, array( Nascimento ) );
 			array_push( $vetAux, array( Idade ) );
 			array_push( $vetAux, array( Sexo_Descritor ) );
@@ -576,23 +475,7 @@ class arqPessoa extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function NomeCompleto()
 	{
-		return( 'Pessoas' );
-	}
-
-	//-------------------------------------------------------------
-	// Visões do Arquivo: EhPaciente
-	//-------------------------------------------------------------
-	function EhPaciente()
-	{
-	return( "TPessoa = 2" );
-	}
-
-	//-------------------------------------------------------------
-	// Visões do Arquivo: NaoPacien 
-	//-------------------------------------------------------------
-	function NaoPacien()
-	{
-	return( "TPessoa != 2" );
+		return( 'Pacientes' );
 	}
 
 }

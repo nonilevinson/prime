@@ -47,6 +47,26 @@ class campo_arqContPessoa_Pessoa_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Pessoa_Prontuario
+//======================================================
+
+class campo_arqContPessoa_Pessoa_Prontuario extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Pessoa", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Prontuário" );
+	}
+
+}
+
+//======================================================
 //	Campo Nome
 //======================================================
 
@@ -225,6 +245,7 @@ function listaCampos_arqContPessoa( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqContPessoa_Pessoa(),
 			new campo_arqContPessoa_Pessoa_Nome(),
+			new campo_arqContPessoa_Pessoa_Prontuario(),
 			new campo_arqContPessoa_Nome(),
 			new campo_arqContPessoa_Apelido(),
 			new campo_arqContPessoa_Funcao(),
@@ -261,7 +282,7 @@ class arqContPessoa extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Pessoa_Nome, Nome) );
+		return( array( Pessoa_Nome, Pessoa_Prontuario, Nome) );
 	}
 
 	//-------------------------------------------------------------
@@ -272,6 +293,7 @@ class arqContPessoa extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Pessoa_Nome ) );
+			array_push( $vetAux, array( Pessoa_Prontuario ) );
 			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( Funcao ) );
 			array_push( $vetAux, array( Celular ) );
@@ -297,6 +319,7 @@ class arqContPessoa extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Pessoa_Nome ) );
+			array_push( $vetAux, array( Pessoa_Prontuario ) );
 			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( Apelido ) );
 			array_push( $vetAux, array( Funcao ) );

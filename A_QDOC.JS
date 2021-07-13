@@ -47,6 +47,17 @@ function Campo_parQDoc_Pessoa_Nome()
 var Pessoa_Nome = new Campo_parQDoc_Pessoa_Nome;
 
 //------------------------------------------------------------
+Campo_parQDoc_Pessoa_Prontuario.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_parQDoc_Pessoa_Prontuario()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", Pessoa, 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Pessoa_Prontuario = new Campo_parQDoc_Pessoa_Prontuario;
+
+//------------------------------------------------------------
 Campo_parQDoc_Cad1.prototype = new Lance_CampoCadeia;
 
 function Campo_parQDoc_Cad1()
@@ -164,6 +175,15 @@ Campo_parQDoc_Pessoa_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
 
 Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQDoc_Pessoa_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Pessoa.Obrigatorio( p_comMsg ) );
+}
+
+Pessoa_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_parQDoc_Salvar.prototype.Sugeriu = function()
@@ -186,17 +206,18 @@ Campo_parQDoc_DocMod.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_parQDoc_Pessoa.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) );
+	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_Prontuario.Obrigatorio( false ) || tem(Pessoa_Prontuario) ) );
 }
 
 function IniciarDependencias_parQDoc()
 {
 DocMod_Documento.ExistenciasDependentes= [ DocMod ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
+Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
 DocMod_Documento.ErrosDependentes= [ DocMod ];
-Pessoa_Nome.ErrosDependentes= [ Pessoa ];
+Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
 DocMod.CamposChave= [ DocMod_Documento ];
-Pessoa.CamposChave= [ Pessoa_Nome ];
+Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
 }
 
 
@@ -214,7 +235,7 @@ function ListaDeCampos_parQDoc( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ DocMod, DocMod_Documento, Pessoa, Pessoa_Nome, Cad1, Cad2, Cad3, Cad4, Cad5, Txt1, Txt2, Salvar ]	);
+		[ DocMod, DocMod_Documento, Pessoa, Pessoa_Nome, Pessoa_Prontuario, Cad1, Cad2, Cad3, Cad4, Cad5, Txt1, Txt2, Salvar ]	);
 	IniciarDependencias_parQDoc();
 	g_prefixo = l_prefixo;
 	return( l_lista );

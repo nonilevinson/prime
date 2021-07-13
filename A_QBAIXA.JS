@@ -375,7 +375,7 @@ Campo_parQBaixa_CCor_Banco_Banco.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_parQBaixa()
 {
-TFPagto.ExistenciasDependentes= [ TDetPg,CCor,CCor_Banco,CCor_Banco_Num,CCor_Agencia,CCor_Conta ];
+TFPagto.ExistenciasDependentes= [ CCor,CCor_Banco,CCor_Banco_Num,CCor_Agencia,CCor_Conta ];
 CCor_Banco.ExistenciasDependentes= [ CCor,CCor_Banco_Banco ];
 CCor_Banco_Num.ExistenciasDependentes= [ CCor_Banco ];
 CCor_Agencia.ExistenciasDependentes= [ CCor ];

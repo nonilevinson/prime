@@ -1,9 +1,9 @@
 var Menu_1 = new Array( 1,"Consultas","","u",111,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 10,[],[39,39] );
 var Menu_1_1 = new Array( 1,"Todas","","T",109,"","",1,"","1","a_consul","arqConsulta","Folhear","","?","FilTodas","", "","", 0,7,[],[39]);
 var Menu_1_2 = new Array( 1,"Seleção","","S",110,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_consul^^^arqConsulta^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[39]);
-var Menu_2 = new Array( 1,"Cadastros","","C",7,"","",1,"","6", "", "", "", "", "", "", "", "", "", 6, 10,[],[7,7,31,14,32,30,36,19,22,7] );
-var Menu_2_1 = new Array( 1,"Pacientes","","t",135,"","",1,"","1","a_pessoa","arqPessoa","Folhear","","?","EhPaciente","", "","", 0,15,[],[7]);
-var Menu_2_2 = new Array( 1,"Fornecedores","","F",136,"","",1,"","1","a_pessoa","arqPessoa","Folhear","","?","NaoPacien","", "","", 0,15,[],[7]);
+var Menu_2 = new Array( 1,"Cadastros","","C",7,"","",1,"","6", "", "", "", "", "", "", "", "", "", 6, 10,[],[7,42,31,14,32,30,36,19,22,7] );
+var Menu_2_1 = new Array( 1,"Pacientes","","t",135,"","",1,"","1","a_pessoa","arqPessoa","Folhear","","?","","", "","", 0,15,[],[7]);
+var Menu_2_2 = new Array( 1,"Fornecedores","","F",136,"","",1,"","1","a_fornec","arqFornecedor","Folhear","","?","","", "","", 0,15,[],[42]);
 var Menu_2_3 = new Array( 1,"Clínicas","","l",88,"","",1,"","1","a_clini","arqClinica","Folhear","","?","","", "","", 0,15,[],[31]);
 var Menu_2_4 = new Array( 1,"Avisos internos","","A",36,"","",cnfConfig["AVISO"] == 1,"","1","a_avisos","arqAvisos","Folhear","","?","FilTodos","", "","", 0,15,[],[14]);
 var Menu_2_5 = new Array( 1,"Outros","","O",60,"","",1,"","6", "", "", "", "", "", "", "", "", "", 5, 15,[],[32,30,36,19,22] );

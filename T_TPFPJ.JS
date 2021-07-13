@@ -1,5 +1,6 @@
 /*=========================================================================
   t_tpfpj - TPFPJ
+	usa a_endere
 =========================================================================*/
 
 //======================================================
@@ -11,6 +12,6 @@ g_arquivoAtual = "tabTPFPJ";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Pessoa","","P",12,"","",1,"","1","a_pessoa","arqPessoa","Folhear","TPFPJ","?","","", "","", 0,6,[],[7]);
+var Menu_1 = new Array( 1,"Fornecedor","","F",142,"","",1,"","1","a_fornec","arqFornecedor","Folhear","TPFPJ","?","","", "","", 0,10,[],[42]);
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }
