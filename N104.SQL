@@ -746,7 +746,7 @@ INSERT INTO tabLanceTipoImg VALUES ( 5, 'JPEG', 'Imagem BMP' );
 commit;
 
 /************************************************************
-	Arquivo arqLanceRegMarca 
+	Arquivo arqLanceRegMarca
 ************************************************************/
 CREATE TABLE arqLanceRegMarca
 (
@@ -842,19 +842,19 @@ CREATE TABLE arqLanceLogAcesso
 );
 commit;
 
-CREATE VIEW V_arqLanceLogAcesso as 
+CREATE VIEW V_arqLanceLogAcesso as
 	SELECT L.IDPRIMARIO, L.STATUS,  T.CHAVE AS STATUS_CHAVE, T.DESCRITOR AS STATUS_DESCRITOR, L.MASTER, L.LOGIN, L.ACESSO,
 		L.DATA, L.HORA, L.PERFIL, L.USUARIO, L.IP, L.OPERACAO, O1.OPERACAO AS OPERACAO_OPERACAO, L.QUEM,
-		L.IDQUEM, L.OPERPROC, O2.OPERACAO AS OPERPROC_OPERACAO, L.OBSERVACAO, L.CAMPO, L.ANTES, L.DEPOIS 
-	from arqLanceLogAcesso L 
+		L.IDQUEM, L.OPERPROC, O2.OPERACAO AS OPERPROC_OPERACAO, L.OBSERVACAO, L.CAMPO, L.ANTES, L.DEPOIS
+	from arqLanceLogAcesso L
 		left join tabLanceLogStatus T on T.IDPRIMARIO = L.STATUS
 		left join arqLanceOperacao O1 on O1.IDPRIMARIO=L.OPERACAO
 		left join arqLanceOperacao O2 on O2.IDPRIMARIO=L.OPERPROC;
 commit;
 
-CREATE VIEW V_arqLanceOperacao as 
+CREATE VIEW V_arqLanceOperacao as
 	select L.IDPRIMARIO, L.TIPO, T.CHAVE AS TIPO_CHAVE, T.DESCRITOR AS TIPO_DESCRITOR, L.OPERACAO,
-		L.ARQUIVO, L.NUMERO, L.ASSUNTO, A1.Assunto as ASSUNTO_ASSUNTO, L.SOZERO, L.VISIVEL 
+		L.ARQUIVO, L.NUMERO, L.ASSUNTO, A1.Assunto as ASSUNTO_ASSUNTO, L.SOZERO, L.VISIVEL
 	from arqLanceOperacao L
 		left join tabLanceTipoOperacao T on T.IDPRIMARIO = L.TIPO
 		left join arqLanceASSUNTO A1 on A1.IDPRIMARIO=L.ASSUNTO;
@@ -887,7 +887,7 @@ as
 	declare variable sql varchar(255);
 	declare variable nomeIndex varchar(255);
 begin
-	for 
+	for
 		select rdb$index_name from rdb$indices
 		into :nomeIndex
 	do
@@ -895,7 +895,7 @@ begin
 		sql = 'SET STATISTICS INDEX ' || nomeIndex;
 		execute statement :sql;
 		if( ( position('_FK', nomeIndex) = 0 ) and
-			 ( position('_PK', nomeIndex) = 0 ) and 
+			 ( position('_PK', nomeIndex) = 0 ) and
 			 ( position('_UK', nomeIndex) = 0 ) ) then
 		begin
 			sql = 'alter index ' || nomeIndex || ' inactive';
@@ -926,7 +926,7 @@ BEGIN
 	RDB$SET_CONTEXT( 'USER_SESSION', 'LOGIN', :p_LOGIN );
 	RDB$SET_CONTEXT( 'USER_SESSION', 'PERFIL', :p_PERFIL );
 	RDB$SET_CONTEXT( 'USER_SESSION', 'USUARIO', :p_USUARIO );
-	RDB$SET_CONTEXT( 'USER_SESSION', 'OPERACAO', :p_OPERACAO ); 
+	RDB$SET_CONTEXT( 'USER_SESSION', 'OPERACAO', :p_OPERACAO );
 END^
 set term ;^
 commit;
@@ -945,25 +945,25 @@ recreate procedure set_log(
 AS
 BEGIN
  if( ( p_tipoOperacao in (13,14,16) ) or ( p_valorOLD is distinct from p_valorNEW ) ) then begin
-   insert into arqLanceLogAcesso values( 
-      gen_Id( genIdPrimario, 1), 
-      :p_tipoOperacao, 
-      RDB$GET_CONTEXT( 'USER_SESSION', 'MASTER' ), 
+   insert into arqLanceLogAcesso values(
+      gen_Id( genIdPrimario, 1),
+      :p_tipoOperacao,
+      RDB$GET_CONTEXT( 'USER_SESSION', 'MASTER' ),
       RDB$GET_CONTEXT( 'USER_SESSION', 'LOGIN' ),
-      CURRENT_DATE, CURRENT_TIME, 
-      RDB$GET_CONTEXT( 'USER_SESSION', 'PERFIL' ), 
-      RDB$GET_CONTEXT( 'USER_SESSION', 'USUARIO' ), 
-      RDB$GET_CONTEXT( 'SYSTEM', 'CLIENT_ADDRESS' ), 
-      RDB$GET_CONTEXT( 'USER_SESSION', 'IDOPERACAO' ), 
+      CURRENT_DATE, CURRENT_TIME,
+      RDB$GET_CONTEXT( 'USER_SESSION', 'PERFIL' ),
+      RDB$GET_CONTEXT( 'USER_SESSION', 'USUARIO' ),
+      RDB$GET_CONTEXT( 'SYSTEM', 'CLIENT_ADDRESS' ),
+      RDB$GET_CONTEXT( 'USER_SESSION', 'IDOPERACAO' ),
       RDB$GET_CONTEXT( 'USER_SESSION', 'VALORCHAVE' ),
-      :p_idPrimario, 
-      RDB$GET_CONTEXT( 'USER_SESSION', 'OPERACAO' ), 
-      RDB$GET_CONTEXT( 'USER_SESSION', 'TXT' ), 
+      :p_idPrimario,
+      RDB$GET_CONTEXT( 'USER_SESSION', 'OPERACAO' ),
+      RDB$GET_CONTEXT( 'USER_SESSION', 'TXT' ),
       :p_campo, :p_valorOLD, :p_valorNEW );
    RDB$SET_CONTEXT( 'USER_SESSION', 'FEITO', 1 );
  end
 END^
-set term ;^ 
+set term ;^
 commit;
 
 /************************************************************
@@ -1555,7 +1555,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Bairro    
+	Arquivo Bairro
 ************************************************************/
 
 CREATE TABLE arqBairro
@@ -1572,7 +1572,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Cidade    
+	Arquivo Cidade
 ************************************************************/
 
 CREATE TABLE arqCidade
@@ -1591,7 +1591,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Grupo     
+	Arquivo Grupo
 ************************************************************/
 
 CREATE TABLE arqGrupo
@@ -1608,7 +1608,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Template  
+	Arquivo Template
 ************************************************************/
 
 CREATE TABLE arqTemplate
@@ -1626,7 +1626,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Midia     
+	Arquivo Midia
 ************************************************************/
 
 CREATE TABLE arqMidia
@@ -1644,7 +1644,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Profissao 
+	Arquivo Profissao
 ************************************************************/
 
 CREATE TABLE arqProfissao
@@ -1661,7 +1661,7 @@ commit;
 
 
 /************************************************************
-	Arquivo AcaoEmail 
+	Arquivo AcaoEmail
 ************************************************************/
 
 CREATE TABLE arqAcaoEmail
@@ -1691,7 +1691,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Banco     
+	Arquivo Banco
 ************************************************************/
 
 CREATE TABLE arqBanco
@@ -1709,7 +1709,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Plano     
+	Arquivo Plano
 ************************************************************/
 
 CREATE TABLE arqPlano
@@ -1728,7 +1728,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Pessoa    
+	Arquivo Pessoa
 ************************************************************/
 
 CREATE TABLE arqPessoa
@@ -1777,7 +1777,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Clinica   
+	Arquivo Clinica
 ************************************************************/
 
 CREATE TABLE arqClinica
@@ -1810,7 +1810,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Usuario   
+	Arquivo Usuario
 ************************************************************/
 
 CREATE TABLE arqUsuario
@@ -1840,7 +1840,7 @@ commit;
 
 
 /************************************************************
-	Arquivo DocMod    
+	Arquivo DocMod
 ************************************************************/
 
 CREATE TABLE arqDocMod
@@ -1881,7 +1881,7 @@ commit;
 
 
 /************************************************************
-	Arquivo LogEmail  
+	Arquivo LogEmail
 ************************************************************/
 
 CREATE TABLE arqLogEmail
@@ -1916,7 +1916,7 @@ commit;
 
 
 /************************************************************
-	Arquivo SubPlano  
+	Arquivo SubPlano
 ************************************************************/
 
 CREATE TABLE arqSubPlano
@@ -1935,7 +1935,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Avisos    
+	Arquivo Avisos
 ************************************************************/
 
 CREATE TABLE arqAvisos
@@ -1983,7 +1983,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Conta     
+	Arquivo Conta
 ************************************************************/
 
 CREATE TABLE arqConta
@@ -2017,7 +2017,7 @@ commit;
 
 
 /************************************************************
-	Arquivo CCor      
+	Arquivo CCor
 ************************************************************/
 
 CREATE TABLE arqCCor
@@ -2058,7 +2058,7 @@ commit;
 
 
 /************************************************************
-	Arquivo ImagemCRM 
+	Arquivo ImagemCRM
 ************************************************************/
 
 CREATE TABLE arqImagemCRM
@@ -2080,7 +2080,7 @@ commit;
 
 
 /************************************************************
-	Parâmetro Config    
+	Parâmetro Config
 ************************************************************/
 
 CREATE TABLE cnfConfig
@@ -2099,7 +2099,7 @@ commit;
 
 
 /************************************************************
-	Arquivo ParaGrupo 
+	Arquivo ParaGrupo
 ************************************************************/
 
 CREATE TABLE arqParaGrupo
@@ -2118,7 +2118,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Lido      
+	Arquivo Lido
 ************************************************************/
 
 CREATE TABLE arqLido
@@ -2138,7 +2138,7 @@ commit;
 
 
 /************************************************************
-	Arquivo IndexAtua 
+	Arquivo IndexAtua
 ************************************************************/
 
 CREATE TABLE arqIndexAtua
@@ -2158,7 +2158,7 @@ commit;
 
 
 /************************************************************
-	Parâmetro XConfig   
+	Parâmetro XConfig
 ************************************************************/
 
 CREATE TABLE cnfXConfig
@@ -2194,7 +2194,7 @@ commit;
 
 
 /************************************************************
-	Arquivo PTrata    
+	Arquivo PTrata
 ************************************************************/
 
 CREATE TABLE arqPTrata
@@ -2236,7 +2236,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Parcela   
+	Arquivo Parcela
 ************************************************************/
 
 CREATE TABLE arqParcela
@@ -2279,7 +2279,7 @@ commit;
 
 
 /************************************************************
-	Arquivo UsuCli    
+	Arquivo UsuCli
 ************************************************************/
 
 CREATE TABLE arqUsuCli
@@ -2325,7 +2325,7 @@ commit;
 
 
 /************************************************************
-	Arquivo HoraBloq  
+	Arquivo HoraBloq
 ************************************************************/
 
 CREATE TABLE arqHoraBloq
@@ -2346,7 +2346,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Duracao   
+	Arquivo Duracao
 ************************************************************/
 
 CREATE TABLE arqDuracao
@@ -2368,7 +2368,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Consulta  
+	Arquivo Consulta
 ************************************************************/
 
 CREATE TABLE arqConsulta
@@ -2399,7 +2399,7 @@ commit;
 
 
 /************************************************************
-	Arquivo Plantao   
+	Arquivo Plantao
 ************************************************************/
 
 CREATE TABLE arqPlantao
@@ -2422,11 +2422,11 @@ commit;
 	CAMPOS CALCULADOS
 ************************************************************/
 
-ALTER TABLE arqPessoa ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( arqPessoa.Ende_Cidade )  ), 0 ) ) ); 
+ALTER TABLE arqPessoa ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( arqPessoa.Ende_Cidade )  ), 0 ) ) );
 ALTER TABLE arqPessoa ALTER ENDE_DDD POSITION 11;
-ALTER TABLE cnfXConfig ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( cnfXConfig.Ende_Cidade )  ), 0 ) ) ); 
+ALTER TABLE cnfXConfig ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( cnfXConfig.Ende_Cidade )  ), 0 ) ) );
 ALTER TABLE cnfXConfig ALTER ENDE_DDD POSITION 12;
-ALTER TABLE arqClinica ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( arqClinica.Ende_Cidade )  ), 0 ) ) ); 
+ALTER TABLE arqClinica ADD ENDE_DDD SMALLINT computed by ( ( COALESCE( ( SELECT DDD FROM arqCidade WHERE arqCidade.IdPrimario=( arqClinica.Ende_Cidade )  ), 0 ) ) );
 ALTER TABLE arqClinica ALTER ENDE_DDD POSITION 10;
 ALTER TABLE arqPessoa ADD IDADE INTEGER computed by ( CASE
 	WHEN( Nascimento is not null ) THEN( ( cast(
@@ -2438,39 +2438,39 @@ ALTER TABLE arqPessoa ADD IDADE INTEGER computed by ( CASE
       extract( year from current_date ), 1, 0 ) as smallint )
 )
  )
-	END  ); 
+	END  );
 ALTER TABLE arqPessoa ALTER IDADE POSITION 20;
-ALTER TABLE arqLogEmail ADD TOTAL INTEGER computed by ( Enviados + NEnviados ); 
+ALTER TABLE arqLogEmail ADD TOTAL INTEGER computed by ( Enviados + NEnviados );
 ALTER TABLE arqLogEmail ALTER TOTAL POSITION 8;
 ALTER TABLE arqLogEmail ADD PERCLIDOS NUMERIC( 5, 2 ) computed by ( CASE
 	WHEN( Enviados > 0 ) THEN( ( Lidos * 100.0 ) / Enviados )
 	ELSE ( 0 )
-	END  ); 
+	END  );
 ALTER TABLE arqLogEmail ALTER PERCLIDOS POSITION 10;
-ALTER TABLE arqAvisos ADD IDQUEM NUMERIC(18,0) computed by ( ( COALESCE( ( SELECT idPrimario FROM arqUsuario WHERE arqUsuario.IdPrimario=( arqAvisos.Quem )  ), 0 ) ) ); 
+ALTER TABLE arqAvisos ADD IDQUEM NUMERIC(18,0) computed by ( ( COALESCE( ( SELECT idPrimario FROM arqUsuario WHERE arqUsuario.IdPrimario=( arqAvisos.Quem )  ), 0 ) ) );
 ALTER TABLE arqAvisos ALTER IDQUEM POSITION 9;
-ALTER TABLE arqLido ADD GRUPO VARCHAR( 50 ) computed by ( ( COALESCE( ( SELECT Grupo FROM arqGrupo WHERE arqGrupo.IdPrimario=( COALESCE( ( SELECT Grupo FROM arqUsuario WHERE arqUsuario.IdPrimario=( arqLido.Usuario ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqLido ADD GRUPO VARCHAR( 50 ) computed by ( ( COALESCE( ( SELECT Grupo FROM arqGrupo WHERE arqGrupo.IdPrimario=( COALESCE( ( SELECT Grupo FROM arqUsuario WHERE arqUsuario.IdPrimario=( arqLido.Usuario ) ), 0 ) )  ), '' ) ) );
 ALTER TABLE arqLido ALTER GRUPO POSITION 4;
-ALTER TABLE arqIndexAtua ADD DATAPROX DATE computed by ( dateadd( Dias day to Data ) ); 
+ALTER TABLE arqIndexAtua ADD DATAPROX DATE computed by ( dateadd( Dias day to Data ) );
 ALTER TABLE arqIndexAtua ALTER DATAPROX POSITION 5;
-ALTER TABLE arqParcela ADD CLINICACAL VARCHAR( 30 ) computed by ( ( COALESCE( ( SELECT Clinica FROM arqClinica WHERE arqClinica.IdPrimario=( COALESCE( ( SELECT Clinica FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqParcela ADD CLINICACAL VARCHAR( 30 ) computed by ( ( COALESCE( ( SELECT Clinica FROM arqClinica WHERE arqClinica.IdPrimario=( COALESCE( ( SELECT Clinica FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) );
 ALTER TABLE arqParcela ALTER CLINICACAL POSITION 3;
-ALTER TABLE arqParcela ADD TPGRECCAL VARCHAR( 7 ) computed by ( (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = arqParcela.Conta) ); 
+ALTER TABLE arqParcela ADD TPGRECCAL VARCHAR( 7 ) computed by ( (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = arqParcela.Conta) );
 ALTER TABLE arqParcela ALTER TPGRECCAL POSITION 4;
-ALTER TABLE arqParcela ADD PESSOACAL VARCHAR( 60 ) computed by ( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqParcela ADD PESSOACAL VARCHAR( 60 ) computed by ( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) );
 ALTER TABLE arqParcela ALTER PESSOACAL POSITION 5;
 ALTER TABLE arqParcela ADD NUMBOLETO NUMERIC(18,0) computed by ( CASE
 	WHEN( Emissao is not null ) THEN( IdPrimario )
 	ELSE ( 0 )
-	END  ); 
+	END  );
 ALTER TABLE arqParcela ALTER NUMBOLETO POSITION 14;
-ALTER TABLE arqConta ADD SALDO NUMERIC( 11, 2 ) computed by ( TrgValLiq - TrgPago ); 
+ALTER TABLE arqConta ADD SALDO NUMERIC( 11, 2 ) computed by ( TrgValLiq - TrgPago );
 ALTER TABLE arqConta ALTER SALDO POSITION 12;
 ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
-	WHEN( DataFim is not null ) THEN( 1 )
+	WHEN( DataFim is null ) THEN( 1 )
 	WHEN( current_date between DataIni and DataFim ) THEN( 1 )
 	ELSE ( 0 )
-	END  ); 
+	END  );
 ALTER TABLE arqClinica ALTER ATIVO POSITION 17;
 commit;
 
@@ -2479,30 +2479,30 @@ commit;
 	VIEWS
 ************************************************************/
 
-RECREATE VIEW V_arqBairro AS 
+RECREATE VIEW V_arqBairro AS
 	SELECT A0.IDPRIMARIO, A0.BAIRRO
 	FROM arqBairro A0;
 commit;
 
-RECREATE VIEW V_arqCidade AS 
+RECREATE VIEW V_arqCidade AS
 	SELECT A0.IDPRIMARIO, A0.UF, A1.CHAVE as UF_CHAVE, A1.DESCRITOR as UF_DESCRITOR, A0.CIDADE, A0.DDD
 	FROM arqCidade A0
 	left join tabUF A1 on A1.IDPRIMARIO=A0.UF;
 commit;
 
-RECREATE VIEW V_arqGrupo AS 
+RECREATE VIEW V_arqGrupo AS
 	SELECT A0.IDPRIMARIO, A0.GRUPO
 	FROM arqGrupo A0;
 commit;
 
-RECREATE VIEW V_arqUsuario AS 
+RECREATE VIEW V_arqUsuario AS
 	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.MEDICO, A0.CRM, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS
 	FROM arqUsuario A0
 	left join arqGrupo A1 on A1.IDPRIMARIO = A0.GRUPO
 	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.FOTO;
 commit;
 
-RECREATE VIEW V_arqPessoa AS 
+RECREATE VIEW V_arqPessoa AS
 	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.TPESSOA, A1.CHAVE as TPessoa_CHAVE, A1.DESCRITOR as TPessoa_DESCRITOR, A0.TPFPJ, A2.CHAVE as TPFPJ_CHAVE, A2.DESCRITOR as TPFPJ_DESCRITOR, A0.PRONTUARIO, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A3.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A4.UF as ENDE_CIDADE_UF, A5.CHAVE as ENDE_CIDADE_UF_CHAVE, A5.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A4.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.INSCESTAD, A0.INSCMUNIC, A0.NASCIMENTO, A0.IDADE, A0.SEXO, A6.CHAVE as Sexo_CHAVE, A6.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A7.CHAVE as EstCivil_CHAVE, A7.DESCRITOR as EstCivil_DESCRITOR, A0.PROFISSAO, A8.PROFISSAO as PROFISSAO_PROFISSAO, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR, A0.MIDIA, A9.MIDIA as MIDIA_MIDIA
 	FROM arqPessoa A0
 	left join tabTPessoa A1 on A1.IDPRIMARIO=A0.TPESSOA
@@ -2516,17 +2516,17 @@ RECREATE VIEW V_arqPessoa AS
 	left join arqMidia A9 on A9.IDPRIMARIO = A0.MIDIA;
 commit;
 
-RECREATE VIEW V_arqTemplate AS 
+RECREATE VIEW V_arqTemplate AS
 	SELECT A0.IDPRIMARIO, A0.NOME, A0.TEMPLATE
 	FROM arqTemplate A0;
 commit;
 
-RECREATE VIEW V_arqEmailRemet AS 
+RECREATE VIEW V_arqEmailRemet AS
 	SELECT A0.IDPRIMARIO, A0.EMAIL, A0.NOMEEMAIL, A0.PADRAO, A0.ATIVO
 	FROM arqEmailRemet A0;
 commit;
 
-RECREATE VIEW V_arqAcaoEmail AS 
+RECREATE VIEW V_arqAcaoEmail AS
 	SELECT A0.IDPRIMARIO, A0.TITULO, A0.VERSAO, A0.TIPOACAO, A1.CHAVE as TipoAcao_CHAVE, A1.DESCRITOR as TipoAcao_DESCRITOR, A0.TEMPLATE, A2.NOME as TEMPLATE_NOME, A0.PADRAOACAO, A3.CHAVE as PadraoAcao_CHAVE, A3.DESCRITOR as PadraoAcao_DESCRITOR, A0.ATIVO, A0.ARQUIVO, A0.Arquivo_ARQUIVO, A0.HTML, A0.IMAGEM, A4.CHAVE as Imagem_CHAVE, A4.DESCRITOR as Imagem_DESCRITOR, A0.IMAGEM_ARQUIVO, A0.LINK, A0.IMAGEMALT, A0.QTDTESTE
 	FROM arqAcaoEmail A0
 	left join tabTipoAcao A1 on A1.IDPRIMARIO=A0.TIPOACAO
@@ -2535,14 +2535,14 @@ RECREATE VIEW V_arqAcaoEmail AS
 	left join tabLanceTipoImg A4 on A4.IDPRIMARIO = A0.IMAGEM;
 commit;
 
-RECREATE VIEW V_arqImagemCRM AS 
+RECREATE VIEW V_arqImagemCRM AS
 	SELECT A0.IDPRIMARIO, A0.ACAOEMAIL, A1.TITULO as ACAOEMAIL_TITULO, A1.VERSAO as ACAOEMAIL_VERSAO, A0.NUMIMG, A0.NOME, A0.IMAGEM, A2.CHAVE as Imagem_CHAVE, A2.DESCRITOR as Imagem_DESCRITOR, A0.IMAGEM_ARQUIVO, A0.LINK
 	FROM arqImagemCRM A0
 	left join arqAcaoEmail A1 on A1.IDPRIMARIO = A0.ACAOEMAIL
 	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.IMAGEM;
 commit;
 
-RECREATE VIEW V_arqLogEmail AS 
+RECREATE VIEW V_arqLogEmail AS
 	SELECT A0.IDPRIMARIO, A0.TITULO, A1.TITULO as TITULO_TITULO, A1.VERSAO as TITULO_VERSAO, A0.DATA, A0.HORA, A0.USUARIO, A2.USUARIO as USUARIO_USUARIO, A0.ENVIADOS, A0.NENVIADOS, A0.TOTAL, A0.LIDOS, A0.PERCLIDOS, A0.EMAILREMET, A0.HORAINI, A0.HORAFIM, A0.HORAREENV, A0.ENVIOU, A0.OPCAO, A0.CLIENTE, A3.NOME as CLIENTE_NOME
 	FROM arqLogEmail A0
 	left join arqAcaoEmail A1 on A1.IDPRIMARIO = A0.TITULO
@@ -2550,7 +2550,7 @@ RECREATE VIEW V_arqLogEmail AS
 	left join arqPessoa A3 on A3.IDPRIMARIO = A0.CLIENTE;
 commit;
 
-RECREATE VIEW V_arqItLogEmail AS 
+RECREATE VIEW V_arqItLogEmail AS
 	SELECT A0.IDPRIMARIO, A0.LOGEMAIL, A1.TITULO as LOGEMAIL_TITULO, A2.TITULO as LOGEMAIL_TITULO_TITULO, A2.VERSAO as LOGEMAIL_TITULO_VERSAO, A1.DATA as LOGEMAIL_DATA, A1.HORA as LOGEMAIL_HORA, A0.CLIENTE, A3.NOME as CLIENTE_NOME, A0.EMAIL, A0.ENVIADO, A0.LIDO, A0.LINKEMP, A0.LINKKM
 	FROM arqItLogEmail A0
 	left join arqLogEmail A1 on A1.IDPRIMARIO = A0.LOGEMAIL
@@ -2558,7 +2558,7 @@ RECREATE VIEW V_arqItLogEmail AS
 	left join arqPessoa A3 on A3.IDPRIMARIO = A0.CLIENTE;
 commit;
 
-RECREATE VIEW V_arqAvisos AS 
+RECREATE VIEW V_arqAvisos AS
 	SELECT A0.IDPRIMARIO, A0.NUMERO, A0.DATA, A0.HORA, A0.QUEM, A1.USUARIO as QUEM_USUARIO, A0.ASSUNTO, A0.PRIORIDADE, A2.CHAVE as Prioridade_CHAVE, A2.DESCRITOR as Prioridade_DESCRITOR, A0.TEXTO, A0.IDQUEM, A0.AVISOPAI, A3.NUMERO as AVISOPAI_NUMERO
 	FROM arqAvisos A0
 	left join arqUsuario A1 on A1.IDPRIMARIO = A0.QUEM
@@ -2566,7 +2566,7 @@ RECREATE VIEW V_arqAvisos AS
 	left join arqAvisos A3 on A3.IDPRIMARIO = A0.AVISOPAI;
 commit;
 
-RECREATE VIEW V_arqParaGrupo AS 
+RECREATE VIEW V_arqParaGrupo AS
 	SELECT A0.IDPRIMARIO, A0.AVISOS, A1.NUMERO as AVISOS_NUMERO, A0.GRUPO, A2.GRUPO as GRUPO_GRUPO, A0.USUARIO, A3.USUARIO as USUARIO_USUARIO
 	FROM arqParaGrupo A0
 	left join arqAvisos A1 on A1.IDPRIMARIO = A0.AVISOS
@@ -2574,14 +2574,14 @@ RECREATE VIEW V_arqParaGrupo AS
 	left join arqUsuario A3 on A3.IDPRIMARIO = A0.USUARIO;
 commit;
 
-RECREATE VIEW V_arqLido AS 
+RECREATE VIEW V_arqLido AS
 	SELECT A0.IDPRIMARIO, A0.AVISOS, A1.NUMERO as AVISOS_NUMERO, A0.USUARIO, A2.USUARIO as USUARIO_USUARIO, A0.GRUPO, A0.DATA
 	FROM arqLido A0
 	left join arqAvisos A1 on A1.IDPRIMARIO = A0.AVISOS
 	left join arqUsuario A2 on A2.IDPRIMARIO = A0.USUARIO;
 commit;
 
-RECREATE VIEW V_cnfXConfig AS 
+RECREATE VIEW V_cnfXConfig AS
 	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR
 	FROM cnfXConfig A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
@@ -2589,12 +2589,12 @@ RECREATE VIEW V_cnfXConfig AS
 	left join tabUF A3 on A3.IDPRIMARIO=A2.UF;
 commit;
 
-RECREATE VIEW V_arqBanco AS 
+RECREATE VIEW V_arqBanco AS
 	SELECT A0.IDPRIMARIO, A0.NUM, A0.BANCO
 	FROM arqBanco A0;
 commit;
 
-RECREATE VIEW V_arqCCor AS 
+RECREATE VIEW V_arqCCor AS
 	SELECT A0.IDPRIMARIO, A0.BANCO, A1.NUM as BANCO_NUM, A1.BANCO as BANCO_BANCO, A0.AGENCIA, A0.DVAGENCIA, A0.CONTA, A0.DVCONTA, A0.CARTEIRA, A0.CODCEDENTE, A0.MULTA, A0.JUROS, A0.CBOLETO, A0.INSTRUCOES, A0.ULTREMESSA, A0.CONVENIO, A0.VARIACAO, A0.ATIVO, A0.TPIX1, A2.CHAVE as TPix1_CHAVE, A2.DESCRITOR as TPix1_DESCRITOR, A0.PIX1, A0.TPIX2, A3.CHAVE as TPix2_CHAVE, A3.DESCRITOR as TPix2_DESCRITOR, A0.PIX2, A0.TPIX3, A4.CHAVE as TPix3_CHAVE, A4.DESCRITOR as TPix3_DESCRITOR, A0.PIX3, A0.TPIX4, A5.CHAVE as TPix4_CHAVE, A5.DESCRITOR as TPix4_DESCRITOR, A0.PIX4, A0.TPIX5, A6.CHAVE as TPix5_CHAVE, A6.DESCRITOR as TPix5_DESCRITOR, A0.PIX5
 	FROM arqCCor A0
 	left join arqBanco A1 on A1.IDPRIMARIO = A0.BANCO
@@ -2605,14 +2605,14 @@ RECREATE VIEW V_arqCCor AS
 	left join tabTPix A6 on A6.IDPRIMARIO=A0.TPIX5;
 commit;
 
-RECREATE VIEW V_arqContPessoa AS 
+RECREATE VIEW V_arqContPessoa AS
 	SELECT A0.IDPRIMARIO, A0.PESSOA, A1.NOME as PESSOA_NOME, A0.NOME, A0.APELIDO, A0.FUNCAO, A0.CELULAR, A0.TELEFONE, A0.EMAIL, A0.RECEMAIL, A0.NASCIMENTO, A0.SEXO, A2.CHAVE as Sexo_CHAVE, A2.DESCRITOR as Sexo_DESCRITOR, A0.OBS, A0.ATIVO
 	FROM arqContPessoa A0
 	left join arqPessoa A1 on A1.IDPRIMARIO = A0.PESSOA
 	left join tabSexo A2 on A2.IDPRIMARIO=A0.SEXO;
 commit;
 
-RECREATE VIEW V_arqDocMod AS 
+RECREATE VIEW V_arqDocMod AS
 	SELECT A0.IDPRIMARIO, A0.DOCUMENTO, A0.TARQDOC, A1.CHAVE as TArqDoc_CHAVE, A1.DESCRITOR as TArqDoc_DESCRITOR, A0.TORDOC, A2.CHAVE as TOrDoc_CHAVE, A2.DESCRITOR as TOrDoc_DESCRITOR, A0.LOGO, A0.MARCA, A0.NOMEARQ, A0.RODAPE, A0.ALTRODAPE, A0.TEMPLATE, A3.NOME as TEMPLATE_NOME, A0.ATIVO, A0.HEADER, A0.Header_ARQUIVO, A0.ARQUIVO, A0.Arquivo_ARQUIVO, A0.FOOTER, A0.Footer_ARQUIVO, A0.HTML, A0.IMAGEM, A4.CHAVE as Imagem_CHAVE, A4.DESCRITOR as Imagem_DESCRITOR, A0.IMAGEM_ARQUIVO, A0.LISTA, A0.MARGEMESQ, A0.MARGEMDIR, A0.MARGEMTOP, A0.TPAPEL, A5.CHAVE as TPapel_CHAVE, A5.DESCRITOR as TPapel_DESCRITOR, A0.TORIENTA, A6.CHAVE as TOrienta_CHAVE, A6.DESCRITOR as TOrienta_DESCRITOR
 	FROM arqDocMod A0
 	left join tabTArqDoc A1 on A1.IDPRIMARIO=A0.TARQDOC
@@ -2623,34 +2623,34 @@ RECREATE VIEW V_arqDocMod AS
 	left join tabTOrienta A6 on A6.IDPRIMARIO=A0.TORIENTA;
 commit;
 
-RECREATE VIEW V_cnfConfig AS 
+RECREATE VIEW V_cnfConfig AS
 	SELECT A0.IDPRIMARIO, A0.EMAIL, A0.AVISO, A0.DOCMOD
 	FROM cnfConfig A0;
 commit;
 
-RECREATE VIEW V_arqPlano AS 
+RECREATE VIEW V_arqPlano AS
 	SELECT A0.IDPRIMARIO, A0.CODPLANO, A0.PLANO, A0.TPGREC, A1.CHAVE as TPgRec_CHAVE, A1.DESCRITOR as TPgRec_DESCRITOR
 	FROM arqPlano A0
 	left join tabTPgRec A1 on A1.IDPRIMARIO=A0.TPGREC;
 commit;
 
-RECREATE VIEW V_arqSubPlano AS 
+RECREATE VIEW V_arqSubPlano AS
 	SELECT A0.IDPRIMARIO, A0.PLANO, A1.CODPLANO as PLANO_CODPLANO, A1.PLANO as PLANO_PLANO, A0.CODIGO, A0.NOME
 	FROM arqSubPlano A0
 	left join arqPlano A1 on A1.IDPRIMARIO = A0.PLANO;
 commit;
 
-RECREATE VIEW V_arqIndexAtua AS 
+RECREATE VIEW V_arqIndexAtua AS
 	SELECT A0.IDPRIMARIO, A0.INDICE, A0.DATA, A0.DIAS, A0.DATAPROX, A0.ESTATIS
 	FROM arqIndexAtua A0;
 commit;
 
-RECREATE VIEW V_arqMidia AS 
+RECREATE VIEW V_arqMidia AS
 	SELECT A0.IDPRIMARIO, A0.MIDIA, A0.ATIVO
 	FROM arqMidia A0;
 commit;
 
-RECREATE VIEW V_arqClinica AS 
+RECREATE VIEW V_arqClinica AS
 	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.DATAINI, A0.DATAFIM, A0.ATIVO, A0.MAXAGENDA
 	FROM arqClinica A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
@@ -2658,12 +2658,12 @@ RECREATE VIEW V_arqClinica AS
 	left join tabUF A3 on A3.IDPRIMARIO=A2.UF;
 commit;
 
-RECREATE VIEW V_arqPTrata AS 
+RECREATE VIEW V_arqPTrata AS
 	SELECT A0.IDPRIMARIO, A0.PTRATA, A0.VALOR, A0.DESCRICAO, A0.ATIVO
 	FROM arqPTrata A0;
 commit;
 
-RECREATE VIEW V_arqConta AS 
+RECREATE VIEW V_arqConta AS
 	SELECT A0.IDPRIMARIO, A0.TRANSACAO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TPGREC, A2.CHAVE as TPgRec_CHAVE, A2.DESCRITOR as TPgRec_DESCRITOR, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.TRGVALOR, A0.TRGVALLIQ, A0.TRGQTDPARC, A0.TRGQPARCPG, A0.PROXVENC, A0.TRGPAGO, A0.SALDO, A0.DOCUMENTO, A0.EMISSAO, A0.RECENVIA, A0.COMPETE, A0.HISTORICO, A0.ARQ1, A0.Arq1_ARQUIVO
 	FROM arqConta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
@@ -2671,7 +2671,7 @@ RECREATE VIEW V_arqConta AS
 	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA;
 commit;
 
-RECREATE VIEW V_arqParcela AS 
+RECREATE VIEW V_arqParcela AS
 	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, A0.CLINICACAL, A0.TPGRECCAL, A0.PESSOACAL, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.BANCO as CCOR_BANCO, A4.NUM as CCOR_BANCO_NUM, A4.BANCO as CCOR_BANCO_BANCO, A3.AGENCIA as CCOR_AGENCIA, A3.CONTA as CCOR_CONTA, A0.SUBPLANO, A5.PLANO as SUBPLANO_PLANO, A6.CODPLANO as SUBPLANO_PLANO_CODPLANO, A6.PLANO as SUBPLANO_PLANO_PLANO, A5.CODIGO as SUBPLANO_CODIGO, A5.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A7.CHAVE as TFPagto_CHAVE, A7.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A8.CHAVE as TDetPg_CHAVE, A8.DESCRITOR as TDetPg_DESCRITOR, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM
 	FROM arqParcela A0
 	left join arqConta A1 on A1.IDPRIMARIO = A0.CONTA
@@ -2684,31 +2684,31 @@ RECREATE VIEW V_arqParcela AS
 	left join tabTDetPg A8 on A8.IDPRIMARIO=A0.TDETPG;
 commit;
 
-RECREATE VIEW V_arqUsuCli AS 
+RECREATE VIEW V_arqUsuCli AS
 	SELECT A0.IDPRIMARIO, A0.USUARIO, A1.USUARIO as USUARIO_USUARIO, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA
 	FROM arqUsuCli A0
 	left join arqUsuario A1 on A1.IDPRIMARIO = A0.USUARIO
 	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA;
 commit;
 
-RECREATE VIEW V_arqProfissao AS 
+RECREATE VIEW V_arqProfissao AS
 	SELECT A0.IDPRIMARIO, A0.PROFISSAO
 	FROM arqProfissao A0;
 commit;
 
-RECREATE VIEW V_arqHoraBloq AS 
+RECREATE VIEW V_arqHoraBloq AS
 	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.NOME, A0.DATAINI, A0.HORAINI, A0.DATAFIM, A0.HORAFIM
 	FROM arqHoraBloq A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA;
 commit;
 
-RECREATE VIEW V_arqDuracao AS 
+RECREATE VIEW V_arqDuracao AS
 	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.INICIO, A0.HORAINI, A0.HORAFIM, A0.CONSSAB, A0.CONSDOM, A0.DURACAO
 	FROM arqDuracao A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA;
 commit;
 
-RECREATE VIEW V_arqConsulta AS 
+RECREATE VIEW V_arqConsulta AS
 	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A3.NOME as PESSOA_NOME, A0.MEDICO, A4.USUARIO as MEDICO_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
@@ -2721,7 +2721,7 @@ RECREATE VIEW V_arqConsulta AS
 	left join tabTPrograma A8 on A8.IDPRIMARIO=A0.TPROGRAMA;
 commit;
 
-RECREATE VIEW V_arqPlantao AS 
+RECREATE VIEW V_arqPlantao AS
 	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATAINI, A0.DATAFIM, A0.TDIASEM, A2.CHAVE as TDiaSem_CHAVE, A2.DESCRITOR as TDiaSem_DESCRITOR, A0.USUARIO, A3.USUARIO as USUARIO_USUARIO
 	FROM arqPlantao A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
@@ -2937,10 +2937,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100001 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Bairro', OLD.Bairro, NEW.Bairro );
 end
@@ -2966,10 +2966,10 @@ select coalesce( UF_chave, ' ' ) || '-' || coalesce( Cidade, ' ' ) from v_arqCid
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100002 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'UF', OLD.UF, NEW.UF );
 	execute procedure set_log( 12, NEW.idPrimario, 'Cidade', OLD.Cidade, NEW.Cidade );
@@ -3000,10 +3000,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100004 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Grupo', OLD.Grupo, NEW.Grupo );
 end
@@ -3032,10 +3032,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100005 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
 	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
@@ -3048,8 +3048,8 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'EmailAces', OLD.EmailAces, NEW.EmailAces );
 	execute procedure set_log( 12, NEW.idPrimario, 'EmailAcesS', OLD.EmailAcesS, NEW.EmailAcesS );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
-		( NEW.Senha is distinct from OLD.Senha )  OR 
-		( NEW.Versao is distinct from OLD.Versao )  OR 
+		( NEW.Senha is distinct from OLD.Senha )  OR
+		( NEW.Versao is distinct from OLD.Versao )  OR
 		( NEW.Foto is distinct from OLD.Foto )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
 end
@@ -3078,10 +3078,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100007 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
 	execute procedure set_log( 12, NEW.idPrimario, 'Apelido', OLD.Apelido, NEW.Apelido );
@@ -3140,10 +3140,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100008 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
 	execute procedure set_log( 12, NEW.idPrimario, 'Template', substring( OLD.Template from 1 for 255 ), substring( NEW.Template from 1 for 255 ) );
@@ -3173,10 +3173,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100009 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Email', OLD.Email, NEW.Email );
 	execute procedure set_log( 12, NEW.idPrimario, 'NomeEmail', OLD.NomeEmail, NEW.NomeEmail );
@@ -3208,10 +3208,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100010 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Titulo', OLD.Titulo, NEW.Titulo );
 	execute procedure set_log( 12, NEW.idPrimario, 'Versao', OLD.Versao, NEW.Versao );
@@ -3222,9 +3222,9 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Link', OLD.Link, NEW.Link );
 	execute procedure set_log( 12, NEW.idPrimario, 'ImagemAlt', OLD.ImagemAlt, NEW.ImagemAlt );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
-		( NEW.Arquivo is distinct from OLD.Arquivo )  OR 
-		( NEW.Html is distinct from OLD.Html )  OR 
-		( NEW.Imagem is distinct from OLD.Imagem )  OR 
+		( NEW.Arquivo is distinct from OLD.Arquivo )  OR
+		( NEW.Html is distinct from OLD.Html )  OR
+		( NEW.Imagem is distinct from OLD.Imagem )  OR
 		( NEW.QtdTeste is distinct from OLD.QtdTeste )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
 end
@@ -3250,10 +3250,10 @@ select coalesce( AcaoEmail_Titulo, ' ' ) || '-' || coalesce( AcaoEmail_Versao, '
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100011 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'AcaoEmail', OLD.AcaoEmail, NEW.AcaoEmail );
 	execute procedure set_log( 12, NEW.idPrimario, 'NumImg', OLD.NumImg, NEW.NumImg );
@@ -3285,10 +3285,10 @@ select coalesce( Titulo_Titulo, ' ' ) || '-' || coalesce( Titulo_Versao, ' ' ) |
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100012 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Titulo', OLD.Titulo, NEW.Titulo );
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
@@ -3296,13 +3296,13 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
 	execute procedure set_log( 12, NEW.idPrimario, 'EmailRemet', OLD.EmailRemet, NEW.EmailRemet );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
-		( NEW.Enviados is distinct from OLD.Enviados )  OR 
-		( NEW.NEnviados is distinct from OLD.NEnviados )  OR 
-		( NEW.HoraIni is distinct from OLD.HoraIni )  OR 
-		( NEW.HoraFim is distinct from OLD.HoraFim )  OR 
-		( NEW.HoraReenv is distinct from OLD.HoraReenv )  OR 
-		( NEW.Enviou is distinct from OLD.Enviou )  OR 
-		( NEW.Opcao is distinct from OLD.Opcao )  OR 
+		( NEW.Enviados is distinct from OLD.Enviados )  OR
+		( NEW.NEnviados is distinct from OLD.NEnviados )  OR
+		( NEW.HoraIni is distinct from OLD.HoraIni )  OR
+		( NEW.HoraFim is distinct from OLD.HoraFim )  OR
+		( NEW.HoraReenv is distinct from OLD.HoraReenv )  OR
+		( NEW.Enviou is distinct from OLD.Enviou )  OR
+		( NEW.Opcao is distinct from OLD.Opcao )  OR
 		( NEW.Cliente is distinct from OLD.Cliente )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
 end
@@ -3331,10 +3331,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100014 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Numero', OLD.Numero, NEW.Numero );
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
@@ -3369,10 +3369,10 @@ select coalesce( Avisos_Numero, ' ' ) || '-' || coalesce( Grupo_Grupo, ' ' ) || 
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100015 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Avisos', OLD.Avisos, NEW.Avisos );
 	execute procedure set_log( 12, NEW.idPrimario, 'Grupo', OLD.Grupo, NEW.Grupo );
@@ -3400,10 +3400,10 @@ select coalesce( Avisos_Numero, ' ' ) || '-' || coalesce( Usuario_Usuario, ' ' )
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100016 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Avisos', OLD.Avisos, NEW.Avisos );
 	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
@@ -3443,11 +3443,11 @@ begin
 	execute procedure set_log( 12, NEW.idPrimario, 'QtasDesmar', OLD.QtasDesmar, NEW.QtasDesmar );
 	execute procedure set_log( 12, NEW.idPrimario, 'Declinar', OLD.Declinar, NEW.Declinar );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
-		( NEW.CPF is distinct from OLD.CPF )  OR 
-		( NEW.LogAcesso is distinct from OLD.LogAcesso )  OR 
-		( NEW.LogAcessoS is distinct from OLD.LogAcessoS )  OR 
-		( NEW.Qtd is distinct from OLD.Qtd )  OR 
-		( NEW.Qtd2 is distinct from OLD.Qtd2 )  OR 
+		( NEW.CPF is distinct from OLD.CPF )  OR
+		( NEW.LogAcesso is distinct from OLD.LogAcesso )  OR
+		( NEW.LogAcessoS is distinct from OLD.LogAcessoS )  OR
+		( NEW.Qtd is distinct from OLD.Qtd )  OR
+		( NEW.Qtd2 is distinct from OLD.Qtd2 )  OR
 		( NEW.CNPJ is distinct from OLD.CNPJ )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
 end
@@ -3476,10 +3476,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100019 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
 	execute procedure set_log( 12, NEW.idPrimario, 'Banco', OLD.Banco, NEW.Banco );
@@ -3506,10 +3506,10 @@ select coalesce( Banco_Num, ' ' ) || '-' || coalesce( Agencia, ' ' ) || '-' || c
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100020 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Banco', OLD.Banco, NEW.Banco );
 	execute procedure set_log( 12, NEW.idPrimario, 'Agencia', OLD.Agencia, NEW.Agencia );
@@ -3559,10 +3559,10 @@ select coalesce( Pessoa_Nome, ' ' ) || '-' || coalesce( Nome, ' ' ) from v_arqCo
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100021 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
 	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
@@ -3602,10 +3602,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100022 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Documento', OLD.Documento, NEW.Documento );
 	execute procedure set_log( 12, NEW.idPrimario, 'TArqDoc', OLD.TArqDoc, NEW.TArqDoc );
@@ -3625,9 +3625,9 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'TPapel', OLD.TPapel, NEW.TPapel );
 	execute procedure set_log( 12, NEW.idPrimario, 'TOrienta', OLD.TOrienta, NEW.TOrienta );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
-		( NEW.Header is distinct from OLD.Header )  OR 
-		( NEW.Arquivo is distinct from OLD.Arquivo )  OR 
-		( NEW.Footer is distinct from OLD.Footer )  OR 
+		( NEW.Header is distinct from OLD.Header )  OR
+		( NEW.Arquivo is distinct from OLD.Arquivo )  OR
+		( NEW.Footer is distinct from OLD.Footer )  OR
 		( NEW.Imagem is distinct from OLD.Imagem )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
 end
@@ -3656,10 +3656,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100027 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'CodPlano', OLD.CodPlano, NEW.CodPlano );
 	execute procedure set_log( 12, NEW.idPrimario, 'Plano', OLD.Plano, NEW.Plano );
@@ -3687,10 +3687,10 @@ select coalesce( Plano_CodPlano, ' ' ) || '-' || coalesce( Codigo, ' ' ) from v_
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100028 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Plano', OLD.Plano, NEW.Plano );
 	execute procedure set_log( 12, NEW.idPrimario, 'Codigo', OLD.Codigo, NEW.Codigo );
@@ -3721,10 +3721,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100030 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Midia', OLD.Midia, NEW.Midia );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
@@ -3754,10 +3754,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100031 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'Razao', OLD.Razao, NEW.Razao );
@@ -3800,10 +3800,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100032 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'PTrata', OLD.PTrata, NEW.PTrata );
 	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
@@ -3835,10 +3835,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100033 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Transacao', OLD.Transacao, NEW.Transacao );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
@@ -3875,10 +3875,10 @@ select coalesce( Conta_Transacao, ' ' ) || '-' || coalesce( Parcela, ' ' ) from 
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100034 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Conta', OLD.Conta, NEW.Conta );
 	execute procedure set_log( 12, NEW.idPrimario, 'Parcela', OLD.Parcela, NEW.Parcela );
@@ -3897,11 +3897,11 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'TDetPg', OLD.TDetPg, NEW.TDetPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'Cheque', OLD.Cheque, NEW.Cheque );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
-		( NEW.LinhaDig is distinct from OLD.LinhaDig )  OR 
-		( NEW.NomePdf is distinct from OLD.NomePdf )  OR 
-		( NEW.Arq1 is distinct from OLD.Arq1 )  OR 
-		( NEW.StRetorno is distinct from OLD.StRetorno )  OR 
-		( NEW.Remessa is distinct from OLD.Remessa )  OR 
+		( NEW.LinhaDig is distinct from OLD.LinhaDig )  OR
+		( NEW.NomePdf is distinct from OLD.NomePdf )  OR
+		( NEW.Arq1 is distinct from OLD.Arq1 )  OR
+		( NEW.StRetorno is distinct from OLD.StRetorno )  OR
+		( NEW.Remessa is distinct from OLD.Remessa )  OR
 		( NEW.DataRem is distinct from OLD.DataRem )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
 end
@@ -3927,10 +3927,10 @@ select coalesce( Usuario_Usuario, ' ' ) || '-' || coalesce( Clinica_Clinica, ' '
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100035 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
@@ -3960,10 +3960,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100036 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Profissao', OLD.Profissao, NEW.Profissao );
 end
@@ -3989,10 +3989,10 @@ begin
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100037 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
@@ -4023,10 +4023,10 @@ begin
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100038 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'Inicio', OLD.Inicio, NEW.Inicio );
@@ -4061,10 +4061,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100039 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
@@ -4104,10 +4104,10 @@ begin
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100041 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'DataIni', OLD.DataIni, NEW.DataIni );
@@ -4140,14 +4140,14 @@ as
 begin
 if( updating or inserting ) then begin
 if( ( NEW.Lido is not null ) ) then begin
-update arqLogEmail set arqLogEmail.Lidos = arqLogEmail.Lidos + 
+update arqLogEmail set arqLogEmail.Lidos = arqLogEmail.Lidos +
 1
  where arqLogEmail.IDPRIMARIO = NEW.LogEmail;
 end
 end
 if( updating or deleting ) then begin
 if( ( OLD.Lido is not null ) ) then begin
-update arqLogEmail set arqLogEmail.Lidos = arqLogEmail.Lidos - 
+update arqLogEmail set arqLogEmail.Lidos = arqLogEmail.Lidos -
 1
  where arqLogEmail.IDPRIMARIO = OLD.LogEmail;
 end
@@ -4169,11 +4169,11 @@ active after Insert or Update or Delete
 as
 begin
 if( updating or inserting ) then begin
-update arqConta set arqConta.TrgValor = arqConta.TrgValor + 
+update arqConta set arqConta.TrgValor = arqConta.TrgValor +
 NEW.Valor where arqConta.IDPRIMARIO = NEW.Conta;
 end
 if( updating or deleting ) then begin
-update arqConta set arqConta.TrgValor = arqConta.TrgValor - 
+update arqConta set arqConta.TrgValor = arqConta.TrgValor -
 OLD.Valor where arqConta.IDPRIMARIO = OLD.Conta;
 end
 end^
@@ -4193,11 +4193,11 @@ active after Insert or Update or Delete
 as
 begin
 if( updating or inserting ) then begin
-update arqConta set arqConta.TrgValLiq = arqConta.TrgValLiq + 
+update arqConta set arqConta.TrgValLiq = arqConta.TrgValLiq +
 NEW.ValorLiq where arqConta.IDPRIMARIO = NEW.Conta;
 end
 if( updating or deleting ) then begin
-update arqConta set arqConta.TrgValLiq = arqConta.TrgValLiq - 
+update arqConta set arqConta.TrgValLiq = arqConta.TrgValLiq -
 OLD.ValorLiq where arqConta.IDPRIMARIO = OLD.Conta;
 end
 end^
@@ -4217,12 +4217,12 @@ active after Insert or Update or Delete
 as
 begin
 if( updating or inserting ) then begin
-update arqConta set arqConta.TrgQtdParc = arqConta.TrgQtdParc + 
+update arqConta set arqConta.TrgQtdParc = arqConta.TrgQtdParc +
 1
  where arqConta.IDPRIMARIO = NEW.Conta;
 end
 if( updating or deleting ) then begin
-update arqConta set arqConta.TrgQtdParc = arqConta.TrgQtdParc - 
+update arqConta set arqConta.TrgQtdParc = arqConta.TrgQtdParc -
 1
  where arqConta.IDPRIMARIO = OLD.Conta;
 end
@@ -4244,14 +4244,14 @@ as
 begin
 if( updating or inserting ) then begin
 if( ( NEW.DataPagto is not null ) ) then begin
-update arqConta set arqConta.TrgQParcPg = arqConta.TrgQParcPg + 
+update arqConta set arqConta.TrgQParcPg = arqConta.TrgQParcPg +
 1
  where arqConta.IDPRIMARIO = NEW.Conta;
 end
 end
 if( updating or deleting ) then begin
 if( ( OLD.DataPagto is not null ) ) then begin
-update arqConta set arqConta.TrgQParcPg = arqConta.TrgQParcPg - 
+update arqConta set arqConta.TrgQParcPg = arqConta.TrgQParcPg -
 1
  where arqConta.IDPRIMARIO = OLD.Conta;
 end
@@ -4300,13 +4300,13 @@ as
 begin
 if( updating or inserting ) then begin
 if( ( NEW.DataPagto is not null ) ) then begin
-update arqConta set arqConta.TrgPago = arqConta.TrgPago + 
+update arqConta set arqConta.TrgPago = arqConta.TrgPago +
 NEW.ValorLiq where arqConta.IDPRIMARIO = NEW.Conta;
 end
 end
 if( updating or deleting ) then begin
 if( ( OLD.DataPagto is not null ) ) then begin
-update arqConta set arqConta.TrgPago = arqConta.TrgPago - 
+update arqConta set arqConta.TrgPago = arqConta.TrgPago -
 OLD.ValorLiq where arqConta.IDPRIMARIO = OLD.Conta;
 end
 end
