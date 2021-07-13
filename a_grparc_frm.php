@@ -31,7 +31,11 @@ echo
 {
    echo
    $this->PedirZerando( "Clínica", Clinica ),
-   $this->PedirZerando( "Pessoa" ),
+   $this->PedirZerando( "Fornecedor" ),
+   $this->PedirZerando( "Paciente", Pessoa_Nome ),
+   $this->PedirZerando( " ",
+      [ "Prontuário ", Pessoa_Prontuario,
+      [ "", Pessoa ] ] ),
    $this->PedirZerando( "Tipo",
       [ "", TPgRec,
       [ brHtml(4) . "Valor ", Valor,

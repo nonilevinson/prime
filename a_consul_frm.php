@@ -26,7 +26,10 @@ echo
    echo
 	$this->Pedir( "Status", TStCon ),
 	$this->Pedir( "Clínica", Clinica ),
-   $this->Pedir( "Paciente", Pessoa ),
+   $this->Pedir( "Paciente", Pessoa_Nome ),
+   $this->Pedir( " ",
+      [ "Prontuário ", Pessoa_Prontuario,
+      [ "", Pessoa ] ] ),
    $this->Pedir( "Médico", Medico ),
    $this->Pedir( "Marketing", Mkt ),
    $this->Pedir( "Assessor" ),

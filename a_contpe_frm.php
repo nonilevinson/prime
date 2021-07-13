@@ -48,7 +48,10 @@ echo
 	else
 	{
 		echo
-		$this->Pedir( "Pessoa" );
+   $this->Pedir( "Paciente", Pessoa_Nome ),
+   $this->Pedir( " ",
+      [ "Prontuário ", Pessoa_Prontuario,
+      [ "", Pessoa ] ] );
 	}
 
 	echo

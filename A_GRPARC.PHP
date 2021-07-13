@@ -45,6 +45,32 @@ class campo_parGeraParc_Clinica_Clinica extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Fornecedor
+//======================================================
+
+class campo_parGeraParc_Fornecedor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor", "Fornecedor", "Fornecedor", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor_Nome
+//======================================================
+
+class campo_parGeraParc_Fornecedor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Fornecedor", false );
+	}
+
+}
+
+//======================================================
 //	Campo Pessoa
 //======================================================
 
@@ -2628,6 +2654,8 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_parGeraParc_Clinica(),
 			new campo_parGeraParc_Clinica_Clinica(),
+			new campo_parGeraParc_Fornecedor(),
+			new campo_parGeraParc_Fornecedor_Nome(),
 			new campo_parGeraParc_Pessoa(),
 			new campo_parGeraParc_Pessoa_Nome(),
 			new campo_parGeraParc_Pessoa_Prontuario(),
