@@ -12,6 +12,12 @@ update arqLanceOperacao set Operacao= 'Cadastro de pacientes' where idPrimario =
 insert into arqLanceOperacao values(100042,1,'Cadastro de fornecedores','arqFornecedor',42,1,0,'');
 commit;
 
+insert into arqLancePermissao (idPrimario, Operacao, Grupo, Usuario, Podeconsultar, Podeverfrm, Podeincluir, Podealterar, Podeexcluir, Podemarcar, Podeimprimir, Podeexportar)
+	Values (gen_id( genIdPrimario, 1 ), 100042, 1, null, 1, 1, 1, 1, 1, 1, 1, 1);
+insert into arqLancePermissao (idPrimario, Operacao, Grupo, Usuario, Podeconsultar, Podeverfrm, Podeincluir, Podealterar, Podeexcluir, Podemarcar, Podeimprimir, Podeexportar)
+	Values (gen_id( genIdPrimario, 1 ), 100042, 3, null, 1, 1, 1, 1, 1, 1, 0, 0);
+commit;
+
 /************************************************************
 	Arquivo Fornecedor
 ************************************************************/
