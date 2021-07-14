@@ -414,3 +414,142 @@ alter HISTORICO position 19,
 alter ARQ1 position 20,
 alter ARQ1_ARQUIVO position 21;
 commit;
+
+/************************************************************
+	Arquivo Consulta
+************************************************************/
+drop trigger arqConsulta_log;
+drop view v_arqConsulta;
+commit;
+
+RECREATE VIEW V_arqConsulta AS
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A3.NOME as PESSOA_NOME, A3.PRONTUARIO as PESSOA_PRONTUARIO, A0.MEDICO, A4.USUARIO as MEDICO_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO
+	FROM arqConsulta A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
+	left join arqUsuario A4 on A4.IDPRIMARIO = A0.MEDICO
+	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MKT
+	left join arqUsuario A6 on A6.IDPRIMARIO = A0.ASSESSOR
+	left join tabTMotivo A7 on A7.IDPRIMARIO=A0.TMOTIVO
+	left join tabTPrograma A8 on A8.IDPRIMARIO=A0.TPROGRAMA;
+commit;
+
+/************************************************************
+	Trigger para Log de arqConsulta
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConsulta_LOG for arqConsulta
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Num,'' );
+else
+	valorChave = coalesce( NEW.Num,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100039 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TStCon', OLD.TStCon, NEW.TStCon );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraChega', OLD.HoraChega, NEW.HoraChega );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
+	execute procedure set_log( 12, NEW.idPrimario, 'Mkt', OLD.Mkt, NEW.Mkt );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'TMotivo', OLD.TMotivo, NEW.TMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPrograma', OLD.TPrograma, NEW.TPrograma );
+	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Arquivo LogEmail
+************************************************************/
+drop trigger arqLogEmail_log;
+drop view v_arqLogEmail;
+commit;
+
+RECREATE VIEW V_arqLogEmail AS
+	SELECT A0.IDPRIMARIO, A0.TITULO, A1.TITULO as TITULO_TITULO, A1.VERSAO as TITULO_VERSAO, A0.DATA, A0.HORA, A0.USUARIO, A2.USUARIO as USUARIO_USUARIO, A0.ENVIADOS, A0.NENVIADOS, A0.TOTAL, A0.LIDOS, A0.PERCLIDOS, A0.EMAILREMET, A0.HORAINI, A0.HORAFIM, A0.HORAREENV, A0.ENVIOU, A0.OPCAO, A0.CLIENTE, A3.NOME as CLIENTE_NOME, A3.PRONTUARIO as CLIENTE_PRONTUARIO
+	FROM arqLogEmail A0
+	left join arqAcaoEmail A1 on A1.IDPRIMARIO = A0.TITULO
+	left join arqUsuario A2 on A2.IDPRIMARIO = A0.USUARIO
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.CLIENTE;
+commit;
+
+/************************************************************
+	Trigger para Log de arqLogEmail
+************************************************************/
+
+set term ^;
+
+recreate trigger arqLogEmail_LOG for arqLogEmail
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Titulo_Titulo, ' ' ) || '-' || coalesce( Titulo_Versao, ' ' ) || '-' || coalesce( Data, ' ' ) || '-' || coalesce( Hora, ' ' ) from v_arqLogEmail where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100012 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Titulo', OLD.Titulo, NEW.Titulo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
+	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
+	execute procedure set_log( 12, NEW.idPrimario, 'EmailRemet', OLD.EmailRemet, NEW.EmailRemet );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.Enviados is distinct from OLD.Enviados )  OR
+		( NEW.NEnviados is distinct from OLD.NEnviados )  OR
+		( NEW.HoraIni is distinct from OLD.HoraIni )  OR
+		( NEW.HoraFim is distinct from OLD.HoraFim )  OR
+		( NEW.HoraReenv is distinct from OLD.HoraReenv )  OR
+		( NEW.Enviou is distinct from OLD.Enviou )  OR
+		( NEW.Opcao is distinct from OLD.Opcao )  OR
+		( NEW.Cliente is distinct from OLD.Cliente )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Arquivo ItLogEmail
+************************************************************/
+drop view v_arqItLogEmail;
+commit;
+
+RECREATE VIEW V_arqItLogEmail AS
+	SELECT A0.IDPRIMARIO, A0.LOGEMAIL, A1.TITULO as LOGEMAIL_TITULO, A2.TITULO as LOGEMAIL_TITULO_TITULO, A2.VERSAO as LOGEMAIL_TITULO_VERSAO, A1.DATA as LOGEMAIL_DATA, A1.HORA as LOGEMAIL_HORA, A0.CLIENTE, A3.NOME as CLIENTE_NOME, A3.PRONTUARIO as CLIENTE_PRONTUARIO, A0.EMAIL, A0.ENVIADO, A0.LIDO, A0.LINKEMP, A0.LINKKM
+	FROM arqItLogEmail A0
+	left join arqLogEmail A1 on A1.IDPRIMARIO = A0.LOGEMAIL
+	left join arqAcaoEmail A2 on A2.IDPRIMARIO = A1.TITULO
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.CLIENTE;
+commit;
+

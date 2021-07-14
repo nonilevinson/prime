@@ -30,9 +30,12 @@ function gerarConta()
 						Where C.Documento = " . $documento . " and " .
 							( $idPessoa ? "C.Pessoa = " . $idPessoa : "C.Fornecedor = " . $idFornecedor );
 					$idContaExiste = sql_lerUmRegistro( $select )->IDPRIMARIO;
-//if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
+if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
 					if( $idContaExiste )
+					{
 						TecleAlgoVolta( "Já existe uma conta com os dados informados e por isso esta não foi criada", true, 1 );
+						return;
+					}
 				}
 			}
 			break;
