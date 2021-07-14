@@ -10,12 +10,13 @@ function gerarConta()
 	switch( ultimaLigOpcao() )
 	{
 		case 130:	//* menu Financeiro
-			$idPessoa  = $parGeraParc->PESSOA;
-			$documento = valorOuZero( $parGeraParc->DOCUMENTO );
-			$emissao   = $parGeraParc->EMISSAO;
-			$recEnvia  = valorOuNull( $parGeraParc->RECENVIA, "", false );
-			$compete   = valorOuNull( $parGeraParc->COMPETE, "", false );
-			$historico = $parGeraParc->HISTORICO;
+			$idFornecedor  = valorOuNull( $parGeraParc->FORNECEDOR, "", false );
+			$idPessoa      = valorOuNull( $parGeraParc->PESSOA, "", false );
+			$documento     = valorOuZero( $parGeraParc->DOCUMENTO );
+			$emissao       = $parGeraParc->EMISSAO;
+			$recEnvia      = valorOuNull( $parGeraParc->RECENVIA, "", false );
+			$compete       = valorOuNull( $parGeraParc->COMPETE, "", false );
+			$historico     = $parGeraParc->HISTORICO;
 
 			if( ultimaLigOpcaoEm( 130 )  )
 			{
@@ -23,9 +24,11 @@ function gerarConta()
 
 				if( $documento > 0 )
 				{
-					$select = "Select C.idPrimario
+					$select = "
+						Select C.idPrimario
 						From arqConta C
-						Where C.Pessoa = " . $idPessoa . " and C.Documento = " . $documento;
+						Where C.Documento = " . $documento . " and " .
+							( $idPessoa ? "C.Pessoa = " . $idPessoa : "C.Fornecedor = " . $idFornecedor );
 					$idContaExiste = sql_lerUmRegistro( $select )->IDPRIMARIO;
 //if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
 					if( $idContaExiste )
@@ -45,7 +48,8 @@ function gerarConta()
       "Transacao"  => $proxTransacao,
       "Clinica"    => $parGeraParc->CLINICA,
       "TPgRec"     => $parGeraParc->TPGREC,
-      "Pessoa"     => $idPessoa,
+      "Fornecedor" => $idFornecedor,
+		"Pessoa"     => $idPessoa,
       "TrgValor"   => 0,
       "TrgValLiq"  => 0,
       "TrgQtdParc" => 0,
