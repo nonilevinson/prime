@@ -70,7 +70,7 @@ Usuario_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 Campo_arqUsuCli_Clinica.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
-			return( "A.Ativo == 1" );
+			return( "A.Ativo = 1" );
 		return( "" );
 }
 
