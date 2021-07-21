@@ -856,6 +856,16 @@ Campo_parQSelecao_Senha2.prototype.TemErro = function()
 }
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parQSelecao_Clinica.prototype.FiltroPai = function()
+{
+		if( g_temMaisDeUmClinica )
+			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_parQSelecao_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_comMsg )

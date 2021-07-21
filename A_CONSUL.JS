@@ -319,6 +319,16 @@ Campo_arqConsulta_Num.prototype.Cabecalho = function()
 
 Num.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_Clinica.prototype.FiltroPai = function()
+{
+		if( g_temMaisDeUmClinica )
+			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqConsulta_Clinica.prototype.Obrigatorio = function( p_comMsg )

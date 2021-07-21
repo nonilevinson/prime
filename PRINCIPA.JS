@@ -4,7 +4,7 @@ var Menu_1_2 = new Array( 1,"Seleção","","S",110,"","",1,"","1", "a_qselec", "pa
 var Menu_2 = new Array( 1,"Cadastros","","C",7,"","",1,"","6", "", "", "", "", "", "", "", "", "", 6, 10,[],[7,42,31,14,32,30,36,1,19,22,7] );
 var Menu_2_1 = new Array( 1,"Pacientes","","t",135,"","",1,"","1","a_pessoa","arqPessoa","Folhear","","?","","", "","", 0,15,[],[7]);
 var Menu_2_2 = new Array( 1,"Fornecedores","","F",136,"","",1,"","1","a_fornec","arqFornecedor","Folhear","","?","","", "","", 0,15,[],[42]);
-var Menu_2_3 = new Array( 1,"Clínicas","","l",88,"","",1,"","1","a_clini","arqClinica","Folhear","","?","","", "","", 0,15,[],[31]);
+var Menu_2_3 = new Array( 1,"Clínicas","","l",88,"","",1,"","1","a_clini","arqClinica","Folhear","","?","FilTodas","", "","", 0,15,[],[31]);
 var Menu_2_4 = new Array( 1,"Avisos internos","","A",36,"","",cnfConfig["AVISO"] == 1,"","1","a_avisos","arqAvisos","Folhear","","?","FilTodos","", "","", 0,15,[],[14]);
 var Menu_2_5 = new Array( 1,"Outros","","O",60,"","",1,"","6", "", "", "", "", "", "", "", "", "", 6, 15,[],[32,30,36,1,19,22] );
 var Menu_2_5_1 = new Array( 1,"Planos de tratamento","","n",89,"","",1,"","1","a_ptrata","arqPTrata","Folhear","","?","","", "","", 0,21,[],[32]);

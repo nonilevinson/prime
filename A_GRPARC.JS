@@ -2141,6 +2141,8 @@ var Cc12_Nome = new Campo_parGeraParc_Cc12_Nome;
 //-------------------------------------------------------------
 Campo_parGeraParc_Clinica.prototype.FiltroPai = function()
 {
+		if( g_temMaisDeUmClinica )
+			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
 			return( "A.Ativo = 1" );
 }
 

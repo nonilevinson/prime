@@ -45,7 +45,7 @@ define( 'G_QTASDESMAR', $qtasDesmar );
 echo
 javaScriptIni(),
 	'var g_vetIdClinica = [', implode( ',', $vetIdClinica ), '];',
-	'var g_temMaisDeUmClinica = ', ( sizeof( $vetIdClinica ) >= 2 ? 'true' : 'false' ), ';',
+	'var g_temMaisDeUmClinica = ', ( sizeof( $vetIdClinica ) >= 1 ? 'true' : 'false' ), ';',
 	'var g_qtasDesmar = ', $qtasDesmar , ';',
 javaScriptFim();
 

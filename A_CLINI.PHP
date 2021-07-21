@@ -234,5 +234,13 @@ class arqClinica extends Lance_Arquivo
 		return( 'Clínicas' );
 	}
 
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilTodas  
+	//-------------------------------------------------------------
+	function FilTodas()
+	{
+	return( "" . ext_filtrarTodos() . "" );
+	}
+
 }
 ?>

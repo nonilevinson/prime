@@ -69,6 +69,10 @@ Usuario_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqUsuCli_Clinica.prototype.FiltroPai = function()
 {
+		if( g_temMaisDeUmClinica )
+			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
+		if( g_inserindo && g_temMaisDeUmClinica )
+			return( "A.Ativo = 1 and A.idPrimario in ( " + g_vetIdClinica + " )" );
 		if( g_inserindo )
 			return( "A.Ativo = 1" );
 		return( "" );
