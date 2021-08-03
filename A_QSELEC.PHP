@@ -126,21 +126,21 @@ class campo_parQSelecao_Cliente_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Cliente_Prontuario
+//	Campo Cliente_NumCelular
 //======================================================
 
-class campo_parQSelecao_Cliente_Prontuario extends Lance_CampoNumerico
+class campo_parQSelecao_Cliente_NumCelular extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Cliente_Prontuario", "Cliente_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Cliente", false );
+		parent::__construct( "Cliente_NumCelular", "Cliente_NumCelular", "NumCelular", 11, "(##) #.####.####", EH_CHAVE, "Cliente", false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Prontuário" );
+			return( "Celular" );
 	}
 
 }
@@ -550,7 +550,7 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new Lance_CampoCadeia( "StatusLog_Descritor", "StatusLog_Descritor", "Descritor", 13, "xxxxxxxxxxxxx", EH_DESCRITOR, StatusLog ),
 			new campo_parQSelecao_Cliente(),
 			new campo_parQSelecao_Cliente_Nome(),
-			new campo_parQSelecao_Cliente_Prontuario(),
+			new campo_parQSelecao_Cliente_NumCelular(),
 			new campo_parQSelecao_EmailRemet(),
 			new campo_parQSelecao_EmailRemet_Email(),
 			new campo_parQSelecao_AcaoEmail(),

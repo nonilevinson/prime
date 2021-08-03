@@ -47,15 +47,15 @@ function Campo_arqContPessoa_Pessoa_Nome()
 var Pessoa_Nome = new Campo_arqContPessoa_Pessoa_Nome;
 
 //------------------------------------------------------------
-Campo_arqContPessoa_Pessoa_Prontuario.prototype = new Lance_CampoNumericoLigado;
+Campo_arqContPessoa_Pessoa_NumCelular.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqContPessoa_Pessoa_Prontuario()
+function Campo_arqContPessoa_Pessoa_NumCelular()
 {
-	this.superClass = Lance_CampoNumericoLigado;
-	this.superClass( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", Pessoa, 13, "#.###.###.###.##z", true,"", "");
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", Pessoa, 11, "(##) #.####.####", true);
 }
 
-var Pessoa_Prontuario = new Campo_arqContPessoa_Pessoa_Prontuario;
+var Pessoa_NumCelular = new Campo_arqContPessoa_Pessoa_NumCelular;
 
 //------------------------------------------------------------
 Campo_arqContPessoa_Nome.prototype = new Lance_CampoCadeia;
@@ -247,12 +247,12 @@ Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqContPessoa_Pessoa_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqContPessoa_Pessoa_NumCelular.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Pessoa.Obrigatorio( p_comMsg ) );
 }
 
-Pessoa_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+Pessoa_NumCelular.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -346,19 +346,19 @@ Campo_arqContPessoa_Fornecedor.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqContPessoa_Pessoa.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_Prontuario.Obrigatorio( false ) || tem(Pessoa_Prontuario) ) );
+	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_NumCelular.Obrigatorio( false ) || tem(Pessoa_NumCelular) ) );
 }
 
 function IniciarDependencias_arqContPessoa()
 {
 Fornecedor_Nome.ExistenciasDependentes= [ Fornecedor ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
-Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
+Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
 Email.ExistenciasDependentes= [ RecEmail ];
 Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
-Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
+Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
 Fornecedor.CamposChave= [ Fornecedor_Nome ];
-Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
+Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 }
 
 
@@ -376,7 +376,7 @@ function ListaDeCampos_arqContPessoa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_Prontuario, Nome, Apelido, Funcao, Celular, Telefone, Email, RecEmail, Nascimento, Sexo, Sexo_Chave, Sexo_Descritor, Obs, Ativo ]	);
+		[ Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Nome, Apelido, Funcao, Celular, Telefone, Email, RecEmail, Nascimento, Sexo, Sexo_Chave, Sexo_Descritor, Obs, Ativo ]	);
 	IniciarDependencias_arqContPessoa();
 	g_prefixo = l_prefixo;
 	return( l_lista );

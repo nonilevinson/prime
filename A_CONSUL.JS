@@ -146,15 +146,26 @@ function Campo_arqConsulta_Pessoa_Nome()
 var Pessoa_Nome = new Campo_arqConsulta_Pessoa_Nome;
 
 //------------------------------------------------------------
-Campo_arqConsulta_Pessoa_Prontuario.prototype = new Lance_CampoNumericoLigado;
+Campo_arqConsulta_Pessoa_NumCelular.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqConsulta_Pessoa_Prontuario()
+function Campo_arqConsulta_Pessoa_NumCelular()
 {
-	this.superClass = Lance_CampoNumericoLigado;
-	this.superClass( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", Pessoa, 13, "#.###.###.###.##z", true,"", "");
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", Pessoa, 11, "(##) #.####.####", true);
 }
 
-var Pessoa_Prontuario = new Campo_arqConsulta_Pessoa_Prontuario;
+var Pessoa_NumCelular = new Campo_arqConsulta_Pessoa_NumCelular;
+
+//------------------------------------------------------------
+Campo_arqConsulta_Prontuario.prototype = new Lance_CampoCadeia;
+
+function Campo_arqConsulta_Prontuario()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "Prontuario", "Prontuario", "Prontuario", 9, "uuuuuuuuu", false);
+}
+
+var Prontuario = new Campo_arqConsulta_Prontuario;
 
 //------------------------------------------------------------
 Campo_arqConsulta_Medico.prototype = new Lance_CampoHidden;
@@ -320,6 +331,17 @@ function Campo_arqConsulta_FormaPg_FormaPg()
 }
 
 var FormaPg_FormaPg = new Campo_arqConsulta_FormaPg_FormaPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_Obs.prototype = new Lance_CampoTexto;
+
+function Campo_arqConsulta_Obs()
+{
+	this.superClass = Lance_CampoTexto;
+	this.superClass( "Obs", "Obs", "Obs", false);
+}
+
+var Obs = new Campo_arqConsulta_Obs;
 
 //-------------------------------------------------------------
 // Campo pode ser alterado?
@@ -509,12 +531,37 @@ Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqConsulta_Pessoa_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqConsulta_Pessoa_NumCelular.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Pessoa.Obrigatorio( p_comMsg ) );
 }
 
-Pessoa_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+Pessoa_NumCelular.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_Prontuario.prototype.Calculou = function()
+{
+{
+{
+	if( !Pessoa.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( " + Pessoa + " )  )" + LANCE_SEPARADOR + this.Prefixo + "Prontuario" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_Prontuario.prototype.Cabecalho = function()
+{
+		return( "Prontuário" );
+}
+
+Prontuario.EhCalculado = true;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -619,7 +666,7 @@ Campo_arqConsulta_Clinica.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_Pessoa.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_Prontuario.Obrigatorio( false ) || tem(Pessoa_Prontuario) ) );
+	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_NumCelular.Obrigatorio( false ) || tem(Pessoa_NumCelular) ) );
 }
 
 //-------------------------------------------------------------
@@ -648,20 +695,21 @@ Campo_arqConsulta_FormaPg.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_arqConsulta()
 {
+Pessoa.CalculosDependentes= [ Prontuario ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
-Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
+Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
 Medico_Usuario.ExistenciasDependentes= [ Medico ];
 Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
 FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 TiAgenda_TiAgenda.ErrosDependentes= [ TiAgenda ];
-Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
+Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
 Assessor_Usuario.ErrosDependentes= [ Assessor ];
 FormaPg_FormaPg.ErrosDependentes= [ FormaPg ];
 Clinica.CamposChave= [ Clinica_Clinica ];
-Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
+Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 Medico.CamposChave= [ Medico_Usuario ];
 Assessor.CamposChave= [ Assessor_Usuario ];
 FormaPg.CamposChave= [ FormaPg_FormaPg ];
@@ -682,7 +730,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, TPrograma, TPrograma_Chave, TPrograma_Descritor, Conduta, Medicacao, FormaPg, FormaPg_FormaPg ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, TPrograma, TPrograma_Chave, TPrograma_Descritor, Conduta, Medicacao, FormaPg, FormaPg_FormaPg, Obs ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

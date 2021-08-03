@@ -26,12 +26,23 @@ function Campo_arqPessoa_Apelido()
 var Apelido = new Campo_arqPessoa_Apelido;
 
 //------------------------------------------------------------
-Campo_arqPessoa_Prontuario.prototype = new Lance_CampoNumerico;
+Campo_arqPessoa_NumCelular.prototype = new Lance_CampoCadeia;
+
+function Campo_arqPessoa_NumCelular()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "NumCelular", "NumCelular", "NumCelular", 11, "(##) #.####.####", true);
+}
+
+var NumCelular = new Campo_arqPessoa_NumCelular;
+
+//------------------------------------------------------------
+Campo_arqPessoa_Prontuario.prototype = new Lance_CampoCadeia;
 
 function Campo_arqPessoa_Prontuario()
 {
-	this.superClass = Lance_CampoNumerico;
-	this.superClass( "Prontuario", "Prontuario", "Prontuario", 13, "#.###.###.###.##z", true,"", "");
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "Prontuario", "Prontuario", "Prontuario", 9, "uuuuuuuuu", false);
 }
 
 var Prontuario = new Campo_arqPessoa_Prontuario;
@@ -254,7 +265,7 @@ Campo_arqPessoa_QtoDesmar.prototype = new Lance_CampoNumerico;
 function Campo_arqPessoa_QtoDesmar()
 {
 	this.superClass = Lance_CampoNumerico;
-	this.superClass( "QtoDesmar", "QtoDesmar", "QtoDesmar", 2, "#z", false,"", "");
+	this.superClass( "QtoDesmar", "QtoDesmar", "QtoDesmar", 2, "#z", false,"", "F");
 }
 
 var QtoDesmar = new Campo_arqPessoa_QtoDesmar;
@@ -317,15 +328,25 @@ Campo_arqPessoa_Apelido.prototype.TemAdvertencia = function()
 }
 
 //-------------------------------------------------------------
-// Campo pode ser alterado?
+// Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
-Campo_arqPessoa_Prontuario.prototype.PodeAlterar = function()
+Campo_arqPessoa_NumCelular.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( GrupoAtualEm() )
+	{
+		if( p_comMsg ) alert( "O celular com o DDD é obrigatório" );
 		return( true );
-	return( false );
+	}
 }
 
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqPessoa_NumCelular.prototype.Cabecalho = function()
+{
+		return( "Celular" );
+}
+
+NumCelular.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -334,7 +355,6 @@ Campo_arqPessoa_Prontuario.prototype.Cabecalho = function()
 		return( "Prontuário" );
 }
 
-Prontuario.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
@@ -552,7 +572,7 @@ function ListaDeCampos_arqPessoa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Nome, Apelido, Prontuario ], 
+		[ Nome, Apelido, NumCelular, Prontuario ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
 		[ Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar, Midia, Midia_Midia ]	);
 	IniciarDependencias_arqPessoa();
@@ -564,12 +584,11 @@ g_arquivoCampos = ListaDeCampos_arqPessoa( '' );
 g_idOperacao = 7;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,18,[],[39]);
-var Menu_2 = new Array( 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,18,[],[33]);
-var Menu_3 = new Array( 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 18,[],[12,13] );
+var Menu_1 = new Array( 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,9,[],[39]);
+var Menu_2 = new Array( 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,9,[],[33]);
+var Menu_3 = new Array( 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 9,[],[12,13] );
 var Menu_3_1 = new Array( 1,"Programado","","P",26,"","",1,"","1","a_logema","arqLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[12]);
 var Menu_3_2 = new Array( 1,"Recebeu","","R",25,"","",1,"","1","a_itloge","arqItLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[13]);
-var Menu_4 = new Array( 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,18,[],[21]);
-var Menu_5 = new Array( 1,"Alterar Prontuário","","u",138,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_pessoa_prontuario^^^^^^^^^^^^^^^^^^", "", 0,18,[138],[]);
-parent.navegacao.MenuPrincQtdOpcoes=5;
+var Menu_4 = new Array( 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,9,[],[21]);
+parent.navegacao.MenuPrincQtdOpcoes=4;
 }

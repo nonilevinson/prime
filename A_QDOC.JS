@@ -47,15 +47,15 @@ function Campo_parQDoc_Pessoa_Nome()
 var Pessoa_Nome = new Campo_parQDoc_Pessoa_Nome;
 
 //------------------------------------------------------------
-Campo_parQDoc_Pessoa_Prontuario.prototype = new Lance_CampoNumericoLigado;
+Campo_parQDoc_Pessoa_NumCelular.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_parQDoc_Pessoa_Prontuario()
+function Campo_parQDoc_Pessoa_NumCelular()
 {
-	this.superClass = Lance_CampoNumericoLigado;
-	this.superClass( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", Pessoa, 13, "#.###.###.###.##z", true,"", "");
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", Pessoa, 11, "(##) #.####.####", true);
 }
 
-var Pessoa_Prontuario = new Campo_parQDoc_Pessoa_Prontuario;
+var Pessoa_NumCelular = new Campo_parQDoc_Pessoa_NumCelular;
 
 //------------------------------------------------------------
 Campo_parQDoc_Cad1.prototype = new Lance_CampoCadeia;
@@ -177,12 +177,12 @@ Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_parQDoc_Pessoa_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_parQDoc_Pessoa_NumCelular.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Pessoa.Obrigatorio( p_comMsg ) );
 }
 
-Pessoa_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+Pessoa_NumCelular.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -206,18 +206,18 @@ Campo_parQDoc_DocMod.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_parQDoc_Pessoa.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_Prontuario.Obrigatorio( false ) || tem(Pessoa_Prontuario) ) );
+	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_NumCelular.Obrigatorio( false ) || tem(Pessoa_NumCelular) ) );
 }
 
 function IniciarDependencias_parQDoc()
 {
 DocMod_Documento.ExistenciasDependentes= [ DocMod ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
-Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
+Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
 DocMod_Documento.ErrosDependentes= [ DocMod ];
-Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
+Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
 DocMod.CamposChave= [ DocMod_Documento ];
-Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
+Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 }
 
 
@@ -235,7 +235,7 @@ function ListaDeCampos_parQDoc( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ DocMod, DocMod_Documento, Pessoa, Pessoa_Nome, Pessoa_Prontuario, Cad1, Cad2, Cad3, Cad4, Cad5, Txt1, Txt2, Salvar ]	);
+		[ DocMod, DocMod_Documento, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Cad1, Cad2, Cad3, Cad4, Cad5, Txt1, Txt2, Salvar ]	);
 	IniciarDependencias_parQDoc();
 	g_prefixo = l_prefixo;
 	return( l_lista );

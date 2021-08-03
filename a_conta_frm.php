@@ -26,7 +26,7 @@ echo
    $this->Pedir( "Fornecedor" ),
    $this->Pedir( "Paciente", Pessoa_Nome ),
    $this->Pedir( " ",
-      [ "Prontuário ", Pessoa_Prontuario,
+      [ "Celular ", Pessoa_NumCelular,
       [ "", Pessoa ] ] ),
    $this->Pedir( "Emissão",
       [ "", Emissao,

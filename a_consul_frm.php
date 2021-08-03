@@ -21,7 +21,7 @@ echo
          [ '', Num,
          [ brHtml(4) . "Data ", Data,
          [ brHtml(4) . "Hora ", Hora,
-         [ " h " . brHtml(2) . "Chegada ", HoraChega, " h",'','','','FormCalculado' ] ] ], '', '','', 'FormCalculado' ] );
+         [ " h" . brHtml(3) . "Chegada ", HoraChega, " h",'','','','FormCalculado' ] ] ], '', '','', 'FormCalculado' ] );
 
    echo
 	$this->Pedir( "Status",
@@ -30,17 +30,24 @@ echo
 	$this->Pedir( "Clínica", Clinica ),
    $this->Pedir( "Paciente", Pessoa_Nome ),
    $this->Pedir( " ",
-      [ "Prontuário ", Pessoa_Prontuario,
-      [ "", Pessoa ] ] ),
+      [ "Celular ", Pessoa_NumCelular,
+      [ "", Pessoa,
+		[ brHtml(4) . "Prontuário ", Prontuario ] ] ] ),
    $this->Pedir( "Médico", Medico ),
    $this->Pedir( "Assessor" ),
 	$this->Pedir( "Forma de pagamento", FormaPg ),
 "</table>",
 
 CriarForms(
+	[ 'Observações', 'O', true ],
 	[ 'Atual', 'A', true ],
 	[ 'Conduta', 'C', true ],
 	[ 'Medicação', 'M', true ] ),
+
+"<table id='O' class='tabFormulario' style='display:none'>",
+	$this->Cabecalhos( [ "Observações", 'FormCab alinhaMeio', '2' ] ),
+	$this->Pedir( "", [ "", Obs, '', 'FormValor alinhaMeio', '2' ] ),
+"</table>",
 
 "<table id='A' class='tabFormulario' style='display:none'>",
 	$this->Pedir( "Motivo", TMotivo ),

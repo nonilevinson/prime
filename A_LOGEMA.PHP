@@ -401,21 +401,21 @@ class campo_arqLogEmail_Cliente_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Cliente_Prontuario
+//	Campo Cliente_NumCelular
 //======================================================
 
-class campo_arqLogEmail_Cliente_Prontuario extends Lance_CampoNumerico
+class campo_arqLogEmail_Cliente_NumCelular extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Cliente_Prontuario", "Cliente_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Cliente", false );
+		parent::__construct( "Cliente_NumCelular", "Cliente_NumCelular", "NumCelular", 11, "(##) #.####.####", EH_CHAVE, "Cliente", false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Prontuário" );
+			return( "Celular" );
 	}
 
 }
@@ -451,7 +451,7 @@ function listaCampos_arqLogEmail( $p_prefixo )
 			new campo_arqLogEmail_Opcao(),
 			new campo_arqLogEmail_Cliente(),
 			new campo_arqLogEmail_Cliente_Nome(),
-			new campo_arqLogEmail_Cliente_Prontuario() )
+			new campo_arqLogEmail_Cliente_NumCelular() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -541,7 +541,7 @@ class arqLogEmail extends Lance_Arquivo
 			array_push( $vetAux, array( Enviou ) );
 			array_push( $vetAux, array( Opcao ) );
 			array_push( $vetAux, array( Cliente_Nome ) );
-			array_push( $vetAux, array( Cliente_Prontuario ) );
+			array_push( $vetAux, array( Cliente_NumCelular ) );
 		return( $vetAux );
 	}
 

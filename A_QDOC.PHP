@@ -73,21 +73,21 @@ class campo_parQDoc_Pessoa_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Pessoa_Prontuario
+//	Campo Pessoa_NumCelular
 //======================================================
 
-class campo_parQDoc_Pessoa_Prontuario extends Lance_CampoNumerico
+class campo_parQDoc_Pessoa_NumCelular extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Pessoa", false );
+		parent::__construct( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", 11, "(##) #.####.####", EH_CHAVE, "Pessoa", false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Prontuário" );
+			return( "Celular" );
 	}
 
 }
@@ -211,7 +211,7 @@ function listaCampos_parQDoc( $p_prefixo )
 			new campo_parQDoc_DocMod_Documento(),
 			new campo_parQDoc_Pessoa(),
 			new campo_parQDoc_Pessoa_Nome(),
-			new campo_parQDoc_Pessoa_Prontuario(),
+			new campo_parQDoc_Pessoa_NumCelular(),
 			new campo_parQDoc_Cad1(),
 			new campo_parQDoc_Cad2(),
 			new campo_parQDoc_Cad3(),

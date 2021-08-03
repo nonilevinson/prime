@@ -102,6 +102,17 @@ function Campo_arqUsuario_CRM()
 var CRM = new Campo_arqUsuario_CRM;
 
 //------------------------------------------------------------
+Campo_arqUsuario_PodeAgenda.prototype = new Lance_CampoLogico;
+
+function Campo_arqUsuario_PodeAgenda()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "PodeAgenda", "PodeAgenda", "PodeAgenda");
+}
+
+var PodeAgenda = new Campo_arqUsuario_PodeAgenda;
+
+//------------------------------------------------------------
 Campo_arqUsuario_Ativo.prototype = new Lance_CampoLogico;
 
 function Campo_arqUsuario_Ativo()
@@ -283,6 +294,24 @@ Campo_arqUsuario_CRM.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
+Campo_arqUsuario_PodeAgenda.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqUsuario_PodeAgenda.prototype.Cabecalho = function()
+{
+		return( "Acessa Portal<br>Agenda?" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
 Campo_arqUsuario_Ativo.prototype.Sugeriu = function()
 {
 {
@@ -391,7 +420,7 @@ function ListaDeCampos_arqUsuario( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Nome, Senha, Grupo, Grupo_Grupo, Versao, Email, Medico, CRM, Ativo, Nascimento, Foto, EmailAces, EmailAcesS ]	);
+		[ Usuario, Nome, Senha, Grupo, Grupo_Grupo, Versao, Email, Medico, CRM, PodeAgenda, Ativo, Nascimento, Foto, EmailAces, EmailAcesS ]	);
 	IniciarDependencias_arqUsuario();
 	g_prefixo = l_prefixo;
 	return( l_lista );

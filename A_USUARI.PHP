@@ -152,6 +152,35 @@ class campo_arqUsuario_CRM extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo PodeAgenda
+//======================================================
+
+class campo_arqUsuario_PodeAgenda extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "PodeAgenda", "PodeAgenda", "PodeAgenda", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->PODEAGENDA == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Acessa Portal<br>Agenda?" );
+	}
+
+}
+
+//======================================================
 //	Campo Ativo
 //======================================================
 
@@ -252,6 +281,7 @@ function listaCampos_arqUsuario( $p_prefixo )
 			new campo_arqUsuario_Email(),
 			new campo_arqUsuario_Medico(),
 			new campo_arqUsuario_CRM(),
+			new campo_arqUsuario_PodeAgenda(),
 			new campo_arqUsuario_Ativo(),
 			new campo_arqUsuario_Nascimento(),
 			new campo_arqUsuario_Foto(),
@@ -296,6 +326,7 @@ class arqUsuario extends Lance_Arquivo
 			array_push( $vetAux, array( Grupo_Grupo ) );
 			array_push( $vetAux, array( Email ) );
 			array_push( $vetAux, array( Medico ) );
+			array_push( $vetAux, array( PodeAgenda ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
@@ -322,6 +353,7 @@ class arqUsuario extends Lance_Arquivo
 			array_push( $vetAux, array( Email ) );
 			array_push( $vetAux, array( Medico ) );
 			array_push( $vetAux, array( CRM ) );
+			array_push( $vetAux, array( PodeAgenda ) );
 			array_push( $vetAux, array( Ativo ) );
 			array_push( $vetAux, array( Nascimento ) );
 			array_push( $vetAux, array( Foto ) );

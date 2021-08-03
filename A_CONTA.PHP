@@ -155,21 +155,21 @@ class campo_arqConta_Pessoa_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Pessoa_Prontuario
+//	Campo Pessoa_NumCelular
 //======================================================
 
-class campo_arqConta_Pessoa_Prontuario extends Lance_CampoNumerico
+class campo_arqConta_Pessoa_NumCelular extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Pessoa", false );
+		parent::__construct( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", 11, "(##) #.####.####", EH_CHAVE, "Pessoa", false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Prontuário" );
+			return( "Celular" );
 	}
 
 }
@@ -478,7 +478,7 @@ function listaCampos_arqConta( $p_prefixo )
 			new campo_arqConta_Fornecedor_Nome(),
 			new campo_arqConta_Pessoa(),
 			new campo_arqConta_Pessoa_Nome(),
-			new campo_arqConta_Pessoa_Prontuario(),
+			new campo_arqConta_Pessoa_NumCelular(),
 			new campo_arqConta_Nome(),
 			new campo_arqConta_TrgValor(),
 			new campo_arqConta_TrgValLiq(),
@@ -560,7 +560,7 @@ class arqConta extends Lance_Arquivo
 			array_push( $vetAux, array( TPgRec_Descritor ) );
 			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_Prontuario ) );
+			array_push( $vetAux, array( Pessoa_NumCelular ) );
 			array_push( $vetAux, array( TrgValor ) );
 			array_push( $vetAux, array( TrgValLiq ) );
 			array_push( $vetAux, array( TrgQtdParc ) );

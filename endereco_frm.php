@@ -5,12 +5,12 @@
 //----------------------------------------------------------------------------------
 function btnWhatsApp()
 {
-	global $g_debugProcesso, $g_regAtual;
+	global $g_debugProcesso, $g_regAtual, $g_ehPaciente;
 	$teste = false;
 
-	$select = "Select P.Ende_DDDCelular || P.Ende_Celular as Celular
-		From arqPessoa P
-		Where P.idPrimario = " . $g_regAtual->IDPRIMARIO;
+	$select = "Select F.Ende_DDDCelular || F.Ende_Celular as Celular
+		From arqFornecedor F
+		Where F.idPrimario = " . $g_regAtual->IDPRIMARIO;
 	$celular = tiraBrEsq( tiraBr( sql_lerUmRegistro( $select )->CELULAR ) );
 	$whatsapp = str_replace( [ "(", ")", ".", "-", " " ], "", $celular );
 
@@ -34,7 +34,9 @@ function btnWhatsApp()
 
 function frmEndereco( $p_inicial, $p_prefixo )
 {
-	global $g_debugProcesso, $g_arquivoAtual, $g_prefixo;
+	global $g_debugProcesso, $g_arquivoAtual, $g_prefixo, $g_ehPaciente;
+	$g_ehPaciente = $g_arquivoAtual->nomeArquivo == 'arqPessoa' ? true : false;
+// if( $g_debugProcesso ) echo '<br><b>GR0 ARQUIVOATAUL=</b> '.$g_arquivoAtual->nomeArquivo.' <b>g_ehPaciente?</b> '.simNao($g_ehPaciente);
 
 	echo javaScriptSrc( LANCE_JS . 'lance_ajax.js' );
 
@@ -62,10 +64,13 @@ function frmEndereco( $p_inicial, $p_prefixo )
 		$g_arquivoAtual->Pedir( "Telefones",
 			[ "", "DDD",
 			[ brHtml(2), Telefone ] ] ) .
-		$g_arquivoAtual->Pedir( "Celular",
-			[ "", DDDCelular,
-			[ brHtml(2), Celular,
-			[ brHtml(4) . "WhatsApp? ", WhatsApp, btnWhatsApp() ] ] ] );
+
+		( $g_ehPaciente
+			? $g_arquivoAtual->NaoPedirVarios( Celular, WhatsApp )
+			: $g_arquivoAtual->Pedir( "Celular",
+				[ "", DDDCelular,
+				[ brHtml(2), Celular,
+				[ brHtml(4) . "WhatsApp? ", WhatsApp, btnWhatsApp() ] ] ] ) );
 
 // echo '<br>tela= '.$tela;
 	$g_prefixo = $prefixo;

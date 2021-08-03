@@ -2,15 +2,47 @@
 
 include( 'endereco_frm.php' );
 
+//----------------------------------------------------------------------------------
+function btnWhats() //* mudei o nome porque ele também existe em endereco_frm
+{
+	global $g_debugProcesso, $g_regAtual, $g_ehPaciente;
+	$teste = false;
+
+	$select = "Select P.NumCelular as Celular
+		From arqPessoa P
+		Where P.idPrimario = " . $g_regAtual->IDPRIMARIO;
+	$celular = tiraBrEsq( tiraBr( sql_lerUmRegistro( $select )->CELULAR ) );
+	$whatsapp = str_replace( [ "(", ")", ".", "-", " " ], "", $celular );
+
+	if( $teste && $g_debugProcesso )
+	{
+		echo '<br><b>GR0 arqPessoa S=</b> '.$select.'<br><b>celular= </b>'.$celular.
+			' <b>WhatsApp=</b> '.$whatsapp.' <b>len</b> '.strlen($whatsapp);
+	}
+
+	$botao =  "<img src='https://www.swsm.com.br/whatsapp.png' alt='WhatsApp' width='15px' border='0'>";
+
+	if( strlen( $whatsapp ) == 11 )
+	{
+		$botao = "<a href='https://wa.me/55" . $whatsapp .
+			"' target='_blank'><button type='button' style='vertical-align:middle'>" . $botao . "</button></a>";
+	}
+
+	return( [ brHtml(2) . $botao ] );
+}
+//----------------------------------------------------------------------------------
+
 echo
 "<table class='tabFormulario'>",
 	$this->Pedir( "Nome" ),
 	$this->Pedir( "Apelido",
 		[ "", Apelido, brHtml(1) . "(será usado em emails para evitar SPAM. <b>Não use caixa alta</b> em todo o apelido)" ] ),
+	$this->Pedir( "Celular",
+		[ "", NumCelular, btnWhats() ] ),
 	$this->Pedir( "Ativo?",
 		[ "", Ativo,
 		[ brHtml(4) . "Desde ", Desde,
-		[ brHtml(4) . "Prontuário ", Prontuario, '','','','','FormCalculado' ] ] ] ),
+		[ brHtml(4) . "Prontuário ", Prontuario ] ] ] ),
 "</table>",
 
 CriarForms(

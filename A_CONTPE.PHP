@@ -73,21 +73,21 @@ class campo_arqContPessoa_Pessoa_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Pessoa_Prontuario
+//	Campo Pessoa_NumCelular
 //======================================================
 
-class campo_arqContPessoa_Pessoa_Prontuario extends Lance_CampoNumerico
+class campo_arqContPessoa_Pessoa_NumCelular extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Pessoa", false );
+		parent::__construct( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", 11, "(##) #.####.####", EH_CHAVE, "Pessoa", false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Prontuário" );
+			return( "Celular" );
 	}
 
 }
@@ -273,7 +273,7 @@ function listaCampos_arqContPessoa( $p_prefixo )
 			new campo_arqContPessoa_Fornecedor_Nome(),
 			new campo_arqContPessoa_Pessoa(),
 			new campo_arqContPessoa_Pessoa_Nome(),
-			new campo_arqContPessoa_Pessoa_Prontuario(),
+			new campo_arqContPessoa_Pessoa_NumCelular(),
 			new campo_arqContPessoa_Nome(),
 			new campo_arqContPessoa_Apelido(),
 			new campo_arqContPessoa_Funcao(),
@@ -327,7 +327,7 @@ class arqContPessoa extends Lance_Arquivo
 		if( ultimaLigOpcaoEm( 75 ) )
  {
 			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_Prontuario ) );
+			array_push( $vetAux, array( Pessoa_NumCelular ) );
  }
 			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( Funcao ) );
@@ -347,7 +347,7 @@ class arqContPessoa extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_Prontuario ) );
+			array_push( $vetAux, array( Pessoa_NumCelular ) );
 			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( Apelido ) );
 			array_push( $vetAux, array( Funcao ) );

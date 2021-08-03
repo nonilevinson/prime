@@ -113,15 +113,15 @@ function Campo_arqConta_Pessoa_Nome()
 var Pessoa_Nome = new Campo_arqConta_Pessoa_Nome;
 
 //------------------------------------------------------------
-Campo_arqConta_Pessoa_Prontuario.prototype = new Lance_CampoNumericoLigado;
+Campo_arqConta_Pessoa_NumCelular.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqConta_Pessoa_Prontuario()
+function Campo_arqConta_Pessoa_NumCelular()
 {
-	this.superClass = Lance_CampoNumericoLigado;
-	this.superClass( "Pessoa_Prontuario", "Pessoa_Prontuario", "Prontuario", Pessoa, 13, "#.###.###.###.##z", true,"", "");
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", Pessoa, 11, "(##) #.####.####", true);
 }
 
-var Pessoa_Prontuario = new Campo_arqConta_Pessoa_Prontuario;
+var Pessoa_NumCelular = new Campo_arqConta_Pessoa_NumCelular;
 
 //------------------------------------------------------------
 Campo_arqConta_Nome.prototype = new Lance_CampoCadeia;
@@ -402,7 +402,7 @@ Campo_arqConta_Pessoa_Nome.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
-Campo_arqConta_Pessoa_Prontuario.prototype.Existencia = function()
+Campo_arqConta_Pessoa_NumCelular.prototype.Existencia = function()
 {
 	return( !tem( Fornecedor_Nome ) );
 }
@@ -419,12 +419,12 @@ Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqConta_Pessoa_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqConta_Pessoa_NumCelular.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Pessoa.Obrigatorio( p_comMsg ) );
 }
 
-Pessoa_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+Pessoa_NumCelular.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
@@ -575,7 +575,7 @@ Campo_arqConta_Fornecedor.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqConta_Pessoa.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_Prontuario.Obrigatorio( false ) || tem(Pessoa_Prontuario) ) );
+	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_NumCelular.Obrigatorio( false ) || tem(Pessoa_NumCelular) ) );
 }
 
 function IniciarDependencias_arqConta()
@@ -586,16 +586,16 @@ TrgValLiq.CalculosDependentes= [ Saldo ];
 TrgPago.CalculosDependentes= [ Saldo ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Fornecedor_Nome.ExistenciasDependentes= [ Fornecedor ];
-Fornecedor.ExistenciasDependentes= [ Pessoa,Pessoa_Nome,Pessoa_Prontuario ];
+Fornecedor.ExistenciasDependentes= [ Pessoa,Pessoa_Nome,Pessoa_NumCelular ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
-Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
+Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
 Fornecedor.ErrosDependentes= [ Pessoa ];
-Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
+Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Fornecedor.CamposChave= [ Fornecedor_Nome ];
-Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
+Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 }
 
 
@@ -613,7 +613,7 @@ function ListaDeCampos_arqConta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Transacao, Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_Prontuario, Nome, TrgValor, TrgValLiq, TrgQtdParc, TrgQParcPg, ProxVenc, TrgPago, Saldo, Documento, Emissao, RecEnvia, Compete, Historico, Arq1 ]	);
+		[ Transacao, Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Nome, TrgValor, TrgValLiq, TrgQtdParc, TrgQParcPg, ProxVenc, TrgPago, Saldo, Documento, Emissao, RecEnvia, Compete, Historico, Arq1 ]	);
 	IniciarDependencias_arqConta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -150,21 +150,21 @@ class campo_arqItLogEmail_Cliente_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Cliente_Prontuario
+//	Campo Cliente_NumCelular
 //======================================================
 
-class campo_arqItLogEmail_Cliente_Prontuario extends Lance_CampoNumerico
+class campo_arqItLogEmail_Cliente_NumCelular extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Cliente_Prontuario", "Cliente_Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, "Cliente", false );
+		parent::__construct( "Cliente_NumCelular", "Cliente_NumCelular", "NumCelular", 11, "(##) #.####.####", EH_CHAVE, "Cliente", false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Prontuário" );
+			return( "Celular" );
 	}
 
 }
@@ -290,7 +290,7 @@ function listaCampos_arqItLogEmail( $p_prefixo )
 			new campo_arqItLogEmail_LogEmail_Hora(),
 			new campo_arqItLogEmail_Cliente(),
 			new campo_arqItLogEmail_Cliente_Nome(),
-			new campo_arqItLogEmail_Cliente_Prontuario(),
+			new campo_arqItLogEmail_Cliente_NumCelular(),
 			new campo_arqItLogEmail_Email(),
 			new campo_arqItLogEmail_Enviado(),
 			new campo_arqItLogEmail_Lido(),
@@ -335,7 +335,7 @@ class arqItLogEmail extends Lance_Arquivo
 			array_push( $vetAux, array( LogEmail_Data ) );
 			array_push( $vetAux, array( LogEmail_Hora ) );
 			array_push( $vetAux, array( Cliente_Nome ) );
-			array_push( $vetAux, array( Cliente_Prontuario ) );
+			array_push( $vetAux, array( Cliente_NumCelular ) );
 			array_push( $vetAux, array( Email ) );
 			array_push( $vetAux, array( Enviado ) );
 			array_push( $vetAux, array( Lido ) );
@@ -367,7 +367,7 @@ class arqItLogEmail extends Lance_Arquivo
 			array_push( $vetAux, array( LogEmail_Data ) );
 			array_push( $vetAux, array( LogEmail_Hora ) );
 			array_push( $vetAux, array( Cliente_Nome ) );
-			array_push( $vetAux, array( Cliente_Prontuario ) );
+			array_push( $vetAux, array( Cliente_NumCelular ) );
 			array_push( $vetAux, array( Email ) );
 			array_push( $vetAux, array( Enviado ) );
 			array_push( $vetAux, array( Lido ) );

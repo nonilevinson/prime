@@ -91,15 +91,15 @@ function Campo_arqItLogEmail_Cliente_Nome()
 var Cliente_Nome = new Campo_arqItLogEmail_Cliente_Nome;
 
 //------------------------------------------------------------
-Campo_arqItLogEmail_Cliente_Prontuario.prototype = new Lance_CampoNumericoLigado;
+Campo_arqItLogEmail_Cliente_NumCelular.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqItLogEmail_Cliente_Prontuario()
+function Campo_arqItLogEmail_Cliente_NumCelular()
 {
-	this.superClass = Lance_CampoNumericoLigado;
-	this.superClass( "Cliente_Prontuario", "Cliente_Prontuario", "Prontuario", Cliente, 13, "#.###.###.###.##z", true,"", "");
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Cliente_NumCelular", "Cliente_NumCelular", "NumCelular", Cliente, 11, "(##) #.####.####", true);
 }
 
-var Cliente_Prontuario = new Campo_arqItLogEmail_Cliente_Prontuario;
+var Cliente_NumCelular = new Campo_arqItLogEmail_Cliente_NumCelular;
 
 //------------------------------------------------------------
 Campo_arqItLogEmail_Email.prototype = new Lance_CampoCadeia;
@@ -221,12 +221,12 @@ Cliente_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqItLogEmail_Cliente_Prontuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqItLogEmail_Cliente_NumCelular.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Cliente.Obrigatorio( p_comMsg ) );
 }
 
-Cliente_Prontuario.TipoCampo |= CAMPO_CHAVE_PAI;
+Cliente_NumCelular.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -283,7 +283,7 @@ Campo_arqItLogEmail_LogEmail_Titulo.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqItLogEmail_Cliente.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) && ( !Cliente_Prontuario.Obrigatorio( false ) || tem(Cliente_Prontuario) ) );
+	return( ( !Cliente_Nome.Obrigatorio( false ) || tem(Cliente_Nome) ) && ( !Cliente_NumCelular.Obrigatorio( false ) || tem(Cliente_NumCelular) ) );
 }
 
 function IniciarDependencias_arqItLogEmail()
@@ -294,13 +294,13 @@ LogEmail_Titulo_Versao.ExistenciasDependentes= [ LogEmail_Titulo ];
 LogEmail_Data.ExistenciasDependentes= [ LogEmail ];
 LogEmail_Hora.ExistenciasDependentes= [ LogEmail ];
 Cliente_Nome.ExistenciasDependentes= [ Cliente ];
-Cliente_Prontuario.ExistenciasDependentes= [ Cliente ];
+Cliente_NumCelular.ExistenciasDependentes= [ Cliente ];
 LogEmail_Titulo_Versao.ErrosDependentes= [ LogEmail_Titulo ];
 LogEmail_Hora.ErrosDependentes= [ LogEmail ];
-Cliente_Prontuario.ErrosDependentes= [ Cliente ];
+Cliente_NumCelular.ErrosDependentes= [ Cliente ];
 LogEmail.CamposChave= [ LogEmail_Titulo,LogEmail_Data,LogEmail_Hora ];
 LogEmail_Titulo.CamposChave= [ LogEmail_Titulo_Titulo,LogEmail_Titulo_Versao ];
-Cliente.CamposChave= [ Cliente_Nome,Cliente_Prontuario ];
+Cliente.CamposChave= [ Cliente_Nome,Cliente_NumCelular ];
 }
 	//=========================================================================
 	function AcionaTecla( p_tecla )
@@ -329,7 +329,7 @@ function ListaDeCampos_arqItLogEmail( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ LogEmail, LogEmail_Titulo, LogEmail_Titulo_Titulo, LogEmail_Titulo_Versao, LogEmail_Data, LogEmail_Hora, Cliente, Cliente_Nome, Cliente_Prontuario, Email, Enviado, Lido, LinkEmp, LinkKm ]	);
+		[ LogEmail, LogEmail_Titulo, LogEmail_Titulo_Titulo, LogEmail_Titulo_Versao, LogEmail_Data, LogEmail_Hora, Cliente, Cliente_Nome, Cliente_NumCelular, Email, Enviado, Lido, LinkEmp, LinkKm ]	);
 	IniciarDependencias_arqItLogEmail();
 	g_prefixo = l_prefixo;
 	return( l_lista );

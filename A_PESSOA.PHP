@@ -48,14 +48,34 @@ class campo_arqPessoa_Apelido extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Prontuario
+//	Campo NumCelular
 //======================================================
 
-class campo_arqPessoa_Prontuario extends Lance_CampoNumerico
+class campo_arqPessoa_NumCelular extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Prontuario", "Prontuario", "Prontuario", 13, "#.###.###.###.##z", "", "", EH_CHAVE, 0, false );
+		parent::__construct( "NumCelular", "NumCelular", "NumCelular", 11, "(##) #.####.####", EH_CHAVE, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Celular" );
+	}
+
+}
+
+//======================================================
+//	Campo Prontuario
+//======================================================
+
+class campo_arqPessoa_Prontuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Prontuario", "Prontuario", "Prontuario", 9, "xxxxxxxxx", 0, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -293,7 +313,7 @@ class campo_arqPessoa_QtoDesmar extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "QtoDesmar", "QtoDesmar", "QtoDesmar", 2, "#z", "", "", 0, 0, false );
+		parent::__construct( "QtoDesmar", "QtoDesmar", "QtoDesmar", 2, "#z", "", "F", 0, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -360,6 +380,7 @@ function listaCampos_arqPessoa( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqPessoa_Nome(),
 			new campo_arqPessoa_Apelido(),
+			new campo_arqPessoa_NumCelular(),
 			new campo_arqPessoa_Prontuario() ),
 		listaCampos_domEndereco( "Ende_" ),
 		array( 
@@ -408,7 +429,7 @@ class arqPessoa extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Nome, Prontuario) );
+		return( array( Nome, NumCelular) );
 	}
 
 	//-------------------------------------------------------------
@@ -419,6 +440,7 @@ class arqPessoa extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Nome ) );
+			array_push( $vetAux, array( NumCelular ) );
 		if( ultimaLigOpcaoEm( 15,135 ) )
  {
 			array_push( $vetAux, array( Prontuario ) );
@@ -440,6 +462,7 @@ class arqPessoa extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( Apelido ) );
+			array_push( $vetAux, array( NumCelular ) );
 			array_push( $vetAux, array( Prontuario ) );
 			array_push( $vetAux, array( Ende_CEP ) );
 			array_push( $vetAux, array( Ende_Endereco ) );
