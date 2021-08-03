@@ -69,6 +69,28 @@ function Campo_arqConsulta_TStCon_Descritor()
 var TStCon_Descritor = new Campo_arqConsulta_TStCon_Descritor;
 
 //------------------------------------------------------------
+Campo_arqConsulta_TiAgenda.prototype = new Lance_CampoLigado;
+
+function Campo_arqConsulta_TiAgenda()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TiAgenda", "TiAgenda", "TiAgenda", "arqTiAgenda", "a_tiagen", null, "",43);
+}
+
+var TiAgenda = new Campo_arqConsulta_TiAgenda;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TiAgenda_TiAgenda.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_TiAgenda_TiAgenda()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TiAgenda_TiAgenda", "TiAgenda_TiAgenda", "TiAgenda", TiAgenda, 20, "uxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var TiAgenda_TiAgenda = new Campo_arqConsulta_TiAgenda_TiAgenda;
+
+//------------------------------------------------------------
 Campo_arqConsulta_Data.prototype = new Lance_CampoData;
 
 function Campo_arqConsulta_Data()
@@ -155,28 +177,6 @@ function Campo_arqConsulta_Medico_Usuario()
 }
 
 var Medico_Usuario = new Campo_arqConsulta_Medico_Usuario;
-
-//------------------------------------------------------------
-Campo_arqConsulta_Mkt.prototype = new Lance_CampoHidden;
-
-function Campo_arqConsulta_Mkt()
-{
-	this.superClass = Lance_CampoHidden;
-	this.superClass( "Mkt", "Mkt", "Mkt", "arqUsuario", "a_usuari", null, "",5);
-}
-
-var Mkt = new Campo_arqConsulta_Mkt;
-
-//------------------------------------------------------------
-Campo_arqConsulta_Mkt_Usuario.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqConsulta_Mkt_Usuario()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Mkt_Usuario", "Mkt_Usuario", "Usuario", Mkt, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
-}
-
-var Mkt_Usuario = new Campo_arqConsulta_Mkt_Usuario;
 
 //------------------------------------------------------------
 Campo_arqConsulta_Assessor.prototype = new Lance_CampoHidden;
@@ -299,6 +299,28 @@ function Campo_arqConsulta_Medicacao()
 
 var Medicacao = new Campo_arqConsulta_Medicacao;
 
+//------------------------------------------------------------
+Campo_arqConsulta_FormaPg.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_FormaPg()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "FormaPg", "FormaPg", "FormaPg", "arqFormaPg", "a_formap", null, "",44);
+}
+
+var FormaPg = new Campo_arqConsulta_FormaPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_FormaPg_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_FormaPg_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", FormaPg, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var FormaPg_FormaPg = new Campo_arqConsulta_FormaPg_FormaPg;
+
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -379,6 +401,33 @@ Campo_arqConsulta_TStCon.prototype.Cabecalho = function()
 
 TStCon_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TStCon_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_TiAgenda.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TiAgenda.prototype.Cabecalho = function()
+{
+		return( "Tipo" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TiAgenda_TiAgenda.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( TiAgenda.Obrigatorio( p_comMsg ) );
+}
+
+TiAgenda_TiAgenda.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -496,33 +545,6 @@ Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
-Campo_arqConsulta_Mkt.prototype.FiltroPai = function()
-{
-		if( g_inserindo )
-			return( "A.Grupo is not null and A.Ativo = 1" );
-			return( "A.Grupo is not null" );
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqConsulta_Mkt.prototype.Cabecalho = function()
-{
-		return( "MKT" );
-}
-
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_Mkt_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( Mkt.Obrigatorio( p_comMsg ) );
-}
-
-Mkt_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Fitro para selecionar registros do pai
-//-------------------------------------------------------------
 Campo_arqConsulta_Assessor.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
@@ -568,6 +590,23 @@ Campo_arqConsulta_TPrograma.prototype.Cabecalho = function()
 TPrograma_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TPrograma_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_FormaPg.prototype.Cabecalho = function()
+{
+		return( "Forma Pagto" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_FormaPg_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( FormaPg.Obrigatorio( p_comMsg ) );
+}
+
+FormaPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_Clinica.prototype.ExistenciaEspecial = function()
@@ -594,17 +633,17 @@ Campo_arqConsulta_Medico.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_arqConsulta_Mkt.prototype.ExistenciaEspecial = function()
+Campo_arqConsulta_Assessor.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Mkt_Usuario.Obrigatorio( false ) || tem(Mkt_Usuario) ) );
+	return( ( !Assessor_Usuario.Obrigatorio( false ) || tem(Assessor_Usuario) ) );
 }
 
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_arqConsulta_Assessor.prototype.ExistenciaEspecial = function()
+Campo_arqConsulta_FormaPg.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Assessor_Usuario.Obrigatorio( false ) || tem(Assessor_Usuario) ) );
+	return( ( !FormaPg_FormaPg.Obrigatorio( false ) || tem(FormaPg_FormaPg) ) );
 }
 
 function IniciarDependencias_arqConsulta()
@@ -613,18 +652,19 @@ Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 Pessoa_Prontuario.ExistenciasDependentes= [ Pessoa ];
 Medico_Usuario.ExistenciasDependentes= [ Medico ];
-Mkt_Usuario.ExistenciasDependentes= [ Mkt ];
 Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
+FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
+TiAgenda_TiAgenda.ErrosDependentes= [ TiAgenda ];
 Pessoa_Prontuario.ErrosDependentes= [ Pessoa ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
-Mkt_Usuario.ErrosDependentes= [ Mkt ];
 Assessor_Usuario.ErrosDependentes= [ Assessor ];
+FormaPg_FormaPg.ErrosDependentes= [ FormaPg ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_Prontuario ];
 Medico.CamposChave= [ Medico_Usuario ];
-Mkt.CamposChave= [ Mkt_Usuario ];
 Assessor.CamposChave= [ Assessor_Usuario ];
+FormaPg.CamposChave= [ FormaPg_FormaPg ];
 }
 
 
@@ -642,7 +682,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_Prontuario, Medico, Medico_Usuario, Mkt, Mkt_Usuario, Assessor, Assessor_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, TPrograma, TPrograma_Chave, TPrograma_Descritor, Conduta, Medicacao ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, TPrograma, TPrograma_Chave, TPrograma_Descritor, Conduta, Medicacao, FormaPg, FormaPg_FormaPg ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

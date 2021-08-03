@@ -204,6 +204,14 @@ Campo_arqFornecedor_TPFPJ.prototype.Sugeriu = function()
 }
 }
 
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqFornecedor_TPFPJ.prototype.Cabecalho = function()
+{
+		return( "PF/PJ" );
+}
+
 TPFPJ_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TPFPJ_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------

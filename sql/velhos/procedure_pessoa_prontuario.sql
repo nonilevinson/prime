@@ -2,6 +2,9 @@
    PROCEDURE PESSOA_PRONTUARIO
 ************************************************/
 
+--* 03/08/2021 foi excluida porque ele pediram para ela ser alfunumérica e eles controlarem a sequencia
+
+
 SET TERM ^;
 RECREATE PROCEDURE PESSOA_PRONTUARIO
 AS

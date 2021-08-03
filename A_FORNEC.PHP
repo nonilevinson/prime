@@ -49,6 +49,13 @@ class campo_arqFornecedor_TPFPJ extends Lance_CampoLigado
 		parent::__construct( "TPFPJ", "TPFPJ", "TPFPJ", 0, "tabTPFPJ", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "PF/PJ" );
+	}
+
 }
 
 //======================================================

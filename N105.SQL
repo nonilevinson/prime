@@ -2093,6 +2093,43 @@ commit;
 
 
 /************************************************************
+	Arquivo TiAgenda  
+************************************************************/
+
+CREATE TABLE arqTiAgenda
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	TIAGENDA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqTiAgenda_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqTiAgenda_UK UNIQUE ( TiAgenda )
+);
+commit;
+
+CREATE DESC INDEX arqTiAgenda_IdPrimario_Desc ON arqTiAgenda (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo FormaPg   
+************************************************************/
+
+CREATE TABLE arqFormaPg
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	FORMAPG VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqFormaPg_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqFormaPg_UK UNIQUE ( FormaPg )
+);
+commit;
+
+CREATE DESC INDEX arqFormaPg_IdPrimario_Desc ON arqFormaPg (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	Parâmetro Config    
 ************************************************************/
 
@@ -2390,18 +2427,19 @@ CREATE TABLE arqConsulta
 	/*  2*/	NUM NUMERIC(18,0), /* Máscara = N */
 	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
 	/*  4*/	TSTCON ligadoComTabela, /* Ligado com a Tabela TStCon */
-	/*  5*/	DATA DATE, /* Máscara = 4ano */
-	/*  6*/	HORA TIME, /* Máscara = Hhmm */
-	/*  7*/	HORACHEGA TIME, /* Máscara = Hhmm */
-	/*  8*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  9*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 10*/	MKT ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  5*/	TIAGENDA ligadoComArquivo, /* Ligado com o Arquivo TiAgenda */
+	/*  6*/	DATA DATE, /* Máscara = 4ano */
+	/*  7*/	HORA TIME, /* Máscara = Hhmm */
+	/*  8*/	HORACHEGA TIME, /* Máscara = Hhmm */
+	/*  9*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/* 10*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 11*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 12*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	/* 13*/	TMOTIVO ligadoComTabela, /* Ligado com a Tabela TMotivo */
 	/* 14*/	TPROGRAMA ligadoComTabela, /* Ligado com a Tabela TPrograma */
 	/* 15*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	/* 16*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 17*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2751,16 +2789,17 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A3.NOME as PESSOA_NOME, A3.PRONTUARIO as PESSOA_PRONTUARIO, A0.MEDICO, A4.USUARIO as MEDICO_USUARIO, A0.MKT, A5.USUARIO as MKT_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.PRONTUARIO as PESSOA_PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
-	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
-	left join arqUsuario A4 on A4.IDPRIMARIO = A0.MEDICO
-	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MKT
+	left join arqTiAgenda A3 on A3.IDPRIMARIO = A0.TIAGENDA
+	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA
+	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MEDICO
 	left join arqUsuario A6 on A6.IDPRIMARIO = A0.ASSESSOR
 	left join tabTMotivo A7 on A7.IDPRIMARIO=A0.TMOTIVO
-	left join tabTPrograma A8 on A8.IDPRIMARIO=A0.TPROGRAMA;
+	left join tabTPrograma A8 on A8.IDPRIMARIO=A0.TPROGRAMA
+	left join arqFormaPg A9 on A9.IDPRIMARIO = A0.FORMAPG;
 commit;
 
 RECREATE VIEW V_arqPlantao AS 
@@ -2778,6 +2817,16 @@ RECREATE VIEW V_arqFornecedor AS
 	left join arqBairro A2 on A2.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A3 on A3.IDPRIMARIO = A0.ENDE_CIDADE
 	left join tabUF A4 on A4.IDPRIMARIO=A3.UF;
+commit;
+
+RECREATE VIEW V_arqTiAgenda AS 
+	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.DOBROTEMPO, A0.ATIVO
+	FROM arqTiAgenda A0;
+commit;
+
+RECREATE VIEW V_arqFormaPg AS 
+	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.ATIVO
+	FROM arqFormaPg A0;
 commit;
 
 
@@ -2857,6 +2906,8 @@ insert into arqLanceOperacao values(100038,1,'Cadastro de duração de uma consult
 insert into arqLanceOperacao values(100039,1,'Cadastro de consultas','arqConsulta',39,1,0,'');
 insert into arqLanceOperacao values(100041,1,'Cadastro de plantonistas nas clínicas','arqPlantao',41,1,0,'');
 insert into arqLanceOperacao values(100042,1,'Cadastro de fornecedores','arqFornecedor',42,1,0,'');
+insert into arqLanceOperacao values(100043,1,'Cadastro de tipos de agendas [0]','arqTiAgenda',43,99,1,'');
+insert into arqLanceOperacao values(100044,1,'Cadastro de formas de pagamento de consultas','arqFormaPg',44,1,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
 insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de grupos de acesso','',11,90,0,'');
@@ -2959,9 +3010,9 @@ ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Clinica FOREIGN KEY ( CLIN
 ALTER TABLE arqHoraBloq ADD CONSTRAINT arqHoraBloq_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqDuracao ADD CONSTRAINT arqDuracao_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TStCon FOREIGN KEY ( TSTCON ) REFERENCES tabTStCon ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TiAgenda FOREIGN KEY ( TIAGENDA ) REFERENCES arqTiAgenda ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
-ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Mkt FOREIGN KEY ( MKT ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_Midia FOREIGN KEY ( MIDIA ) REFERENCES arqMidia ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TMotivo FOREIGN KEY ( TMOTIVO ) REFERENCES tabTMotivo ON DELETE SET NULL ON UPDATE CASCADE;
@@ -2970,6 +3021,7 @@ ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Clinica FOREIGN KEY ( CLINIC
 ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_TDiaSem FOREIGN KEY ( TDIASEM ) REFERENCES tabTDiaSem ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqFornecedor ADD CONSTRAINT arqFornecedor_FK_TPFPJ FOREIGN KEY ( TPFPJ ) REFERENCES tabTPFPJ ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_FormaPg FOREIGN KEY ( FORMAPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 
@@ -4121,18 +4173,19 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'TStCon', OLD.TStCon, NEW.TStCon );
+	execute procedure set_log( 12, NEW.idPrimario, 'TiAgenda', OLD.TiAgenda, NEW.TiAgenda );
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
 	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
 	execute procedure set_log( 12, NEW.idPrimario, 'HoraChega', OLD.HoraChega, NEW.HoraChega );
 	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
-	execute procedure set_log( 12, NEW.idPrimario, 'Mkt', OLD.Mkt, NEW.Mkt );
 	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
 	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'TMotivo', OLD.TMotivo, NEW.TMotivo );
 	execute procedure set_log( 12, NEW.idPrimario, 'TPrograma', OLD.TPrograma, NEW.TPrograma );
 	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
 end
 end^
 
@@ -4218,6 +4271,39 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Desde', OLD.Desde, NEW.Desde );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqFormaPg
+************************************************************/
+
+set term ^;
+
+recreate trigger arqFormaPg_LOG for arqFormaPg
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.FormaPg,'' );
+else
+	valorChave = coalesce( NEW.FormaPg,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100044 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end
 end^
 

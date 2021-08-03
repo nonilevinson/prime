@@ -13,7 +13,7 @@
 
 	$setup["BANCO"] = array(
 		"TIPO"				=> "firebird",	// Tipo
-		"NOME"				=> "dado104.fdb",	// Nome
+		"NOME"				=> "dado105.fdb",	// Nome
 		"LOGINLOCAL"		=> "SYSDBA",	// Login Local
 		"SENHALOCAL"		=> "masterkey",	// Senha
 		"CAMINHOLOCAL"		=> "",	// Caminho
@@ -30,6 +30,7 @@
 		array( 'Usuários', 'arqUsuario', 'Usuario', 'Senha', 'Grupo', '', 'Ativo', 'Email', 'Versao', 'principa' )	);
 
 	$versoes = array(
+		"1.05"	=> "05/08/2021",
 		"1.04"	=> "14/07/2021",
 		"1.03"	=> "07/07/2021",
 		"1.02"	=> "18/06/2021",
@@ -37,10 +38,10 @@
 		"1.00"	=> "25/05/2021" );
 
 	$vetDependencia = array(
+		array( "a_fornec", "a_endere" ),
 		array( "a_clini", "a_endere" ),
 		array( "a_xconfi", "a_endere" ),
-		array( "a_pessoa", "a_endere" ),
-		array( "a_fornec", "a_endere" ) );
+		array( "a_pessoa", "a_endere" ) );
 
 include_once( SISTEMA_DIR_ABSOLUTO . 'cores.php' );
 include_once( CLIENTE_DIR_ABSOLUTO . 'cores.php' );
