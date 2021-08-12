@@ -157,6 +157,17 @@ class campo_arqConsulta_Data extends Lance_CampoData
 		parent::__construct( "Data", "Data", "Data", 8, "dd/mm/aaaa", 0, 0, false );
 	}
 
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( formatarData( $g_regAtual->DATA ) == HOJE )
+			return( "DataHoje" );
+		if( quantosDias( formatarData( $g_regAtual->DATA ), HOJE ) > 0 )
+			return( "DataFutura" );
+		return( parent::Estilo() );
+	}
+
 }
 
 //======================================================
