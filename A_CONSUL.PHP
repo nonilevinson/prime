@@ -607,6 +607,18 @@ class arqConsulta extends Lance_Arquivo
 	}
 
 	//-------------------------------------------------------------
+	// Acionar
+	//-------------------------------------------------------------
+	function AcionarBotao( $p_tecla )
+	{
+		switch( $p_tecla )
+		{
+			case _INS: return( false );
+		}
+		return( parent::AcionarBotao( $p_tecla ) );
+	}
+
+	//-------------------------------------------------------------
 	// Cabeçalho do arquivo
 	//-------------------------------------------------------------
 	function NomeCompleto()
