@@ -477,6 +477,26 @@ class campo_arqConsulta_Obs extends Lance_CampoTexto
 }
 
 //======================================================
+//	Campo Valor
+//======================================================
+
+class campo_arqConsulta_Valor extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Valor", "Valor", "Valor", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function PodeTotalizar()
+	{
+		global $g_regAtual;
+		return( (true) );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqConsulta
 //======================================================
 function listaCampos_arqConsulta( $p_prefixo )
@@ -517,7 +537,8 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_Medicacao(),
 			new campo_arqConsulta_FormaPg(),
 			new campo_arqConsulta_FormaPg_FormaPg(),
-			new campo_arqConsulta_Obs() )
+			new campo_arqConsulta_Obs(),
+			new campo_arqConsulta_Valor() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -566,6 +587,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( TMotivo_Descritor ) );
 			array_push( $vetAux, array( TPrograma_Descritor ) );
 			array_push( $vetAux, array( FormaPg_FormaPg ) );
+			array_push( $vetAux, array( Valor ) );
 		return( $vetAux );
 	}
 
@@ -603,6 +625,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( Medicacao ) );
 			array_push( $vetAux, array( FormaPg_FormaPg ) );
 			array_push( $vetAux, array( Obs ) );
+			array_push( $vetAux, array( Valor ) );
 		return( $vetAux );
 	}
 

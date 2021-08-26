@@ -343,6 +343,17 @@ function Campo_arqConsulta_Obs()
 
 var Obs = new Campo_arqConsulta_Obs;
 
+//------------------------------------------------------------
+Campo_arqConsulta_Valor.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_Valor()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Valor", "Valor", "Valor", 8, "###.##z,zz", true,"", "");
+}
+
+var Valor = new Campo_arqConsulta_Valor;
+
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -730,7 +741,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, TPrograma, TPrograma_Chave, TPrograma_Descritor, Conduta, Medicacao, FormaPg, FormaPg_FormaPg, Obs ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, TPrograma, TPrograma_Chave, TPrograma_Descritor, Conduta, Medicacao, FormaPg, FormaPg_FormaPg, Obs, Valor ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -35,6 +35,7 @@ echo
 		[ brHtml(4) . "Prontuário ", Prontuario ] ] ] ),
    $this->Pedir( "Médico", Medico ),
    $this->Pedir( "Assessor" ),
+	$this->Pedir( "Valor" ),
 	$this->Pedir( "Forma de pagamento", FormaPg ),
 "</table>",
 
