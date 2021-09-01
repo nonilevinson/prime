@@ -35,8 +35,9 @@ class EmailUsuario extends EmailParaUsuario {
 		$cnpj = sql_lerUmRegistro( $select )->CNPJ;
 // if( $g_debugProcesso ) echo '<br><b>GR0 cnfXConfig S=</b> '.$select;
 
-		//* function cobranca( $p_tipo, $p_diaAnterior, $p_emails, $p_qtd=0, $p_loja=5, $p_acessos=0, $p_cnpj='' )
-		cobranca( "EMAIL", $this->diaAnterior, $qtos, 0, 5, 0, $cnpj );
+		//* function cobranca( $p_tipo, $p_diaAnterior, $p_emails, $p_qtd=0, $p_loja=1, $p_acessos=0, $p_cnpj='' )
+		//* o p_loja precisa ser o do sistema em Contatos: SWSM = 1
+		cobranca( "EMAIL", $this->diaAnterior, $qtos, 0, 1, 0, $cnpj );
 
 		parent::Fim();
 	}
