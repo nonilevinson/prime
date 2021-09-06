@@ -12,5 +12,5 @@ echo
       [ "", ConsSab,
       [ brHtml(4) . "Domingo? ", ConsDom ] ] ),
    $this->Pedir( "Duração de cada consulta",
-      [ " ", Duracao, " min (10, 15, 20, 30 ou 60 minutos)" ] ),
+      [ " ", Duracao, " min (10, 15, 20, 30 ou 60 minutos)<br><br><b>Atenção!!!<br>A opção [Retorno OSP] acarretará em um agendamento<br>de um intervalo de consulta e as demais usarão duas<br>vezes esse mesmo intervalo</b>" ] ),
 "</table>";
