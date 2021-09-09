@@ -718,9 +718,7 @@ Campo_arqParcela_CCor.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
 			return( "A.Ativo == 1" );
-		if( false )
 			return( "A.Clinica = " + Conta_Clinica + "" );
-		return( "" );
 }
 
 //-------------------------------------------------------------

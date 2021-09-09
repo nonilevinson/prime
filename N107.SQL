@@ -2946,6 +2946,7 @@ insert into arqLanceOperacao values(200129,2,'Rotina para baixar parcelas','',12
 insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
 insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos usuários','',68,90,0,'');
+insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos','',151,1,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');

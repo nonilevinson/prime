@@ -2,8 +2,7 @@
 
 global $g_debugProcesso;
 
-sql_abrirBD( false );
+sql_abrirBD( OperacaoAtual() );
 
 
 sql_fecharBD();
-

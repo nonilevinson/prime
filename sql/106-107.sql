@@ -7,6 +7,9 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos','',151,1,0,'');
+commit;
+
 /************************************************************
 	Arquivo CCor      
 ************************************************************/
