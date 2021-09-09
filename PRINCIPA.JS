@@ -23,7 +23,7 @@ var Menu_3_2 = new Array( 1,"Parcelas","","P",126,"","",1,"","6", "", "", "", ""
 var Menu_3_2_1 = new Array( 1,"Hoje","","H",95,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_parcel^^^arqParcela^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[34]);
 var Menu_3_2_2 = new Array( 1,"Todas","","T",93,"","",1,"","1","a_parcel","arqParcela","Folhear","","?","FilTodas","", "","", 0,7,[],[34]);
 var Menu_3_2_3 = new Array( 1,"Seleção","","S",94,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_parcel^^^arqParcela^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[34]);
-var Menu_3_3 = new Array( 1,"Contas correntes","","t",72,"","",1,"","1","a_ccor","arqCCor","Folhear","","?","","", "","", 0,21,[],[20]);
+var Menu_3_3 = new Array( 1,"Contas correntes","","t",72,"","",1,"","1","a_ccor","arqCCor","Folhear","","?","FilTodos","", "","", 0,21,[],[20]);
 var Menu_3_4 = new Array( 1,"Plano de contas","","l",128,"","",1,"","1","a_plano","arqPlano","Folhear","","?","","", "","", 0,21,[],[27]);
 var Menu_3_5 = new Array( 1,"Gerar conta e parcela","","G",130,"","",1,"","1", "a_grparc", "parGeraParc", "Alterar", "", "", "", "", "5^^^p_conta_parcela_gerar^^^^^^^^^^^^^^^^^^", "", 0,21,[130],[]);
 var Menu_4 = new Array( 1,"Emails","","E",42,"","",cnfConfig["EMAIL"] == 1 || GrupoAtualEm(),"","6", "", "", "", "", "", "", "", "", "", 6, 10,[53,55,47,71,52,54,48,49],[10,12,8,9] );

@@ -12,6 +12,52 @@ include_once( SISTEMA_DIR_ABSOLUTO . "a_ccor_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
 
 //======================================================
+//	Campo Nome
+//======================================================
+
+class campo_arqCCor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Nome", "Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Clinica
+//======================================================
+
+class campo_arqCCor_Clinica extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Clinica", "Clinica", "Clinica", 0, "arqClinica", "arqClinica.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Clínica" );
+	}
+
+}
+
+//======================================================
+//	Campo Clinica_Clinica
+//======================================================
+
+class campo_arqCCor_Clinica_Clinica extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Clinica_Clinica", "Clinica_Clinica", "Clinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Clinica", false );
+	}
+
+}
+
+//======================================================
 //	Campo Banco
 //======================================================
 
@@ -19,7 +65,7 @@ class campo_arqCCor_Banco extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Banco", "Banco", "Banco", EH_CHAVE, "arqBanco", "arqBanco.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, 0, false );
+		parent::__construct( "Banco", "Banco", "Banco", 0, "arqBanco", "arqBanco.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, 0, false );
 	}
 
 }
@@ -65,7 +111,7 @@ class campo_arqCCor_Agencia extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Agencia", "Agencia", "Agencia", 4, "xxxx", EH_CHAVE, 0, false );
+		parent::__construct( "Agencia", "Agencia", "Agencia", 4, "xxxx", 0, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -105,7 +151,7 @@ class campo_arqCCor_Conta extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Conta", "Conta", "Conta", 10, "xxxxxxxxxx", EH_CHAVE, 0, false );
+		parent::__construct( "Conta", "Conta", "Conta", 10, "xxxxxxxxxx", 0, 0, false );
 	}
 
 }
@@ -408,6 +454,9 @@ function listaCampos_arqCCor( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
+			new campo_arqCCor_Nome(),
+			new campo_arqCCor_Clinica(),
+			new campo_arqCCor_Clinica_Clinica(),
 			new campo_arqCCor_Banco(),
 			new campo_arqCCor_Banco_Num(),
 			new campo_arqCCor_Banco_Banco(),
@@ -468,7 +517,7 @@ class arqCCor extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Banco_Num, Agencia, Conta) );
+		return( array( Nome) );
 	}
 
 	//-------------------------------------------------------------
@@ -478,6 +527,8 @@ class arqCCor extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
+			array_push( $vetAux, array( Nome ) );
+			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Banco_Num ) );
 			array_push( $vetAux, array( Banco_Banco ) );
 			array_push( $vetAux, array( Agencia ) );
@@ -493,7 +544,7 @@ class arqCCor extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Banco ) ) );
+		return( array( array( Clinica ), array( Banco ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -503,6 +554,8 @@ class arqCCor extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
+			array_push( $vetAux, array( Nome ) );
+			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Banco_Num ) );
 			array_push( $vetAux, array( Banco_Banco ) );
 			array_push( $vetAux, array( Agencia ) );
@@ -538,6 +591,14 @@ class arqCCor extends Lance_Arquivo
 	function NomeCompleto()
 	{
 		return( 'Contas correntes' );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilTodos  
+	//-------------------------------------------------------------
+	function FilTodos()
+	{
+	return( "" . filtrarTodos() . "" );
 	}
 
 }

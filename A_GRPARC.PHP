@@ -204,6 +204,19 @@ class campo_parGeraParc_Historico extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo LinhaDig
+//======================================================
+
+class campo_parGeraParc_LinhaDig extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "LinhaDig", "LinhaDig", "LinhaDig", 54, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Valor
 //======================================================
 
@@ -341,80 +354,14 @@ class campo_parGeraParc_CCor extends Lance_CampoLigado
 }
 
 //======================================================
-//	Campo CCor_Banco
+//	Campo CCor_Nome
 //======================================================
 
-class campo_parGeraParc_CCor_Banco extends Lance_CampoLigado
+class campo_parGeraParc_CCor_Nome extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "CCor_Banco", "CCor_Banco", "Banco", EH_CHAVE, "arqBanco", "arqBanco.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, "CCor", false );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Banco_Num
-//======================================================
-
-class campo_parGeraParc_CCor_Banco_Num extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Banco_Num", "CCor_Banco_Num", "Num", 3, "##z", "", "", EH_CHAVE, "CCor_Banco", false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "N° Banco" );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Banco_Banco
-//======================================================
-
-class campo_parGeraParc_CCor_Banco_Banco extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Banco_Banco", "CCor_Banco_Banco", "Banco", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "CCor_Banco", false );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Agencia
-//======================================================
-
-class campo_parGeraParc_CCor_Agencia extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Agencia", "CCor_Agencia", "Agencia", 4, "xxxx", EH_CHAVE, "CCor", false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Agência" );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Conta
-//======================================================
-
-class campo_parGeraParc_CCor_Conta extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Conta", "CCor_Conta", "Conta", 10, "xxxxxxxxxx", EH_CHAVE, "CCor", false );
+		parent::__construct( "CCor_Nome", "CCor_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CCor", false );
 	}
 
 }
@@ -2667,6 +2614,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_RecEnvia(),
 			new campo_parGeraParc_Compete(),
 			new campo_parGeraParc_Historico(),
+			new campo_parGeraParc_LinhaDig(),
 			new campo_parGeraParc_Valor(),
 			new campo_parGeraParc_Estimado(),
 			new campo_parGeraParc_Condicao(),
@@ -2683,11 +2631,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new Lance_CampoCadeia( "TDetPg_Chave", "TDetPg_Chave", "Chave", 1, "x", EH_CHAVE, TDetPg ),
 			new Lance_CampoCadeia( "TDetPg_Descritor", "TDetPg_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TDetPg ),
 			new campo_parGeraParc_CCor(),
-			new campo_parGeraParc_CCor_Banco(),
-			new campo_parGeraParc_CCor_Banco_Num(),
-			new campo_parGeraParc_CCor_Banco_Banco(),
-			new campo_parGeraParc_CCor_Agencia(),
-			new campo_parGeraParc_CCor_Conta(),
+			new campo_parGeraParc_CCor_Nome(),
 			new campo_parGeraParc_Cheque(),
 			new campo_parGeraParc_TotValor(),
 			new campo_parGeraParc_Dia1(),

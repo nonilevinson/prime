@@ -212,59 +212,15 @@ function Campo_arqParcela_CCor()
 var CCor = new Campo_arqParcela_CCor;
 
 //------------------------------------------------------------
-Campo_arqParcela_CCor_Banco.prototype = new Lance_CampoHidden;
+Campo_arqParcela_CCor_Nome.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqParcela_CCor_Banco()
-{
-	this.superClass = Lance_CampoHidden;
-	this.superClass( "CCor_Banco", "CCor_Banco", "Banco", "arqBanco", "a_banco", CCor, "",19);
-}
-
-var CCor_Banco = new Campo_arqParcela_CCor_Banco;
-
-//------------------------------------------------------------
-Campo_arqParcela_CCor_Banco_Num.prototype = new Lance_CampoNumericoLigado;
-
-function Campo_arqParcela_CCor_Banco_Num()
-{
-	this.superClass = Lance_CampoNumericoLigado;
-	this.superClass( "CCor_Banco_Num", "CCor_Banco_Num", "Num", CCor_Banco, 3, "##z", true,"", "");
-}
-
-var CCor_Banco_Num = new Campo_arqParcela_CCor_Banco_Num;
-
-//------------------------------------------------------------
-Campo_arqParcela_CCor_Banco_Banco.prototype = new Lance_CampoCadeia;
-
-function Campo_arqParcela_CCor_Banco_Banco()
-{
-	this.superClass = Lance_CampoCadeia;
-	this.superClass( "CCor_Banco_Banco", "CCor_Banco_Banco", "Banco", 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
-}
-
-var CCor_Banco_Banco = new Campo_arqParcela_CCor_Banco_Banco;
-
-//------------------------------------------------------------
-Campo_arqParcela_CCor_Agencia.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqParcela_CCor_Agencia()
+function Campo_arqParcela_CCor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCor_Agencia", "CCor_Agencia", "Agencia", CCor, 4, "uuuu", false);
+	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var CCor_Agencia = new Campo_arqParcela_CCor_Agencia;
-
-//------------------------------------------------------------
-Campo_arqParcela_CCor_Conta.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqParcela_CCor_Conta()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCor_Conta", "CCor_Conta", "Conta", CCor, 10, "uuuuuuuuuu", false);
-}
-
-var CCor_Conta = new Campo_arqParcela_CCor_Conta;
+var CCor_Nome = new Campo_arqParcela_CCor_Nome;
 
 //------------------------------------------------------------
 Campo_arqParcela_SubPlano.prototype = new Lance_CampoHidden;
@@ -481,9 +437,9 @@ var DataRem = new Campo_arqParcela_DataRem;
 Campo_arqParcela_Conta.prototype.TrazOutrosDoPai = function()
 {
 	var vetPai = new Array();
-			vetPai[0] = [ "TPgRec",
+			vetPai[0] = [ "TPgRec, Clinica",
 					"A.Conta, arqConta",
-					"0" ];
+					"0,0" ];
 			vetPai[1] = [ "Clinica",
 					"A.Conta, arqConta.Clinica, arqClinica",
 					"1" ];
@@ -722,11 +678,19 @@ Campo_arqParcela_LinhaDig.prototype.PodeAlterar = function()
 }
 
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqParcela_LinhaDig.prototype.Cabecalho = function()
+{
+		return( "Linha digitável" );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqParcela_LinhaDig.prototype.Existencia = function()
 {
-	return( TFCobra == 1 && ( Conta_TPgRec == 2 ) );
+	return( TFCobra == 1 );
 }
 
 //-------------------------------------------------------------
@@ -754,6 +718,8 @@ Campo_arqParcela_CCor.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
 			return( "A.Ativo == 1" );
+		if( false )
+			return( "A.Clinica = " + Conta_Clinica + "" );
 		return( "" );
 }
 
@@ -781,31 +747,7 @@ Campo_arqParcela_CCor.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
-Campo_arqParcela_CCor_Banco.prototype.Existencia = function()
-{
-	return( TFPagto == 1 || tem( Emissao ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Banco_Num.prototype.Existencia = function()
-{
-	return( TFPagto == 1 || tem( Emissao ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Agencia.prototype.Existencia = function()
-{
-	return( TFPagto == 1 || tem( Emissao ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Conta.prototype.Existencia = function()
+Campo_arqParcela_CCor_Nome.prototype.Existencia = function()
 {
 	return( TFPagto == 1 || tem( Emissao ) );
 }
@@ -813,40 +755,12 @@ Campo_arqParcela_CCor_Conta.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqParcela_CCor_Banco.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqParcela_CCor_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( CCor.Obrigatorio( p_comMsg ) );
 }
 
-CCor_Banco.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Banco_Num.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( CCor.Obrigatorio( p_comMsg ) );
-}
-
-CCor_Banco_Num.TipoCampo |= CAMPO_CHAVE_PAI;
-CCor_Banco_Banco.TipoCampo |= CAMPO_DESCRITOR_PAI;
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Agencia.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( CCor.Obrigatorio( p_comMsg ) );
-}
-
-CCor_Agencia.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Conta.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( CCor.Obrigatorio( p_comMsg ) );
-}
-
-CCor_Conta.TipoCampo |= CAMPO_CHAVE_PAI;
+CCor_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -1042,23 +956,7 @@ Campo_arqParcela_Conta.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqParcela_CCor.prototype.ExistenciaEspecial = function()
 {
-	return( ( !CCor_Banco.Obrigatorio( false ) || tem(CCor_Banco) ) && ( !CCor_Agencia.Obrigatorio( false ) || tem(CCor_Agencia) ) && ( !CCor_Conta.Obrigatorio( false ) || tem(CCor_Conta) ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Banco.prototype.ExistenciaEspecial = function()
-{
-	return( ( !CCor_Banco_Num.Obrigatorio( false ) || tem(CCor_Banco_Num) ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Banco_Banco.prototype.ExistenciaEspecial = function()
-{
-	return( ( !CCor_Banco.Obrigatorio( false ) || tem(CCor_Banco) ) );
+	return( ( !CCor_Nome.Obrigatorio( false ) || tem(CCor_Nome) ) );
 }
 
 //-------------------------------------------------------------
@@ -1099,13 +997,10 @@ Conta.CalculosDependentes= [ ClinicaCal,TPgRecCal,PessoaCal ];
 Emissao.CalculosDependentes= [ NumBoleto ];
 Conta_Transacao.ExistenciasDependentes= [ Conta ];
 TFCobra.ExistenciasDependentes= [ Emissao,LinhaDig,NomePdf,TFPagto,TDetPg,StRetorno,Remessa ];
-Conta.ExistenciasDependentes= [ Emissao,LinhaDig,NomePdf,StRetorno,Remessa ];
-TFPagto.ExistenciasDependentes= [ CCor,CCor_Banco,CCor_Banco_Num,CCor_Agencia,CCor_Conta,DataPagto,TDetPg ];
-Emissao.ExistenciasDependentes= [ CCor,CCor_Banco,CCor_Banco_Num,CCor_Agencia,CCor_Conta ];
-CCor_Banco.ExistenciasDependentes= [ CCor,CCor_Banco_Banco ];
-CCor_Banco_Num.ExistenciasDependentes= [ CCor_Banco ];
-CCor_Agencia.ExistenciasDependentes= [ CCor ];
-CCor_Conta.ExistenciasDependentes= [ CCor ];
+Conta.ExistenciasDependentes= [ Emissao,NomePdf,CCor,StRetorno,Remessa ];
+TFPagto.ExistenciasDependentes= [ CCor,CCor_Nome,DataPagto,TDetPg ];
+Emissao.ExistenciasDependentes= [ CCor,CCor_Nome ];
+CCor_Nome.ExistenciasDependentes= [ CCor ];
 SubPlano_Plano.ExistenciasDependentes= [ SubPlano,SubPlano_Plano_Plano ];
 SubPlano_Plano_CodPlano.ExistenciasDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ExistenciasDependentes= [ SubPlano ];
@@ -1114,16 +1009,13 @@ DataPagto.ExistenciasDependentes= [ DataComp ];
 TDetPg.ExistenciasDependentes= [ Cheque ];
 Remessa.ExistenciasDependentes= [ DataRem ];
 Conta_Transacao.ErrosDependentes= [ Conta ];
-CCor_Banco_Num.ErrosDependentes= [ CCor_Banco ];
-CCor_Conta.ErrosDependentes= [ CCor ];
+CCor_Nome.ErrosDependentes= [ CCor ];
 SubPlano_Plano_CodPlano.ErrosDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ErrosDependentes= [ SubPlano ];
-CCor_Banco.DescritoresDependentes= [ CCor_Banco_Banco ];
 SubPlano_Plano.DescritoresDependentes= [ SubPlano_Plano_Plano ];
 SubPlano.DescritoresDependentes= [ SubPlano_Nome ];
 Conta.CamposChave= [ Conta_Transacao ];
-CCor.CamposChave= [ CCor_Banco,CCor_Agencia,CCor_Conta ];
-CCor_Banco.CamposChave= [ CCor_Banco_Num ];
+CCor.CamposChave= [ CCor_Nome ];
 SubPlano.CamposChave= [ SubPlano_Plano,SubPlano_Codigo ];
 SubPlano_Plano.CamposChave= [ SubPlano_Plano_CodPlano ];
 }
@@ -1146,7 +1038,7 @@ function ListaDeCampos_arqParcela( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Banco, CCor_Banco_Num, CCor_Banco_Banco, CCor_Agencia, CCor_Conta, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, Cheque, Arq1, StRetorno, Remessa, DataRem ]	);
+		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, Cheque, Arq1, StRetorno, Remessa, DataRem ]	);
 	IniciarDependencias_arqParcela();
 	g_prefixo = l_prefixo;
 	return( l_lista );

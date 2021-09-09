@@ -1,7 +1,7 @@
 <?php
 
 //===========================================================
-function ext_filtrarSelecao()
+function filtrarSelecao()
 {
    $parQSelecao = lerParametro( 'parQSelecao' );
 
@@ -15,7 +15,7 @@ function ext_filtrarSelecao()
 }
 
 //===========================================================
-function ext_filtrarTodas()
+function filtrarTodos()
 {
    return(
 	   ( SQL_VETIDCLINICA

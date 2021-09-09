@@ -590,7 +590,7 @@ class arqConta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function FilSel()
 	{
-	return( "" . ext_filtrarSelecao() . "" );
+	return( "" . filtrarSelecao() . "" );
 	}
 
 	//-------------------------------------------------------------
@@ -598,7 +598,7 @@ class arqConta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function FilTodas()
 	{
-	return( "" . ext_filtrarTodas() . "" );
+	return( "" . filtrarTodos() . "" );
 	}
 
 }

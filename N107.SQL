@@ -2019,33 +2019,35 @@ commit;
 CREATE TABLE arqCCor
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
-	/*  3*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
-	/*  4*/	DVAGENCIA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
-	/*  5*/	CONTA VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
-	/*  6*/	DVCONTA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
-	/*  7*/	CARTEIRA INTEGER, /* Máscara = N */
-	/*  8*/	CODCEDENTE VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = M */
-	/*  9*/	MULTA NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 10*/	JUROS NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 11*/	CBOLETO NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 12*/	INSTRUCOES BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 13*/	ULTREMESSA NUMERIC(18,0), /* Máscara = N */
-	/* 14*/	CONVENIO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = N */
-	/* 15*/	VARIACAO NUMERIC(18,0), /* Máscara = N */
-	/* 16*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 17*/	TPIX1 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 18*/	PIX1 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 19*/	TPIX2 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 20*/	PIX2 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 21*/	TPIX3 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 22*/	PIX3 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 23*/	TPIX4 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 24*/	PIX4 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 25*/	TPIX5 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 26*/	PIX5 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/*  2*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  4*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
+	/*  5*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
+	/*  6*/	DVAGENCIA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
+	/*  7*/	CONTA VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
+	/*  8*/	DVCONTA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
+	/*  9*/	CARTEIRA INTEGER, /* Máscara = N */
+	/* 10*/	CODCEDENTE VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = M */
+	/* 11*/	MULTA NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 12*/	JUROS NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 13*/	CBOLETO NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 14*/	INSTRUCOES BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 15*/	ULTREMESSA NUMERIC(18,0), /* Máscara = N */
+	/* 16*/	CONVENIO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = N */
+	/* 17*/	VARIACAO NUMERIC(18,0), /* Máscara = N */
+	/* 18*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 19*/	TPIX1 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 20*/	PIX1 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 21*/	TPIX2 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 22*/	PIX2 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 23*/	TPIX3 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 24*/	PIX3 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 25*/	TPIX4 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 26*/	PIX4 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 27*/	TPIX5 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 28*/	PIX5 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
 	CONSTRAINT arqCCor_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqCCor_UK UNIQUE ( Banco, Agencia, Conta )
+	CONSTRAINT arqCCor_UK UNIQUE ( Nome )
 );
 commit;
 
@@ -2680,14 +2682,15 @@ RECREATE VIEW V_arqBanco AS
 commit;
 
 RECREATE VIEW V_arqCCor AS 
-	SELECT A0.IDPRIMARIO, A0.BANCO, A1.NUM as BANCO_NUM, A1.BANCO as BANCO_BANCO, A0.AGENCIA, A0.DVAGENCIA, A0.CONTA, A0.DVCONTA, A0.CARTEIRA, A0.CODCEDENTE, A0.MULTA, A0.JUROS, A0.CBOLETO, A0.INSTRUCOES, A0.ULTREMESSA, A0.CONVENIO, A0.VARIACAO, A0.ATIVO, A0.TPIX1, A2.CHAVE as TPix1_CHAVE, A2.DESCRITOR as TPix1_DESCRITOR, A0.PIX1, A0.TPIX2, A3.CHAVE as TPix2_CHAVE, A3.DESCRITOR as TPix2_DESCRITOR, A0.PIX2, A0.TPIX3, A4.CHAVE as TPix3_CHAVE, A4.DESCRITOR as TPix3_DESCRITOR, A0.PIX3, A0.TPIX4, A5.CHAVE as TPix4_CHAVE, A5.DESCRITOR as TPix4_DESCRITOR, A0.PIX4, A0.TPIX5, A6.CHAVE as TPix5_CHAVE, A6.DESCRITOR as TPix5_DESCRITOR, A0.PIX5
+	SELECT A0.IDPRIMARIO, A0.NOME, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.BANCO, A2.NUM as BANCO_NUM, A2.BANCO as BANCO_BANCO, A0.AGENCIA, A0.DVAGENCIA, A0.CONTA, A0.DVCONTA, A0.CARTEIRA, A0.CODCEDENTE, A0.MULTA, A0.JUROS, A0.CBOLETO, A0.INSTRUCOES, A0.ULTREMESSA, A0.CONVENIO, A0.VARIACAO, A0.ATIVO, A0.TPIX1, A3.CHAVE as TPix1_CHAVE, A3.DESCRITOR as TPix1_DESCRITOR, A0.PIX1, A0.TPIX2, A4.CHAVE as TPix2_CHAVE, A4.DESCRITOR as TPix2_DESCRITOR, A0.PIX2, A0.TPIX3, A5.CHAVE as TPix3_CHAVE, A5.DESCRITOR as TPix3_DESCRITOR, A0.PIX3, A0.TPIX4, A6.CHAVE as TPix4_CHAVE, A6.DESCRITOR as TPix4_DESCRITOR, A0.PIX4, A0.TPIX5, A7.CHAVE as TPix5_CHAVE, A7.DESCRITOR as TPix5_DESCRITOR, A0.PIX5
 	FROM arqCCor A0
-	left join arqBanco A1 on A1.IDPRIMARIO = A0.BANCO
-	left join tabTPix A2 on A2.IDPRIMARIO=A0.TPIX1
-	left join tabTPix A3 on A3.IDPRIMARIO=A0.TPIX2
-	left join tabTPix A4 on A4.IDPRIMARIO=A0.TPIX3
-	left join tabTPix A5 on A5.IDPRIMARIO=A0.TPIX4
-	left join tabTPix A6 on A6.IDPRIMARIO=A0.TPIX5;
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join arqBanco A2 on A2.IDPRIMARIO = A0.BANCO
+	left join tabTPix A3 on A3.IDPRIMARIO=A0.TPIX1
+	left join tabTPix A4 on A4.IDPRIMARIO=A0.TPIX2
+	left join tabTPix A5 on A5.IDPRIMARIO=A0.TPIX3
+	left join tabTPix A6 on A6.IDPRIMARIO=A0.TPIX4
+	left join tabTPix A7 on A7.IDPRIMARIO=A0.TPIX5;
 commit;
 
 RECREATE VIEW V_arqContPessoa AS 
@@ -2759,16 +2762,15 @@ RECREATE VIEW V_arqConta AS
 commit;
 
 RECREATE VIEW V_arqParcela AS 
-	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, A0.CLINICACAL, A0.TPGRECCAL, A0.PESSOACAL, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.BANCO as CCOR_BANCO, A4.NUM as CCOR_BANCO_NUM, A4.BANCO as CCOR_BANCO_BANCO, A3.AGENCIA as CCOR_AGENCIA, A3.CONTA as CCOR_CONTA, A0.SUBPLANO, A5.PLANO as SUBPLANO_PLANO, A6.CODPLANO as SUBPLANO_PLANO_CODPLANO, A6.PLANO as SUBPLANO_PLANO_PLANO, A5.CODIGO as SUBPLANO_CODIGO, A5.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A7.CHAVE as TFPagto_CHAVE, A7.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A8.CHAVE as TDetPg_CHAVE, A8.DESCRITOR as TDetPg_DESCRITOR, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM
+	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, A0.CLINICACAL, A0.TPGRECCAL, A0.PESSOACAL, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.NOME as CCOR_NOME, A0.SUBPLANO, A4.PLANO as SUBPLANO_PLANO, A5.CODPLANO as SUBPLANO_PLANO_CODPLANO, A5.PLANO as SUBPLANO_PLANO_PLANO, A4.CODIGO as SUBPLANO_CODIGO, A4.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A6.CHAVE as TFPagto_CHAVE, A6.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A7.CHAVE as TDetPg_CHAVE, A7.DESCRITOR as TDetPg_DESCRITOR, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM
 	FROM arqParcela A0
 	left join arqConta A1 on A1.IDPRIMARIO = A0.CONTA
 	left join tabTFCobra A2 on A2.IDPRIMARIO=A0.TFCOBRA
 	left join arqCCor A3 on A3.IDPRIMARIO = A0.CCOR
-	left join arqBanco A4 on A4.IDPRIMARIO = A3.BANCO
-	left join arqSubPlano A5 on A5.IDPRIMARIO = A0.SUBPLANO
-	left join arqPlano A6 on A6.IDPRIMARIO = A5.PLANO
-	left join tabTFPagto A7 on A7.IDPRIMARIO=A0.TFPAGTO
-	left join tabTDetPg A8 on A8.IDPRIMARIO=A0.TDETPG;
+	left join arqSubPlano A4 on A4.IDPRIMARIO = A0.SUBPLANO
+	left join arqPlano A5 on A5.IDPRIMARIO = A4.PLANO
+	left join tabTFPagto A6 on A6.IDPRIMARIO=A0.TFPAGTO
+	left join tabTDetPg A7 on A7.IDPRIMARIO=A0.TDETPG;
 commit;
 
 RECREATE VIEW V_arqUsuCli AS 
@@ -2983,6 +2985,7 @@ ALTER TABLE arqParaGrupo ADD CONSTRAINT arqParaGrupo_FK_Grupo FOREIGN KEY ( GRUP
 ALTER TABLE arqLido ADD CONSTRAINT arqLido_FK_Avisos FOREIGN KEY ( AVISOS ) REFERENCES arqAvisos ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqLido ADD CONSTRAINT arqLido_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqParaGrupo ADD CONSTRAINT arqParaGrupo_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqCCor ADD CONSTRAINT arqCCor_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqCCor ADD CONSTRAINT arqCCor_FK_Banco FOREIGN KEY ( BANCO ) REFERENCES arqBanco ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqAvisos ADD CONSTRAINT arqAvisos_FK_AvisoPai FOREIGN KEY ( AVISOPAI ) REFERENCES arqAvisos ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqDocMod ADD CONSTRAINT arqDocMod_FK_TArqDoc FOREIGN KEY ( TARQDOC ) REFERENCES tabTArqDoc ON DELETE SET NULL ON UPDATE CASCADE;
@@ -3612,7 +3615,10 @@ position 999
 as
 	declare variable valorChave varchar(1000);
 begin
-select coalesce( Banco_Num, ' ' ) || '-' || coalesce( Agencia, ' ' ) || '-' || coalesce( Conta, ' ' ) from v_arqCCor where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+if( deleting ) then
+	valorChave = coalesce( OLD.Nome,'' );
+else
+	valorChave = coalesce( NEW.Nome,'' );
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100020 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
@@ -3621,6 +3627,8 @@ else
 if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'Banco', OLD.Banco, NEW.Banco );
 	execute procedure set_log( 12, NEW.idPrimario, 'Agencia', OLD.Agencia, NEW.Agencia );
 	execute procedure set_log( 12, NEW.idPrimario, 'DvAgencia', OLD.DvAgencia, NEW.DvAgencia );

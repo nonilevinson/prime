@@ -28,9 +28,9 @@ class campo_arqParcela_Conta extends Lance_CampoLigado
 		global $g_regAtual;
 		$vetPai = array();
 			array_push( $vetPai, 
-				array( "TPgRec", 
+				array( "TPgRec, Clinica", 
 					"A.Conta, arqConta",
-					"0" ) );
+					"0,0" ) );
 			array_push( $vetPai, 
 				array( "Clinica", 
 					"A.Conta, arqConta.Clinica, arqClinica",
@@ -345,6 +345,13 @@ class campo_arqParcela_LinhaDig extends Lance_CampoCadeia
 		parent::__construct( "LinhaDig", "LinhaDig", "LinhaDig", 54, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Linha digitável" );
+	}
+
 }
 
 //======================================================
@@ -374,80 +381,14 @@ class campo_arqParcela_CCor extends Lance_CampoLigado
 }
 
 //======================================================
-//	Campo CCor_Banco
+//	Campo CCor_Nome
 //======================================================
 
-class campo_arqParcela_CCor_Banco extends Lance_CampoLigado
+class campo_arqParcela_CCor_Nome extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "CCor_Banco", "CCor_Banco", "Banco", EH_CHAVE, "arqBanco", "arqBanco.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, "CCor", false );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Banco_Num
-//======================================================
-
-class campo_arqParcela_CCor_Banco_Num extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Banco_Num", "CCor_Banco_Num", "Num", 3, "##z", "", "", EH_CHAVE, "CCor_Banco", false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "N° Banco" );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Banco_Banco
-//======================================================
-
-class campo_arqParcela_CCor_Banco_Banco extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Banco_Banco", "CCor_Banco_Banco", "Banco", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "CCor_Banco", false );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Agencia
-//======================================================
-
-class campo_arqParcela_CCor_Agencia extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Agencia", "CCor_Agencia", "Agencia", 4, "xxxx", EH_CHAVE, "CCor", false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Agência" );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Conta
-//======================================================
-
-class campo_arqParcela_CCor_Conta extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Conta", "CCor_Conta", "Conta", 10, "xxxxxxxxxx", EH_CHAVE, "CCor", false );
+		parent::__construct( "CCor_Nome", "CCor_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CCor", false );
 	}
 
 }
@@ -698,11 +639,7 @@ function listaCampos_arqParcela( $p_prefixo )
 			new campo_arqParcela_LinhaDig(),
 			new campo_arqParcela_NomePdf(),
 			new campo_arqParcela_CCor(),
-			new campo_arqParcela_CCor_Banco(),
-			new campo_arqParcela_CCor_Banco_Num(),
-			new campo_arqParcela_CCor_Banco_Banco(),
-			new campo_arqParcela_CCor_Agencia(),
-			new campo_arqParcela_CCor_Conta(),
+			new campo_arqParcela_CCor_Nome(),
 			new campo_arqParcela_SubPlano(),
 			new campo_arqParcela_SubPlano_Plano(),
 			new campo_arqParcela_SubPlano_Plano_CodPlano(),
@@ -764,6 +701,7 @@ class arqParcela extends Lance_Arquivo
 			array_push( $vetAux, array( Valor ) );
 			array_push( $vetAux, array( ValorLiq ) );
 			array_push( $vetAux, array( TFCobra_Descritor ) );
+			array_push( $vetAux, array( LinhaDig ) );
 			array_push( $vetAux, array( DataPagto ) );
 		return( $vetAux );
 	}
@@ -798,10 +736,7 @@ class arqParcela extends Lance_Arquivo
 			array_push( $vetAux, array( NumBoleto ) );
 			array_push( $vetAux, array( LinhaDig ) );
 			array_push( $vetAux, array( NomePdf ) );
-			array_push( $vetAux, array( CCor_Banco_Num ) );
-			array_push( $vetAux, array( CCor_Banco_Banco ) );
-			array_push( $vetAux, array( CCor_Agencia ) );
-			array_push( $vetAux, array( CCor_Conta ) );
+			array_push( $vetAux, array( CCor_Nome ) );
 			array_push( $vetAux, array( SubPlano_Plano_CodPlano ) );
 			array_push( $vetAux, array( SubPlano_Plano_Plano ) );
 			array_push( $vetAux, array( SubPlano_Codigo ) );

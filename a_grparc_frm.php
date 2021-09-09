@@ -34,7 +34,7 @@ echo
    $this->PedirZerando( "Fornecedor" ),
    $this->PedirZerando( "Paciente", Pessoa_Nome ),
    $this->PedirZerando( " ",
-      [ "Prontuário ", Pessoa_Prontuario,
+      [ "Celular ", Pessoa_NumCelular,
       [ "", Pessoa ] ] ),
    $this->PedirZerando( "Tipo",
       [ "", TPgRec,
@@ -55,17 +55,15 @@ echo
       [ brHtml(4) . "Parcelas ", Parcelas,
       [ brHtml(4) . "Iguais (mesmo valor)? ", Iguais,
       [ brHtml(4) . "Intervalo entre as parcelas ", Intervalo ] ] ] ] ),
-      $this->PedirZerando( "Forma de cobrança",
-         [ "", TFCobra, brHtml(2) . "(sugerimos que só preencha este campo se estiver com o documento em mãos)" ] ),
+   $this->PedirZerando( "Forma de cobrança",
+      [ "", TFCobra, brHtml(2) . "(sugerimos que só preencha este campo se estiver com o documento em mãos)" ] ),
+   $this->PedirZerando( "Linha digitável", LinhaDig ),
+   
    $this->Pular1Linha(2),
    $this->Cabecalhos( [ "Se quiser gerar como pagas", "FormCab alinhaMeio", "2" ] ),
    $this->PedirZerando( "Forma de pagamento", TFPagto ),
    $this->PedirZerando( "Detalhe", TDetPg ),
-   $this->PedirZerando( "Conta Corrente",
-      [ "Banco ", CCor_Banco ] ),
-   $this->PedirZerando( " ",
-      [ "Agência ", CCor_Agencia,
-      [ brHtml(4) . "Conta ", CCor ] ] ),
+   $this->PedirZerando( "Conta corrente", CCor ),
    $this->PedirZerando( "Cheque" );
 }
 

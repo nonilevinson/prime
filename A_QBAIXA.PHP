@@ -51,80 +51,14 @@ class campo_parQBaixa_CCor extends Lance_CampoLigado
 }
 
 //======================================================
-//	Campo CCor_Banco
+//	Campo CCor_Nome
 //======================================================
 
-class campo_parQBaixa_CCor_Banco extends Lance_CampoLigado
+class campo_parQBaixa_CCor_Nome extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "CCor_Banco", "CCor_Banco", "Banco", EH_CHAVE, "arqBanco", "arqBanco.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, "CCor", false );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Banco_Num
-//======================================================
-
-class campo_parQBaixa_CCor_Banco_Num extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Banco_Num", "CCor_Banco_Num", "Num", 3, "##z", "", "", EH_CHAVE, "CCor_Banco", false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "N° Banco" );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Banco_Banco
-//======================================================
-
-class campo_parQBaixa_CCor_Banco_Banco extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Banco_Banco", "CCor_Banco_Banco", "Banco", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "CCor_Banco", false );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Agencia
-//======================================================
-
-class campo_parQBaixa_CCor_Agencia extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Agencia", "CCor_Agencia", "Agencia", 4, "xxxx", EH_CHAVE, "CCor", false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Agência" );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Conta
-//======================================================
-
-class campo_parQBaixa_CCor_Conta extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Conta", "CCor_Conta", "Conta", 10, "xxxxxxxxxx", EH_CHAVE, "CCor", false );
+		parent::__construct( "CCor_Nome", "CCor_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CCor", false );
 	}
 
 }
@@ -186,11 +120,7 @@ function listaCampos_parQBaixa( $p_prefixo )
 			new Lance_CampoCadeia( "TDetPg_Chave", "TDetPg_Chave", "Chave", 1, "x", EH_CHAVE, TDetPg ),
 			new Lance_CampoCadeia( "TDetPg_Descritor", "TDetPg_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TDetPg ),
 			new campo_parQBaixa_CCor(),
-			new campo_parQBaixa_CCor_Banco(),
-			new campo_parQBaixa_CCor_Banco_Num(),
-			new campo_parQBaixa_CCor_Banco_Banco(),
-			new campo_parQBaixa_CCor_Agencia(),
-			new campo_parQBaixa_CCor_Conta(),
+			new campo_parQBaixa_CCor_Nome(),
 			new campo_parQBaixa_Cheque(),
 			new campo_parQBaixa_DataPagto(),
 			new campo_parQBaixa_DataComp() )

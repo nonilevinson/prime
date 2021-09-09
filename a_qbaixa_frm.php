@@ -20,17 +20,19 @@ if( $op == 129 ) //* baixar parcelas
 	if( sizeOf( $regQtos ) > 1 )
 		tecleAlgoVolta( 'Foram marcadas parcelas de mais de uma clínica.\n Marque parcelas de somente uma por vez.', true );
 
-	$select = "Select P.ValorLiq, P.Parcela, C.Transacao, E.Nome, T.Descritor as TPgRec, N.Clinica,
+	$select = "Select P.ValorLiq, P.Parcela, C.Transacao, T.Descritor as TPgRec, N.Clinica,
+				iif( C.Fornecedor is not null, F.Nome, E.Nome ) as Nome,
 				(Select count(*)
 					From arqParcela P
 					Where P.IdPrimario IN ( SELECT MARCADOS.Registro FROM " . FromMarcados( "arqParcela", "P" ) .
 						" where " . WhereMarcados() . " ) and P.DataPagto is null
 				) as Qtas
 			From arqParcela P
-				join arqConta  	C on C.idPrimario=P.Conta
-				join tabTPgRec 	T on T.idPrimario=C.TPgRec
-				join arqClinica	N on N.idPrimario=C.Clinica
-				join arqPessoa		E on E.idPrimario=C.Pessoa
+				join arqConta  			C on C.idPrimario=P.Conta
+				join tabTPgRec 			T on T.idPrimario=C.TPgRec
+				join arqClinica			N on N.idPrimario=C.Clinica
+				left join arqFornecedor	F on F.idPrimario=C.Fornecedor
+				left join arqPessoa		E on E.idPrimario=C.Pessoa
 			Where P.idPrimario IN ( SELECT MARCADOS.Registro FROM " . FromMarcados( "arqParcela", "P" ) .
 				" where " . WhereMarcados() . " ) and P.DataPagto is null
 			Order by C.Clinica, T.Descritor, E.Nome";
@@ -75,15 +77,7 @@ if( $op == 129 ) //* baixar parcelas
 	$this->Pular1Linha(2),
    $this->PedirZerando( "Forma", TFPagto ),
    $this->PedirZerando( "Detalhe", TDetPg ),
-   $this->PedirZerando( "Conta corrente",
-      [ "Banco ", CCor_Banco_Num ]) ,
-   $this->PedirZerando( " ",
-      [ "", CCor_Banco_Banco ,
-      [ "", CCor_Banco ] ] ),
-   $this->PedirZerando( " ",
-      [ "Agência ", CCor_Agencia,
-      [ brHtml(4) . "Conta ", CCor_Conta,
-      [ "", CCor ] ] ] ),
+   $this->PedirZerando( "Conta corrente", CCor ),
    $this->PedirZerando( "Cheque ", Cheque ),
    $this->PedirZerando( "Pagamento", DataPagto ),
    $this->PedirZerando( "Data compensação", DataComp );

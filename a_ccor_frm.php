@@ -2,6 +2,8 @@
 
 echo
 "<table class='tabFormulario' >",
+	$this->Pedir( "Nome" ),
+	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Banco",
 		[ "", Banco_Num,
 		[ brHtml(2), Banco ] ] ),

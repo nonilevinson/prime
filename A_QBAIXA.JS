@@ -80,59 +80,15 @@ function Campo_parQBaixa_CCor()
 var CCor = new Campo_parQBaixa_CCor;
 
 //------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco.prototype = new Lance_CampoHidden;
+Campo_parQBaixa_CCor_Nome.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_parQBaixa_CCor_Banco()
-{
-	this.superClass = Lance_CampoHidden;
-	this.superClass( "CCor_Banco", "CCor_Banco", "Banco", "arqBanco", "a_banco", CCor, "",19);
-}
-
-var CCor_Banco = new Campo_parQBaixa_CCor_Banco;
-
-//------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco_Num.prototype = new Lance_CampoNumericoLigado;
-
-function Campo_parQBaixa_CCor_Banco_Num()
-{
-	this.superClass = Lance_CampoNumericoLigado;
-	this.superClass( "CCor_Banco_Num", "CCor_Banco_Num", "Num", CCor_Banco, 3, "##z", true,"", "");
-}
-
-var CCor_Banco_Num = new Campo_parQBaixa_CCor_Banco_Num;
-
-//------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco_Banco.prototype = new Lance_CampoCadeia;
-
-function Campo_parQBaixa_CCor_Banco_Banco()
-{
-	this.superClass = Lance_CampoCadeia;
-	this.superClass( "CCor_Banco_Banco", "CCor_Banco_Banco", "Banco", 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
-}
-
-var CCor_Banco_Banco = new Campo_parQBaixa_CCor_Banco_Banco;
-
-//------------------------------------------------------------
-Campo_parQBaixa_CCor_Agencia.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parQBaixa_CCor_Agencia()
+function Campo_parQBaixa_CCor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCor_Agencia", "CCor_Agencia", "Agencia", CCor, 4, "uuuu", false);
+	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var CCor_Agencia = new Campo_parQBaixa_CCor_Agencia;
-
-//------------------------------------------------------------
-Campo_parQBaixa_CCor_Conta.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parQBaixa_CCor_Conta()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCor_Conta", "CCor_Conta", "Conta", CCor, 10, "uuuuuuuuuu", false);
-}
-
-var CCor_Conta = new Campo_parQBaixa_CCor_Conta;
+var CCor_Nome = new Campo_parQBaixa_CCor_Nome;
 
 //------------------------------------------------------------
 Campo_parQBaixa_Cheque.prototype = new Lance_CampoNumerico;
@@ -217,31 +173,7 @@ Campo_parQBaixa_CCor.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco.prototype.Existencia = function()
-{
-	return( TFPagto == 1 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco_Num.prototype.Existencia = function()
-{
-	return( TFPagto == 1 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_parQBaixa_CCor_Agencia.prototype.Existencia = function()
-{
-	return( TFPagto == 1 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_parQBaixa_CCor_Conta.prototype.Existencia = function()
+Campo_parQBaixa_CCor_Nome.prototype.Existencia = function()
 {
 	return( TFPagto == 1 );
 }
@@ -249,40 +181,12 @@ Campo_parQBaixa_CCor_Conta.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_parQBaixa_CCor_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( CCor.Obrigatorio( p_comMsg ) );
 }
 
-CCor_Banco.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco_Num.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( CCor.Obrigatorio( p_comMsg ) );
-}
-
-CCor_Banco_Num.TipoCampo |= CAMPO_CHAVE_PAI;
-CCor_Banco_Banco.TipoCampo |= CAMPO_DESCRITOR_PAI;
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_parQBaixa_CCor_Agencia.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( CCor.Obrigatorio( p_comMsg ) );
-}
-
-CCor_Agencia.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_parQBaixa_CCor_Conta.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( CCor.Obrigatorio( p_comMsg ) );
-}
-
-CCor_Conta.TipoCampo |= CAMPO_CHAVE_PAI;
+CCor_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -354,39 +258,16 @@ Campo_parQBaixa_DataComp.prototype.TemAdvertencia = function()
 //-------------------------------------------------------------
 Campo_parQBaixa_CCor.prototype.ExistenciaEspecial = function()
 {
-	return( ( !CCor_Banco.Obrigatorio( false ) || tem(CCor_Banco) ) && ( !CCor_Agencia.Obrigatorio( false ) || tem(CCor_Agencia) ) && ( !CCor_Conta.Obrigatorio( false ) || tem(CCor_Conta) ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco.prototype.ExistenciaEspecial = function()
-{
-	return( ( !CCor_Banco_Num.Obrigatorio( false ) || tem(CCor_Banco_Num) ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
-Campo_parQBaixa_CCor_Banco_Banco.prototype.ExistenciaEspecial = function()
-{
-	return( ( !CCor_Banco.Obrigatorio( false ) || tem(CCor_Banco) ) );
+	return( ( !CCor_Nome.Obrigatorio( false ) || tem(CCor_Nome) ) );
 }
 
 function IniciarDependencias_parQBaixa()
 {
-TFPagto.CalculosDependentes= [ TDetPg ];
-TFPagto.ExistenciasDependentes= [ CCor,CCor_Banco,CCor_Banco_Num,CCor_Agencia,CCor_Conta ];
-CCor_Banco.ExistenciasDependentes= [ CCor,CCor_Banco_Banco ];
-CCor_Banco_Num.ExistenciasDependentes= [ CCor_Banco ];
-CCor_Agencia.ExistenciasDependentes= [ CCor ];
-CCor_Conta.ExistenciasDependentes= [ CCor ];
+TFPagto.ExistenciasDependentes= [ TDetPg,CCor,CCor_Nome ];
+CCor_Nome.ExistenciasDependentes= [ CCor ];
 TDetPg.ExistenciasDependentes= [ Cheque ];
-CCor_Banco_Num.ErrosDependentes= [ CCor_Banco ];
-CCor_Conta.ErrosDependentes= [ CCor ];
-CCor_Banco.DescritoresDependentes= [ CCor_Banco_Banco ];
-CCor.CamposChave= [ CCor_Banco,CCor_Agencia,CCor_Conta ];
-CCor_Banco.CamposChave= [ CCor_Banco_Num ];
+CCor_Nome.ErrosDependentes= [ CCor ];
+CCor.CamposChave= [ CCor_Nome ];
 }
 
 
@@ -404,7 +285,7 @@ function ListaDeCampos_parQBaixa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Banco, CCor_Banco_Num, CCor_Banco_Banco, CCor_Agencia, CCor_Conta, Cheque, DataPagto, DataComp ]	);
+		[ TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Nome, Cheque, DataPagto, DataComp ]	);
 	IniciarDependencias_parQBaixa();
 	g_prefixo = l_prefixo;
 	return( l_lista );

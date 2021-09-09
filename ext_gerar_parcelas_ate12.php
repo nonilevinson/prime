@@ -23,7 +23,6 @@ function criarParcela( $p_idConta )
 		switch( ultimaLigOpcao() )
 		{
 				case 130:	//* menu Financeiro
-					$tFCobra  = ValorOuNull( $parGeraParc->TFCOBRA, "", false );
 					$valorLiq = $valorI;
 					break;
 // if( $g_debugProcesso ) echo '<br><b>GR0 ehCartao S=</b> '.$ehCartao.' <b>txCartao=</b> '.$txCartao.' <b>valorI=</b> '.$valorI;
@@ -55,9 +54,9 @@ function criarParcela( $p_idConta )
          "Valor"      => $valor,
          "ValorLiq"   => $valorLiq,
          "Estimado"   => ValorOuZero( $parGeraParc->ESTIMADO ),
-         "TFCobra"    => $tFCobra,
+         "TFCobra"    => ValorOuNull( $parGeraParc->TFCOBRA, "", false ),
          "Emissao"    => null,
-         "LinhaDig"   => '',
+         "LinhaDig"   => ( $parGeraParc->LINHADIG != '' ? $parGeraParc->LINHADIG : '' ),
          "NomePdf"    => '',
          "CCor"       => ValorOuNull( $parGeraParc->CCOR, "", false ),
          "SubPlano"   => ValorOuNull( $parGeraParc->$cc, "", false ),
