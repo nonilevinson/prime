@@ -1,14 +1,14 @@
 <?php
 
 /*=========================================================================
-  a_recorr - Recorrente
+  a_recor - Recorrente
 =========================================================================*/
 
-if( DEF_a_recorr == 1 )
+if( DEF_a_recor == 1 )
   return;
-define( "DEF_a_recorr", 1 );
+define( "DEF_a_recor", 1 );
 
-include_once( SISTEMA_DIR_ABSOLUTO . "a_recorr_ext.php" );
+include_once( SISTEMA_DIR_ABSOLUTO . "a_recor_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
 
 //======================================================
@@ -40,35 +40,6 @@ class campo_arqRecorrente_Clinica_Clinica extends Lance_CampoCadeia
 	{
 		global $g_regAtual;
 			return( "Clínica" );
-	}
-
-}
-
-//======================================================
-//	Campo TPgRec
-//======================================================
-
-class campo_arqRecorrente_TPgRec extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "TPgRec", "TPgRec", "TPgRec", 0, "tabTPgRec", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( $g_regAtual->TPGREC == 2 )
-			return( "ContaReceber" );
-		return( parent::Estilo() );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Tipo" );
 	}
 
 }
@@ -170,6 +141,35 @@ class campo_arqRecorrente_Nome extends Lance_CampoCadeia
 	{
 		global $g_regAtual;
 		return( (NAO) );
+	}
+
+}
+
+//======================================================
+//	Campo TPgRec
+//======================================================
+
+class campo_arqRecorrente_TPgRec extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TPgRec", "TPgRec", "TPgRec", 0, "tabTPgRec", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->TPGREC == 2 )
+			return( "ContaReceber" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Tipo" );
 	}
 
 }
@@ -452,15 +452,15 @@ function listaCampos_arqRecorrente( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqRecorrente_Clinica(),
 			new campo_arqRecorrente_Clinica_Clinica(),
-			new campo_arqRecorrente_TPgRec(),
-			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
-			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ),
 			new campo_arqRecorrente_Fornecedor(),
 			new campo_arqRecorrente_Fornecedor_Nome(),
 			new campo_arqRecorrente_Pessoa(),
 			new campo_arqRecorrente_Pessoa_Nome(),
 			new campo_arqRecorrente_Pessoa_NumCelular(),
 			new campo_arqRecorrente_Nome(),
+			new campo_arqRecorrente_TPgRec(),
+			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
+			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ),
 			new campo_arqRecorrente_TCompete(),
 			new Lance_CampoCadeia( "TCompete_Chave", "TCompete_Chave", "Chave", 1, "x", EH_CHAVE, TCompete ),
 			new Lance_CampoCadeia( "TCompete_Descritor", "TCompete_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TCompete ),
@@ -491,7 +491,7 @@ class arqRecorrente extends Lance_Arquivo
 	{
 		parent::__construct(
 			"arqRecorrente",  // Nome Interno do arquivo
-			"a_recorr",  // Nome deste arquivo Php que contém o arquivo
+			"a_recor",  // Nome deste arquivo Php que contém o arquivo
 			"Recorrente",  // Nome do arquivo acentuado-se
 			listaCampos_arqRecorrente( "" ), 46
 		);
@@ -513,8 +513,8 @@ class arqRecorrente extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( TPgRec_Descritor ) );
 			array_push( $vetAux, array( Nome ) );
+			array_push( $vetAux, array( TPgRec_Descritor ) );
 			array_push( $vetAux, array( Venc ) );
 			array_push( $vetAux, array( Antecipa ) );
 			array_push( $vetAux, array( Valor ) );
@@ -541,10 +541,10 @@ class arqRecorrente extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( TPgRec_Descritor ) );
 			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( Pessoa_Nome ) );
 			array_push( $vetAux, array( Pessoa_NumCelular ) );
+			array_push( $vetAux, array( TPgRec_Descritor ) );
 			array_push( $vetAux, array( TCompete_Descritor ) );
 			array_push( $vetAux, array( Venc ) );
 			array_push( $vetAux, array( Antecipa ) );
@@ -566,6 +566,14 @@ class arqRecorrente extends Lance_Arquivo
 	function NomeCompleto()
 	{
 		return( 'Contas recorrentes' );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilTodos  
+	//-------------------------------------------------------------
+	function FilTodos()
+	{
+	return( "" . filtrarTodos() . "" );
 	}
 
 }

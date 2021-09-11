@@ -37,10 +37,10 @@ CREATE TABLE arqRecorrente
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  3*/	TPGREC ligadoComTabela, /* Ligado com a Tabela TPgRec */
-	/*  4*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
-	/*  5*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  6*/	/* NOME */
+	/*  3*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+	/*  4*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  5*/	/* NOME */
+	/*  6*/	TPGREC ligadoComTabela, /* Ligado com a Tabela TPgRec */
 	/*  7*/	TCOMPETE ligadoComTabela, /* Ligado com a Tabela TCompete */
 	/*  8*/	VENC SMALLINT, /* Máscara = Z */
 	/*  9*/	ANTECIPA campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -61,7 +61,7 @@ ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
 	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqRecorrente.Pessoa )  ), '' ) ) )
 	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqRecorrente.Fornecedor )  ), '' ) ) )
 	END  ); 
-ALTER TABLE arqRecorrente ALTER NOME POSITION 6;
+ALTER TABLE arqRecorrente ALTER NOME POSITION 5;
 commit;
 
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
@@ -74,12 +74,12 @@ ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_SubPlano FOREIGN KEY (
 commit;
 
 RECREATE VIEW V_arqRecorrente AS 
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TPGREC, A2.CHAVE as TPgRec_CHAVE, A2.DESCRITOR as TPgRec_DESCRITOR, A0.FORNECEDOR, A3.NOME as FORNECEDOR_NOME, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.NOME, A0.TCOMPETE, A5.CHAVE as TCompete_CHAVE, A5.DESCRITOR as TCompete_DESCRITOR, A0.VENC, A0.ANTECIPA, A0.VALOR, A0.ESTIMADO, A0.TFCOBRA, A6.CHAVE as TFCobra_CHAVE, A6.DESCRITOR as TFCobra_DESCRITOR, A0.HISTORICO, A0.SUBPLANO, A7.PLANO as SUBPLANO_PLANO, A8.CODPLANO as SUBPLANO_PLANO_CODPLANO, A8.PLANO as SUBPLANO_PLANO_PLANO, A7.CODIGO as SUBPLANO_CODIGO, A7.NOME as SUBPLANO_NOME, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.FORNECEDOR, A2.NOME as FORNECEDOR_NOME, A0.PESSOA, A3.NOME as PESSOA_NOME, A3.NUMCELULAR as PESSOA_NUMCELULAR, A0.NOME, A0.TPGREC, A4.CHAVE as TPgRec_CHAVE, A4.DESCRITOR as TPgRec_DESCRITOR, A0.TCOMPETE, A5.CHAVE as TCompete_CHAVE, A5.DESCRITOR as TCompete_DESCRITOR, A0.VENC, A0.ANTECIPA, A0.VALOR, A0.ESTIMADO, A0.TFCOBRA, A6.CHAVE as TFCobra_CHAVE, A6.DESCRITOR as TFCobra_DESCRITOR, A0.HISTORICO, A0.SUBPLANO, A7.PLANO as SUBPLANO_PLANO, A8.CODPLANO as SUBPLANO_PLANO_CODPLANO, A8.PLANO as SUBPLANO_PLANO_PLANO, A7.CODIGO as SUBPLANO_CODIGO, A7.NOME as SUBPLANO_NOME, A0.ATIVO
 	FROM arqRecorrente A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
-	left join tabTPgRec A2 on A2.IDPRIMARIO=A0.TPGREC
-	left join arqFornecedor A3 on A3.IDPRIMARIO = A0.FORNECEDOR
-	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA
+	left join arqFornecedor A2 on A2.IDPRIMARIO = A0.FORNECEDOR
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
+	left join tabTPgRec A4 on A4.IDPRIMARIO=A0.TPGREC
 	left join tabTCompete A5 on A5.IDPRIMARIO=A0.TCOMPETE
 	left join tabTFCobra A6 on A6.IDPRIMARIO=A0.TFCOBRA
 	left join arqSubPlano A7 on A7.IDPRIMARIO = A0.SUBPLANO
@@ -108,9 +108,9 @@ if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
-	execute procedure set_log( 12, NEW.idPrimario, 'TPgRec', OLD.TPgRec, NEW.TPgRec );
 	execute procedure set_log( 12, NEW.idPrimario, 'Fornecedor', OLD.Fornecedor, NEW.Fornecedor );
 	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPgRec', OLD.TPgRec, NEW.TPgRec );
 	execute procedure set_log( 12, NEW.idPrimario, 'TCompete', OLD.TCompete, NEW.TCompete );
 	execute procedure set_log( 12, NEW.idPrimario, 'Venc', OLD.Venc, NEW.Venc );
 	execute procedure set_log( 12, NEW.idPrimario, 'Antecipa', OLD.Antecipa, NEW.Antecipa );

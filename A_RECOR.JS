@@ -1,5 +1,5 @@
 /*=========================================================================
-  a_recorr - Recorrente
+  a_recor - Recorrente
 =========================================================================*/
 
 //------------------------------------------------------------
@@ -23,39 +23,6 @@ function Campo_arqRecorrente_Clinica_Clinica()
 }
 
 var Clinica_Clinica = new Campo_arqRecorrente_Clinica_Clinica;
-
-//------------------------------------------------------------
-Campo_arqRecorrente_TPgRec.prototype = new Lance_CampoLigado;
-
-function Campo_arqRecorrente_TPgRec()
-{
-	this.superClass = Lance_CampoLigado;
-	this.superClass( "TPgRec", "TPgRec", "TPgRec", "tabTPgRec", "t_tpgre", null, "",0);
-}
-
-var TPgRec = new Campo_arqRecorrente_TPgRec;
-
-//------------------------------------------------------------
-Campo_arqRecorrente_TPgRec_Chave.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqRecorrente_TPgRec_Chave()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TPgRec_Chave", "TPgRec_Chave", "TPgRec", TPgRec, 1, "u", false);
-}
-
-var TPgRec_Chave = new Campo_arqRecorrente_TPgRec_Chave;
-
-//------------------------------------------------------------
-Campo_arqRecorrente_TPgRec_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqRecorrente_TPgRec_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TPgRec_Descritor", "TPgRec_Descritor", "TPgRec", TPgRec, 7, "xxxxxxx", false);
-}
-
-var TPgRec_Descritor = new Campo_arqRecorrente_TPgRec_Descritor;
 
 //------------------------------------------------------------
 Campo_arqRecorrente_Fornecedor.prototype = new Lance_CampoHidden;
@@ -122,6 +89,39 @@ function Campo_arqRecorrente_Nome()
 }
 
 var Nome = new Campo_arqRecorrente_Nome;
+
+//------------------------------------------------------------
+Campo_arqRecorrente_TPgRec.prototype = new Lance_CampoLigado;
+
+function Campo_arqRecorrente_TPgRec()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TPgRec", "TPgRec", "TPgRec", "tabTPgRec", "t_tpgre", null, "",0);
+}
+
+var TPgRec = new Campo_arqRecorrente_TPgRec;
+
+//------------------------------------------------------------
+Campo_arqRecorrente_TPgRec_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqRecorrente_TPgRec_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TPgRec_Chave", "TPgRec_Chave", "TPgRec", TPgRec, 1, "u", false);
+}
+
+var TPgRec_Chave = new Campo_arqRecorrente_TPgRec_Chave;
+
+//------------------------------------------------------------
+Campo_arqRecorrente_TPgRec_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqRecorrente_TPgRec_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TPgRec_Descritor", "TPgRec_Descritor", "TPgRec", TPgRec, 7, "xxxxxxx", false);
+}
+
+var TPgRec_Descritor = new Campo_arqRecorrente_TPgRec_Descritor;
 
 //------------------------------------------------------------
 Campo_arqRecorrente_TCompete.prototype = new Lance_CampoLigado;
@@ -342,27 +342,6 @@ Campo_arqRecorrente_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqRecorrente_TPgRec.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "O tipo é obrigatório" );
-		return( true );
-	}
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqRecorrente_TPgRec.prototype.Cabecalho = function()
-{
-		return( "Tipo" );
-}
-
-TPgRec_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TPgRec_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
-//-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
 Campo_arqRecorrente_Fornecedor.prototype.FiltroPai = function()
@@ -473,6 +452,27 @@ Campo_arqRecorrente_Nome.prototype.Calculou = function()
 }
 
 Nome.EhCalculado = true;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqRecorrente_TPgRec.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O tipo é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqRecorrente_TPgRec.prototype.Cabecalho = function()
+{
+		return( "Tipo" );
+}
+
+TPgRec_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TPgRec_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -708,7 +708,7 @@ function ListaDeCampos_arqRecorrente( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Nome, TCompete, TCompete_Chave, TCompete_Descritor, Venc, Antecipa, Valor, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Historico, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, Ativo ]	);
+		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Nome, TPgRec, TPgRec_Chave, TPgRec_Descritor, TCompete, TCompete_Chave, TCompete_Descritor, Venc, Antecipa, Valor, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Historico, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, Ativo ]	);
 	IniciarDependencias_arqRecorrente();
 	g_prefixo = l_prefixo;
 	return( l_lista );
@@ -718,5 +718,6 @@ g_arquivoCampos = ListaDeCampos_arqRecorrente( '' );
 g_idOperacao = 46;
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"Gerar conta e parcela","","G",162,"","",1,"temMarcados()","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_recorrente_criar^^^^^^^^^^^^^^^^^^", "", 0,21,[162],[]);
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }
