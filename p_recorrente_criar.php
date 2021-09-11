@@ -7,20 +7,22 @@ sql_abrirBD( false );
 
 $select = "Select RecorDia From cnfXConfig";
 $recorDia = sql_lerUmRegistro( $select )->RECORDIA;
-// if( $g_debugProcesso ) echo '<br><b>GR0 cnfXConfig S=</b> '.$select.' <b>recorDia=</b> '.$recorDia.' <b>HOJE=</b> '.formatarData( HOJE, 'dd' );
+// if( $g_debugProcesso ) echo '<br><b>GR0 cnfXConfig S=</b> '.$select.' <b>recorDia=</b> '.$recorDia;
 
-$hoje = formatarData( HOJE, 'aaaa/mm/dd');
+$hoje    = formatarData( HOJE, 'aaaa/mm/dd');
+$diaHoje = dataDia( $hoje );
+$ultDia  = ultDiaDoMes( $hoje );
+// if( $g_debugProcesso ) echo '<br><b>GR0 hoje=</b> '.$hoje.' <b>diaHoje=</b> '.$diaHoje.' <b>ult=</b> '.$ultDia;
 
 sql_fecharBD();
 
-if( $recorDia == formatarData( HOJE, 'dd' ) || ultimaLigOpcaoEm( 162 ) )
+if( $recorDia == $diaHoje || $recorDia > $ultDia || ultimaLigOpcaoEm( 162 ) )
 {
    $g_qtd = 0;
    $parQSelecao = lerParametro( 'parQSelecao' );
 
-   //* Lê as contas recorrentes ativas
    //* Criação automática pelo rotinas_php.bat do server
-   if( $recorDia == formatarData( HOJE, 'dd' ) || ultimaLigOpcaoEm(162) )
+   if( $recorDia == formatarData( HOJE, 'dd' ) || ultimaLigOpcaoEm(163) )
    {
          $peloServer    = true;
          $operacaoAtual = 200163;
@@ -32,7 +34,7 @@ if( $recorDia == formatarData( HOJE, 'dd' ) || ultimaLigOpcaoEm( 162 ) )
    //* Criação manual pelo sistema
    switch( ultimaLigOpcao() )
    {
-      case 162:	// opção pelo menu de navegação do arqRecorentes
+      case 162:	//* opção pelo menu de navegação do arqRecorentes
          $peloServer    = false;
          $operacaoAtual = OperacaoAtual();
          $from          = FromMarcados( 'arqRecorrente', 'R' );
@@ -45,18 +47,18 @@ if( $recorDia == formatarData( HOJE, 'dd' ) || ultimaLigOpcaoEm( 162 ) )
    sql_abrirBD( $operacaoAtual );
    sql_iniciarTransacao();
 
-   $select = "select R.*
+   $select = "Select R.*
       From " . $from . "
          join arqClinica         U on U.idPrimario=R.Clinica
          left join arqFornecedor F on F.idPrimario=R.Fornecedor
          left join arqPessoa     P on P.idPrimario=R.Pessoa
-      Where ( P.Ativo = 1 or F.Ativo = 1 ) and " . $where .
-      " Order by R.Clinica, F.Nome, P.Nome";
+      Where ( P.Ativo = 1 or F.Ativo = 1 ) and " . $where . "
+      Order by R.Clinica, F.Nome, P.Nome";
 // if( $g_debugProcesso ) echo '<br><b>GR0 arqRecorrente S=</b> '.$select;
    $regRecorrentes = sql_lerRegistros( $select );
 
    $g_contas = [];
-   
+
    foreach( $regRecorrentes as $umaRecorrente )
    {
       $idRecorrente = $umaRecorrente->IDPRIMARIO;
