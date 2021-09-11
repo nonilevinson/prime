@@ -11,6 +11,25 @@ insert into arqLanceOperacao values(200163,2,'Rotina para criar contas recorrent
 
 insert into arqLanceOperacao values(100046,1,'Cadastro de contas recorrentes a pagar e a receber','arqRecorrente',46,10,0,'');
 insert into arqLanceOperacao values(200162,2,'Gerar conta e parcela de recorrentes','',162,10,0,'');
+insert into arqLanceOperacao values(200166,2,'Relatório de parcelas de contas a pagar e a receber','',166,50,0,'');
+commit;
+
+/************************************************************
+	TABELA tabTData
+************************************************************/
+
+CREATE TABLE tabTData
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTData_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTData_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTData VALUES ( 1, '1', 'Pagamento' );
+INSERT INTO tabTData VALUES ( 2, '2', 'Vencimento' );
 commit;
 
 /************************************************************

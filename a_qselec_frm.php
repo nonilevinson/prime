@@ -187,5 +187,35 @@ if( $op == 162 ) //* p_recorrente_criar
 	$this->Pedir( "Mês do vencimento", MesIni );
 }
 
+if( $op == 166 ) //* r_parcela
+{
+	echo
+	$this->Pedir( "Tipo", TPgRec ),
+	$this->Pedir( "Tipo da data",
+		[ "", TData, " (obrigatório)" ] ),
+	$this->Pedir( "Data entre",
+		[ "", DataIni,
+		[ " (obrigatória) e ", DataFim ] ] ),
+	$this->Pedir( "Quitadas?", TSimNao ),
+	$this->Pedir( "Forma Cobrança", TFCobra ),
+	$this->Pedir( "Forma Pagamento", TFPagto ),
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Fornecedor" ),
+	$this->Pedir( "Pessoa", Cliente ),
+	$this->Pedir( "Conta corrente", CCor ),
+   $this->Pedir( "Plano de contas",
+      [ "", SubPlano_Plano_CodPlano,
+      [ brHtml(2), SubPlano_Plano_Plano,
+      [ "", SubPlano_Plano ] ] ] ),
+   $this->Pedir( " ",
+      [ "", SubPlano_Codigo,
+      [ brHtml(2), SubPlano_Nome,
+      [ "", SubPlano ] ] ] ),
+	$this->Pedir( "Competência entre os meses de ",
+		[ '', MesIni,
+		[ brHtml(2) . 'e ', MesFim ] ] ),
+	$this->Pedir( "Consolidado?", Logico1 );
+}
+
 //==================================================================================
 echo 	"</table>";

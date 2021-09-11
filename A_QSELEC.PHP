@@ -146,6 +146,32 @@ class campo_parQSelecao_Cliente_NumCelular extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Fornecedor
+//======================================================
+
+class campo_parQSelecao_Fornecedor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor", "Fornecedor", "Fornecedor", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor_Nome
+//======================================================
+
+class campo_parQSelecao_Fornecedor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Fornecedor", false );
+	}
+
+}
+
+//======================================================
 //	Campo EmailRemet
 //======================================================
 
@@ -324,6 +350,19 @@ class campo_parQSelecao_MesIni extends Lance_CampoData
 	function __construct()
 	{
 		parent::__construct( "MesIni", "MesIni", "MesIni", 6, "mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo MesFim
+//======================================================
+
+class campo_parQSelecao_MesFim extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "MesFim", "MesFim", "MesFim", 6, "mm/aaaa", 0, 0, false );
 	}
 
 }
@@ -518,27 +557,158 @@ class campo_parQSelecao_TPgRec extends Lance_CampoLigado
 }
 
 //======================================================
-//	Campo Fornecedor
+//	Campo SubPlano
 //======================================================
 
-class campo_parQSelecao_Fornecedor extends Lance_CampoLigado
+class campo_parQSelecao_SubPlano extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Fornecedor", "Fornecedor", "Fornecedor", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+		parent::__construct( "SubPlano", "SubPlano", "SubPlano", 0, "arqSubPlano", "arqSubPlano.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, 0, false );
 	}
 
 }
 
 //======================================================
-//	Campo Fornecedor_Nome
+//	Campo SubPlano_Plano
 //======================================================
 
-class campo_parQSelecao_Fornecedor_Nome extends Lance_CampoCadeia
+class campo_parQSelecao_SubPlano_Plano extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Fornecedor", false );
+		parent::__construct( "SubPlano_Plano", "SubPlano_Plano", "Plano", EH_CHAVE, "arqPlano", "arqPlano.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, "SubPlano", false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlano_Plano_CodPlano
+//======================================================
+
+class campo_parQSelecao_SubPlano_Plano_CodPlano extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlano_Plano_CodPlano", "SubPlano_Plano_CodPlano", "CodPlano", 2, "zz", "", "", EH_CHAVE, "SubPlano_Plano", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Código" );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlano_Plano_Plano
+//======================================================
+
+class campo_parQSelecao_SubPlano_Plano_Plano extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlano_Plano_Plano", "SubPlano_Plano_Plano", "Plano", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "SubPlano_Plano", false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlano_Codigo
+//======================================================
+
+class campo_parQSelecao_SubPlano_Codigo extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlano_Codigo", "SubPlano_Codigo", "Codigo", 6, "##.##.##", EH_CHAVE, "SubPlano", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Código" );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlano_Nome
+//======================================================
+
+class campo_parQSelecao_SubPlano_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlano_Nome", "SubPlano_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "SubPlano", false );
+	}
+
+}
+
+//======================================================
+//	Campo TData
+//======================================================
+
+class campo_parQSelecao_TData extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TData", "TData", "TData", 0, "tabTData", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo CCor
+//======================================================
+
+class campo_parQSelecao_CCor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "CCor", "CCor", "CCor", 0, "arqCCor", "arqCCor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo CCor_Nome
+//======================================================
+
+class campo_parQSelecao_CCor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "CCor_Nome", "CCor_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CCor", false );
+	}
+
+}
+
+//======================================================
+//	Campo TFCobra
+//======================================================
+
+class campo_parQSelecao_TFCobra extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TFCobra", "TFCobra", "TFCobra", 0, "tabTFCobra", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo TFPagto
+//======================================================
+
+class campo_parQSelecao_TFPagto extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TFPagto", "TFPagto", "TFPagto", 0, "tabTFPagto", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
 	}
 
 }
@@ -564,6 +734,8 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Cliente(),
 			new campo_parQSelecao_Cliente_Nome(),
 			new campo_parQSelecao_Cliente_NumCelular(),
+			new campo_parQSelecao_Fornecedor(),
+			new campo_parQSelecao_Fornecedor_Nome(),
 			new campo_parQSelecao_EmailRemet(),
 			new campo_parQSelecao_EmailRemet_Email(),
 			new campo_parQSelecao_AcaoEmail(),
@@ -579,6 +751,7 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_DataIni1(),
 			new campo_parQSelecao_DataFim1(),
 			new campo_parQSelecao_MesIni(),
+			new campo_parQSelecao_MesFim(),
 			new campo_parQSelecao_HoraIni(),
 			new campo_parQSelecao_HoraFim(),
 			new campo_parQSelecao_Gran6(),
@@ -599,8 +772,23 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_TPgRec(),
 			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
 			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ),
-			new campo_parQSelecao_Fornecedor(),
-			new campo_parQSelecao_Fornecedor_Nome() )
+			new campo_parQSelecao_SubPlano(),
+			new campo_parQSelecao_SubPlano_Plano(),
+			new campo_parQSelecao_SubPlano_Plano_CodPlano(),
+			new campo_parQSelecao_SubPlano_Plano_Plano(),
+			new campo_parQSelecao_SubPlano_Codigo(),
+			new campo_parQSelecao_SubPlano_Nome(),
+			new campo_parQSelecao_TData(),
+			new Lance_CampoCadeia( "TData_Chave", "TData_Chave", "Chave", 1, "x", EH_CHAVE, TData ),
+			new Lance_CampoCadeia( "TData_Descritor", "TData_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TData ),
+			new campo_parQSelecao_CCor(),
+			new campo_parQSelecao_CCor_Nome(),
+			new campo_parQSelecao_TFCobra(),
+			new Lance_CampoCadeia( "TFCobra_Chave", "TFCobra_Chave", "Chave", 1, "x", EH_CHAVE, TFCobra ),
+			new Lance_CampoCadeia( "TFCobra_Descritor", "TFCobra_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TFCobra ),
+			new campo_parQSelecao_TFPagto(),
+			new Lance_CampoCadeia( "TFPagto_Chave", "TFPagto_Chave", "Chave", 1, "x", EH_CHAVE, TFPagto ),
+			new Lance_CampoCadeia( "TFPagto_Descritor", "TFPagto_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TFPagto ) )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

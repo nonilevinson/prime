@@ -318,6 +318,6 @@ g_idOperacao = 42;
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Contatos","","C",143,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Fornecedor","?","","", "","", 0,11,[],[21]);
 var Menu_2 = new Array( 1,"Contas","","t",144,"","",1,"","1","a_conta","arqConta","Folhear","Fornecedor","?","","", "","", 0,11,[],[33]);
-var Menu_3 = new Array( 1,"Recorrentes","","R",154,"","",1,"","1","a_recorr","arqRecorrente","Folhear","Fornecedor","?","","", "","", 0,11,[],[46]);
+var Menu_3 = new Array( 1,"Recorrentes","","R",154,"","",1,"","1","a_recor","arqRecorrente","Folhear","Fornecedor","?","","", "","", 0,11,[],[46]);
 parent.navegacao.MenuPrincQtdOpcoes=3;
 }

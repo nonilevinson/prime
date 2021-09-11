@@ -1575,6 +1575,25 @@ commit;
 
 
 /************************************************************
+	TABELA tabTData
+************************************************************/
+
+CREATE TABLE tabTData
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTData_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTData_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTData VALUES ( 1, '1', 'Pagamento' );
+INSERT INTO tabTData VALUES ( 2, '2', 'Vencimento' );
+commit;
+
+
+/************************************************************
 	Arquivo Bairro    
 ************************************************************/
 
@@ -3020,6 +3039,7 @@ insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos
 insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
 insert into arqLanceOperacao values(200162,2,'Gerar conta e parcela de recorrentes','',162,10,0,'');
 insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm()');
+insert into arqLanceOperacao values(200166,2,'Relatório de parcelas de contas a pagar e a receber','',166,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');

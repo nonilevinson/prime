@@ -140,6 +140,6 @@ g_idOperacao = 28;
 
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Parcelas","","P",102,"","",1,"","1","a_parcel","arqParcela","Folhear","SubPlano","?","","", "","", 0,11,[],[34]);
-var Menu_2 = new Array( 1,"Recorrentes","","R",159,"","",1,"","1","a_recorr","arqRecorrente","Folhear","SubPlano","?","","", "","", 0,11,[],[46]);
+var Menu_2 = new Array( 1,"Recorrentes","","R",159,"","",1,"","1","a_recor","arqRecorrente","Folhear","SubPlano","?","","", "","", 0,11,[],[46]);
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }
