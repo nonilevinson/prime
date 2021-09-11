@@ -147,7 +147,7 @@ if( $recorDia == $diaHoje || $recorDia > $ultDia || ultimaLigOpcaoEm( 162 ) )
          //* prepara vetor para ter os dados que irão no email
          $select = "Select C.Transacao, P.Vencimento, P.Valor, C.Historico, U.Clinica,
                T.Descritor as TFCobra, N.idPrimario as idTPgRec, N.Descritor as TPgRec,
-               iif( F.Nome is not null, F.Nome, E.Nome ) as Nome
+               iif( C.Fornecedor is not null, F.Nome, E.Nome ) as Nome
             From arqParcela P
                join arqConta           C on C.idPrimario=P.Conta
                join tabTPgRec			   N on N.idPrimario=C.TPgRec

@@ -236,7 +236,7 @@ else
 $select = "Select P.Parcela, P.Vencimento, P.ValorLiq, P.Estimado, P.VencEst, P.DataPagto,
 		C.TrgQtdParc, C.Transacao, C.Compete, C.Historico, C.TPgRec as idTPgRec, L.Clinica,
       O.Descritor as TFCobra,
-		iif( F.Nome is not null, F.Nome, S.Nome ) as Nome
+		iif( C.Fornecedor is not null, F.Nome, S.Nome ) as Nome
 	From arqParcela P
 		join arqConta  			C on C.idPrimario=P.Conta
 		join arqClinica 			L on L.idPrimario=C.Clinica

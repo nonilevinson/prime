@@ -8,6 +8,8 @@ execute procedure reindexartudo;
 commit;
 
 insert into arqLanceOperacao values(200163,2,'Rotina para criar contas recorrentes','',163,99,1,'');
+insert into arqLanceOperacao values(200167,2,'Envia o m_parcela_padrao Hojes','',167,99,1,'');
+insert into arqLanceOperacao values(200168,2,'Envia o m_parcela_aberta','',168,99,1,'');
 
 insert into arqLanceOperacao values(100046,1,'Cadastro de contas recorrentes a pagar e a receber','arqRecorrente',46,10,0,'');
 insert into arqLanceOperacao values(200162,2,'Gerar conta e parcela de recorrentes','',162,10,0,'');

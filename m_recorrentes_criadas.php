@@ -133,7 +133,6 @@ $proc->campoHabilitado = "EmailFinan";
 $proc->tituloEmail = $g_qtd . " contas recorrentes de " . CLIENTE_NOME . " criadas  em " . formatarData( HOJE );
 
 $proc->DefinirQuebras( [ 'QuebraPorClinica', SIM, NAO, SIM ] );
-
 $proc->DefinirTotais( 'totReceber', 'totPagar', 'totQtdReceber', 'totQtdPagar' );
 
 sql_abrirBD( false );
