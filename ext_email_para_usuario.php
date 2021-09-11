@@ -58,7 +58,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 txtEmail=</b><br>'.$this->txtEmail;
 
 		if( $this->campoHabilitado )
 		{
-			//* USUÁRIOS CADASTRADOS PARA RECEBER
+			//* usuários cadastrados para receber
 			$select = "Select U.Email
 			From arqUsuario U
 			Where U.Email != '' and U." . $this->campoHabilitado . " = 1 and U.Ativo = 1
@@ -70,7 +70,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 txtEmail=</b><br>'.$this->txtEmail;
 
 			foreach( $emailLog as $umEmail )
 			{
-if( $g_debugProcesso ) echo '<br>Envia para= '.$umEmail->EMAIL;
+if( $g_debugProcesso ) echo '<br><b>GR0 Envia para=</b> '.$umEmail->EMAIL;
 				$vetEmail[] = [ $umEmail->EMAIL, $umEmail->USUARIO ];
 			}
 
@@ -78,7 +78,7 @@ $teste = false;
 			if( $teste )
 			{
 				$this->comSupervisor = false;
-				echo '<br><center><b><font size="6">EM TESTE</font></b></center><br>'.$this->txtEmail;
+				echo '<br><center><b><font size="6">ext_email_para_usuario EM TESTE</font></b></center><br>'.$this->txtEmail;
 			}
 			else
 				$this->ProcessarMultiEmail( $vetEmail, $this->tituloEmail );

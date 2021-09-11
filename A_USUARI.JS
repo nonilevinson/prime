@@ -167,6 +167,17 @@ function Campo_arqUsuario_EmailAcesS()
 
 var EmailAcesS = new Campo_arqUsuario_EmailAcesS;
 
+//------------------------------------------------------------
+Campo_arqUsuario_EmailFinan.prototype = new Lance_CampoLogico;
+
+function Campo_arqUsuario_EmailFinan()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "EmailFinan", "EmailFinan", "EmailFinan");
+}
+
+var EmailFinan = new Campo_arqUsuario_EmailFinan;
+
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -389,6 +400,26 @@ Campo_arqUsuario_EmailAcesS.prototype.PodeAlterar = function()
 }
 
 //-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqUsuario_EmailFinan.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqUsuario_EmailFinan.prototype.PodeAlterar = function()
+{
+		if( PodeExecutarOperacao(2) || g_usuarioAtual == g_idRegAtual )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqUsuario_Grupo.prototype.ExistenciaEspecial = function()
@@ -420,7 +451,7 @@ function ListaDeCampos_arqUsuario( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Nome, Senha, Grupo, Grupo_Grupo, Versao, Email, Medico, CRM, PodeAgenda, Ativo, Nascimento, Foto, EmailAces, EmailAcesS ]	);
+		[ Usuario, Nome, Senha, Grupo, Grupo_Grupo, Versao, Email, Medico, CRM, PodeAgenda, Ativo, Nascimento, Foto, EmailAces, EmailAcesS, EmailFinan ]	);
 	IniciarDependencias_arqUsuario();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -262,6 +262,19 @@ class campo_arqUsuario_EmailAcesS extends Lance_CampoLogico
 }
 
 //======================================================
+//	Campo EmailFinan
+//======================================================
+
+class campo_arqUsuario_EmailFinan extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "EmailFinan", "EmailFinan", "EmailFinan", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqUsuario
 //======================================================
 function listaCampos_arqUsuario( $p_prefixo )
@@ -287,7 +300,8 @@ function listaCampos_arqUsuario( $p_prefixo )
 			new campo_arqUsuario_Foto(),
 			new Lance_CampoCadeia( "Foto_Arquivo", "Foto_Arquivo", "Descritor", 0, "", EH_DESCRITOR, Foto ),
 			new campo_arqUsuario_EmailAces(),
-			new campo_arqUsuario_EmailAcesS() )
+			new campo_arqUsuario_EmailAcesS(),
+			new campo_arqUsuario_EmailFinan() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -359,6 +373,7 @@ class arqUsuario extends Lance_Arquivo
 			array_push( $vetAux, array( Foto ) );
 			array_push( $vetAux, array( EmailAces ) );
 			array_push( $vetAux, array( EmailAcesS ) );
+			array_push( $vetAux, array( EmailFinan ) );
 		return( $vetAux );
 	}
 

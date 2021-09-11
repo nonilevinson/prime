@@ -30,15 +30,20 @@ echo
 	$this->Pedir( "Email" ),
 	$this->Pedir( "Site" ),
 	$this->Pular1Linha(2),
+"</table>",
+
+CriarForms(
+	[ 'Consultas', 'C', true ],
+	[ 'Financeiro', 'F', true ],
+	[ 'Endereço', 'E', true ] ),
+
+//* Consultas
+"<table id='C' class='tabFormulario' style='display:none'>",
 	$this->Pedir( "Desmarcações",
 		[ "", QtasDesmar, " (quantas desmarcações um paciente pode efetuar)" ] ),
 	$this->Pedir( "Declinar",
 		[ "", Declinar, " % (qual a taxa percentual mensal que um médico pode declinar de pacientes)" ] ),
 "</table>",
-
-CriarForms(
-	[ 'Financeiro', 'F', true ],
-	[ 'Endereço', 'E', true ] ),
 
 //* Financeiro
 "<table id='F' class='tabFormulario' style='display:none'>",

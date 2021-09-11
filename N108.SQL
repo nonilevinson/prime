@@ -1847,6 +1847,7 @@ CREATE TABLE arqUsuario
 	/* 14*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
 	/* 15*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 16*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 17*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
 );
@@ -2640,7 +2641,7 @@ RECREATE VIEW V_arqGrupo AS
 commit;
 
 RECREATE VIEW V_arqUsuario AS 
-	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.MEDICO, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.MEDICO, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS, A0.EMAILFINAN
 	FROM arqUsuario A0
 	left join arqGrupo A1 on A1.IDPRIMARIO = A0.GRUPO
 	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.FOTO;
@@ -3007,8 +3008,8 @@ insert into arqLanceOperacao values(200048,2,'Rotina de envio de email Funcionár
 insert into arqLanceOperacao values(200049,2,'Rotina de envio de email Avisa Niver Dia','',49,99,1,'');
 insert into arqLanceOperacao values(200028,2,'Relatório de log de acessos ao sistema','',28,90,0,'');
 insert into arqLanceOperacao values(200107,2,'Rotina para alterar as senhas dos usuários','',107,null,0,'');
+insert into arqLanceOperacao values(200163,2,'Rotina para criar contas recorrentes','',163,99,1,'');
 insert into arqLanceOperacao values(200083,2,'Rotina para reindexar os índices','',83,99,1,'');
-insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm()');
 insert into arqLanceOperacao values(200073,2,'Relatório analítico de interações no sistema','',73,90,0,'');
 insert into arqLanceOperacao values(200074,2,'Relatório resumido de interações no sistema','',74,90,0,'');
 insert into arqLanceOperacao values(200129,2,'Rotina para baixar parcelas','',129,10,0,'');
@@ -3018,6 +3019,7 @@ insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos 
 insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos','',151,1,0,'');
 insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
 insert into arqLanceOperacao values(200162,2,'Gerar conta e parcela de recorrentes','',162,10,0,'');
+insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm()');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -3243,6 +3245,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Nascimento', OLD.Nascimento, NEW.Nascimento );
 	execute procedure set_log( 12, NEW.idPrimario, 'EmailAces', OLD.EmailAces, NEW.EmailAces );
 	execute procedure set_log( 12, NEW.idPrimario, 'EmailAcesS', OLD.EmailAcesS, NEW.EmailAcesS );
+	execute procedure set_log( 12, NEW.idPrimario, 'EmailFinan', OLD.EmailFinan, NEW.EmailFinan );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
 		( NEW.Senha is distinct from OLD.Senha )  OR 
 		( NEW.Versao is distinct from OLD.Versao )  OR 
