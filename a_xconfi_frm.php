@@ -21,7 +21,7 @@ if( GrupoAtualEm() )
 else
 {
 	echo
-	$this->NaoPedirVarios( CPF, LogAcesso, LogAcessoS, Qtd1, Qtd2 );
+	$this->NaoPedirVarios( CPF, LogAcesso, LogAcessoS, Qtd, Qtd2 );
 }
 
 echo
@@ -37,9 +37,16 @@ echo
 "</table>",
 
 CriarForms(
+	[ 'Financeiro', 'F', true ],
 	[ 'Endereço', 'E', true ] ),
 
-"<table class='tabFormulario'>",
+//* Financeiro
+"<table id='F' class='tabFormulario' style='display:none'>",
+	$this->Pedir( "Dia para criação automática<br>das contas recorrentes",
+		[ "", RecorDia, " (deixe zero, se não quiser usar a rotina automática)" ] ),
+"</table>",
+
+"<table id='E' class='tabFormulario' style='display:none'>",
 	frmEndereco( "E", "Ende_" ),
 "</table>";
 

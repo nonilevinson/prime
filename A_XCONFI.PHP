@@ -156,6 +156,19 @@ class campo_cnfXConfig_Declinar extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo RecorDia
+//======================================================
+
+class campo_cnfXConfig_RecorDia extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "RecorDia", "RecorDia", "RecorDia", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo cnfXConfig
 //======================================================
 function listaCampos_cnfXConfig( $p_prefixo )
@@ -178,7 +191,8 @@ function listaCampos_cnfXConfig( $p_prefixo )
 			new campo_cnfXConfig_Email(),
 			new campo_cnfXConfig_Site(),
 			new campo_cnfXConfig_QtasDesmar(),
-			new campo_cnfXConfig_Declinar() )
+			new campo_cnfXConfig_Declinar(),
+			new campo_cnfXConfig_RecorDia() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

@@ -127,6 +127,17 @@ function Campo_cnfXConfig_Declinar()
 
 var Declinar = new Campo_cnfXConfig_Declinar;
 
+//------------------------------------------------------------
+Campo_cnfXConfig_RecorDia.prototype = new Lance_CampoNumerico;
+
+function Campo_cnfXConfig_RecorDia()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "RecorDia", "RecorDia", "RecorDia", 2, "#z", false,"", "");
+}
+
+var RecorDia = new Campo_cnfXConfig_RecorDia;
+
 //-------------------------------------------------------------
 // Condição de erro do campo
 //-------------------------------------------------------------
@@ -186,6 +197,19 @@ Campo_cnfXConfig_Email.prototype.TemErro = function()
 	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_cnfXConfig_RecorDia.prototype.TemErro = function()
+{
+		if( tem(this) && ( RecorDia > 31 ) )
+	{
+		alert( "Dia inválido" );
+		return( true );
+	}
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+}
+
 function IniciarDependencias_cnfXConfig()
 {
 }
@@ -207,7 +231,7 @@ function ListaDeCampos_cnfXConfig( p_prefixo )
 
 		[ CPF, LogAcesso, LogAcessoS, Qtd, Qtd2, Empresa ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ CNPJ, Email, Site, QtasDesmar, Declinar ]	);
+		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia ]	);
 	IniciarDependencias_cnfXConfig();
 	g_prefixo = l_prefixo;
 	return( l_lista );

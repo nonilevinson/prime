@@ -12,7 +12,7 @@ $recorDia = sql_lerUmRegistro( $select )->RECORDIA;
 
 sql_fecharBD();
 
-if( $recorDia == formatarData( HOJE, 'dd' ) || ultimaLigOpcaoEm( 185 ) )
+if( $recorDia == formatarData( HOJE, 'dd' ) || ultimaLigOpcaoEm( 162 ) )
 {
    $g_qtd = 0;
    $parQSelecao = lerParametro( 'parQSelecao' );

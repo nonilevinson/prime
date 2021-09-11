@@ -181,5 +181,11 @@ if( $op == 138 ) //* p_pessoa_prontuario
 	$this->Pedir( "Prontuário Nº", Gran13 );
 }
 
+if( $op == 162 ) //* p_recorrente_criar
+{
+	echo
+	$this->Pedir( "Mês do vencimento", MesIni );
+}
+
 //==================================================================================
 echo 	"</table>";

@@ -316,6 +316,19 @@ class campo_parQSelecao_DataFim1 extends Lance_CampoData
 }
 
 //======================================================
+//	Campo MesIni
+//======================================================
+
+class campo_parQSelecao_MesIni extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "MesIni", "MesIni", "MesIni", 6, "mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo HoraIni
 //======================================================
 
@@ -565,6 +578,7 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_DataFim(),
 			new campo_parQSelecao_DataIni1(),
 			new campo_parQSelecao_DataFim1(),
+			new campo_parQSelecao_MesIni(),
 			new campo_parQSelecao_HoraIni(),
 			new campo_parQSelecao_HoraFim(),
 			new campo_parQSelecao_Gran6(),

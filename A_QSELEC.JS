@@ -267,6 +267,17 @@ function Campo_parQSelecao_DataFim1()
 var DataFim1 = new Campo_parQSelecao_DataFim1;
 
 //------------------------------------------------------------
+Campo_parQSelecao_MesIni.prototype = new Lance_CampoData;
+
+function Campo_parQSelecao_MesIni()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "MesIni", "MesIni", "MesIni", 6, "mm/aaaa", true);
+}
+
+var MesIni = new Campo_parQSelecao_MesIni;
+
+//------------------------------------------------------------
 Campo_parQSelecao_HoraIni.prototype = new Lance_CampoHora;
 
 function Campo_parQSelecao_HoraIni()
@@ -734,6 +745,19 @@ Campo_parQSelecao_DataFim1.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
+Campo_parQSelecao_MesIni.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 162 ) )
+	{
+		if( p_comMsg ) alert( "O mês é obrigatório" );
+		return( true );
+	}
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
 Campo_parQSelecao_HoraIni.prototype.Obrigatorio = function( p_comMsg )
 {
 		if( ultimaLigOpcaoEm( 53,137 ) )
@@ -996,7 +1020,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );
