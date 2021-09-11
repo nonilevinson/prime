@@ -15,7 +15,7 @@ var Menu_2_5_5 = new Array( 1,"Bairros","","i",145,"","",1,"","1","a_bairro","ar
 var Menu_2_5_6 = new Array( 1,"Modelos de documentos","","M",66,"","",cnfConfig["DOCMOD"] == 1,"","1","a_docmod","arqDocMod","Folhear","","?","","", "","", 0,32,[],[22]);
 var Menu_2_5_7 = new Array( 1,"Gerar plantões","","G",151,"","",1,"","1", "a_grplan", "parGeraPlant", "Alterar", "", "", "", "", "5^^^p_plantao_gerar^^^^^^^^^^^^^^^^^^", "", 0,32,[151],[]);
 var Menu_2_6 = new Array( 1,"Pessoas [0]","","P",15,"","",GrupoAtualEm(),"","1","a_pessoa","arqPessoa","Folhear","","?","","", "","", 0,15,[],[7]);
-var Menu_3 = new Array( 1,"Financeiro","","F",90,"","",1,"","6", "", "", "", "", "", "", "", "", "", 6, 10,[130],[33,33,34,34,34,27,20,19] );
+var Menu_3 = new Array( 1,"Financeiro","","F",90,"","",1,"","6", "", "", "", "", "", "", "", "", "", 5, 10,[130],[33,33,34,34,34,46,27,20,19] );
 var Menu_3_1 = new Array( 1,"Contas","","C",125,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 21,[],[33,33] );
 var Menu_3_1_1 = new Array( 1,"Todas","","T",91,"","",1,"","1","a_conta","arqConta","Folhear","","?","FilTodas","", "","", 0,7,[],[33]);
 var Menu_3_1_2 = new Array( 1,"Seleção","","S",92,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_conta^^^arqConta^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[33]);
@@ -23,10 +23,12 @@ var Menu_3_2 = new Array( 1,"Parcelas","","P",126,"","",1,"","6", "", "", "", ""
 var Menu_3_2_1 = new Array( 1,"Hoje","","H",95,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_parcel^^^arqParcela^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[34]);
 var Menu_3_2_2 = new Array( 1,"Todas","","T",93,"","",1,"","1","a_parcel","arqParcela","Folhear","","?","FilTodas","", "","", 0,7,[],[34]);
 var Menu_3_2_3 = new Array( 1,"Seleção","","S",94,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_parcel^^^arqParcela^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[34]);
-var Menu_3_3 = new Array( 1,"Plano de contas","","l",128,"","",1,"","1","a_plano","arqPlano","Folhear","","?","","", "","", 0,21,[],[27]);
-var Menu_3_4 = new Array( 1,"Contas correntes","","t",72,"","",1,"","1","a_ccor","arqCCor","Folhear","","?","FilTodos","", "","", 0,21,[],[20]);
-var Menu_3_5 = new Array( 1,"Bancos","","B",59,"","",1,"","1","a_banco","arqBanco","Folhear","","?","","", "","", 0,21,[],[19]);
-var Menu_3_6 = new Array( 1,"Gerar conta e parcela","","G",130,"","",1,"","1", "a_grparc", "parGeraParc", "Alterar", "", "", "", "", "5^^^p_conta_parcela_gerar^^^^^^^^^^^^^^^^^^", "", 0,21,[130],[]);
+var Menu_3_3 = new Array( 1,"Recorrentes","","R",160,"","",1,"","1","a_recorr","arqRecorrente","Folhear","","?","","", "","", 0,21,[],[46]);
+var Menu_3_4 = new Array( 1,"Outros","","u",161,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 21,[],[27,20,19] );
+var Menu_3_4_1 = new Array( 1,"Plano de contas","","l",128,"","",1,"","1","a_plano","arqPlano","Folhear","","?","","", "","", 0,16,[],[27]);
+var Menu_3_4_2 = new Array( 1,"Contas correntes","","t",72,"","",1,"","1","a_ccor","arqCCor","Folhear","","?","FilTodos","", "","", 0,16,[],[20]);
+var Menu_3_4_3 = new Array( 1,"Bancos","","B",59,"","",1,"","1","a_banco","arqBanco","Folhear","","?","","", "","", 0,16,[],[19]);
+var Menu_3_5 = new Array( 1,"Gerar conta e parcela","","G",130,"","",1,"","1", "a_grparc", "parGeraParc", "Alterar", "", "", "", "", "5^^^p_conta_parcela_gerar^^^^^^^^^^^^^^^^^^", "", 0,21,[130],[]);
 var Menu_4 = new Array( 1,"Emails","","E",42,"","",cnfConfig["EMAIL"] == 1 || GrupoAtualEm(),"","6", "", "", "", "", "", "", "", "", "", 6, 10,[53,55,47,71,52,54,48,49],[10,12,8,9] );
 var Menu_4_1 = new Array( 1,"Ações","","A",43,"","",1,"","1","a_aemail","arqAcaoEmail","Folhear","","?","","", "","", 0,22,[],[10]);
 var Menu_4_2 = new Array( 1,"Programar envio","","P",53,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_programar_acao^^^^^^^^^^^^^^^^^^", "", 0,22,[53],[]);

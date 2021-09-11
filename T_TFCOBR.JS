@@ -11,6 +11,7 @@ g_arquivoAtual = "tabTFCobra";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Parcela","","P",100,"","",1,"","1","a_parcel","arqParcela","Folhear","TFCobra","?","","", "","", 0,7,[],[34]);
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_1 = new Array( 1,"Parcela","","P",100,"","",1,"","1","a_parcel","arqParcela","Folhear","TFCobra","?","","", "","", 0,10,[],[34]);
+var Menu_2 = new Array( 1,"Recorrente","","R",158,"","",1,"","1","a_recorr","arqRecorrente","Folhear","TFCobra","?","","", "","", 0,10,[],[46]);
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }
