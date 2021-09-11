@@ -1555,6 +1555,26 @@ commit;
 
 
 /************************************************************
+	TABELA tabTCompete
+************************************************************/
+
+CREATE TABLE tabTCompete
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTCompete_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTCompete_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTCompete VALUES ( 1, '1', 'Anterior' );
+INSERT INTO tabTCompete VALUES ( 2, '2', 'Atual' );
+INSERT INTO tabTCompete VALUES ( 3, '3', 'Próximo' );
+commit;
+
+
+/************************************************************
 	Arquivo Bairro    
 ************************************************************/
 
@@ -2499,6 +2519,26 @@ commit;
 
 
 /************************************************************
+	Arquivo Recorrente
+************************************************************/
+
+CREATE TABLE arqRecorrente
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  3*/	TPGREC ligadoComTabela, /* Ligado com a Tabela TPgRec */
+	/*  4*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+	/*  5*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  6*/	/* NOME */
+	CONSTRAINT arqRecorrente_PK PRIMARY KEY ( IDPRIMARIO )
+);
+commit;
+
+CREATE DESC INDEX arqRecorrente_IdPrimario_Desc ON arqRecorrente (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -2561,6 +2601,11 @@ ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
 	ELSE ( 0 )
 	END  ); 
 ALTER TABLE arqClinica ALTER ATIVO POSITION 17;
+ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
+	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqRecorrente.Pessoa )  ), '' ) ) )
+	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqRecorrente.Fornecedor )  ), '' ) ) )
+	END  ); 
+ALTER TABLE arqRecorrente ALTER NOME POSITION 6;
 commit;
 
 
@@ -2838,6 +2883,15 @@ RECREATE VIEW V_arqFormaPg AS
 	FROM arqFormaPg A0;
 commit;
 
+RECREATE VIEW V_arqRecorrente AS 
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TPGREC, A2.CHAVE as TPgRec_CHAVE, A2.DESCRITOR as TPgRec_DESCRITOR, A0.FORNECEDOR, A3.NOME as FORNECEDOR_NOME, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.NOME
+	FROM arqRecorrente A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join tabTPgRec A2 on A2.IDPRIMARIO=A0.TPGREC
+	left join arqFornecedor A3 on A3.IDPRIMARIO = A0.FORNECEDOR
+	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -2917,6 +2971,7 @@ insert into arqLanceOperacao values(100041,1,'Cadastro de plantonistas nas clíni
 insert into arqLanceOperacao values(100042,1,'Cadastro de fornecedores','arqFornecedor',42,1,0,'');
 insert into arqLanceOperacao values(100043,1,'Cadastro de tipos de agendas [0]','arqTiAgenda',43,99,1,'');
 insert into arqLanceOperacao values(100044,1,'Cadastro de formas de pagamento de consultas','arqFormaPg',44,1,0,'');
+insert into arqLanceOperacao values(100046,1,'Cadastro de contas recorrentes a pagar e a receber','arqRecorrente',46,10,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
 insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de grupos de acesso','',11,90,0,'');
@@ -2944,6 +2999,7 @@ insert into arqLanceOperacao values(200073,2,'Relatório analítico de interações 
 insert into arqLanceOperacao values(200074,2,'Relatório resumido de interações no sistema','',74,90,0,'');
 insert into arqLanceOperacao values(200129,2,'Rotina para baixar parcelas','',129,10,0,'');
 insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
+insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos usuários','',68,90,0,'');
 insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos','',151,1,0,'');
@@ -3032,6 +3088,10 @@ ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_TDiaSem FOREIGN KEY ( TDIASE
 ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqFornecedor ADD CONSTRAINT arqFornecedor_FK_TPFPJ FOREIGN KEY ( TPFPJ ) REFERENCES tabTPFPJ ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_FormaPg FOREIGN KEY ( FORMAPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_TPgRec FOREIGN KEY ( TPGREC ) REFERENCES tabTPgRec ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE CASCADE ON UPDATE CASCADE;
 commit;
 
 
@@ -4323,6 +4383,38 @@ if( deleting ) then
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqRecorrente
+************************************************************/
+
+set term ^;
+
+recreate trigger arqRecorrente_LOG for arqRecorrente
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+	valorChave='';
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100046 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPgRec', OLD.TPgRec, NEW.TPgRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'Fornecedor', OLD.Fornecedor, NEW.Fornecedor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
 end
 end^
 
