@@ -24,4 +24,30 @@ class Relatorios extends Lance_RelatorioPDF_Colunar
 		$this->ImprimirTotalEmUmaColuna( $p_txtCabQuebra );
 	}
 
+	//------------------------------------------------------------------------
+	//	Rotina para fazer imprimir um titulo de datas se DATAINI foi informado
+	//------------------------------------------------------------------------
+	function TituloData( $p_titulo, $p_dataIni, $p_dataFim=null )
+	{
+		return( $p_titulo . " entre " . formatarData( $p_dataIni ) . " e " . 
+			( $p_dataFim
+				? formatarData( $p_dataFim )
+				: "sem um final estipulado" )
+		);
+	}
+
+	//------------------------------------------------------------------------
+	//	Rotina para fazer imprimir um titulo com os dados da conta corrente
+	//------------------------------------------------------------------------
+	function TituloCCor( $p_idCCOr )
+	{
+		$select = "Select C.Agencia, C.Conta, C.Banco_Num as NumBanco, C.Banco_Banco as Banco
+			From v_arqCCor C
+			Where C.idPrimario = " . $p_idCCOr;
+		$umCCor = sql_lerUmRegistro( $select );
+		
+		return( "Conta corrente do " . $umCCor->NUMBANCO . " " . $umCCor->BANCO . 
+			" Ag. " . $umCCor->AGENCIA . " cc " . $umCCor->CONTA 
+		);
+	}
 }
