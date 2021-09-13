@@ -146,8 +146,7 @@ if( $ehUtil )
 			left join tabTFCobra 	T on T.idPrimario=P.TFCobra
 			left join arqFornecedor	F on F.idPrimario=C.Fornecedor
 			left join arqPessoa  	O on O.idPrimario=C.Pessoa
-		Where P.Vencimento < '" . formatarData( HOJE, 'aaaa/mm/dd') . "' " .
-		" and P.DataPagto is null
+		Where P.Vencimento < current_date and P.DataPagto is null
 		Order by L.Clinica, P.Vencimento, F.Nome, O.Nome";
 
 	$proc->Processar( $select );
