@@ -2609,7 +2609,10 @@ ALTER TABLE arqParcela ADD CLINICACAL VARCHAR( 30 ) computed by ( ( COALESCE( ( 
 ALTER TABLE arqParcela ALTER CLINICACAL POSITION 3;
 ALTER TABLE arqParcela ADD TPGRECCAL VARCHAR( 7 ) computed by ( (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = arqParcela.Conta) ); 
 ALTER TABLE arqParcela ALTER TPGRECCAL POSITION 4;
-ALTER TABLE arqParcela ADD PESSOACAL VARCHAR( 60 ) computed by ( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqParcela ADD PESSOACAL VARCHAR( 60 ) computed by ( CASE
+	WHEN( (Select C.Fornecedor From arqConta C Where C.idPrimario=arqParcela.Conta) is not null ) THEN( (Select F.Nome From arqConta C join arqFornecedor F on F.idPrimario=C.Fornecedor Where C.idPrimario=arqParcela.Conta) )
+	ELSE ( (Select P.Nome From arqConta C join arqPessoa P on P.idPrimario=C.Pessoa Where C.idPrimario=arqParcela.Conta) )
+	END  ); 
 ALTER TABLE arqParcela ALTER PESSOACAL POSITION 5;
 ALTER TABLE arqParcela ADD NUMBOLETO NUMERIC(18,0) computed by ( CASE
 	WHEN( Emissao is not null ) THEN( IdPrimario )

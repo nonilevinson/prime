@@ -28,9 +28,9 @@ class campo_arqParcela_Conta extends Lance_CampoLigado
 		global $g_regAtual;
 		$vetPai = array();
 			array_push( $vetPai, 
-				array( "TPgRec, Clinica", 
+				array( "TPgRec, Clinica, Fornecedor", 
 					"A.Conta, arqConta",
-					"0,0" ) );
+					"0,0,0" ) );
 			array_push( $vetPai, 
 				array( "Clinica", 
 					"A.Conta, arqConta.Clinica, arqClinica",

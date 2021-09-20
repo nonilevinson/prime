@@ -437,9 +437,9 @@ var DataRem = new Campo_arqParcela_DataRem;
 Campo_arqParcela_Conta.prototype.TrazOutrosDoPai = function()
 {
 	var vetPai = new Array();
-			vetPai[0] = [ "TPgRec, Clinica",
+			vetPai[0] = [ "TPgRec, Clinica, Fornecedor",
 					"A.Conta, arqConta",
-					"0,0" ];
+					"0,0,0" ];
 			vetPai[1] = [ "Clinica",
 					"A.Conta, arqConta.Clinica, arqClinica",
 					"1" ];
@@ -508,6 +508,16 @@ TPgRecCal.EhCalculado = true;
 //-------------------------------------------------------------
 Campo_arqParcela_PessoaCal.prototype.Calculou = function()
 {
+{
+		if( tem( Conta_Fornecedor ) )
+{
+	if( !Conta.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( COALESCE( ( SELECT Fornecedor FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "PessoaCal" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
 {
 {
 	if( !Conta.ValorFoiPreenchido() )
@@ -1025,6 +1035,7 @@ SubPlano_Plano.CamposChave= [ SubPlano_Plano_CodPlano ];
 g_arquivoAtual = "arqParcela";
 var Conta_TPgRec;
 var Conta_Clinica;
+var Conta_Fornecedor;
 var Conta_Nome;
 //------------------------------------------------------------
 function ListaDeCampos_arqParcela( p_prefixo )
