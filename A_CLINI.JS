@@ -130,6 +130,17 @@ Campo_arqClinica_CNPJ.prototype.TemErro = function()
 }
 
 //-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqClinica_DataIni.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A data inicial do período de atividade é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
 // Condição de erro do campo
 //-------------------------------------------------------------
 Campo_arqClinica_DataFim.prototype.TemErro = function()
@@ -210,7 +221,7 @@ var Menu_4 = new Array( 1,"Plantões","","P",139,"","",1,"","1","a_planta","arqPl
 var Menu_5 = new Array( 1,"Financeiro","","F",156,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 19,[],[33,20,46] );
 var Menu_5_1 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,15,[],[33]);
 var Menu_5_2 = new Array( 1,"Contas corrente","","t",150,"","",1,"","1","a_ccor","arqCCor","Folhear","Clinica","?","","", "","", 0,15,[],[20]);
-var Menu_5_3 = new Array( 1,"Recorrentes","","s",152,"","",1,"","1","a_recorr","arqRecorrente","Folhear","Clinica","?","","", "","", 0,15,[],[46]);
+var Menu_5_3 = new Array( 1,"Recorrentes","","s",152,"","",1,"","1","a_recor","arqRecorrente","Folhear","Clinica","?","","", "","", 0,15,[],[46]);
 var Menu_6 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,19,[],[35]);
 parent.navegacao.MenuPrincQtdOpcoes=6;
 }

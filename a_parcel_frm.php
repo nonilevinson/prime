@@ -1,5 +1,13 @@
 <?php
 
+//----------------------------------------------------------------------------------
+function btnCopiar( $p_nome )
+{
+	return( brHtml(1) . "<button class='btnCopiar' style='vertical-align:top' idCampo='" .
+		$p_nome . "'><img src='" . LANCE_GIF . "/copy.png' style='width:13px'></button>" );
+}
+//----------------------------------------------------------------------------------
+
 echo
 "<table class='tabFormulario'>",
    $this->Pedir( "Nº Transação",
@@ -27,7 +35,8 @@ echo
       [ "", TFCobra,
       [ brHtml(4) . "Forma de Pagamento ", TFPagto,
       [ brHtml(4) . "Detalhe ", TDetPg ] ] ] ),
-   $this->Pedir( "Linha digitável", LinhaDig ),
+   $this->Pedir( "Linha digitável",
+      [ "", LinhaDig, btnCopiar( "LinhaDig" ) ] ),
    $this->Pedir( "Conta corrente", CCor ),
    $this->Pedir( "Cheque" ),
    $this->Pedir( "Pagamento",
@@ -55,3 +64,38 @@ echo
    $this->Cabecalhos( [ "Arquivo", 'FormCab alinhaMeio', '2' ] ),
    $this->Pedir( "", [ "", Arq1, '', 'FormValor alinhaMeio', '2' ] ),
 "</table>";
+
+echo
+javaScriptIni(),  "
+	// Os campos View são protegidos contra copia, document.execCommand('copy'),
+	// por isso, salvamos o valor REAL de Valor, usamos o Valor para forçar o copy
+	// e depois restauramos o valor de Valor
+
+	function copiarDado( p_quem ) {
+		let campoCopiado = document.getElementById( p_quem );
+		let campoValor = document.getElementById('Valor');
+		let valorRealValor = campoValor.value;
+		campoValor.value = campoCopiado.value;
+		campoValor.select();
+		campoValor.setSelectionRange(0, campoCopiado.value.length);
+		let result = document.execCommand('copy');
+		campoValor.value = valorRealValor;
+		campoCopiado.focus();
+	}
+
+	const buttons = document.getElementsByClassName( 'btnCopiar' );
+	for( let i=0; i<buttons.length; i++ )
+	{
+		let umButton = buttons[i];
+		const idCampo = umButton.getAttribute( 'idCampo' );
+		umButton.addEventListener( 'click', (event) => {
+			copiarDado( idCampo );
+			event.preventDefault();
+			event.stopPropagation();
+
+			return( false );
+		});
+	};
+	", 
+javaScriptFim();
+

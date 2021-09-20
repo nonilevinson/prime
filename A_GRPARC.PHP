@@ -204,19 +204,6 @@ class campo_parGeraParc_Historico extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo LinhaDig
-//======================================================
-
-class campo_parGeraParc_LinhaDig extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "LinhaDig", "LinhaDig", "LinhaDig", 54, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
-	}
-
-}
-
-//======================================================
 //	Campo Valor
 //======================================================
 
@@ -576,6 +563,19 @@ class campo_parGeraParc_Cc1_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Linha1
+//======================================================
+
+class campo_parGeraParc_Linha1 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha1", "Linha1", "Linha1", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Dia2
 //======================================================
 
@@ -754,6 +754,19 @@ class campo_parGeraParc_Cc2_Nome extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Cc2_Nome", "Cc2_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "Cc2", false );
+	}
+
+}
+
+//======================================================
+//	Campo Linha2
+//======================================================
+
+class campo_parGeraParc_Linha2 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha2", "Linha2", "Linha2", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
 	}
 
 }
@@ -942,6 +955,19 @@ class campo_parGeraParc_Cc3_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Linha3
+//======================================================
+
+class campo_parGeraParc_Linha3 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha3", "Linha3", "Linha3", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Dia4
 //======================================================
 
@@ -1120,6 +1146,19 @@ class campo_parGeraParc_Cc4_Nome extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Cc4_Nome", "Cc4_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "Cc4", false );
+	}
+
+}
+
+//======================================================
+//	Campo Linha4
+//======================================================
+
+class campo_parGeraParc_Linha4 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha4", "Linha4", "Linha4", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
 	}
 
 }
@@ -1308,6 +1347,19 @@ class campo_parGeraParc_Cc5_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Linha5
+//======================================================
+
+class campo_parGeraParc_Linha5 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha5", "Linha5", "Linha5", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Dia6
 //======================================================
 
@@ -1486,6 +1538,19 @@ class campo_parGeraParc_Cc6_Nome extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Cc6_Nome", "Cc6_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "Cc6", false );
+	}
+
+}
+
+//======================================================
+//	Campo Linha6
+//======================================================
+
+class campo_parGeraParc_Linha6 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha6", "Linha6", "Linha6", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
 	}
 
 }
@@ -1674,6 +1739,19 @@ class campo_parGeraParc_Cc7_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Linha7
+//======================================================
+
+class campo_parGeraParc_Linha7 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha7", "Linha7", "Linha7", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Dia8
 //======================================================
 
@@ -1852,6 +1930,19 @@ class campo_parGeraParc_Cc8_Nome extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Cc8_Nome", "Cc8_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "Cc8", false );
+	}
+
+}
+
+//======================================================
+//	Campo Linha8
+//======================================================
+
+class campo_parGeraParc_Linha8 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha8", "Linha8", "Linha8", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
 	}
 
 }
@@ -2040,6 +2131,19 @@ class campo_parGeraParc_Cc9_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Linha9
+//======================================================
+
+class campo_parGeraParc_Linha9 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha9", "Linha9", "Linha9", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Dia10
 //======================================================
 
@@ -2218,6 +2322,19 @@ class campo_parGeraParc_Cc10_Nome extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Cc10_Nome", "Cc10_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "Cc10", false );
+	}
+
+}
+
+//======================================================
+//	Campo Linha10
+//======================================================
+
+class campo_parGeraParc_Linha10 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha10", "Linha10", "Linha10", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
 	}
 
 }
@@ -2406,6 +2523,19 @@ class campo_parGeraParc_Cc11_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Linha11
+//======================================================
+
+class campo_parGeraParc_Linha11 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha11", "Linha11", "Linha11", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Dia12
 //======================================================
 
@@ -2589,6 +2719,19 @@ class campo_parGeraParc_Cc12_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Linha12
+//======================================================
+
+class campo_parGeraParc_Linha12 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Linha12", "Linha12", "Linha12", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo parGeraParc
 //======================================================
 function listaCampos_parGeraParc( $p_prefixo )
@@ -2614,7 +2757,6 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_RecEnvia(),
 			new campo_parGeraParc_Compete(),
 			new campo_parGeraParc_Historico(),
-			new campo_parGeraParc_LinhaDig(),
 			new campo_parGeraParc_Valor(),
 			new campo_parGeraParc_Estimado(),
 			new campo_parGeraParc_Condicao(),
@@ -2647,6 +2789,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc1_Plano_Plano(),
 			new campo_parGeraParc_Cc1_Codigo(),
 			new campo_parGeraParc_Cc1_Nome(),
+			new campo_parGeraParc_Linha1(),
 			new campo_parGeraParc_Dia2(),
 			new campo_parGeraParc_Venc2(),
 			new campo_parGeraParc_Semana2(),
@@ -2660,6 +2803,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc2_Plano_Plano(),
 			new campo_parGeraParc_Cc2_Codigo(),
 			new campo_parGeraParc_Cc2_Nome(),
+			new campo_parGeraParc_Linha2(),
 			new campo_parGeraParc_Dia3(),
 			new campo_parGeraParc_Venc3(),
 			new campo_parGeraParc_Semana3(),
@@ -2673,6 +2817,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc3_Plano_Plano(),
 			new campo_parGeraParc_Cc3_Codigo(),
 			new campo_parGeraParc_Cc3_Nome(),
+			new campo_parGeraParc_Linha3(),
 			new campo_parGeraParc_Dia4(),
 			new campo_parGeraParc_Venc4(),
 			new campo_parGeraParc_Semana4(),
@@ -2686,6 +2831,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc4_Plano_Plano(),
 			new campo_parGeraParc_Cc4_Codigo(),
 			new campo_parGeraParc_Cc4_Nome(),
+			new campo_parGeraParc_Linha4(),
 			new campo_parGeraParc_Dia5(),
 			new campo_parGeraParc_Venc5(),
 			new campo_parGeraParc_Semana5(),
@@ -2699,6 +2845,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc5_Plano_Plano(),
 			new campo_parGeraParc_Cc5_Codigo(),
 			new campo_parGeraParc_Cc5_Nome(),
+			new campo_parGeraParc_Linha5(),
 			new campo_parGeraParc_Dia6(),
 			new campo_parGeraParc_Venc6(),
 			new campo_parGeraParc_Semana6(),
@@ -2712,6 +2859,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc6_Plano_Plano(),
 			new campo_parGeraParc_Cc6_Codigo(),
 			new campo_parGeraParc_Cc6_Nome(),
+			new campo_parGeraParc_Linha6(),
 			new campo_parGeraParc_Dia7(),
 			new campo_parGeraParc_Venc7(),
 			new campo_parGeraParc_Semana7(),
@@ -2725,6 +2873,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc7_Plano_Plano(),
 			new campo_parGeraParc_Cc7_Codigo(),
 			new campo_parGeraParc_Cc7_Nome(),
+			new campo_parGeraParc_Linha7(),
 			new campo_parGeraParc_Dia8(),
 			new campo_parGeraParc_Venc8(),
 			new campo_parGeraParc_Semana8(),
@@ -2738,6 +2887,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc8_Plano_Plano(),
 			new campo_parGeraParc_Cc8_Codigo(),
 			new campo_parGeraParc_Cc8_Nome(),
+			new campo_parGeraParc_Linha8(),
 			new campo_parGeraParc_Dia9(),
 			new campo_parGeraParc_Venc9(),
 			new campo_parGeraParc_Semana9(),
@@ -2751,6 +2901,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc9_Plano_Plano(),
 			new campo_parGeraParc_Cc9_Codigo(),
 			new campo_parGeraParc_Cc9_Nome(),
+			new campo_parGeraParc_Linha9(),
 			new campo_parGeraParc_Dia10(),
 			new campo_parGeraParc_Venc10(),
 			new campo_parGeraParc_Semana10(),
@@ -2764,6 +2915,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc10_Plano_Plano(),
 			new campo_parGeraParc_Cc10_Codigo(),
 			new campo_parGeraParc_Cc10_Nome(),
+			new campo_parGeraParc_Linha10(),
 			new campo_parGeraParc_Dia11(),
 			new campo_parGeraParc_Venc11(),
 			new campo_parGeraParc_Semana11(),
@@ -2777,6 +2929,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc11_Plano_Plano(),
 			new campo_parGeraParc_Cc11_Codigo(),
 			new campo_parGeraParc_Cc11_Nome(),
+			new campo_parGeraParc_Linha11(),
 			new campo_parGeraParc_Dia12(),
 			new campo_parGeraParc_Venc12(),
 			new campo_parGeraParc_Semana12(),
@@ -2789,7 +2942,8 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc12_Plano_CodPlano(),
 			new campo_parGeraParc_Cc12_Plano_Plano(),
 			new campo_parGeraParc_Cc12_Codigo(),
-			new campo_parGeraParc_Cc12_Nome() )
+			new campo_parGeraParc_Cc12_Nome(),
+			new campo_parGeraParc_Linha12() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

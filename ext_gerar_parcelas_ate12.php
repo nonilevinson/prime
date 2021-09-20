@@ -17,6 +17,7 @@ function criarParcela( $p_idConta )
 		$valor	= "VALOR" . $i;
 		$pg		= "PG" . $i;
 		$cc		= "CC" . $i;
+		$linha	= "LINHA" . $i;
 
 		$valorI = ( $iguais ? $parcIgual : $parGeraParc->$valor );
 /*
@@ -56,7 +57,7 @@ function criarParcela( $p_idConta )
          "Estimado"   => ValorOuZero( $parGeraParc->ESTIMADO ),
          "TFCobra"    => ValorOuNull( $parGeraParc->TFCOBRA, "", false ),
          "Emissao"    => null,
-         "LinhaDig"   => ( $parGeraParc->LINHADIG != '' ? $parGeraParc->LINHADIG : '' ),
+         "LinhaDig"   => ( $parGeraParc->$linha != '' ? $parGeraParc->$linha : '' ),
          "NomePdf"    => '',
          "CCor"       => ValorOuNull( $parGeraParc->CCOR, "", false ),
          "SubPlano"   => ValorOuNull( $parGeraParc->$cc, "", false ),

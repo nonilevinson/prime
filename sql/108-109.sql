@@ -7,6 +7,9 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+insert into arqLanceOperacao values(200169,2,'Envia o m_clinica_ativa','',169,99,1,'');
+commit;
+
 /************************************************************
 	Arquivo Parcela   
 ************************************************************/
