@@ -217,5 +217,15 @@ if( $op == 166 ) //* r_parcela
 	$this->Pedir( "Consolidado?", Logico1 );
 }
 
+if( $op == 170 ) //* r_consulta_dispensada
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Médico", Medico ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
 //==================================================================================
 echo 	"</table>";

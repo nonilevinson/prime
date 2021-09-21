@@ -859,7 +859,7 @@ Campo_parQSelecao_Cadeia100.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_parQSelecao_DataIni.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( ultimaLigOpcaoEm( 53,155 ) )
+		if( ultimaLigOpcaoEm( 53,155,170 ) )
 	{
 		if( p_comMsg ) alert( "A data é obrigatória" );
 		return( true );
@@ -873,7 +873,7 @@ Campo_parQSelecao_DataIni.prototype.Obrigatorio = function( p_comMsg )
 Campo_parQSelecao_DataFim.prototype.Sugeriu = function()
 {
 {
-		if( !tem( DataIni1 ) )
+		if( !tem( DataIni ) )
 	return( this.AtribuiuSemCritica(  ) );
 }
 {
