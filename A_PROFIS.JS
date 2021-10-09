@@ -8,7 +8,7 @@ Campo_arqProfissao_Profissao.prototype = new Lance_CampoCadeia;
 function Campo_arqProfissao_Profissao()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Profissao", "Profissao", "Profissao", 40, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Profissao", "Profissao", "Profissao", 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Profissao = new Campo_arqProfissao_Profissao;

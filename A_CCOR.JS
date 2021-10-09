@@ -8,7 +8,7 @@ Campo_arqCCor_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqCCor_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Nome", "Nome", "Nome", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Nome", "Nome", "Nome", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Nome = new Campo_arqCCor_Nome;
@@ -30,7 +30,7 @@ Campo_arqCCor_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqCCor_Clinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Clinica_Clinica = new Campo_arqCCor_Clinica_Clinica;
@@ -63,7 +63,7 @@ Campo_arqCCor_Banco_Banco.prototype = new Lance_CampoCadeia;
 function Campo_arqCCor_Banco_Banco()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Banco_Banco", "Banco_Banco", "Banco", 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Banco_Banco", "Banco_Banco", "Banco", 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Banco_Banco = new Campo_arqCCor_Banco_Banco;

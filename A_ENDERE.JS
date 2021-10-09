@@ -19,7 +19,7 @@ Campo_domEndereco_Endereco.prototype = new Lance_CampoCadeia;
 function Campo_domEndereco_Endereco()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Endereco", "Endereco", "Endereço", 80, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Endereco", "Endereco", "Endereço", 80, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Endereco = new Campo_domEndereco_Endereco;
@@ -41,7 +41,7 @@ Campo_domEndereco_Bairro_Bairro.prototype = new Lance_CampoCadeiaLigado;
 function Campo_domEndereco_Bairro_Bairro()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Bairro_Bairro", "Bairro_Bairro", "Bairro", Bairro, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Bairro_Bairro", "Bairro_Bairro", "Bairro", Bairro, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Bairro_Bairro = new Campo_domEndereco_Bairro_Bairro;
@@ -96,7 +96,7 @@ Campo_domEndereco_Cidade_Cidade.prototype = new Lance_CampoCadeiaLigado;
 function Campo_domEndereco_Cidade_Cidade()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Cidade_Cidade", "Cidade_Cidade", "Cidade", Cidade, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Cidade_Cidade", "Cidade_Cidade", "Cidade", Cidade, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Cidade_Cidade = new Campo_domEndereco_Cidade_Cidade;
@@ -118,7 +118,7 @@ Campo_domEndereco_Telefone.prototype = new Lance_CampoCadeia;
 function Campo_domEndereco_Telefone()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Telefone", "Telefone", "Telefone", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Telefone", "Telefone", "Telefone", 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Telefone = new Campo_domEndereco_Telefone;

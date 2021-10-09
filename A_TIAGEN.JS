@@ -8,7 +8,7 @@ Campo_arqTiAgenda_TiAgenda.prototype = new Lance_CampoCadeia;
 function Campo_arqTiAgenda_TiAgenda()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "TiAgenda", "TiAgenda", "TiAgenda", 20, "uxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "TiAgenda", "TiAgenda", "TiAgenda", 20, "uuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var TiAgenda = new Campo_arqTiAgenda_TiAgenda;

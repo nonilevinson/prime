@@ -1600,7 +1600,7 @@ commit;
 CREATE TABLE arqBairro
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	BAIRRO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	BAIRRO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqBairro_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqBairro_UK UNIQUE ( Bairro )
 );
@@ -1618,7 +1618,7 @@ CREATE TABLE arqCidade
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	UF ligadoComTabela, /* Ligado com a Tabela UF */
-	/*  3*/	CIDADE VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	CIDADE VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	DDD SMALLINT, /* Máscara = N */
 	CONSTRAINT arqCidade_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqCidade_UK UNIQUE ( UF, Cidade )
@@ -1636,7 +1636,7 @@ commit;
 CREATE TABLE arqGrupo
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	GRUPO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	GRUPO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqGrupo_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqGrupo_UK UNIQUE ( Grupo )
 );
@@ -1653,7 +1653,7 @@ commit;
 CREATE TABLE arqTemplate
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	TEMPLATE BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	CONSTRAINT arqTemplate_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTemplate_UK UNIQUE ( Nome )
@@ -1671,7 +1671,7 @@ commit;
 CREATE TABLE arqMidia
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	MIDIA VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	MIDIA VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqMidia_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqMidia_UK UNIQUE ( Midia )
@@ -1689,7 +1689,7 @@ commit;
 CREATE TABLE arqProfissao
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	PROFISSAO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	PROFISSAO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqProfissao_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqProfissao_UK UNIQUE ( Profissao )
 );
@@ -1737,7 +1737,7 @@ CREATE TABLE arqBanco
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	NUM NUMERIC(18,0), /* Máscara = N */
-	/*  3*/	BANCO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	BANCO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqBanco_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqBanco_UK UNIQUE ( Num )
 );
@@ -1755,7 +1755,7 @@ CREATE TABLE arqPlano
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	CODPLANO SMALLINT, /* Máscara = Z */
-	/*  3*/	PLANO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	PLANO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	TPGREC ligadoComTabela, /* Ligado com a Tabela TPgRec */
 	CONSTRAINT arqPlano_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqPlano_UK UNIQUE ( CodPlano )
@@ -1773,16 +1773,16 @@ commit;
 CREATE TABLE arqPessoa
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	APELIDO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	APELIDO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	NUMCELULAR VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = (nn) n.nnnn.nnn */
 	/*  5*/	PRONTUARIO VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = M */
 	/*  6*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
-	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
 	/*  8*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
 	/*  9*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
 	/* 10*/	/* ENDE_DDD */
-	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
 	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
 	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -1792,8 +1792,8 @@ CREATE TABLE arqPessoa
 	/* 18*/	ESTCIVIL ligadoComTabela, /* Ligado com a Tabela EstCivil */
 	/* 19*/	PROFISSAO ligadoComArquivo, /* Ligado com o Arquivo Profissao */
 	/* 20*/	CPF VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = nnn.nnn.nnn-nn */
-	/* 21*/	IDENTIDADE VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = X */
-	/* 22*/	ORGAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = X */
+	/* 21*/	IDENTIDADE VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
+	/* 22*/	ORGAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
 	/* 23*/	EMISSAO DATE, /* Máscara = 4ano */
 	/* 24*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
 	/* 25*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -1818,16 +1818,16 @@ commit;
 CREATE TABLE arqClinica
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	CLINICA VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	RAZAO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	CLINICA VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	RAZAO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
 	/*  5*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
 	/*  6*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
-	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  7*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
 	/*  8*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
 	/*  9*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
 	/* 10*/	/* ENDE_DDD */
-	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 11*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
 	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
 	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -1852,13 +1852,13 @@ CREATE TABLE arqUsuario
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	USUARIO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	SENHA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = ? */
 	/*  5*/	GRUPO ligadoComArquivo, /* Ligado com o Arquivo Grupo */
 	/*  6*/	VERSAO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
 	/*  7*/	EMAIL VARCHAR( 70 ) COLLATE PT_BR, /* Máscara = X */
 	/*  8*/	MEDICO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  9*/	CRM VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
+	/*  9*/	CRM VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
 	/* 10*/	PODEAGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 11*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 12*/	NASCIMENTO DATE, /* Máscara = 4ano */
@@ -1883,24 +1883,24 @@ commit;
 CREATE TABLE arqFornecedor
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	APELIDO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	APELIDO VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	TPFPJ ligadoComTabela, /* Ligado com a Tabela TPFPJ */
 	/*  5*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
-	/*  6*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  6*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
 	/*  7*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
 	/*  8*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
 	/*  9*/	/* ENDE_DDD */
-	/* 10*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 10*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	/* 11*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
 	/* 12*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
 	/* 13*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 14*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
-	/* 15*/	INSCESTAD VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
-	/* 16*/	INSCMUNIC VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = X */
+	/* 15*/	INSCESTAD VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = M */
+	/* 16*/	INSCMUNIC VARCHAR( 25 ) COLLATE PT_BR, /* Máscara = M */
 	/* 17*/	CPF VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = nnn.nnn.nnn-nn */
-	/* 18*/	IDENTIDADE VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = X */
-	/* 19*/	ORGAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = X */
+	/* 18*/	IDENTIDADE VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
+	/* 19*/	ORGAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
 	/* 20*/	EMISSAO DATE, /* Máscara = 4ano */
 	/* 21*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 22*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
@@ -1958,7 +1958,7 @@ CREATE TABLE arqSubPlano
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	PLANO ligadoComArquivo, /* Ligado com o Arquivo Plano */
 	/*  3*/	CODIGO VARCHAR( 6 ) COLLATE PT_BR, /* Máscara = nn.nn.nn */
-	/*  4*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  4*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqSubPlano_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqSubPlano_UK UNIQUE ( Plano, Codigo )
 );
@@ -1979,7 +1979,7 @@ CREATE TABLE arqAvisos
 	/*  3*/	DATA DATE, /* Máscara = 4ano */
 	/*  4*/	HORA TIME, /* Máscara = Hhmm */
 	/*  5*/	QUEM ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/*  6*/	ASSUNTO VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
+	/*  6*/	ASSUNTO VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
 	/*  7*/	PRIORIDADE ligadoComTabela, /* Ligado com a Tabela Prioridade */
 	/*  8*/	TEXTO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
 	/*  9*/	/* IDQUEM */
@@ -2004,7 +2004,7 @@ CREATE TABLE arqEmailRemet
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/*  3*/	NOMEEMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	NOMEEMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	PADRAO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqEmailRemet_PK PRIMARY KEY ( IDPRIMARIO ),
@@ -2040,7 +2040,7 @@ CREATE TABLE arqConta
 	/* 16*/	EMISSAO DATE, /* Máscara = 4ano */
 	/* 17*/	RECENVIA DATE, /* Máscara = 4ano */
 	/* 18*/	COMPETE DATE, /* Máscara = A4mm */
-	/* 19*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/* 19*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	/* 20*/	ARQ1 VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
 	/* 21*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'Conta/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
 	CONSTRAINT arqConta_PK PRIMARY KEY ( IDPRIMARIO ),
@@ -2059,7 +2059,7 @@ commit;
 CREATE TABLE arqCCor
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
 	/*  4*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
 	/*  5*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
@@ -2102,7 +2102,7 @@ commit;
 CREATE TABLE arqDocMod
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	DOCUMENTO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	DOCUMENTO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	TARQDOC ligadoComTabela, /* Ligado com a Tabela TArqDoc */
 	/*  4*/	TORDOC ligadoComTabela, /* Ligado com a Tabela TOrDoc */
 	/*  5*/	LOGO campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -2143,7 +2143,7 @@ commit;
 CREATE TABLE arqTiAgenda
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	TIAGENDA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	TIAGENDA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  4*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTiAgenda_PK PRIMARY KEY ( IDPRIMARIO ),
@@ -2162,7 +2162,7 @@ commit;
 CREATE TABLE arqFormaPg
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	FORMAPG VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	FORMAPG VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqFormaPg_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqFormaPg_UK UNIQUE ( FormaPg )
@@ -2263,13 +2263,13 @@ CREATE TABLE cnfXConfig
 	/*  4*/	LOGACESSOS campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  5*/	QTD NUMERIC(18,0), /* Máscara = N */
 	/*  6*/	QTD2 NUMERIC(18,0), /* Máscara = N */
-	/*  7*/	EMPRESA VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
+	/*  7*/	EMPRESA VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
 	/*  8*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
-	/*  9*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  9*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
 	/* 10*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
 	/* 11*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
 	/* 12*/	/* ENDE_DDD */
-	/* 13*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 13*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	/* 14*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
 	/* 15*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
 	/* 16*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -2295,7 +2295,7 @@ commit;
 CREATE TABLE arqPTrata
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	PTRATA VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	PTRATA VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
 	/*  4*/	DESCRICAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
 	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -2400,9 +2400,9 @@ CREATE TABLE arqContPessoa
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
 	/*  3*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  4*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
-	/*  5*/	APELIDO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
-	/*  6*/	FUNCAO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/*  4*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	/*  5*/	APELIDO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
+	/*  6*/	FUNCAO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	/*  7*/	CELULAR VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
 	/*  8*/	TELEFONE VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
 	/*  9*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
@@ -2427,7 +2427,7 @@ CREATE TABLE arqHoraBloq
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  3*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	DATAINI DATE, /* Máscara = 4ano */
 	/*  5*/	HORAINI TIME, /* Máscara = Hhmm */
 	/*  6*/	DATAFIM DATE, /* Máscara = 4ano */
@@ -2557,7 +2557,7 @@ CREATE TABLE arqRecorrente
 	/* 10*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
 	/* 11*/	ESTIMADO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 12*/	TFCOBRA ligadoComTabela, /* Ligado com a Tabela TFCobra */
-	/* 13*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = I */
+	/* 13*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	/* 14*/	SUBPLANO ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
 	/* 15*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqRecorrente_PK PRIMARY KEY ( IDPRIMARIO )

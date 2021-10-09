@@ -103,13 +103,13 @@
 }
 .StAtendido{
 	color:#ffffff;
-	background-color: #f01010;
+	background-color: green;
 	text-align: left;
 	/* font-weight:bold */
 }
 .StLiberado{
 	color:#ffffff;
-	background-color: #147901;
+	background-color: red;
 	text-align: left;
 	/* font-weight:bold */
 }

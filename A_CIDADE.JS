@@ -41,7 +41,7 @@ Campo_arqCidade_Cidade.prototype = new Lance_CampoCadeia;
 function Campo_arqCidade_Cidade()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Cidade", "Cidade", "Cidade", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Cidade", "Cidade", "Cidade", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Cidade = new Campo_arqCidade_Cidade;

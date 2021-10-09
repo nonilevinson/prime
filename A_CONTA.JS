@@ -30,7 +30,7 @@ Campo_arqConta_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqConta_Clinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Clinica_Clinica = new Campo_arqConta_Clinica_Clinica;
@@ -85,7 +85,7 @@ Campo_arqConta_Fornecedor_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqConta_Fornecedor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Fornecedor_Nome = new Campo_arqConta_Fornecedor_Nome;
@@ -107,7 +107,7 @@ Campo_arqConta_Pessoa_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqConta_Pessoa_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Pessoa_Nome = new Campo_arqConta_Pessoa_Nome;
@@ -261,7 +261,7 @@ Campo_arqConta_Historico.prototype = new Lance_CampoCadeia;
 function Campo_arqConta_Historico()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Historico", "Historico", "Historico", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Historico", "Historico", "Historico", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Historico = new Campo_arqConta_Historico;

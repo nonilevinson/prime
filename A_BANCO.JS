@@ -19,7 +19,7 @@ Campo_arqBanco_Banco.prototype = new Lance_CampoCadeia;
 function Campo_arqBanco_Banco()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Banco", "Banco", "Banco", 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Banco", "Banco", "Banco", 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Banco = new Campo_arqBanco_Banco;

@@ -8,7 +8,7 @@ Campo_arqFormaPg_FormaPg.prototype = new Lance_CampoCadeia;
 function Campo_arqFormaPg_FormaPg()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "FormaPg", "FormaPg", "FormaPg", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "FormaPg", "FormaPg", "FormaPg", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var FormaPg = new Campo_arqFormaPg_FormaPg;

@@ -19,7 +19,7 @@ Campo_arqUsuario_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqUsuario_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Nome", "Nome", "Nome", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Nome", "Nome", "Nome", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Nome = new Campo_arqUsuario_Nome;
@@ -52,7 +52,7 @@ Campo_arqUsuario_Grupo_Grupo.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqUsuario_Grupo_Grupo()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Grupo_Grupo", "Grupo_Grupo", "Grupo", Grupo, 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Grupo_Grupo", "Grupo_Grupo", "Grupo", Grupo, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Grupo_Grupo = new Campo_arqUsuario_Grupo_Grupo;
@@ -96,7 +96,7 @@ Campo_arqUsuario_CRM.prototype = new Lance_CampoCadeia;
 function Campo_arqUsuario_CRM()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "CRM", "CRM", "CRM", 10, "xxxxxxxxxx", false);
+	this.superClass( "CRM", "CRM", "CRM", 10, "uuuuuuuuuu", false);
 }
 
 var CRM = new Campo_arqUsuario_CRM;

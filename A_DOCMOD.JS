@@ -8,7 +8,7 @@ Campo_arqDocMod_Documento.prototype = new Lance_CampoCadeia;
 function Campo_arqDocMod_Documento()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Documento", "Documento", "Documento", 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Documento", "Documento", "Documento", 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Documento = new Campo_arqDocMod_Documento;
@@ -151,7 +151,7 @@ Campo_arqDocMod_Template_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqDocMod_Template_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Template_Nome", "Template_Nome", "Nome", Template, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Template_Nome", "Template_Nome", "Nome", Template, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Template_Nome = new Campo_arqDocMod_Template_Nome;

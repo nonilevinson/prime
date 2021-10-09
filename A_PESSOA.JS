@@ -9,7 +9,7 @@ Campo_arqPessoa_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqPessoa_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Nome", "Nome", "Nome", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Nome", "Nome", "Nome", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Nome = new Campo_arqPessoa_Nome;
@@ -20,7 +20,7 @@ Campo_arqPessoa_Apelido.prototype = new Lance_CampoCadeia;
 function Campo_arqPessoa_Apelido()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Apelido", "Apelido", "Apelido", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Apelido", "Apelido", "Apelido", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Apelido = new Campo_arqPessoa_Apelido;
@@ -177,7 +177,7 @@ Campo_arqPessoa_Identidade.prototype = new Lance_CampoCadeia;
 function Campo_arqPessoa_Identidade()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Identidade", "Identidade", "Identidade", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Identidade", "Identidade", "Identidade", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Identidade = new Campo_arqPessoa_Identidade;
@@ -188,7 +188,7 @@ Campo_arqPessoa_Orgao.prototype = new Lance_CampoCadeia;
 function Campo_arqPessoa_Orgao()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Orgao", "Orgao", "Orgão", 20, "xxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Orgao", "Orgao", "Orgão", 20, "uuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Orgao = new Campo_arqPessoa_Orgao;
@@ -313,18 +313,6 @@ Campo_arqPessoa_Apelido.prototype.Sugeriu = function()
 {
 	return( this.AtribuiuSemCritica( sugereApelido( Nome ) ) );
 }
-}
-
-//-------------------------------------------------------------
-// Condição de advertência do campo
-//-------------------------------------------------------------
-Campo_arqPessoa_Apelido.prototype.TemAdvertencia = function()
-{
-		if( tem(this) && ( Apelido == Apelido.toString().toUpperCase() ) )
-	{
-		return( !confirm( "Usar CAIXA ALTA em todo o apelido clasificará a empresa como SPAMMER" ) );
-	}
-	return( Lance_CampoCadeiaLigado.prototype.TemAdvertencia.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -586,7 +574,7 @@ g_idOperacao = 7;
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,11,[],[39]);
 var Menu_2 = new Array( 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,11,[],[33]);
-var Menu_3 = new Array( 1,"Recorrentes","","R",155,"","",1,"","1","a_recorr","arqRecorrente","Folhear","Pessoa","?","","", "","", 0,11,[],[46]);
+var Menu_3 = new Array( 1,"Recorrentes","","R",155,"","",1,"","1","a_recor","arqRecorrente","Folhear","Pessoa","?","","", "","", 0,11,[],[46]);
 var Menu_4 = new Array( 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,11,[],[21]);
 var Menu_5 = new Array( 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 11,[],[12,13] );
 var Menu_5_1 = new Array( 1,"Programado","","P",26,"","",1,"","1","a_logema","arqLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[12]);

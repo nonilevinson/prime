@@ -8,7 +8,7 @@ Campo_arqPTrata_PTrata.prototype = new Lance_CampoCadeia;
 function Campo_arqPTrata_PTrata()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "PTrata", "PTrata", "PTrata", 80, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "PTrata", "PTrata", "PTrata", 80, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var PTrata = new Campo_arqPTrata_PTrata;

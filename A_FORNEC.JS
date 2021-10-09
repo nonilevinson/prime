@@ -9,7 +9,7 @@ Campo_arqFornecedor_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqFornecedor_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Nome", "Nome", "Nome", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Nome", "Nome", "Nome", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Nome = new Campo_arqFornecedor_Nome;
@@ -20,7 +20,7 @@ Campo_arqFornecedor_Apelido.prototype = new Lance_CampoCadeia;
 function Campo_arqFornecedor_Apelido()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Apelido", "Apelido", "Apelido", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Apelido", "Apelido", "Apelido", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Apelido = new Campo_arqFornecedor_Apelido;
@@ -78,7 +78,7 @@ Campo_arqFornecedor_InscEstad.prototype = new Lance_CampoCadeia;
 function Campo_arqFornecedor_InscEstad()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "InscEstad", "InscEstad", "InscEstad", 25, "xxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "InscEstad", "InscEstad", "InscEstad", 25, "uuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var InscEstad = new Campo_arqFornecedor_InscEstad;
@@ -89,7 +89,7 @@ Campo_arqFornecedor_InscMunic.prototype = new Lance_CampoCadeia;
 function Campo_arqFornecedor_InscMunic()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "InscMunic", "InscMunic", "InscMunic", 25, "xxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "InscMunic", "InscMunic", "InscMunic", 25, "uuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var InscMunic = new Campo_arqFornecedor_InscMunic;
@@ -111,7 +111,7 @@ Campo_arqFornecedor_Identidade.prototype = new Lance_CampoCadeia;
 function Campo_arqFornecedor_Identidade()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Identidade", "Identidade", "Identidade", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Identidade", "Identidade", "Identidade", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Identidade = new Campo_arqFornecedor_Identidade;
@@ -122,7 +122,7 @@ Campo_arqFornecedor_Orgao.prototype = new Lance_CampoCadeia;
 function Campo_arqFornecedor_Orgao()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Orgao", "Orgao", "Orgao", 20, "xxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Orgao", "Orgao", "Orgao", 20, "uuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Orgao = new Campo_arqFornecedor_Orgao;
@@ -180,18 +180,6 @@ Campo_arqFornecedor_Apelido.prototype.Sugeriu = function()
 {
 	return( this.AtribuiuSemCritica( SugereApelido( Nome ) ) );
 }
-}
-
-//-------------------------------------------------------------
-// Condição de advertência do campo
-//-------------------------------------------------------------
-Campo_arqFornecedor_Apelido.prototype.TemAdvertencia = function()
-{
-		if( tem(this) && ( Apelido == Apelido.toString().toUpperCase() ) )
-	{
-		return( !confirm( "Usar CAIXA ALTA em todo o apelido clasificará a empresa como SPAMMER" ) );
-	}
-	return( Lance_CampoData.prototype.TemAdvertencia.call( this ) );
 }
 
 //-------------------------------------------------------------

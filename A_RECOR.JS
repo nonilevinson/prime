@@ -19,7 +19,7 @@ Campo_arqRecorrente_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqRecorrente_Clinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Clinica_Clinica = new Campo_arqRecorrente_Clinica_Clinica;
@@ -41,7 +41,7 @@ Campo_arqRecorrente_Fornecedor_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqRecorrente_Fornecedor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Fornecedor_Nome = new Campo_arqRecorrente_Fornecedor_Nome;
@@ -63,7 +63,7 @@ Campo_arqRecorrente_Pessoa_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqRecorrente_Pessoa_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Pessoa_Nome = new Campo_arqRecorrente_Pessoa_Nome;
@@ -239,7 +239,7 @@ Campo_arqRecorrente_Historico.prototype = new Lance_CampoCadeia;
 function Campo_arqRecorrente_Historico()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Historico", "Historico", "Historico", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Historico", "Historico", "Historico", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Historico = new Campo_arqRecorrente_Historico;
@@ -283,7 +283,7 @@ Campo_arqRecorrente_SubPlano_Plano_Plano.prototype = new Lance_CampoCadeia;
 function Campo_arqRecorrente_SubPlano_Plano_Plano()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "SubPlano_Plano_Plano", "SubPlano_Plano_Plano", "Plano", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "SubPlano_Plano_Plano", "SubPlano_Plano_Plano", "Plano", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var SubPlano_Plano_Plano = new Campo_arqRecorrente_SubPlano_Plano_Plano;
@@ -305,7 +305,7 @@ Campo_arqRecorrente_SubPlano_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqRecorrente_SubPlano_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "SubPlano_Nome", "SubPlano_Nome", "Nome", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "SubPlano_Nome", "SubPlano_Nome", "Nome", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var SubPlano_Nome = new Campo_arqRecorrente_SubPlano_Nome;

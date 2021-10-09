@@ -63,7 +63,7 @@ Campo_arqAvisos_Assunto.prototype = new Lance_CampoCadeia;
 function Campo_arqAvisos_Assunto()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Assunto", "Assunto", "Assunto", 100, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Assunto", "Assunto", "Assunto", 100, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Assunto = new Campo_arqAvisos_Assunto;

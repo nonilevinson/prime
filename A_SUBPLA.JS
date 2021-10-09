@@ -30,7 +30,7 @@ Campo_arqSubPlano_Plano_Plano.prototype = new Lance_CampoCadeia;
 function Campo_arqSubPlano_Plano_Plano()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Plano_Plano", "Plano_Plano", "Plano", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Plano_Plano", "Plano_Plano", "Plano", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Plano_Plano = new Campo_arqSubPlano_Plano_Plano;
@@ -52,7 +52,7 @@ Campo_arqSubPlano_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqSubPlano_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Nome", "Nome", "Nome", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Nome", "Nome", "Nome", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Nome = new Campo_arqSubPlano_Nome;

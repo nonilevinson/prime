@@ -19,7 +19,7 @@ Campo_arqEmailRemet_NomeEmail.prototype = new Lance_CampoCadeia;
 function Campo_arqEmailRemet_NomeEmail()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "NomeEmail", "NomeEmail", "NomeEmail", 100, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "NomeEmail", "NomeEmail", "NomeEmail", 100, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var NomeEmail = new Campo_arqEmailRemet_NomeEmail;

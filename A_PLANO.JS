@@ -19,7 +19,7 @@ Campo_arqPlano_Plano.prototype = new Lance_CampoCadeia;
 function Campo_arqPlano_Plano()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Plano", "Plano", "Plano", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Plano", "Plano", "Plano", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Plano = new Campo_arqPlano_Plano;

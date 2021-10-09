@@ -8,7 +8,7 @@ Campo_arqBairro_Bairro.prototype = new Lance_CampoCadeia;
 function Campo_arqBairro_Bairro()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Bairro", "Bairro", "Bairro", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Bairro", "Bairro", "Bairro", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Bairro = new Campo_arqBairro_Bairro;

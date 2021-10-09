@@ -96,7 +96,7 @@ Campo_parQSelecao_Cliente_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_Cliente_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Cliente_Nome", "Cliente_Nome", "Nome", Cliente, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Cliente_Nome", "Cliente_Nome", "Nome", Cliente, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Cliente_Nome = new Campo_parQSelecao_Cliente_Nome;
@@ -129,7 +129,7 @@ Campo_parQSelecao_Fornecedor_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_Fornecedor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Fornecedor_Nome = new Campo_parQSelecao_Fornecedor_Nome;
@@ -228,7 +228,7 @@ Campo_parQSelecao_Cadeia100.prototype = new Lance_CampoCadeia;
 function Campo_parQSelecao_Cadeia100()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Cadeia100", "Cadeia100", "Cadeia100", 100, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Cadeia100", "Cadeia100", "Cadeia100", 100, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Cadeia100 = new Campo_parQSelecao_Cadeia100;
@@ -426,7 +426,7 @@ Campo_parQSelecao_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_Clinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Clinica_Clinica = new Campo_parQSelecao_Clinica_Clinica;
@@ -569,7 +569,7 @@ Campo_parQSelecao_SubPlano_Plano_Plano.prototype = new Lance_CampoCadeia;
 function Campo_parQSelecao_SubPlano_Plano_Plano()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "SubPlano_Plano_Plano", "SubPlano_Plano_Plano", "Plano", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "SubPlano_Plano_Plano", "SubPlano_Plano_Plano", "Plano", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var SubPlano_Plano_Plano = new Campo_parQSelecao_SubPlano_Plano_Plano;
@@ -591,7 +591,7 @@ Campo_parQSelecao_SubPlano_Nome.prototype = new Lance_CampoCadeia;
 function Campo_parQSelecao_SubPlano_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "SubPlano_Nome", "SubPlano_Nome", "Nome", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "SubPlano_Nome", "SubPlano_Nome", "Nome", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var SubPlano_Nome = new Campo_parQSelecao_SubPlano_Nome;
@@ -646,7 +646,7 @@ Campo_parQSelecao_CCor_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_CCor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var CCor_Nome = new Campo_parQSelecao_CCor_Nome;

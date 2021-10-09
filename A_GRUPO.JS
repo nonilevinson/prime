@@ -8,7 +8,7 @@ Campo_arqGrupo_Grupo.prototype = new Lance_CampoCadeia;
 function Campo_arqGrupo_Grupo()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Grupo", "Grupo", "Grupo", 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Grupo", "Grupo", "Grupo", 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Grupo = new Campo_arqGrupo_Grupo;

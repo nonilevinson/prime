@@ -8,7 +8,7 @@ Campo_arqMidia_Midia.prototype = new Lance_CampoCadeia;
 function Campo_arqMidia_Midia()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Midia", "Midia", "Midia", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Midia", "Midia", "Midia", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Midia = new Campo_arqMidia_Midia;

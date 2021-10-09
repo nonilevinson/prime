@@ -19,7 +19,7 @@ Campo_arqHoraBloq_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqHoraBloq_Clinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Clinica_Clinica = new Campo_arqHoraBloq_Clinica_Clinica;
@@ -30,7 +30,7 @@ Campo_arqHoraBloq_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqHoraBloq_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Nome", "Nome", "Nome", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Nome", "Nome", "Nome", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Nome = new Campo_arqHoraBloq_Nome;

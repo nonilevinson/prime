@@ -19,7 +19,7 @@ Campo_arqContPessoa_Fornecedor_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqContPessoa_Fornecedor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Fornecedor_Nome = new Campo_arqContPessoa_Fornecedor_Nome;
@@ -41,7 +41,7 @@ Campo_arqContPessoa_Pessoa_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqContPessoa_Pessoa_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Pessoa_Nome = new Campo_arqContPessoa_Pessoa_Nome;
@@ -63,7 +63,7 @@ Campo_arqContPessoa_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqContPessoa_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Nome", "Nome", "Nome", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Nome", "Nome", "Nome", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Nome = new Campo_arqContPessoa_Nome;
@@ -74,7 +74,7 @@ Campo_arqContPessoa_Apelido.prototype = new Lance_CampoCadeia;
 function Campo_arqContPessoa_Apelido()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Apelido", "Apelido", "Apelido", 20, "uxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Apelido", "Apelido", "Apelido", 20, "uuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Apelido = new Campo_arqContPessoa_Apelido;
@@ -85,7 +85,7 @@ Campo_arqContPessoa_Funcao.prototype = new Lance_CampoCadeia;
 function Campo_arqContPessoa_Funcao()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Funcao", "Funcao", "Funcao", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Funcao", "Funcao", "Funcao", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Funcao = new Campo_arqContPessoa_Funcao;

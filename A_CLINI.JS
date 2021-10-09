@@ -9,7 +9,7 @@ Campo_arqClinica_Clinica.prototype = new Lance_CampoCadeia;
 function Campo_arqClinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Clinica", "Clinica", "Clinica", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Clinica", "Clinica", "Clinica", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Clinica = new Campo_arqClinica_Clinica;
@@ -20,7 +20,7 @@ Campo_arqClinica_Razao.prototype = new Lance_CampoCadeia;
 function Campo_arqClinica_Razao()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Razao", "Razao", "Razao", 80, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Razao", "Razao", "Razao", 80, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Razao = new Campo_arqClinica_Razao;

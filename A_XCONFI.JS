@@ -64,7 +64,7 @@ Campo_cnfXConfig_Empresa.prototype = new Lance_CampoCadeia;
 function Campo_cnfXConfig_Empresa()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Empresa", "Empresa", "Empresa", 100, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Empresa", "Empresa", "Empresa", 100, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Empresa = new Campo_cnfXConfig_Empresa;
