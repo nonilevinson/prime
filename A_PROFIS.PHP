@@ -32,6 +32,35 @@ class campo_arqProfissao_Profissao extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Ativo
+//======================================================
+
+class campo_arqProfissao_Ativo extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "Ativo", "Ativo", "Ativo", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->ATIVO == 0 )
+			return( "CorInativo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Ativo?" );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqProfissao
 //======================================================
 function listaCampos_arqProfissao( $p_prefixo )
@@ -42,7 +71,8 @@ function listaCampos_arqProfissao( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
-			new campo_arqProfissao_Profissao() )
+			new campo_arqProfissao_Profissao(),
+			new campo_arqProfissao_Ativo() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -77,6 +107,7 @@ class arqProfissao extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Profissao ) );
+			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
 
@@ -88,6 +119,7 @@ class arqProfissao extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Profissao ) );
+			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
 

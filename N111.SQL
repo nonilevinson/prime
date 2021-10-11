@@ -1690,6 +1690,7 @@ CREATE TABLE arqProfissao
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	PROFISSAO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqProfissao_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqProfissao_UK UNIQUE ( Profissao )
 );
@@ -2859,7 +2860,7 @@ RECREATE VIEW V_arqUsuCli AS
 commit;
 
 RECREATE VIEW V_arqProfissao AS 
-	SELECT A0.IDPRIMARIO, A0.PROFISSAO
+	SELECT A0.IDPRIMARIO, A0.PROFISSAO, A0.ATIVO
 	FROM arqProfissao A0;
 commit;
 
@@ -4196,6 +4197,7 @@ if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Profissao', OLD.Profissao, NEW.Profissao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end
 end^
 

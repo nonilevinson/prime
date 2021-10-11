@@ -155,7 +155,7 @@ Campo_arqPessoa_Profissao_Profissao.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqPessoa_Profissao_Profissao()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Profissao_Profissao", "Profissao_Profissao", "Profissao", Profissao, 40, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Profissao_Profissao", "Profissao_Profissao", "Profissao", Profissao, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Profissao_Profissao = new Campo_arqPessoa_Profissao_Profissao;
@@ -287,7 +287,7 @@ Campo_arqPessoa_Midia_Midia.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqPessoa_Midia_Midia()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Midia_Midia", "Midia_Midia", "Midia", Midia, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Midia_Midia", "Midia_Midia", "Midia", Midia, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Midia_Midia = new Campo_arqPessoa_Midia_Midia;
@@ -360,6 +360,16 @@ Sexo_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 Sexo_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 EstCivil_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 EstCivil_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqPessoa_Profissao.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1" );
+		return( "" );
+}
+
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------

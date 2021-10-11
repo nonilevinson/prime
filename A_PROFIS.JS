@@ -13,6 +13,17 @@ function Campo_arqProfissao_Profissao()
 
 var Profissao = new Campo_arqProfissao_Profissao;
 
+//------------------------------------------------------------
+Campo_arqProfissao_Ativo.prototype = new Lance_CampoLogico;
+
+function Campo_arqProfissao_Ativo()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "Ativo", "Ativo", "Ativo");
+}
+
+var Ativo = new Campo_arqProfissao_Ativo;
+
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -22,6 +33,24 @@ Campo_arqProfissao_Profissao.prototype.Cabecalho = function()
 }
 
 Profissao.TipoCampo |= CAMPO_CHAVE;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqProfissao_Ativo.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 1 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqProfissao_Ativo.prototype.Cabecalho = function()
+{
+		return( "Ativo?" );
+}
+
 function IniciarDependencias_arqProfissao()
 {
 }
@@ -41,7 +70,7 @@ function ListaDeCampos_arqProfissao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Profissao ]	);
+		[ Profissao, Ativo ]	);
 	IniciarDependencias_arqProfissao();
 	g_prefixo = l_prefixo;
 	return( l_lista );
