@@ -117,6 +117,10 @@ commit;
 INSERT INTO arqTiAgenda VALUES ( 7, 'RETESTE', 1, 1, 1, 1, 1, 1 );
 commit;
 
+/************************************************************
+	Arquivo CliMidia  
+************************************************************/
+
 CREATE TABLE arqCliMidia
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
