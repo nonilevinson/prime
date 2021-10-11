@@ -218,10 +218,11 @@ var Menu_1 = new Array( 1,"Consultas","","l",112,"","",1,"","1","a_consul","arqC
 var Menu_2 = new Array( 1,"Horários/Duração","","r",133,"","",1,"","1","a_duraca","arqDuracao","Folhear","Clinica","?","","", "","", 0,19,[],[38]);
 var Menu_3 = new Array( 1,"Horários Bloqueados","","q",114,"","",1,"","1","a_horabl","arqHoraBloq","Folhear","Clinica","?","","", "","", 0,19,[],[37]);
 var Menu_4 = new Array( 1,"Plantões","","P",139,"","",1,"","1","a_planta","arqPlantao","Folhear","Clinica","?","","", "","", 0,19,[],[41]);
-var Menu_5 = new Array( 1,"Financeiro","","F",156,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 19,[],[33,20,46] );
-var Menu_5_1 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,15,[],[33]);
-var Menu_5_2 = new Array( 1,"Contas corrente","","t",150,"","",1,"","1","a_ccor","arqCCor","Folhear","Clinica","?","","", "","", 0,15,[],[20]);
-var Menu_5_3 = new Array( 1,"Recorrentes","","s",152,"","",1,"","1","a_recor","arqRecorrente","Folhear","Clinica","?","","", "","", 0,15,[],[46]);
-var Menu_6 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,19,[],[35]);
-parent.navegacao.MenuPrincQtdOpcoes=6;
+var Menu_5 = new Array( 1,"Mídias","","M",171,"","",1,"","1","a_climid","arqCliMidia","Folhear","Clinica","?","","", "","", 0,19,[],[47]);
+var Menu_6 = new Array( 1,"Financeiro","","F",156,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 19,[],[33,20,46] );
+var Menu_6_1 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,15,[],[33]);
+var Menu_6_2 = new Array( 1,"Contas corrente","","t",150,"","",1,"","1","a_ccor","arqCCor","Folhear","Clinica","?","","", "","", 0,15,[],[20]);
+var Menu_6_3 = new Array( 1,"Recorrentes","","s",152,"","",1,"","1","a_recor","arqRecorrente","Folhear","Clinica","?","","", "","", 0,15,[],[46]);
+var Menu_7 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,19,[],[35]);
+parent.navegacao.MenuPrincQtdOpcoes=7;
 }

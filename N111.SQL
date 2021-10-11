@@ -1475,17 +1475,17 @@ CREATE TABLE tabTStCon
 );
 commit;
 
-INSERT INTO tabTStCon VALUES ( 1, '1', 'Agendado' );
-INSERT INTO tabTStCon VALUES ( 2, '2', 'Recepção' );
-INSERT INTO tabTStCon VALUES ( 3, '3', 'Médico' );
-INSERT INTO tabTStCon VALUES ( 4, '4', 'Teste' );
-INSERT INTO tabTStCon VALUES ( 5, '5', 'Ag. Assessor' );
-INSERT INTO tabTStCon VALUES ( 6, '6', 'Assessor' );
-INSERT INTO tabTStCon VALUES ( 7, '7', 'Atendido' );
-INSERT INTO tabTStCon VALUES ( 8, '8', 'Liberado' );
-INSERT INTO tabTStCon VALUES ( 9, '9', 'Clínica desmarcou' );
-INSERT INTO tabTStCon VALUES ( 10, '10', 'Paciente desmarcou' );
-INSERT INTO tabTStCon VALUES ( 11, '11', 'Médico desmarcou' );
+INSERT INTO tabTStCon VALUES ( 1, '1', 'AGENDADo' );
+INSERT INTO tabTStCon VALUES ( 2, '2', 'RECEPÇÃO' );
+INSERT INTO tabTStCon VALUES ( 3, '3', 'MÉDICO' );
+INSERT INTO tabTStCon VALUES ( 4, '4', 'TESTE' );
+INSERT INTO tabTStCon VALUES ( 5, '5', 'AG. ASSESSOR' );
+INSERT INTO tabTStCon VALUES ( 6, '6', 'ASSESSOR' );
+INSERT INTO tabTStCon VALUES ( 7, '7', 'ATENDIDO' );
+INSERT INTO tabTStCon VALUES ( 8, '8', 'LIBERADO' );
+INSERT INTO tabTStCon VALUES ( 9, '9', 'CLÍNICA DESMARCOU' );
+INSERT INTO tabTStCon VALUES ( 10, '10', 'PACIENTE DESMARCOU' );
+INSERT INTO tabTStCon VALUES ( 11, '11', 'MÉDICO DESMARCOU' );
 commit;
 
 
@@ -2145,8 +2145,12 @@ CREATE TABLE arqTiAgenda
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	TIAGENDA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  4*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	AGTOPO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	AGFORM campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  7*/	PAGAMENTO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  8*/	MIDIA campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTiAgenda_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTiAgenda_UK UNIQUE ( TiAgenda )
 );
@@ -2570,6 +2574,25 @@ commit;
 
 
 /************************************************************
+	Arquivo CliMidia  
+************************************************************/
+
+CREATE TABLE arqCliMidia
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  3*/	MIDIA ligadoComArquivo, /* Ligado com o Arquivo Midia */
+	/*  4*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqCliMidia_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqCliMidia_UK UNIQUE ( Clinica, Midia )
+);
+commit;
+
+CREATE DESC INDEX arqCliMidia_IdPrimario_Desc ON arqCliMidia (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -2908,7 +2931,7 @@ RECREATE VIEW V_arqFornecedor AS
 commit;
 
 RECREATE VIEW V_arqTiAgenda AS 
-	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.DOBROTEMPO, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ATIVO, A0.DOBROTEMPO, A0.AGTOPO, A0.AGFORM, A0.PAGAMENTO, A0.MIDIA
 	FROM arqTiAgenda A0;
 commit;
 
@@ -2928,6 +2951,13 @@ RECREATE VIEW V_arqRecorrente AS
 	left join tabTFCobra A6 on A6.IDPRIMARIO=A0.TFCOBRA
 	left join arqSubPlano A7 on A7.IDPRIMARIO = A0.SUBPLANO
 	left join arqPlano A8 on A8.IDPRIMARIO = A7.PLANO;
+commit;
+
+RECREATE VIEW V_arqCliMidia AS 
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.MIDIA, A2.MIDIA as MIDIA_MIDIA, A0.ATIVO
+	FROM arqCliMidia A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join arqMidia A2 on A2.IDPRIMARIO = A0.MIDIA;
 commit;
 
 
@@ -3010,6 +3040,7 @@ insert into arqLanceOperacao values(100042,1,'Cadastro de fornecedores','arqForn
 insert into arqLanceOperacao values(100043,1,'Cadastro de tipos de agendas [0]','arqTiAgenda',43,99,1,'');
 insert into arqLanceOperacao values(100044,1,'Cadastro de formas de pagamento de consultas','arqFormaPg',44,1,0,'');
 insert into arqLanceOperacao values(100046,1,'Cadastro de contas recorrentes a pagar e a receber','arqRecorrente',46,10,0,'');
+insert into arqLanceOperacao values(100047,1,'Cadastro da relação de mídias e clínicas','arqCliMidia',47,1,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
 insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de grupos de acesso','',11,90,0,'');
@@ -3040,10 +3071,10 @@ insert into arqLanceOperacao values(200083,2,'Rotina para reindexar os índices',
 insert into arqLanceOperacao values(200073,2,'Relatório analítico de interações no sistema','',73,90,0,'');
 insert into arqLanceOperacao values(200074,2,'Relatório resumido de interações no sistema','',74,90,0,'');
 insert into arqLanceOperacao values(200129,2,'Rotina para baixar parcelas','',129,10,0,'');
-insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos usuários','',68,90,0,'');
 insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos','',151,1,0,'');
+insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
 insert into arqLanceOperacao values(200162,2,'Gerar conta e parcela de recorrentes','',162,10,0,'');
 insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm()');
@@ -3140,6 +3171,8 @@ ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_TPgRec FOREIGN KEY ( T
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_TCompete FOREIGN KEY ( TCOMPETE ) REFERENCES tabTCompete ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_TFCobra FOREIGN KEY ( TFCOBRA ) REFERENCES tabTFCobra ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_SubPlano FOREIGN KEY ( SUBPLANO ) REFERENCES arqSubPlano ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqCliMidia ADD CONSTRAINT arqCliMidia_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqCliMidia ADD CONSTRAINT arqCliMidia_FK_Midia FOREIGN KEY ( MIDIA ) REFERENCES arqMidia ON DELETE CASCADE ON UPDATE CASCADE;
 commit;
 
 
@@ -4474,6 +4507,37 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'TFCobra', OLD.TFCobra, NEW.TFCobra );
 	execute procedure set_log( 12, NEW.idPrimario, 'Historico', OLD.Historico, NEW.Historico );
 	execute procedure set_log( 12, NEW.idPrimario, 'SubPlano', OLD.SubPlano, NEW.SubPlano );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqCliMidia
+************************************************************/
+
+set term ^;
+
+recreate trigger arqCliMidia_LOG for arqCliMidia
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Clinica_Clinica, ' ' ) || '-' || coalesce( Midia_Midia, ' ' ) from v_arqCliMidia where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100047 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Midia', OLD.Midia, NEW.Midia );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end
 end^

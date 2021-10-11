@@ -1,25 +1,25 @@
 <?php
 
 /*=========================================================================
-  a_tiagen - TiAgenda
+  a_ticons - TiConsulta
 =========================================================================*/
 
-if( DEF_a_tiagen == 1 )
+if( DEF_a_ticons == 1 )
   return;
-define( "DEF_a_tiagen", 1 );
+define( "DEF_a_ticons", 1 );
 
-include_once( SISTEMA_DIR_ABSOLUTO . "a_tiagen_ext.php" );
+include_once( SISTEMA_DIR_ABSOLUTO . "a_ticons_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
 
 //======================================================
-//	Campo TiAgenda
+//	Campo TiConsulta
 //======================================================
 
-class campo_arqTiAgenda_TiAgenda extends Lance_CampoCadeia
+class campo_arqTiConsulta_TiConsulta extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "TiAgenda", "TiAgenda", "TiAgenda", 20, "xxxxxxxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
+		parent::__construct( "TiConsulta", "TiConsulta", "TiConsulta", 20, "xxxxxxxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -35,7 +35,7 @@ class campo_arqTiAgenda_TiAgenda extends Lance_CampoCadeia
 //	Campo Ativo
 //======================================================
 
-class campo_arqTiAgenda_Ativo extends Lance_CampoLogico
+class campo_arqTiConsulta_Ativo extends Lance_CampoLogico
 {
 	function __construct()
 	{
@@ -61,39 +61,10 @@ class campo_arqTiAgenda_Ativo extends Lance_CampoLogico
 }
 
 //======================================================
-//	Campo DobroTempo
-//======================================================
-
-class campo_arqTiAgenda_DobroTempo extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "DobroTempo", "DobroTempo", "DobroTempo", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( $g_regAtual->DOBROTEMPO == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Dobro do tempo?" );
-	}
-
-}
-
-//======================================================
 //	Campo AgTopo
 //======================================================
 
-class campo_arqTiAgenda_AgTopo extends Lance_CampoLogico
+class campo_arqTiConsulta_AgTopo extends Lance_CampoLogico
 {
 	function __construct()
 	{
@@ -104,7 +75,7 @@ class campo_arqTiAgenda_AgTopo extends Lance_CampoLogico
 	function Estilo()
 	{
 		global $g_regAtual;
-		if( $g_regAtual->AGTOPO == 0 )
+		if( AgendaTopo == 0 )
 			return( "CorInativo" );
 		return( parent::Estilo() );
 	}
@@ -115,20 +86,11 @@ class campo_arqTiAgenda_AgTopo extends Lance_CampoLogico
 //	Campo AgForm
 //======================================================
 
-class campo_arqTiAgenda_AgForm extends Lance_CampoLogico
+class campo_arqTiConsulta_AgForm extends Lance_CampoLogico
 {
 	function __construct()
 	{
 		parent::__construct( "AgForm", "AgForm", "AgForm", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( AgCab == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
 	}
 
 }
@@ -137,7 +99,7 @@ class campo_arqTiAgenda_AgForm extends Lance_CampoLogico
 //	Campo Pagamento
 //======================================================
 
-class campo_arqTiAgenda_Pagamento extends Lance_CampoLogico
+class campo_arqTiConsulta_Pagamento extends Lance_CampoLogico
 {
 	function __construct()
 	{
@@ -159,7 +121,7 @@ class campo_arqTiAgenda_Pagamento extends Lance_CampoLogico
 //	Campo Midia
 //======================================================
 
-class campo_arqTiAgenda_Midia extends Lance_CampoLogico
+class campo_arqTiConsulta_Midia extends Lance_CampoLogico
 {
 	function __construct()
 	{
@@ -178,9 +140,9 @@ class campo_arqTiAgenda_Midia extends Lance_CampoLogico
 }
 
 //======================================================
-//	Arquivo arqTiAgenda
+//	Arquivo arqTiConsulta
 //======================================================
-function listaCampos_arqTiAgenda( $p_prefixo )
+function listaCampos_arqTiConsulta( $p_prefixo )
 {
 	global $g_prefixo;
 	$prefixoAnt = $g_prefixo;
@@ -188,30 +150,28 @@ function listaCampos_arqTiAgenda( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
-			new campo_arqTiAgenda_TiAgenda(),
-			new campo_arqTiAgenda_Ativo(),
-			new campo_arqTiAgenda_DobroTempo(),
-			new campo_arqTiAgenda_AgTopo(),
-			new campo_arqTiAgenda_AgForm(),
-			new campo_arqTiAgenda_Pagamento(),
-			new campo_arqTiAgenda_Midia() )
+			new campo_arqTiConsulta_TiConsulta(),
+			new campo_arqTiConsulta_Ativo(),
+			new campo_arqTiConsulta_AgTopo(),
+			new campo_arqTiConsulta_AgForm(),
+			new campo_arqTiConsulta_Pagamento(),
+			new campo_arqTiConsulta_Midia() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
 }
 
 //------------------------------------------------------------
-class arqTiAgenda extends Lance_Arquivo
+class arqTiConsulta extends Lance_Arquivo
 {
 	function __construct()
 	{
 		parent::__construct(
-			"arqTiAgenda",  // Nome Interno do arquivo
-			"a_tiagen",  // Nome deste arquivo Php que contém o arquivo
-			"TiAgenda",  // Nome do arquivo acentuado-se
-			listaCampos_arqTiAgenda( "" ), 43
+			"arqTiConsulta",  // Nome Interno do arquivo
+			"a_ticons",  // Nome deste arquivo Php que contém o arquivo
+			"TiConsulta",  // Nome do arquivo acentuado-se
+			listaCampos_arqTiConsulta( "" ), 47
 		);
-		$this->temLog = false;
 	}
 
 	//-------------------------------------------------------------
@@ -219,7 +179,7 @@ class arqTiAgenda extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( TiAgenda) );
+		return( array( TiConsulta) );
 	}
 
 	//-------------------------------------------------------------
@@ -229,9 +189,8 @@ class arqTiAgenda extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( TiAgenda ) );
+			array_push( $vetAux, array( TiConsulta ) );
 			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( DobroTempo ) );
 			array_push( $vetAux, array( AgTopo ) );
 			array_push( $vetAux, array( AgForm ) );
 			array_push( $vetAux, array( Pagamento ) );
@@ -246,9 +205,8 @@ class arqTiAgenda extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( TiAgenda ) );
+			array_push( $vetAux, array( TiConsulta ) );
 			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( DobroTempo ) );
 			array_push( $vetAux, array( AgTopo ) );
 			array_push( $vetAux, array( AgForm ) );
 			array_push( $vetAux, array( Pagamento ) );
@@ -261,7 +219,7 @@ class arqTiAgenda extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function NomeCompleto()
 	{
-		return( 'Tipos de agendas' );
+		return( 'Tipos de consulta' );
 	}
 
 }

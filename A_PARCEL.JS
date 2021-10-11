@@ -217,7 +217,7 @@ Campo_arqParcela_CCor_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqParcela_CCor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var CCor_Nome = new Campo_arqParcela_CCor_Nome;
@@ -261,7 +261,7 @@ Campo_arqParcela_SubPlano_Plano_Plano.prototype = new Lance_CampoCadeia;
 function Campo_arqParcela_SubPlano_Plano_Plano()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "SubPlano_Plano_Plano", "SubPlano_Plano_Plano", "Plano", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "SubPlano_Plano_Plano", "SubPlano_Plano_Plano", "Plano", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var SubPlano_Plano_Plano = new Campo_arqParcela_SubPlano_Plano_Plano;
@@ -283,7 +283,7 @@ Campo_arqParcela_SubPlano_Nome.prototype = new Lance_CampoCadeia;
 function Campo_arqParcela_SubPlano_Nome()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "SubPlano_Nome", "SubPlano_Nome", "Nome", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "SubPlano_Nome", "SubPlano_Nome", "Nome", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var SubPlano_Nome = new Campo_arqParcela_SubPlano_Nome;

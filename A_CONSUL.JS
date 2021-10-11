@@ -30,7 +30,7 @@ Campo_arqConsulta_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqConsulta_Clinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Clinica_Clinica = new Campo_arqConsulta_Clinica_Clinica;
@@ -85,7 +85,7 @@ Campo_arqConsulta_TiAgenda_TiAgenda.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqConsulta_TiAgenda_TiAgenda()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TiAgenda_TiAgenda", "TiAgenda_TiAgenda", "TiAgenda", TiAgenda, 20, "uxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "TiAgenda_TiAgenda", "TiAgenda_TiAgenda", "TiAgenda", TiAgenda, 20, "uuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var TiAgenda_TiAgenda = new Campo_arqConsulta_TiAgenda_TiAgenda;
@@ -140,7 +140,7 @@ Campo_arqConsulta_Pessoa_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqConsulta_Pessoa_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Pessoa_Nome = new Campo_arqConsulta_Pessoa_Nome;
@@ -327,7 +327,7 @@ Campo_arqConsulta_FormaPg_FormaPg.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqConsulta_FormaPg_FormaPg()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", FormaPg, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", FormaPg, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var FormaPg_FormaPg = new Campo_arqConsulta_FormaPg_FormaPg;

@@ -1,97 +1,86 @@
 /*=========================================================================
-  a_tiagen - TiAgenda
+  a_ticons - TiConsulta
 =========================================================================*/
 
 //------------------------------------------------------------
-Campo_arqTiAgenda_TiAgenda.prototype = new Lance_CampoCadeia;
+Campo_arqTiConsulta_TiConsulta.prototype = new Lance_CampoCadeia;
 
-function Campo_arqTiAgenda_TiAgenda()
+function Campo_arqTiConsulta_TiConsulta()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "TiAgenda", "TiAgenda", "TiAgenda", 20, "uuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "TiConsulta", "TiConsulta", "TiConsulta", 20, "uuuuuuuuuuuuuuuuuuuu", false);
 }
 
-var TiAgenda = new Campo_arqTiAgenda_TiAgenda;
+var TiConsulta = new Campo_arqTiConsulta_TiConsulta;
 
 //------------------------------------------------------------
-Campo_arqTiAgenda_Ativo.prototype = new Lance_CampoLogico;
+Campo_arqTiConsulta_Ativo.prototype = new Lance_CampoLogico;
 
-function Campo_arqTiAgenda_Ativo()
+function Campo_arqTiConsulta_Ativo()
 {
 	this.superClass = Lance_CampoLogico;
 	this.superClass( "Ativo", "Ativo", "Ativo");
 }
 
-var Ativo = new Campo_arqTiAgenda_Ativo;
+var Ativo = new Campo_arqTiConsulta_Ativo;
 
 //------------------------------------------------------------
-Campo_arqTiAgenda_DobroTempo.prototype = new Lance_CampoLogico;
+Campo_arqTiConsulta_AgTopo.prototype = new Lance_CampoLogico;
 
-function Campo_arqTiAgenda_DobroTempo()
-{
-	this.superClass = Lance_CampoLogico;
-	this.superClass( "DobroTempo", "DobroTempo", "DobroTempo");
-}
-
-var DobroTempo = new Campo_arqTiAgenda_DobroTempo;
-
-//------------------------------------------------------------
-Campo_arqTiAgenda_AgTopo.prototype = new Lance_CampoLogico;
-
-function Campo_arqTiAgenda_AgTopo()
+function Campo_arqTiConsulta_AgTopo()
 {
 	this.superClass = Lance_CampoLogico;
 	this.superClass( "AgTopo", "AgTopo", "AgTopo");
 }
 
-var AgTopo = new Campo_arqTiAgenda_AgTopo;
+var AgTopo = new Campo_arqTiConsulta_AgTopo;
 
 //------------------------------------------------------------
-Campo_arqTiAgenda_AgForm.prototype = new Lance_CampoLogico;
+Campo_arqTiConsulta_AgForm.prototype = new Lance_CampoLogico;
 
-function Campo_arqTiAgenda_AgForm()
+function Campo_arqTiConsulta_AgForm()
 {
 	this.superClass = Lance_CampoLogico;
 	this.superClass( "AgForm", "AgForm", "AgForm");
 }
 
-var AgForm = new Campo_arqTiAgenda_AgForm;
+var AgForm = new Campo_arqTiConsulta_AgForm;
 
 //------------------------------------------------------------
-Campo_arqTiAgenda_Pagamento.prototype = new Lance_CampoLogico;
+Campo_arqTiConsulta_Pagamento.prototype = new Lance_CampoLogico;
 
-function Campo_arqTiAgenda_Pagamento()
+function Campo_arqTiConsulta_Pagamento()
 {
 	this.superClass = Lance_CampoLogico;
 	this.superClass( "Pagamento", "Pagamento", "Pagamento");
 }
 
-var Pagamento = new Campo_arqTiAgenda_Pagamento;
+var Pagamento = new Campo_arqTiConsulta_Pagamento;
 
 //------------------------------------------------------------
-Campo_arqTiAgenda_Midia.prototype = new Lance_CampoLogico;
+Campo_arqTiConsulta_Midia.prototype = new Lance_CampoLogico;
 
-function Campo_arqTiAgenda_Midia()
+function Campo_arqTiConsulta_Midia()
 {
 	this.superClass = Lance_CampoLogico;
 	this.superClass( "Midia", "Midia", "Midia");
 }
 
-var Midia = new Campo_arqTiAgenda_Midia;
+var Midia = new Campo_arqTiConsulta_Midia;
 
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqTiAgenda_TiAgenda.prototype.Cabecalho = function()
+Campo_arqTiConsulta_TiConsulta.prototype.Cabecalho = function()
 {
 		return( "Tipo" );
 }
 
-TiAgenda.TipoCampo |= CAMPO_CHAVE;
+TiConsulta.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
-Campo_arqTiAgenda_Ativo.prototype.Sugeriu = function()
+Campo_arqTiConsulta_Ativo.prototype.Sugeriu = function()
 {
 {
 	return( this.AtribuiuSemCritica( 1 ) );
@@ -101,7 +90,7 @@ Campo_arqTiAgenda_Ativo.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqTiAgenda_Ativo.prototype.Cabecalho = function()
+Campo_arqTiConsulta_Ativo.prototype.Cabecalho = function()
 {
 		return( "Ativo?" );
 }
@@ -109,25 +98,7 @@ Campo_arqTiAgenda_Ativo.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
-Campo_arqTiAgenda_DobroTempo.prototype.Sugeriu = function()
-{
-{
-	return( this.AtribuiuSemCritica( 1 ) );
-}
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqTiAgenda_DobroTempo.prototype.Cabecalho = function()
-{
-		return( "Dobro do tempo?" );
-}
-
-//-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
-Campo_arqTiAgenda_AgTopo.prototype.Sugeriu = function()
+Campo_arqTiConsulta_AgTopo.prototype.Sugeriu = function()
 {
 {
 	return( this.AtribuiuSemCritica( 1 ) );
@@ -137,7 +108,7 @@ Campo_arqTiAgenda_AgTopo.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
-Campo_arqTiAgenda_AgForm.prototype.Sugeriu = function()
+Campo_arqTiConsulta_AgForm.prototype.Sugeriu = function()
 {
 {
 	return( this.AtribuiuSemCritica( 1 ) );
@@ -147,7 +118,7 @@ Campo_arqTiAgenda_AgForm.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
-Campo_arqTiAgenda_Pagamento.prototype.Sugeriu = function()
+Campo_arqTiConsulta_Pagamento.prototype.Sugeriu = function()
 {
 {
 	return( this.AtribuiuSemCritica( 1 ) );
@@ -157,14 +128,14 @@ Campo_arqTiAgenda_Pagamento.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
-Campo_arqTiAgenda_Midia.prototype.Sugeriu = function()
+Campo_arqTiConsulta_Midia.prototype.Sugeriu = function()
 {
 {
 	return( this.AtribuiuSemCritica( 1 ) );
 }
 }
 
-function IniciarDependencias_arqTiAgenda()
+function IniciarDependencias_arqTiConsulta()
 {
 }
 
@@ -172,9 +143,9 @@ function IniciarDependencias_arqTiAgenda()
 //======================================================
 //	Arquivo e seus campos
 //======================================================
-g_arquivoAtual = "arqTiAgenda";
+g_arquivoAtual = "arqTiConsulta";
 //------------------------------------------------------------
-function ListaDeCampos_arqTiAgenda( p_prefixo )
+function ListaDeCampos_arqTiConsulta( p_prefixo )
 {
 	var l_prefixo = g_prefixo;
 	g_prefixo += p_prefixo;
@@ -183,16 +154,15 @@ function ListaDeCampos_arqTiAgenda( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ TiAgenda, Ativo, DobroTempo, AgTopo, AgForm, Pagamento, Midia ]	);
-	IniciarDependencias_arqTiAgenda();
+		[ TiConsulta, Ativo, AgTopo, AgForm, Pagamento, Midia ]	);
+	IniciarDependencias_arqTiConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );
 }
 
-g_arquivoCampos = ListaDeCampos_arqTiAgenda( '' );
-g_idOperacao = 43;
+g_arquivoCampos = ListaDeCampos_arqTiConsulta( '' );
+g_idOperacao = 47;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Consultas","","C",148,"","",1,"","1","a_consul","arqConsulta","Folhear","TiAgenda","?","","", "","", 0,9,[],[39]);
-parent.navegacao.MenuPrincQtdOpcoes=1;
+parent.navegacao.MenuPrincQtdOpcoes=0;
 }
