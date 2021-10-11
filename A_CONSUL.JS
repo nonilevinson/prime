@@ -617,8 +617,8 @@ Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 Campo_arqConsulta_Assessor.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
-			return( "A.Grupo is not null and A.Ativo == 1" );
-			return( "A.Grupo is not null" );
+			return( "A.Grupo is not null and A.Medico = 0 and A.Ativo = 1" );
+			return( "A.Grupo is not null and A.Medico = 0" );
 }
 
 //-------------------------------------------------------------
@@ -644,8 +644,8 @@ Assessor_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 Campo_arqConsulta_CallCenter.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
-			return( "A.Grupo is not null and A.Ativo == 1" );
-			return( "A.Grupo is not null" );
+			return( "A.Grupo is not null and A.Medico = 0 and A.Ativo = 1" );
+			return( "A.Grupo is not null and A.Medico = 0" );
 }
 
 //-------------------------------------------------------------
