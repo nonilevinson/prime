@@ -35,6 +35,7 @@ echo
 		[ brHtml(4) . "Prontuário ", Prontuario ] ] ] ),
    $this->Pedir( "Médico", Medico ),
    $this->Pedir( "Assessor" ),
+	$this->Pedir( "Call center", CallCenter ),
 	$this->Pedir( "Valor" ),
 	$this->Pedir( "Forma de pagamento", FormaPg ),
 "</table>",
@@ -56,7 +57,7 @@ CriarForms(
 "</table>",
 
 "<table id='C' class='tabFormulario' style='display:none'>",
-	$this->Pedir( "Programa de tratamento", TPrograma ),
+	$this->Pedir( "Plano de tratamento", PTrata ),
 	$this->Pedir( "Conduta" ),
 "</table>",
 

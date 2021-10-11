@@ -113,5 +113,6 @@ g_arquivoCampos = ListaDeCampos_arqPTrata( '' );
 g_idOperacao = 32;
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"Consultas","","C",174,"","",1,"","1","a_consul","arqConsulta","Folhear","PTrata","?","","", "","", 0,9,[],[39]);
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }

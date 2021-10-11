@@ -1535,26 +1535,6 @@ commit;
 
 
 /************************************************************
-	TABELA tabTPrograma
-************************************************************/
-
-CREATE TABLE tabTPrograma
-(
-	IDPRIMARIO chavePrimariaTab,
-	CHAVE VARCHAR( 2 ) COLLATE PT_BR,
-	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
-	CONSTRAINT tabTPrograma_PK PRIMARY KEY( IDPRIMARIO ),
-	CONSTRAINT tabTPrograma_UK UNIQUE( CHAVE )
-);
-commit;
-
-INSERT INTO tabTPrograma VALUES ( 1, '6', '6 meses' );
-INSERT INTO tabTPrograma VALUES ( 2, '9', '9 meses' );
-INSERT INTO tabTPrograma VALUES ( 3, '12', '12 meses' );
-commit;
-
-
-/************************************************************
 	TABELA tabTCompete
 ************************************************************/
 
@@ -2018,6 +1998,26 @@ commit;
 
 
 /************************************************************
+	Arquivo PTrata    
+************************************************************/
+
+CREATE TABLE arqPTrata
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	PTRATA VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
+	/*  4*/	DESCRICAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
+	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqPTrata_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqPTrata_UK UNIQUE ( PTrata )
+);
+commit;
+
+CREATE DESC INDEX arqPTrata_IdPrimario_Desc ON arqPTrata (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	Arquivo Conta     
 ************************************************************/
 
@@ -2179,25 +2179,6 @@ commit;
 
 
 /************************************************************
-	Parâmetro Config    
-************************************************************/
-
-CREATE TABLE cnfConfig
-(
-	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	EMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  3*/	AVISO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  4*/	DOCMOD campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT cnfConfig_PK PRIMARY KEY ( IDPRIMARIO )
-);
-commit;
-
-INSERT INTO cnfConfig (idprimario) VALUES (0);
-CREATE DESC INDEX cnfConfig_IdPrimario_Desc ON cnfConfig (IDPRIMARIO);
-commit;
-
-
-/************************************************************
 	Arquivo ParaGrupo 
 ************************************************************/
 
@@ -2294,26 +2275,6 @@ commit;
 
 
 /************************************************************
-	Arquivo PTrata    
-************************************************************/
-
-CREATE TABLE arqPTrata
-(
-	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	PTRATA VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
-	/*  4*/	DESCRICAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
-	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqPTrata_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqPTrata_UK UNIQUE ( PTrata )
-);
-commit;
-
-CREATE DESC INDEX arqPTrata_IdPrimario_Desc ON arqPTrata (IDPRIMARIO);
-commit;
-
-
-/************************************************************
 	Arquivo ItLogEmail
 ************************************************************/
 
@@ -2332,6 +2293,34 @@ CREATE TABLE arqItLogEmail
 commit;
 
 CREATE DESC INDEX arqItLogEmail_IdPrimario_Desc ON arqItLogEmail (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo ContPessoa
+************************************************************/
+
+CREATE TABLE arqContPessoa
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+	/*  3*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  4*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	/*  5*/	APELIDO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
+	/*  6*/	FUNCAO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	/*  7*/	CELULAR VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/*  8*/	TELEFONE VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/*  9*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
+	/* 10*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 11*/	NASCIMENTO DATE, /* Máscara = 4ano */
+	/* 12*/	SEXO ligadoComTabela, /* Ligado com a Tabela Sexo */
+	/* 13*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 14*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqContPessoa_PK PRIMARY KEY ( IDPRIMARIO )
+);
+commit;
+
+CREATE DESC INDEX arqContPessoa_IdPrimario_Desc ON arqContPessoa (IDPRIMARIO);
 commit;
 
 
@@ -2397,30 +2386,24 @@ commit;
 
 
 /************************************************************
-	Arquivo ContPessoa
+	Arquivo ImagemCRM 
 ************************************************************/
 
-CREATE TABLE arqContPessoa
+CREATE TABLE arqImagemCRM
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
-	/*  3*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  4*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
-	/*  5*/	APELIDO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
-	/*  6*/	FUNCAO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
-	/*  7*/	CELULAR VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/*  8*/	TELEFONE VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/*  9*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
-	/* 10*/	RECEMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 11*/	NASCIMENTO DATE, /* Máscara = 4ano */
-	/* 12*/	SEXO ligadoComTabela, /* Ligado com a Tabela Sexo */
-	/* 13*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 14*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqContPessoa_PK PRIMARY KEY ( IDPRIMARIO )
+	/*  2*/	ACAOEMAIL ligadoComArquivo, /* Ligado com o Arquivo AcaoEmail */
+	/*  3*/	NUMIMG NUMERIC(18,0), /* Máscara = N */
+	/*  4*/	NOME VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
+	/*  5*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
+	/*  6*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'ImagemCRM/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
+	/*  7*/	LINK VARCHAR( 200 ) COLLATE PT_BR, /* Máscara = X */
+	CONSTRAINT arqImagemCRM_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqImagemCRM_UK UNIQUE ( AcaoEmail, NumImg )
 );
 commit;
 
-CREATE DESC INDEX arqContPessoa_IdPrimario_Desc ON arqContPessoa (IDPRIMARIO);
+CREATE DESC INDEX arqImagemCRM_IdPrimario_Desc ON arqImagemCRM (IDPRIMARIO);
 commit;
 
 
@@ -2485,14 +2468,15 @@ CREATE TABLE arqConsulta
 	/* 10*/	/* PRONTUARIO */
 	/* 11*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	/* 12*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 13*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 14*/	TMOTIVO ligadoComTabela, /* Ligado com a Tabela TMotivo */
-	/* 15*/	TPROGRAMA ligadoComTabela, /* Ligado com a Tabela TPrograma */
-	/* 16*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 17*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 18*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 19*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 20*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 13*/	CALLCENTER ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 14*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 15*/	TMOTIVO ligadoComTabela, /* Ligado com a Tabela TMotivo */
+	/* 16*/	PTRATA ligadoComArquivo, /* Ligado com o Arquivo PTrata */
+	/* 17*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 18*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 19*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 20*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 21*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2523,24 +2507,21 @@ commit;
 
 
 /************************************************************
-	Arquivo ImagemCRM 
+	Parâmetro Config    
 ************************************************************/
 
-CREATE TABLE arqImagemCRM
+CREATE TABLE cnfConfig
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	ACAOEMAIL ligadoComArquivo, /* Ligado com o Arquivo AcaoEmail */
-	/*  3*/	NUMIMG NUMERIC(18,0), /* Máscara = N */
-	/*  4*/	NOME VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
-	/*  5*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/*  6*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'ImagemCRM/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
-	/*  7*/	LINK VARCHAR( 200 ) COLLATE PT_BR, /* Máscara = X */
-	CONSTRAINT arqImagemCRM_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqImagemCRM_UK UNIQUE ( AcaoEmail, NumImg )
+	/*  2*/	EMAIL campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  3*/	AVISO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	DOCMOD campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT cnfConfig_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
 
-CREATE DESC INDEX arqImagemCRM_IdPrimario_Desc ON arqImagemCRM (IDPRIMARIO);
+INSERT INTO cnfConfig (idprimario) VALUES (0);
+CREATE DESC INDEX cnfConfig_IdPrimario_Desc ON cnfConfig (IDPRIMARIO);
 commit;
 
 
@@ -2900,7 +2881,7 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A7.CHAVE as TMotivo_CHAVE, A7.DESCRITOR as TMotivo_DESCRITOR, A0.TPROGRAMA, A8.CHAVE as TPrograma_CHAVE, A8.DESCRITOR as TPrograma_DESCRITOR, A0.CONDUTA, A0.MEDICACAO, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.OBS, A0.VALOR
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.PTRATA, A9.PTRATA as PTRATA_PTRATA, A0.CONDUTA, A0.MEDICACAO, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.OBS, A0.VALOR
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
@@ -2908,9 +2889,10 @@ RECREATE VIEW V_arqConsulta AS
 	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA
 	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MEDICO
 	left join arqUsuario A6 on A6.IDPRIMARIO = A0.ASSESSOR
-	left join tabTMotivo A7 on A7.IDPRIMARIO=A0.TMOTIVO
-	left join tabTPrograma A8 on A8.IDPRIMARIO=A0.TPROGRAMA
-	left join arqFormaPg A9 on A9.IDPRIMARIO = A0.FORMAPG;
+	left join arqUsuario A7 on A7.IDPRIMARIO = A0.CALLCENTER
+	left join tabTMotivo A8 on A8.IDPRIMARIO=A0.TMOTIVO
+	left join arqPTrata A9 on A9.IDPRIMARIO = A0.PTRATA
+	left join arqFormaPg A10 on A10.IDPRIMARIO = A0.FORMAPG;
 commit;
 
 RECREATE VIEW V_arqPlantao AS 
@@ -3157,8 +3139,9 @@ ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Pessoa FOREIGN KEY ( PESSO
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqPessoa ADD CONSTRAINT arqPessoa_FK_Midia FOREIGN KEY ( MIDIA ) REFERENCES arqMidia ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_CallCenter FOREIGN KEY ( CALLCENTER ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TMotivo FOREIGN KEY ( TMOTIVO ) REFERENCES tabTMotivo ON DELETE SET NULL ON UPDATE CASCADE;
-ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TPrograma FOREIGN KEY ( TPROGRAMA ) REFERENCES tabTPrograma ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_PTrata FOREIGN KEY ( PTRATA ) REFERENCES arqPTrata ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_TDiaSem FOREIGN KEY ( TDIASEM ) REFERENCES tabTDiaSem ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
@@ -4341,9 +4324,10 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
 	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'CallCenter', OLD.CallCenter, NEW.CallCenter );
 	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'TMotivo', OLD.TMotivo, NEW.TMotivo );
-	execute procedure set_log( 12, NEW.idPrimario, 'TPrograma', OLD.TPrograma, NEW.TPrograma );
+	execute procedure set_log( 12, NEW.idPrimario, 'PTrata', OLD.PTrata, NEW.PTrata );
 	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );

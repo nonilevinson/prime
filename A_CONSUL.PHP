@@ -352,6 +352,39 @@ class campo_arqConsulta_Assessor_Usuario extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo CallCenter
+//======================================================
+
+class campo_arqConsulta_CallCenter extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "CallCenter", "CallCenter", "CallCenter", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Call center" );
+	}
+
+}
+
+//======================================================
+//	Campo CallCenter_Usuario
+//======================================================
+
+class campo_arqConsulta_CallCenter_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "CallCenter_Usuario", "CallCenter_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CallCenter", false );
+	}
+
+}
+
+//======================================================
 //	Campo MedicaAtua
 //======================================================
 
@@ -385,21 +418,34 @@ class campo_arqConsulta_TMotivo extends Lance_CampoLigado
 }
 
 //======================================================
-//	Campo TPrograma
+//	Campo PTrata
 //======================================================
 
-class campo_arqConsulta_TPrograma extends Lance_CampoLigado
+class campo_arqConsulta_PTrata extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "TPrograma", "TPrograma", "TPrograma", 0, "tabTPrograma", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+		parent::__construct( "PTrata", "PTrata", "PTrata", 0, "arqPTrata", "arqPTrata.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo PTrata_PTrata
+//======================================================
+
+class campo_arqConsulta_PTrata_PTrata extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "PTrata_PTrata", "PTrata_PTrata", "PTrata", 80, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "PTrata", false );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Programa" );
+			return( "Plano" );
 	}
 
 }
@@ -526,13 +572,14 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_Medico_Usuario(),
 			new campo_arqConsulta_Assessor(),
 			new campo_arqConsulta_Assessor_Usuario(),
+			new campo_arqConsulta_CallCenter(),
+			new campo_arqConsulta_CallCenter_Usuario(),
 			new campo_arqConsulta_MedicaAtua(),
 			new campo_arqConsulta_TMotivo(),
 			new Lance_CampoCadeia( "TMotivo_Chave", "TMotivo_Chave", "Chave", 1, "x", EH_CHAVE, TMotivo ),
 			new Lance_CampoCadeia( "TMotivo_Descritor", "TMotivo_Descritor", "Descritor", 32, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TMotivo ),
-			new campo_arqConsulta_TPrograma(),
-			new Lance_CampoCadeia( "TPrograma_Chave", "TPrograma_Chave", "Chave", 2, "xx", EH_CHAVE, TPrograma ),
-			new Lance_CampoCadeia( "TPrograma_Descritor", "TPrograma_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TPrograma ),
+			new campo_arqConsulta_PTrata(),
+			new campo_arqConsulta_PTrata_PTrata(),
 			new campo_arqConsulta_Conduta(),
 			new campo_arqConsulta_Medicacao(),
 			new campo_arqConsulta_FormaPg(),
@@ -584,8 +631,8 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( Prontuario ) );
 			array_push( $vetAux, array( Medico_Usuario ) );
 			array_push( $vetAux, array( Assessor_Usuario ) );
+			array_push( $vetAux, array( CallCenter_Usuario ) );
 			array_push( $vetAux, array( TMotivo_Descritor ) );
-			array_push( $vetAux, array( TPrograma_Descritor ) );
 			array_push( $vetAux, array( FormaPg_FormaPg ) );
 			array_push( $vetAux, array( Valor ) );
 		return( $vetAux );
@@ -596,7 +643,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( TPrograma ), array( TPrograma_Chave ), array( TPrograma_Descritor ), array( FormaPg ) ) );
+		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -618,9 +665,10 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( Prontuario ) );
 			array_push( $vetAux, array( Medico_Usuario ) );
 			array_push( $vetAux, array( Assessor_Usuario ) );
+			array_push( $vetAux, array( CallCenter_Usuario ) );
 			array_push( $vetAux, array( MedicaAtua ) );
 			array_push( $vetAux, array( TMotivo_Descritor ) );
-			array_push( $vetAux, array( TPrograma_Descritor ) );
+			array_push( $vetAux, array( PTrata_PTrata ) );
 			array_push( $vetAux, array( Conduta ) );
 			array_push( $vetAux, array( Medicacao ) );
 			array_push( $vetAux, array( FormaPg_FormaPg ) );
