@@ -8,6 +8,7 @@ execute procedure reindexartudo;
 commit;
 
 insert into arqLanceOperacao values(100047,1,'Cadastro da relação de mídias e clínicas','arqCliMidia',47,1,0,'');
+insert into arqLanceOperacao values(200175,2,'Relatório da relação de consultas','',175,50,0,'');
 commit;
 
 /************************************************************

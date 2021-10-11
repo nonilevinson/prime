@@ -227,5 +227,14 @@ if( $op == 170 ) //* r_consulta_dispensada
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
+if( $op == 175 ) //* r_consulta_relacao
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
 //==================================================================================
 echo 	"</table>";

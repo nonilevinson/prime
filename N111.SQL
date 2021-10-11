@@ -3028,6 +3028,7 @@ insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de gr
 insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de grupos de acesso','',11,90,0,'');
 insert into arqLanceOperacao values(200019,2,'Rotina para envio de teste de ação de email','',19,20,0,'');
 insert into arqLanceOperacao values(200020,2,'Visualizar ação de email','',20,20,0,'');
+insert into arqLanceOperacao values(200175,2,'Relatório da relação de consultas','',175,50,0,'');
 insert into arqLanceOperacao values(200170,2,'Relatório de consultas dispensadas por médicos','',170,50,0,'');
 insert into arqLanceOperacao values(200030,2,'Rotina para ver as operações do sistema','',30,null,0,'');
 insert into arqLanceOperacao values(200056,2,'Relatório resumido de emails enviados','',56,50,0,'cnfConfig["EMAIL"] == 1');
