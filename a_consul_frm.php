@@ -58,6 +58,9 @@ CriarForms(
 
 "<table id='C' class='tabFormulario' style='display:none'>",
 	$this->Pedir( "Plano de tratamento", PTrata ),
+	$this->Pedir( "Valor do tratamento", ValPTrata ),
+	$this->Pedir( "Descritivo de como será pago", ObsPTrata ),
+	$this->Pular1Linha(2),
 	$this->Pedir( "Conduta" ),
 "</table>",
 

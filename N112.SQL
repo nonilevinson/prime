@@ -1841,16 +1841,15 @@ CREATE TABLE arqUsuario
 	/*  5*/	GRUPO ligadoComArquivo, /* Ligado com o Arquivo Grupo */
 	/*  6*/	VERSAO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
 	/*  7*/	EMAIL VARCHAR( 70 ) COLLATE PT_BR, /* Máscara = X */
-	/*  8*/	MEDICO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  9*/	CRM VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
-	/* 10*/	PODEAGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 11*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 12*/	NASCIMENTO DATE, /* Máscara = 4ano */
-	/* 13*/	FOTO campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 14*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
-	/* 15*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 16*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 17*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  8*/	CRM VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
+	/*  9*/	PODEAGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 11*/	NASCIMENTO DATE, /* Máscara = 4ano */
+	/* 12*/	FOTO campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
+	/* 13*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
+	/* 14*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 15*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 16*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
 );
@@ -2473,11 +2472,13 @@ CREATE TABLE arqConsulta
 	/* 14*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	/* 15*/	TMOTIVO ligadoComTabela, /* Ligado com a Tabela TMotivo */
 	/* 16*/	PTRATA ligadoComArquivo, /* Ligado com o Arquivo PTrata */
-	/* 17*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 18*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 19*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 20*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 21*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 17*/	VALPTRATA NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 18*/	OBSPTRATA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 19*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 20*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 21*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 22*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 23*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2669,7 +2670,7 @@ RECREATE VIEW V_arqGrupo AS
 commit;
 
 RECREATE VIEW V_arqUsuario AS 
-	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.MEDICO, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS, A0.EMAILFINAN
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS, A0.EMAILFINAN
 	FROM arqUsuario A0
 	left join arqGrupo A1 on A1.IDPRIMARIO = A0.GRUPO
 	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.FOTO;
@@ -2882,7 +2883,7 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.PTRATA, A9.PTRATA as PTRATA_PTRATA, A0.CONDUTA, A0.MEDICACAO, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.OBS, A0.VALOR
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.PTRATA, A9.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.OBSPTRATA, A0.CONDUTA, A0.MEDICACAO, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.OBS, A0.VALOR
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
@@ -3287,7 +3288,6 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
 	execute procedure set_log( 12, NEW.idPrimario, 'Grupo', OLD.Grupo, NEW.Grupo );
 	execute procedure set_log( 12, NEW.idPrimario, 'Email', OLD.Email, NEW.Email );
-	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
 	execute procedure set_log( 12, NEW.idPrimario, 'CRM', OLD.CRM, NEW.CRM );
 	execute procedure set_log( 12, NEW.idPrimario, 'PodeAgenda', OLD.PodeAgenda, NEW.PodeAgenda );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
@@ -4333,6 +4333,8 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'TMotivo', OLD.TMotivo, NEW.TMotivo );
 	execute procedure set_log( 12, NEW.idPrimario, 'PTrata', OLD.PTrata, NEW.PTrata );
+	execute procedure set_log( 12, NEW.idPrimario, 'ValPTrata', OLD.ValPTrata, NEW.ValPTrata );
+	execute procedure set_log( 12, NEW.idPrimario, 'ObsPTrata', substring( OLD.ObsPTrata from 1 for 255 ), substring( NEW.ObsPTrata from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );

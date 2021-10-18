@@ -80,17 +80,6 @@ function Campo_arqUsuario_Email()
 var Email = new Campo_arqUsuario_Email;
 
 //------------------------------------------------------------
-Campo_arqUsuario_Medico.prototype = new Lance_CampoLogico;
-
-function Campo_arqUsuario_Medico()
-{
-	this.superClass = Lance_CampoLogico;
-	this.superClass( "Medico", "Medico", "Medico");
-}
-
-var Medico = new Campo_arqUsuario_Medico;
-
-//------------------------------------------------------------
 Campo_arqUsuario_CRM.prototype = new Lance_CampoCadeia;
 
 function Campo_arqUsuario_CRM()
@@ -287,14 +276,6 @@ Campo_arqUsuario_Email.prototype.TemErro = function()
 }
 
 //-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqUsuario_Medico.prototype.Cabecalho = function()
-{
-		return( "Médico?" );
-}
-
-//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqUsuario_CRM.prototype.Existencia = function()
@@ -430,7 +411,6 @@ Campo_arqUsuario_Grupo.prototype.ExistenciaEspecial = function()
 function IniciarDependencias_arqUsuario()
 {
 Grupo_Grupo.ExistenciasDependentes= [ Grupo ];
-Medico.ExistenciasDependentes= [ CRM ];
 Usuario.ErrosDependentes= [ Senha ];
 Grupo_Grupo.ErrosDependentes= [ Grupo ];
 Grupo.CamposChave= [ Grupo_Grupo ];
@@ -451,7 +431,7 @@ function ListaDeCampos_arqUsuario( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Nome, Senha, Grupo, Grupo_Grupo, Versao, Email, Medico, CRM, PodeAgenda, Ativo, Nascimento, Foto, EmailAces, EmailAcesS, EmailFinan ]	);
+		[ Usuario, Nome, Senha, Grupo, Grupo_Grupo, Versao, Email, CRM, PodeAgenda, Ativo, Nascimento, Foto, EmailAces, EmailAcesS, EmailFinan ]	);
 	IniciarDependencias_arqUsuario();
 	g_prefixo = l_prefixo;
 	return( l_lista );

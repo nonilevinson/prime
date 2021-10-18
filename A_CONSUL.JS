@@ -300,6 +300,28 @@ function Campo_arqConsulta_PTrata_PTrata()
 var PTrata_PTrata = new Campo_arqConsulta_PTrata_PTrata;
 
 //------------------------------------------------------------
+Campo_arqConsulta_ValPTrata.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_ValPTrata()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "ValPTrata", "ValPTrata", "ValPTrata", 8, "###.##z,zz", true,"", "");
+}
+
+var ValPTrata = new Campo_arqConsulta_ValPTrata;
+
+//------------------------------------------------------------
+Campo_arqConsulta_ObsPTrata.prototype = new Lance_CampoTexto;
+
+function Campo_arqConsulta_ObsPTrata()
+{
+	this.superClass = Lance_CampoTexto;
+	this.superClass( "ObsPTrata", "ObsPTrata", "ObsPTrata", false);
+}
+
+var ObsPTrata = new Campo_arqConsulta_ObsPTrata;
+
+//------------------------------------------------------------
 Campo_arqConsulta_Conduta.prototype = new Lance_CampoTexto;
 
 function Campo_arqConsulta_Conduta()
@@ -589,9 +611,7 @@ Prontuario.EhCalculado = true;
 //-------------------------------------------------------------
 Campo_arqConsulta_Medico.prototype.FiltroPai = function()
 {
-		if( g_inserindo )
-			return( "A.Medico = 1 and A.Ativo = 1 and A.Grupo is not null" );
-			return( "A.Medico = 1 and A.Grupo is not null" );
+			return( "" + vijMedico() + "" );
 }
 
 //-------------------------------------------------------------
@@ -616,9 +636,7 @@ Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqConsulta_Assessor.prototype.FiltroPai = function()
 {
-		if( g_inserindo )
-			return( "A.Grupo is not null and A.Medico = 0 and A.Ativo = 1" );
-			return( "A.Grupo is not null and A.Medico = 0" );
+			return( "" + vijAssessor() + "" );
 }
 
 //-------------------------------------------------------------
@@ -643,8 +661,6 @@ Assessor_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqConsulta_CallCenter.prototype.FiltroPai = function()
 {
-		if( g_inserindo )
-			return( "A.Grupo is not null and A.Medico = 0 and A.Ativo = 1" );
 			return( "" + vijCallCenter() + "" );
 }
 
@@ -694,6 +710,49 @@ Campo_arqConsulta_PTrata_PTrata.prototype.ObrigatorioEspecial = function( p_comM
 }
 
 PTrata_PTrata.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ValPTrata.prototype.Sugeriu = function()
+{
+{
+{
+	if( !PTrata.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Valor FROM arqPTrata WHERE arqPTrata.IdPrimario=( " + PTrata + " )  )" + LANCE_SEPARADOR + this.Prefixo + "ValPTrata" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_ValPTrata.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O valor do tratamento é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ValPTrata.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ObsPTrata.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -777,6 +836,7 @@ Medico_Usuario.ExistenciasDependentes= [ Medico ];
 Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
 CallCenter_Usuario.ExistenciasDependentes= [ CallCenter ];
 PTrata_PTrata.ExistenciasDependentes= [ PTrata ];
+PTrata.ExistenciasDependentes= [ ValPTrata,ObsPTrata ];
 FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 TiAgenda_TiAgenda.ErrosDependentes= [ TiAgenda ];
@@ -810,7 +870,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, PTrata, PTrata_PTrata, Conduta, Medicacao, FormaPg, FormaPg_FormaPg, Obs, Valor ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, PTrata, PTrata_PTrata, ValPTrata, ObsPTrata, Conduta, Medicacao, FormaPg, FormaPg_FormaPg, Obs, Valor ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

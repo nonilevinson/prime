@@ -110,35 +110,6 @@ class campo_arqUsuario_Email extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo Medico
-//======================================================
-
-class campo_arqUsuario_Medico extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "Medico", "Medico", "Medico", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( $g_regAtual->MEDICO == 1 )
-			return( "CorAtivo" );
-		return( parent::Estilo() );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Médico?" );
-	}
-
-}
-
-//======================================================
 //	Campo CRM
 //======================================================
 
@@ -292,7 +263,6 @@ function listaCampos_arqUsuario( $p_prefixo )
 			new campo_arqUsuario_Grupo_Grupo(),
 			new campo_arqUsuario_Versao(),
 			new campo_arqUsuario_Email(),
-			new campo_arqUsuario_Medico(),
 			new campo_arqUsuario_CRM(),
 			new campo_arqUsuario_PodeAgenda(),
 			new campo_arqUsuario_Ativo(),
@@ -339,7 +309,6 @@ class arqUsuario extends Lance_Arquivo
 			array_push( $vetAux, array( Nome ) );
 			array_push( $vetAux, array( Grupo_Grupo ) );
 			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( Medico ) );
 			array_push( $vetAux, array( PodeAgenda ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
@@ -365,7 +334,6 @@ class arqUsuario extends Lance_Arquivo
 			array_push( $vetAux, array( Grupo_Grupo ) );
 			array_push( $vetAux, array( Versao ) );
 			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( Medico ) );
 			array_push( $vetAux, array( CRM ) );
 			array_push( $vetAux, array( PodeAgenda ) );
 			array_push( $vetAux, array( Ativo ) );

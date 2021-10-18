@@ -451,6 +451,32 @@ class campo_arqConsulta_PTrata_PTrata extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo ValPTrata
+//======================================================
+
+class campo_arqConsulta_ValPTrata extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "ValPTrata", "ValPTrata", "ValPTrata", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo ObsPTrata
+//======================================================
+
+class campo_arqConsulta_ObsPTrata extends Lance_CampoTexto
+{
+	function __construct()
+	{
+		parent::__construct( "ObsPTrata", "ObsPTrata", "ObsPTrata", 10,90, false, false );
+	}
+
+}
+
+//======================================================
 //	Campo Conduta
 //======================================================
 
@@ -580,6 +606,8 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new Lance_CampoCadeia( "TMotivo_Descritor", "TMotivo_Descritor", "Descritor", 32, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TMotivo ),
 			new campo_arqConsulta_PTrata(),
 			new campo_arqConsulta_PTrata_PTrata(),
+			new campo_arqConsulta_ValPTrata(),
+			new campo_arqConsulta_ObsPTrata(),
 			new campo_arqConsulta_Conduta(),
 			new campo_arqConsulta_Medicacao(),
 			new campo_arqConsulta_FormaPg(),
@@ -669,6 +697,8 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( MedicaAtua ) );
 			array_push( $vetAux, array( TMotivo_Descritor ) );
 			array_push( $vetAux, array( PTrata_PTrata ) );
+			array_push( $vetAux, array( ValPTrata ) );
+			array_push( $vetAux, array( ObsPTrata ) );
 			array_push( $vetAux, array( Conduta ) );
 			array_push( $vetAux, array( Medicacao ) );
 			array_push( $vetAux, array( FormaPg_FormaPg ) );
@@ -684,7 +714,7 @@ class arqConsulta extends Lance_Arquivo
 	{
 		switch( $p_tecla )
 		{
-			case _INS: return( false );
+			case _INS: return( GrupoAtualEm() );
 		}
 		return( parent::AcionarBotao( $p_tecla ) );
 	}
