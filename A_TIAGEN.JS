@@ -36,28 +36,6 @@ function Campo_arqTiAgenda_DobroTempo()
 var DobroTempo = new Campo_arqTiAgenda_DobroTempo;
 
 //------------------------------------------------------------
-Campo_arqTiAgenda_AgTopo.prototype = new Lance_CampoLogico;
-
-function Campo_arqTiAgenda_AgTopo()
-{
-	this.superClass = Lance_CampoLogico;
-	this.superClass( "AgTopo", "AgTopo", "AgTopo");
-}
-
-var AgTopo = new Campo_arqTiAgenda_AgTopo;
-
-//------------------------------------------------------------
-Campo_arqTiAgenda_AgForm.prototype = new Lance_CampoLogico;
-
-function Campo_arqTiAgenda_AgForm()
-{
-	this.superClass = Lance_CampoLogico;
-	this.superClass( "AgForm", "AgForm", "AgForm");
-}
-
-var AgForm = new Campo_arqTiAgenda_AgForm;
-
-//------------------------------------------------------------
 Campo_arqTiAgenda_Pagamento.prototype = new Lance_CampoLogico;
 
 function Campo_arqTiAgenda_Pagamento()
@@ -127,26 +105,6 @@ Campo_arqTiAgenda_DobroTempo.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
-Campo_arqTiAgenda_AgTopo.prototype.Sugeriu = function()
-{
-{
-	return( this.AtribuiuSemCritica( 1 ) );
-}
-}
-
-//-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
-Campo_arqTiAgenda_AgForm.prototype.Sugeriu = function()
-{
-{
-	return( this.AtribuiuSemCritica( 1 ) );
-}
-}
-
-//-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
 Campo_arqTiAgenda_Pagamento.prototype.Sugeriu = function()
 {
 {
@@ -183,7 +141,7 @@ function ListaDeCampos_arqTiAgenda( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ TiAgenda, Ativo, DobroTempo, AgTopo, AgForm, Pagamento, Midia ]	);
+		[ TiAgenda, Ativo, DobroTempo, Pagamento, Midia ]	);
 	IniciarDependencias_arqTiAgenda();
 	g_prefixo = l_prefixo;
 	return( l_lista );

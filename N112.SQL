@@ -1475,7 +1475,7 @@ CREATE TABLE tabTStCon
 );
 commit;
 
-INSERT INTO tabTStCon VALUES ( 1, '1', 'AGENDADo' );
+INSERT INTO tabTStCon VALUES ( 1, '1', 'AGENDADO' );
 INSERT INTO tabTStCon VALUES ( 2, '2', 'RECEPÇÃO' );
 INSERT INTO tabTStCon VALUES ( 3, '3', 'MÉDICO' );
 INSERT INTO tabTStCon VALUES ( 4, '4', 'TESTE' );
@@ -1617,6 +1617,9 @@ CREATE TABLE arqGrupo
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	GRUPO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	CALLCENTER campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	MEDICO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	ASSESSOR campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqGrupo_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqGrupo_UK UNIQUE ( Grupo )
 );
@@ -2147,10 +2150,8 @@ CREATE TABLE arqTiAgenda
 	/*  2*/	TIAGENDA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  4*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	AGTOPO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	AGFORM campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  7*/	PAGAMENTO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  8*/	MIDIA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	PAGAMENTO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	MIDIA campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTiAgenda_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTiAgenda_UK UNIQUE ( TiAgenda )
 );
@@ -2663,7 +2664,7 @@ RECREATE VIEW V_arqCidade AS
 commit;
 
 RECREATE VIEW V_arqGrupo AS 
-	SELECT A0.IDPRIMARIO, A0.GRUPO
+	SELECT A0.IDPRIMARIO, A0.GRUPO, A0.CALLCENTER, A0.MEDICO, A0.ASSESSOR
 	FROM arqGrupo A0;
 commit;
 
@@ -2913,7 +2914,7 @@ RECREATE VIEW V_arqFornecedor AS
 commit;
 
 RECREATE VIEW V_arqTiAgenda AS 
-	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ATIVO, A0.DOBROTEMPO, A0.AGTOPO, A0.AGFORM, A0.PAGAMENTO, A0.MIDIA
+	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ATIVO, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
 	FROM arqTiAgenda A0;
 commit;
 
@@ -3248,6 +3249,9 @@ if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Grupo', OLD.Grupo, NEW.Grupo );
+	execute procedure set_log( 12, NEW.idPrimario, 'CallCenter', OLD.CallCenter, NEW.CallCenter );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
 end
 end^
 

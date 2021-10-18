@@ -90,50 +90,6 @@ class campo_arqTiAgenda_DobroTempo extends Lance_CampoLogico
 }
 
 //======================================================
-//	Campo AgTopo
-//======================================================
-
-class campo_arqTiAgenda_AgTopo extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "AgTopo", "AgTopo", "AgTopo", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( $g_regAtual->AGTOPO == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
-	}
-
-}
-
-//======================================================
-//	Campo AgForm
-//======================================================
-
-class campo_arqTiAgenda_AgForm extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "AgForm", "AgForm", "AgForm", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( AgCab == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
-	}
-
-}
-
-//======================================================
 //	Campo Pagamento
 //======================================================
 
@@ -191,8 +147,6 @@ function listaCampos_arqTiAgenda( $p_prefixo )
 			new campo_arqTiAgenda_TiAgenda(),
 			new campo_arqTiAgenda_Ativo(),
 			new campo_arqTiAgenda_DobroTempo(),
-			new campo_arqTiAgenda_AgTopo(),
-			new campo_arqTiAgenda_AgForm(),
 			new campo_arqTiAgenda_Pagamento(),
 			new campo_arqTiAgenda_Midia() )
 	);
@@ -232,8 +186,6 @@ class arqTiAgenda extends Lance_Arquivo
 			array_push( $vetAux, array( TiAgenda ) );
 			array_push( $vetAux, array( Ativo ) );
 			array_push( $vetAux, array( DobroTempo ) );
-			array_push( $vetAux, array( AgTopo ) );
-			array_push( $vetAux, array( AgForm ) );
 			array_push( $vetAux, array( Pagamento ) );
 			array_push( $vetAux, array( Midia ) );
 		return( $vetAux );
@@ -249,8 +201,6 @@ class arqTiAgenda extends Lance_Arquivo
 			array_push( $vetAux, array( TiAgenda ) );
 			array_push( $vetAux, array( Ativo ) );
 			array_push( $vetAux, array( DobroTempo ) );
-			array_push( $vetAux, array( AgTopo ) );
-			array_push( $vetAux, array( AgForm ) );
 			array_push( $vetAux, array( Pagamento ) );
 			array_push( $vetAux, array( Midia ) );
 		return( $vetAux );

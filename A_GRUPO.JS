@@ -13,7 +13,94 @@ function Campo_arqGrupo_Grupo()
 
 var Grupo = new Campo_arqGrupo_Grupo;
 
+//------------------------------------------------------------
+Campo_arqGrupo_CallCenter.prototype = new Lance_CampoLogico;
+
+function Campo_arqGrupo_CallCenter()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "CallCenter", "CallCenter", "CallCenter");
+}
+
+var CallCenter = new Campo_arqGrupo_CallCenter;
+
+//------------------------------------------------------------
+Campo_arqGrupo_Medico.prototype = new Lance_CampoLogico;
+
+function Campo_arqGrupo_Medico()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "Medico", "Medico", "Medico");
+}
+
+var Medico = new Campo_arqGrupo_Medico;
+
+//------------------------------------------------------------
+Campo_arqGrupo_Assessor.prototype = new Lance_CampoLogico;
+
+function Campo_arqGrupo_Assessor()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "Assessor", "Assessor", "Assessor");
+}
+
+var Assessor = new Campo_arqGrupo_Assessor;
+
 Grupo.TipoCampo |= CAMPO_CHAVE;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqGrupo_CallCenter.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqGrupo_CallCenter.prototype.Cabecalho = function()
+{
+		return( "Call center?" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqGrupo_Medico.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqGrupo_Medico.prototype.Cabecalho = function()
+{
+		return( "Médico?" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqGrupo_Assessor.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqGrupo_Assessor.prototype.Cabecalho = function()
+{
+		return( "Assessor?" );
+}
+
 function IniciarDependencias_arqGrupo()
 {
 }
@@ -33,7 +120,7 @@ function ListaDeCampos_arqGrupo( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Grupo ]	);
+		[ Grupo, CallCenter, Medico, Assessor ]	);
 	IniciarDependencias_arqGrupo();
 	g_prefixo = l_prefixo;
 	return( l_lista );

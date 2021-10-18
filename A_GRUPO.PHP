@@ -25,6 +25,93 @@ class campo_arqGrupo_Grupo extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo CallCenter
+//======================================================
+
+class campo_arqGrupo_CallCenter extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "CallCenter", "CallCenter", "CallCenter", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->CALLCENTER == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Call center?" );
+	}
+
+}
+
+//======================================================
+//	Campo Medico
+//======================================================
+
+class campo_arqGrupo_Medico extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "Medico", "Medico", "Medico", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->MEDICO == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Médico?" );
+	}
+
+}
+
+//======================================================
+//	Campo Assessor
+//======================================================
+
+class campo_arqGrupo_Assessor extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "Assessor", "Assessor", "Assessor", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->ASSESSOR == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Assessor?" );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqGrupo
 //======================================================
 function listaCampos_arqGrupo( $p_prefixo )
@@ -35,7 +122,10 @@ function listaCampos_arqGrupo( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
-			new campo_arqGrupo_Grupo() )
+			new campo_arqGrupo_Grupo(),
+			new campo_arqGrupo_CallCenter(),
+			new campo_arqGrupo_Medico(),
+			new campo_arqGrupo_Assessor() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -70,6 +160,9 @@ class arqGrupo extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Grupo ) );
+			array_push( $vetAux, array( CallCenter ) );
+			array_push( $vetAux, array( Medico ) );
+			array_push( $vetAux, array( Assessor ) );
 		return( $vetAux );
 	}
 
@@ -81,6 +174,9 @@ class arqGrupo extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Grupo ) );
+			array_push( $vetAux, array( CallCenter ) );
+			array_push( $vetAux, array( Medico ) );
+			array_push( $vetAux, array( Assessor ) );
 		return( $vetAux );
 	}
 
