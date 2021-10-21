@@ -21,7 +21,8 @@ function ext_filtrarSelecao()
       filtrarPorIntervaloData( "A.DataPagto", $parQSelecao->DATAINI1, $parQSelecao->DATAFIM1 ) .
       filtrarPorLig( "A.Conta,arqConta.TPgRec", $parQSelecao->TPGREC ) .
       filtrarPorLig( "A.Conta,arqConta.Clinica", $parQSelecao->CLINICA ) .
-      filtrarPorLig( "A.Conta,arqConta.Pessoa", $parQSelecao->PESSOA ), 0, -4 )
+      filtrarPorLig( "A.Conta,arqConta.Fornecedor", $parQSelecao->FORNECEDOR ) .
+      filtrarPorLig( "A.Conta,arqConta.Pessoa", $parQSelecao->CLIENTE ), 0, -4 )
    );
 }
 

@@ -455,17 +455,6 @@ Campo_arqCCor_Nome.prototype.Obrigatorio = function( p_comMsg )
 
 Nome.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqCCor_Clinica.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "A clínica é obrigatória" );
-		return( true );
-	}
-}
-
-//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqCCor_Clinica.prototype.Cabecalho = function()
@@ -482,6 +471,22 @@ Campo_arqCCor_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_comMsg
 }
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqCCor_Banco.prototype.Existencia = function()
+{
+	return( tem( Clinica_Clinica ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqCCor_Banco_Num.prototype.Existencia = function()
+{
+	return( tem( Clinica_Clinica ) );
+}
+
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
@@ -501,6 +506,14 @@ Campo_arqCCor_Agencia.prototype.Cabecalho = function()
 }
 
 //-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqCCor_Agencia.prototype.Existencia = function()
+{
+	return( tem( Banco_Num ) );
+}
+
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqCCor_DvAgencia.prototype.Cabecalho = function()
@@ -509,11 +522,43 @@ Campo_arqCCor_DvAgencia.prototype.Cabecalho = function()
 }
 
 //-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqCCor_DvAgencia.prototype.Existencia = function()
+{
+	return( tem( Banco_Num ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqCCor_Conta.prototype.Existencia = function()
+{
+	return( tem( Banco_Num ) );
+}
+
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqCCor_DvConta.prototype.Cabecalho = function()
 {
 		return( "DV" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqCCor_DvConta.prototype.Existencia = function()
+{
+	return( tem( Banco_Num ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqCCor_Carteira.prototype.Existencia = function()
+{
+	return( tem( Banco_Num ) );
 }
 
 //-------------------------------------------------------------
@@ -569,6 +614,14 @@ Campo_arqCCor_UltRemessa.prototype.PodeAlterar = function()
 //-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
+Campo_arqCCor_UltRemessa.prototype.Existencia = function()
+{
+	return( tem( Carteira ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
 Campo_arqCCor_Convenio.prototype.Existencia = function()
 {
 	return( tem( Carteira ) );
@@ -609,6 +662,14 @@ Campo_arqCCor_Ativo.prototype.Obrigatorio = function( p_comMsg )
 Campo_arqCCor_Ativo.prototype.Cabecalho = function()
 {
 		return( "Ativa?" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqCCor_TPix1.prototype.Existencia = function()
+{
+	return( tem( Banco_Num ) );
 }
 
 TPix1_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
@@ -775,9 +836,10 @@ Campo_arqCCor_Banco_Banco.prototype.ExistenciaEspecial = function()
 function IniciarDependencias_arqCCor()
 {
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
+Clinica.ExistenciasDependentes= [ Banco,Banco_Num ];
 Banco_Num.ExistenciasDependentes= [ Banco ];
-Banco.ExistenciasDependentes= [ Banco_Banco ];
-Carteira.ExistenciasDependentes= [ CodCedente,Multa,Juros,CBoleto,Instrucoes,Convenio,Variacao ];
+Banco.ExistenciasDependentes= [ Banco_Banco,Agencia,DvAgencia,Conta,DvConta,Carteira,TPix1 ];
+Carteira.ExistenciasDependentes= [ CodCedente,Multa,Juros,CBoleto,Instrucoes,UltRemessa,Convenio,Variacao ];
 TPix1.ExistenciasDependentes= [ Pix1,TPix2 ];
 TPix2.ExistenciasDependentes= [ Pix2,TPix3 ];
 TPix3.ExistenciasDependentes= [ Pix3,TPix4 ];

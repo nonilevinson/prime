@@ -169,6 +169,242 @@ class campo_cnfXConfig_RecorDia extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo CCorRec
+//======================================================
+
+class campo_cnfXConfig_CCorRec extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "CCorRec", "CCorRec", "CCorRec", 0, "arqCCor", "arqCCor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo CCorRec_Nome
+//======================================================
+
+class campo_cnfXConfig_CCorRec_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "CCorRec_Nome", "CCorRec_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CCorRec", false );
+	}
+
+}
+
+//======================================================
+//	Campo CCorAss
+//======================================================
+
+class campo_cnfXConfig_CCorAss extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "CCorAss", "CCorAss", "CCorAss", 0, "arqCCor", "arqCCor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo CCorAss_Nome
+//======================================================
+
+class campo_cnfXConfig_CCorAss_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "CCorAss_Nome", "CCorAss_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CCorAss", false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRRec
+//======================================================
+
+class campo_cnfXConfig_SubPlaRRec extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRRec", "SubPlaRRec", "SubPlaRRec", 0, "arqSubPlano", "arqSubPlano.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRRec_Plano
+//======================================================
+
+class campo_cnfXConfig_SubPlaRRec_Plano extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRRec_Plano", "SubPlaRRec_Plano", "Plano", EH_CHAVE, "arqPlano", "arqPlano.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, "SubPlaRRec", false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRRec_Plano_CodPlano
+//======================================================
+
+class campo_cnfXConfig_SubPlaRRec_Plano_CodPlano extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRRec_Plano_CodPlano", "SubPlaRRec_Plano_CodPlano", "CodPlano", 2, "zz", "", "", EH_CHAVE, "SubPlaRRec_Plano", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Código" );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRRec_Plano_Plano
+//======================================================
+
+class campo_cnfXConfig_SubPlaRRec_Plano_Plano extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRRec_Plano_Plano", "SubPlaRRec_Plano_Plano", "Plano", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "SubPlaRRec_Plano", false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRRec_Codigo
+//======================================================
+
+class campo_cnfXConfig_SubPlaRRec_Codigo extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRRec_Codigo", "SubPlaRRec_Codigo", "Codigo", 6, "##.##.##", EH_CHAVE, "SubPlaRRec", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Código" );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRRec_Nome
+//======================================================
+
+class campo_cnfXConfig_SubPlaRRec_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRRec_Nome", "SubPlaRRec_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "SubPlaRRec", false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRAss
+//======================================================
+
+class campo_cnfXConfig_SubPlaRAss extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRAss", "SubPlaRAss", "SubPlaRAss", 0, "arqSubPlano", "arqSubPlano.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRAss_Plano
+//======================================================
+
+class campo_cnfXConfig_SubPlaRAss_Plano extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRAss_Plano", "SubPlaRAss_Plano", "Plano", EH_CHAVE, "arqPlano", "arqPlano.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 3, "SubPlaRAss", false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRAss_Plano_CodPlano
+//======================================================
+
+class campo_cnfXConfig_SubPlaRAss_Plano_CodPlano extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRAss_Plano_CodPlano", "SubPlaRAss_Plano_CodPlano", "CodPlano", 2, "zz", "", "", EH_CHAVE, "SubPlaRAss_Plano", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Código" );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRAss_Plano_Plano
+//======================================================
+
+class campo_cnfXConfig_SubPlaRAss_Plano_Plano extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRAss_Plano_Plano", "SubPlaRAss_Plano_Plano", "Plano", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "SubPlaRAss_Plano", false );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRAss_Codigo
+//======================================================
+
+class campo_cnfXConfig_SubPlaRAss_Codigo extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRAss_Codigo", "SubPlaRAss_Codigo", "Codigo", 6, "##.##.##", EH_CHAVE, "SubPlaRAss", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Código" );
+	}
+
+}
+
+//======================================================
+//	Campo SubPlaRAss_Nome
+//======================================================
+
+class campo_cnfXConfig_SubPlaRAss_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SubPlaRAss_Nome", "SubPlaRAss_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, "SubPlaRAss", false );
+	}
+
+}
+
+//======================================================
 //	Arquivo cnfXConfig
 //======================================================
 function listaCampos_cnfXConfig( $p_prefixo )
@@ -192,7 +428,23 @@ function listaCampos_cnfXConfig( $p_prefixo )
 			new campo_cnfXConfig_Site(),
 			new campo_cnfXConfig_QtasDesmar(),
 			new campo_cnfXConfig_Declinar(),
-			new campo_cnfXConfig_RecorDia() )
+			new campo_cnfXConfig_RecorDia(),
+			new campo_cnfXConfig_CCorRec(),
+			new campo_cnfXConfig_CCorRec_Nome(),
+			new campo_cnfXConfig_CCorAss(),
+			new campo_cnfXConfig_CCorAss_Nome(),
+			new campo_cnfXConfig_SubPlaRRec(),
+			new campo_cnfXConfig_SubPlaRRec_Plano(),
+			new campo_cnfXConfig_SubPlaRRec_Plano_CodPlano(),
+			new campo_cnfXConfig_SubPlaRRec_Plano_Plano(),
+			new campo_cnfXConfig_SubPlaRRec_Codigo(),
+			new campo_cnfXConfig_SubPlaRRec_Nome(),
+			new campo_cnfXConfig_SubPlaRAss(),
+			new campo_cnfXConfig_SubPlaRAss_Plano(),
+			new campo_cnfXConfig_SubPlaRAss_Plano_CodPlano(),
+			new campo_cnfXConfig_SubPlaRAss_Plano_Plano(),
+			new campo_cnfXConfig_SubPlaRAss_Codigo(),
+			new campo_cnfXConfig_SubPlaRAss_Nome() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

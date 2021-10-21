@@ -10,7 +10,8 @@ function filtrarSelecao()
       ( $parQSelecao->CADEIA30 != '' ? filtrarPorUpper( "A.Historico", $parQSelecao->CADEIA30 ) : '' ) .
       filtrarPorLig( "A.TPgRec", $parQSelecao->TPGREC ) .
       filtrarPorLig( "A.Clinica", $parQSelecao->CLINICA ) .
-      filtrarPorLig( "A.Pessoa", $parQSelecao->PESSOA ), 0, -4 )
+      filtrarPorLig( "A.Fornecedor", $parQSelecao->FORNECEDOR ) .
+      filtrarPorLig( "A.Pessoa", $parQSelecao->CLIENTE ), 0, -4 )
    );
 }
 

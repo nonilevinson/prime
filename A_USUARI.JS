@@ -276,14 +276,6 @@ Campo_arqUsuario_Email.prototype.TemErro = function()
 }
 
 //-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqUsuario_CRM.prototype.Existencia = function()
-{
-	return( Medico == 1 );
-}
-
-//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_arqUsuario_PodeAgenda.prototype.Sugeriu = function()

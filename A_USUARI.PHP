@@ -369,13 +369,5 @@ class arqUsuario extends Lance_Arquivo
 	return( "". ext_filtrarGrupo() . "" );
 	}
 
-	//-------------------------------------------------------------
-	// Visões do Arquivo: EhMedico  
-	//-------------------------------------------------------------
-	function EhMedico()
-	{
-	return( "Medico == 1" );
-	}
-
 }
 ?>

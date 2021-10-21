@@ -29,7 +29,6 @@ echo
 	$this->Pedir( "CNPJ" ),
 	$this->Pedir( "Email" ),
 	$this->Pedir( "Site" ),
-	$this->Pular1Linha(2),
 "</table>",
 
 CriarForms(
@@ -49,6 +48,20 @@ CriarForms(
 "<table id='F' class='tabFormulario' style='display:none'>",
 	$this->Pedir( "Dia para criação automática<br>das contas recorrentes",
 		[ "", RecorDia, " (deixe zero, se não quiser usar a rotina automática)" ] ),
+	$this->Pedir( "Caixa da Recepção",
+		[ "Conta corrente ", CCorRec ] ),
+	$this->Pedir( " ",
+		[ "Plano de contas ", SubPlaRRec_Plano ] ),
+	$this->Pedir( " ",
+		[ "Plano de contas ", SubPlaRRec_Codigo,
+		[ "", SubPlaRRec ] ] ),
+	$this->Pedir( "Caixa do Assessor",
+		[ "Conta corrente ", CCorAss ] ),
+	$this->Pedir( " ",
+		[ "Plano de contas ", SubPlaRAss_Plano ] ),
+	$this->Pedir( " ",
+		[ "Plano de contas ", SubPlaRAss_Codigo,
+		[ "", SubPlaRAss ] ] ),
 "</table>",
 
 "<table id='E' class='tabFormulario' style='display:none'>",

@@ -2,10 +2,13 @@
 
 echo
 "<table class='tabFormulario'>",
-	$this->Pedir( "Usuário", Usuario ),
+	$this->Pedir( "Usuário",
+		[ "", Usuario, "<br>(evite usar espaços em branco)" ] ),
 	$this->Pedir( "Nome" ),
 	$this->Pedir( "Email",
-		[ "", Email, "<br> (não deixe de preencher o email. Com ele, poderemos enviar comunicados)" ] );
+		[ "", Email, "<br> (não deixe de preencher o email. Com ele, poderemos enviar comunicados)" ] ),
+	$this->Pedir( "CRM",
+		[ "", CRM, " (se for médico)" ] );
 
 	if( $g_acaoAtual == INSERINDO )
 	{

@@ -264,6 +264,19 @@ class campo_parQSelecao_TSimNao extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo Cadeia30
+//======================================================
+
+class campo_parQSelecao_Cadeia30 extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Cadeia30", "Cadeia30", "Cadeia30", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Cadeia100
 //======================================================
 
@@ -744,6 +757,7 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_TSimNao(),
 			new Lance_CampoCadeia( "TSimNao_Chave", "TSimNao_Chave", "Chave", 1, "x", EH_CHAVE, TSimNao ),
 			new Lance_CampoCadeia( "TSimNao_Descritor", "TSimNao_Descritor", "Descritor", 3, "xxx", EH_DESCRITOR, TSimNao ),
+			new campo_parQSelecao_Cadeia30(),
 			new campo_parQSelecao_Cadeia100(),
 			new campo_parQSelecao_Logico1(),
 			new campo_parQSelecao_DataIni(),

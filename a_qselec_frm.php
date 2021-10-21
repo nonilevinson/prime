@@ -60,7 +60,10 @@ if( $op == 53 ) //* Programar envio de ações
 	$this->Cabecalhos( [ "Se quiser enviar para todos os pessoas, deixe os campos da seção Seleção dos pessoas em branco.<br>Prencha somente os campos da seção Dados da ação", "FormCab alinhaMeio", "2" ] ),
 	$this->Pular1Linha(2),
 	$this->Cabecalhos( [ "Seleção dos pessoas", "FormCab alinhaMeio", "2" ] ),
-	$this->Pedir( "Pessoa", Cliente  ),
+	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
 	$this->Pular1Linha(2),
 	$this->Cabecalhos( [ "Dados da ação", "FormCab alinhaMeio", "2" ] ),
 	$this->Pedir( "Título da ação",
@@ -129,7 +132,11 @@ if( $op == 92 ) //* selecao arqConta
 	echo
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Pessoa", Cliente ),
+	$this->Pedir( "Fornecedor" ),
+	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
 	$this->Pedir( "Trecho do<br>histórico", Cadeia30 );
 }
 
@@ -138,7 +145,11 @@ if( $op == 94 ) //* selecao arqParcela
 	echo
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Pessoa", Cliente ),
+	$this->Pedir( "Fornecedor" ),
+	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
 	$this->Pedir( "Vencimento entre",
 		[ "", DataIni,
 		[ brHtml(1) . "e ", DataFim ] ] ),
@@ -152,7 +163,11 @@ if( $op == 95 ) //* selecao Hoje arqParcela
 	echo
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Pessoa", Cliente ),
+	$this->Pedir( "Fornecedor" ),
+	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
 	$this->Pedir( "Pagamento entre",
 		[ "", DataIni1,
 		[ brHtml(1) . "e ", DataFim1 ] ] );
@@ -162,7 +177,10 @@ if( $op == 110 ) //* selecao arqConsulta
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Pessoa", Cliente ),
+	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
 	$this->Pedir( "Médico", Medico ),
 	$this->Pedir( "Entre",
 		[ "", DataIni,
@@ -201,7 +219,10 @@ if( $op == 166 ) //* r_parcela
 	$this->Pedir( "Forma Pagamento", TFPagto ),
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Fornecedor" ),
-	$this->Pedir( "Pessoa", Cliente ),
+	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
 	$this->Pedir( "Conta corrente", CCor ),
    $this->Pedir( "Plano de contas",
       [ "", SubPlano_Plano_CodPlano,
@@ -211,7 +232,7 @@ if( $op == 166 ) //* r_parcela
       [ "", SubPlano_Codigo,
       [ brHtml(2), SubPlano_Nome,
       [ "", SubPlano ] ] ] ),
-	$this->Pedir( "Competência entre os meses de ",
+	$this->Pedir( "Competência entre<br>os meses de ",
 		[ '', MesIni,
 		[ brHtml(2) . 'e ', MesFim ] ] ),
 	$this->Pedir( "Consolidado?", Logico1 );
