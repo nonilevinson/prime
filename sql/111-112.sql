@@ -316,3 +316,82 @@ commit;
 
 update cnfXConfig set CCorRec=2, CCorAss=3, SubPlaRRec=9, SubPlaRAss=8;
 commit;
+
+/************************************************************
+	Arquivo FormaPg   
+************************************************************/
+drop trigger arqFormaPg_log;
+drop view v_arqFormaPg;
+commit;
+
+ALTER TABLE arqFormaPg
+add /*  3*/	DINHEIRO campoLogico, /* Lógico: 0=Não 1=Sim */
+add /*  4*/	CARTAO campoLogico, /* Lógico: 0=Não 1=Sim */
+add /*  5*/	DIAS SMALLINT, /* Máscara = N */
+add /*  6*/	TAXADEB NUMERIC( 4, 2 ), /* Máscara = N */
+add /*  7*/	TAXA2 NUMERIC( 4, 2 ), /* Máscara = N */
+add /*  8*/	TAXA3 NUMERIC( 4, 2 ); /* Máscara = N */
+commit;
+
+update arqFormaPg set Dinheiro =1, Cartao=0, Dias=0, TaxaDeb=0,Taxa2=0, Taxa3=0 Where idPrimario = 1;
+update arqFormaPg set Dinheiro =0, Cartao=1, Dias=1, TaxaDeb=0.94,Taxa2=0, Taxa3=0 Where idPrimario = 2;
+update arqFormaPg set Dinheiro =0, Cartao=1, Dias=1, TaxaDeb=0,Taxa2=3.33, Taxa3=4.07 Where idPrimario = 3;
+update arqFormaPg set Dinheiro =0, Cartao=0, Dias=0, TaxaDeb=0,Taxa2=0, Taxa3=0 Where idPrimario = 4;
+update arqFormaPg set Dinheiro =0, Cartao=0, Dias=0, TaxaDeb=0,Taxa2=0, Taxa3=0 Where idPrimario = 5;
+commit;
+
+RECREATE VIEW V_arqFormaPg AS 
+	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.DINHEIRO, A0.CARTAO, A0.DIAS, A0.TAXADEB, A0.TAXA2, A0.TAXA3, A0.ATIVO
+	FROM arqFormaPg A0;
+commit;
+
+/************************************************************
+	Trigger para Log de arqFormaPg
+************************************************************/
+
+set term ^;
+
+recreate trigger arqFormaPg_LOG for arqFormaPg
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.FormaPg,'' );
+else
+	valorChave = coalesce( NEW.FormaPg,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100044 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'Dinheiro', OLD.Dinheiro, NEW.Dinheiro );
+	execute procedure set_log( 12, NEW.idPrimario, 'Cartao', OLD.Cartao, NEW.Cartao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Dias', OLD.Dias, NEW.Dias );
+	execute procedure set_log( 12, NEW.idPrimario, 'TaxaDeb', OLD.TaxaDeb, NEW.TaxaDeb );
+	execute procedure set_log( 12, NEW.idPrimario, 'Taxa2', OLD.Taxa2, NEW.Taxa2 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Taxa3', OLD.Taxa3, NEW.Taxa3 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqFormaPg
+alter IDPRIMARIO position 1,
+alter FORMAPG position 2,
+alter DINHEIRO position 3,
+alter CARTAO position 4,
+alter DIAS position 5,
+alter TAXADEB position 6,
+alter TAXA2 position 7,
+alter TAXA3 position 8,
+alter ATIVO position 9;
+commit;

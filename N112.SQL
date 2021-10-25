@@ -2168,7 +2168,13 @@ CREATE TABLE arqFormaPg
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	FORMAPG VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  3*/	DINHEIRO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	CARTAO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	DIAS SMALLINT, /* Máscara = N */
+	/*  6*/	TAXADEB NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  7*/	TAXA2 NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  8*/	TAXA3 NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  9*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqFormaPg_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqFormaPg_UK UNIQUE ( FormaPg )
 );
@@ -2930,7 +2936,7 @@ RECREATE VIEW V_arqTiAgenda AS
 commit;
 
 RECREATE VIEW V_arqFormaPg AS 
-	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.DINHEIRO, A0.CARTAO, A0.DIAS, A0.TAXADEB, A0.TAXA2, A0.TAXA3, A0.ATIVO
 	FROM arqFormaPg A0;
 commit;
 
@@ -4475,6 +4481,12 @@ if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'Dinheiro', OLD.Dinheiro, NEW.Dinheiro );
+	execute procedure set_log( 12, NEW.idPrimario, 'Cartao', OLD.Cartao, NEW.Cartao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Dias', OLD.Dias, NEW.Dias );
+	execute procedure set_log( 12, NEW.idPrimario, 'TaxaDeb', OLD.TaxaDeb, NEW.TaxaDeb );
+	execute procedure set_log( 12, NEW.idPrimario, 'Taxa2', OLD.Taxa2, NEW.Taxa2 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Taxa3', OLD.Taxa3, NEW.Taxa3 );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end
 end^

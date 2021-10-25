@@ -24,10 +24,10 @@ var Menu_3_2_2 = new Array( 1,"Todas","","T",93,"","",1,"","1","a_parcel","arqPa
 var Menu_3_2_3 = new Array( 1,"Seleção","","S",94,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_parcel^^^arqParcela^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[34]);
 var Menu_3_3 = new Array( 1,"Recorrentes","","R",160,"","",1,"","1","a_recor","arqRecorrente","Folhear","","?","FilTodos","", "","", 0,21,[],[46]);
 var Menu_3_4 = new Array( 1,"Outros","","u",161,"","",1,"","6", "", "", "", "", "", "", "", "", "", 4, 21,[],[19,20,44,27] );
-var Menu_3_4_1 = new Array( 1,"Bancos","","B",59,"","",1,"","1","a_banco","arqBanco","Folhear","","?","","", "","", 0,19,[],[19]);
-var Menu_3_4_2 = new Array( 1,"Contas correntes","","t",72,"","",1,"","1","a_ccor","arqCCor","Folhear","","?","FilTodos","", "","", 0,19,[],[20]);
-var Menu_3_4_3 = new Array( 1,"Formas de pagamento","","o",147,"","",1,"","1","a_formap","arqFormaPg","Folhear","","?","","", "","", 0,19,[],[44]);
-var Menu_3_4_4 = new Array( 1,"Plano de contas","","l",128,"","",1,"","1","a_plano","arqPlano","Folhear","","?","","", "","", 0,19,[],[27]);
+var Menu_3_4_1 = new Array( 1,"Bancos","","B",59,"","",1,"","1","a_banco","arqBanco","Folhear","","?","","", "","", 0,32,[],[19]);
+var Menu_3_4_2 = new Array( 1,"Contas correntes","","t",72,"","",1,"","1","a_ccor","arqCCor","Folhear","","?","FilTodos","", "","", 0,32,[],[20]);
+var Menu_3_4_3 = new Array( 1,"Formas de pagamento de Consultas","","o",147,"","",1,"","1","a_formap","arqFormaPg","Folhear","","?","","", "","", 0,32,[],[44]);
+var Menu_3_4_4 = new Array( 1,"Plano de contas","","l",128,"","",1,"","1","a_plano","arqPlano","Folhear","","?","","", "","", 0,32,[],[27]);
 var Menu_3_5 = new Array( 1,"Gerar conta e parcela","","G",130,"","",1,"","1", "a_grparc", "parGeraParc", "Alterar", "", "", "", "", "5^^^p_conta_parcela_gerar^^^^^^^^^^^^^^^^^^", "", 0,21,[130],[]);
 var Menu_4 = new Array( 1,"Emails","","E",42,"","",cnfConfig["EMAIL"] == 1 || GrupoAtualEm(),"","6", "", "", "", "", "", "", "", "", "", 6, 10,[53,169,167,168,55,47,71,52,54,48,49],[10,12,8,9] );
 var Menu_4_1 = new Array( 1,"Ações","","A",43,"","",1,"","1","a_aemail","arqAcaoEmail","Folhear","","?","","", "","", 0,22,[],[10]);
