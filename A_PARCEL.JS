@@ -728,7 +728,9 @@ Campo_arqParcela_CCor.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
 			return( "A.Ativo == 1" );
+		if( TFPagto == 1 )
 			return( "A.Clinica = " + Conta_Clinica + "" );
+		return( "" );
 }
 
 //-------------------------------------------------------------
@@ -742,22 +744,6 @@ Campo_arqParcela_CCor.prototype.Obrigatorio = function( p_comMsg )
 		return( true );
 	}
 	return( false );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor.prototype.Existencia = function()
-{
-	return( TFPagto == 1 || tem( Emissao ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqParcela_CCor_Nome.prototype.Existencia = function()
-{
-	return( TFPagto == 1 || tem( Emissao ) );
 }
 
 //-------------------------------------------------------------
@@ -1006,8 +992,7 @@ Emissao.CalculosDependentes= [ NumBoleto ];
 Conta_Transacao.ExistenciasDependentes= [ Conta ];
 TFCobra.ExistenciasDependentes= [ Emissao,LinhaDig,NomePdf,TFPagto,TDetPg,StRetorno,Remessa ];
 Conta.ExistenciasDependentes= [ Emissao,NomePdf,CCor,StRetorno,Remessa ];
-TFPagto.ExistenciasDependentes= [ CCor,CCor_Nome,DataPagto,TDetPg ];
-Emissao.ExistenciasDependentes= [ CCor,CCor_Nome ];
+TFPagto.ExistenciasDependentes= [ CCor,DataPagto,TDetPg ];
 CCor_Nome.ExistenciasDependentes= [ CCor ];
 SubPlano_Plano.ExistenciasDependentes= [ SubPlano,SubPlano_Plano_Plano ];
 SubPlano_Plano_CodPlano.ExistenciasDependentes= [ SubPlano_Plano ];

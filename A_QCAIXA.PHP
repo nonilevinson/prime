@@ -45,19 +45,6 @@ class campo_parQCaixa_Clinica_Clinica extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo TPgRec
-//======================================================
-
-class campo_parQCaixa_TPgRec extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "TPgRec", "TPgRec", "TPgRec", 0, "tabTPgRec", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
-	}
-
-}
-
-//======================================================
 //	Campo Fornecedor
 //======================================================
 
@@ -270,32 +257,6 @@ class campo_parQCaixa_SubPlano_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo CCor
-//======================================================
-
-class campo_parQCaixa_CCor extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "CCor", "CCor", "CCor", 0, "arqCCor", "arqCCor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo CCor_Nome
-//======================================================
-
-class campo_parQCaixa_CCor_Nome extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCor_Nome", "CCor_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CCor", false );
-	}
-
-}
-
-//======================================================
 //	Arquivo parQCaixa
 //======================================================
 function listaCampos_parQCaixa( $p_prefixo )
@@ -308,9 +269,6 @@ function listaCampos_parQCaixa( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_parQCaixa_Clinica(),
 			new campo_parQCaixa_Clinica_Clinica(),
-			new campo_parQCaixa_TPgRec(),
-			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
-			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ),
 			new campo_parQCaixa_Fornecedor(),
 			new campo_parQCaixa_Fornecedor_Nome(),
 			new campo_parQCaixa_Pessoa(),
@@ -324,9 +282,7 @@ function listaCampos_parQCaixa( $p_prefixo )
 			new campo_parQCaixa_SubPlano_Plano_CodPlano(),
 			new campo_parQCaixa_SubPlano_Plano_Plano(),
 			new campo_parQCaixa_SubPlano_Codigo(),
-			new campo_parQCaixa_SubPlano_Nome(),
-			new campo_parQCaixa_CCor(),
-			new campo_parQCaixa_CCor_Nome() )
+			new campo_parQCaixa_SubPlano_Nome() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

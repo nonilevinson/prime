@@ -25,39 +25,6 @@ function Campo_parQCaixa_Clinica_Clinica()
 var Clinica_Clinica = new Campo_parQCaixa_Clinica_Clinica;
 
 //------------------------------------------------------------
-Campo_parQCaixa_TPgRec.prototype = new Lance_CampoLigado;
-
-function Campo_parQCaixa_TPgRec()
-{
-	this.superClass = Lance_CampoLigado;
-	this.superClass( "TPgRec", "TPgRec", "TPgRec", "tabTPgRec", "t_tpgre", null, "",0);
-}
-
-var TPgRec = new Campo_parQCaixa_TPgRec;
-
-//------------------------------------------------------------
-Campo_parQCaixa_TPgRec_Chave.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parQCaixa_TPgRec_Chave()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TPgRec_Chave", "TPgRec_Chave", "TPgRec", TPgRec, 1, "u", false);
-}
-
-var TPgRec_Chave = new Campo_parQCaixa_TPgRec_Chave;
-
-//------------------------------------------------------------
-Campo_parQCaixa_TPgRec_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parQCaixa_TPgRec_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TPgRec_Descritor", "TPgRec_Descritor", "TPgRec", TPgRec, 7, "xxxxxxx", false);
-}
-
-var TPgRec_Descritor = new Campo_parQCaixa_TPgRec_Descritor;
-
-//------------------------------------------------------------
 Campo_parQCaixa_Fornecedor.prototype = new Lance_CampoHidden;
 
 function Campo_parQCaixa_Fornecedor()
@@ -211,28 +178,6 @@ function Campo_parQCaixa_SubPlano_Nome()
 
 var SubPlano_Nome = new Campo_parQCaixa_SubPlano_Nome;
 
-//------------------------------------------------------------
-Campo_parQCaixa_CCor.prototype = new Lance_CampoHidden;
-
-function Campo_parQCaixa_CCor()
-{
-	this.superClass = Lance_CampoHidden;
-	this.superClass( "CCor", "CCor", "CCor", "arqCCor", "a_ccor", null, "",20);
-}
-
-var CCor = new Campo_parQCaixa_CCor;
-
-//------------------------------------------------------------
-Campo_parQCaixa_CCor_Nome.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parQCaixa_CCor_Nome()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
-}
-
-var CCor_Nome = new Campo_parQCaixa_CCor_Nome;
-
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -253,19 +198,6 @@ Campo_parQCaixa_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_comM
 }
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_parQCaixa_TPgRec.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "O tipo da conta é obrigatório" );
-		return( true );
-	}
-}
-
-TPgRec_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TPgRec_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -314,7 +246,7 @@ Campo_parQCaixa_Pessoa.prototype.TemErro = function()
 		alert( "Informe um paciente ou um fornecedor" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -432,23 +364,6 @@ Campo_parQCaixa_SubPlano_Codigo.prototype.ObrigatorioEspecial = function( p_comM
 SubPlano_Codigo.TipoCampo |= CAMPO_CHAVE_PAI;
 SubPlano_Nome.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
-// Fitro para selecionar registros do pai
-//-------------------------------------------------------------
-Campo_parQCaixa_CCor.prototype.FiltroPai = function()
-{
-			return( "A.Ativo = 1" );
-}
-
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_parQCaixa_CCor_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( CCor.Obrigatorio( p_comMsg ) );
-}
-
-CCor_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_parQCaixa_Clinica.prototype.ExistenciaEspecial = function()
@@ -504,14 +419,6 @@ Campo_parQCaixa_SubPlano_Nome.prototype.ExistenciaEspecial = function()
 	return( ( !SubPlano.Obrigatorio( false ) || tem(SubPlano) ) );
 }
 
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
-Campo_parQCaixa_CCor.prototype.ExistenciaEspecial = function()
-{
-	return( ( !CCor_Nome.Obrigatorio( false ) || tem(CCor_Nome) ) );
-}
-
 function IniciarDependencias_parQCaixa()
 {
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
@@ -523,14 +430,12 @@ SubPlano_Plano.ExistenciasDependentes= [ SubPlano,SubPlano_Plano_Plano ];
 SubPlano_Plano_CodPlano.ExistenciasDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ExistenciasDependentes= [ SubPlano ];
 SubPlano.ExistenciasDependentes= [ SubPlano_Nome ];
-CCor_Nome.ExistenciasDependentes= [ CCor ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
 Fornecedor.ErrosDependentes= [ Pessoa ];
 Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
 SubPlano_Plano_CodPlano.ErrosDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ErrosDependentes= [ SubPlano ];
-CCor_Nome.ErrosDependentes= [ CCor ];
 SubPlano_Plano.DescritoresDependentes= [ SubPlano_Plano_Plano ];
 SubPlano.DescritoresDependentes= [ SubPlano_Nome ];
 Clinica.CamposChave= [ Clinica_Clinica ];
@@ -538,7 +443,6 @@ Fornecedor.CamposChave= [ Fornecedor_Nome ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 SubPlano.CamposChave= [ SubPlano_Plano,SubPlano_Codigo ];
 SubPlano_Plano.CamposChave= [ SubPlano_Plano_CodPlano ];
-CCor.CamposChave= [ CCor_Nome ];
 }
 
 
@@ -556,7 +460,7 @@ function ListaDeCampos_parQCaixa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Historico, Data, Valor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, CCor, CCor_Nome ]	);
+		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Historico, Data, Valor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome ]	);
 	IniciarDependencias_parQCaixa();
 	g_prefixo = l_prefixo;
 	return( l_lista );
