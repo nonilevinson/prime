@@ -7,6 +7,10 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+insert into arqLanceOperacao values(200176,2,'Rotina para criar Saída de caixa da Recepção','',176,10,0,'');
+insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa da Recepção','',177,10,0,'');
+commit;
+
 /************************************************************
 	Arquivo CCor      
 ************************************************************/

@@ -3080,6 +3080,8 @@ insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas
 insert into arqLanceOperacao values(200162,2,'Gerar conta e parcela de recorrentes','',162,10,0,'');
 insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm()');
 insert into arqLanceOperacao values(200166,2,'Relatório de parcelas de contas a pagar e a receber','',166,50,0,'');
+insert into arqLanceOperacao values(200176,2,'Rotina para criar Saída de caixa da Recepção','',176,10,0,'');
+insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa da Recepção','',177,10,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
