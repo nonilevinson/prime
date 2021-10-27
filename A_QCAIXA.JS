@@ -179,6 +179,16 @@ function Campo_parQCaixa_SubPlano_Nome()
 var SubPlano_Nome = new Campo_parQCaixa_SubPlano_Nome;
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parQCaixa_Clinica.prototype.FiltroPai = function()
+{
+		if( g_temMaisDeUmClinica )
+			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_parQCaixa_Clinica.prototype.Obrigatorio = function( p_comMsg )

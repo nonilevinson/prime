@@ -11,7 +11,7 @@ $op        = ultimaLigOpcao();
 $select = "Select X.CCorRec, X.CCorAss, X.SubPlaRRec, X.SubPlaRAss
       From cnfXConfig X";
 $umXConfig = sql_lerUmRegistro( $select );
-if( $g_debugProcesso ) echo '<br><br><b>GR0 cnfXConfig S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><br><b>GR0 cnfXConfig S=</b> '.$select;
 
 switch( ultimaLigOpcao() )
 {
@@ -25,6 +25,18 @@ switch( ultimaLigOpcao() )
       $tPgRec   = 2;
       $cCor     = $umXConfig->CCORREC;
       $subPlano = $umXConfig->SUBPLARREC;
+      break;
+
+   case 180: //* saída assessor
+      $tPgRec   = 1;
+      $cCor     = $umXConfig->CCORASS;
+      $subPlano = $umXConfig->SUBPLARASS;
+      break;
+
+   case 181: //* entrada assessor
+      $tPgRec   = 2;
+      $cCor     = $umXConfig->CCORASS;
+      $subPlano = $umXConfig->SUBPLARASS;
       break;
 }
 if( $g_debugProcesso ) echo '<br><b>GR0 cCor S=</b> '.$cCor.' <b>subPlano=</b> '.$subPlano;
@@ -81,12 +93,12 @@ sql_insert( "arqParcela", [
    "Arq1"       => null,
    "StRetorno"  => '',
    "Remessa"    => 0,
-   "DataRem"    => null ],1,true );
+   "DataRem"    => null ] );
 
 sql_gravarTransacao();
 sql_fecharBD();
 
-$teste = true;
+$teste = false;
 if( $teste )
    echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE ***</p>';
 else

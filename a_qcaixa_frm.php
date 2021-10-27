@@ -6,7 +6,7 @@ $op = ultimaLigOpcao();
 echo 	"<table class='tabFormulario'>";
 //====================================================================
 
-if( in_array( $op, [176] ) ) //* 176: criar saída Recepção
+if( in_array( $op, [176,180] ) ) //* 176: criar saída Recepção | 180: Assessor
 {
    echo
    $this->Pedir( "Clínica", Clinica ),
@@ -24,12 +24,9 @@ if( in_array( $op, [176] ) ) //* 176: criar saída Recepção
       [ "", SubPlano ] ] ] );
 }
 
-if( in_array( $op, [177] ) ) //* 177: criar entrada Recepção
+if( in_array( $op, [177,181] ) ) //* 177: criar entrada Recepção | 181: Assessor
 { 
    echo
-   $this->NaoPedir( TPgRec, 2 ),
-   $this->NaoPedir( CCor, $cCor ),
-   
    $this->Pedir( "Clínica", Clinica ),
    $this->Pedir( "Data" ),
    $this->PedirZerando( "Valor" ),
