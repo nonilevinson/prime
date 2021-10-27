@@ -623,6 +623,8 @@ g_arquivoCampos = ListaDeCampos_arqConta( '' );
 g_idOperacao = 33;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Parcelas","","P",99,"","",1,"","1","a_parcel","arqParcela","Folhear","Conta","?","","", "","", 0,8,[],[34]);
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_1 = new Array( 1,"Parcelas","","P",99,"","",1,"","1","a_parcel","arqParcela","Folhear","Conta","?","","", "","", 0,11,[],[34]);
+var Menu_2 = new Array( 1,"Consultas","","u",182,"","",1,"","1","a_consul","arqConsulta","Folhear","ContaCons","?","","", "","", 0,11,[],[39]);
+var Menu_3 = new Array( 1,"Tratamentos","","T",183,"","",1,"","1","a_consul","arqConsulta","Folhear","ContaPTra","?","","", "","", 0,11,[],[39]);
+parent.navegacao.MenuPrincQtdOpcoes=3;
 }

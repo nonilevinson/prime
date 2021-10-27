@@ -569,6 +569,72 @@ class campo_arqConsulta_Valor extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo ContaCons
+//======================================================
+
+class campo_arqConsulta_ContaCons extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "ContaCons", "ContaCons", "ContaCons", 0, "arqConta", "arqConta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo ContaCons_Transacao
+//======================================================
+
+class campo_arqConsulta_ContaCons_Transacao extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "ContaCons_Transacao", "ContaCons_Transacao", "Transacao", 6, "###.##z", "", "", EH_CHAVE, "ContaCons", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Transação" );
+	}
+
+}
+
+//======================================================
+//	Campo ContaPTra
+//======================================================
+
+class campo_arqConsulta_ContaPTra extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "ContaPTra", "ContaPTra", "ContaPTra", 0, "arqConta", "arqConta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo ContaPTra_Transacao
+//======================================================
+
+class campo_arqConsulta_ContaPTra_Transacao extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "ContaPTra_Transacao", "ContaPTra_Transacao", "Transacao", 6, "###.##z", "", "", EH_CHAVE, "ContaPTra", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Transação" );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqConsulta
 //======================================================
 function listaCampos_arqConsulta( $p_prefixo )
@@ -613,7 +679,11 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_FormaPg(),
 			new campo_arqConsulta_FormaPg_FormaPg(),
 			new campo_arqConsulta_Obs(),
-			new campo_arqConsulta_Valor() )
+			new campo_arqConsulta_Valor(),
+			new campo_arqConsulta_ContaCons(),
+			new campo_arqConsulta_ContaCons_Transacao(),
+			new campo_arqConsulta_ContaPTra(),
+			new campo_arqConsulta_ContaPTra_Transacao() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -704,6 +774,8 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( FormaPg_FormaPg ) );
 			array_push( $vetAux, array( Obs ) );
 			array_push( $vetAux, array( Valor ) );
+			array_push( $vetAux, array( ContaCons_Transacao ) );
+			array_push( $vetAux, array( ContaPTra_Transacao ) );
 		return( $vetAux );
 	}
 

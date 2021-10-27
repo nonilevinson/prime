@@ -387,6 +387,50 @@ function Campo_arqConsulta_Valor()
 
 var Valor = new Campo_arqConsulta_Valor;
 
+//------------------------------------------------------------
+Campo_arqConsulta_ContaCons.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_ContaCons()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "ContaCons", "ContaCons", "ContaCons", "arqConta", "a_conta", null, "",33);
+}
+
+var ContaCons = new Campo_arqConsulta_ContaCons;
+
+//------------------------------------------------------------
+Campo_arqConsulta_ContaCons_Transacao.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_arqConsulta_ContaCons_Transacao()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "ContaCons_Transacao", "ContaCons_Transacao", "Transacao", ContaCons, 6, "###.##z", true,"", "");
+}
+
+var ContaCons_Transacao = new Campo_arqConsulta_ContaCons_Transacao;
+
+//------------------------------------------------------------
+Campo_arqConsulta_ContaPTra.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_ContaPTra()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "ContaPTra", "ContaPTra", "ContaPTra", "arqConta", "a_conta", null, "",33);
+}
+
+var ContaPTra = new Campo_arqConsulta_ContaPTra;
+
+//------------------------------------------------------------
+Campo_arqConsulta_ContaPTra_Transacao.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_arqConsulta_ContaPTra_Transacao()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "ContaPTra_Transacao", "ContaPTra_Transacao", "Transacao", ContaPTra, 6, "###.##z", true,"", "");
+}
+
+var ContaPTra_Transacao = new Campo_arqConsulta_ContaPTra_Transacao;
+
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -762,6 +806,22 @@ Campo_arqConsulta_FormaPg.prototype.Cabecalho = function()
 }
 
 //-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_FormaPg.prototype.Existencia = function()
+{
+	return( tem( Valor ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_FormaPg_FormaPg.prototype.Existencia = function()
+{
+	return( tem( Valor ) );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_FormaPg_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
@@ -770,6 +830,76 @@ Campo_arqConsulta_FormaPg_FormaPg.prototype.ObrigatorioEspecial = function( p_co
 }
 
 FormaPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaCons.prototype.PodeAlterar = function()
+{
+		if( GrupoAtualEm() )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaCons.prototype.Existencia = function()
+{
+	return( tem( Valor ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaCons_Transacao.prototype.Existencia = function()
+{
+	return( tem( Valor ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaCons_Transacao.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( ContaCons.Obrigatorio( p_comMsg ) );
+}
+
+ContaCons_Transacao.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaPTra.prototype.PodeAlterar = function()
+{
+		if( GrupoAtualEm() )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaPTra.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaPTra_Transacao.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaPTra_Transacao.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( ContaPTra.Obrigatorio( p_comMsg ) );
+}
+
+ContaPTra_Transacao.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
@@ -826,6 +956,22 @@ Campo_arqConsulta_FormaPg.prototype.ExistenciaEspecial = function()
 	return( ( !FormaPg_FormaPg.Obrigatorio( false ) || tem(FormaPg_FormaPg) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaCons.prototype.ExistenciaEspecial = function()
+{
+	return( ( !ContaCons_Transacao.Obrigatorio( false ) || tem(ContaCons_Transacao) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaPTra.prototype.ExistenciaEspecial = function()
+{
+	return( ( !ContaPTra_Transacao.Obrigatorio( false ) || tem(ContaPTra_Transacao) ) );
+}
+
 function IniciarDependencias_arqConsulta()
 {
 Pessoa.CalculosDependentes= [ Prontuario ];
@@ -836,8 +982,11 @@ Medico_Usuario.ExistenciasDependentes= [ Medico ];
 Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
 CallCenter_Usuario.ExistenciasDependentes= [ CallCenter ];
 PTrata_PTrata.ExistenciasDependentes= [ PTrata ];
-PTrata.ExistenciasDependentes= [ ValPTrata,ObsPTrata ];
+PTrata.ExistenciasDependentes= [ ValPTrata,ObsPTrata,ContaPTra,ContaPTra_Transacao ];
+Valor.ExistenciasDependentes= [ FormaPg,FormaPg_FormaPg,ContaCons,ContaCons_Transacao ];
 FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
+ContaCons_Transacao.ExistenciasDependentes= [ ContaCons ];
+ContaPTra_Transacao.ExistenciasDependentes= [ ContaPTra ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 TiAgenda_TiAgenda.ErrosDependentes= [ TiAgenda ];
 Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
@@ -846,6 +995,8 @@ Assessor_Usuario.ErrosDependentes= [ Assessor ];
 CallCenter_Usuario.ErrosDependentes= [ CallCenter ];
 PTrata_PTrata.ErrosDependentes= [ PTrata ];
 FormaPg_FormaPg.ErrosDependentes= [ FormaPg ];
+ContaCons_Transacao.ErrosDependentes= [ ContaCons ];
+ContaPTra_Transacao.ErrosDependentes= [ ContaPTra ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 Medico.CamposChave= [ Medico_Usuario ];
@@ -853,6 +1004,8 @@ Assessor.CamposChave= [ Assessor_Usuario ];
 CallCenter.CamposChave= [ CallCenter_Usuario ];
 PTrata.CamposChave= [ PTrata_PTrata ];
 FormaPg.CamposChave= [ FormaPg_FormaPg ];
+ContaCons.CamposChave= [ ContaCons_Transacao ];
+ContaPTra.CamposChave= [ ContaPTra_Transacao ];
 }
 
 
@@ -870,7 +1023,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, PTrata, PTrata_PTrata, ValPTrata, ObsPTrata, Conduta, Medicacao, FormaPg, FormaPg_FormaPg, Obs, Valor ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, PTrata, PTrata_PTrata, ValPTrata, ObsPTrata, Conduta, Medicacao, FormaPg, FormaPg_FormaPg, Obs, Valor, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

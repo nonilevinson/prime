@@ -36,8 +36,11 @@ echo
    $this->Pedir( "Médico", Medico ),
    $this->Pedir( "Assessor" ),
 	$this->Pedir( "Call center", CallCenter ),
-	$this->Pedir( "Valor" ),
-	$this->Pedir( "Forma de pagamento", FormaPg ),
+	$this->Pedir( "Valor",
+		[ "", Valor,
+		[ brHtml(4) . "Forma de pagamento ", FormaPg ] ] ),
+	$this->Pedir( " ",
+		[ "Conta ", ContaCons, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ),
 "</table>",
 
 CriarForms(
@@ -58,7 +61,9 @@ CriarForms(
 
 "<table id='C' class='tabFormulario' style='display:none'>",
 	$this->Pedir( "Plano de tratamento", PTrata ),
-	$this->Pedir( "Valor do tratamento", ValPTrata ),
+	$this->Pedir( "Valor do tratamento",
+		[ "", ValPTrata,
+		[ brHtml(4) . "Conta ", ContaPTra, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ] ),
 	$this->Pedir( "Descritivo de como será pago", ObsPTrata ),
 	$this->Pular1Linha(2),
 	$this->Pedir( "Conduta" ),
