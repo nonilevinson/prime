@@ -831,6 +831,14 @@ Campo_arqConsulta_FormaPg_FormaPg.prototype.ObrigatorioEspecial = function( p_co
 
 FormaPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaCons.prototype.FiltroPai = function()
+{
+			return( "A.TPgRec = 2" );
+}
+
+//-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
 Campo_arqConsulta_ContaCons.prototype.PodeAlterar = function()
@@ -865,6 +873,14 @@ Campo_arqConsulta_ContaCons_Transacao.prototype.ObrigatorioEspecial = function( 
 }
 
 ContaCons_Transacao.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_ContaPTra.prototype.FiltroPai = function()
+{
+			return( "A.TPgRec = 2" );
+}
+
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -1033,6 +1049,7 @@ g_arquivoCampos = ListaDeCampos_arqConsulta( '' );
 g_idOperacao = 39;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,16,[137],[]);
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_1 = new Array( 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,24,[137],[]);
+var Menu_2 = new Array( 1,"Gerar Receber Tratamento","","G",184,"","",1,"!tem( ContaPTra )","1", "a_grparc", "parGeraParc", "Alterar", "", "", "", "", "5^^^p_conta_parcela_gerar^^^^^^^^^^^^^^^^^^", "", 0,24,[184],[]);
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }
