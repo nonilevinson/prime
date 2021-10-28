@@ -17,15 +17,6 @@ echo '<br><b>GR0 arqConsulta S=</b> '.$select;
       }',
       "console.warn( 'valPTrata= '+'".$umaConsulta->VALPTRATA."');",
    javaScriptFim();
-/*
-	echo
-		javaScriptIni(),
-		'with( parent ) {
-			alt( Valor, ' . $valor . ' );
-			Historico.Focalizar();
-		}',
-		javaScriptFim();
-*/
 }
 
 //==================================================================
