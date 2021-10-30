@@ -35,6 +35,8 @@ echo
       [ "", TFCobra,
       [ brHtml(4) . "Forma de Pagamento ", TFPagto,
       [ brHtml(4) . "Detalhe ", TDetPg ] ] ] ),
+   $this->Pedir( "Forma",
+      [ "", FormaPg, " (quando a receber)" ] ),
    $this->Pedir( "Linha digitável",
       [ "", LinhaDig, btnCopiar( "LinhaDig" ) ] ),
    $this->Pedir( "Conta corrente", CCor ),

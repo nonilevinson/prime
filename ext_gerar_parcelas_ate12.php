@@ -24,7 +24,8 @@ function criarParcela( $p_idConta )
 				$pg         = ValorOuNull( $parGeraParc->$pg, "", false );
 				$valorLiq   = $valorI;
 				$valorEst   = ValorOuZero( $parGeraParc->ESTIMADO );
-				$idTFCobra = ValorOuNull( $parGeraParc->TFCOBRA, "", false );
+				$idTFCobra  = ValorOuNull( $parGeraParc->TFCOBRA, "", false );
+				$idFormaPg  = null;
 				$subPlano   = "CC" . $i;
 				$idSubPlano = ValorOuNull( $parGeraParc->$idSubPlano, "", false );
 				$linhaI     = "LINHA" . $i;
@@ -47,7 +48,7 @@ function criarParcela( $p_idConta )
 				$vezes     = "VEZES" . $i;
 // if( $g_debugProcesso ) echo '<br><b>GR0 idTFCobra=</b> '.$idTFCobra;
 
-				if( $idTFCobra == 2 ) //* se eh cartao calcula o liquido pela taxa
+				if( $idTFCobra == 2 ) //* se eh cartao calcula o liquido pela taxa e o vencimento por Dias
 				{
 					$idFormaPg = $parGeraParc->$formaPg;
 					$qtasVezes = $parGeraParc->$vezes;
@@ -65,7 +66,7 @@ function criarParcela( $p_idConta )
 						$txCartao = $umaFormaPg->TAXA2;
 					else
 						$txCartao = $umaFormaPg->TAXA3;
-						
+
 						$valorLiq = $valorI * ( 100 - $txCartao ) / 100.0;
 // if( $g_debugProcesso ) echo '<br><b>GR0 arqFormaPg S=</b> '.$select.'<br><b>vezes=</b> '.$vezes.' <b>txtCartao=</b> '.$txCartao.' <b>valorI=</b> '.$valorI.' <b>valorLiq=</b> '.$valorLiq;
 				}
@@ -107,7 +108,8 @@ function criarParcela( $p_idConta )
 					: null ),
          "TFPagto"    => ValorOuNull( $parGeraParc->TFPAGTO, "", false ),
          "TDetPg"     => ValorOuNull( $parGeraParc->TDETPAGTO, "", false ),
-         "Cheque"     => ValorOuZero( $parGeraParc->CHEQUE ),
+         "FormaPg"    => $idFormaPg,
+			"Cheque"     => ValorOuZero( $parGeraParc->CHEQUE ),
          "Arq1"       => null,
          "StRetorno"  => '',
          "Remessa"    => 0,

@@ -545,6 +545,39 @@ class campo_arqParcela_TDetPg extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo FormaPg
+//======================================================
+
+class campo_arqParcela_FormaPg extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg", "FormaPg", "FormaPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg_FormaPg
+//======================================================
+
+class campo_arqParcela_FormaPg_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "FormaPg", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
+	}
+
+}
+
+//======================================================
 //	Campo Cheque
 //======================================================
 
@@ -654,6 +687,8 @@ function listaCampos_arqParcela( $p_prefixo )
 			new campo_arqParcela_TDetPg(),
 			new Lance_CampoCadeia( "TDetPg_Chave", "TDetPg_Chave", "Chave", 1, "x", EH_CHAVE, TDetPg ),
 			new Lance_CampoCadeia( "TDetPg_Descritor", "TDetPg_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TDetPg ),
+			new campo_arqParcela_FormaPg(),
+			new campo_arqParcela_FormaPg_FormaPg(),
 			new campo_arqParcela_Cheque(),
 			new campo_arqParcela_Arq1(),
 			new campo_arqParcela_StRetorno(),
@@ -745,6 +780,7 @@ class arqParcela extends Lance_Arquivo
 			array_push( $vetAux, array( DataComp ) );
 			array_push( $vetAux, array( TFPagto_Descritor ) );
 			array_push( $vetAux, array( TDetPg_Descritor ) );
+			array_push( $vetAux, array( FormaPg_FormaPg ) );
 			array_push( $vetAux, array( Cheque ) );
 			array_push( $vetAux, array( Arq1 ) );
 			array_push( $vetAux, array( StRetorno ) );

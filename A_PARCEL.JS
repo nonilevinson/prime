@@ -377,6 +377,28 @@ function Campo_arqParcela_TDetPg_Descritor()
 var TDetPg_Descritor = new Campo_arqParcela_TDetPg_Descritor;
 
 //------------------------------------------------------------
+Campo_arqParcela_FormaPg.prototype = new Lance_CampoHidden;
+
+function Campo_arqParcela_FormaPg()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "FormaPg", "FormaPg", "FormaPg", "arqFormaPg", "a_formap", null, "",44);
+}
+
+var FormaPg = new Campo_arqParcela_FormaPg;
+
+//------------------------------------------------------------
+Campo_arqParcela_FormaPg_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqParcela_FormaPg_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", FormaPg, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var FormaPg_FormaPg = new Campo_arqParcela_FormaPg_FormaPg;
+
+//------------------------------------------------------------
 Campo_arqParcela_Cheque.prototype = new Lance_CampoNumerico;
 
 function Campo_arqParcela_Cheque()
@@ -865,6 +887,31 @@ Campo_arqParcela_TDetPg.prototype.Existencia = function()
 TDetPg_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TDetPg_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqParcela_FormaPg.prototype.Existencia = function()
+{
+	return( Conta_TPgRec == 2 );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqParcela_FormaPg_FormaPg.prototype.Existencia = function()
+{
+	return( Conta_TPgRec == 2 );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqParcela_FormaPg_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( FormaPg.Obrigatorio( p_comMsg ) );
+}
+
+FormaPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqParcela_Cheque.prototype.Obrigatorio = function( p_comMsg )
@@ -985,13 +1032,21 @@ Campo_arqParcela_SubPlano_Nome.prototype.ExistenciaEspecial = function()
 	return( ( !SubPlano.Obrigatorio( false ) || tem(SubPlano) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqParcela_FormaPg.prototype.ExistenciaEspecial = function()
+{
+	return( ( !FormaPg_FormaPg.Obrigatorio( false ) || tem(FormaPg_FormaPg) ) );
+}
+
 function IniciarDependencias_arqParcela()
 {
 Conta.CalculosDependentes= [ ClinicaCal,TPgRecCal,PessoaCal ];
 Emissao.CalculosDependentes= [ NumBoleto ];
 Conta_Transacao.ExistenciasDependentes= [ Conta ];
 TFCobra.ExistenciasDependentes= [ Emissao,LinhaDig,NomePdf,TFPagto,TDetPg,StRetorno,Remessa ];
-Conta.ExistenciasDependentes= [ Emissao,NomePdf,CCor,StRetorno,Remessa ];
+Conta.ExistenciasDependentes= [ Emissao,NomePdf,CCor,FormaPg,FormaPg_FormaPg,StRetorno,Remessa ];
 TFPagto.ExistenciasDependentes= [ CCor,DataPagto,TDetPg ];
 CCor_Nome.ExistenciasDependentes= [ CCor ];
 SubPlano_Plano.ExistenciasDependentes= [ SubPlano,SubPlano_Plano_Plano ];
@@ -999,18 +1054,21 @@ SubPlano_Plano_CodPlano.ExistenciasDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ExistenciasDependentes= [ SubPlano ];
 SubPlano.ExistenciasDependentes= [ SubPlano_Nome ];
 DataPagto.ExistenciasDependentes= [ DataComp ];
+FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 TDetPg.ExistenciasDependentes= [ Cheque ];
 Remessa.ExistenciasDependentes= [ DataRem ];
 Conta_Transacao.ErrosDependentes= [ Conta ];
 CCor_Nome.ErrosDependentes= [ CCor ];
 SubPlano_Plano_CodPlano.ErrosDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ErrosDependentes= [ SubPlano ];
+FormaPg_FormaPg.ErrosDependentes= [ FormaPg ];
 SubPlano_Plano.DescritoresDependentes= [ SubPlano_Plano_Plano ];
 SubPlano.DescritoresDependentes= [ SubPlano_Nome ];
 Conta.CamposChave= [ Conta_Transacao ];
 CCor.CamposChave= [ CCor_Nome ];
 SubPlano.CamposChave= [ SubPlano_Plano,SubPlano_Codigo ];
 SubPlano_Plano.CamposChave= [ SubPlano_Plano_CodPlano ];
+FormaPg.CamposChave= [ FormaPg_FormaPg ];
 }
 
 
@@ -1032,7 +1090,7 @@ function ListaDeCampos_arqParcela( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, Cheque, Arq1, StRetorno, Remessa, DataRem ]	);
+		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, FormaPg, FormaPg_FormaPg, Cheque, Arq1, StRetorno, Remessa, DataRem ]	);
 	IniciarDependencias_arqParcela();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -265,5 +265,6 @@ g_idOperacao = 44;
 
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Consultas","","C",149,"","",1,"","1","a_consul","arqConsulta","Folhear","FormaPg","?","","", "","", 0,9,[],[39]);
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_2 = new Array( 1,"Parcelas","","P",185,"","",1,"","1","a_parcel","arqParcela","Folhear","FormaPg","?","","", "","", 0,9,[],[34]);
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }

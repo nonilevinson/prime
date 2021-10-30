@@ -149,7 +149,6 @@ class arqPTrata extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( PTrata ) );
-			array_push( $vetAux, array( Apelido ) );
 			array_push( $vetAux, array( Valor ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
