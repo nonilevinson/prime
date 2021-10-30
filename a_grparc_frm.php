@@ -105,23 +105,29 @@ if( $op == 130 ) //* menu Finaneiro
 if( $op == 184 ) //* criar de tratamento de uma consulta no menu de navegação
 {
    echo
-   $this->NaoPedir( Clinica, $umaConsulta->CLINICA ),
-   $this->NaoPedir( Pessoa, $umaConsulta->PESSOA ),
+   // $this->NaoPedir( Clinica, $umaConsulta->CLINICA ),
+   // $this->NaoPedir( Pessoa, $umaConsulta->PESSOA ),
    $this->NaoPedir( TPgRec, 2 ),
    $this->NaoPedir( Emissao, formatarData( HOJE, 'aaaa/mm/dd' ) ),
    $this->NaoPedir( Compete, dataAno( HOJE ) . "/" . dataMes( HOJE ). "/01" ),
    $this->NaoPedir( RecEnvia, formatarData( HOJE, 'aaaa/mm/dd' ) ),
 
+   $this->Pedir( "Clínica",
+      [ "", Clinica, '','','','','FormCalculado' ] ),
+   $this->Pedir( "Paciente",
+      [ "", Pessoa_Nome, '','','','','FormCalculado' ] ),
+   $this->Pedir( " ",
+      [ "Celular ", Pessoa, '','','','','FormCalculado' ] ),
    $this->Pedir( "Valor",
       [ "", Valor, '','','','','FormCalculado' ] ),
    $this->Pedir( "Histórico",
       [ "", Historico, '','','','','FormCalculado' ] ),
 
    $this->Pular1Linha(2),
-   $this->Pedir( "Parcelas",
+   $this->PedirZerando( "Parcelas",
       [ "Quantas ", Parcelas,
       [ " (obrigatório)" . brHtml(4) . "Iguais (mesmo valor)? ", Iguais ] ] ),
-   $this->Pedir( "Condição",
+   $this->PedirZerando( "Condição",
       [ "Para a 1ª parcela ", Condicao,
       [ brHtml(4) . "Intervalo entre as demais ", Intervalo ] ] ),
    "</table>

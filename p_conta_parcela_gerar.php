@@ -10,6 +10,8 @@ function gerarConta()
 	switch( ultimaLigOpcao() )
 	{
 		case 130:	//* menu Financeiro
+			$idClinica     = $parGeraParc->CLINICA;
+			$tPgRec        = $parGeraParc->TPGREC;
 			$idFornecedor  = valorOuNull( $parGeraParc->FORNECEDOR, "", false );
 			$idPessoa      = valorOuNull( $parGeraParc->PESSOA, "", false );
 			$documento     = valorOuZero( $parGeraParc->DOCUMENTO );
@@ -18,26 +20,38 @@ function gerarConta()
 			$compete       = valorOuNull( $parGeraParc->COMPETE, "", false );
 			$historico     = $parGeraParc->HISTORICO;
 
-			if( ultimaLigOpcaoEm( 130 )  )
-			{
-				$g_tecleAlgo = 1;
+			$g_tecleAlgo = 1;
 
-				if( $documento > 0 )
-				{
-					$select = "
-						Select C.idPrimario
-						From arqConta C
-						Where C.Documento = " . $documento . " and " .
-							( $idPessoa ? "C.Pessoa = " . $idPessoa : "C.Fornecedor = " . $idFornecedor );
-					$idContaExiste = sql_lerUmRegistro( $select )->IDPRIMARIO;
+			if( $documento > 0 )
+			{
+				$select = "
+					Select C.idPrimario
+					From arqConta C
+					Where C.Documento = " . $documento . " and " .
+						( $idPessoa ? "C.Pessoa = " . $idPessoa : "C.Fornecedor = " . $idFornecedor );
+				$idContaExiste = sql_lerUmRegistro( $select )->IDPRIMARIO;
 if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
-					if( $idContaExiste )
-					{
-						TecleAlgoVolta( "Já existe uma conta com os dados informados e por isso esta não foi criada", true, 1 );
-						return;
-					}
+				if( $idContaExiste )
+				{
+					TecleAlgoVolta( "Já existe uma conta com os dados informados e por isso esta não foi criada", true, 1 );
+					return;
 				}
 			}
+			break;
+
+		case 184:	//* gerar Tratamento, menu navegação arqConsulta
+			$hoje    = formatarData( HOJE, 'aaaa/mm/dd' );
+			$compete = dataAno( $hoje ) . "/" . dataMes( $hoje ) . "/01";
+			
+			$idClinica     = $parGeraParc->CLINICA;
+			$tPgRec        = 2;
+			$idFornecedor  = null;
+			$idPessoa      = $parGeraParc->PESSOA;
+			$documento     = 0;
+			$emissao       = $hoje;
+			$recEnvia      = $hoje;
+			$compete       = $compete;
+			$historico     = $parGeraParc->HISTORICO;
 			break;
 	}
 
@@ -49,8 +63,8 @@ if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
 	sql_insert( "arqConta", [
 		"idPrimario" => $idConta,
       "Transacao"  => $proxTransacao,
-      "Clinica"    => $parGeraParc->CLINICA,
-      "TPgRec"     => $parGeraParc->TPGREC,
+      "Clinica"    => $idClinica,
+      "TPgRec"     => $tPgRec,
       "Fornecedor" => $idFornecedor,
 		"Pessoa"     => $idPessoa,
       "TrgValor"   => 0,
@@ -64,16 +78,13 @@ if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
       "RecEnvia"   => $recEnvia,
       "Compete"    => $compete,
       "Historico"  => $historico,
-      "Arq1"       => null ] );
+      "Arq1"       => null ],1,true );
 
-		if( ultimaLigOpcaoEm( 159 ) )
-		{
-			$idVenda = lerInput( 'idVenda' );
+		$idConsulta = navegouDe( 'arqConsulta' );
 
-			sql_update( "arqVenda", [
-					"Conta" => $idConta ],
-				"idPrimario = " . $idVenda );
-		}
+		sql_update( "arqConsulta", [
+				"ContaPTra" => $idConta ],
+			"idPrimario = " . $idConsulta ,1,true,false );
 
 	return( $idConta );
 }
@@ -91,7 +102,7 @@ criarParcela( $idConta );
 
 sql_fecharBD();
 
-$teste = false;
+$teste = true;
 if( $teste )
 	echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE ***</p>';
 else
