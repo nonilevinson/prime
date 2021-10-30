@@ -891,6 +891,19 @@ class campo_parGeraParc_FormaPg2_FormaPg extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Vezes2
+//======================================================
+
+class campo_parGeraParc_Vezes2 extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Vezes2", "Vezes2", "Vezes2", 1, "z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Dia3
 //======================================================
 
@@ -1135,6 +1148,19 @@ class campo_parGeraParc_FormaPg3_FormaPg extends Lance_CampoCadeia
 	{
 		global $g_regAtual;
 			return( "Forma" );
+	}
+
+}
+
+//======================================================
+//	Campo Vezes3
+//======================================================
+
+class campo_parGeraParc_Vezes3 extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Vezes3", "Vezes3", "Vezes3", 1, "z", "", "", 0, 0, false );
 	}
 
 }
@@ -2987,6 +3013,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new Lance_CampoCadeia( "TFCobra2_Descritor", "TFCobra2_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TFCobra2 ),
 			new campo_parGeraParc_FormaPg2(),
 			new campo_parGeraParc_FormaPg2_FormaPg(),
+			new campo_parGeraParc_Vezes2(),
 			new campo_parGeraParc_Dia3(),
 			new campo_parGeraParc_Venc3(),
 			new campo_parGeraParc_Semana3(),
@@ -3006,6 +3033,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new Lance_CampoCadeia( "TFCobra3_Descritor", "TFCobra3_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TFCobra3 ),
 			new campo_parGeraParc_FormaPg3(),
 			new campo_parGeraParc_FormaPg3_FormaPg(),
+			new campo_parGeraParc_Vezes3(),
 			new campo_parGeraParc_Dia4(),
 			new campo_parGeraParc_Venc4(),
 			new campo_parGeraParc_Semana4(),

@@ -157,7 +157,7 @@ class campo_arqFormaPg_Taxa3 extends Lance_CampoNumerico
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "2 vezes %" );
+			return( "3 vezes %" );
 	}
 
 }

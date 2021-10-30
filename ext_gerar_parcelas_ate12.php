@@ -12,36 +12,76 @@ function criarParcela( $p_idConta )
 	for( $i=1; $i<=$parGeraParc->PARCELAS; $i++ )
 	{
 		$venc 	= "VENC" . $i;
-		$perc 	= "PERC" . $i;
-		$est     = "EST" . $i;
 		$valor	= "VALOR" . $i;
-		$pg		= "PG" . $i;
-		$cc		= "CC" . $i;
-		$linha	= "LINHA" . $i;
-
 		$valorI = ( $iguais ? $parcIgual : $parGeraParc->$valor );
-/*
+
 		switch( ultimaLigOpcao() )
 		{
-				case 130:	//* menu Financeiro
-					$valorLiq = $valorI;
-					break;
-// if( $g_debugProcesso ) echo '<br><b>GR0 ehCartao S=</b> '.$ehCartao.' <b>txCartao=</b> '.$txCartao.' <b>valorI=</b> '.$valorI;
+			case 130:	//* menu Financeiro
+				$vencimento = formatarData( $parGeraParc->$venc, 'aaaa/mm/dd' );
+				$vencEst    = "EST" . $i;
+				$pgI        = "PG" . $i;
+				$pg         = ValorOuNull( $parGeraParc->$pg, "", false );
+				$valorLiq   = $valorI;
+				$valorEst   = ValorOuZero( $parGeraParc->ESTIMADO );
+				$idTFCobra = ValorOuNull( $parGeraParc->TFCOBRA, "", false );
+				$subPlano   = "CC" . $i;
+				$idSubPlano = ValorOuNull( $parGeraParc->$idSubPlano, "", false );
+				$linhaI     = "LINHA" . $i;
+				$linha      = $parGeraParc->$linhaI != '' ? $parGeraParc->$linhaI : '';
+				break;
 
-					if( $ehCartao == 1 ) //* se eh cartao calcula o liquido pela taxa
+			case 184: //* criar de tratamento de uma consulta no menu de navegação
+				$select = "Select X.SubPlaRAss
+					From cnfXConfig X";
+				$idSubPlano = sql_lerUmRegistro( $select )->SUBPLARASS;
+
+				$vencimento = formatarData( $parGeraParc->$venc, 'aaaa/mm/dd' ); //* se for cartão, depois o altero
+				$vencEst   = 0;
+				$valorEst  = 0;
+				$tFCobra   = "TFCOBRA" . $i;
+				$idTFCobra = ValorOuNull( $parGeraParc->$tFCobra, "", false );
+				$pg        = null;
+				$linha     = '';
+				$formaPg   = "FORMAPG" . $i;
+				$vezes     = "VEZES" . $i;
+// if( $g_debugProcesso ) echo '<br><b>GR0 idTFCobra=</b> '.$idTFCobra;
+
+				if( $idTFCobra == 2 ) //* se eh cartao calcula o liquido pela taxa
+				{
+					$idFormaPg = $parGeraParc->$formaPg;
+					$qtasVezes = $parGeraParc->$vezes;
+
+					$select = "Select F.TaxaDeb, F.Taxa2, F.Taxa3, F.Dias
+						From arqFormaPg F
+						Where F.idPrimario = " . $idFormaPg;
+					$umaFormaPg = sql_lerUmRegistro( $select );
+					$vencimento = incDia( formatarData( HOJE, 'aaaa/mm/dd' ), $umaFormaPg->DIAS );
+// if( $g_debugProcesso ) echo '<br><b>GR0 vencimento=</b> '.$vencimento;
+
+					if( $umaFormaPg->TAXADEB > 0 )
+						$txCartao = $umaFormaPg->TAXADEB;
+					elseif( $vezes <= 2 )
+						$txCartao = $umaFormaPg->TAXA2;
+					else
+						$txCartao = $umaFormaPg->TAXA3;
+						
 						$valorLiq = $valorI * ( 100 - $txCartao ) / 100.0;
+// if( $g_debugProcesso ) echo '<br><b>GR0 arqFormaPg S=</b> '.$select.'<br><b>vezes=</b> '.$vezes.' <b>txtCartao=</b> '.$txCartao.' <b>valorI=</b> '.$valorI.' <b>valorLiq=</b> '.$valorLiq;
+				}
 					else
 						$valorLiq = $valorI;
-					break;
+				break;
 		}
 
 		$valor = round( ( $iguais ? $parcIgual : $valorI ), 2 );
-*/
-		$valor = $valorLiq = round( ( $iguais ? $parcIgual : $valorLiq ), 2 );
+
+		//* 30/10/2021 comentei pois para Tratamento com cartão dá problema...
+		// $valor = $valorLiq = round( ( $iguais ? $parcIgual : $valorLiq ), 2 );
 
 		//* metodo para ter a ultima parcela com o valor certo - principalmente para não ter dízimo
 		if( $i == $parGeraParc->PARCELAS && $iguais )
-			$valor = $valorLiq = round( $parGeraParc->VALOR - $totValor, 2 );
+			$valor = round( $parGeraParc->VALOR - $totValor, 2 );
 		else
 			$totValor += $valor;
 //echo '<br><b>Valor=</b> '.$parGeraParc->VALOR.' - ' .$totValor.' = '.$valor;
@@ -50,20 +90,20 @@ function criarParcela( $p_idConta )
 			"idPrimario" => [ sql_NumeroUnico(), FORCAR_NUMERICO ],
          "Conta"      => $p_idConta,
 			"Parcela"    => $numParc++,
-         "Vencimento" => $parGeraParc->$venc,
-         "Vencest"    => $parGeraParc->$est,
+         "Vencimento" => $vencimento,
+         "Vencest"    => $parGeraParc->$vencEst,
          "Valor"      => $valor,
          "ValorLiq"   => $valorLiq,
-         "Estimado"   => ValorOuZero( $parGeraParc->ESTIMADO ),
-         "TFCobra"    => ValorOuNull( $parGeraParc->TFCOBRA, "", false ),
+         "Estimado"   => $valorEst,
+         "TFCobra"    => $idTFCobra,
          "Emissao"    => null,
-         "LinhaDig"   => ( $parGeraParc->$linha != '' ? $parGeraParc->$linha : '' ),
+         "LinhaDig"   => $linha,
          "NomePdf"    => '',
          "CCor"       => ValorOuNull( $parGeraParc->CCOR, "", false ),
-         "SubPlano"   => ValorOuNull( $parGeraParc->$cc, "", false ),
-         "DataPagto"  => ValorOuNull( $parGeraParc->$pg, "", false ),
+         "SubPlano"   => $idSubPlano,
+         "DataPagto"  => $pg,
          "DataComp"   => ( in_array( $parGeraParc->TFPAGTO, [2,3] ) || $parGeraParc->TDETPAGTO != 1
-					? ValorOuNull( $parGeraParc->$pg, "", false )
+					? ValorOuNull( $pg, "", false )
 					: null ),
          "TFPagto"    => ValorOuNull( $parGeraParc->TFPAGTO, "", false ),
          "TDetPg"     => ValorOuNull( $parGeraParc->TDETPAGTO, "", false ),

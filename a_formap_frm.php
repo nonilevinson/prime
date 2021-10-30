@@ -9,7 +9,8 @@ echo
    $this->Pedir( "Dias",
       [ "", Dias, " (para dinheiro e transferências como PIX e TED pode ser zero)" ] ),
    $this->Pedir( "Taxas Adm",
-      [ "Duas vezes ", Taxa2,
-      [ " %" . brHtml(4) . "Três vezes ", Taxa3, " %" ] ] ),
+      [ "Débito ", TaxaDeb,
+      [ brHtml(4) . "Duas vezes ", Taxa2,
+      [ " %" . brHtml(4) . "Três vezes ", Taxa3, " %" ] ] ] ),
    $this->Pedir( "Ativa?", Ativo ),
 "</table>";

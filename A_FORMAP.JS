@@ -195,7 +195,7 @@ Campo_arqFormaPg_Taxa2.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqFormaPg_Taxa2.prototype.Existencia = function()
 {
-	return( Dinheiro == 0 );
+	return( ( Dinheiro == 0 ) && TaxaDeb == 0 );
 }
 
 //-------------------------------------------------------------
@@ -203,7 +203,7 @@ Campo_arqFormaPg_Taxa2.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_arqFormaPg_Taxa3.prototype.Cabecalho = function()
 {
-		return( "2 vezes %" );
+		return( "3 vezes %" );
 }
 
 //-------------------------------------------------------------
@@ -211,7 +211,7 @@ Campo_arqFormaPg_Taxa3.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqFormaPg_Taxa3.prototype.Existencia = function()
 {
-	return( Dinheiro == 0 );
+	return( ( Dinheiro == 0 ) && TaxaDeb == 0 );
 }
 
 //-------------------------------------------------------------
@@ -235,6 +235,7 @@ Campo_arqFormaPg_Ativo.prototype.Cabecalho = function()
 function IniciarDependencias_arqFormaPg()
 {
 Dinheiro.ExistenciasDependentes= [ Cartao,TaxaDeb,Taxa2,Taxa3 ];
+TaxaDeb.ExistenciasDependentes= [ Taxa2,Taxa3 ];
 Cartao.ErrosDependentes= [ Dias ];
 }
 

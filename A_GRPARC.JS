@@ -806,6 +806,17 @@ function Campo_parGeraParc_FormaPg2_FormaPg()
 var FormaPg2_FormaPg = new Campo_parGeraParc_FormaPg2_FormaPg;
 
 //------------------------------------------------------------
+Campo_parGeraParc_Vezes2.prototype = new Lance_CampoNumerico;
+
+function Campo_parGeraParc_Vezes2()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Vezes2", "Vezes2", "Vezes2", 1, "z", false,"", "");
+}
+
+var Vezes2 = new Campo_parGeraParc_Vezes2;
+
+//------------------------------------------------------------
 Campo_parGeraParc_Dia3.prototype = new Lance_CampoNumerico;
 
 function Campo_parGeraParc_Dia3()
@@ -1013,6 +1024,17 @@ function Campo_parGeraParc_FormaPg3_FormaPg()
 }
 
 var FormaPg3_FormaPg = new Campo_parGeraParc_FormaPg3_FormaPg;
+
+//------------------------------------------------------------
+Campo_parGeraParc_Vezes3.prototype = new Lance_CampoNumerico;
+
+function Campo_parGeraParc_Vezes3()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Vezes3", "Vezes3", "Vezes3", 1, "z", false,"", "");
+}
+
+var Vezes3 = new Campo_parGeraParc_Vezes3;
 
 //------------------------------------------------------------
 Campo_parGeraParc_Dia4.prototype = new Lance_CampoNumerico;
@@ -2604,6 +2626,24 @@ Campo_parGeraParc_Parcelas.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Parcelas.prototype.TemErro = function()
+{
+		if( tem(this) && ( ultimaLigOpcaoEm( 130 ) && Parcelas > 12 ) )
+	{
+		alert( "A quantidade precisa ser até 12" );
+		return( true );
+	}
+		if( tem(this) && ( ultimaLigOpcaoEm( 184 ) && Parcelas > 3 ) )
+	{
+		alert( "A quantidade precisa ser até 3" );
+		return( true );
+	}
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_parGeraParc_Iguais.prototype.Sugeriu = function()
@@ -2758,8 +2798,22 @@ TotValor.EhCalculado = true;
 Campo_parGeraParc_Dia1.prototype.Sugeriu = function()
 {
 {
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra1 == 2 )
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+{
 	return( this.AtribuiuSemCritica( Condicao ) );
 }
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_parGeraParc_Dia1.prototype.PodeAlterar = function()
+{
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra1 != 2 )
+		return( true );
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -3019,6 +3073,16 @@ Campo_parGeraParc_FormaPg1_FormaPg.prototype.ObrigatorioEspecial = function( p_c
 
 FormaPg1_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Vezes1.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( sugereVezes( FormaPg1, 1 ) ) );
+}
+}
+
+//-------------------------------------------------------------
 // Condição de erro do campo
 //-------------------------------------------------------------
 Campo_parGeraParc_Vezes1.prototype.TemErro = function()
@@ -3032,15 +3096,37 @@ Campo_parGeraParc_Vezes1.prototype.TemErro = function()
 }
 
 //-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Vezes1.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra1 == 2 );
+}
+
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_parGeraParc_Dia2.prototype.Sugeriu = function()
 {
 {
-		if( Intervalo > 0 )
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra2 == 2 )
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+{
+		if( Intervalo > 0 && !ultimaLigOpcaoEm( 184 ) )
 	return( this.AtribuiuSemCritica( Dia1 + Intervalo ) );
 }
 		return( true );
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_parGeraParc_Dia2.prototype.PodeAlterar = function()
+{
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra2 != 2 )
+		return( true );
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -3354,13 +3440,58 @@ FormaPg2_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
+Campo_parGeraParc_Vezes2.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( sugereVezes( FormaPg2, 2 ) ) );
+}
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Vezes2.prototype.TemErro = function()
+{
+		if( tem(this) && ( Vezes2 > 3 ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Vezes2.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra2 == 2 );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
 Campo_parGeraParc_Dia3.prototype.Sugeriu = function()
 {
 {
-		if( Intervalo > 0 )
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra3 == 2 )
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+{
+		if( Intervalo > 0 && !ultimaLigOpcaoEm( 184 ) )
 	return( this.AtribuiuSemCritica( Dia2 + Intervalo ) );
 }
 		return( true );
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_parGeraParc_Dia3.prototype.PodeAlterar = function()
+{
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra3 != 2 )
+		return( true );
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -3671,6 +3802,37 @@ Campo_parGeraParc_FormaPg3_FormaPg.prototype.ObrigatorioEspecial = function( p_c
 }
 
 FormaPg3_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Vezes3.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( sugereVezes( FormaPg3, 3 ) ) );
+}
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Vezes3.prototype.TemErro = function()
+{
+		if( tem(this) && ( Vezes3 > 3 ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_Vezes3.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra3 == 2 );
+}
+
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -6163,18 +6325,18 @@ Iguais.ExistenciasDependentes= [ Valor1,Perc1,Valor2,Perc2,Valor3,Perc3,Valor4,P
 Cc1_Plano_CodPlano.ExistenciasDependentes= [ Cc1_Plano ];
 Cc1_Plano.ExistenciasDependentes= [ Cc1_Plano_Plano ];
 TPgRec.ExistenciasDependentes= [ Linha1,Linha2,Linha3,Linha4,Linha5,Linha6,Linha7,Linha8,Linha9,Linha10,Linha11,Linha12 ];
-TFCobra1.ExistenciasDependentes= [ FormaPg1,FormaPg1_FormaPg ];
+TFCobra1.ExistenciasDependentes= [ FormaPg1,FormaPg1_FormaPg,Vezes1 ];
 FormaPg1_FormaPg.ExistenciasDependentes= [ FormaPg1 ];
 Parcelas.ExistenciasDependentes= [ Dia2,Venc2,Valor2,Perc2,Pg2,Cc2,Cc2_Plano,Cc2_Plano_CodPlano,Cc2_Codigo,Linha2,TFCobra2,Dia3,Venc3,Valor3,Perc3,Pg3,Cc3,Cc3_Plano,Cc3_Plano_CodPlano,Cc3_Codigo,Linha3,TFCobra3,Dia4,Venc4,Valor4,Perc4,Pg4,Cc4,Cc4_Plano,Cc4_Plano_CodPlano,Cc4_Codigo,Linha4,Dia5,Venc5,Valor5,Perc5,Pg5,Cc5,Cc5_Plano,Cc5_Plano_CodPlano,Cc5_Codigo,Linha5,Dia6,Venc6,Valor6,Perc6,Pg6,Cc6,Cc6_Plano,Cc6_Plano_CodPlano,Cc6_Codigo,Linha6,Dia7,Venc7,Valor7,Perc7,Pg7,Cc7,Cc7_Plano,Cc7_Plano_CodPlano,Cc7_Codigo,Linha7,Dia8,Venc8,Valor8,Perc8,Pg8,Cc8,Cc8_Plano,Cc8_Plano_CodPlano,Cc8_Codigo,Linha8,Dia9,Venc9,Semana9,Est9,Valor9,Perc9,Pg9,Cc9,Cc9_Plano,Cc9_Plano_CodPlano,Cc9_Codigo,Linha9,Dia10,Venc10,Valor10,Perc10,Pg10,Cc10,Cc10_Plano,Cc10_Plano_CodPlano,Cc10_Codigo,Linha10,Dia11,Venc11,Valor11,Perc11,Pg11,Cc11,Cc11_Plano,Cc11_Plano_CodPlano,Cc11_Codigo,Linha11,Dia12,Venc12,Valor12,Perc12,Pg12,Cc12,Cc12_Plano,Cc12_Plano_CodPlano,Cc12_Codigo,Linha12 ];
 Venc2.ExistenciasDependentes= [ Semana2,Est2 ];
 Cc2_Plano_CodPlano.ExistenciasDependentes= [ Cc2_Plano ];
 Cc2_Plano.ExistenciasDependentes= [ Cc2_Plano_Plano ];
-TFCobra2.ExistenciasDependentes= [ FormaPg2,FormaPg2_FormaPg ];
+TFCobra2.ExistenciasDependentes= [ FormaPg2,FormaPg2_FormaPg,Vezes2 ];
 FormaPg2_FormaPg.ExistenciasDependentes= [ FormaPg2 ];
 Venc3.ExistenciasDependentes= [ Semana3,Est3 ];
 Cc3_Plano_CodPlano.ExistenciasDependentes= [ Cc3_Plano ];
 Cc3_Plano.ExistenciasDependentes= [ Cc3_Plano_Plano ];
-TFCobra3.ExistenciasDependentes= [ FormaPg3,FormaPg3_FormaPg ];
+TFCobra3.ExistenciasDependentes= [ FormaPg3,FormaPg3_FormaPg,Vezes3 ];
 FormaPg3_FormaPg.ExistenciasDependentes= [ FormaPg3 ];
 Venc4.ExistenciasDependentes= [ Semana4,Est4 ];
 Cc4_Plano_CodPlano.ExistenciasDependentes= [ Cc4_Plano ];
@@ -6284,7 +6446,7 @@ function ListaDeCampos_parGeraParc( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Documento, TPgRec, TPgRec_Chave, TPgRec_Descritor, Emissao, RecEnvia, Compete, Historico, Valor, Estimado, Condicao, Parcelas, Iguais, Intervalo, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Nome, Cheque, TotValor, Dia1, Venc1, Semana1, Est1, Valor1, Perc1, Pg1, Cc1, Cc1_Plano, Cc1_Plano_CodPlano, Cc1_Plano_Plano, Cc1_Codigo, Cc1_Nome, Linha1, TFCobra1, TFCobra1_Chave, TFCobra1_Descritor, FormaPg1, FormaPg1_FormaPg, Vezes1, Dia2, Venc2, Semana2, Est2, Valor2, Perc2, Pg2, Cc2, Cc2_Plano, Cc2_Plano_CodPlano, Cc2_Plano_Plano, Cc2_Codigo, Cc2_Nome, Linha2, TFCobra2, TFCobra2_Chave, TFCobra2_Descritor, FormaPg2, FormaPg2_FormaPg, Dia3, Venc3, Semana3, Est3, Valor3, Perc3, Pg3, Cc3, Cc3_Plano, Cc3_Plano_CodPlano, Cc3_Plano_Plano, Cc3_Codigo, Cc3_Nome, Linha3, TFCobra3, TFCobra3_Chave, TFCobra3_Descritor, FormaPg3, FormaPg3_FormaPg, Dia4, Venc4, Semana4, Est4, Valor4, Perc4, Pg4, Cc4, Cc4_Plano, Cc4_Plano_CodPlano, Cc4_Plano_Plano, Cc4_Codigo, Cc4_Nome, Linha4, Dia5, Venc5, Semana5, Est5, Valor5, Perc5, Pg5, Cc5, Cc5_Plano, Cc5_Plano_CodPlano, Cc5_Plano_Plano, Cc5_Codigo, Cc5_Nome, Linha5, Dia6, Venc6, Semana6, Est6, Valor6, Perc6, Pg6, Cc6, Cc6_Plano, Cc6_Plano_CodPlano, Cc6_Plano_Plano, Cc6_Codigo, Cc6_Nome, Linha6, Dia7, Venc7, Semana7, Est7, Valor7, Perc7, Pg7, Cc7, Cc7_Plano, Cc7_Plano_CodPlano, Cc7_Plano_Plano, Cc7_Codigo, Cc7_Nome, Linha7, Dia8, Venc8, Semana8, Est8, Valor8, Perc8, Pg8, Cc8, Cc8_Plano, Cc8_Plano_CodPlano, Cc8_Plano_Plano, Cc8_Codigo, Cc8_Nome, Linha8, Dia9, Venc9, Semana9, Est9, Valor9, Perc9, Pg9, Cc9, Cc9_Plano, Cc9_Plano_CodPlano, Cc9_Plano_Plano, Cc9_Codigo, Cc9_Nome, Linha9, Dia10, Venc10, Semana10, Est10, Valor10, Perc10, Pg10, Cc10, Cc10_Plano, Cc10_Plano_CodPlano, Cc10_Plano_Plano, Cc10_Codigo, Cc10_Nome, Linha10, Dia11, Venc11, Semana11, Est11, Valor11, Perc11, Pg11, Cc11, Cc11_Plano, Cc11_Plano_CodPlano, Cc11_Plano_Plano, Cc11_Codigo, Cc11_Nome, Linha11, Dia12, Venc12, Semana12, Est12, Valor12, Perc12, Pg12, Cc12, Cc12_Plano, Cc12_Plano_CodPlano, Cc12_Plano_Plano, Cc12_Codigo, Cc12_Nome, Linha12 ]	);
+		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Documento, TPgRec, TPgRec_Chave, TPgRec_Descritor, Emissao, RecEnvia, Compete, Historico, Valor, Estimado, Condicao, Parcelas, Iguais, Intervalo, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Nome, Cheque, TotValor, Dia1, Venc1, Semana1, Est1, Valor1, Perc1, Pg1, Cc1, Cc1_Plano, Cc1_Plano_CodPlano, Cc1_Plano_Plano, Cc1_Codigo, Cc1_Nome, Linha1, TFCobra1, TFCobra1_Chave, TFCobra1_Descritor, FormaPg1, FormaPg1_FormaPg, Vezes1, Dia2, Venc2, Semana2, Est2, Valor2, Perc2, Pg2, Cc2, Cc2_Plano, Cc2_Plano_CodPlano, Cc2_Plano_Plano, Cc2_Codigo, Cc2_Nome, Linha2, TFCobra2, TFCobra2_Chave, TFCobra2_Descritor, FormaPg2, FormaPg2_FormaPg, Vezes2, Dia3, Venc3, Semana3, Est3, Valor3, Perc3, Pg3, Cc3, Cc3_Plano, Cc3_Plano_CodPlano, Cc3_Plano_Plano, Cc3_Codigo, Cc3_Nome, Linha3, TFCobra3, TFCobra3_Chave, TFCobra3_Descritor, FormaPg3, FormaPg3_FormaPg, Vezes3, Dia4, Venc4, Semana4, Est4, Valor4, Perc4, Pg4, Cc4, Cc4_Plano, Cc4_Plano_CodPlano, Cc4_Plano_Plano, Cc4_Codigo, Cc4_Nome, Linha4, Dia5, Venc5, Semana5, Est5, Valor5, Perc5, Pg5, Cc5, Cc5_Plano, Cc5_Plano_CodPlano, Cc5_Plano_Plano, Cc5_Codigo, Cc5_Nome, Linha5, Dia6, Venc6, Semana6, Est6, Valor6, Perc6, Pg6, Cc6, Cc6_Plano, Cc6_Plano_CodPlano, Cc6_Plano_Plano, Cc6_Codigo, Cc6_Nome, Linha6, Dia7, Venc7, Semana7, Est7, Valor7, Perc7, Pg7, Cc7, Cc7_Plano, Cc7_Plano_CodPlano, Cc7_Plano_Plano, Cc7_Codigo, Cc7_Nome, Linha7, Dia8, Venc8, Semana8, Est8, Valor8, Perc8, Pg8, Cc8, Cc8_Plano, Cc8_Plano_CodPlano, Cc8_Plano_Plano, Cc8_Codigo, Cc8_Nome, Linha8, Dia9, Venc9, Semana9, Est9, Valor9, Perc9, Pg9, Cc9, Cc9_Plano, Cc9_Plano_CodPlano, Cc9_Plano_Plano, Cc9_Codigo, Cc9_Nome, Linha9, Dia10, Venc10, Semana10, Est10, Valor10, Perc10, Pg10, Cc10, Cc10_Plano, Cc10_Plano_CodPlano, Cc10_Plano_Plano, Cc10_Codigo, Cc10_Nome, Linha10, Dia11, Venc11, Semana11, Est11, Valor11, Perc11, Pg11, Cc11, Cc11_Plano, Cc11_Plano_CodPlano, Cc11_Plano_Plano, Cc11_Codigo, Cc11_Nome, Linha11, Dia12, Venc12, Semana12, Est12, Valor12, Perc12, Pg12, Cc12, Cc12_Plano, Cc12_Plano_CodPlano, Cc12_Plano_Plano, Cc12_Codigo, Cc12_Nome, Linha12 ]	);
 	IniciarDependencias_parGeraParc();
 	g_prefixo = l_prefixo;
 	return( l_lista );

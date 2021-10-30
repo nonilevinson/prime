@@ -4,15 +4,15 @@ global $g_debugProcesso;
 $op = ultimaLigOpcao();
 
 //=================================================================================
-function umaParc( $p_num, $p_data, $p_venc, $p_dia, $p_est, $p_valor, $p_perc, $p_pg, $p_cc, $p_linha )
+function umaParc( $p_num, $p_dia, $p_venc, $p_diaSemana, $p_est, $p_valor, $p_perc, $p_pg, $p_cc, $p_linha )
 {
    global $g_arquivoAtual;
    return(
       '<tr>
          <td class="FormCab alinhaMeio">' . $p_num . '</td>' .
-         $g_arquivoAtual->PedirColunaZerando( "", $p_data ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_dia ) .
          $g_arquivoAtual->PedirColunaZerando( "", $p_venc ) .
-         $g_arquivoAtual->PedirColunaZerando( "", $p_dia )  .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_diaSemana )  .
          $g_arquivoAtual->PedirColuna( "", $p_est ) .
          $g_arquivoAtual->PedirColunaZerando( "", $p_valor ) .
          $g_arquivoAtual->PedirColunaZerando( "", $p_perc ) .
@@ -23,17 +23,18 @@ function umaParc( $p_num, $p_data, $p_venc, $p_dia, $p_est, $p_valor, $p_perc, $
 }
 
 //=================================================================================
-function umaParcTrata( $p_num, $p_data, $p_venc, $p_dia, $p_tFCobra, $p_formaPg, $p_valor )
+function umaParcTrata( $p_num, $p_tFCobra, $p_formaPg, $p_vezes, $p_dia, $p_venc, $p_diaSemana, $p_valor )
 {
    global $g_arquivoAtual;
    return(
       '<tr>
          <td class="FormCab alinhaMeio">' . $p_num . '</td>' .
-         $g_arquivoAtual->PedirColunaZerando( "", $p_data ) .
-         $g_arquivoAtual->PedirColunaZerando( "", $p_venc ) .
-         $g_arquivoAtual->PedirColunaZerando( "", $p_dia )  .
          $g_arquivoAtual->PedirColunaZerando( "", $p_tFCobra ) .
          $g_arquivoAtual->PedirColunaZerando( "", $p_formaPg ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_vezes ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_dia ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_venc ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_diaSemana )  .
          $g_arquivoAtual->PedirColunaZerando( "", $p_valor ) .
       '</tr>' );
 }
@@ -134,15 +135,16 @@ if( $op == 184 ) //* criar de tratamento de uma consulta no menu de navegação
    <br>
    <table class='tabFormulario'>",
       $this->Cabecalhos( '&nbsp;',
-         'Intervalo',
-         [ 'Vencimento', 'FormCab alinhaMeio' ],
-         [ 'Dia', 'FormCab alinhaMeio' ],
          [ 'Cobrança', 'FormCab alinhaMeio' ],
          [ 'Cartão', 'FormCab alinhaMeio' ],
-         [ 'Valor (se Não iguais)', 'FormCab alinhaMeio' ] ),
-      umaParcTrata(  1, Dia1, Venc1, Semana1, TFCobra1, FormaPg1, Valor1 ),
-      umaParcTrata(  2, Dia2, Venc2, Semana2, TFCobra2, FormaPg2, Valor2 ),
-      umaParcTrata(  3, Dia3, Venc3, Semana3, TFCobra3, FormaPg3, Valor3 ),
+         [ 'Vezes', 'FormCab alinhaMeio' ],
+         [ 'Intervalo', 'FormCab alinhaMeio' ],
+         [ 'Vencimento ou<br>Contratação', 'FormCab alinhaMeio' ],
+         [ 'Dia', 'FormCab alinhaMeio' ],
+         [ 'Valor<br>(se Não iguais)', 'FormCab alinhaMeio' ] ),
+      umaParcTrata(  1, TFCobra1, FormaPg1, Vezes1, Dia1, Venc1, Semana1, Valor1 ),
+      umaParcTrata(  2, TFCobra2, FormaPg2, Vezes2, Dia2, Venc2, Semana2, Valor2 ),
+      umaParcTrata(  3, TFCobra3, FormaPg3, Vezes3, Dia3, Venc3, Semana3, Valor3 ),
       $this->NaoPedir( 'TotValor' ),
    "</table>";
 }
