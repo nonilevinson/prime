@@ -3,6 +3,8 @@
 echo
 "<table class='tabFormulario'>",
 	$this->Pedir( "Plano", PTrata ),
+   $this->Pedir( "Apelido",
+      [ "", Apelido, " (será usado em histórico de conta a receber)" ] ),
    $this->Pedir( "Valor" ),
    $this->Pedir( "Ativo?", Ativo ),
 "</table>

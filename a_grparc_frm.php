@@ -21,6 +21,22 @@ function umaParc( $p_num, $p_data, $p_venc, $p_dia, $p_est, $p_valor, $p_perc, $
          $g_arquivoAtual->PedirColunaZerando( "", $p_linha ) .
       '</tr>' );
 }
+
+//=================================================================================
+function umaParcTrata( $p_num, $p_data, $p_venc, $p_dia, $p_tFCobra, $p_formaPg, $p_valor )
+{
+   global $g_arquivoAtual;
+   return(
+      '<tr>
+         <td class="FormCab alinhaMeio">' . $p_num . '</td>' .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_data ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_venc ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_dia )  .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_tFCobra ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_formaPg ) .
+         $g_arquivoAtual->PedirColunaZerando( "", $p_valor ) .
+      '</tr>' );
+}
 //=================================================================================
 
 echo
@@ -57,7 +73,7 @@ if( $op == 130 ) //* menu Finaneiro
       [ brHtml(4) . "Intervalo entre as parcelas ", Intervalo ] ] ] ] ),
    $this->PedirZerando( "Forma de cobrança",
       [ "", TFCobra, brHtml(2) . "(sugerimos que só preencha este campo se estiver com o documento em mãos)" ] ),
-   
+
    $this->Pular1Linha(2),
    $this->Cabecalhos( [ "Se quiser gerar como pagas", "FormCab alinhaMeio", "2" ] ),
    $this->PedirZerando( "Forma de pagamento", TFPagto ),
@@ -87,7 +103,7 @@ if( $op == 130 ) //* menu Finaneiro
 }
 
 if( $op == 184 ) //* criar de tratamento de uma consulta no menu de navegação
-{   
+{
    echo
    $this->NaoPedir( Clinica, $umaConsulta->CLINICA ),
    $this->NaoPedir( Pessoa, $umaConsulta->PESSOA ),
@@ -95,28 +111,35 @@ if( $op == 184 ) //* criar de tratamento de uma consulta no menu de navegação
    $this->NaoPedir( Emissao, formatarData( HOJE, 'aaaa/mm/dd' ) ),
    $this->NaoPedir( Compete, dataAno( HOJE ) . "/" . dataMes( HOJE ). "/01" ),
    $this->NaoPedir( RecEnvia, formatarData( HOJE, 'aaaa/mm/dd' ) ),
-  
-   $this->Pedir( "Valor", Valor ),
-   $this->Pedir( "Histórico", Historico ),
+
+   $this->Pedir( "Valor",
+      [ "", Valor, '','','','','FormCalculado' ] ),
+   $this->Pedir( "Histórico",
+      [ "", Historico, '','','','','FormCalculado' ] ),
 
    $this->Pular1Linha(2),
-   $this->Pedir( "Condição para a 1ª parcela",
-      [ "", Condicao,
-      [ brHtml(4) . "Parcelas ", Parcelas,
-      [ brHtml(4) . "Iguais (mesmo valor)? ", Iguais,
-      [ brHtml(4) . "Intervalo entre as parcelas ", Intervalo ] ],'','','','FormCalculado' ] ] ),
+   $this->Pedir( "Parcelas",
+      [ "Quantas ", Parcelas,
+      [ " (obrigatório)" . brHtml(4) . "Iguais (mesmo valor)? ", Iguais ] ] ),
+   $this->Pedir( "Condição",
+      [ "Para a 1ª parcela ", Condicao,
+      [ brHtml(4) . "Intervalo entre as demais ", Intervalo ] ] ),
    "</table>
    <br>
    <table class='tabFormulario'>",
-      $this->Cabecalhos( '&nbsp;', 'Intervalo', 'Vencimento', 'Dia', 'Vencimento<br>Estimado?',
-         'Valor', '%', 'Pagamento', 'Plano de contas', 'Linha digitável' ),
-      umaParc(  1, Dia1,  Venc1,  Semana1,  Est1,  Valor1,  Perc1,  Pg1,  Cc1, Linha1 ),
-      umaParc(  2, Dia2,  Venc2,  Semana2,  Est2,  Valor2,  Perc2,  Pg2,  Cc2, Linha2 ),
-      umaParc(  3, Dia3,  Venc3,  Semana3,  Est3,  Valor3,  Perc3,  Pg3,  Cc3, Linha3 ),
+      $this->Cabecalhos( '&nbsp;',
+         'Intervalo',
+         [ 'Vencimento', 'FormCab alinhaMeio' ],
+         [ 'Dia', 'FormCab alinhaMeio' ],
+         [ 'Cobrança', 'FormCab alinhaMeio' ],
+         [ 'Cartão', 'FormCab alinhaMeio' ],
+         [ 'Valor (se Não iguais)', 'FormCab alinhaMeio' ] ),
+      umaParcTrata(  1, Dia1, Venc1, Semana1, TFCobra1, FormaPg1, Valor1 ),
+      umaParcTrata(  2, Dia2, Venc2, Semana2, TFCobra2, FormaPg2, Valor2 ),
+      umaParcTrata(  3, Dia3, Venc3, Semana3, TFCobra3, FormaPg3, Valor3 ),
       $this->NaoPedir( 'TotValor' ),
    "</table>";
 }
 
-  
 echo
 "</table>";

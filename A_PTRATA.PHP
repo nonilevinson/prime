@@ -32,6 +32,19 @@ class campo_arqPTrata_PTrata extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Apelido
+//======================================================
+
+class campo_arqPTrata_Apelido extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Apelido", "Apelido", "Apelido", 10, "xxxxxxxxxx", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Valor
 //======================================================
 
@@ -98,6 +111,7 @@ function listaCampos_arqPTrata( $p_prefixo )
 		array(
 			new Lance_CampoIdPrimario(),
 			new campo_arqPTrata_PTrata(),
+			new campo_arqPTrata_Apelido(),
 			new campo_arqPTrata_Valor(),
 			new campo_arqPTrata_Descricao(),
 			new campo_arqPTrata_Ativo() )
@@ -135,6 +149,7 @@ class arqPTrata extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( PTrata ) );
+			array_push( $vetAux, array( Apelido ) );
 			array_push( $vetAux, array( Valor ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
@@ -148,6 +163,7 @@ class arqPTrata extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( PTrata ) );
+			array_push( $vetAux, array( Apelido ) );
 			array_push( $vetAux, array( Valor ) );
 			array_push( $vetAux, array( Descricao ) );
 			array_push( $vetAux, array( Ativo ) );

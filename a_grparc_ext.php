@@ -1,21 +1,26 @@
 <?php
 
 //==================================================================
-function sugereValor( $p_idConsulta )
+function sugereCamposTratamento( $p_idConsulta )
 {
-	$select = "Select C.Clinica, C.Pessoa, C.ValPTrata
+	$select = "Select C.Clinica, C.Pessoa, C.ValPTrata, C.Num, P.Prontuario, T.Apelido
       From arqConsulta C
+			join arqPTrata	T on T.idPrimario=C.PTrata
+			join arqPessoa P on P.idPrimario=C.Pessoa
       Where C.idPrimario = " . $p_idConsulta;
    $umaConsulta = sql_lerUmRegistro( $select );
-echo '<br><b>GR0 arqConsulta S=</b> '.$select;
+	$historico = "C: " . formatarNum( $umaConsulta->NUM ) . " Pr: " . $umaConsulta->PRONTUARIO . 
+		" Tr: " . $umaConsulta->APELIDO;
+// echo '<br><b>GR0 arqConsulta S=</b> '.$select.'<br><b>historico=</b> '.$historico;
 
   echo
    javaScriptIni(),
       'with( parent ) {
          alt( Valor,' . $umaConsulta->VALPTRATA . ' );
-			Historico.Focalizar();
+         alt( Historico,\'' . $historico . '\' );
+			Parcelas.Focalizar();
       }',
-      "console.warn( 'valPTrata= '+'".$umaConsulta->VALPTRATA."');",
+      "/*console.warn( 'valPTrata= '+'".$umaConsulta->VALPTRATA."');*/",
    javaScriptFim();
 }
 

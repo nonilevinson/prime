@@ -14,6 +14,17 @@ function Campo_arqPTrata_PTrata()
 var PTrata = new Campo_arqPTrata_PTrata;
 
 //------------------------------------------------------------
+Campo_arqPTrata_Apelido.prototype = new Lance_CampoCadeia;
+
+function Campo_arqPTrata_Apelido()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "Apelido", "Apelido", "Apelido", 10, "uuuuuuuuuu", false);
+}
+
+var Apelido = new Campo_arqPTrata_Apelido;
+
+//------------------------------------------------------------
 Campo_arqPTrata_Valor.prototype = new Lance_CampoNumerico;
 
 function Campo_arqPTrata_Valor()
@@ -55,6 +66,16 @@ Campo_arqPTrata_PTrata.prototype.Cabecalho = function()
 }
 
 PTrata.TipoCampo |= CAMPO_CHAVE;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqPTrata_Apelido.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( cadEsq( PTrata, 10 ) ) );
+}
+}
+
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -103,7 +124,7 @@ function ListaDeCampos_arqPTrata( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ PTrata, Valor, Descricao, Ativo ]	);
+		[ PTrata, Apelido, Valor, Descricao, Ativo ]	);
 	IniciarDependencias_arqPTrata();
 	g_prefixo = l_prefixo;
 	return( l_lista );

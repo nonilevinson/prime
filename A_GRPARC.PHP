@@ -586,30 +586,11 @@ class campo_parGeraParc_TFCobra1 extends Lance_CampoLigado
 		parent::__construct( "TFCobra1", "TFCobra1", "TFCobra1", 0, "tabTFCobra", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
 	}
 
-}
-
-//======================================================
-//	Campo TFPagto1
-//======================================================
-
-class campo_parGeraParc_TFPagto1 extends Lance_CampoLigado
-{
-	function __construct()
+	//--------------------------------------------------
+	function FiltroPai()
 	{
-		parent::__construct( "TFPagto1", "TFPagto1", "TFPagto1", 0, "tabTFPagto", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo TDetPg1
-//======================================================
-
-class campo_parGeraParc_TDetPg1 extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "TDetPg1", "TDetPg1", "TDetPg1", 0, "tabTDetPg", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+		global $g_regAtual;
+			return( "idPrimario <= 3" );
 	}
 
 }
@@ -857,6 +838,59 @@ class campo_parGeraParc_Linha2 extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo TFCobra2
+//======================================================
+
+class campo_parGeraParc_TFCobra2 extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TFCobra2", "TFCobra2", "TFCobra2", 0, "tabTFCobra", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+	//--------------------------------------------------
+	function FiltroPai()
+	{
+		global $g_regAtual;
+			return( "idPrimario <= 3" );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg2
+//======================================================
+
+class campo_parGeraParc_FormaPg2 extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg2", "FormaPg2", "FormaPg2", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg2_FormaPg
+//======================================================
+
+class campo_parGeraParc_FormaPg2_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg2_FormaPg", "FormaPg2_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "FormaPg2", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
+	}
+
+}
+
+//======================================================
 //	Campo Dia3
 //======================================================
 
@@ -1048,6 +1082,59 @@ class campo_parGeraParc_Linha3 extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Linha3", "Linha3", "Linha3", 54, "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo TFCobra3
+//======================================================
+
+class campo_parGeraParc_TFCobra3 extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TFCobra3", "TFCobra3", "TFCobra3", 0, "tabTFCobra", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+	//--------------------------------------------------
+	function FiltroPai()
+	{
+		global $g_regAtual;
+			return( "idPrimario <= 3" );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg3
+//======================================================
+
+class campo_parGeraParc_FormaPg3 extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg3", "FormaPg3", "FormaPg3", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg3_FormaPg
+//======================================================
+
+class campo_parGeraParc_FormaPg3_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg3_FormaPg", "FormaPg3_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "FormaPg3", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
 	}
 
 }
@@ -2878,12 +2965,6 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_TFCobra1(),
 			new Lance_CampoCadeia( "TFCobra1_Chave", "TFCobra1_Chave", "Chave", 1, "x", EH_CHAVE, TFCobra1 ),
 			new Lance_CampoCadeia( "TFCobra1_Descritor", "TFCobra1_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TFCobra1 ),
-			new campo_parGeraParc_TFPagto1(),
-			new Lance_CampoCadeia( "TFPagto1_Chave", "TFPagto1_Chave", "Chave", 1, "x", EH_CHAVE, TFPagto1 ),
-			new Lance_CampoCadeia( "TFPagto1_Descritor", "TFPagto1_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TFPagto1 ),
-			new campo_parGeraParc_TDetPg1(),
-			new Lance_CampoCadeia( "TDetPg1_Chave", "TDetPg1_Chave", "Chave", 1, "x", EH_CHAVE, TDetPg1 ),
-			new Lance_CampoCadeia( "TDetPg1_Descritor", "TDetPg1_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TDetPg1 ),
 			new campo_parGeraParc_FormaPg1(),
 			new campo_parGeraParc_FormaPg1_FormaPg(),
 			new campo_parGeraParc_Vezes1(),
@@ -2901,6 +2982,11 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc2_Codigo(),
 			new campo_parGeraParc_Cc2_Nome(),
 			new campo_parGeraParc_Linha2(),
+			new campo_parGeraParc_TFCobra2(),
+			new Lance_CampoCadeia( "TFCobra2_Chave", "TFCobra2_Chave", "Chave", 1, "x", EH_CHAVE, TFCobra2 ),
+			new Lance_CampoCadeia( "TFCobra2_Descritor", "TFCobra2_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TFCobra2 ),
+			new campo_parGeraParc_FormaPg2(),
+			new campo_parGeraParc_FormaPg2_FormaPg(),
 			new campo_parGeraParc_Dia3(),
 			new campo_parGeraParc_Venc3(),
 			new campo_parGeraParc_Semana3(),
@@ -2915,6 +3001,11 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc3_Codigo(),
 			new campo_parGeraParc_Cc3_Nome(),
 			new campo_parGeraParc_Linha3(),
+			new campo_parGeraParc_TFCobra3(),
+			new Lance_CampoCadeia( "TFCobra3_Chave", "TFCobra3_Chave", "Chave", 1, "x", EH_CHAVE, TFCobra3 ),
+			new Lance_CampoCadeia( "TFCobra3_Descritor", "TFCobra3_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TFCobra3 ),
+			new campo_parGeraParc_FormaPg3(),
+			new campo_parGeraParc_FormaPg3_FormaPg(),
 			new campo_parGeraParc_Dia4(),
 			new campo_parGeraParc_Venc4(),
 			new campo_parGeraParc_Semana4(),

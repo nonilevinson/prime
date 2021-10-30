@@ -564,72 +564,6 @@ function Campo_parGeraParc_TFCobra1_Descritor()
 var TFCobra1_Descritor = new Campo_parGeraParc_TFCobra1_Descritor;
 
 //------------------------------------------------------------
-Campo_parGeraParc_TFPagto1.prototype = new Lance_CampoLigado;
-
-function Campo_parGeraParc_TFPagto1()
-{
-	this.superClass = Lance_CampoLigado;
-	this.superClass( "TFPagto1", "TFPagto1", "TFPagto1", "tabTFPagto", "t_tfpagt", null, "",0);
-}
-
-var TFPagto1 = new Campo_parGeraParc_TFPagto1;
-
-//------------------------------------------------------------
-Campo_parGeraParc_TFPagto1_Chave.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parGeraParc_TFPagto1_Chave()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TFPagto1_Chave", "TFPagto1_Chave", "TFPagto1", TFPagto1, 1, "u", false);
-}
-
-var TFPagto1_Chave = new Campo_parGeraParc_TFPagto1_Chave;
-
-//------------------------------------------------------------
-Campo_parGeraParc_TFPagto1_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parGeraParc_TFPagto1_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TFPagto1_Descritor", "TFPagto1_Descritor", "TFPagto1", TFPagto1, 8, "xxxxxxxx", false);
-}
-
-var TFPagto1_Descritor = new Campo_parGeraParc_TFPagto1_Descritor;
-
-//------------------------------------------------------------
-Campo_parGeraParc_TDetPg1.prototype = new Lance_CampoLigado;
-
-function Campo_parGeraParc_TDetPg1()
-{
-	this.superClass = Lance_CampoLigado;
-	this.superClass( "TDetPg1", "TDetPg1", "TDetPg1", "tabTDetPg", "t_tdetpg", null, "",0);
-}
-
-var TDetPg1 = new Campo_parGeraParc_TDetPg1;
-
-//------------------------------------------------------------
-Campo_parGeraParc_TDetPg1_Chave.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parGeraParc_TDetPg1_Chave()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TDetPg1_Chave", "TDetPg1_Chave", "TDetPg1", TDetPg1, 1, "u", false);
-}
-
-var TDetPg1_Chave = new Campo_parGeraParc_TDetPg1_Chave;
-
-//------------------------------------------------------------
-Campo_parGeraParc_TDetPg1_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parGeraParc_TDetPg1_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TDetPg1_Descritor", "TDetPg1_Descritor", "TDetPg1", TDetPg1, 14, "xxxxxxxxxxxxxx", false);
-}
-
-var TDetPg1_Descritor = new Campo_parGeraParc_TDetPg1_Descritor;
-
-//------------------------------------------------------------
 Campo_parGeraParc_FormaPg1.prototype = new Lance_CampoHidden;
 
 function Campo_parGeraParc_FormaPg1()
@@ -817,6 +751,61 @@ function Campo_parGeraParc_Linha2()
 var Linha2 = new Campo_parGeraParc_Linha2;
 
 //------------------------------------------------------------
+Campo_parGeraParc_TFCobra2.prototype = new Lance_CampoLigado;
+
+function Campo_parGeraParc_TFCobra2()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TFCobra2", "TFCobra2", "TFCobra2", "tabTFCobra", "t_tfcobr", null, "",0);
+}
+
+var TFCobra2 = new Campo_parGeraParc_TFCobra2;
+
+//------------------------------------------------------------
+Campo_parGeraParc_TFCobra2_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parGeraParc_TFCobra2_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TFCobra2_Chave", "TFCobra2_Chave", "TFCobra2", TFCobra2, 1, "u", false);
+}
+
+var TFCobra2_Chave = new Campo_parGeraParc_TFCobra2_Chave;
+
+//------------------------------------------------------------
+Campo_parGeraParc_TFCobra2_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parGeraParc_TFCobra2_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TFCobra2_Descritor", "TFCobra2_Descritor", "TFCobra2", TFCobra2, 10, "xxxxxxxxxx", false);
+}
+
+var TFCobra2_Descritor = new Campo_parGeraParc_TFCobra2_Descritor;
+
+//------------------------------------------------------------
+Campo_parGeraParc_FormaPg2.prototype = new Lance_CampoHidden;
+
+function Campo_parGeraParc_FormaPg2()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "FormaPg2", "FormaPg2", "FormaPg2", "arqFormaPg", "a_formap", null, "",44);
+}
+
+var FormaPg2 = new Campo_parGeraParc_FormaPg2;
+
+//------------------------------------------------------------
+Campo_parGeraParc_FormaPg2_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parGeraParc_FormaPg2_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "FormaPg2_FormaPg", "FormaPg2_FormaPg", "FormaPg", FormaPg2, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var FormaPg2_FormaPg = new Campo_parGeraParc_FormaPg2_FormaPg;
+
+//------------------------------------------------------------
 Campo_parGeraParc_Dia3.prototype = new Lance_CampoNumerico;
 
 function Campo_parGeraParc_Dia3()
@@ -969,6 +958,61 @@ function Campo_parGeraParc_Linha3()
 }
 
 var Linha3 = new Campo_parGeraParc_Linha3;
+
+//------------------------------------------------------------
+Campo_parGeraParc_TFCobra3.prototype = new Lance_CampoLigado;
+
+function Campo_parGeraParc_TFCobra3()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TFCobra3", "TFCobra3", "TFCobra3", "tabTFCobra", "t_tfcobr", null, "",0);
+}
+
+var TFCobra3 = new Campo_parGeraParc_TFCobra3;
+
+//------------------------------------------------------------
+Campo_parGeraParc_TFCobra3_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parGeraParc_TFCobra3_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TFCobra3_Chave", "TFCobra3_Chave", "TFCobra3", TFCobra3, 1, "u", false);
+}
+
+var TFCobra3_Chave = new Campo_parGeraParc_TFCobra3_Chave;
+
+//------------------------------------------------------------
+Campo_parGeraParc_TFCobra3_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parGeraParc_TFCobra3_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TFCobra3_Descritor", "TFCobra3_Descritor", "TFCobra3", TFCobra3, 10, "xxxxxxxxxx", false);
+}
+
+var TFCobra3_Descritor = new Campo_parGeraParc_TFCobra3_Descritor;
+
+//------------------------------------------------------------
+Campo_parGeraParc_FormaPg3.prototype = new Lance_CampoHidden;
+
+function Campo_parGeraParc_FormaPg3()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "FormaPg3", "FormaPg3", "FormaPg3", "arqFormaPg", "a_formap", null, "",44);
+}
+
+var FormaPg3 = new Campo_parGeraParc_FormaPg3;
+
+//------------------------------------------------------------
+Campo_parGeraParc_FormaPg3_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parGeraParc_FormaPg3_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "FormaPg3_FormaPg", "FormaPg3_FormaPg", "FormaPg", FormaPg3, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var FormaPg3_FormaPg = new Campo_parGeraParc_FormaPg3_FormaPg;
 
 //------------------------------------------------------------
 Campo_parGeraParc_Dia4.prototype = new Lance_CampoNumerico;
@@ -2476,13 +2520,23 @@ Campo_parGeraParc_Compete.prototype.Sugeriu = function()
 }
 
 //-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_parGeraParc_Historico.prototype.PodeAlterar = function()
+{
+		if( !ultimaLigOpcaoEm( 184 ) )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_parGeraParc_Valor.prototype.Sugeriu = function()
 {
 {
 		if( ultimaLigOpcaoEm( 184 ) )
-	return( this.AtribuiuSemCritica( sugereValor() ) );
+	return( this.AtribuiuSemCritica( sugereCamposTratamento() ) );
 }
 		return( true );
 }
@@ -2492,7 +2546,7 @@ Campo_parGeraParc_Valor.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 Campo_parGeraParc_Valor.prototype.PodeAlterar = function()
 {
-		if( ultimaLigOpcaoEm( 130 ) )
+		if( !ultimaLigOpcaoEm( 184 ) )
 		return( true );
 	return( false );
 }
@@ -2877,18 +2931,62 @@ Campo_parGeraParc_Linha1.prototype.Existencia = function()
 	return( TFCobra == 1 && ( TPgRec == 1 ) );
 }
 
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parGeraParc_TFCobra1.prototype.FiltroPai = function()
+{
+			return( "idPrimario <= 3" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parGeraParc_TFCobra1.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A forma de cobrança é obrigatória" );
+		return( true );
+	}
+}
+
 TFCobra1_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TFCobra1_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
-TFPagto1_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TFPagto1_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
-TDetPg1_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TDetPg1_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
 Campo_parGeraParc_FormaPg1.prototype.FiltroPai = function()
 {
 			return( "A.Cartao = 1" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg1.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra1 == 2 )
+	{
+		if( p_comMsg ) alert( "A forma de pagamento é obrigatória" );
+		return( true );
+	}
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg1.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra1 == 2 );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg1_FormaPg.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra1 == 2 );
 }
 
 //-------------------------------------------------------------
@@ -3159,6 +3257,73 @@ Campo_parGeraParc_Linha2.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parGeraParc_TFCobra2.prototype.FiltroPai = function()
+{
+			return( "idPrimario <= 3" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parGeraParc_TFCobra2.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A forma de cobrança é obrigatória" );
+		return( true );
+	}
+}
+
+TFCobra2_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TFCobra2_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg2.prototype.FiltroPai = function()
+{
+			return( "A.Cartao = 1" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg2.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra2 == 2 )
+	{
+		if( p_comMsg ) alert( "A forma de pagamento é obrigatória" );
+		return( true );
+	}
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg2.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra2 == 2 );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg2_FormaPg.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra2 == 2 );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg2_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( FormaPg2.Obrigatorio( p_comMsg ) );
+}
+
+FormaPg2_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_parGeraParc_Dia3.prototype.Sugeriu = function()
@@ -3403,6 +3568,73 @@ Campo_parGeraParc_Linha3.prototype.Existencia = function()
 	return( ( Parcelas > 2 ) && ( TFCobra == 1 && ( TPgRec == 1 ) ) );
 }
 
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parGeraParc_TFCobra3.prototype.FiltroPai = function()
+{
+			return( "idPrimario <= 3" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parGeraParc_TFCobra3.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A forma de cobrança é obrigatória" );
+		return( true );
+	}
+}
+
+TFCobra3_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TFCobra3_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg3.prototype.FiltroPai = function()
+{
+			return( "A.Cartao = 1" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg3.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 184 ) && TFCobra3 == 2 )
+	{
+		if( p_comMsg ) alert( "A forma de pagamento é obrigatória" );
+		return( true );
+	}
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg3.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra3 == 2 );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg3_FormaPg.prototype.Existencia = function()
+{
+	return( ultimaLigOpcaoEm( 184 ) && TFCobra3 == 2 );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg3_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( FormaPg3.Obrigatorio( p_comMsg ) );
+}
+
+FormaPg3_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -5683,6 +5915,14 @@ Campo_parGeraParc_Cc2_Plano_Plano.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_parGeraParc_FormaPg2.prototype.ExistenciaEspecial = function()
+{
+	return( ( !FormaPg2_FormaPg.Obrigatorio( false ) || tem(FormaPg2_FormaPg) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_parGeraParc_Cc3_Plano.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Cc3_Plano_CodPlano.Obrigatorio( false ) || tem(Cc3_Plano_CodPlano) ) );
@@ -5694,6 +5934,14 @@ Campo_parGeraParc_Cc3_Plano.prototype.ExistenciaEspecial = function()
 Campo_parGeraParc_Cc3_Plano_Plano.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Cc3_Plano.Obrigatorio( false ) || tem(Cc3_Plano) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_parGeraParc_FormaPg3.prototype.ExistenciaEspecial = function()
+{
+	return( ( !FormaPg3_FormaPg.Obrigatorio( false ) || tem(FormaPg3_FormaPg) ) );
 }
 
 //-------------------------------------------------------------
@@ -5879,14 +6127,19 @@ Iguais.ExistenciasDependentes= [ Valor1,Perc1,Valor2,Perc2,Valor3,Perc3,Valor4,P
 Cc1_Plano_CodPlano.ExistenciasDependentes= [ Cc1_Plano ];
 Cc1_Plano.ExistenciasDependentes= [ Cc1_Plano_Plano ];
 TPgRec.ExistenciasDependentes= [ Linha1,Linha2,Linha3,Linha4,Linha5,Linha6,Linha7,Linha8,Linha9,Linha10,Linha11,Linha12 ];
+TFCobra1.ExistenciasDependentes= [ FormaPg1,FormaPg1_FormaPg ];
 FormaPg1_FormaPg.ExistenciasDependentes= [ FormaPg1 ];
 Parcelas.ExistenciasDependentes= [ Dia2,Venc2,Valor2,Perc2,Pg2,Cc2,Cc2_Plano,Cc2_Plano_CodPlano,Cc2_Codigo,Linha2,Dia3,Venc3,Valor3,Perc3,Pg3,Cc3,Cc3_Plano,Cc3_Plano_CodPlano,Cc3_Codigo,Linha3,Dia4,Venc4,Valor4,Perc4,Pg4,Cc4,Cc4_Plano,Cc4_Plano_CodPlano,Cc4_Codigo,Linha4,Dia5,Venc5,Valor5,Perc5,Pg5,Cc5,Cc5_Plano,Cc5_Plano_CodPlano,Cc5_Codigo,Linha5,Dia6,Venc6,Valor6,Perc6,Pg6,Cc6,Cc6_Plano,Cc6_Plano_CodPlano,Cc6_Codigo,Linha6,Dia7,Venc7,Valor7,Perc7,Pg7,Cc7,Cc7_Plano,Cc7_Plano_CodPlano,Cc7_Codigo,Linha7,Dia8,Venc8,Valor8,Perc8,Pg8,Cc8,Cc8_Plano,Cc8_Plano_CodPlano,Cc8_Codigo,Linha8,Dia9,Venc9,Semana9,Est9,Valor9,Perc9,Pg9,Cc9,Cc9_Plano,Cc9_Plano_CodPlano,Cc9_Codigo,Linha9,Dia10,Venc10,Valor10,Perc10,Pg10,Cc10,Cc10_Plano,Cc10_Plano_CodPlano,Cc10_Codigo,Linha10,Dia11,Venc11,Valor11,Perc11,Pg11,Cc11,Cc11_Plano,Cc11_Plano_CodPlano,Cc11_Codigo,Linha11,Dia12,Venc12,Valor12,Perc12,Pg12,Cc12,Cc12_Plano,Cc12_Plano_CodPlano,Cc12_Codigo,Linha12 ];
 Venc2.ExistenciasDependentes= [ Semana2,Est2 ];
 Cc2_Plano_CodPlano.ExistenciasDependentes= [ Cc2_Plano ];
 Cc2_Plano.ExistenciasDependentes= [ Cc2_Plano_Plano ];
+TFCobra2.ExistenciasDependentes= [ FormaPg2,FormaPg2_FormaPg ];
+FormaPg2_FormaPg.ExistenciasDependentes= [ FormaPg2 ];
 Venc3.ExistenciasDependentes= [ Semana3,Est3 ];
 Cc3_Plano_CodPlano.ExistenciasDependentes= [ Cc3_Plano ];
 Cc3_Plano.ExistenciasDependentes= [ Cc3_Plano_Plano ];
+TFCobra3.ExistenciasDependentes= [ FormaPg3,FormaPg3_FormaPg ];
+FormaPg3_FormaPg.ExistenciasDependentes= [ FormaPg3 ];
 Venc4.ExistenciasDependentes= [ Semana4,Est4 ];
 Cc4_Plano_CodPlano.ExistenciasDependentes= [ Cc4_Plano ];
 Cc4_Plano.ExistenciasDependentes= [ Cc4_Plano_Plano ];
@@ -5923,8 +6176,10 @@ Cc1_Codigo.ErrosDependentes= [ Cc1 ];
 FormaPg1_FormaPg.ErrosDependentes= [ FormaPg1 ];
 Cc2_Plano_CodPlano.ErrosDependentes= [ Cc2_Plano ];
 Cc2_Codigo.ErrosDependentes= [ Cc2 ];
+FormaPg2_FormaPg.ErrosDependentes= [ FormaPg2 ];
 Cc3_Plano_CodPlano.ErrosDependentes= [ Cc3_Plano ];
 Cc3_Codigo.ErrosDependentes= [ Cc3 ];
+FormaPg3_FormaPg.ErrosDependentes= [ FormaPg3 ];
 Cc4_Plano_CodPlano.ErrosDependentes= [ Cc4_Plano ];
 Cc4_Codigo.ErrosDependentes= [ Cc4 ];
 Cc5_Plano_CodPlano.ErrosDependentes= [ Cc5_Plano ];
@@ -5964,7 +6219,9 @@ CCor.CamposChave= [ CCor_Nome ];
 Cc1_Plano.CamposChave= [ Cc1_Plano_CodPlano ];
 FormaPg1.CamposChave= [ FormaPg1_FormaPg ];
 Cc2_Plano.CamposChave= [ Cc2_Plano_CodPlano ];
+FormaPg2.CamposChave= [ FormaPg2_FormaPg ];
 Cc3_Plano.CamposChave= [ Cc3_Plano_CodPlano ];
+FormaPg3.CamposChave= [ FormaPg3_FormaPg ];
 Cc4_Plano.CamposChave= [ Cc4_Plano_CodPlano ];
 Cc5_Plano.CamposChave= [ Cc5_Plano_CodPlano ];
 Cc6_Plano.CamposChave= [ Cc6_Plano_CodPlano ];
@@ -5991,7 +6248,7 @@ function ListaDeCampos_parGeraParc( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Documento, TPgRec, TPgRec_Chave, TPgRec_Descritor, Emissao, RecEnvia, Compete, Historico, Valor, Estimado, Condicao, Parcelas, Iguais, Intervalo, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Nome, Cheque, TotValor, Dia1, Venc1, Semana1, Est1, Valor1, Perc1, Pg1, Cc1, Cc1_Plano, Cc1_Plano_CodPlano, Cc1_Plano_Plano, Cc1_Codigo, Cc1_Nome, Linha1, TFCobra1, TFCobra1_Chave, TFCobra1_Descritor, TFPagto1, TFPagto1_Chave, TFPagto1_Descritor, TDetPg1, TDetPg1_Chave, TDetPg1_Descritor, FormaPg1, FormaPg1_FormaPg, Vezes1, Dia2, Venc2, Semana2, Est2, Valor2, Perc2, Pg2, Cc2, Cc2_Plano, Cc2_Plano_CodPlano, Cc2_Plano_Plano, Cc2_Codigo, Cc2_Nome, Linha2, Dia3, Venc3, Semana3, Est3, Valor3, Perc3, Pg3, Cc3, Cc3_Plano, Cc3_Plano_CodPlano, Cc3_Plano_Plano, Cc3_Codigo, Cc3_Nome, Linha3, Dia4, Venc4, Semana4, Est4, Valor4, Perc4, Pg4, Cc4, Cc4_Plano, Cc4_Plano_CodPlano, Cc4_Plano_Plano, Cc4_Codigo, Cc4_Nome, Linha4, Dia5, Venc5, Semana5, Est5, Valor5, Perc5, Pg5, Cc5, Cc5_Plano, Cc5_Plano_CodPlano, Cc5_Plano_Plano, Cc5_Codigo, Cc5_Nome, Linha5, Dia6, Venc6, Semana6, Est6, Valor6, Perc6, Pg6, Cc6, Cc6_Plano, Cc6_Plano_CodPlano, Cc6_Plano_Plano, Cc6_Codigo, Cc6_Nome, Linha6, Dia7, Venc7, Semana7, Est7, Valor7, Perc7, Pg7, Cc7, Cc7_Plano, Cc7_Plano_CodPlano, Cc7_Plano_Plano, Cc7_Codigo, Cc7_Nome, Linha7, Dia8, Venc8, Semana8, Est8, Valor8, Perc8, Pg8, Cc8, Cc8_Plano, Cc8_Plano_CodPlano, Cc8_Plano_Plano, Cc8_Codigo, Cc8_Nome, Linha8, Dia9, Venc9, Semana9, Est9, Valor9, Perc9, Pg9, Cc9, Cc9_Plano, Cc9_Plano_CodPlano, Cc9_Plano_Plano, Cc9_Codigo, Cc9_Nome, Linha9, Dia10, Venc10, Semana10, Est10, Valor10, Perc10, Pg10, Cc10, Cc10_Plano, Cc10_Plano_CodPlano, Cc10_Plano_Plano, Cc10_Codigo, Cc10_Nome, Linha10, Dia11, Venc11, Semana11, Est11, Valor11, Perc11, Pg11, Cc11, Cc11_Plano, Cc11_Plano_CodPlano, Cc11_Plano_Plano, Cc11_Codigo, Cc11_Nome, Linha11, Dia12, Venc12, Semana12, Est12, Valor12, Perc12, Pg12, Cc12, Cc12_Plano, Cc12_Plano_CodPlano, Cc12_Plano_Plano, Cc12_Codigo, Cc12_Nome, Linha12 ]	);
+		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Documento, TPgRec, TPgRec_Chave, TPgRec_Descritor, Emissao, RecEnvia, Compete, Historico, Valor, Estimado, Condicao, Parcelas, Iguais, Intervalo, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Nome, Cheque, TotValor, Dia1, Venc1, Semana1, Est1, Valor1, Perc1, Pg1, Cc1, Cc1_Plano, Cc1_Plano_CodPlano, Cc1_Plano_Plano, Cc1_Codigo, Cc1_Nome, Linha1, TFCobra1, TFCobra1_Chave, TFCobra1_Descritor, FormaPg1, FormaPg1_FormaPg, Vezes1, Dia2, Venc2, Semana2, Est2, Valor2, Perc2, Pg2, Cc2, Cc2_Plano, Cc2_Plano_CodPlano, Cc2_Plano_Plano, Cc2_Codigo, Cc2_Nome, Linha2, TFCobra2, TFCobra2_Chave, TFCobra2_Descritor, FormaPg2, FormaPg2_FormaPg, Dia3, Venc3, Semana3, Est3, Valor3, Perc3, Pg3, Cc3, Cc3_Plano, Cc3_Plano_CodPlano, Cc3_Plano_Plano, Cc3_Codigo, Cc3_Nome, Linha3, TFCobra3, TFCobra3_Chave, TFCobra3_Descritor, FormaPg3, FormaPg3_FormaPg, Dia4, Venc4, Semana4, Est4, Valor4, Perc4, Pg4, Cc4, Cc4_Plano, Cc4_Plano_CodPlano, Cc4_Plano_Plano, Cc4_Codigo, Cc4_Nome, Linha4, Dia5, Venc5, Semana5, Est5, Valor5, Perc5, Pg5, Cc5, Cc5_Plano, Cc5_Plano_CodPlano, Cc5_Plano_Plano, Cc5_Codigo, Cc5_Nome, Linha5, Dia6, Venc6, Semana6, Est6, Valor6, Perc6, Pg6, Cc6, Cc6_Plano, Cc6_Plano_CodPlano, Cc6_Plano_Plano, Cc6_Codigo, Cc6_Nome, Linha6, Dia7, Venc7, Semana7, Est7, Valor7, Perc7, Pg7, Cc7, Cc7_Plano, Cc7_Plano_CodPlano, Cc7_Plano_Plano, Cc7_Codigo, Cc7_Nome, Linha7, Dia8, Venc8, Semana8, Est8, Valor8, Perc8, Pg8, Cc8, Cc8_Plano, Cc8_Plano_CodPlano, Cc8_Plano_Plano, Cc8_Codigo, Cc8_Nome, Linha8, Dia9, Venc9, Semana9, Est9, Valor9, Perc9, Pg9, Cc9, Cc9_Plano, Cc9_Plano_CodPlano, Cc9_Plano_Plano, Cc9_Codigo, Cc9_Nome, Linha9, Dia10, Venc10, Semana10, Est10, Valor10, Perc10, Pg10, Cc10, Cc10_Plano, Cc10_Plano_CodPlano, Cc10_Plano_Plano, Cc10_Codigo, Cc10_Nome, Linha10, Dia11, Venc11, Semana11, Est11, Valor11, Perc11, Pg11, Cc11, Cc11_Plano, Cc11_Plano_CodPlano, Cc11_Plano_Plano, Cc11_Codigo, Cc11_Nome, Linha11, Dia12, Venc12, Semana12, Est12, Valor12, Perc12, Pg12, Cc12, Cc12_Plano, Cc12_Plano_CodPlano, Cc12_Plano_Plano, Cc12_Codigo, Cc12_Nome, Linha12 ]	);
 	IniciarDependencias_parGeraParc();
 	g_prefixo = l_prefixo;
 	return( l_lista );
