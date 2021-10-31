@@ -39,7 +39,7 @@ switch( ultimaLigOpcao() )
       $subPlano = $umXConfig->SUBPLARASS;
       break;
 }
-if( $g_debugProcesso ) echo '<br><b>GR0 cCor S=</b> '.$cCor.' <b>subPlano=</b> '.$subPlano;
+// if( $g_debugProcesso ) echo '<br><b>GR0 cCor S=</b> '.$cCor.' <b>subPlano=</b> '.$subPlano;
 
 $idConta = sql_IdPrimario();
 $data    = $parQCaixa->DATA;
