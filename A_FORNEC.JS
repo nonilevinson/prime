@@ -178,7 +178,7 @@ Nome.TipoCampo |= CAMPO_CHAVE;
 Campo_arqFornecedor_Apelido.prototype.Sugeriu = function()
 {
 {
-	return( this.AtribuiuSemCritica( SugereApelido( Nome ) ) );
+	return( this.AtribuiuSemCritica( sugereApelido( Nome ) ) );
 }
 }
 

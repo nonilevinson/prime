@@ -102,7 +102,7 @@ criarParcela( $idConta );
 
 sql_fecharBD();
 
-$teste = true;
+$teste = false;
 if( $teste )
 	echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE ***</p>';
 else

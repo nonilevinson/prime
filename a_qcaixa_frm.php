@@ -35,7 +35,8 @@ if( in_array( $op, [177,181] ) ) //* 177: criar entrada Recepção | 181: Assessor
    $this->PedirZerando( " ",
       [ "Celular ", Pessoa_NumCelular,
       [ "", Pessoa ] ] ),
-   $this->PedirZerando( "Histórico ", Historico );
+   $this->PedirZerando( "Histórico ", Historico ),
+   $this->PedirZerando( "Forma", FormaPg );
 }
 
 //==================================================================================

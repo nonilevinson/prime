@@ -89,6 +89,7 @@ sql_insert( "arqParcela", [
    "DataComp"   => $data,
    "TFPagto"    => 2,
    "TDetPg"     => null,
+   "FormaPg"    => ValorOuNull( $parQCaixa->FORMAPG, '', false ),
    "Cheque"     => 0,
    "Arq1"       => null,
    "StRetorno"  => '',

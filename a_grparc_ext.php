@@ -85,14 +85,17 @@ echo '<br><b>focal=</b> '.$focalizar;
 function sugereNumConta( $p_loja, $p_fonte, $p_cliente, $p_confere )
 {
 	sql_abrirBD( false );
+	
 	$select = "Select coalesce( max( Conta ), 0 ) + 1 as ProxConta
 		From arqConta
 		Where Loja = " . $p_loja . " and Origem = " . ( $p_fonte ? 1 : 2 ) .
 			" and " . ( $p_fonte ? "Fonte = " . $p_fonte : "Cliente = " . $p_cliente ) .
 			" and Confere = " . $p_confere;
 	$proxConta = sql_lerUmRegistro( $select )->PROXCONTA;
-	sql_fecharBD();
 //echo '<br>S= '.$select.' prox= '.$proxConta;
+
+	sql_fecharBD();
+	
 	echo
 		javaScriptIni(),
 		'with( parent ) {

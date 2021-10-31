@@ -257,6 +257,39 @@ class campo_parQCaixa_SubPlano_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo FormaPg
+//======================================================
+
+class campo_parQCaixa_FormaPg extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg", "FormaPg", "FormaPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg_FormaPg
+//======================================================
+
+class campo_parQCaixa_FormaPg_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "FormaPg", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQCaixa
 //======================================================
 function listaCampos_parQCaixa( $p_prefixo )
@@ -282,7 +315,9 @@ function listaCampos_parQCaixa( $p_prefixo )
 			new campo_parQCaixa_SubPlano_Plano_CodPlano(),
 			new campo_parQCaixa_SubPlano_Plano_Plano(),
 			new campo_parQCaixa_SubPlano_Codigo(),
-			new campo_parQCaixa_SubPlano_Nome() )
+			new campo_parQCaixa_SubPlano_Nome(),
+			new campo_parQCaixa_FormaPg(),
+			new campo_parQCaixa_FormaPg_FormaPg() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

@@ -178,6 +178,28 @@ function Campo_parQCaixa_SubPlano_Nome()
 
 var SubPlano_Nome = new Campo_parQCaixa_SubPlano_Nome;
 
+//------------------------------------------------------------
+Campo_parQCaixa_FormaPg.prototype = new Lance_CampoHidden;
+
+function Campo_parQCaixa_FormaPg()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "FormaPg", "FormaPg", "FormaPg", "arqFormaPg", "a_formap", null, "",44);
+}
+
+var FormaPg = new Campo_parQCaixa_FormaPg;
+
+//------------------------------------------------------------
+Campo_parQCaixa_FormaPg_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQCaixa_FormaPg_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", FormaPg, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var FormaPg_FormaPg = new Campo_parQCaixa_FormaPg_FormaPg;
+
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -186,6 +208,28 @@ Campo_parQCaixa_Clinica.prototype.FiltroPai = function()
 		if( g_temMaisDeUmClinica )
 			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
 		return( "" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_parQCaixa_Clinica.prototype.Sugeriu = function()
+{
+{
+		if( g_temMaisDeUmClinica == 0 )
+	return( this.AtribuiuSemCritica( g_minhaClinica ) );
+}
+		return( true );
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_parQCaixa_Clinica.prototype.PodeAlterar = function()
+{
+		if( g_temMaisDeUmClinica )
+		return( true );
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -214,6 +258,16 @@ Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
 Campo_parQCaixa_Fornecedor.prototype.FiltroPai = function()
 {
 			return( "A.Ativo = 1" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_parQCaixa_Fornecedor.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( sugereFornecedor() ) );
+}
 }
 
 //-------------------------------------------------------------
@@ -256,7 +310,7 @@ Campo_parQCaixa_Pessoa.prototype.TemErro = function()
 		alert( "Informe um paciente ou um fornecedor" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -374,6 +428,15 @@ Campo_parQCaixa_SubPlano_Codigo.prototype.ObrigatorioEspecial = function( p_comM
 SubPlano_Codigo.TipoCampo |= CAMPO_CHAVE_PAI;
 SubPlano_Nome.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQCaixa_FormaPg_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( FormaPg.Obrigatorio( p_comMsg ) );
+}
+
+FormaPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_parQCaixa_Clinica.prototype.ExistenciaEspecial = function()
@@ -429,6 +492,14 @@ Campo_parQCaixa_SubPlano_Nome.prototype.ExistenciaEspecial = function()
 	return( ( !SubPlano.Obrigatorio( false ) || tem(SubPlano) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_parQCaixa_FormaPg.prototype.ExistenciaEspecial = function()
+{
+	return( ( !FormaPg_FormaPg.Obrigatorio( false ) || tem(FormaPg_FormaPg) ) );
+}
+
 function IniciarDependencias_parQCaixa()
 {
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
@@ -440,12 +511,14 @@ SubPlano_Plano.ExistenciasDependentes= [ SubPlano,SubPlano_Plano_Plano ];
 SubPlano_Plano_CodPlano.ExistenciasDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ExistenciasDependentes= [ SubPlano ];
 SubPlano.ExistenciasDependentes= [ SubPlano_Nome ];
+FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
 Fornecedor.ErrosDependentes= [ Pessoa ];
 Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
 SubPlano_Plano_CodPlano.ErrosDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ErrosDependentes= [ SubPlano ];
+FormaPg_FormaPg.ErrosDependentes= [ FormaPg ];
 SubPlano_Plano.DescritoresDependentes= [ SubPlano_Plano_Plano ];
 SubPlano.DescritoresDependentes= [ SubPlano_Nome ];
 Clinica.CamposChave= [ Clinica_Clinica ];
@@ -453,6 +526,7 @@ Fornecedor.CamposChave= [ Fornecedor_Nome ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 SubPlano.CamposChave= [ SubPlano_Plano,SubPlano_Codigo ];
 SubPlano_Plano.CamposChave= [ SubPlano_Plano_CodPlano ];
+FormaPg.CamposChave= [ FormaPg_FormaPg ];
 }
 
 
@@ -470,7 +544,7 @@ function ListaDeCampos_parQCaixa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Historico, Data, Valor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome ]	);
+		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Historico, Data, Valor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, FormaPg, FormaPg_FormaPg ]	);
 	IniciarDependencias_parQCaixa();
 	g_prefixo = l_prefixo;
 	return( l_lista );

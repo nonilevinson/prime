@@ -314,6 +314,28 @@ function Campo_cnfXConfig_SubPlaRAss_Nome()
 
 var SubPlaRAss_Nome = new Campo_cnfXConfig_SubPlaRAss_Nome;
 
+//------------------------------------------------------------
+Campo_cnfXConfig_FornRec.prototype = new Lance_CampoHidden;
+
+function Campo_cnfXConfig_FornRec()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "FornRec", "FornRec", "FornRec", "arqFornecedor", "a_fornec", null, "",42);
+}
+
+var FornRec = new Campo_cnfXConfig_FornRec;
+
+//------------------------------------------------------------
+Campo_cnfXConfig_FornRec_Nome.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_cnfXConfig_FornRec_Nome()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "FornRec_Nome", "FornRec_Nome", "Nome", FornRec, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var FornRec_Nome = new Campo_cnfXConfig_FornRec_Nome;
+
 //-------------------------------------------------------------
 // Condição de erro do campo
 //-------------------------------------------------------------
@@ -324,7 +346,7 @@ Campo_cnfXConfig_CPF.prototype.TemErro = function()
 		alert( "CPF inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -357,7 +379,7 @@ Campo_cnfXConfig_CNPJ.prototype.TemErro = function()
 		alert( "CNPJ inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -370,7 +392,7 @@ Campo_cnfXConfig_Email.prototype.TemErro = function()
 		alert( "Email inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -383,7 +405,7 @@ Campo_cnfXConfig_RecorDia.prototype.TemErro = function()
 		alert( "Dia inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -462,6 +484,23 @@ Campo_cnfXConfig_SubPlaRAss_Codigo.prototype.ObrigatorioEspecial = function( p_c
 
 SubPlaRAss_Codigo.TipoCampo |= CAMPO_CHAVE_PAI;
 SubPlaRAss_Nome.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_cnfXConfig_FornRec.prototype.FiltroPai = function()
+{
+			return( "A.Ativo = 1" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_cnfXConfig_FornRec_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( FornRec.Obrigatorio( p_comMsg ) );
+}
+
+FornRec_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
@@ -542,6 +581,14 @@ Campo_cnfXConfig_SubPlaRAss_Nome.prototype.ExistenciaEspecial = function()
 	return( ( !SubPlaRAss.Obrigatorio( false ) || tem(SubPlaRAss) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_cnfXConfig_FornRec.prototype.ExistenciaEspecial = function()
+{
+	return( ( !FornRec_Nome.Obrigatorio( false ) || tem(FornRec_Nome) ) );
+}
+
 function IniciarDependencias_cnfXConfig()
 {
 CCorRec_Nome.ExistenciasDependentes= [ CCorRec ];
@@ -554,12 +601,14 @@ SubPlaRAss_Plano.ExistenciasDependentes= [ SubPlaRAss,SubPlaRAss_Plano_Plano ];
 SubPlaRAss_Plano_CodPlano.ExistenciasDependentes= [ SubPlaRAss_Plano ];
 SubPlaRAss_Codigo.ExistenciasDependentes= [ SubPlaRAss ];
 SubPlaRAss.ExistenciasDependentes= [ SubPlaRAss_Nome ];
+FornRec_Nome.ExistenciasDependentes= [ FornRec ];
 CCorRec_Nome.ErrosDependentes= [ CCorRec ];
 CCorAss_Nome.ErrosDependentes= [ CCorAss ];
 SubPlaRRec_Plano_CodPlano.ErrosDependentes= [ SubPlaRRec_Plano ];
 SubPlaRRec_Codigo.ErrosDependentes= [ SubPlaRRec ];
 SubPlaRAss_Plano_CodPlano.ErrosDependentes= [ SubPlaRAss_Plano ];
 SubPlaRAss_Codigo.ErrosDependentes= [ SubPlaRAss ];
+FornRec_Nome.ErrosDependentes= [ FornRec ];
 SubPlaRRec_Plano.DescritoresDependentes= [ SubPlaRRec_Plano_Plano ];
 SubPlaRRec.DescritoresDependentes= [ SubPlaRRec_Nome ];
 SubPlaRAss_Plano.DescritoresDependentes= [ SubPlaRAss_Plano_Plano ];
@@ -570,6 +619,7 @@ SubPlaRRec.CamposChave= [ SubPlaRRec_Plano,SubPlaRRec_Codigo ];
 SubPlaRRec_Plano.CamposChave= [ SubPlaRRec_Plano_CodPlano ];
 SubPlaRAss.CamposChave= [ SubPlaRAss_Plano,SubPlaRAss_Codigo ];
 SubPlaRAss_Plano.CamposChave= [ SubPlaRAss_Plano_CodPlano ];
+FornRec.CamposChave= [ FornRec_Nome ];
 }
 
 
@@ -589,7 +639,7 @@ function ListaDeCampos_cnfXConfig( p_prefixo )
 
 		[ CPF, LogAcesso, LogAcessoS, Qtd, Qtd2, Empresa ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia, CCorRec, CCorRec_Nome, CCorAss, CCorAss_Nome, SubPlaRRec, SubPlaRRec_Plano, SubPlaRRec_Plano_CodPlano, SubPlaRRec_Plano_Plano, SubPlaRRec_Codigo, SubPlaRRec_Nome, SubPlaRAss, SubPlaRAss_Plano, SubPlaRAss_Plano_CodPlano, SubPlaRAss_Plano_Plano, SubPlaRAss_Codigo, SubPlaRAss_Nome ]	);
+		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia, CCorRec, CCorRec_Nome, CCorAss, CCorAss_Nome, SubPlaRRec, SubPlaRRec_Plano, SubPlaRRec_Plano_CodPlano, SubPlaRRec_Plano_Plano, SubPlaRRec_Codigo, SubPlaRRec_Nome, SubPlaRAss, SubPlaRAss_Plano, SubPlaRAss_Plano_CodPlano, SubPlaRAss_Plano_Plano, SubPlaRAss_Codigo, SubPlaRAss_Nome, FornRec, FornRec_Nome ]	);
 	IniciarDependencias_cnfXConfig();
 	g_prefixo = l_prefixo;
 	return( l_lista );

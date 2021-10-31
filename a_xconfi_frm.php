@@ -48,6 +48,8 @@ CriarForms(
 "<table id='F' class='tabFormulario' style='display:none'>",
 	$this->Pedir( "Dia para criação automática<br>das contas recorrentes",
 		[ "", RecorDia, " (deixe zero, se não quiser usar a rotina automática)" ] ),
+	$this->Pedir( "Fornecedor<br>para aporte",
+		[ "", FornRec, "<br>(será sugerido nas rotinas de entrada de caixa)" ] ),
 	$this->Pedir( "Caixa da Recepção",
 		[ "Conta corrente ", CCorRec ] ),
 	$this->Pedir( " ",

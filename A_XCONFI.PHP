@@ -405,6 +405,32 @@ class campo_cnfXConfig_SubPlaRAss_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo FornRec
+//======================================================
+
+class campo_cnfXConfig_FornRec extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "FornRec", "FornRec", "FornRec", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo FornRec_Nome
+//======================================================
+
+class campo_cnfXConfig_FornRec_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "FornRec_Nome", "FornRec_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "FornRec", false );
+	}
+
+}
+
+//======================================================
 //	Arquivo cnfXConfig
 //======================================================
 function listaCampos_cnfXConfig( $p_prefixo )
@@ -444,7 +470,9 @@ function listaCampos_cnfXConfig( $p_prefixo )
 			new campo_cnfXConfig_SubPlaRAss_Plano_CodPlano(),
 			new campo_cnfXConfig_SubPlaRAss_Plano_Plano(),
 			new campo_cnfXConfig_SubPlaRAss_Codigo(),
-			new campo_cnfXConfig_SubPlaRAss_Nome() )
+			new campo_cnfXConfig_SubPlaRAss_Nome(),
+			new campo_cnfXConfig_FornRec(),
+			new campo_cnfXConfig_FornRec_Nome() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
