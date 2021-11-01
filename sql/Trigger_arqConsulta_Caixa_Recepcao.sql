@@ -1,12 +1,12 @@
 --*
 --* Trigger para manipular Conta e Parcela em função do pagamento de uma Consulta (não do Tratamento)
 
---* ARQCONSULTA_AD_AU > Achei melhor ter critério de acionamento na tecla DEL
+--* ARQCONSULTA_AD > Achei melhor ter critério de acionamento na tecla DEL
 
 --* ARQCONSULTA_AI_AU
 set term ^;
 
-recreate trigger ARQCONSULTA_AI_AU for ARQLOCALIZA
+recreate trigger ARQCONSULTA_AI_AU for ARQCONSULTA
 active after Insert or Update position 101 as
 	declare idConsulta bigInt;
 	declare idConta bigInt;
@@ -31,29 +31,28 @@ active after Insert or Update position 101 as
 	declare taxa3 numeric(18,2);
 begin
 	--* procurar se já tem um arqConta
+	idConsulta = NEW.idPrimario;
+
 	select ContaCons, Valor, FormaPg
-		from arqConsulta C
-		where idPrimario = NEW.idPrimario
-		into :idConta, :valor, :idFormaPg;
+	from arqConsulta C
+	where idPrimario = :idConsulta
+	into :idConta, :valor, :idFormaPg;
 
 	--* achou um arqConta
-	if( idConta is not null ) then
+	if( :idConta is not null and ( :valor <> NEW.Valor or :idFormaPg <> NEW.FormaPg ) ) then
 	begin
-		if( valor != NEW.Valor || idFormaPg != NEW.FormaPg ) then
+		select idPrimario, Valor, ValorLiq, 100 - ( ValorLiq / Valor * 100.0 )
+		from arqParcela
+		where Conta = :idConta
+		into :idParcela, :valor, :valorLiq, :txCartao;
+
+		if( :valor <> :valorLiq ) then
 		begin
-			select idPrimario, Valor, ValorLiq, 100 - ( ValorLiq / Valor * 100.0 )
-				from arqParcela
-			where Conta = :idConta
-			into :idParcela, :valor, :valorLiq, :txCartao
-
-			if( :valor != :valorLiq ) then
-			begin
-				valorLiq = NEW.Valor ( 100 - :txCartao ) / 100.0;
-			end
-
-			update arqParcela set Valor = NEW.Valor, ValorLiq = :valorLiq, FormaPg = NEW.FormaPg
-				where idPrimario = :idParcela;
+			valorLiq = NEW.Valor * ( 100 - :txCartao ) / 100.0;
 		end
+
+		update arqParcela set Valor = NEW.Valor, ValorLiq = :valorLiq, FormaPg = NEW.FormaPg
+			where idPrimario = :idParcela;
 	end
 	else
 	begin
@@ -66,16 +65,18 @@ begin
 		select Dinheiro, Cartao, Dias, TaxaDeb, Taxa2, Taxa3
 		from arqFormaPg
 		where idPrimario = NEW.FORMAPG
-		into :dinheiro, :cartao, :dias, :taxaDeb, :taxa2, :taxa3
+		into :dinheiro, :cartao, :dias, :taxaDeb, :taxa2, :taxa3;
 
-		if( cartao == 1 ) then
+		if( cartao = 1 ) then
 		begin
 			idTFCobra = 2;
 		end
 		else
+		begin
 			idTFCobra = 3;
+		end
 
-		if( dinheiro == 1 ) then
+		if( dinheiro = 1 ) then
 		begin
 			vencimento = current_date;
 			dataPagto  = current_date;
@@ -84,13 +85,16 @@ begin
 			idTFPagto  = 2;
 		end
 		else
+		begin
 			if( taxaDeb > 0 ) then
 			begin
 				txCartao = taxaDeb;
 			end
 			else
+			begin
 				txCartao = taxa2;
-							
+			end
+
 			vencimento = dateadd( day, dias, current_date );
 			dataPagto  = null;
 			dataComp   = null;
@@ -104,9 +108,9 @@ begin
 
 		insert into arqConta (idPrimario, Transacao, Clinica, TPgRec, Fornecedor, Pessoa, TrgValor,
 			TrgValLiq, TrgQtdParc, TrgQParcPg, ProxVenc, TrgPago, Documento, Emissao, RecEnvia, Compete,
-			Histrico, Arq1  )
+			Historico, Arq1  )
 			values( :idConta, :transacao, NEW.Clinica, 2, null, NEW.Pessoa, 0,
-			0, 0, 0, null, 0, 0, current_date, current_date, current_date, 'Consulta ' . NEW.NUM, null );
+			0, 0, 0, null, 0, 0, current_date, current_date, current_date, 'Consulta ' || NEW.NUM, null );
 
 		--? o Vencimento precisa ser calculado em função de Dias de arqFormaPg
 		--? o ValorLiq precisa ser calculado em função da Taxa de arqFormaPg
@@ -116,11 +120,13 @@ begin
 		--? o TFPagto precisa ser calculado em função dos Logicos de arqFormaPg
 
 		insert into arqParcela (idPrimario, Conta, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado,
-			TFCobra, Emissao, LinhaDig, NomePdf, CCor, Sublano, DataPagto, DataComp, TFPagto, TDetPg, FormaPg
+			TFCobra, Emissao, LinhaDig, NomePdf, CCor, SubPlano, DataPagto, DataComp, TFPagto, TDetPg, FormaPg,
 			Cheque, Arq1, StRetorno, Remessa, DataRem )
 			values( gen_id( GENIDPRIMARIO, 1 ), :idConta, 1, :vencimento, 0, NEW.Valor, NEW.Valor, 0,
 			:idTFCobra, null, '', '', :idCCor, :idSubPlano, :dataPagto, :dataComp, :idTFPagto, null, NEW.FormaPg,
 			0, null, '', null, null );
+
+		update arqConsulta set ContaCons = :idConta where idPrimario = :idConsulta;
 	end
 end^
 
