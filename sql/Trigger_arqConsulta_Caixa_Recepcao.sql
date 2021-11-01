@@ -7,7 +7,7 @@
 set term ^;
 
 recreate trigger ARQCONSULTA_AI_AU for ARQCONSULTA
-active after Insert or Update position 101 as
+active before Insert or Update position 101 as
 	declare idConsulta bigInt;
 	declare idConta bigInt;
 	declare idParcela bigInt;
@@ -30,25 +30,22 @@ active after Insert or Update position 101 as
 	declare taxa2 numeric(18,2);
 	declare taxa3 numeric(18,2);
 begin
-	--* procurar se já tem um arqConta
-	idConsulta = NEW.idPrimario;
 
-	select ContaCons, Valor, FormaPg
-	from arqConsulta C
-	where idPrimario = :idConsulta
-	into :idConta, :valor, :idFormaPg;
-
-	--* achou um arqConta
-	if( :idConta is not null and ( :valor <> NEW.Valor or :idFormaPg <> NEW.FormaPg ) ) then
+--exception teste 'idConta= ' || coalesce( :idConta, 'null' ) || 'NEW valor= ' || NEW.Valor || ' old valor= ' || OLD.VALOR || ' NEW FormaPg= ' || NEW.FormaPg || ' OLD formaPg= ' || OLD.FormaPg;
+	if( updating and ( NEW.Valor <> OLD.Valor or NEW.FormaPg <> OLD.FormaPg ) ) then
 	begin
 		select idPrimario, Valor, ValorLiq, 100 - ( ValorLiq / Valor * 100.0 )
 		from arqParcela
-		where Conta = :idConta
+		where Conta = OLD.ContaCons
 		into :idParcela, :valor, :valorLiq, :txCartao;
 
 		if( :valor <> :valorLiq ) then
 		begin
 			valorLiq = NEW.Valor * ( 100 - :txCartao ) / 100.0;
+		end
+		else
+		begin
+			valorLiq = NEW.Valor;
 		end
 
 		update arqParcela set Valor = NEW.Valor, ValorLiq = :valorLiq, FormaPg = NEW.FormaPg
@@ -126,7 +123,7 @@ begin
 			:idTFCobra, null, '', '', :idCCor, :idSubPlano, :dataPagto, :dataComp, :idTFPagto, null, NEW.FormaPg,
 			0, null, '', null, null );
 
-		update arqConsulta set ContaCons = :idConta where idPrimario = :idConsulta;
+		NEW.ContaCons = :idConta;
 	end
 end^
 
