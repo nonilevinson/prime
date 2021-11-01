@@ -1039,6 +1039,16 @@ PTrata.CamposChave= [ PTrata_PTrata ];
 ContaCons.CamposChave= [ ContaCons_Transacao ];
 ContaPTra.CamposChave= [ ContaPTra_Transacao ];
 }
+	//=========================================================================
+	function AcionaTecla( p_tecla )
+	{
+		switch( p_tecla )
+		{
+			case _DEL: return( !tem( ContaCons ) && !tem( ContaPTra ) );
+		}
+		return( true );
+	}
+	g_acionaTecla="AcionaTecla";
 
 
 //======================================================

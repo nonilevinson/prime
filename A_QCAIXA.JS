@@ -216,7 +216,7 @@ Campo_parQCaixa_Clinica.prototype.FiltroPai = function()
 Campo_parQCaixa_Clinica.prototype.Sugeriu = function()
 {
 {
-		if( g_temMaisDeUmClinica == 0 )
+		if( g_temUmaClinica )
 	return( this.AtribuiuSemCritica( g_minhaClinica ) );
 }
 		return( true );
@@ -227,7 +227,7 @@ Campo_parQCaixa_Clinica.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 Campo_parQCaixa_Clinica.prototype.PodeAlterar = function()
 {
-		if( g_temMaisDeUmClinica )
+		if( g_temMaisDeUmClinica || g_podeTodasClinica )
 		return( true );
 	return( false );
 }

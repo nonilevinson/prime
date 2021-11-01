@@ -763,7 +763,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( ContaPTra ) ) );
+		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( ContaCons ), array( ContaPTra ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -809,6 +809,7 @@ class arqConsulta extends Lance_Arquivo
 		switch( $p_tecla )
 		{
 			case _INS: return( GrupoAtualEm() );
+			case _SDEL: return( false );
 		}
 		return( parent::AcionarBotao( $p_tecla ) );
 	}
