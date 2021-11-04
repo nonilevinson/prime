@@ -637,6 +637,14 @@ commit;
 --* ARQCONSULTA_AI_AU
 set term ^;
 
+--*
+--* Trigger para manipular Conta e Parcela em função do pagamento de uma Consulta (não do Tratamento)
+
+--* ARQCONSULTA_AD > Achei melhor ter critério de acionamento na tecla DEL
+
+--* ARQCONSULTA_AI_AU
+set term ^;
+
 recreate trigger ARQCONSULTA_AI_AU for ARQCONSULTA
 active before Insert or Update position 101 as
 	declare idConsulta bigInt;
@@ -683,6 +691,7 @@ begin
 			where idPrimario = :idParcela;
 	end
 	else
+	if( updating and OLD.FormaPg is null ) then
 	begin
 		idConta = gen_id( GENIDPRIMARIO, 1 );
 

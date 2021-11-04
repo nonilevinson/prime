@@ -52,6 +52,7 @@ begin
 			where idPrimario = :idParcela;
 	end
 	else
+	if( updating and OLD.FormaPg is null ) then
 	begin
 		idConta = gen_id( GENIDPRIMARIO, 1 );
 
