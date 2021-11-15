@@ -65,7 +65,14 @@ class campo_arqFxComCall_ComCall_Mes extends Lance_CampoData
 {
 	function __construct()
 	{
-		parent::__construct( "ComCall_Mes", "ComCall_Mes", "Mes", 4, "mm/aa", EH_CHAVE, "ComCall", false );
+		parent::__construct( "ComCall_Mes", "ComCall_Mes", "Mes", 6, "mm/aaaa", EH_CHAVE, "ComCall", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Mês" );
 	}
 
 }
@@ -104,14 +111,14 @@ class campo_arqFxComCall_PercAte extends Lance_CampoNumerico
 }
 
 //======================================================
-//	Campo Comissa
+//	Campo Comissao
 //======================================================
 
-class campo_arqFxComCall_Comissa extends Lance_CampoNumerico
+class campo_arqFxComCall_Comissao extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "Comissa", "Comissa", "Comissa", 4, "#z,zz", "", "", 0, 0, false );
+		parent::__construct( "Comissao", "Comissao", "Comissao", 4, "#z,zz", "", "", 0, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -140,7 +147,7 @@ function listaCampos_arqFxComCall( $p_prefixo )
 			new campo_arqFxComCall_ComCall_Mes(),
 			new campo_arqFxComCall_Faixa(),
 			new campo_arqFxComCall_PercAte(),
-			new campo_arqFxComCall_Comissa() )
+			new campo_arqFxComCall_Comissao() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -178,7 +185,7 @@ class arqFxComCall extends Lance_Arquivo
 			array_push( $vetAux, array( ComCall_Mes ) );
 			array_push( $vetAux, array( Faixa ) );
 			array_push( $vetAux, array( PercAte ) );
-			array_push( $vetAux, array( Comissa ) );
+			array_push( $vetAux, array( Comissao ) );
 		return( $vetAux );
 	}
 
@@ -201,7 +208,7 @@ class arqFxComCall extends Lance_Arquivo
 			array_push( $vetAux, array( ComCall_Mes ) );
 			array_push( $vetAux, array( Faixa ) );
 			array_push( $vetAux, array( PercAte ) );
-			array_push( $vetAux, array( Comissa ) );
+			array_push( $vetAux, array( Comissao ) );
 		return( $vetAux );
 	}
 

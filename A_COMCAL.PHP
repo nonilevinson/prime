@@ -52,7 +52,14 @@ class campo_arqComCall_Mes extends Lance_CampoData
 {
 	function __construct()
 	{
-		parent::__construct( "Mes", "Mes", "Mes", 4, "mm/aa", EH_CHAVE, 0, false );
+		parent::__construct( "Mes", "Mes", "Mes", 6, "mm/aaaa", EH_CHAVE, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Mês" );
 	}
 
 }

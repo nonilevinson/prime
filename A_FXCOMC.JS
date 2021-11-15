@@ -41,7 +41,7 @@ Campo_arqFxComCall_ComCall_Mes.prototype = new Lance_CampoDataLigado;
 function Campo_arqFxComCall_ComCall_Mes()
 {
 	this.superClass = Lance_CampoDataLigado;
-	this.superClass( "ComCall_Mes", "ComCall_Mes", "Mes", ComCall, 4, "mm/aa", true);
+	this.superClass( "ComCall_Mes", "ComCall_Mes", "Mes", ComCall, 6, "mm/aaaa", true);
 }
 
 var ComCall_Mes = new Campo_arqFxComCall_ComCall_Mes;
@@ -69,15 +69,15 @@ function Campo_arqFxComCall_PercAte()
 var PercAte = new Campo_arqFxComCall_PercAte;
 
 //------------------------------------------------------------
-Campo_arqFxComCall_Comissa.prototype = new Lance_CampoNumerico;
+Campo_arqFxComCall_Comissao.prototype = new Lance_CampoNumerico;
 
-function Campo_arqFxComCall_Comissa()
+function Campo_arqFxComCall_Comissao()
 {
 	this.superClass = Lance_CampoNumerico;
-	this.superClass( "Comissa", "Comissa", "Comissa", 4, "#z,zz", true,"", "");
+	this.superClass( "Comissao", "Comissao", "Comissao", 4, "#z,zz", true,"", "");
 }
 
-var Comissa = new Campo_arqFxComCall_Comissa;
+var Comissao = new Campo_arqFxComCall_Comissao;
 
 ComCall.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
@@ -140,7 +140,7 @@ Campo_arqFxComCall_PercAte.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
-Campo_arqFxComCall_Comissa.prototype.Obrigatorio = function( p_comMsg )
+Campo_arqFxComCall_Comissao.prototype.Obrigatorio = function( p_comMsg )
 {
 	{
 		if( p_comMsg ) alert( "O percentual da comissão é obrigatório" );
@@ -151,7 +151,7 @@ Campo_arqFxComCall_Comissa.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqFxComCall_Comissa.prototype.Cabecalho = function()
+Campo_arqFxComCall_Comissao.prototype.Cabecalho = function()
 {
 		return( "% Comissão" );
 }
@@ -198,7 +198,7 @@ function ListaDeCampos_arqFxComCall( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ ComCall, ComCall_Clinica, ComCall_Clinica_Clinica, ComCall_Mes, Faixa, PercAte, Comissa ]	);
+		[ ComCall, ComCall_Clinica, ComCall_Clinica_Clinica, ComCall_Mes, Faixa, PercAte, Comissao ]	);
 	IniciarDependencias_arqFxComCall();
 	g_prefixo = l_prefixo;
 	return( l_lista );

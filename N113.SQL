@@ -2193,7 +2193,7 @@ CREATE TABLE arqComCall
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  3*/	MES DATE, /* Máscara = Mmaa */
+	/*  3*/	MES DATE, /* Máscara = A4mm */
 	/*  4*/	TRGQTOFX INTEGER, /* Máscara = N */
 	CONSTRAINT arqComCall_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqComCall_UK UNIQUE ( Clinica, Mes )
@@ -2619,7 +2619,7 @@ CREATE TABLE arqFxComCall
 	/*  2*/	COMCALL ligadoComArquivo, /* Ligado com o Arquivo ComCall */
 	/*  3*/	FAIXA INTEGER, /* Máscara = N */
 	/*  4*/	PERCATE NUMERIC( 4, 2 ), /* Máscara = N */
-	/*  5*/	COMISSA NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  5*/	COMISSAO NUMERIC( 4, 2 ), /* Máscara = N */
 	CONSTRAINT arqFxComCall_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqFxComCall_UK UNIQUE ( ComCall, Faixa )
 );
@@ -3015,7 +3015,7 @@ RECREATE VIEW V_arqComCall AS
 commit;
 
 RECREATE VIEW V_arqFxComCall AS 
-	SELECT A0.IDPRIMARIO, A0.COMCALL, A1.CLINICA as COMCALL_CLINICA, A2.CLINICA as COMCALL_CLINICA_CLINICA, A1.MES as COMCALL_MES, A0.FAIXA, A0.PERCATE, A0.COMISSA
+	SELECT A0.IDPRIMARIO, A0.COMCALL, A1.CLINICA as COMCALL_CLINICA, A2.CLINICA as COMCALL_CLINICA_CLINICA, A1.MES as COMCALL_MES, A0.FAIXA, A0.PERCATE, A0.COMISSAO
 	FROM arqFxComCall A0
 	left join arqComCall A1 on A1.IDPRIMARIO = A0.COMCALL
 	left join arqClinica A2 on A2.IDPRIMARIO = A1.CLINICA;
@@ -3148,6 +3148,7 @@ insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa
 insert into arqLanceOperacao values(200180,2,'Rotina para criar Saída de caixa de Assesor','',180,10,0,'');
 insert into arqLanceOperacao values(200181,2,'Rotina para criar Entrada de caixa de Assesor','',181,10,0,'');
 insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'');
+insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -4700,7 +4701,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'ComCall', OLD.ComCall, NEW.ComCall );
 	execute procedure set_log( 12, NEW.idPrimario, 'Faixa', OLD.Faixa, NEW.Faixa );
 	execute procedure set_log( 12, NEW.idPrimario, 'PercAte', OLD.PercAte, NEW.PercAte );
-	execute procedure set_log( 12, NEW.idPrimario, 'Comissa', OLD.Comissa, NEW.Comissa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Comissao', OLD.Comissao, NEW.Comissao );
 end
 end^
 

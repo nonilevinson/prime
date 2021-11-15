@@ -9,6 +9,7 @@ commit;
 
 insert into arqLanceOperacao values(100049,1,'Cadastro de comissionamento do Call Center','arqComCall',49,1,0,'');
 insert into arqLanceOperacao values(100050,1,'Cadastro das faixas de comissionamento do Call Center','arqFxComCall',50,1,0,'');
+insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
 commit;
 
 /************************************************************
@@ -78,7 +79,7 @@ CREATE TABLE arqFxComCall
 	/*  2*/	COMCALL ligadoComArquivo, /* Ligado com o Arquivo ComCall */
 	/*  3*/	FAIXA INTEGER, /* Máscara = N */
 	/*  4*/	PERCATE NUMERIC( 4, 2 ), /* Máscara = N */
-	/*  5*/	COMISSA NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  5*/	COMISSAO NUMERIC( 4, 2 ), /* Máscara = N */
 	CONSTRAINT arqFxComCall_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqFxComCall_UK UNIQUE ( ComCall, Faixa )
 );
@@ -91,7 +92,7 @@ ALTER TABLE arqFxComCall ADD CONSTRAINT arqFxComCall_FK_ComCall FOREIGN KEY ( CO
 commit;
 
 RECREATE VIEW V_arqFxComCall AS 
-	SELECT A0.IDPRIMARIO, A0.COMCALL, A1.CLINICA as COMCALL_CLINICA, A2.CLINICA as COMCALL_CLINICA_CLINICA, A1.MES as COMCALL_MES, A0.FAIXA, A0.PERCATE, A0.COMISSA
+	SELECT A0.IDPRIMARIO, A0.COMCALL, A1.CLINICA as COMCALL_CLINICA, A2.CLINICA as COMCALL_CLINICA_CLINICA, A1.MES as COMCALL_MES, A0.FAIXA, A0.PERCATE, A0.COMISSAO
 	FROM arqFxComCall A0
 	left join arqComCall A1 on A1.IDPRIMARIO = A0.COMCALL
 	left join arqClinica A2 on A2.IDPRIMARIO = A1.CLINICA;
@@ -121,7 +122,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'ComCall', OLD.ComCall, NEW.ComCall );
 	execute procedure set_log( 12, NEW.idPrimario, 'Faixa', OLD.Faixa, NEW.Faixa );
 	execute procedure set_log( 12, NEW.idPrimario, 'PercAte', OLD.PercAte, NEW.PercAte );
-	execute procedure set_log( 12, NEW.idPrimario, 'Comissa', OLD.Comissa, NEW.Comissa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Comissao', OLD.Comissao, NEW.Comissao );
 end
 end^
 
@@ -154,3 +155,13 @@ end^
 set term ;^
 commit;
 
+//* Caxias
+INSERT INTO ARQCOMCALL (IDPRIMARIO, CLINICA, MES, TRGQTOFX) VALUES (1, 4, '2021-10-01', 0);
+COMMIT WORK;
+INSERT INTO ARQFXCOMCALL (IDPRIMARIO, COMCALL, FAIXA, PERCATE, COMISSAO) VALUES (1, 1, 1, 45, 5);
+INSERT INTO ARQFXCOMCALL (IDPRIMARIO, COMCALL, FAIXA, PERCATE, COMISSAO) VALUES (2, 1, 2, 50, 10);
+INSERT INTO ARQFXCOMCALL (IDPRIMARIO, COMCALL, FAIXA, PERCATE, COMISSAO) VALUES (3, 1, 3, 55, 12);
+INSERT INTO ARQFXCOMCALL (IDPRIMARIO, COMCALL, FAIXA, PERCATE, COMISSAO) VALUES (4, 1, 4, 60, 15);
+INSERT INTO ARQFXCOMCALL (IDPRIMARIO, COMCALL, FAIXA, PERCATE, COMISSAO) VALUES (5, 1, 5, 65, 20);
+INSERT INTO ARQFXCOMCALL (IDPRIMARIO, COMCALL, FAIXA, PERCATE, COMISSAO) VALUES (6, 1, 6, 99.99, 25);
+COMMIT WORK;

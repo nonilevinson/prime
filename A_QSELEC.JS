@@ -965,7 +965,7 @@ Campo_parQSelecao_DataFim1.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_parQSelecao_MesIni.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( ultimaLigOpcaoEm( 162 ) )
+		if( ultimaLigOpcaoEm( 162,189 ) )
 	{
 		if( p_comMsg ) alert( "O mês é obrigatório" );
 		return( true );
@@ -1126,6 +1126,19 @@ Campo_parQSelecao_Clinica.prototype.FiltroPai = function()
 		if( g_temMaisDeUmClinica )
 			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
 		return( "" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parQSelecao_Clinica.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 189 ) )
+	{
+		if( p_comMsg ) alert( "A clínica é obrigatória" );
+		return( true );
+	}
+	return( false );
 }
 
 //-------------------------------------------------------------

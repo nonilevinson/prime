@@ -30,7 +30,7 @@ Campo_arqComCall_Mes.prototype = new Lance_CampoData;
 function Campo_arqComCall_Mes()
 {
 	this.superClass = Lance_CampoData;
-	this.superClass( "Mes", "Mes", "Mes", 4, "mm/aa", true);
+	this.superClass( "Mes", "Mes", "Mes", 6, "mm/aaaa", true);
 }
 
 var Mes = new Campo_arqComCall_Mes;
@@ -65,6 +65,14 @@ Campo_arqComCall_Mes.prototype.Obrigatorio = function( p_comMsg )
 		if( p_comMsg ) alert( "O mês é obrigatório" );
 		return( true );
 	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqComCall_Mes.prototype.Cabecalho = function()
+{
+		return( "Mês" );
 }
 
 Mes.TipoCampo |= CAMPO_CHAVE;
@@ -119,5 +127,6 @@ g_idOperacao = 49;
 
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Faixas","","F",187,"","",1,"","1","a_fxcomc","arqFxComCall","Folhear","ComCall","?","","", "","", 0,6,[],[50]);
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_2 = new Array( 1,"Copiar","","p",189,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_comcall_copiar^^^^^^^^^^^^^^^^^^", "", 0,6,[189],[]);
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }
