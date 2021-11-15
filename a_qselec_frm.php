@@ -257,5 +257,12 @@ if( $op == 175 ) //* r_consulta_relacao
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
+if( $op == 189 ) //* p_comcall_copiar
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Mês", MesIni );
+}
+
 //==================================================================================
 echo 	"</table>";

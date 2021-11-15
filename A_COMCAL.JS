@@ -126,7 +126,7 @@ g_arquivoCampos = ListaDeCampos_arqComCall( '' );
 g_idOperacao = 49;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Faixas","","F",187,"","",1,"","1","a_fxcomc","arqFxComCall","Folhear","ComCall","?","","", "","", 0,6,[],[50]);
-var Menu_2 = new Array( 1,"Copiar","","p",189,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_comcall_copiar^^^^^^^^^^^^^^^^^^", "", 0,6,[189],[]);
+var Menu_1 = new Array( 1,"Faixas","","F",187,"","",1,"","1","a_fxcomc","arqFxComCall","Folhear","ComCall","?","","", "","", 0,15,[],[50]);
+var Menu_2 = new Array( 1,"Copiar de ATUAL","","p",189,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_comcall_copiar^^^^^^^^^^^^^^^^^^", "", 0,15,[189],[]);
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }
