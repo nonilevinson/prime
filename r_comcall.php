@@ -18,14 +18,16 @@ class RelParcela extends Relatorios
          ' ' ];
 
       $this->DefinirCabColunas(
-         [ "Nome",         60, ALINHA_ESQ ],
-         [ "Contato",      25, ALINHA_DIR ],
-         [ "Compareceram", 25, ALINHA_DIR ],
-         [ "Conversão %",  25, ALINHA_DIR ],
-         [ "Valor",	      25, ALINHA_DIR ],
-         [ "Faixa",	      15, ALINHA_DIR ],
-         [ "Comissão %",	15, ALINHA_DIR ],
-         [ "Comissão R$",  25, ALINHA_DIR ] );
+         [ "Nome",         65, ALINHA_ESQ, 2 ],
+         [ "Contatos",     18, ALINHA_DIR, 2 ],
+         [ "Compareceram", 25, ALINHA_DIR, 2 ],
+         [ "Conversão\n%", 20, ALINHA_DIR, 2 ],
+         [ "Valor",	      22, ALINHA_DIR, 2 ],
+         [ "Faixa",	      12, ALINHA_DIR, 2 ],
+         
+         [ "Comissão %",	40, ALINHA_DIR, 1, [
+            [ "%",	18, ALINHA_DIR ],
+            [ "R$",  22, ALINHA_DIR ] ] ] );
 
       $this->DefinirQuebras(
          [ 'QuebraPorClinica',   SIM, NAO, SIM ] );
@@ -42,13 +44,14 @@ class RelParcela extends Relatorios
 	{
 		// $total = $this->ValorTotal( "totenviado" ) + $this->ValorTotal( "totNenviado" );
 
-		$this->valores[ 0 ] = $p_cabTotal;
+		$this->JuntarColunas( [5,6] );
+      $this->valores[ 0 ] = $p_cabTotal;
 		$this->valores[ 1 ] = $this->FormatarTotal( "totContato" );
 		$this->valores[ 2 ] = $this->FormatarTotal( "totCompareceram" );
-		$this->valores[ 4 ] = $this->FormatarTotal( "totValor" );
-		$this->valores[ 7 ] = $this->FormatarTotal( "totComissao" );
+		$this->valores[ 4 ] = $this->FormatarTotal( "totValor", 2 );
+		$this->valores[ 7 ] = $this->FormatarTotal( "totComissao", 2 );
 		$this->ImprimirTotalColunas();
-
+      $this->RestaurarColunas();
 	}
 
 	//------------------------------------------------------------------------
@@ -87,7 +90,7 @@ class RelParcela extends Relatorios
          From arqComCall C
          Where C.Clinica = " . $regA->IDCLINICA . " and C.Mes = '" . $parQSelecao->MESINI . "'";
       $umComCall = sql_lerUmRegistro( $select );
-if( $g_debugProcesso ) echo '<br><b>GR0 1 arqComCall S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>GR0 1 arqComCall S=</b> '.$select;
 
       if( !$umComCall )
       {
@@ -97,7 +100,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 1 arqComCall S=</b> '.$select;
             Order by C.Mes Desc
             rows 1";
          $umComCall = sql_lerUmRegistro( $select );
-if( $g_debugProcesso ) echo '<br><b>GR0 2 arqComCall S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>GR0 2 arqComCall S=</b> '.$select;
       }
       
       $this->idComCall = $umComCall->IDCOMCALL;
@@ -126,12 +129,14 @@ if( $g_debugProcesso ) echo '<br><b>GR0 2 arqComCall S=</b> '.$select;
       //* ver a faixa da comissão
       $select = "Select F.Faixa, F.PercAte, F.Comissao
          From arqFxComCall F
-         Where F.Influencer = " . $p_idInfluencer . " and F.ValorAte >= " . $total . " and
-            extract(year from F.Data) || '/' || lpad(extract(month from F.Data),2,0) <= '" . $this->mesIni . "'
-         Order by F.Data, F.ValorAte
+         Where F.ComCall = " . $this->idComCall . " and F.PercAte >= " . $conversao . "
+         Order by F.PercAte
          rows 1";
-      $umaFaixa    = sql_lerUmRegistro( $select );
+      $umFxComCall = sql_lerUmRegistro( $select );
+// if( $g_debugProcesso ) echo '<br><b>GR0 arqFxComCall S=</b> '.$select;
 
+      $percAte  = $umFxComCall->PERCATE;
+      $comissao = $valor * $percAte / 100.0;
       
       $this->valores = [
          $regA->NOME,
@@ -139,9 +144,9 @@ if( $g_debugProcesso ) echo '<br><b>GR0 2 arqComCall S=</b> '.$select;
          formatarNum( $compareceu ),
          formatarValor( $conversao ),
          formatarValor( $valor ),
-         "Faixa",
-         "Comissão %",
-         "Comissão R$",
+         $umFxComCall->FAIXA,
+         formatarValor( $percAte ),
+         formatarValor( $comissao ),
       ];
 
       $this->ImprimirValorColunas();
@@ -149,6 +154,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 2 arqComCall S=</b> '.$select;
 		$this->AcumularTotal( "totContato", $todas );
 		$this->AcumularTotal( "totCompareceram", $compareceu );
 		$this->AcumularTotal( "totValor", $valor );
+		$this->AcumularTotal( "totComissao", $comissao );
 	}
 }
 
@@ -158,7 +164,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 2 arqComCall S=</b> '.$select;
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelParcela( RETRATO, A4, 'Consultas_Relacao.pdf', '', true );
+$proc = new RelParcela( RETRATO, A4, 'Consultas_Relacao.pdf', '', true, .97 );
 
 $filtro = substr(
    ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
