@@ -13,7 +13,7 @@
 
 	$setup["BANCO"] = array(
 		"TIPO"				=> "firebird",	// Tipo
-		"NOME"				=> "dado112.fdb",	// Nome
+		"NOME"				=> "dado113.fdb",	// Nome
 		"LOGINLOCAL"		=> "SYSDBA",	// Login Local
 		"SENHALOCAL"		=> "masterkey",	// Senha
 		"CAMINHOLOCAL"		=> "",	// Caminho
@@ -22,7 +22,7 @@
 		"CAMINHOSERV"		=> "j:/www.swsm.com.br/firebird",	// Caminho
 		"ACENTO"				=> "ISO8859_1" );	// Acentuação do banco
 
-	$txtRodape = '<a href="http://www.kogumelo.com.br" target="_blank" class="Rodape">&copy; Kogumelo Informática</a>';
+	$txtRodape = '<a href="https://www.swsm.com.br" target="_blank" class="Rodape">&copy; Kogumelo Informática</a>';
 
 
 	global $g_vetPerfil;
@@ -30,6 +30,7 @@
 		array( 'Usuários', 'arqUsuario', 'Usuario', 'Senha', 'Grupo', '', 'Ativo', 'Email', 'Versao', 'principa' )	);
 
 	$versoes = array(
+		"1.13"	=> "16/11/2021",
 		"1.12"	=> "01/11/2021",
 		"1.11"	=> "13/10/2021",
 		"1.10"	=> "22/09/2021",

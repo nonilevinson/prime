@@ -2186,6 +2186,25 @@ commit;
 
 
 /************************************************************
+	Arquivo ComCall   
+************************************************************/
+
+CREATE TABLE arqComCall
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  3*/	MES DATE, /* Máscara = Mmaa */
+	/*  4*/	TRGQTOFX INTEGER, /* Máscara = N */
+	CONSTRAINT arqComCall_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqComCall_UK UNIQUE ( Clinica, Mes )
+);
+commit;
+
+CREATE DESC INDEX arqComCall_IdPrimario_Desc ON arqComCall (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	Arquivo ParaGrupo 
 ************************************************************/
 
@@ -2591,6 +2610,26 @@ commit;
 
 
 /************************************************************
+	Arquivo FxComCall 
+************************************************************/
+
+CREATE TABLE arqFxComCall
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	COMCALL ligadoComArquivo, /* Ligado com o Arquivo ComCall */
+	/*  3*/	FAIXA INTEGER, /* Máscara = N */
+	/*  4*/	PERCATE NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  5*/	COMISSA NUMERIC( 4, 2 ), /* Máscara = N */
+	CONSTRAINT arqFxComCall_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqFxComCall_UK UNIQUE ( ComCall, Faixa )
+);
+commit;
+
+CREATE DESC INDEX arqFxComCall_IdPrimario_Desc ON arqFxComCall (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -2969,6 +3008,19 @@ RECREATE VIEW V_arqCliMidia AS
 	left join arqMidia A2 on A2.IDPRIMARIO = A0.MIDIA;
 commit;
 
+RECREATE VIEW V_arqComCall AS 
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.MES, A0.TRGQTOFX
+	FROM arqComCall A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA;
+commit;
+
+RECREATE VIEW V_arqFxComCall AS 
+	SELECT A0.IDPRIMARIO, A0.COMCALL, A1.CLINICA as COMCALL_CLINICA, A2.CLINICA as COMCALL_CLINICA_CLINICA, A1.MES as COMCALL_MES, A0.FAIXA, A0.PERCATE, A0.COMISSA
+	FROM arqFxComCall A0
+	left join arqComCall A1 on A1.IDPRIMARIO = A0.COMCALL
+	left join arqClinica A2 on A2.IDPRIMARIO = A1.CLINICA;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -3050,6 +3102,8 @@ insert into arqLanceOperacao values(100043,1,'Cadastro de tipos de agendas [0]',
 insert into arqLanceOperacao values(100044,1,'Cadastro de formas de pagamento de consultas','arqFormaPg',44,1,0,'');
 insert into arqLanceOperacao values(100046,1,'Cadastro de contas recorrentes a pagar e a receber','arqRecorrente',46,10,0,'');
 insert into arqLanceOperacao values(100047,1,'Cadastro da relação de mídias e clínicas','arqCliMidia',47,1,0,'');
+insert into arqLanceOperacao values(100049,1,'Cadastro de comissionamento do Call Center','arqComCall',49,1,0,'');
+insert into arqLanceOperacao values(100050,1,'Cadastro das faixas de comissionamento do Call Center','arqFxComCall',50,1,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
 insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de grupos de acesso','',11,90,0,'');
@@ -3084,11 +3138,11 @@ insert into arqLanceOperacao values(200129,2,'Rotina para baixar parcelas','',12
 insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos usuários','',68,90,0,'');
 insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos','',151,1,0,'');
-insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
 insert into arqLanceOperacao values(200162,2,'Gerar conta e parcela de recorrentes','',162,10,0,'');
 insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm()');
 insert into arqLanceOperacao values(200166,2,'Relatório de parcelas de contas a pagar e a receber','',166,50,0,'');
+insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200176,2,'Rotina para criar Saída de caixa da Recepção','',176,10,0,'');
 insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa da Recepção','',177,10,0,'');
 insert into arqLanceOperacao values(200180,2,'Rotina para criar Saída de caixa de Assesor','',180,10,0,'');
@@ -3197,6 +3251,8 @@ ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_SubPlaRAss FOREIGN KEY ( SUB
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaCons FOREIGN KEY ( CONTACONS ) REFERENCES arqConta ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaPTra FOREIGN KEY ( CONTAPTRA ) REFERENCES arqConta ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_FornRec FOREIGN KEY ( FORNREC ) REFERENCES arqFornecedor ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqComCall ADD CONSTRAINT arqComCall_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqFxComCall ADD CONSTRAINT arqFxComCall_FK_ComCall FOREIGN KEY ( COMCALL ) REFERENCES arqComCall ON DELETE CASCADE ON UPDATE CASCADE;
 commit;
 
 
@@ -4590,6 +4646,68 @@ set term ;^
 
 commit;
 
+/************************************************************
+	Trigger para Log de arqComCall
+************************************************************/
+
+set term ^;
+
+recreate trigger arqComCall_LOG for arqComCall
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Clinica_Clinica, ' ' ) || '-' || coalesce( Mes, ' ' ) from v_arqComCall where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100049 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Mes', OLD.Mes, NEW.Mes );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqFxComCall
+************************************************************/
+
+set term ^;
+
+recreate trigger arqFxComCall_LOG for arqFxComCall
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( ComCall_Clinica_Clinica, ' ' ) || '-' || coalesce( ComCall_Mes, ' ' ) || '-' || coalesce( Faixa, ' ' ) from v_arqFxComCall where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100050 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'ComCall', OLD.ComCall, NEW.ComCall );
+	execute procedure set_log( 12, NEW.idPrimario, 'Faixa', OLD.Faixa, NEW.Faixa );
+	execute procedure set_log( 12, NEW.idPrimario, 'PercAte', OLD.PercAte, NEW.PercAte );
+	execute procedure set_log( 12, NEW.idPrimario, 'Comissa', OLD.Comissa, NEW.Comissa );
+end
+end^
+
+set term ;^
+
+commit;
+
 
 /************************************************************
 	TRIGGERS DE TOTALIZADORES
@@ -4778,6 +4896,32 @@ if( ( OLD.DataPagto is not null ) ) then begin
 update arqConta set arqConta.TrgPago = arqConta.TrgPago - 
 OLD.ValorLiq where arqConta.IDPRIMARIO = OLD.Conta;
 end
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqFxComCall: Quantos - atua em arqComCall.TrgQtoFx
+************************************************************/
+
+set term ^;
+
+recreate trigger arqComCall_TrgQtoFx for arqFxComCall
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqComCall set arqComCall.TrgQtoFx = arqComCall.TrgQtoFx + 
+1
+ where arqComCall.IDPRIMARIO = NEW.ComCall;
+end
+if( updating or deleting ) then begin
+update arqComCall set arqComCall.TrgQtoFx = arqComCall.TrgQtoFx - 
+1
+ where arqComCall.IDPRIMARIO = OLD.ComCall;
 end
 end^
 
