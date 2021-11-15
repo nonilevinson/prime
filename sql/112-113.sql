@@ -10,6 +10,7 @@ commit;
 insert into arqLanceOperacao values(100049,1,'Cadastro de comissionamento do Call Center','arqComCall',49,1,0,'');
 insert into arqLanceOperacao values(100050,1,'Cadastro das faixas de comissionamento do Call Center','arqFxComCall',50,1,0,'');
 insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
+insert into arqLanceOperacao values(200190,2,'Relatório de comissionamento do Call Center','',190,50,0,'');
 commit;
 
 /************************************************************

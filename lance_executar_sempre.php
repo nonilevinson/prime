@@ -50,9 +50,13 @@ javaScriptIni(),
 	'var g_temMaisDeUmClinica = ', ( sizeof( $vetIdClinica ) > 1 ? 'true' : 'false' ), ';',
 	'var g_podeTodasClinica = ', ( sizeof( $vetIdClinica ) == 0 ? 'true' : 'false' ), ';',
 	'var g_qtasDesmar = ', $qtasDesmar , ';',
+javaScriptFim();
+/*	
+echo
+javaScriptIni(),
 	'console.warn(\'MaisDeUmClinica= \'+g_temMaisDeUmClinica );',
 	'console.warn(\'UmaClinica= \'+g_temUmaClinica );',
 	'console.warn(\'TodasClinica= \'+g_podeTodasClinica );',
 javaScriptFim();
-
+*/
 sql_fecharBD();

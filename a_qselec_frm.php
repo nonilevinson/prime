@@ -257,11 +257,12 @@ if( $op == 175 ) //* r_consulta_relacao
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
-if( $op == 189 ) //* p_comcall_copiar
+if( in_array( $op, [189,190] ) ) //* 189: p_comcall_copiar | 190: r_comcall
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Mês", MesIni );
+	$this->Pedir( "Mês", MesIni ),
+	$this->Pedir( "Call Center", Usuario );
 }
 
 //==================================================================================

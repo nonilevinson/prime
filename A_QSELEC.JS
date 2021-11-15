@@ -750,7 +750,7 @@ Usuario_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_parQSelecao_Medico.prototype.FiltroPai = function()
 {
-			return( "A.Grupo is not null and Medico = 1" );
+			return( "A.Grupo is not null" );
 }
 
 //-------------------------------------------------------------
@@ -965,7 +965,7 @@ Campo_parQSelecao_DataFim1.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_parQSelecao_MesIni.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( ultimaLigOpcaoEm( 162,189 ) )
+		if( ultimaLigOpcaoEm( 162,189,190 ) )
 	{
 		if( p_comMsg ) alert( "O mês é obrigatório" );
 		return( true );
