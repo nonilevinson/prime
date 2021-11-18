@@ -36,6 +36,28 @@ function Campo_arqPTrata_Valor()
 var Valor = new Campo_arqPTrata_Valor;
 
 //------------------------------------------------------------
+Campo_arqPTrata_MrgDesc.prototype = new Lance_CampoNumerico;
+
+function Campo_arqPTrata_MrgDesc()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "MrgDesc", "MrgDesc", "MrgDesc", 4, "#z,zz", true,"", "");
+}
+
+var MrgDesc = new Campo_arqPTrata_MrgDesc;
+
+//------------------------------------------------------------
+Campo_arqPTrata_ValMinimo.prototype = new Lance_CampoNumerico;
+
+function Campo_arqPTrata_ValMinimo()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "ValMinimo", "ValMinimo", "ValMinimo", 8, "###.##z,zz", true,"", "");
+}
+
+var ValMinimo = new Campo_arqPTrata_ValMinimo;
+
+//------------------------------------------------------------
 Campo_arqPTrata_Descricao.prototype = new Lance_CampoTexto;
 
 function Campo_arqPTrata_Descricao()
@@ -88,6 +110,33 @@ Campo_arqPTrata_Valor.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqPTrata_MrgDesc.prototype.Cabecalho = function()
+{
+		return( "% Desconto" );
+}
+
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqPTrata_ValMinimo.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( Valor - ( Valor * MrgDesc ) / 100.0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqPTrata_ValMinimo.prototype.Cabecalho = function()
+{
+		return( "Mínimo" );
+}
+
+ValMinimo.EhCalculado = true;
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_arqPTrata_Ativo.prototype.Sugeriu = function()
@@ -107,6 +156,8 @@ Campo_arqPTrata_Ativo.prototype.Cabecalho = function()
 
 function IniciarDependencias_arqPTrata()
 {
+Valor.CalculosDependentes= [ ValMinimo ];
+MrgDesc.CalculosDependentes= [ ValMinimo ];
 }
 
 
@@ -124,7 +175,7 @@ function ListaDeCampos_arqPTrata( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ PTrata, Apelido, Valor, Descricao, Ativo ]	);
+		[ PTrata, Apelido, Valor, MrgDesc, ValMinimo, Descricao, Ativo ]	);
 	IniciarDependencias_arqPTrata();
 	g_prefixo = l_prefixo;
 	return( l_lista );

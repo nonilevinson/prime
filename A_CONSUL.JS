@@ -787,6 +787,18 @@ Campo_arqConsulta_PTrata.prototype.FiltroPai = function()
 }
 
 //-------------------------------------------------------------
+// Campos a mais que o ligado traz do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_PTrata.prototype.TrazOutrosDoPai = function()
+{
+	var vetPai = new Array();
+			vetPai[0] = [ "Valor, MrgDesc",
+					"A.PTrata, arqPTrata",
+					"0,0" ];
+		return( vetPai );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_PTrata_PTrata.prototype.ObrigatorioEspecial = function( p_comMsg )
@@ -795,6 +807,18 @@ Campo_arqConsulta_PTrata_PTrata.prototype.ObrigatorioEspecial = function( p_comM
 }
 
 PTrata_PTrata.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Pré Campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ValPTrata.prototype.PreCampo = function()
+{
+		if( ValPTrata == 0 )
+	{
+		alt( ValPTrata, PTrata_Valor );
+	}
+	return( true );
+}
+
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -820,6 +844,19 @@ Campo_arqConsulta_ValPTrata.prototype.Obrigatorio = function( p_comMsg )
 		if( p_comMsg ) alert( "O valor do tratamento é obrigatório" );
 		return( true );
 	}
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ValPTrata.prototype.TemErro = function()
+{
+		if( tem(this) && ( ValPTrata < ( PTrata_Valor - (PTrata_Valor * PTrata_MrgDesc ) / 100.0 ) ) )
+	{
+		alert( "Valor inválido! Está abaixo da margem de desconto permitida" );
+		return( true );
+	}
+	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1027,6 +1064,7 @@ Assessor_Usuario.ErrosDependentes= [ Assessor ];
 CallCenter_Usuario.ErrosDependentes= [ CallCenter ];
 FormaPg_FormaPg.ErrosDependentes= [ FormaPg ];
 PTrata_PTrata.ErrosDependentes= [ PTrata ];
+PTrata.ErrosDependentes= [ ValPTrata ];
 ContaCons_Transacao.ErrosDependentes= [ ContaCons ];
 ContaPTra_Transacao.ErrosDependentes= [ ContaPTra ];
 Clinica.CamposChave= [ Clinica_Clinica ];
@@ -1055,6 +1093,8 @@ ContaPTra.CamposChave= [ ContaPTra_Transacao ];
 //	Arquivo e seus campos
 //======================================================
 g_arquivoAtual = "arqConsulta";
+var PTrata_Valor;
+var PTrata_MrgDesc;
 //------------------------------------------------------------
 function ListaDeCampos_arqConsulta( p_prefixo )
 {

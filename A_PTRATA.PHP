@@ -58,6 +58,46 @@ class campo_arqPTrata_Valor extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo MrgDesc
+//======================================================
+
+class campo_arqPTrata_MrgDesc extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "MrgDesc", "MrgDesc", "MrgDesc", 4, "#z,zz", "", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "% Desconto" );
+	}
+
+}
+
+//======================================================
+//	Campo ValMinimo
+//======================================================
+
+class campo_arqPTrata_ValMinimo extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "ValMinimo", "ValMinimo", "ValMinimo", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Mínimo" );
+	}
+
+}
+
+//======================================================
 //	Campo Descricao
 //======================================================
 
@@ -113,6 +153,8 @@ function listaCampos_arqPTrata( $p_prefixo )
 			new campo_arqPTrata_PTrata(),
 			new campo_arqPTrata_Apelido(),
 			new campo_arqPTrata_Valor(),
+			new campo_arqPTrata_MrgDesc(),
+			new campo_arqPTrata_ValMinimo(),
 			new campo_arqPTrata_Descricao(),
 			new campo_arqPTrata_Ativo() )
 	);
@@ -150,6 +192,8 @@ class arqPTrata extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( PTrata ) );
 			array_push( $vetAux, array( Valor ) );
+			array_push( $vetAux, array( MrgDesc ) );
+			array_push( $vetAux, array( ValMinimo ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
@@ -164,6 +208,8 @@ class arqPTrata extends Lance_Arquivo
 			array_push( $vetAux, array( PTrata ) );
 			array_push( $vetAux, array( Apelido ) );
 			array_push( $vetAux, array( Valor ) );
+			array_push( $vetAux, array( MrgDesc ) );
+			array_push( $vetAux, array( ValMinimo ) );
 			array_push( $vetAux, array( Descricao ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );

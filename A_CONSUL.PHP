@@ -488,6 +488,18 @@ class campo_arqConsulta_PTrata extends Lance_CampoLigado
 		parent::__construct( "PTrata", "PTrata", "PTrata", 0, "arqPTrata", "arqPTrata.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = array();
+			array_push( $vetPai, 
+				array( "Valor, MrgDesc", 
+					"A.PTrata, arqPTrata",
+					"0,0" ) );
+		return( $vetPai );
+	}
+
 }
 
 //======================================================

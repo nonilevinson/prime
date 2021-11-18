@@ -2009,8 +2009,10 @@ CREATE TABLE arqPTrata
 	/*  2*/	PTRATA VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	APELIDO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
-	/*  5*/	DESCRICAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
-	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	MRGDESC NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  6*/	/* VALMINIMO */
+	/*  7*/	DESCRICAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
+	/*  8*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqPTrata_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqPTrata_UK UNIQUE ( PTrata )
 );
@@ -2666,6 +2668,8 @@ ALTER TABLE arqLido ADD GRUPO VARCHAR( 50 ) computed by ( ( COALESCE( ( SELECT G
 ALTER TABLE arqLido ALTER GRUPO POSITION 4;
 ALTER TABLE arqIndexAtua ADD DATAPROX DATE computed by ( dateadd( Dias day to Data ) ); 
 ALTER TABLE arqIndexAtua ALTER DATAPROX POSITION 5;
+ALTER TABLE arqPTrata ADD VALMINIMO NUMERIC( 8, 2 ) computed by ( Valor - ( Valor * MrgDesc ) / 100.0 ); 
+ALTER TABLE arqPTrata ALTER VALMINIMO POSITION 6;
 ALTER TABLE arqParcela ADD CLINICACAL VARCHAR( 30 ) computed by ( ( COALESCE( ( SELECT Clinica FROM arqClinica WHERE arqClinica.IdPrimario=( COALESCE( ( SELECT Clinica FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) ); 
 ALTER TABLE arqParcela ALTER CLINICACAL POSITION 3;
 ALTER TABLE arqParcela ADD TPGRECCAL VARCHAR( 7 ) computed by ( (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = arqParcela.Conta) ); 
@@ -2894,7 +2898,7 @@ RECREATE VIEW V_arqClinica AS
 commit;
 
 RECREATE VIEW V_arqPTrata AS 
-	SELECT A0.IDPRIMARIO, A0.PTRATA, A0.APELIDO, A0.VALOR, A0.DESCRICAO, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.PTRATA, A0.APELIDO, A0.VALOR, A0.MRGDESC, A0.VALMINIMO, A0.DESCRICAO, A0.ATIVO
 	FROM arqPTrata A0;
 commit;
 
@@ -4160,6 +4164,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'PTrata', OLD.PTrata, NEW.PTrata );
 	execute procedure set_log( 12, NEW.idPrimario, 'Apelido', OLD.Apelido, NEW.Apelido );
 	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'MrgDesc', OLD.MrgDesc, NEW.MrgDesc );
 	execute procedure set_log( 12, NEW.idPrimario, 'Descricao', substring( OLD.Descricao from 1 for 255 ), substring( NEW.Descricao from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end

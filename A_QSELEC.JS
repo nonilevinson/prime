@@ -733,6 +733,8 @@ var TFPagto_Descritor = new Campo_parQSelecao_TFPagto_Descritor;
 //-------------------------------------------------------------
 Campo_parQSelecao_Usuario.prototype.FiltroPai = function()
 {
+		if( ultimaLigOpcaoEm( 190 ) )
+			return( "" + vijCallCenter() + "" );
 			return( "A.Grupo is not null" );
 }
 
@@ -750,7 +752,7 @@ Usuario_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_parQSelecao_Medico.prototype.FiltroPai = function()
 {
-			return( "A.Grupo is not null" );
+			return( "" + vijMedico() + "" );
 }
 
 //-------------------------------------------------------------
