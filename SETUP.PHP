@@ -13,7 +13,7 @@
 
 	$setup["BANCO"] = array(
 		"TIPO"				=> "firebird",	// Tipo
-		"NOME"				=> "dado114.fdb",	// Nome
+		"NOME"				=> "dado115.fdb",	// Nome
 		"LOGINLOCAL"		=> "SYSDBA",	// Login Local
 		"SENHALOCAL"		=> "masterkey",	// Senha
 		"CAMINHOLOCAL"		=> "",	// Caminho
@@ -30,7 +30,8 @@
 		array( 'Usuários', 'arqUsuario', 'Usuario', 'Senha', 'Grupo', '', 'Ativo', 'Email', 'Versao', 'principa' )	);
 
 	$versoes = array(
-		"1.14"	=> "23/11/2021",
+		"1.15"	=> "24/11/2021",
+		"1.14"	=> "18/11/2021",
 		"1.13"	=> "16/11/2021",
 		"1.12"	=> "01/11/2021",
 		"1.11"	=> "13/10/2021",

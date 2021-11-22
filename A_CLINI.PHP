@@ -140,6 +140,19 @@ class campo_arqClinica_MaxAgenda extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo Sigla
+//======================================================
+
+class campo_arqClinica_Sigla extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Sigla", "Sigla", "Sigla", 3, "xxx", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqClinica
 //======================================================
 function listaCampos_arqClinica( $p_prefixo )
@@ -159,7 +172,8 @@ function listaCampos_arqClinica( $p_prefixo )
 			new campo_arqClinica_DataIni(),
 			new campo_arqClinica_DataFim(),
 			new campo_arqClinica_Ativo(),
-			new campo_arqClinica_MaxAgenda() )
+			new campo_arqClinica_MaxAgenda(),
+			new campo_arqClinica_Sigla() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -223,6 +237,7 @@ class arqClinica extends Lance_Arquivo
 			array_push( $vetAux, array( DataFim ) );
 			array_push( $vetAux, array( Ativo ) );
 			array_push( $vetAux, array( MaxAgenda ) );
+			array_push( $vetAux, array( Sigla ) );
 		return( $vetAux );
 	}
 

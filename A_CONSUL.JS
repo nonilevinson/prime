@@ -1117,5 +1117,6 @@ g_idOperacao = 39;
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,24,[137],[]);
 var Menu_2 = new Array( 1,"Gerar Receber Tratamento","","G",184,"","",1,"!tem( ContaPTra )","1", "a_grparc", "parGeraParc", "Alterar", "", "", "", "", "5^^^p_conta_parcela_gerar^^^^^^^^^^^^^^^^^^", "", 0,24,[184],[]);
-parent.navegacao.MenuPrincQtdOpcoes=2;
+var Menu_3 = new Array( 1,"Emitir Contrato","","m",191,"","",1,"","5","r_consulta_contrato","","","","","","", "","", 0,24,[191],[]);
+parent.navegacao.MenuPrincQtdOpcoes=3;
 }

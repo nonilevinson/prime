@@ -13,7 +13,7 @@ class RelAvisos extends Lance_RelatorioPDF_Livre
 
 		$this->comData = true;
 
-		$this->DefinirQuebras( 
+		$this->DefinirQuebras(
 			[ 'QuebraPorNumero', SIM, NAO, SIM ] );
 	}
 
@@ -30,17 +30,17 @@ class RelAvisos extends Lance_RelatorioPDF_Livre
 	{
 		$regA = &$this->regAtual;
 		$this->NovaMargem( 25 );
-		
+
 		$this->ParaGrupo = '';
-		$this->SubProcesso( 0, 'Select G.Grupo 
+		$this->SubProcesso( 0, 'Select G.Grupo
 			From arqParaGrupo P
 				left join arqGrupo G on G.Idprimario = P.Grupo
 			Where P.Avisos=' . $regA->IDPRIMARIO,
 			'', '', 'SubParaGrupo', '' );
 
-		$this->WriteTxt( "Aviso Nº: ". $regA->NUMERO . " de " . formatarData( $regA->DATA ), 100, 
+		$this->WriteTxt( "Aviso Nº: ". $regA->NUMERO . " de " . formatarData( $regA->DATA ), 100,
 			[ '', BOLD, 0, [0], [155] ] );
-		$this->WriteTxt( "De: ". $regA->NOME, 100, 
+		$this->WriteTxt( "De: ". $regA->NOME, 100,
 			[ '', BOLD, 0, [0], [155] ] );
 		$this->WriteTxt( "Para: " . $this->ParaGrupo, 100,
 			[ '', BOLD, 0, [0], [155] ] );
@@ -98,7 +98,7 @@ class RelAvisos extends Lance_RelatorioPDF_Livre
 		$this->Writeln();
 		$this->Writeln();
 		$this->WriteTxt( "Nome legível _____________________________   Assinatura: _____________________________", 100 );
-		
+
 		$this->Buffer( true );
 	}
 }

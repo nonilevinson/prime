@@ -94,6 +94,17 @@ function Campo_arqClinica_MaxAgenda()
 
 var MaxAgenda = new Campo_arqClinica_MaxAgenda;
 
+//------------------------------------------------------------
+Campo_arqClinica_Sigla.prototype = new Lance_CampoCadeia;
+
+function Campo_arqClinica_Sigla()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "Sigla", "Sigla", "Sigla", 3, "uuu", false);
+}
+
+var Sigla = new Campo_arqClinica_Sigla;
+
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -113,7 +124,7 @@ Campo_arqClinica_Email.prototype.TemErro = function()
 		alert( "Email inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -126,7 +137,7 @@ Campo_arqClinica_CNPJ.prototype.TemErro = function()
 		alert( "CNPJ inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -150,7 +161,7 @@ Campo_arqClinica_DataFim.prototype.TemErro = function()
 		alert( "A data final precisa ser posterior a inicial" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -180,6 +191,17 @@ Campo_arqClinica_Ativo.prototype.Cabecalho = function()
 }
 
 Ativo.EhCalculado = true;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqClinica_Sigla.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A sigla é obrigatória" );
+		return( true );
+	}
+}
+
 function IniciarDependencias_arqClinica()
 {
 DataFim.CalculosDependentes= [ Ativo ];
@@ -204,7 +226,7 @@ function ListaDeCampos_arqClinica( p_prefixo )
 
 		[ Clinica, Razao, Email, CNPJ ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ DataIni, DataFim, Ativo, MaxAgenda ]	);
+		[ DataIni, DataFim, Ativo, MaxAgenda, Sigla ]	);
 	IniciarDependencias_arqClinica();
 	g_prefixo = l_prefixo;
 	return( l_lista );

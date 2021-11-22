@@ -6,6 +6,8 @@ echo
 "<table class='tabFormulario'>",
 	$this->Pedir( "Clínica", Clinica ),
    $this->Pedir( "Razão social", Razao ),
+   $this->Pedir( "Sigla",
+      [ "", Sigla, " (será usada no contrato com o paciente)" ] ),
    $this->Pedir( "Email" ),
    $this->Pedir( "CNPJ" ),
    $this->Pedir( "Agendamento disponível para até",
