@@ -28,18 +28,15 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $paciente = $regA->PACIENTE;
       $cidade   = $regA->CIDADE;
 
-      // $this->NovaMargem( 25 );
-
-		$this->Buffer( false );
-
-		// $this->WriteTxt( "CONTRATANTE: " . $regA->SIGLA . " " . $regA->PRONTUARIO, 100, [ '', BOLD, 0, [0], [195] ] );
-		$this->WriteTxt( "CONTRATANTE: " . $regA->SIGLA . " " . $regA->PRONTUARIO, 100, [ '', BOLD ] );
-
       $larg1  = 27;
       $larg2  = 55;
       $larg3  = 15;
-      $larg4  = 41;
+      $larg4  = 38;
       $altura = 5;
+
+      //* início dos dados do paciente
+		// $this->WriteTxt( "CONTRATANTE: " . $regA->SIGLA . " " . $regA->PRONTUARIO, 100, [ '', BOLD, 0, [0], [195] ] );
+		$this->WriteTxt( "1- CONTRATANTE: " . $regA->SIGLA . " " . $regA->PRONTUARIO, 100, [ '', BOLD ] );
 
       $this->PDF->Cell( $larg1, $altura, "Nome:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $paciente, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
@@ -77,29 +74,36 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 
       $this->PDF->Cell( $larg1, $altura, "Email:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $regA->EMAIL, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      
+      //* fim dos dados do paciente
+       
+      //* início de procedimento e consulta
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-
 		$this->WriteTxt( "2- PROCEDIMENTO E CONSULTA", 100, [ '', BOLD ] );
       $this->PDF->Cell( $larg4, $altura, "Procedimento Contratado:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, $regA->PTRATA, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      
-      $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, $regA->PTRATA, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
-		
-		$this->WriteTxt( "3- PREÇOS E CONDIÇÕES A PAGAR", 100, [ '', BOLD ] );
-      $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias em", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, '$regA->XXX', SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-
-      $this->PDF->Cell( $larg4, $altura, "Tempo:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, '$regA->ZZZ', SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-
-      $this->PDF->Cell( $larg4, $altura, "Consulta Médica:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg1, $altura, "Tempo:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, '$regA->ZZZ', SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg1, $altura, "Consulta Médica:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, formatarData( $regA->DATA ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      //* fim de procedimento e consulta
+      
+      //* início de preços e condições
+      $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );	
+		$this->WriteTxt( "3- PREÇOS E CONDIÇÕES A PAGAR", 100, [ '', BOLD ] );
+      $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias em " . '$regA->XXX',
+         SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      
+      $this->PDF->Cell( $larg1, $altura, "Assessor:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, $regA->ASSESSOR, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      //* fim de preços e condições
       
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-
-		$this->WriteTxt( "4- ASSINATURA", 100, [ '', BOLD ] );
+		$this->WriteTxt( "4- DECLARAÇÃO DO CONTRATANTE", 100, [ '', BOLD ] );
+		$this->WriteTxt( "Declaro que as informações por mim prestadas neste contrato são verdadeiras e completas, estando completamente de acordo.", 121 );
+		
+      $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->WriteTxt( "5- ASSINATURA", 100, [ '', BOLD ] );
 		$this->WriteTxt( $cidade . ", " . maiuscula( formatarData( HOJE, 'dd de mmm de aaaa' ) ), 100 );
 		$this->Writeln();
 		$this->PDF->Cell( $larg1, $altura,  "Assinatura:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
