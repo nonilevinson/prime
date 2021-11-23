@@ -48,10 +48,10 @@
 		"1.00"	=> "25/05/2021" );
 
 	$vetDependencia = array(
-		array( "a_fornec", "a_endere" ),
 		array( "a_clini", "a_endere" ),
-		array( "a_xconfi", "a_endere" ),
-		array( "a_pessoa", "a_endere" ) );
+		array( "a_fornec", "a_endere" ),
+		array( "a_pessoa", "a_endere" ),
+		array( "a_xconfi", "a_endere" ) );
 
 include_once( SISTEMA_DIR_ABSOLUTO . 'cores.php' );
 include_once( CLIENTE_DIR_ABSOLUTO . 'cores.php' );

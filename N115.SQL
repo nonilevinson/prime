@@ -2014,6 +2014,7 @@ CREATE TABLE arqPTrata
 	/*  6*/	/* VALMINIMO */
 	/*  7*/	DESCRICAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
 	/*  8*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  9*/	TEMPO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqPTrata_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqPTrata_UK UNIQUE ( PTrata )
 );
@@ -2208,21 +2209,20 @@ commit;
 
 
 /************************************************************
-	Arquivo ParaGrupo 
+	Arquivo Unidade   
 ************************************************************/
 
-CREATE TABLE arqParaGrupo
+CREATE TABLE arqUnidade
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	AVISOS ligadoComArquivo, /* Ligado com o Arquivo Avisos */
-	/*  3*/	GRUPO ligadoComArquivo, /* Ligado com o Arquivo Grupo */
-	/*  4*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	CONSTRAINT arqParaGrupo_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqParaGrupo_UK UNIQUE ( Avisos, Grupo, Usuario )
+	/*  2*/	UNIDADE VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqUnidade_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqUnidade_UK UNIQUE ( Unidade )
 );
 commit;
 
-CREATE DESC INDEX arqParaGrupo_IdPrimario_Desc ON arqParaGrupo (IDPRIMARIO);
+CREATE DESC INDEX arqUnidade_IdPrimario_Desc ON arqUnidade (IDPRIMARIO);
 commit;
 
 
@@ -2633,6 +2633,46 @@ commit;
 
 
 /************************************************************
+	Arquivo ParaGrupo 
+************************************************************/
+
+CREATE TABLE arqParaGrupo
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	AVISOS ligadoComArquivo, /* Ligado com o Arquivo Avisos */
+	/*  3*/	GRUPO ligadoComArquivo, /* Ligado com o Arquivo Grupo */
+	/*  4*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	CONSTRAINT arqParaGrupo_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqParaGrupo_UK UNIQUE ( Avisos, Grupo, Usuario )
+);
+commit;
+
+CREATE DESC INDEX arqParaGrupo_IdPrimario_Desc ON arqParaGrupo (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo Medicamen 
+************************************************************/
+
+CREATE TABLE arqMedicamen
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	MEDICAMEN VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	UNIDADE ligadoComArquivo, /* Ligado com o Arquivo Unidade */
+	/*  4*/	ESTOQUEMIN INTEGER, /* Máscara = N */
+	/*  5*/	ESTOQUEMAX INTEGER, /* Máscara = N */
+	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqMedicamen_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqMedicamen_UK UNIQUE ( Medicamen )
+);
+commit;
+
+CREATE DESC INDEX arqMedicamen_IdPrimario_Desc ON arqMedicamen (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -2899,7 +2939,7 @@ RECREATE VIEW V_arqClinica AS
 commit;
 
 RECREATE VIEW V_arqPTrata AS 
-	SELECT A0.IDPRIMARIO, A0.PTRATA, A0.APELIDO, A0.VALOR, A0.MRGDESC, A0.VALMINIMO, A0.DESCRICAO, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.PTRATA, A0.APELIDO, A0.VALOR, A0.MRGDESC, A0.VALMINIMO, A0.DESCRICAO, A0.ATIVO, A0.TEMPO
 	FROM arqPTrata A0;
 commit;
 
@@ -3026,6 +3066,17 @@ RECREATE VIEW V_arqFxComCall AS
 	left join arqClinica A2 on A2.IDPRIMARIO = A1.CLINICA;
 commit;
 
+RECREATE VIEW V_arqUnidade AS 
+	SELECT A0.IDPRIMARIO, A0.UNIDADE, A0.ATIVO
+	FROM arqUnidade A0;
+commit;
+
+RECREATE VIEW V_arqMedicamen AS 
+	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.ESTOQUEMIN, A0.ESTOQUEMAX, A0.ATIVO
+	FROM arqMedicamen A0
+	left join arqUnidade A1 on A1.IDPRIMARIO = A0.UNIDADE;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -3057,6 +3108,7 @@ ALTER TABLE ARQLANCEPERMISSAO ADD CONSTRAINT ARQLANCEPERMISSAO_FK_Usuario FOREIG
 ************************************************************/
 
 insert into arqLanceAssunto values (1,'Cadastros' );
+insert into arqLanceAssunto values (2,'Estoque' );
 insert into arqLanceAssunto values (10,'Financeiro' );
 insert into arqLanceAssunto values (20,'Emails' );
 insert into arqLanceAssunto values (50,'Relatórios' );
@@ -3109,6 +3161,9 @@ insert into arqLanceOperacao values(100046,1,'Cadastro de contas recorrentes a p
 insert into arqLanceOperacao values(100047,1,'Cadastro da relação de mídias e clínicas','arqCliMidia',47,1,0,'');
 insert into arqLanceOperacao values(100049,1,'Cadastro de comissionamento do Call Center','arqComCall',49,1,0,'');
 insert into arqLanceOperacao values(100050,1,'Cadastro das faixas de comissionamento do Call Center','arqFxComCall',50,1,0,'');
+insert into arqLanceOperacao values(100051,1,'Cadastro de unidades de medidas','arqUnidade',51,2,0,'');
+insert into arqLanceOperacao values(100052,1,'Cadastro de medicamentos','arqMedicamen',52,1,0,'');
+insert into arqLanceOperacao values(200193,2,'Rotina para excluir permissões de grupos de acesso','',193,null,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
 insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de grupos de acesso','',11,90,0,'');
@@ -3261,6 +3316,7 @@ ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaPTra FOREIGN KEY ( CO
 ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_FornRec FOREIGN KEY ( FORNREC ) REFERENCES arqFornecedor ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqComCall ADD CONSTRAINT arqComCall_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqFxComCall ADD CONSTRAINT arqFxComCall_FK_ComCall FOREIGN KEY ( COMCALL ) REFERENCES arqComCall ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqMedicamen ADD CONSTRAINT arqMedicamen_FK_Unidade FOREIGN KEY ( UNIDADE ) REFERENCES arqUnidade ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 
@@ -4170,6 +4226,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'MrgDesc', OLD.MrgDesc, NEW.MrgDesc );
 	execute procedure set_log( 12, NEW.idPrimario, 'Descricao', substring( OLD.Descricao from 1 for 255 ), substring( NEW.Descricao from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Tempo', OLD.Tempo, NEW.Tempo );
 end
 end^
 
@@ -4711,6 +4768,75 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Faixa', OLD.Faixa, NEW.Faixa );
 	execute procedure set_log( 12, NEW.idPrimario, 'PercAte', OLD.PercAte, NEW.PercAte );
 	execute procedure set_log( 12, NEW.idPrimario, 'Comissao', OLD.Comissao, NEW.Comissao );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqUnidade
+************************************************************/
+
+set term ^;
+
+recreate trigger arqUnidade_LOG for arqUnidade
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Unidade,'' );
+else
+	valorChave = coalesce( NEW.Unidade,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100051 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Unidade', OLD.Unidade, NEW.Unidade );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqMedicamen
+************************************************************/
+
+set term ^;
+
+recreate trigger arqMedicamen_LOG for arqMedicamen
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Medicamen,'' );
+else
+	valorChave = coalesce( NEW.Medicamen,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100052 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
+	execute procedure set_log( 12, NEW.idPrimario, 'Unidade', OLD.Unidade, NEW.Unidade );
+	execute procedure set_log( 12, NEW.idPrimario, 'EstoqueMin', OLD.EstoqueMin, NEW.EstoqueMin );
+	execute procedure set_log( 12, NEW.idPrimario, 'EstoqueMax', OLD.EstoqueMax, NEW.EstoqueMax );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end
 end^
 

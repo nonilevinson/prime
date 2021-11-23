@@ -140,6 +140,19 @@ class campo_arqPTrata_Ativo extends Lance_CampoLogico
 }
 
 //======================================================
+//	Campo Tempo
+//======================================================
+
+class campo_arqPTrata_Tempo extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Tempo", "Tempo", "Tempo", 10, "xxxxxxxxxx", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqPTrata
 //======================================================
 function listaCampos_arqPTrata( $p_prefixo )
@@ -156,7 +169,8 @@ function listaCampos_arqPTrata( $p_prefixo )
 			new campo_arqPTrata_MrgDesc(),
 			new campo_arqPTrata_ValMinimo(),
 			new campo_arqPTrata_Descricao(),
-			new campo_arqPTrata_Ativo() )
+			new campo_arqPTrata_Ativo(),
+			new campo_arqPTrata_Tempo() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -212,6 +226,7 @@ class arqPTrata extends Lance_Arquivo
 			array_push( $vetAux, array( ValMinimo ) );
 			array_push( $vetAux, array( Descricao ) );
 			array_push( $vetAux, array( Ativo ) );
+			array_push( $vetAux, array( Tempo ) );
 		return( $vetAux );
 	}
 

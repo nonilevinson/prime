@@ -8,10 +8,9 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 	function DefinirRelatorio()
 	{
 		$regA = &$this->regAtual;
+      $this->tituloRelatorio = [ 'ANEXO I' ];
       $this->tituloRelatorioDir = [ [ $regA->SIGLA . " " . $regA->PRONTUARIO, '', BOLD, 20 ],
          ' ' ];
-
-		// $this->DefinirXYIniciais( [25, 28] );
 
 		$this->comCodigoRel = false;
       $this->comData      = false;
@@ -79,11 +78,11 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       //* início de procedimento e consulta
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->WriteTxt( "2- PROCEDIMENTO E CONSULTA", 100, [ '', BOLD ] );
-      $this->PDF->Cell( $larg4, $altura, "Procedimento Contratado:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg1, $altura, "Procedimento:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $regA->PTRATA, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
       $this->PDF->Cell( $larg1, $altura, "Tempo:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, '$regA->ZZZ', SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, $regA->TEMPO, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg1, $altura, "Consulta Médica:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, formatarData( $regA->DATA ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       //* fim de procedimento e consulta
@@ -129,7 +128,7 @@ $filtro = substr(
 $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade, P.Orgao, X.Descritor as Sexo,
       V.Descritor as EstCivil, P.Ende_Endereco as Endereco, B.Bairro, I.Cidade, upper( U.Descritor ) as UF,
       P.Ende_CEP as CEP, P.Nascimento, F.Profissao, I.DDD, P.Ende_Telefone as Telefone, P.NumCelular, P.Email,
-      C.Data, A.Nome as Assessor, R.PTrata
+      C.Data, A.Nome as Assessor, R.PTrata, R.Tempo
 	From arqConsulta C
 		join arqClinica         L on L.idPrimario=C.Clinica
       join arqPessoa          P on P.idPrimario=C.Pessoa

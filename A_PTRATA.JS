@@ -79,6 +79,17 @@ function Campo_arqPTrata_Ativo()
 
 var Ativo = new Campo_arqPTrata_Ativo;
 
+//------------------------------------------------------------
+Campo_arqPTrata_Tempo.prototype = new Lance_CampoCadeia;
+
+function Campo_arqPTrata_Tempo()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "Tempo", "Tempo", "Tempo", 10, "uuuuuuuuuu", false);
+}
+
+var Tempo = new Campo_arqPTrata_Tempo;
+
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -154,6 +165,17 @@ Campo_arqPTrata_Ativo.prototype.Cabecalho = function()
 		return( "Ativo?" );
 }
 
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqPTrata_Tempo.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O tempo é obrigatório" );
+		return( true );
+	}
+}
+
 function IniciarDependencias_arqPTrata()
 {
 Valor.CalculosDependentes= [ ValMinimo ];
@@ -175,7 +197,7 @@ function ListaDeCampos_arqPTrata( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ PTrata, Apelido, Valor, MrgDesc, ValMinimo, Descricao, Ativo ]	);
+		[ PTrata, Apelido, Valor, MrgDesc, ValMinimo, Descricao, Ativo, Tempo ]	);
 	IniciarDependencias_arqPTrata();
 	g_prefixo = l_prefixo;
 	return( l_lista );
