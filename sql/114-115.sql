@@ -16,6 +16,25 @@ insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consu
 commit;
 
 /************************************************************
+	TABELA tabTStAgMed
+************************************************************/
+
+CREATE TABLE tabTStAgMed
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTStAgMed_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTStAgMed_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTStAgMed VALUES ( 1, '1', 'RECEPÇÃO' );
+INSERT INTO tabTStAgMed VALUES ( 2, '2', 'EM PROCESSO' );
+INSERT INTO tabTStAgMed VALUES ( 3, '3', 'ENTREGUE' );
+commit;
+
+/************************************************************
 	Arquivo Unidade   
 ************************************************************/
 
@@ -72,7 +91,7 @@ commit;
 
 insert into arqUnidade values( 1, 'Caixa', 1);
 insert into arqUnidade values( 2, 'Cápsula', 1 );
-insert into arqUnidade values( 3, 'Ampola', 1 );
+insert into arqUnidade values( 3, 'Frasco', 1 );
 commit;
 
 /************************************************************
@@ -214,7 +233,7 @@ commit;
 CREATE TABLE arqMedicamen
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	MEDICAMEN VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
+	/*  2*/	MEDICAMEN VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	UNIDADE ligadoComArquivo, /* Ligado com o Arquivo Unidade */
 	/*  4*/	ESTOQUEMIN INTEGER, /* Máscara = N */
 	/*  5*/	ESTOQUEMAX INTEGER, /* Máscara = N */

@@ -19,7 +19,7 @@ class campo_arqMedicamen_Medicamen extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Medicamen", "Medicamen", "Medicamen", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
+		parent::__construct( "Medicamen", "Medicamen", "Medicamen", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
 	}
 
 	//--------------------------------------------------

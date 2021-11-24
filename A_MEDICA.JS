@@ -8,7 +8,7 @@ Campo_arqMedicamen_Medicamen.prototype = new Lance_CampoCadeia;
 function Campo_arqMedicamen_Medicamen()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Medicamen", "Medicamen", "Medicamen", 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "Medicamen", "Medicamen", "Medicamen", 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Medicamen = new Campo_arqMedicamen_Medicamen;
