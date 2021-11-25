@@ -12,26 +12,27 @@ commit;
 
 insert into arqLanceOperacao values(100051,1,'Cadastro de unidades de medidas','arqUnidade',51,2,0,'');
 insert into arqLanceOperacao values(100052,1,'Cadastro de medicamentos','arqMedicamen',52,1,0,'');
+insert into arqLanceOperacao values(100053,1,'Cadastro das agendas de retirada de medicação','arqAgRet',53,1,0,'');
 insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'');
 commit;
 
 /************************************************************
-	TABELA tabTStAgMed
+	TABELA tabTStAgRet
 ************************************************************/
 
-CREATE TABLE tabTStAgMed
+CREATE TABLE tabTStAgRet
 (
 	IDPRIMARIO chavePrimariaTab,
 	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
 	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
-	CONSTRAINT tabTStAgMed_PK PRIMARY KEY( IDPRIMARIO ),
-	CONSTRAINT tabTStAgMed_UK UNIQUE( CHAVE )
+	CONSTRAINT tabTStAgRet_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTStAgRet_UK UNIQUE( CHAVE )
 );
 commit;
 
-INSERT INTO tabTStAgMed VALUES ( 1, '1', 'RECEPÇÃO' );
-INSERT INTO tabTStAgMed VALUES ( 2, '2', 'EM PROCESSO' );
-INSERT INTO tabTStAgMed VALUES ( 3, '3', 'ENTREGUE' );
+INSERT INTO tabTStAgRet VALUES ( 1, '1', 'RECEPÇÃO' );
+INSERT INTO tabTStAgRet VALUES ( 2, '2', 'EM PROCESSO' );
+INSERT INTO tabTStAgRet VALUES ( 3, '3', 'ENTREGUE' );
 commit;
 
 /************************************************************
@@ -293,4 +294,98 @@ commit;
 
 insert into arqMedicamen values( 1, 'POWER', 1, 0, 0, 1 );
 insert into arqMedicamen values( 2, 'FIC 8', 1, 0, 0, 1 );
+commit;
+
+/************************************************************
+	Arquivo AgRet     
+************************************************************/
+
+CREATE TABLE arqAgRet
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  3*/	DATA DATE, /* Máscara = 4ano */
+	/*  4*/	/* DIA */
+	/*  5*/	HORA TIME, /* Máscara = Hhmm */
+	/*  6*/	CONSULTA ligadoComArquivo, /* Ligado com o Arquivo Consulta */
+	/*  7*/	/* PRONTUARIO */
+	/*  8*/	/* NOME */
+	/*  9*/	/* NUMCELULAR */
+	/* 10*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
+	/* 11*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 12*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	CONSTRAINT arqAgRet_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqAgRet_UK UNIQUE ( Clinica, Data, Hora )
+);
+commit;
+
+CREATE DESC INDEX arqAgRet_IdPrimario_Desc ON arqAgRet (IDPRIMARIO);
+commit;
+
+ALTER TABLE arqAgRet ADD DIA VARCHAR( 15 ) computed by ( CASE
+	WHEN( extract( weekday from Data ) = 0 ) THEN( 'DOMINGO' )
+	WHEN( extract( weekday from Data ) = 1 ) THEN( 'SEGUNDA-FEIRA' )
+	WHEN( extract( weekday from Data ) = 2 ) THEN( 'TERÇA-FEIRA' )
+	WHEN( extract( weekday from Data ) = 3 ) THEN( 'QUARTA-FEIRA' )
+	WHEN( extract( weekday from Data ) = 4 ) THEN( 'QUINTA-FEIRA' )
+	WHEN( extract( weekday from Data ) = 5 ) THEN( 'SEXTA-FEIRA' )
+	ELSE ( 'SÁBADO' )
+	END  ); 
+ALTER TABLE arqAgRet ALTER DIA POSITION 4;
+ALTER TABLE arqAgRet ADD PRONTUARIO VARCHAR( 9 ) computed by ( ( COALESCE( ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqAgRet ALTER PRONTUARIO POSITION 6;
+ALTER TABLE arqAgRet ADD NOME VARCHAR( 60 ) computed by ( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqAgRet ALTER NOME POSITION 7;
+ALTER TABLE arqAgRet ADD NUMCELULAR VARCHAR( 11 ) computed by ( ( COALESCE( ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqAgRet ALTER NUMCELULAR POSITION 8;
+commit;
+
+ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Consulta FOREIGN KEY ( CONSULTA ) REFERENCES arqConsulta ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_TStAgRet FOREIGN KEY ( TSTAGRET ) REFERENCES tabTStAgRet ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+commit;
+
+RECREATE VIEW V_arqAgRet AS 
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.DIA, A0.HORA, A0.CONSULTA, A2.NUM as CONSULTA_NUM, A0.PRONTUARIO, A0.NOME, A0.NUMCELULAR, A0.TSTAGRET, A3.CHAVE as TStAgRet_CHAVE, A3.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESSOR, A4.USUARIO as ASSESSOR_USUARIO, A0.OBS
+	FROM arqAgRet A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join arqConsulta A2 on A2.IDPRIMARIO = A0.CONSULTA
+	left join tabTStAgRet A3 on A3.IDPRIMARIO=A0.TSTAGRET
+	left join arqUsuario A4 on A4.IDPRIMARIO = A0.ASSESSOR;
+commit;
+
+/************************************************************
+	Trigger para Log de arqAgRet
+************************************************************/
+
+set term ^;
+
+recreate trigger arqAgRet_LOG for arqAgRet
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Clinica_Clinica, ' ' ) || '-' || coalesce( Data, ' ' ) || '-' || coalesce( Hora, ' ' ) from v_arqAgRet where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100053 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
+	execute procedure set_log( 12, NEW.idPrimario, 'Consulta', OLD.Consulta, NEW.Consulta );
+	execute procedure set_log( 12, NEW.idPrimario, 'TStAgRet', OLD.TStAgRet, NEW.TStAgRet );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
+end
+end^
+
+set term ;^
+
 commit;

@@ -445,5 +445,6 @@ var Menu_4_2 = new Array( 1,"Avisos lidos","","v",33,"","",1,"","1","a_lido","ar
 var Menu_4_3 = new Array( 1,"Para grupo","","P",35,"","",1,"","1","a_paragr","arqParaGrupo","Folhear","Usuario","?","","", "","", 0,14,[],[15]);
 var Menu_5 = new Array( 1,"Emails enviou","","E",23,"","",cnfConfig["EMAIL"] == 1,"","1","a_logema","arqLogEmail","Folhear","Usuario","?","","", "","", 0,18,[],[12]);
 var Menu_6 = new Array( 1,"Alterar senha","","h",68,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_usuario_senha^^^^^^^^^^^^^^^^^^", "", 0,18,[68],[]);
-parent.navegacao.MenuPrincQtdOpcoes=6;
+var Menu_7 = new Array( 1,"Ag. Retiradas","","d",202,"","",1,"","1","a_agret","arqAgRet","Folhear","Assessor","?","","", "","", 0,18,[],[53]);
+parent.navegacao.MenuPrincQtdOpcoes=7;
 }

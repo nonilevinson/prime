@@ -47,6 +47,28 @@ function Campo_parQSelecao_Medico_Usuario()
 var Medico_Usuario = new Campo_parQSelecao_Medico_Usuario;
 
 //------------------------------------------------------------
+Campo_parQSelecao_Assessor.prototype = new Lance_CampoHidden;
+
+function Campo_parQSelecao_Assessor()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Assessor", "Assessor", "Assessor", "arqUsuario", "a_usuari", null, "",5);
+}
+
+var Assessor = new Campo_parQSelecao_Assessor;
+
+//------------------------------------------------------------
+Campo_parQSelecao_Assessor_Usuario.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_Assessor_Usuario()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Assessor_Usuario", "Assessor_Usuario", "Usuario", Assessor, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var Assessor_Usuario = new Campo_parQSelecao_Assessor_Usuario;
+
+//------------------------------------------------------------
 Campo_parQSelecao_StatusLog.prototype = new Lance_CampoLigado;
 
 function Campo_parQSelecao_StatusLog()
@@ -728,6 +750,61 @@ function Campo_parQSelecao_TFPagto_Descritor()
 
 var TFPagto_Descritor = new Campo_parQSelecao_TFPagto_Descritor;
 
+//------------------------------------------------------------
+Campo_parQSelecao_Consulta.prototype = new Lance_CampoHidden;
+
+function Campo_parQSelecao_Consulta()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Consulta", "Consulta", "Consulta", "arqConsulta", "a_consul", null, "",39);
+}
+
+var Consulta = new Campo_parQSelecao_Consulta;
+
+//------------------------------------------------------------
+Campo_parQSelecao_Consulta_Num.prototype = new Lance_CampoNumericoLigado;
+
+function Campo_parQSelecao_Consulta_Num()
+{
+	this.superClass = Lance_CampoNumericoLigado;
+	this.superClass( "Consulta_Num", "Consulta_Num", "Num", Consulta, 6, "###.##z", true,"", "");
+}
+
+var Consulta_Num = new Campo_parQSelecao_Consulta_Num;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TStAgRet.prototype = new Lance_CampoLigado;
+
+function Campo_parQSelecao_TStAgRet()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TStAgRet", "TStAgRet", "TStAgRet", "tabTStAgRet", "t_tstagr", null, "",0);
+}
+
+var TStAgRet = new Campo_parQSelecao_TStAgRet;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TStAgRet_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TStAgRet_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TStAgRet_Chave", "TStAgRet_Chave", "TStAgRet", TStAgRet, 1, "u", false);
+}
+
+var TStAgRet_Chave = new Campo_parQSelecao_TStAgRet_Chave;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TStAgRet_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TStAgRet_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TStAgRet_Descritor", "TStAgRet_Descritor", "TStAgRet", TStAgRet, 11, "xxxxxxxxxxx", false);
+}
+
+var TStAgRet_Descritor = new Campo_parQSelecao_TStAgRet_Descritor;
+
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -764,6 +841,23 @@ Campo_parQSelecao_Medico_Usuario.prototype.ObrigatorioEspecial = function( p_com
 }
 
 Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parQSelecao_Assessor.prototype.FiltroPai = function()
+{
+			return( "" + vijAssessor() + "" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Assessor_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Assessor.Obrigatorio( p_comMsg ) );
+}
+
+Assessor_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
 StatusLog_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 StatusLog_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
@@ -1216,6 +1310,27 @@ TFCobra_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 TFPagto_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TFPagto_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_parQSelecao_Consulta.prototype.FiltroPai = function()
+{
+		if( g_temMaisDeUmClinica )
+			return( "A.Clinica in( " + + g_vetIdClinica + " )" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Consulta_Num.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Consulta.Obrigatorio( p_comMsg ) );
+}
+
+Consulta_Num.TipoCampo |= CAMPO_CHAVE_PAI;
+TStAgRet_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TStAgRet_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_parQSelecao_Usuario.prototype.ExistenciaEspecial = function()
@@ -1229,6 +1344,14 @@ Campo_parQSelecao_Usuario.prototype.ExistenciaEspecial = function()
 Campo_parQSelecao_Medico.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Medico_Usuario.Obrigatorio( false ) || tem(Medico_Usuario) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Assessor.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Assessor_Usuario.Obrigatorio( false ) || tem(Assessor_Usuario) ) );
 }
 
 //-------------------------------------------------------------
@@ -1311,10 +1434,19 @@ Campo_parQSelecao_CCor.prototype.ExistenciaEspecial = function()
 	return( ( !CCor_Nome.Obrigatorio( false ) || tem(CCor_Nome) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Consulta.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Consulta_Num.Obrigatorio( false ) || tem(Consulta_Num) ) );
+}
+
 function IniciarDependencias_parQSelecao()
 {
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
 Medico_Usuario.ExistenciasDependentes= [ Medico ];
+Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
 Cliente_Nome.ExistenciasDependentes= [ Cliente ];
 Cliente_NumCelular.ExistenciasDependentes= [ Cliente ];
 Fornecedor_Nome.ExistenciasDependentes= [ Fornecedor ];
@@ -1333,8 +1465,10 @@ SubPlano_Plano_CodPlano.ExistenciasDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ExistenciasDependentes= [ SubPlano ];
 SubPlano.ExistenciasDependentes= [ SubPlano_Nome ];
 CCor_Nome.ExistenciasDependentes= [ CCor ];
+Consulta_Num.ExistenciasDependentes= [ Consulta ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
+Assessor_Usuario.ErrosDependentes= [ Assessor ];
 Cliente_NumCelular.ErrosDependentes= [ Cliente ];
 Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
 EmailRemet_Email.ErrosDependentes= [ EmailRemet ];
@@ -1348,10 +1482,12 @@ Clinica_Clinica.ErrosDependentes= [ Clinica ];
 SubPlano_Plano_CodPlano.ErrosDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ErrosDependentes= [ SubPlano ];
 CCor_Nome.ErrosDependentes= [ CCor ];
+Consulta_Num.ErrosDependentes= [ Consulta ];
 SubPlano_Plano.DescritoresDependentes= [ SubPlano_Plano_Plano ];
 SubPlano.DescritoresDependentes= [ SubPlano_Nome ];
 Usuario.CamposChave= [ Usuario_Usuario ];
 Medico.CamposChave= [ Medico_Usuario ];
+Assessor.CamposChave= [ Assessor_Usuario ];
 Cliente.CamposChave= [ Cliente_Nome,Cliente_NumCelular ];
 Fornecedor.CamposChave= [ Fornecedor_Nome ];
 EmailRemet.CamposChave= [ EmailRemet_Email ];
@@ -1360,6 +1496,7 @@ Clinica.CamposChave= [ Clinica_Clinica ];
 SubPlano.CamposChave= [ SubPlano_Plano,SubPlano_Codigo ];
 SubPlano_Plano.CamposChave= [ SubPlano_Plano_CodPlano ];
 CCor.CamposChave= [ CCor_Nome ];
+Consulta.CamposChave= [ Consulta_Num ];
 }
 
 
@@ -1377,7 +1514,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -48,8 +48,8 @@
 		"1.00"	=> "25/05/2021" );
 
 	$vetDependencia = array(
-		array( "a_clini", "a_endere" ),
 		array( "a_fornec", "a_endere" ),
+		array( "a_clini", "a_endere" ),
 		array( "a_pessoa", "a_endere" ),
 		array( "a_xconfi", "a_endere" ) );
 

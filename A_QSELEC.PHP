@@ -78,6 +78,39 @@ class campo_parQSelecao_Medico_Usuario extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Assessor
+//======================================================
+
+class campo_parQSelecao_Assessor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Assessor", "Assessor", "Assessor", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Assessor_Usuario
+//======================================================
+
+class campo_parQSelecao_Assessor_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Assessor_Usuario", "Assessor_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Assessor", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Usuário" );
+	}
+
+}
+
+//======================================================
 //	Campo StatusLog
 //======================================================
 
@@ -727,6 +760,52 @@ class campo_parQSelecao_TFPagto extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo Consulta
+//======================================================
+
+class campo_parQSelecao_Consulta extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Consulta", "Consulta", "Consulta", 0, "arqConsulta", "arqConsulta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Consulta_Num
+//======================================================
+
+class campo_parQSelecao_Consulta_Num extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Consulta_Num", "Consulta_Num", "Num", 6, "###.##z", "", "", EH_CHAVE, "Consulta", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "N°" );
+	}
+
+}
+
+//======================================================
+//	Campo TStAgRet
+//======================================================
+
+class campo_parQSelecao_TStAgRet extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TStAgRet", "TStAgRet", "TStAgRet", 0, "tabTStAgRet", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQSelecao
 //======================================================
 function listaCampos_parQSelecao( $p_prefixo )
@@ -741,6 +820,8 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Usuario_Usuario(),
 			new campo_parQSelecao_Medico(),
 			new campo_parQSelecao_Medico_Usuario(),
+			new campo_parQSelecao_Assessor(),
+			new campo_parQSelecao_Assessor_Usuario(),
 			new campo_parQSelecao_StatusLog(),
 			new Lance_CampoCadeia( "StatusLog_Chave", "StatusLog_Chave", "Chave", 2, "xx", EH_CHAVE, StatusLog ),
 			new Lance_CampoCadeia( "StatusLog_Descritor", "StatusLog_Descritor", "Descritor", 13, "xxxxxxxxxxxxx", EH_DESCRITOR, StatusLog ),
@@ -802,7 +883,12 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new Lance_CampoCadeia( "TFCobra_Descritor", "TFCobra_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TFCobra ),
 			new campo_parQSelecao_TFPagto(),
 			new Lance_CampoCadeia( "TFPagto_Chave", "TFPagto_Chave", "Chave", 1, "x", EH_CHAVE, TFPagto ),
-			new Lance_CampoCadeia( "TFPagto_Descritor", "TFPagto_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TFPagto ) )
+			new Lance_CampoCadeia( "TFPagto_Descritor", "TFPagto_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TFPagto ),
+			new campo_parQSelecao_Consulta(),
+			new campo_parQSelecao_Consulta_Num(),
+			new campo_parQSelecao_TStAgRet(),
+			new Lance_CampoCadeia( "TStAgRet_Chave", "TStAgRet_Chave", "Chave", 1, "x", EH_CHAVE, TStAgRet ),
+			new Lance_CampoCadeia( "TStAgRet_Descritor", "TStAgRet_Descritor", "Descritor", 11, "xxxxxxxxxxx", EH_DESCRITOR, TStAgRet ) )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

@@ -60,7 +60,7 @@ if( $op == 53 ) //* Programar envio de ações
 	$this->Cabecalhos( [ "Se quiser enviar para todos os pessoas, deixe os campos da seção Seleção dos pessoas em branco.<br>Prencha somente os campos da seção Dados da ação", "FormCab alinhaMeio", "2" ] ),
 	$this->Pular1Linha(2),
 	$this->Cabecalhos( [ "Seleção dos pessoas", "FormCab alinhaMeio", "2" ] ),
-	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
@@ -133,7 +133,7 @@ if( $op == 92 ) //* selecao arqConta
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Fornecedor" ),
-	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
@@ -146,7 +146,7 @@ if( $op == 94 ) //* selecao arqParcela
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Fornecedor" ),
-	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
@@ -164,7 +164,7 @@ if( $op == 95 ) //* selecao Hoje arqParcela
 	$this->Pedir( "Tipo", TPgRec ),
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Fornecedor" ),
-	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
@@ -177,7 +177,7 @@ if( $op == 110 ) //* selecao arqConsulta
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
@@ -219,7 +219,7 @@ if( $op == 166 ) //* r_parcela
 	$this->Pedir( "Forma Pagamento", TFPagto ),
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Fornecedor" ),
-	$this->Pedir( "Pessoa", Cliente_Nome ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
@@ -263,6 +263,22 @@ if( in_array( $op, [189,190] ) ) //* 189: p_comcall_copiar | 190: r_comcall
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Mês", MesIni ),
 	$this->Pedir( "Call Center", Usuario );
+}
+
+if( $op == 200 ) //* selecao arqAgRet
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
+	$this->Pedir( "Status", TStAgRet ),
+	$this->Pedir( "Consulta" ),
+	$this->Pedir( "Assessor" ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
 //==================================================================================

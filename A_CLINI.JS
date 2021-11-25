@@ -237,15 +237,16 @@ g_idOperacao = 31;
 
 if( parent.navegacao ) {
 var Menu_1 = new Array( 1,"Consultas","","l",112,"","",1,"","1","a_consul","arqConsulta","Folhear","Clinica","?","","", "","", 0,20,[],[39]);
-var Menu_2 = new Array( 1,"Horários/Duração","","r",133,"","",1,"","1","a_duraca","arqDuracao","Folhear","Clinica","?","","", "","", 0,20,[],[38]);
-var Menu_3 = new Array( 1,"Horários Bloqueados","","q",114,"","",1,"","1","a_horabl","arqHoraBloq","Folhear","Clinica","?","","", "","", 0,20,[],[37]);
-var Menu_4 = new Array( 1,"Plantões","","P",139,"","",1,"","1","a_planta","arqPlantao","Folhear","Clinica","?","","", "","", 0,20,[],[41]);
-var Menu_5 = new Array( 1,"Mídias","","M",171,"","",1,"","1","a_climid","arqCliMidia","Folhear","Clinica","?","","", "","", 0,20,[],[47]);
-var Menu_6 = new Array( 1,"Comissão Call Center","","n",186,"","",1,"","1","a_comcal","arqComCall","Folhear","Clinica","?","","", "","", 0,20,[],[49]);
-var Menu_7 = new Array( 1,"Financeiro","","F",156,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 20,[],[33,20,46] );
-var Menu_7_1 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,15,[],[33]);
-var Menu_7_2 = new Array( 1,"Contas corrente","","t",150,"","",1,"","1","a_ccor","arqCCor","Folhear","Clinica","?","","", "","", 0,15,[],[20]);
-var Menu_7_3 = new Array( 1,"Recorrentes","","s",152,"","",1,"","1","a_recor","arqRecorrente","Folhear","Clinica","?","","", "","", 0,15,[],[46]);
-var Menu_8 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,20,[],[35]);
-parent.navegacao.MenuPrincQtdOpcoes=8;
+var Menu_2 = new Array( 1,"Ag. Retirada","","g",196,"","",1,"","1","a_agret","arqAgRet","Folhear","Clinica","?","","", "","", 0,20,[],[53]);
+var Menu_3 = new Array( 1,"Horários/Duração","","r",133,"","",1,"","1","a_duraca","arqDuracao","Folhear","Clinica","?","","", "","", 0,20,[],[38]);
+var Menu_4 = new Array( 1,"Horários Bloqueados","","q",114,"","",1,"","1","a_horabl","arqHoraBloq","Folhear","Clinica","?","","", "","", 0,20,[],[37]);
+var Menu_5 = new Array( 1,"Plantões","","P",139,"","",1,"","1","a_planta","arqPlantao","Folhear","Clinica","?","","", "","", 0,20,[],[41]);
+var Menu_6 = new Array( 1,"Mídias","","M",171,"","",1,"","1","a_climid","arqCliMidia","Folhear","Clinica","?","","", "","", 0,20,[],[47]);
+var Menu_7 = new Array( 1,"Comissão Call Center","","n",186,"","",1,"","1","a_comcal","arqComCall","Folhear","Clinica","?","","", "","", 0,20,[],[49]);
+var Menu_8 = new Array( 1,"Financeiro","","F",156,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 20,[],[33,20,46] );
+var Menu_8_1 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqConta","Folhear","Clinica","?","","", "","", 0,15,[],[33]);
+var Menu_8_2 = new Array( 1,"Contas corrente","","t",150,"","",1,"","1","a_ccor","arqCCor","Folhear","Clinica","?","","", "","", 0,15,[],[20]);
+var Menu_8_3 = new Array( 1,"Recorrentes","","s",152,"","",1,"","1","a_recor","arqRecorrente","Folhear","Clinica","?","","", "","", 0,15,[],[46]);
+var Menu_9 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,20,[],[35]);
+parent.navegacao.MenuPrincQtdOpcoes=9;
 }
