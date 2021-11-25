@@ -269,16 +269,16 @@ if( $op == 200 ) //* selecao arqAgRet
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
 	$this->Pedir( "Paciente", Cliente_Nome ),
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
 	$this->Pedir( "Status", TStAgRet ),
 	$this->Pedir( "Consulta" ),
-	$this->Pedir( "Assessor" ),
-	$this->Pedir( "Entre",
-		[ "", DataIni,
-		[ brHtml(1) . "e ", DataFim ] ] );
+	$this->Pedir( "Assessor" );
 }
 
 //==================================================================================

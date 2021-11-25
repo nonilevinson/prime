@@ -7,6 +7,8 @@ function ext_filtrarSelecao()
 
    return( substr(
       ( SQL_VETIDCLINICA ? "A.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
+      filtrarPorIntervaloData( "A.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
+      filtrarPorLig( "A.Consulta,arqConsulta.Pessoa", $parQSelecao->CLIENTE ) .
       filtrarPorLig( "A.TStAgRet", $parQSelecao->TSTAGRET ) .
       filtrarPorLig( "A.Clinica", $parQSelecao->CLINICA ) .
       filtrarPorLig( "A.Assessor", $parQSelecao->ASSESSOR ) .
