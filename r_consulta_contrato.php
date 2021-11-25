@@ -93,12 +93,16 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias em " . '$regA->XXX',
          SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       
+      
+      $this->WriteTxt( "4- RECIBO", 100, [ '', BOLD ] );
+      
+      $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg1, $altura, "Assessor:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $regA->ASSESSOR, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       //* fim de preços e condições
       
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->WriteTxt( "4- DECLARAÇÃO DO CONTRATANTE", 100, [ '', BOLD ] );
+		$this->WriteTxt( "DECLARAÇÃO DO CONTRATANTE", 100, [ '', BOLD ] );
 		$this->WriteTxt( "Declaro que as informações por mim prestadas neste contrato são verdadeiras e completas, estando completamente de acordo.", 121 );
 		
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );

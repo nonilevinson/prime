@@ -281,5 +281,16 @@ if( $op == 200 ) //* selecao arqAgRet
 	$this->Pedir( "Assessor" );
 }
 
+if( $op == 203 ) //* r_agret
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Status", TStAgRet ),
+	$this->Pedir( "Assessor" );
+}
+
 //==================================================================================
 echo 	"</table>";

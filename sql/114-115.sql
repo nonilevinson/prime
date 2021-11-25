@@ -14,6 +14,7 @@ insert into arqLanceOperacao values(100051,1,'Cadastro de unidades de medidas','
 insert into arqLanceOperacao values(100052,1,'Cadastro de medicamentos','arqMedicamen',52,1,0,'');
 insert into arqLanceOperacao values(100053,1,'Cadastro das agendas de retirada de medicação','arqAgRet',53,1,0,'');
 insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'');
+insert into arqLanceOperacao values(200203,2,'Relatório das agendas de retirada de medicação','',203,50,0,'');
 commit;
 
 /************************************************************
