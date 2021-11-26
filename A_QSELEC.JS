@@ -966,7 +966,7 @@ Campo_parQSelecao_Cadeia100.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_parQSelecao_DataIni.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( ultimaLigOpcaoEm( 53,155,170,175 ) )
+		if( ultimaLigOpcaoEm( 53,155,170,175,203 ) )
 	{
 		if( p_comMsg ) alert( "A data é obrigatória" );
 		return( true );
@@ -1219,9 +1219,31 @@ Campo_parQSelecao_Senha2.prototype.TemErro = function()
 //-------------------------------------------------------------
 Campo_parQSelecao_Clinica.prototype.FiltroPai = function()
 {
-		if( g_temMaisDeUmClinica )
+		if( !g_podeTodasClinica )
 			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
 		return( "" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Clinica.prototype.Sugeriu = function()
+{
+{
+		if( g_temUmaClinica )
+	return( this.AtribuiuSemCritica( g_minhaClinica ) );
+}
+		return( true );
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_parQSelecao_Clinica.prototype.PodeAlterar = function()
+{
+		if( g_podeTodasClinica || g_temMaisDeUmClinica )
+		return( true );
+	return( false );
 }
 
 //-------------------------------------------------------------
