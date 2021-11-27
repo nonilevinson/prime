@@ -647,6 +647,19 @@ class campo_arqConsulta_EntraTotP extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo BoletoMin
+//======================================================
+
+class campo_arqConsulta_BoletoMin extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "BoletoMin", "BoletoMin", "BoletoMin", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo EntraObs
 //======================================================
 
@@ -897,6 +910,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_EntraParc(),
 			new campo_arqConsulta_EntraValP(),
 			new campo_arqConsulta_EntraTotP(),
+			new campo_arqConsulta_BoletoMin(),
 			new campo_arqConsulta_EntraObs(),
 			new campo_arqConsulta_SaldoParc(),
 			new campo_arqConsulta_SaldoVal(),
@@ -969,7 +983,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( ContaCons ), array( ContaPTra ) ) );
+		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( BoletoMin ), array( ContaCons ), array( ContaPTra ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -1003,6 +1017,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( EntraParc ) );
 			array_push( $vetAux, array( EntraValP ) );
 			array_push( $vetAux, array( EntraTotP ) );
+			array_push( $vetAux, array( BoletoMin ) );
 			array_push( $vetAux, array( EntraObs ) );
 			array_push( $vetAux, array( SaldoParc ) );
 			array_push( $vetAux, array( SaldoVal ) );

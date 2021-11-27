@@ -9,7 +9,7 @@ function sugereFornecedor()
 		From cnfXConfig X
          join arqFornecedor F on F.idPrimario=X.FornRec";
 	$umXConfig = sql_lerUmRegistro( $select );
-echo '<br><b>cnfXConfig S=</b> '.$select;
+// echo '<br><b>cnfXConfig S=</b> '.$select;
 
    sql_fecharBD();
    

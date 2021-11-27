@@ -1,5 +1,26 @@
 <?php
 
+//==================================================================
+function sugereBoletoMin()
+{
+	sql_abrirBD( false );
+   
+   $select = "Select X.BoletoMin
+		From cnfXConfig X";
+	$umXConfig = sql_lerUmRegistro( $select );
+echo '<br><b>cnfXConfig S=</b> '.$select;
+
+   sql_fecharBD();
+   
+	echo
+		javaScriptIni(),
+		'with( parent ) {
+			alt( BoletoMin, ' . $umXConfig->BOLETOMIN . ' );
+         console.warn( \'BOLETOMIN= \'+\''.$umXConfig->BOLETOMIN.'\');
+		}',
+		javaScriptFim();
+}
+
 //===========================================================
 function ext_filtrarSelecao()
 {

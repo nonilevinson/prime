@@ -72,7 +72,8 @@ CriarForms(
 	$this->Pedir( "Se boleto e dividiu",
 		[ "Parcelas do saldo da entrada ", EntraParc,
 		[ brHtml(4) . "Valor das parcelas ", EntraValP,
-		[ brHtml(4) . "Total ", EntraTotP ] ] ] ),
+		[ brHtml(4) . "Total ", EntraTotP,
+		[ brHtml(4) . "Mínimo ", BoletoMin, '','','','','FormCalculado' ] ] ] ] ),
 	$this->Pedir( "Observações", EntraObs ),
 	
 	$this->Cabecalhos( [ "Saldo", 'FormCab alinhaEsq', '2' ] ),

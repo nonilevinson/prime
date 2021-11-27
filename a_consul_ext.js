@@ -1,4 +1,11 @@
 //----------------------------------------------------------
+function sugereBoletoMin()
+{
+	Lance_ExecutarPhp( 'sugereBoletoMin()', 'a_consul_ext', '' );
+	return( '' );
+}
+
+//----------------------------------------------------------
 function vijCallCenter()
 {
    return( 
