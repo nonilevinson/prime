@@ -57,7 +57,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->PDF->Cell( $larg1, $altura, "Bairro:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $regA->BAIRRO, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg3, $altura, "Cidade:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_DIR, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, $regA->CIDADE . "/" . $regA->UF, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, $cidade . "/" . $regA->UF, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg3, $altura, "CEP:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_DIR, VAZIO );
       $this->PDF->Cell( $larg2, $altura, formatarCep( $regA->CEP ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
@@ -79,7 +79,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->WriteTxt( "2- PROCEDIMENTO E CONSULTA MÉDICA", 100, [ '', BOLD ] );
       $this->PDF->Cell( $larg1, $altura, "Procedimento:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, $regA->PTRATA, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, "TRATAMENTO MÉDICO", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
       $this->PDF->Cell( $larg1, $altura, "Tempo:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $regA->TEMPO, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
@@ -93,7 +93,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias em " . '$regA->XXX',
          SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       
-      
+      $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->WriteTxt( "4- RECIBO", 100, [ '', BOLD ] );
       
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
@@ -102,11 +102,11 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       //* fim de preços e condições
       
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->WriteTxt( "DECLARAÇÃO DO CONTRATANTE", 100, [ '', BOLD ] );
-		$this->WriteTxt( "Declaro que as informações por mim prestadas neste contrato são verdadeiras e completas, estando completamente de acordo.", 121 );
+		$this->WriteTxt( "5- DECLARAÇÃO DO CONTRATANTE", 100, [ '', BOLD ] );
+		$this->WriteTxt( "Declaro que as informações por mim prestadas neste contrato são verdadeiras e completas, estando completamente de acordo.", 200 );
 		
       $this->PDF->Cell( $larg2, $altura * 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->WriteTxt( "5- ASSINATURA", 100, [ '', BOLD ] );
+      $this->WriteTxt( "6- ASSINATURA", 100, [ '', BOLD ] );
 		$this->WriteTxt( $cidade . ", " . maiuscula( formatarData( HOJE, 'dd de mmm de aaaa' ) ), 100 );
 		$this->Writeln();
 		$this->PDF->Cell( $larg1, $altura,  "Assinatura:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );

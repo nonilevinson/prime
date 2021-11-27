@@ -1024,8 +1024,8 @@ CREATE TABLE tabSexo
 );
 commit;
 
-INSERT INTO tabSexo VALUES ( 1, 'M', 'Masculino' );
-INSERT INTO tabSexo VALUES ( 2, 'F', 'Feminino' );
+INSERT INTO tabSexo VALUES ( 1, 'M', 'MASCULINO' );
+INSERT INTO tabSexo VALUES ( 2, 'F', 'FEMININO' );
 commit;
 
 
@@ -1043,11 +1043,11 @@ CREATE TABLE tabEstCivil
 );
 commit;
 
-INSERT INTO tabEstCivil VALUES ( 1, '1', 'Solteiro(a)' );
-INSERT INTO tabEstCivil VALUES ( 2, '2', 'Casado(a)' );
-INSERT INTO tabEstCivil VALUES ( 3, '3', 'Viúvo(a)' );
-INSERT INTO tabEstCivil VALUES ( 4, '4', 'Divorciado(a)' );
-INSERT INTO tabEstCivil VALUES ( 5, '5', 'Outros' );
+INSERT INTO tabEstCivil VALUES ( 1, '1', 'SOLTEIRO(A)' );
+INSERT INTO tabEstCivil VALUES ( 2, '2', 'CASADO(A)' );
+INSERT INTO tabEstCivil VALUES ( 3, '3', 'VIÚVO(A)' );
+INSERT INTO tabEstCivil VALUES ( 4, '4', 'DIVORCIADO(A)' );
+INSERT INTO tabEstCivil VALUES ( 5, '5', 'OUTRO' );
 commit;
 
 

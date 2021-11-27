@@ -18,6 +18,23 @@ insert into arqLanceOperacao values(200203,2,'Relatório das agendas de retirada 
 commit;
 
 /************************************************************
+	TABELA tabSexo
+************************************************************/
+update tabSexo set Descritor = 'MASCULINO' Where idPrimario = 1;
+update tabSexo set Descritor = 'FEMININO' Where idPrimario = 2;
+commit;
+
+/************************************************************
+	TABELA tabEstCivil
+************************************************************/
+update tabEstCivil set Descritor = 'SOLTEIRO(A)' Where idPrimario = 1;
+update tabEstCivil set Descritor = 'CASADO(A)' Where idPrimario = 2;
+update tabEstCivil set Descritor = 'VIÚVO(A)' Where idPrimario = 3;
+update tabEstCivil set Descritor = 'DIVORCIADO(A)' Where idPrimario = 4;
+update tabEstCivil set Descritor = 'OUTRO' Where idPrimario = 5;
+commit;
+
+/************************************************************
 	TABELA tabTStAgRet
 ************************************************************/
 
