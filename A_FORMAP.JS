@@ -25,6 +25,17 @@ function Campo_arqFormaPg_Dinheiro()
 var Dinheiro = new Campo_arqFormaPg_Dinheiro;
 
 //------------------------------------------------------------
+Campo_arqFormaPg_Boleto.prototype = new Lance_CampoLogico;
+
+function Campo_arqFormaPg_Boleto()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "Boleto", "Boleto", "Boleto");
+}
+
+var Boleto = new Campo_arqFormaPg_Boleto;
+
+//------------------------------------------------------------
 Campo_arqFormaPg_Cartao.prototype = new Lance_CampoLogico;
 
 function Campo_arqFormaPg_Cartao()
@@ -120,6 +131,32 @@ Campo_arqFormaPg_Dinheiro.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
+Campo_arqFormaPg_Boleto.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqFormaPg_Boleto.prototype.Cabecalho = function()
+{
+		return( "Boleto?" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqFormaPg_Boleto.prototype.Existencia = function()
+{
+	return( Dinheiro == 0 );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
 Campo_arqFormaPg_Cartao.prototype.Sugeriu = function()
 {
 {
@@ -140,7 +177,7 @@ Campo_arqFormaPg_Cartao.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqFormaPg_Cartao.prototype.Existencia = function()
 {
-	return( Dinheiro == 0 );
+	return( ( Dinheiro == 0 ) && ( Boleto == 0 ) );
 }
 
 //-------------------------------------------------------------
@@ -179,7 +216,7 @@ Campo_arqFormaPg_TaxaDeb.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqFormaPg_TaxaDeb.prototype.Existencia = function()
 {
-	return( Dinheiro == 0 );
+	return( ( Dinheiro == 0 ) && ( Boleto == 0 ) );
 }
 
 //-------------------------------------------------------------
@@ -195,7 +232,7 @@ Campo_arqFormaPg_Taxa2.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqFormaPg_Taxa2.prototype.Existencia = function()
 {
-	return( ( Dinheiro == 0 ) && TaxaDeb == 0 );
+	return( ( ( Dinheiro == 0 ) && ( Boleto == 0 ) ) && TaxaDeb == 0 );
 }
 
 //-------------------------------------------------------------
@@ -211,7 +248,7 @@ Campo_arqFormaPg_Taxa3.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqFormaPg_Taxa3.prototype.Existencia = function()
 {
-	return( ( Dinheiro == 0 ) && TaxaDeb == 0 );
+	return( ( ( Dinheiro == 0 ) && ( Boleto == 0 ) ) && TaxaDeb == 0 );
 }
 
 //-------------------------------------------------------------
@@ -234,7 +271,8 @@ Campo_arqFormaPg_Ativo.prototype.Cabecalho = function()
 
 function IniciarDependencias_arqFormaPg()
 {
-Dinheiro.ExistenciasDependentes= [ Cartao,TaxaDeb,Taxa2,Taxa3 ];
+Dinheiro.ExistenciasDependentes= [ Boleto,Cartao,TaxaDeb,Taxa2,Taxa3 ];
+Boleto.ExistenciasDependentes= [ Cartao,TaxaDeb,Taxa2,Taxa3 ];
 TaxaDeb.ExistenciasDependentes= [ Taxa2,Taxa3 ];
 Cartao.ErrosDependentes= [ Dias ];
 }
@@ -254,7 +292,7 @@ function ListaDeCampos_arqFormaPg( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ FormaPg, Dinheiro, Cartao, Dias, TaxaDeb, Taxa2, Taxa3, Ativo ]	);
+		[ FormaPg, Dinheiro, Boleto, Cartao, Dias, TaxaDeb, Taxa2, Taxa3, Ativo ]	);
 	IniciarDependencias_arqFormaPg();
 	g_prefixo = l_prefixo;
 	return( l_lista );
@@ -264,7 +302,9 @@ g_arquivoCampos = ListaDeCampos_arqFormaPg( '' );
 g_idOperacao = 44;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Consultas","","C",149,"","",1,"","1","a_consul","arqConsulta","Folhear","FormaPg","?","","", "","", 0,9,[],[39]);
-var Menu_2 = new Array( 1,"Parcelas","","P",185,"","",1,"","1","a_parcel","arqParcela","Folhear","FormaPg","?","","", "","", 0,9,[],[34]);
-parent.navegacao.MenuPrincQtdOpcoes=2;
+var Menu_1 = new Array( 1,"Consultas","","C",149,"","",1,"","1","a_consul","arqConsulta","Folhear","FormaPg","?","","", "","", 0,23,[],[39]);
+var Menu_2 = new Array( 1,"Parcelas","","P",185,"","",1,"","1","a_parcel","arqParcela","Folhear","FormaPg","?","","", "","", 0,23,[],[34]);
+var Menu_3 = new Array( 1,"Entradas de tratamentos","","E",204,"","",1,"","1","a_consul","arqConsulta","Folhear","EntraFPg","?","","", "","", 0,23,[],[39]);
+var Menu_4 = new Array( 1,"Saldos de tratamentos","","S",205,"","",1,"","1","a_consul","arqConsulta","Folhear","SaldoFPg","?","","", "","", 0,23,[],[39]);
+parent.navegacao.MenuPrincQtdOpcoes=4;
 }

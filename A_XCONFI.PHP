@@ -431,6 +431,19 @@ class campo_cnfXConfig_FornRec_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo BoletoMin
+//======================================================
+
+class campo_cnfXConfig_BoletoMin extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "BoletoMin", "BoletoMin", "BoletoMin", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo cnfXConfig
 //======================================================
 function listaCampos_cnfXConfig( $p_prefixo )
@@ -472,7 +485,8 @@ function listaCampos_cnfXConfig( $p_prefixo )
 			new campo_cnfXConfig_SubPlaRAss_Codigo(),
 			new campo_cnfXConfig_SubPlaRAss_Nome(),
 			new campo_cnfXConfig_FornRec(),
-			new campo_cnfXConfig_FornRec_Nome() )
+			new campo_cnfXConfig_FornRec_Nome(),
+			new campo_cnfXConfig_BoletoMin() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

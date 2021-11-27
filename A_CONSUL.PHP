@@ -550,14 +550,196 @@ class campo_arqConsulta_ValPTrata extends Lance_CampoNumerico
 }
 
 //======================================================
-//	Campo ObsPTrata
+//	Campo EntraFPg
 //======================================================
 
-class campo_arqConsulta_ObsPTrata extends Lance_CampoTexto
+class campo_arqConsulta_EntraFPg extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "ObsPTrata", "ObsPTrata", "ObsPTrata", 10,90, false, false );
+		parent::__construct( "EntraFPg", "EntraFPg", "EntraFPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = array();
+			array_push( $vetPai, 
+				array( "Boleto", 
+					"A.EntraFPg, arqFormaPg",
+					"0" ) );
+		return( $vetPai );
+	}
+
+}
+
+//======================================================
+//	Campo EntraFPg_FormaPg
+//======================================================
+
+class campo_arqConsulta_EntraFPg_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "EntraFPg_FormaPg", "EntraFPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "EntraFPg", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
+	}
+
+}
+
+//======================================================
+//	Campo EntraVal
+//======================================================
+
+class campo_arqConsulta_EntraVal extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "EntraVal", "EntraVal", "EntraVal", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo EntraParc
+//======================================================
+
+class campo_arqConsulta_EntraParc extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "EntraParc", "EntraParc", "EntraParc", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo EntraValP
+//======================================================
+
+class campo_arqConsulta_EntraValP extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "EntraValP", "EntraValP", "EntraValP", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo EntraTotP
+//======================================================
+
+class campo_arqConsulta_EntraTotP extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "EntraTotP", "EntraTotP", "EntraTotP", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo EntraObs
+//======================================================
+
+class campo_arqConsulta_EntraObs extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "EntraObs", "EntraObs", "EntraObs", 100, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoParc
+//======================================================
+
+class campo_arqConsulta_SaldoParc extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoParc", "SaldoParc", "SaldoParc", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoVal
+//======================================================
+
+class campo_arqConsulta_SaldoVal extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoVal", "SaldoVal", "SaldoVal", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoTotP
+//======================================================
+
+class campo_arqConsulta_SaldoTotP extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoTotP", "SaldoTotP", "SaldoTotP", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoFPg
+//======================================================
+
+class campo_arqConsulta_SaldoFPg extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoFPg", "SaldoFPg", "SaldoFPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoFPg_FormaPg
+//======================================================
+
+class campo_arqConsulta_SaldoFPg_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoFPg_FormaPg", "SaldoFPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "SaldoFPg", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoObs
+//======================================================
+
+class campo_arqConsulta_SaldoObs extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoObs", "SaldoObs", "SaldoObs", 100, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
 	}
 
 }
@@ -709,7 +891,19 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_PTrata(),
 			new campo_arqConsulta_PTrata_PTrata(),
 			new campo_arqConsulta_ValPTrata(),
-			new campo_arqConsulta_ObsPTrata(),
+			new campo_arqConsulta_EntraFPg(),
+			new campo_arqConsulta_EntraFPg_FormaPg(),
+			new campo_arqConsulta_EntraVal(),
+			new campo_arqConsulta_EntraParc(),
+			new campo_arqConsulta_EntraValP(),
+			new campo_arqConsulta_EntraTotP(),
+			new campo_arqConsulta_EntraObs(),
+			new campo_arqConsulta_SaldoParc(),
+			new campo_arqConsulta_SaldoVal(),
+			new campo_arqConsulta_SaldoTotP(),
+			new campo_arqConsulta_SaldoFPg(),
+			new campo_arqConsulta_SaldoFPg_FormaPg(),
+			new campo_arqConsulta_SaldoObs(),
 			new campo_arqConsulta_Conduta(),
 			new campo_arqConsulta_Medicacao(),
 			new campo_arqConsulta_Obs(),
@@ -804,7 +998,17 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( Valor ) );
 			array_push( $vetAux, array( PTrata_PTrata ) );
 			array_push( $vetAux, array( ValPTrata ) );
-			array_push( $vetAux, array( ObsPTrata ) );
+			array_push( $vetAux, array( EntraFPg_FormaPg ) );
+			array_push( $vetAux, array( EntraVal ) );
+			array_push( $vetAux, array( EntraParc ) );
+			array_push( $vetAux, array( EntraValP ) );
+			array_push( $vetAux, array( EntraTotP ) );
+			array_push( $vetAux, array( EntraObs ) );
+			array_push( $vetAux, array( SaldoParc ) );
+			array_push( $vetAux, array( SaldoVal ) );
+			array_push( $vetAux, array( SaldoTotP ) );
+			array_push( $vetAux, array( SaldoFPg_FormaPg ) );
+			array_push( $vetAux, array( SaldoObs ) );
 			array_push( $vetAux, array( Conduta ) );
 			array_push( $vetAux, array( Medicacao ) );
 			array_push( $vetAux, array( Obs ) );

@@ -61,6 +61,35 @@ class campo_arqFormaPg_Dinheiro extends Lance_CampoLogico
 }
 
 //======================================================
+//	Campo Boleto
+//======================================================
+
+class campo_arqFormaPg_Boleto extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "Boleto", "Boleto", "Boleto", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->BOLETO == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Boleto?" );
+	}
+
+}
+
+//======================================================
 //	Campo Cartao
 //======================================================
 
@@ -204,6 +233,7 @@ function listaCampos_arqFormaPg( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqFormaPg_FormaPg(),
 			new campo_arqFormaPg_Dinheiro(),
+			new campo_arqFormaPg_Boleto(),
 			new campo_arqFormaPg_Cartao(),
 			new campo_arqFormaPg_Dias(),
 			new campo_arqFormaPg_TaxaDeb(),
@@ -245,6 +275,7 @@ class arqFormaPg extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( FormaPg ) );
 			array_push( $vetAux, array( Dinheiro ) );
+			array_push( $vetAux, array( Boleto ) );
 			array_push( $vetAux, array( Cartao ) );
 			array_push( $vetAux, array( Dias ) );
 			array_push( $vetAux, array( TaxaDeb ) );
@@ -263,6 +294,7 @@ class arqFormaPg extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( FormaPg ) );
 			array_push( $vetAux, array( Dinheiro ) );
+			array_push( $vetAux, array( Boleto ) );
 			array_push( $vetAux, array( Cartao ) );
 			array_push( $vetAux, array( Dias ) );
 			array_push( $vetAux, array( TaxaDeb ) );

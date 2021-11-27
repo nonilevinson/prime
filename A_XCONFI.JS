@@ -336,6 +336,17 @@ function Campo_cnfXConfig_FornRec_Nome()
 
 var FornRec_Nome = new Campo_cnfXConfig_FornRec_Nome;
 
+//------------------------------------------------------------
+Campo_cnfXConfig_BoletoMin.prototype = new Lance_CampoNumerico;
+
+function Campo_cnfXConfig_BoletoMin()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "BoletoMin", "BoletoMin", "BoletoMin", 8, "###.##z,zz", true,"", "");
+}
+
+var BoletoMin = new Campo_cnfXConfig_BoletoMin;
+
 //-------------------------------------------------------------
 // Condição de erro do campo
 //-------------------------------------------------------------
@@ -346,7 +357,7 @@ Campo_cnfXConfig_CPF.prototype.TemErro = function()
 		alert( "CPF inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -379,7 +390,7 @@ Campo_cnfXConfig_CNPJ.prototype.TemErro = function()
 		alert( "CNPJ inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -392,7 +403,7 @@ Campo_cnfXConfig_Email.prototype.TemErro = function()
 		alert( "Email inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -405,7 +416,7 @@ Campo_cnfXConfig_RecorDia.prototype.TemErro = function()
 		alert( "Dia inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -639,7 +650,7 @@ function ListaDeCampos_cnfXConfig( p_prefixo )
 
 		[ CPF, LogAcesso, LogAcessoS, Qtd, Qtd2, Empresa ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia, CCorRec, CCorRec_Nome, CCorAss, CCorAss_Nome, SubPlaRRec, SubPlaRRec_Plano, SubPlaRRec_Plano_CodPlano, SubPlaRRec_Plano_Plano, SubPlaRRec_Codigo, SubPlaRRec_Nome, SubPlaRAss, SubPlaRAss_Plano, SubPlaRAss_Plano_CodPlano, SubPlaRAss_Plano_Plano, SubPlaRAss_Codigo, SubPlaRAss_Nome, FornRec, FornRec_Nome ]	);
+		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia, CCorRec, CCorRec_Nome, CCorAss, CCorAss_Nome, SubPlaRRec, SubPlaRRec_Plano, SubPlaRRec_Plano_CodPlano, SubPlaRRec_Plano_Plano, SubPlaRRec_Codigo, SubPlaRRec_Nome, SubPlaRAss, SubPlaRAss_Plano, SubPlaRAss_Plano_CodPlano, SubPlaRAss_Plano_Plano, SubPlaRAss_Codigo, SubPlaRAss_Nome, FornRec, FornRec_Nome, BoletoMin ]	);
 	IniciarDependencias_cnfXConfig();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -407,3 +407,309 @@ end^
 set term ;^
 
 commit;
+
+/************************************************************
+	Arquivo FormaPg   
+************************************************************/
+drop trigger arqFormaPg_log;
+drop view v_arqFormaPg;
+commit;
+
+ALTER TABLE arqFormaPg
+add /*  4*/	BOLETO campoLogico; /* Lógico: 0=Não 1=Sim */
+commit;
+
+update arqFormaPg set Boleto = 0;
+commit;
+
+RECREATE VIEW V_arqFormaPg AS 
+	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.DINHEIRO, A0.BOLETO, A0.CARTAO, A0.DIAS, A0.TAXADEB, A0.TAXA2, A0.TAXA3, A0.ATIVO
+	FROM arqFormaPg A0;
+commit;
+
+/************************************************************
+	Trigger para Log de arqFormaPg
+************************************************************/
+
+set term ^;
+
+recreate trigger arqFormaPg_LOG for arqFormaPg
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.FormaPg,'' );
+else
+	valorChave = coalesce( NEW.FormaPg,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100044 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'Dinheiro', OLD.Dinheiro, NEW.Dinheiro );
+	execute procedure set_log( 12, NEW.idPrimario, 'Boleto', OLD.Boleto, NEW.Boleto );
+	execute procedure set_log( 12, NEW.idPrimario, 'Cartao', OLD.Cartao, NEW.Cartao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Dias', OLD.Dias, NEW.Dias );
+	execute procedure set_log( 12, NEW.idPrimario, 'TaxaDeb', OLD.TaxaDeb, NEW.TaxaDeb );
+	execute procedure set_log( 12, NEW.idPrimario, 'Taxa2', OLD.Taxa2, NEW.Taxa2 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Taxa3', OLD.Taxa3, NEW.Taxa3 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqFormaPg
+alter IDPRIMARIO position 1,
+alter FORMAPG position 2,
+alter DINHEIRO position 3,
+alter BOLETO position 4,
+alter CARTAO position 5,
+alter DIAS position 6,
+alter TAXADEB position 7,
+alter TAXA2 position 8,
+alter TAXA3 position 9,
+alter ATIVO position 10;
+commit;
+
+INSERT INTO ARQFORMAPG (IDPRIMARIO, FORMAPG, DINHEIRO, BOLETO, CARTAO, DIAS, TAXADEB, TAXA2, TAXA3, ATIVO) VALUES (6, 'BOLETO', 0, 1, 0, 1, 0, 0, 0, 1);
+COMMIT WORK;
+
+/************************************************************
+	Arquivo Consulta  
+************************************************************/
+drop trigger arqConsulta_log;
+drop view v_arqConsulta;
+commit;
+
+ALTER TABLE arqConsulta drop ObsPTrata;
+commit;
+
+ALTER TABLE arqConsulta
+add /* 20*/	ENTRAFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+add /* 21*/	ENTRAVAL NUMERIC( 8, 2 ), /* Máscara = N */
+add /* 22*/	ENTRAPARC SMALLINT, /* Máscara = N */
+add /* 23*/	ENTRAVALP NUMERIC( 8, 2 ), /* Máscara = N */
+add /* 24*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+add /* 25*/	SALDOPARC SMALLINT, /* Máscara = N */
+add /* 26*/	SALDOVAL NUMERIC( 8, 2 ), /* Máscara = N */
+add /* 27*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+add /* 28*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR; /* Máscara = M */
+commit;
+
+ALTER TABLE arqConsulta ADD ENTRATOTP NUMERIC( 8, 2 ) computed by ( EntraParc * EntraValP ); 
+ALTER TABLE arqConsulta ADD SALDOTOTP NUMERIC( 8, 2 ) computed by ( SaldoParc * SaldoVal ); 
+commit;
+
+update arqConsulta set EntraVal=0, EntraParc=0, EntraValP=0, SaldoParc=0, SaldoVal=0;
+commit;
+
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_EntraFPg FOREIGN KEY ( ENTRAFPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_SaldoFPg FOREIGN KEY ( SALDOFPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
+commit;
+
+RECREATE VIEW V_arqConsulta AS 
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO
+	FROM arqConsulta A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
+	left join arqTiAgenda A3 on A3.IDPRIMARIO = A0.TIAGENDA
+	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA
+	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MEDICO
+	left join arqUsuario A6 on A6.IDPRIMARIO = A0.ASSESSOR
+	left join arqUsuario A7 on A7.IDPRIMARIO = A0.CALLCENTER
+	left join tabTMotivo A8 on A8.IDPRIMARIO=A0.TMOTIVO
+	left join arqFormaPg A9 on A9.IDPRIMARIO = A0.FORMAPG
+	left join arqPTrata A10 on A10.IDPRIMARIO = A0.PTRATA
+	left join arqFormaPg A11 on A11.IDPRIMARIO = A0.ENTRAFPG
+	left join arqFormaPg A12 on A12.IDPRIMARIO = A0.SALDOFPG
+	left join arqConta A13 on A13.IDPRIMARIO = A0.CONTACONS
+	left join arqConta A14 on A14.IDPRIMARIO = A0.CONTAPTRA;
+commit;
+
+/************************************************************
+	Trigger para Log de arqConsulta
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConsulta_LOG for arqConsulta
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Num,'' );
+else
+	valorChave = coalesce( NEW.Num,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100039 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TStCon', OLD.TStCon, NEW.TStCon );
+	execute procedure set_log( 12, NEW.idPrimario, 'TiAgenda', OLD.TiAgenda, NEW.TiAgenda );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraChega', OLD.HoraChega, NEW.HoraChega );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'CallCenter', OLD.CallCenter, NEW.CallCenter );
+	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'TMotivo', OLD.TMotivo, NEW.TMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'PTrata', OLD.PTrata, NEW.PTrata );
+	execute procedure set_log( 12, NEW.idPrimario, 'ValPTrata', OLD.ValPTrata, NEW.ValPTrata );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraFPg', OLD.EntraFPg, NEW.EntraFPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraVal', OLD.EntraVal, NEW.EntraVal );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraParc', OLD.EntraParc, NEW.EntraParc );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraValP', OLD.EntraValP, NEW.EntraValP );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraObs', OLD.EntraObs, NEW.EntraObs );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoParc', OLD.SaldoParc, NEW.SaldoParc );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoVal', OLD.SaldoVal, NEW.SaldoVal );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoTotP', OLD.SaldoTotP, NEW.SaldoTotP );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoFPg', OLD.SaldoFPg, NEW.SaldoFPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoObs', OLD.SaldoObs, NEW.SaldoObs );
+	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'ContaCons', OLD.ContaCons, NEW.ContaCons );
+	execute procedure set_log( 12, NEW.idPrimario, 'ContaPTra', OLD.ContaPTra, NEW.ContaPTra );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqConsulta
+alter IDPRIMARIO position 1,
+alter NUM position 2,
+alter CLINICA position 3,
+alter TSTCON position 4,
+alter TIAGENDA position 5,
+alter DATA position 6,
+alter HORA position 7,
+alter HORACHEGA position 8,
+alter PESSOA position 9,
+alter PRONTUARIO position 10,
+alter MEDICO position 11,
+alter ASSESSOR position 12,
+alter CALLCENTER position 13,
+alter MEDICAATUA position 14,
+alter TMOTIVO position 15,
+alter FORMAPG position 16,
+alter VALOR position 17,
+alter PTRATA position 18,
+alter VALPTRATA position 19,
+alter ENTRAFPG position 20,
+alter ENTRAVAL position 21,
+alter ENTRAPARC position 22,
+alter ENTRAVALP position 23,
+alter ENTRATOTP position 24,
+alter ENTRAOBS position 25,
+alter SALDOPARC position 26,
+alter SALDOVAL position 27,
+alter SALDOTOTP position 28,
+alter SALDOFPG position 29,
+alter SALDOOBS position 30,
+alter CONDUTA position 31,
+alter MEDICACAO position 32,
+alter OBS position 33,
+alter CONTACONS position 34,
+alter CONTAPTRA position 35;
+commit;
+
+/************************************************************
+	Parâmetro XConfig   
+************************************************************/
+drop trigger cnfXConfig_log;
+drop view v_cnfXConfig;
+commit;
+
+ALTER TABLE cnfXConfig
+add /* 28*/	BOLETOMIN NUMERIC( 8, 2 ); /* Máscara = N */
+commit;
+
+update cnfXConfig set BoletoMin=1500;
+commit;
+
+RECREATE VIEW V_cnfXConfig AS 
+	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR, A0.RECORDIA, A0.CCORREC, A4.NOME as CCORREC_NOME, A0.CCORASS, A5.NOME as CCORASS_NOME, A0.SUBPLARREC, A6.PLANO as SUBPLARREC_PLANO, A7.CODPLANO as SUBPLARREC_PLANO_CODPLANO, A7.PLANO as SUBPLARREC_PLANO_PLANO, A6.CODIGO as SUBPLARREC_CODIGO, A6.NOME as SUBPLARREC_NOME, A0.SUBPLARASS, A8.PLANO as SUBPLARASS_PLANO, A9.CODPLANO as SUBPLARASS_PLANO_CODPLANO, A9.PLANO as SUBPLARASS_PLANO_PLANO, A8.CODIGO as SUBPLARASS_CODIGO, A8.NOME as SUBPLARASS_NOME, A0.FORNREC, A10.NOME as FORNREC_NOME, A0.BOLETOMIN
+	FROM cnfXConfig A0
+	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
+	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
+	left join tabUF A3 on A3.IDPRIMARIO=A2.UF
+	left join arqCCor A4 on A4.IDPRIMARIO = A0.CCORREC
+	left join arqCCor A5 on A5.IDPRIMARIO = A0.CCORASS
+	left join arqSubPlano A6 on A6.IDPRIMARIO = A0.SUBPLARREC
+	left join arqPlano A7 on A7.IDPRIMARIO = A6.PLANO
+	left join arqSubPlano A8 on A8.IDPRIMARIO = A0.SUBPLARASS
+	left join arqPlano A9 on A9.IDPRIMARIO = A8.PLANO
+	left join arqFornecedor A10 on A10.IDPRIMARIO = A0.FORNREC;
+commit;
+
+/************************************************************
+	Trigger para Log de cnfXConfig
+************************************************************/
+
+set term ^;
+
+recreate trigger cnfXConfig_LOG for cnfXConfig
+active after Insert or Delete or Update
+position 999
+as
+begin
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100017 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', '' );
+begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Empresa', OLD.Empresa, NEW.Empresa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_CEP', OLD.Ende_CEP, NEW.Ende_CEP );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Endereco', OLD.Ende_Endereco, NEW.Ende_Endereco );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Bairro', OLD.Ende_Bairro, NEW.Ende_Bairro );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Cidade', OLD.Ende_Cidade, NEW.Ende_Cidade );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Telefone', OLD.Ende_Telefone, NEW.Ende_Telefone );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_DDDCelular', OLD.Ende_DDDCelular, NEW.Ende_DDDCelular );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Celular', OLD.Ende_Celular, NEW.Ende_Celular );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_WhatsApp', OLD.Ende_WhatsApp, NEW.Ende_WhatsApp );
+	execute procedure set_log( 12, NEW.idPrimario, 'Email', OLD.Email, NEW.Email );
+	execute procedure set_log( 12, NEW.idPrimario, 'Site', OLD.Site, NEW.Site );
+	execute procedure set_log( 12, NEW.idPrimario, 'QtasDesmar', OLD.QtasDesmar, NEW.QtasDesmar );
+	execute procedure set_log( 12, NEW.idPrimario, 'Declinar', OLD.Declinar, NEW.Declinar );
+	execute procedure set_log( 12, NEW.idPrimario, 'RecorDia', OLD.RecorDia, NEW.RecorDia );
+	execute procedure set_log( 12, NEW.idPrimario, 'CCorRec', OLD.CCorRec, NEW.CCorRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'CCorAss', OLD.CCorAss, NEW.CCorAss );
+	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRRec', OLD.SubPlaRRec, NEW.SubPlaRRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRAss', OLD.SubPlaRAss, NEW.SubPlaRAss );
+	execute procedure set_log( 12, NEW.idPrimario, 'FornRec', OLD.FornRec, NEW.FornRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'BoletoMin', OLD.BoletoMin, NEW.BoletoMin );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.CPF is distinct from OLD.CPF )  OR 
+		( NEW.LogAcesso is distinct from OLD.LogAcesso )  OR 
+		( NEW.LogAcessoS is distinct from OLD.LogAcessoS )  OR 
+		( NEW.Qtd is distinct from OLD.Qtd )  OR 
+		( NEW.Qtd2 is distinct from OLD.Qtd2 )  OR 
+		( NEW.CNPJ is distinct from OLD.CNPJ )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;

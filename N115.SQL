@@ -2008,12 +2008,13 @@ CREATE TABLE arqFormaPg
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	FORMAPG VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	DINHEIRO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  4*/	CARTAO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	DIAS SMALLINT, /* Máscara = N */
-	/*  6*/	TAXADEB NUMERIC( 4, 2 ), /* Máscara = N */
-	/*  7*/	TAXA2 NUMERIC( 4, 2 ), /* Máscara = N */
-	/*  8*/	TAXA3 NUMERIC( 4, 2 ), /* Máscara = N */
-	/*  9*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	BOLETO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	CARTAO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	DIAS SMALLINT, /* Máscara = N */
+	/*  7*/	TAXADEB NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  8*/	TAXA2 NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  9*/	TAXA3 NUMERIC( 4, 2 ), /* Máscara = N */
+	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqFormaPg_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqFormaPg_UK UNIQUE ( FormaPg )
 );
@@ -2167,12 +2168,22 @@ CREATE TABLE arqConsulta
 	/* 17*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
 	/* 18*/	PTRATA ligadoComArquivo, /* Ligado com o Arquivo PTrata */
 	/* 19*/	VALPTRATA NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 20*/	OBSPTRATA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 21*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 22*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 23*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 24*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 25*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 20*/	ENTRAFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 21*/	ENTRAVAL NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 22*/	ENTRAPARC SMALLINT, /* Máscara = N */
+	/* 23*/	ENTRAVALP NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 24*/	/* ENTRATOTP */
+	/* 25*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 26*/	SALDOPARC SMALLINT, /* Máscara = N */
+	/* 27*/	SALDOVAL NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 28*/	/* SALDOTOTP */
+	/* 29*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 30*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 31*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 32*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 33*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 34*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 35*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2339,6 +2350,7 @@ CREATE TABLE cnfXConfig
 	/* 25*/	SUBPLARREC ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
 	/* 26*/	SUBPLARASS ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
 	/* 27*/	FORNREC ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+	/* 28*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
 	CONSTRAINT cnfXConfig_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
@@ -2787,6 +2799,10 @@ ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
 	ELSE ( 0 )
 	END  ); 
 ALTER TABLE arqClinica ALTER ATIVO POSITION 17;
+ALTER TABLE arqConsulta ADD ENTRATOTP NUMERIC( 8, 2 ) computed by ( EntraParc * EntraValP ); 
+ALTER TABLE arqConsulta ALTER ENTRATOTP POSITION 24;
+ALTER TABLE arqConsulta ADD SALDOTOTP NUMERIC( 8, 2 ) computed by ( SaldoParc * SaldoVal ); 
+ALTER TABLE arqConsulta ALTER SALDOTOTP POSITION 28;
 ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
 	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqRecorrente.Pessoa )  ), '' ) ) )
 	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqRecorrente.Fornecedor )  ), '' ) ) )
@@ -2916,7 +2932,7 @@ RECREATE VIEW V_arqLido AS
 commit;
 
 RECREATE VIEW V_cnfXConfig AS 
-	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR, A0.RECORDIA, A0.CCORREC, A4.NOME as CCORREC_NOME, A0.CCORASS, A5.NOME as CCORASS_NOME, A0.SUBPLARREC, A6.PLANO as SUBPLARREC_PLANO, A7.CODPLANO as SUBPLARREC_PLANO_CODPLANO, A7.PLANO as SUBPLARREC_PLANO_PLANO, A6.CODIGO as SUBPLARREC_CODIGO, A6.NOME as SUBPLARREC_NOME, A0.SUBPLARASS, A8.PLANO as SUBPLARASS_PLANO, A9.CODPLANO as SUBPLARASS_PLANO_CODPLANO, A9.PLANO as SUBPLARASS_PLANO_PLANO, A8.CODIGO as SUBPLARASS_CODIGO, A8.NOME as SUBPLARASS_NOME, A0.FORNREC, A10.NOME as FORNREC_NOME
+	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR, A0.RECORDIA, A0.CCORREC, A4.NOME as CCORREC_NOME, A0.CCORASS, A5.NOME as CCORASS_NOME, A0.SUBPLARREC, A6.PLANO as SUBPLARREC_PLANO, A7.CODPLANO as SUBPLARREC_PLANO_CODPLANO, A7.PLANO as SUBPLARREC_PLANO_PLANO, A6.CODIGO as SUBPLARREC_CODIGO, A6.NOME as SUBPLARREC_NOME, A0.SUBPLARASS, A8.PLANO as SUBPLARASS_PLANO, A9.CODPLANO as SUBPLARASS_PLANO_CODPLANO, A9.PLANO as SUBPLARASS_PLANO_PLANO, A8.CODIGO as SUBPLARASS_CODIGO, A8.NOME as SUBPLARASS_NOME, A0.FORNREC, A10.NOME as FORNREC_NOME, A0.BOLETOMIN
 	FROM cnfXConfig A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
@@ -3053,7 +3069,7 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.OBSPTRATA, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A11.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A12.TRANSACAO as CONTAPTRA_TRANSACAO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
@@ -3065,8 +3081,10 @@ RECREATE VIEW V_arqConsulta AS
 	left join tabTMotivo A8 on A8.IDPRIMARIO=A0.TMOTIVO
 	left join arqFormaPg A9 on A9.IDPRIMARIO = A0.FORMAPG
 	left join arqPTrata A10 on A10.IDPRIMARIO = A0.PTRATA
-	left join arqConta A11 on A11.IDPRIMARIO = A0.CONTACONS
-	left join arqConta A12 on A12.IDPRIMARIO = A0.CONTAPTRA;
+	left join arqFormaPg A11 on A11.IDPRIMARIO = A0.ENTRAFPG
+	left join arqFormaPg A12 on A12.IDPRIMARIO = A0.SALDOFPG
+	left join arqConta A13 on A13.IDPRIMARIO = A0.CONTACONS
+	left join arqConta A14 on A14.IDPRIMARIO = A0.CONTAPTRA;
 commit;
 
 RECREATE VIEW V_arqPlantao AS 
@@ -3092,7 +3110,7 @@ RECREATE VIEW V_arqTiAgenda AS
 commit;
 
 RECREATE VIEW V_arqFormaPg AS 
-	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.DINHEIRO, A0.CARTAO, A0.DIAS, A0.TAXADEB, A0.TAXA2, A0.TAXA3, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.DINHEIRO, A0.BOLETO, A0.CARTAO, A0.DIAS, A0.TAXADEB, A0.TAXA2, A0.TAXA3, A0.ATIVO
 	FROM arqFormaPg A0;
 commit;
 
@@ -3372,6 +3390,8 @@ ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Clinica FOREIGN KEY ( CLINIC
 ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_TDiaSem FOREIGN KEY ( TDIASEM ) REFERENCES tabTDiaSem ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqFornecedor ADD CONSTRAINT arqFornecedor_FK_TPFPJ FOREIGN KEY ( TPFPJ ) REFERENCES tabTPFPJ ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_EntraFPg FOREIGN KEY ( ENTRAFPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_SaldoFPg FOREIGN KEY ( SALDOFPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE CASCADE ON UPDATE CASCADE;
@@ -3928,6 +3948,7 @@ begin
 	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRRec', OLD.SubPlaRRec, NEW.SubPlaRRec );
 	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRAss', OLD.SubPlaRAss, NEW.SubPlaRAss );
 	execute procedure set_log( 12, NEW.idPrimario, 'FornRec', OLD.FornRec, NEW.FornRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'BoletoMin', OLD.BoletoMin, NEW.BoletoMin );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
 		( NEW.CPF is distinct from OLD.CPF )  OR 
 		( NEW.LogAcesso is distinct from OLD.LogAcesso )  OR 
@@ -4582,7 +4603,16 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
 	execute procedure set_log( 12, NEW.idPrimario, 'PTrata', OLD.PTrata, NEW.PTrata );
 	execute procedure set_log( 12, NEW.idPrimario, 'ValPTrata', OLD.ValPTrata, NEW.ValPTrata );
-	execute procedure set_log( 12, NEW.idPrimario, 'ObsPTrata', substring( OLD.ObsPTrata from 1 for 255 ), substring( NEW.ObsPTrata from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraFPg', OLD.EntraFPg, NEW.EntraFPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraVal', OLD.EntraVal, NEW.EntraVal );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraParc', OLD.EntraParc, NEW.EntraParc );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraValP', OLD.EntraValP, NEW.EntraValP );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraObs', OLD.EntraObs, NEW.EntraObs );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoParc', OLD.SaldoParc, NEW.SaldoParc );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoVal', OLD.SaldoVal, NEW.SaldoVal );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoTotP', OLD.SaldoTotP, NEW.SaldoTotP );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoFPg', OLD.SaldoFPg, NEW.SaldoFPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoObs', OLD.SaldoObs, NEW.SaldoObs );
 	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
@@ -4706,6 +4736,7 @@ if( deleting ) then
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'Dinheiro', OLD.Dinheiro, NEW.Dinheiro );
+	execute procedure set_log( 12, NEW.idPrimario, 'Boleto', OLD.Boleto, NEW.Boleto );
 	execute procedure set_log( 12, NEW.idPrimario, 'Cartao', OLD.Cartao, NEW.Cartao );
 	execute procedure set_log( 12, NEW.idPrimario, 'Dias', OLD.Dias, NEW.Dias );
 	execute procedure set_log( 12, NEW.idPrimario, 'TaxaDeb', OLD.TaxaDeb, NEW.TaxaDeb );

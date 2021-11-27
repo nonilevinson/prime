@@ -344,15 +344,147 @@ function Campo_arqConsulta_ValPTrata()
 var ValPTrata = new Campo_arqConsulta_ValPTrata;
 
 //------------------------------------------------------------
-Campo_arqConsulta_ObsPTrata.prototype = new Lance_CampoTexto;
+Campo_arqConsulta_EntraFPg.prototype = new Lance_CampoHidden;
 
-function Campo_arqConsulta_ObsPTrata()
+function Campo_arqConsulta_EntraFPg()
 {
-	this.superClass = Lance_CampoTexto;
-	this.superClass( "ObsPTrata", "ObsPTrata", "ObsPTrata", false);
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "EntraFPg", "EntraFPg", "EntraFPg", "arqFormaPg", "a_formap", null, "",44);
 }
 
-var ObsPTrata = new Campo_arqConsulta_ObsPTrata;
+var EntraFPg = new Campo_arqConsulta_EntraFPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_EntraFPg_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_EntraFPg_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "EntraFPg_FormaPg", "EntraFPg_FormaPg", "FormaPg", EntraFPg, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var EntraFPg_FormaPg = new Campo_arqConsulta_EntraFPg_FormaPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_EntraVal.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_EntraVal()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "EntraVal", "EntraVal", "EntraVal", 8, "###.##z,zz", true,"", "");
+}
+
+var EntraVal = new Campo_arqConsulta_EntraVal;
+
+//------------------------------------------------------------
+Campo_arqConsulta_EntraParc.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_EntraParc()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "EntraParc", "EntraParc", "EntraParc", 2, "#z", false,"", "");
+}
+
+var EntraParc = new Campo_arqConsulta_EntraParc;
+
+//------------------------------------------------------------
+Campo_arqConsulta_EntraValP.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_EntraValP()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "EntraValP", "EntraValP", "EntraValP", 8, "###.##z,zz", true,"", "");
+}
+
+var EntraValP = new Campo_arqConsulta_EntraValP;
+
+//------------------------------------------------------------
+Campo_arqConsulta_EntraTotP.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_EntraTotP()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "EntraTotP", "EntraTotP", "EntraTotP", 8, "###.##z,zz", true,"", "");
+}
+
+var EntraTotP = new Campo_arqConsulta_EntraTotP;
+
+//------------------------------------------------------------
+Campo_arqConsulta_EntraObs.prototype = new Lance_CampoCadeia;
+
+function Campo_arqConsulta_EntraObs()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "EntraObs", "EntraObs", "EntraObs", 100, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var EntraObs = new Campo_arqConsulta_EntraObs;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SaldoParc.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_SaldoParc()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "SaldoParc", "SaldoParc", "SaldoParc", 2, "#z", false,"", "");
+}
+
+var SaldoParc = new Campo_arqConsulta_SaldoParc;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SaldoVal.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_SaldoVal()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "SaldoVal", "SaldoVal", "SaldoVal", 8, "###.##z,zz", true,"", "");
+}
+
+var SaldoVal = new Campo_arqConsulta_SaldoVal;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SaldoTotP.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_SaldoTotP()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "SaldoTotP", "SaldoTotP", "SaldoTotP", 8, "###.##z,zz", true,"", "");
+}
+
+var SaldoTotP = new Campo_arqConsulta_SaldoTotP;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SaldoFPg.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_SaldoFPg()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "SaldoFPg", "SaldoFPg", "SaldoFPg", "arqFormaPg", "a_formap", null, "",44);
+}
+
+var SaldoFPg = new Campo_arqConsulta_SaldoFPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SaldoFPg_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_SaldoFPg_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "SaldoFPg_FormaPg", "SaldoFPg_FormaPg", "FormaPg", SaldoFPg, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var SaldoFPg_FormaPg = new Campo_arqConsulta_SaldoFPg_FormaPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SaldoObs.prototype = new Lance_CampoCadeia;
+
+function Campo_arqConsulta_SaldoObs()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "SaldoObs", "SaldoObs", "SaldoObs", 100, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var SaldoObs = new Campo_arqConsulta_SaldoObs;
 
 //------------------------------------------------------------
 Campo_arqConsulta_Conduta.prototype = new Lance_CampoTexto;
@@ -876,9 +1008,284 @@ Campo_arqConsulta_ValPTrata.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraFPg.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A forma de pagamento da entrada é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Campos a mais que o ligado traz do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraFPg.prototype.TrazOutrosDoPai = function()
+{
+	var vetPai = new Array();
+			vetPai[0] = [ "Boleto",
+					"A.EntraFPg, arqFormaPg",
+					"0" ];
+		return( vetPai );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
-Campo_arqConsulta_ObsPTrata.prototype.Existencia = function()
+Campo_arqConsulta_EntraFPg.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraFPg_FormaPg.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraFPg_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( EntraFPg.Obrigatorio( p_comMsg ) );
+}
+
+EntraFPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraVal.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O valor da entrada é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraVal.prototype.TemErro = function()
+{
+		if( tem(this) && ( EntraVal > ValPTrata ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraVal.prototype.Existencia = function()
+{
+	return( tem( EntraFPg_FormaPg ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraParc.prototype.Existencia = function()
+{
+	return( EntraFPg_Boleto == 1 );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraValP.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O valor do saldo da entrada é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraValP.prototype.TemErro = function()
+{
+		if( tem(this) && ( ValPTrata != EntraVal + (EntraParc *  EntraValP ) + ( SaldoParc * SaldoVal ) ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraValP.prototype.Existencia = function()
+{
+	return( tem( EntraParc ) );
+}
+
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraTotP.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( EntraParc * EntraValP ) );
+}
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraTotP.prototype.Existencia = function()
+{
+	return( tem( EntraParc ) );
+}
+
+EntraTotP.EhCalculado = true;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraObs.prototype.Existencia = function()
+{
+	return( tem( EntraFPg_FormaPg ) );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoParc.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A quantidades de parcelas do saldo devedor é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoParc.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Pré Campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoVal.prototype.PreCampo = function()
+{
+		if( SaldoVal == 0 )
+	{
+		alt( SaldoVal, (ValPTrata-EntraVal-(EntraParc*EntraValP))/SaldoParc );
+	}
+	return( true );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoVal.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( ( ValPTrata - EntraVal - ( EntraParc * EntraValP ) ) / SaldoParc ) );
+}
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoVal.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O valor do saldo devedor é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoVal.prototype.TemErro = function()
+{
+		if( tem(this) && ( ValPTrata != EntraVal + (EntraParc *  EntraValP ) + ( SaldoParc * SaldoVal ) ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoVal.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoTotP.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( SaldoParc * SaldoVal ) );
+}
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoTotP.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+SaldoTotP.EhCalculado = true;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoFPg.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A forma de pagamento do saldo devedor é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoFPg.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoFPg_FormaPg.prototype.Existencia = function()
+{
+	return( tem( PTrata_PTrata ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoFPg_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( SaldoFPg.Obrigatorio( p_comMsg ) );
+}
+
+SaldoFPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoObs.prototype.Existencia = function()
 {
 	return( tem( PTrata_PTrata ) );
 }
@@ -1028,6 +1435,22 @@ Campo_arqConsulta_PTrata.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_arqConsulta_EntraFPg.prototype.ExistenciaEspecial = function()
+{
+	return( ( !EntraFPg_FormaPg.Obrigatorio( false ) || tem(EntraFPg_FormaPg) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoFPg.prototype.ExistenciaEspecial = function()
+{
+	return( ( !SaldoFPg_FormaPg.Obrigatorio( false ) || tem(SaldoFPg_FormaPg) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_arqConsulta_ContaCons.prototype.ExistenciaEspecial = function()
 {
 	return( ( !ContaCons_Transacao.Obrigatorio( false ) || tem(ContaCons_Transacao) ) );
@@ -1044,6 +1467,10 @@ Campo_arqConsulta_ContaPTra.prototype.ExistenciaEspecial = function()
 function IniciarDependencias_arqConsulta()
 {
 Pessoa.CalculosDependentes= [ Prontuario ];
+EntraParc.CalculosDependentes= [ EntraTotP ];
+EntraValP.CalculosDependentes= [ EntraTotP ];
+SaldoParc.CalculosDependentes= [ SaldoTotP ];
+SaldoVal.CalculosDependentes= [ SaldoTotP ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
@@ -1053,7 +1480,11 @@ CallCenter_Usuario.ExistenciasDependentes= [ CallCenter ];
 Valor.ExistenciasDependentes= [ FormaPg,FormaPg_FormaPg,ContaCons,ContaCons_Transacao ];
 FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 PTrata_PTrata.ExistenciasDependentes= [ PTrata ];
-PTrata.ExistenciasDependentes= [ ValPTrata,ObsPTrata,ContaPTra,ContaPTra_Transacao ];
+PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoParc,SaldoVal,SaldoTotP,SaldoFPg,SaldoFPg_FormaPg,SaldoObs,ContaPTra,ContaPTra_Transacao ];
+EntraFPg_FormaPg.ExistenciasDependentes= [ EntraFPg ];
+EntraFPg.ExistenciasDependentes= [ EntraVal,EntraParc,EntraObs ];
+EntraParc.ExistenciasDependentes= [ EntraValP,EntraTotP ];
+SaldoFPg_FormaPg.ExistenciasDependentes= [ SaldoFPg ];
 ContaCons_Transacao.ExistenciasDependentes= [ ContaCons ];
 ContaPTra_Transacao.ExistenciasDependentes= [ ContaPTra ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
@@ -1065,6 +1496,14 @@ CallCenter_Usuario.ErrosDependentes= [ CallCenter ];
 FormaPg_FormaPg.ErrosDependentes= [ FormaPg ];
 PTrata_PTrata.ErrosDependentes= [ PTrata ];
 PTrata.ErrosDependentes= [ ValPTrata ];
+EntraFPg_FormaPg.ErrosDependentes= [ EntraFPg ];
+ValPTrata.ErrosDependentes= [ EntraVal,EntraValP,SaldoVal ];
+EntraVal.ErrosDependentes= [ EntraValP,SaldoVal ];
+EntraParc.ErrosDependentes= [ EntraValP,SaldoVal ];
+SaldoParc.ErrosDependentes= [ EntraValP,SaldoVal ];
+SaldoVal.ErrosDependentes= [ EntraValP ];
+EntraValP.ErrosDependentes= [ SaldoVal ];
+SaldoFPg_FormaPg.ErrosDependentes= [ SaldoFPg ];
 ContaCons_Transacao.ErrosDependentes= [ ContaCons ];
 ContaPTra_Transacao.ErrosDependentes= [ ContaPTra ];
 Clinica.CamposChave= [ Clinica_Clinica ];
@@ -1074,6 +1513,8 @@ Assessor.CamposChave= [ Assessor_Usuario ];
 CallCenter.CamposChave= [ CallCenter_Usuario ];
 FormaPg.CamposChave= [ FormaPg_FormaPg ];
 PTrata.CamposChave= [ PTrata_PTrata ];
+EntraFPg.CamposChave= [ EntraFPg_FormaPg ];
+SaldoFPg.CamposChave= [ SaldoFPg_FormaPg ];
 ContaCons.CamposChave= [ ContaCons_Transacao ];
 ContaPTra.CamposChave= [ ContaPTra_Transacao ];
 }
@@ -1095,6 +1536,7 @@ ContaPTra.CamposChave= [ ContaPTra_Transacao ];
 g_arquivoAtual = "arqConsulta";
 var PTrata_Valor;
 var PTrata_MrgDesc;
+var EntraFPg_Boleto;
 //------------------------------------------------------------
 function ListaDeCampos_arqConsulta( p_prefixo )
 {
@@ -1105,7 +1547,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, ObsPTrata, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, EntraValP, EntraTotP, EntraObs, SaldoParc, SaldoVal, SaldoTotP, SaldoFPg, SaldoFPg_FormaPg, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );
