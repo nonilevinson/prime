@@ -8,7 +8,7 @@ Campo_arqUnidade_Unidade.prototype = new Lance_CampoCadeia;
 function Campo_arqUnidade_Unidade()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Unidade", "Unidade", "Unidade", 10, "uxxxxxxxxx", false);
+	this.superClass( "Unidade", "Unidade", "Unidade", 10, "uuuuuuuuuu", false);
 }
 
 var Unidade = new Campo_arqUnidade_Unidade;

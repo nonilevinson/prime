@@ -229,6 +229,14 @@ Campo_arqAgRet_Dia.prototype.Cabecalho = function()
 		return( "Dia Semana" );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqAgRet_Dia.prototype.Existencia = function()
+{
+	return( tem( Data ) );
+}
+
 Dia.EhCalculado = true;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
@@ -420,6 +428,7 @@ function IniciarDependencias_arqAgRet()
 Data.CalculosDependentes= [ Dia ];
 Consulta.CalculosDependentes= [ Prontuario,Nome,NumCelular ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
+Data.ExistenciasDependentes= [ Dia ];
 Consulta_Num.ExistenciasDependentes= [ Consulta ];
 TStAgRet.ExistenciasDependentes= [ Assessor,Assessor_Usuario ];
 Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
