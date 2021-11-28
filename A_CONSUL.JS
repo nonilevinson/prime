@@ -1134,9 +1134,9 @@ Campo_arqConsulta_EntraValP.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraValP.prototype.TemErro = function()
 {
-		if( tem(this) && ( BoletoMin > EntraVal + ( EntraParc * EntraValP ) ) )
+		if( tem(this) && ( BoletoMin > ( EntraVal + ( EntraParc * EntraValP ) ) ) )
 	{
-		alert( "Valor inválido" );
+		alert( "Valor inválido! O total ficará acima do mínimo" );
 		return( true );
 	}
 	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
