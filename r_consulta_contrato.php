@@ -87,7 +87,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->PDF->Cell( $larg2, $altura, $regA->DDD . " " . $regA->TELEFONE, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
       $this->PDF->Cell( $larg1, $altura, "Email:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, $regA->EMAIL, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, $regA->EMAIL, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       //* fim dos dados do paciente
 
       //* início de procedimento e consulta
@@ -152,11 +152,11 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 
       if( $entraObs )
          $this->PDF->Cell( $larg1, $altura, "Observações: " . $entraObs, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-
-
+/*
       $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg1, $altura, "Assessor:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $regA->ASSESSOR, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+*/
       //* fim do recibo
 
       $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
@@ -167,15 +167,19 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->WriteTxt( "6- ASSINATURAS", 100, [ '', BOLD ] );
 		$this->WriteTxt( $cidade . ", " . maiuscula( formatarData( HOJE, 'dd de mmm de aaaa' ) ), 100 );
 		
-      $this->PDF->Cell( $larg2, $altura2 + 5, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->PDF->Cell( $larg1, $altura,  "Paciente:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->PDF->Cell( $larg2, $altura,  repete( '_', 40 ), SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->PDF->Cell( $larg1, $altura,  "Assessor:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->PDF->Cell( $larg2, $altura,  repete( '_', 40 ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-		
+      $largQuem = 17;
+      $largSub  = 70;
       
-      $this->PDF->Cell( $larg1, $altura,  "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->PDF->Cell( $larg2, $altura,  $paciente, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura2 + 5, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largQuem, $altura,  "Paciente:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largSub, $altura,  repete( '_', 35 ), SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largQuem, $altura,  "Assessor:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largSub, $altura,  repete( '_', 35 ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+		      
+      $this->PDF->Cell( $largQuem, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largSub, $altura, " " . $paciente, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $largQuem, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largSub, $altura, " " . $regA->ASSESSOR, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->Writeln();
 	}
 }
