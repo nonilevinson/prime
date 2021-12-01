@@ -2287,7 +2287,7 @@ commit;
 CREATE TABLE arqUnidade
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	UNIDADE VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	UNIDADE VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqUnidade_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqUnidade_UK UNIQUE ( Unidade )
