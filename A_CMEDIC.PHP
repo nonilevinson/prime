@@ -100,6 +100,13 @@ class campo_arqCMedica_UnidadeCal extends Lance_CampoCadeia
 		parent::__construct( "UnidadeCal", "UnidadeCal", "UnidadeCal", 10, "xxxxxxxxxx", EH_CALCULADO, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Unidade" );
+	}
+
 }
 
 //======================================================

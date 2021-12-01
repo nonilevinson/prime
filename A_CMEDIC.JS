@@ -140,6 +140,14 @@ Campo_arqCMedica_UnidadeCal.prototype.Calculou = function()
 }
 }
 
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqCMedica_UnidadeCal.prototype.Cabecalho = function()
+{
+		return( "Unidade" );
+}
+
 UnidadeCal.EhCalculado = true;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?

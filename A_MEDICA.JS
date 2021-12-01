@@ -108,6 +108,22 @@ Campo_arqMedicamen_Unidade_Unidade.prototype.ObrigatorioEspecial = function( p_c
 
 Unidade_Unidade.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqMedicamen_EstoqueMin.prototype.Cabecalho = function()
+{
+		return( "Est.Min." );
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqMedicamen_EstoqueMax.prototype.Cabecalho = function()
+{
+		return( "Est.Max." );
+}
+
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_arqMedicamen_Ativo.prototype.Sugeriu = function()

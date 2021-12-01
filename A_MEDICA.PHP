@@ -68,6 +68,13 @@ class campo_arqMedicamen_EstoqueMin extends Lance_CampoNumerico
 		parent::__construct( "EstoqueMin", "EstoqueMin", "EstoqueMin", 4, "#.##z", "", "", 0, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Est.Min." );
+	}
+
 }
 
 //======================================================
@@ -79,6 +86,13 @@ class campo_arqMedicamen_EstoqueMax extends Lance_CampoNumerico
 	function __construct()
 	{
 		parent::__construct( "EstoqueMax", "EstoqueMax", "EstoqueMax", 4, "#.##z", "", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Est.Max." );
 	}
 
 }
@@ -164,6 +178,8 @@ class arqMedicamen extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Medicamen ) );
 			array_push( $vetAux, array( Unidade_Unidade ) );
+			array_push( $vetAux, array( EstoqueMin ) );
+			array_push( $vetAux, array( EstoqueMax ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
