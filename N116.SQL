@@ -2025,45 +2025,20 @@ commit;
 
 
 /************************************************************
-	Arquivo CCor      
+	Arquivo Unidade   
 ************************************************************/
 
-CREATE TABLE arqCCor
+CREATE TABLE arqUnidade
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  4*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
-	/*  5*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
-	/*  6*/	DVAGENCIA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
-	/*  7*/	CONTA VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
-	/*  8*/	DVCONTA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
-	/*  9*/	CARTEIRA INTEGER, /* Máscara = N */
-	/* 10*/	CODCEDENTE VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = M */
-	/* 11*/	MULTA NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 12*/	JUROS NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 13*/	CBOLETO NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 14*/	INSTRUCOES BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 15*/	ULTREMESSA NUMERIC(18,0), /* Máscara = N */
-	/* 16*/	CONVENIO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = N */
-	/* 17*/	VARIACAO NUMERIC(18,0), /* Máscara = N */
-	/* 18*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 19*/	TPIX1 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 20*/	PIX1 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 21*/	TPIX2 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 22*/	PIX2 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 23*/	TPIX3 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 24*/	PIX3 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 25*/	TPIX4 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 26*/	PIX4 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 27*/	TPIX5 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 28*/	PIX5 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	CONSTRAINT arqCCor_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqCCor_UK UNIQUE ( Nome )
+	/*  2*/	UNIDADE VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqUnidade_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqUnidade_UK UNIQUE ( Unidade )
 );
 commit;
 
-CREATE DESC INDEX arqCCor_IdPrimario_Desc ON arqCCor (IDPRIMARIO);
+CREATE DESC INDEX arqUnidade_IdPrimario_Desc ON arqUnidade (IDPRIMARIO);
 commit;
 
 
@@ -2281,40 +2256,66 @@ commit;
 
 
 /************************************************************
-	Arquivo Unidade   
+	Arquivo CCor      
 ************************************************************/
 
-CREATE TABLE arqUnidade
+CREATE TABLE arqCCor
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	UNIDADE VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqUnidade_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqUnidade_UK UNIQUE ( Unidade )
+	/*  2*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  4*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
+	/*  5*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
+	/*  6*/	DVAGENCIA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
+	/*  7*/	CONTA VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
+	/*  8*/	DVCONTA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
+	/*  9*/	CARTEIRA INTEGER, /* Máscara = N */
+	/* 10*/	CODCEDENTE VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = M */
+	/* 11*/	MULTA NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 12*/	JUROS NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 13*/	CBOLETO NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 14*/	INSTRUCOES BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 15*/	ULTREMESSA NUMERIC(18,0), /* Máscara = N */
+	/* 16*/	CONVENIO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = N */
+	/* 17*/	VARIACAO NUMERIC(18,0), /* Máscara = N */
+	/* 18*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 19*/	TPIX1 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 20*/	PIX1 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 21*/	TPIX2 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 22*/	PIX2 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 23*/	TPIX3 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 24*/	PIX3 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 25*/	TPIX4 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 26*/	PIX4 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 27*/	TPIX5 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 28*/	PIX5 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	CONSTRAINT arqCCor_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqCCor_UK UNIQUE ( Nome )
 );
 commit;
 
-CREATE DESC INDEX arqUnidade_IdPrimario_Desc ON arqUnidade (IDPRIMARIO);
+CREATE DESC INDEX arqCCor_IdPrimario_Desc ON arqCCor (IDPRIMARIO);
 commit;
 
 
 /************************************************************
-	Arquivo IndexAtua 
+	Arquivo Medicamen 
 ************************************************************/
 
-CREATE TABLE arqIndexAtua
+CREATE TABLE arqMedicamen
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	INDICE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	DATA DATE, /* Máscara = 4ano */
-	/*  4*/	DIAS SMALLINT, /* Máscara = N */
-	/*  5*/	/* DATAPROX */
-	/*  6*/	ESTATIS NUMERIC( 7, 6 ), /* Máscara = N */
-	CONSTRAINT arqIndexAtua_PK PRIMARY KEY ( IDPRIMARIO )
+	/*  2*/	MEDICAMEN VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	UNIDADE ligadoComArquivo, /* Ligado com o Arquivo Unidade */
+	/*  4*/	ESTOQUEMIN INTEGER, /* Máscara = N */
+	/*  5*/	ESTOQUEMAX INTEGER, /* Máscara = N */
+	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqMedicamen_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqMedicamen_UK UNIQUE ( Medicamen )
 );
 commit;
 
-CREATE DESC INDEX arqIndexAtua_IdPrimario_Desc ON arqIndexAtua (IDPRIMARIO);
+CREATE DESC INDEX arqMedicamen_IdPrimario_Desc ON arqMedicamen (IDPRIMARIO);
 commit;
 
 
@@ -2685,23 +2686,22 @@ commit;
 
 
 /************************************************************
-	Arquivo Medicamen 
+	Arquivo IndexAtua 
 ************************************************************/
 
-CREATE TABLE arqMedicamen
+CREATE TABLE arqIndexAtua
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	MEDICAMEN VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	UNIDADE ligadoComArquivo, /* Ligado com o Arquivo Unidade */
-	/*  4*/	ESTOQUEMIN INTEGER, /* Máscara = N */
-	/*  5*/	ESTOQUEMAX INTEGER, /* Máscara = N */
-	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqMedicamen_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqMedicamen_UK UNIQUE ( Medicamen )
+	/*  2*/	INDICE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	DATA DATE, /* Máscara = 4ano */
+	/*  4*/	DIAS SMALLINT, /* Máscara = N */
+	/*  5*/	/* DATAPROX */
+	/*  6*/	ESTATIS NUMERIC( 7, 6 ), /* Máscara = N */
+	CONSTRAINT arqIndexAtua_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
 
-CREATE DESC INDEX arqMedicamen_IdPrimario_Desc ON arqMedicamen (IDPRIMARIO);
+CREATE DESC INDEX arqIndexAtua_IdPrimario_Desc ON arqIndexAtua (IDPRIMARIO);
 commit;
 
 
@@ -2729,6 +2729,26 @@ CREATE TABLE arqAgRet
 commit;
 
 CREATE DESC INDEX arqAgRet_IdPrimario_Desc ON arqAgRet (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo CMedica   
+************************************************************/
+
+CREATE TABLE arqCMedica
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	CONSULTA ligadoComArquivo, /* Ligado com o Arquivo Consulta */
+	/*  3*/	MEDICAMEN ligadoComArquivo, /* Ligado com o Arquivo Medicamen */
+	/*  4*/	/* UNIDADECAL */
+	/*  5*/	QTD INTEGER, /* Máscara = N */
+	CONSTRAINT arqCMedica_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqCMedica_UK UNIQUE ( Consulta, Medicamen )
+);
+commit;
+
+CREATE DESC INDEX arqCMedica_IdPrimario_Desc ON arqCMedica (IDPRIMARIO);
 commit;
 
 
@@ -2825,6 +2845,8 @@ ALTER TABLE arqAgRet ADD NOME VARCHAR( 60 ) computed by ( ( COALESCE( ( SELECT N
 ALTER TABLE arqAgRet ALTER NOME POSITION 8;
 ALTER TABLE arqAgRet ADD NUMCELULAR VARCHAR( 11 ) computed by ( ( COALESCE( ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) ); 
 ALTER TABLE arqAgRet ALTER NUMCELULAR POSITION 9;
+ALTER TABLE arqCMedica ADD UNIDADECAL VARCHAR( 10 ) computed by ( (Select U.Unidade From arqMedicamen M join arqUnidade U on U.idPrimario=M.Unidade Where M.idPrimario=arqCMedica.Medicamen) ); 
+ALTER TABLE arqCMedica ALTER UNIDADECAL POSITION 4;
 commit;
 
 
@@ -3168,6 +3190,13 @@ RECREATE VIEW V_arqAgRet AS
 	left join arqUsuario A4 on A4.IDPRIMARIO = A0.ASSESSOR;
 commit;
 
+RECREATE VIEW V_arqCMedica AS 
+	SELECT A0.IDPRIMARIO, A0.CONSULTA, A1.NUM as CONSULTA_NUM, A0.MEDICAMEN, A2.MEDICAMEN as MEDICAMEN_MEDICAMEN, A0.UNIDADECAL, A0.QTD
+	FROM arqCMedica A0
+	left join arqConsulta A1 on A1.IDPRIMARIO = A0.CONSULTA
+	left join arqMedicamen A2 on A2.IDPRIMARIO = A0.MEDICAMEN;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -3255,6 +3284,7 @@ insert into arqLanceOperacao values(100050,1,'Cadastro das faixas de comissionam
 insert into arqLanceOperacao values(100051,1,'Cadastro de unidades de medidas','arqUnidade',51,2,0,'');
 insert into arqLanceOperacao values(100052,1,'Cadastro de medicamentos','arqMedicamen',52,1,0,'');
 insert into arqLanceOperacao values(100053,1,'Cadastro das agendas de retirada de medicação','arqAgRet',53,1,0,'');
+insert into arqLanceOperacao values(100054,1,'Cadastro as medicação da consulta','arqCMedica',54,1,0,'');
 insert into arqLanceOperacao values(200193,2,'Rotina para excluir permissões de grupos de acesso','',193,null,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
@@ -3289,7 +3319,6 @@ insert into arqLanceOperacao values(200083,2,'Rotina para reindexar os índices',
 insert into arqLanceOperacao values(200073,2,'Relatório analítico de interações no sistema','',73,90,0,'');
 insert into arqLanceOperacao values(200074,2,'Relatório resumido de interações no sistema','',74,90,0,'');
 insert into arqLanceOperacao values(200129,2,'Rotina para baixar parcelas','',129,10,0,'');
-insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200068,2,'Rotina para alterar as senhas dos usuários','',68,90,0,'');
 insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos','',151,1,0,'');
 insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
@@ -3300,6 +3329,7 @@ insert into arqLanceOperacao values(200176,2,'Rotina para criar Saída de caixa d
 insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa da Recepção','',177,10,0,'');
 insert into arqLanceOperacao values(200180,2,'Rotina para criar Saída de caixa de Assesor','',180,10,0,'');
 insert into arqLanceOperacao values(200181,2,'Rotina para criar Entrada de caixa de Assesor','',181,10,0,'');
+insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
 insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'');
@@ -3416,6 +3446,8 @@ ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Clinica FOREIGN KEY ( CLINICA ) 
 ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Consulta FOREIGN KEY ( CONSULTA ) REFERENCES arqConsulta ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_TStAgRet FOREIGN KEY ( TSTAGRET ) REFERENCES tabTStAgRet ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Consulta FOREIGN KEY ( CONSULTA ) REFERENCES arqConsulta ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Medicamen FOREIGN KEY ( MEDICAMEN ) REFERENCES arqMedicamen ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 
@@ -4985,6 +5017,37 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'TStAgRet', OLD.TStAgRet, NEW.TStAgRet );
 	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqCMedica
+************************************************************/
+
+set term ^;
+
+recreate trigger arqCMedica_LOG for arqCMedica
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Consulta_Num, ' ' ) || '-' || coalesce( Medicamen_Medicamen, ' ' ) from v_arqCMedica where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100054 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Consulta', OLD.Consulta, NEW.Consulta );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
+	execute procedure set_log( 12, NEW.idPrimario, 'Qtd', OLD.Qtd, NEW.Qtd );
 end
 end^
 

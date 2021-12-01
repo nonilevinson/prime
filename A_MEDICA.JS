@@ -30,7 +30,7 @@ Campo_arqMedicamen_Unidade_Unidade.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqMedicamen_Unidade_Unidade()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Unidade_Unidade", "Unidade_Unidade", "Unidade", Unidade, 10, "uxxxxxxxxx", false);
+	this.superClass( "Unidade_Unidade", "Unidade_Unidade", "Unidade", Unidade, 10, "uuuuuuuuuu", false);
 }
 
 var Unidade_Unidade = new Campo_arqMedicamen_Unidade_Unidade;
@@ -165,5 +165,6 @@ g_arquivoCampos = ListaDeCampos_arqMedicamen( '' );
 g_idOperacao = 52;
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"Consultas","","u",207,"","",1,"","1","a_cmedic","arqCMedica","Folhear","Medicamen","?","","", "","", 0,9,[],[54]);
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }
