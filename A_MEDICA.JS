@@ -181,6 +181,7 @@ g_arquivoCampos = ListaDeCampos_arqMedicamen( '' );
 g_idOperacao = 52;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Consultas","","u",207,"","",1,"","1","a_cmedic","arqCMedica","Folhear","Medicamen","?","","", "","", 0,9,[],[54]);
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_1 = new Array( 1,"Lotes","","L",208,"","",1,"","1","a_lote","arqLote","Folhear","Medicam","?","","", "","", 0,9,[],[55]);
+var Menu_2 = new Array( 1,"Consultas","","u",207,"","",1,"","1","a_cmedic","arqCMedica","Folhear","Medicamen","?","","", "","", 0,9,[],[54]);
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }

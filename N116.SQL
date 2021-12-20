@@ -1453,11 +1453,13 @@ CREATE TABLE tabTMov
 );
 commit;
 
-INSERT INTO tabTMov VALUES ( 1, '1', 'Entrada' );
-INSERT INTO tabTMov VALUES ( 2, '2', 'Perda validade' );
-INSERT INTO tabTMov VALUES ( 3, '3', 'Quebra' );
-INSERT INTO tabTMov VALUES ( 4, '4', 'Saída consulta' );
-INSERT INTO tabTMov VALUES ( 5, '5', 'Saída diversa' );
+INSERT INTO tabTMov VALUES ( 1, '1', 'Devolução' );
+INSERT INTO tabTMov VALUES ( 2, '2', 'Entrada' );
+INSERT INTO tabTMov VALUES ( 3, '3', 'Perda Diversa' );
+INSERT INTO tabTMov VALUES ( 4, '4', 'Perda pela validade' );
+INSERT INTO tabTMov VALUES ( 5, '5', 'Quebra' );
+INSERT INTO tabTMov VALUES ( 6, '6', 'Saída consulta' );
+INSERT INTO tabTMov VALUES ( 7, '7', 'Saída diversa' );
 commit;
 
 
@@ -1821,33 +1823,20 @@ commit;
 
 
 /************************************************************
-	Arquivo Usuario   
+	Arquivo Unidade   
 ************************************************************/
 
-CREATE TABLE arqUsuario
+CREATE TABLE arqUnidade
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	USUARIO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
-	/*  4*/	SENHA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = ? */
-	/*  5*/	GRUPO ligadoComArquivo, /* Ligado com o Arquivo Grupo */
-	/*  6*/	VERSAO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
-	/*  7*/	EMAIL VARCHAR( 70 ) COLLATE PT_BR, /* Máscara = X */
-	/*  8*/	CRM VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
-	/*  9*/	PODEAGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 11*/	NASCIMENTO DATE, /* Máscara = 4ano */
-	/* 12*/	FOTO campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 13*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
-	/* 14*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 15*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 16*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
+	/*  2*/	UNIDADE VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqUnidade_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqUnidade_UK UNIQUE ( Unidade )
 );
 commit;
 
-CREATE DESC INDEX arqUsuario_IdPrimario_Desc ON arqUsuario (IDPRIMARIO);
+CREATE DESC INDEX arqUnidade_IdPrimario_Desc ON arqUnidade (IDPRIMARIO);
 commit;
 
 
@@ -2025,61 +2014,54 @@ commit;
 
 
 /************************************************************
-	Arquivo Unidade   
+	Arquivo Usuario   
 ************************************************************/
 
-CREATE TABLE arqUnidade
+CREATE TABLE arqUsuario
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	UNIDADE VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqUnidade_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqUnidade_UK UNIQUE ( Unidade )
+	/*  2*/	USUARIO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	/*  4*/	SENHA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = ? */
+	/*  5*/	GRUPO ligadoComArquivo, /* Ligado com o Arquivo Grupo */
+	/*  6*/	VERSAO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = X */
+	/*  7*/	EMAIL VARCHAR( 70 ) COLLATE PT_BR, /* Máscara = X */
+	/*  8*/	CRM VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
+	/*  9*/	PODEAGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 11*/	NASCIMENTO DATE, /* Máscara = 4ano */
+	/* 12*/	FOTO campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
+	/* 13*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
+	/* 14*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 15*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 16*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
 );
 commit;
 
-CREATE DESC INDEX arqUnidade_IdPrimario_Desc ON arqUnidade (IDPRIMARIO);
+CREATE DESC INDEX arqUsuario_IdPrimario_Desc ON arqUsuario (IDPRIMARIO);
 commit;
 
 
 /************************************************************
-	Arquivo DocMod    
+	Arquivo Medicamen 
 ************************************************************/
 
-CREATE TABLE arqDocMod
+CREATE TABLE arqMedicamen
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	DOCUMENTO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	TARQDOC ligadoComTabela, /* Ligado com a Tabela TArqDoc */
-	/*  4*/	TORDOC ligadoComTabela, /* Ligado com a Tabela TOrDoc */
-	/*  5*/	LOGO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	MARCA campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  7*/	NOMEARQ VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = X */
-	/*  8*/	RODAPE campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  9*/	ALTRODAPE SMALLINT, /* Máscara = N */
-	/* 10*/	TEMPLATE ligadoComArquivo, /* Ligado com o Arquivo Template */
-	/* 11*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 12*/	HEADER VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 13*/	HEADER_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( HEADER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_HEADER.' || HEADER ) END ) ),
-	/* 14*/	ARQUIVO VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 15*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
-	/* 16*/	FOOTER VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 17*/	FOOTER_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( FOOTER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_FOOTER.' || FOOTER ) END ) ),
-	/* 18*/	HTML BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
-	/* 19*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 20*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'DocMod/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
-	/* 21*/	LISTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 22*/	MARGEMESQ SMALLINT, /* Máscara = N */
-	/* 23*/	MARGEMDIR SMALLINT, /* Máscara = N */
-	/* 24*/	MARGEMTOP SMALLINT, /* Máscara = N */
-	/* 25*/	TPAPEL ligadoComTabela, /* Ligado com a Tabela TPapel */
-	/* 26*/	TORIENTA ligadoComTabela, /* Ligado com a Tabela TOrienta */
-	CONSTRAINT arqDocMod_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqDocMod_UK UNIQUE ( Documento )
+	/*  2*/	MEDICAMEN VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	UNIDADE ligadoComArquivo, /* Ligado com o Arquivo Unidade */
+	/*  4*/	ESTOQUEMIN INTEGER, /* Máscara = N */
+	/*  5*/	ESTOQUEMAX INTEGER, /* Máscara = N */
+	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqMedicamen_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqMedicamen_UK UNIQUE ( Medicamen )
 );
 commit;
 
-CREATE DESC INDEX arqDocMod_IdPrimario_Desc ON arqDocMod (IDPRIMARIO);
+CREATE DESC INDEX arqMedicamen_IdPrimario_Desc ON arqMedicamen (IDPRIMARIO);
 commit;
 
 
@@ -2299,66 +2281,88 @@ commit;
 
 
 /************************************************************
-	Arquivo Medicamen 
+	Arquivo DocMod    
 ************************************************************/
 
-CREATE TABLE arqMedicamen
+CREATE TABLE arqDocMod
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	MEDICAMEN VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	UNIDADE ligadoComArquivo, /* Ligado com o Arquivo Unidade */
-	/*  4*/	ESTOQUEMIN INTEGER, /* Máscara = N */
-	/*  5*/	ESTOQUEMAX INTEGER, /* Máscara = N */
-	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqMedicamen_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqMedicamen_UK UNIQUE ( Medicamen )
+	/*  2*/	DOCUMENTO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	TARQDOC ligadoComTabela, /* Ligado com a Tabela TArqDoc */
+	/*  4*/	TORDOC ligadoComTabela, /* Ligado com a Tabela TOrDoc */
+	/*  5*/	LOGO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	MARCA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  7*/	NOMEARQ VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = X */
+	/*  8*/	RODAPE campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  9*/	ALTRODAPE SMALLINT, /* Máscara = N */
+	/* 10*/	TEMPLATE ligadoComArquivo, /* Ligado com o Arquivo Template */
+	/* 11*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 12*/	HEADER VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
+	/* 13*/	HEADER_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( HEADER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_HEADER.' || HEADER ) END ) ),
+	/* 14*/	ARQUIVO VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
+	/* 15*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
+	/* 16*/	FOOTER VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
+	/* 17*/	FOOTER_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( FOOTER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_FOOTER.' || FOOTER ) END ) ),
+	/* 18*/	HTML BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
+	/* 19*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
+	/* 20*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'DocMod/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
+	/* 21*/	LISTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 22*/	MARGEMESQ SMALLINT, /* Máscara = N */
+	/* 23*/	MARGEMDIR SMALLINT, /* Máscara = N */
+	/* 24*/	MARGEMTOP SMALLINT, /* Máscara = N */
+	/* 25*/	TPAPEL ligadoComTabela, /* Ligado com a Tabela TPapel */
+	/* 26*/	TORIENTA ligadoComTabela, /* Ligado com a Tabela TOrienta */
+	CONSTRAINT arqDocMod_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqDocMod_UK UNIQUE ( Documento )
 );
 commit;
 
-CREATE DESC INDEX arqMedicamen_IdPrimario_Desc ON arqMedicamen (IDPRIMARIO);
+CREATE DESC INDEX arqDocMod_IdPrimario_Desc ON arqDocMod (IDPRIMARIO);
 commit;
 
 
 /************************************************************
-	Parâmetro XConfig   
+	Arquivo Lote      
 ************************************************************/
 
-CREATE TABLE cnfXConfig
+CREATE TABLE arqLote
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	CPF VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = nnn.nnn.nnn-nn */
-	/*  3*/	LOGACESSO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  4*/	LOGACESSOS campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	QTD NUMERIC(18,0), /* Máscara = N */
-	/*  6*/	QTD2 NUMERIC(18,0), /* Máscara = N */
-	/*  7*/	EMPRESA VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/*  8*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
-	/*  9*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
-	/* 10*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
-	/* 11*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
-	/* 12*/	/* ENDE_DDD */
-	/* 13*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
-	/* 14*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
-	/* 15*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
-	/* 16*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 17*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
-	/* 18*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
-	/* 19*/	SITE VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
-	/* 20*/	QTASDESMAR SMALLINT, /* Máscara = N */
-	/* 21*/	DECLINAR SMALLINT, /* Máscara = N */
-	/* 22*/	RECORDIA SMALLINT, /* Máscara = N */
-	/* 23*/	CCORREC ligadoComArquivo, /* Ligado com o Arquivo CCor */
-	/* 24*/	CCORASS ligadoComArquivo, /* Ligado com o Arquivo CCor */
-	/* 25*/	SUBPLARREC ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
-	/* 26*/	SUBPLARASS ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
-	/* 27*/	FORNREC ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
-	/* 28*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
-	CONSTRAINT cnfXConfig_PK PRIMARY KEY ( IDPRIMARIO )
+	/*  2*/	MEDICAM ligadoComArquivo, /* Ligado com o Arquivo Medicamen */
+	/*  3*/	LOTE VARCHAR( 15 ) COLLATE PT_BR, /* Máscara = M */
+	/*  4*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  5*/	FABRICA DATE, /* Máscara = 4ano */
+	/*  6*/	VALIDADE DATE, /* Máscara = 4ano */
+	/*  7*/	TRGITMOV NUMERIC(18,0), /* Máscara = N */
+	/*  8*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqLote_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqLote_UK UNIQUE ( Medicam, Lote )
 );
 commit;
 
-INSERT INTO cnfXConfig (idprimario) VALUES (0);
-CREATE DESC INDEX cnfXConfig_IdPrimario_Desc ON cnfXConfig (IDPRIMARIO);
+CREATE DESC INDEX arqLote_IdPrimario_Desc ON arqLote (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo MovEstoque
+************************************************************/
+
+CREATE TABLE arqMovEstoque
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	NUM NUMERIC(18,0), /* Máscara = N */
+	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  4*/	DATA DATE, /* Máscara = 4ano */
+	/*  5*/	NUMDOC NUMERIC(18,0), /* Máscara = N */
+	/*  6*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/*  7*/	FECHADO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqMovEstoque_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqMovEstoque_UK UNIQUE ( Num )
+);
+commit;
+
+CREATE DESC INDEX arqMovEstoque_IdPrimario_Desc ON arqMovEstoque (IDPRIMARIO);
 commit;
 
 
@@ -2742,13 +2746,84 @@ CREATE TABLE arqCMedica
 	/*  2*/	CONSULTA ligadoComArquivo, /* Ligado com o Arquivo Consulta */
 	/*  3*/	MEDICAMEN ligadoComArquivo, /* Ligado com o Arquivo Medicamen */
 	/*  4*/	/* UNIDADECAL */
-	/*  5*/	QTD INTEGER, /* Máscara = N */
+	/*  5*/	QTD NUMERIC(18,0), /* Máscara = N */
+	/*  6*/	LOTE ligadoComArquivo, /* Ligado com o Arquivo Lote */
+	/*  7*/	DATASEPARA DATE, /* Máscara = 4ano */
+	/*  8*/	QTDENTREG NUMERIC(18,0), /* Máscara = N */
+	/*  9*/	/* SALDO */
+	/* 10*/	OBSENTREG VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqCMedica_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqCMedica_UK UNIQUE ( Consulta, Medicamen )
 );
 commit;
 
 CREATE DESC INDEX arqCMedica_IdPrimario_Desc ON arqCMedica (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Parâmetro XConfig   
+************************************************************/
+
+CREATE TABLE cnfXConfig
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	CPF VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = nnn.nnn.nnn-nn */
+	/*  3*/	LOGACESSO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	LOGACESSOS campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	QTD NUMERIC(18,0), /* Máscara = N */
+	/*  6*/	QTD2 NUMERIC(18,0), /* Máscara = N */
+	/*  7*/	EMPRESA VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/*  8*/	ENDE_CEP VARCHAR( 8 ) COLLATE PT_BR, /* Máscara = nnnnn-nnn */
+	/*  9*/	ENDE_ENDERECO VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = M */
+	/* 10*/	ENDE_BAIRRO ligadoComArquivo, /* Ligado com o Arquivo Bairro */
+	/* 11*/	ENDE_CIDADE ligadoComArquivo, /* Ligado com o Arquivo Cidade */
+	/* 12*/	/* ENDE_DDD */
+	/* 13*/	ENDE_TELEFONE VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
+	/* 14*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
+	/* 15*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
+	/* 16*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 17*/	CNPJ VARCHAR( 14 ) COLLATE PT_BR, /* Máscara = nn.nnn.nnn/nnnn */
+	/* 18*/	EMAIL VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
+	/* 19*/	SITE VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
+	/* 20*/	QTASDESMAR SMALLINT, /* Máscara = N */
+	/* 21*/	DECLINAR SMALLINT, /* Máscara = N */
+	/* 22*/	RECORDIA SMALLINT, /* Máscara = N */
+	/* 23*/	CCORREC ligadoComArquivo, /* Ligado com o Arquivo CCor */
+	/* 24*/	CCORASS ligadoComArquivo, /* Ligado com o Arquivo CCor */
+	/* 25*/	SUBPLARREC ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
+	/* 26*/	SUBPLARASS ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
+	/* 27*/	FORNREC ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+	/* 28*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
+	CONSTRAINT cnfXConfig_PK PRIMARY KEY ( IDPRIMARIO )
+);
+commit;
+
+INSERT INTO cnfXConfig (idprimario) VALUES (0);
+CREATE DESC INDEX cnfXConfig_IdPrimario_Desc ON cnfXConfig (IDPRIMARIO);
+commit;
+
+
+/************************************************************
+	Arquivo ItemMov   
+************************************************************/
+
+CREATE TABLE arqItemMov
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	MOVESTOQUE ligadoComArquivo, /* Ligado com o Arquivo MovEstoque */
+	/*  3*/	ITEM INTEGER, /* Máscara = N */
+	/*  4*/	LOTE ligadoComArquivo, /* Ligado com o Arquivo Lote */
+	/*  5*/	TMOV ligadoComTabela, /* Ligado com a Tabela TMov */
+	/*  6*/	QTD INTEGER, /* Máscara = N */
+	/*  7*/	/* QTDCALC */
+	/*  8*/	/* CUNIDADE */
+	CONSTRAINT arqItemMov_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqItemMov_UK UNIQUE ( MovEstoque, Item )
+);
+commit;
+
+CREATE DESC INDEX arqItemMov_IdPrimario_Desc ON arqItemMov (IDPRIMARIO);
 commit;
 
 
@@ -2847,6 +2922,15 @@ ALTER TABLE arqAgRet ADD NUMCELULAR VARCHAR( 11 ) computed by ( ( COALESCE( ( SE
 ALTER TABLE arqAgRet ALTER NUMCELULAR POSITION 9;
 ALTER TABLE arqCMedica ADD UNIDADECAL VARCHAR( 10 ) computed by ( (Select U.Unidade From arqMedicamen M join arqUnidade U on U.idPrimario=M.Unidade Where M.idPrimario=arqCMedica.Medicamen) ); 
 ALTER TABLE arqCMedica ALTER UNIDADECAL POSITION 4;
+ALTER TABLE arqItemMov ADD QTDCALC NUMERIC(18,0) computed by ( CASE
+	WHEN( TMov in( 1 ) ) THEN( Qtd )
+	ELSE ( -Qtd )
+	END  ); 
+ALTER TABLE arqItemMov ALTER QTDCALC POSITION 7;
+ALTER TABLE arqItemMov ADD CUNIDADE VARCHAR( 10 ) computed by ( ( COALESCE( ( SELECT Unidade FROM arqUnidade WHERE arqUnidade.IdPrimario=( COALESCE( ( SELECT Unidade FROM arqMedicamen WHERE arqMedicamen.IdPrimario=( COALESCE( ( SELECT Medicam FROM arqLote WHERE arqLote.IdPrimario=( arqItemMov.Lote ) ), 0 ) ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqItemMov ALTER CUNIDADE POSITION 8;
+ALTER TABLE arqCMedica ADD SALDO NUMERIC(18,0) computed by ( Qtd - QtdEntreg ); 
+ALTER TABLE arqCMedica ALTER SALDO POSITION 9;
 commit;
 
 
@@ -3191,10 +3275,34 @@ RECREATE VIEW V_arqAgRet AS
 commit;
 
 RECREATE VIEW V_arqCMedica AS 
-	SELECT A0.IDPRIMARIO, A0.CONSULTA, A1.NUM as CONSULTA_NUM, A0.MEDICAMEN, A2.MEDICAMEN as MEDICAMEN_MEDICAMEN, A0.UNIDADECAL, A0.QTD
+	SELECT A0.IDPRIMARIO, A0.CONSULTA, A1.NUM as CONSULTA_NUM, A0.MEDICAMEN, A2.MEDICAMEN as MEDICAMEN_MEDICAMEN, A0.UNIDADECAL, A0.QTD, A0.LOTE, A3.MEDICAM as LOTE_MEDICAM, A4.MEDICAMEN as LOTE_MEDICAM_MEDICAMEN, A3.LOTE as LOTE_LOTE, A0.DATASEPARA, A0.QTDENTREG, A0.SALDO, A0.OBSENTREG
 	FROM arqCMedica A0
 	left join arqConsulta A1 on A1.IDPRIMARIO = A0.CONSULTA
-	left join arqMedicamen A2 on A2.IDPRIMARIO = A0.MEDICAMEN;
+	left join arqMedicamen A2 on A2.IDPRIMARIO = A0.MEDICAMEN
+	left join arqLote A3 on A3.IDPRIMARIO = A0.LOTE
+	left join arqMedicamen A4 on A4.IDPRIMARIO = A3.MEDICAM;
+commit;
+
+RECREATE VIEW V_arqLote AS 
+	SELECT A0.IDPRIMARIO, A0.MEDICAM, A1.MEDICAMEN as MEDICAM_MEDICAMEN, A0.LOTE, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.FABRICA, A0.VALIDADE, A0.TRGITMOV, A0.ATIVO
+	FROM arqLote A0
+	left join arqMedicamen A1 on A1.IDPRIMARIO = A0.MEDICAM
+	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA;
+commit;
+
+RECREATE VIEW V_arqMovEstoque AS 
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.NUMDOC, A0.OBS, A0.FECHADO
+	FROM arqMovEstoque A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA;
+commit;
+
+RECREATE VIEW V_arqItemMov AS 
+	SELECT A0.IDPRIMARIO, A0.MOVESTOQUE, A1.NUM as MOVESTOQUE_NUM, A0.ITEM, A0.LOTE, A2.MEDICAM as LOTE_MEDICAM, A3.MEDICAMEN as LOTE_MEDICAM_MEDICAMEN, A2.LOTE as LOTE_LOTE, A0.TMOV, A4.CHAVE as TMov_CHAVE, A4.DESCRITOR as TMov_DESCRITOR, A0.QTD, A0.QTDCALC, A0.CUNIDADE
+	FROM arqItemMov A0
+	left join arqMovEstoque A1 on A1.IDPRIMARIO = A0.MOVESTOQUE
+	left join arqLote A2 on A2.IDPRIMARIO = A0.LOTE
+	left join arqMedicamen A3 on A3.IDPRIMARIO = A2.MEDICAM
+	left join tabTMov A4 on A4.IDPRIMARIO=A0.TMOV;
 commit;
 
 
@@ -3285,6 +3393,9 @@ insert into arqLanceOperacao values(100051,1,'Cadastro de unidades de medidas','
 insert into arqLanceOperacao values(100052,1,'Cadastro de medicamentos','arqMedicamen',52,1,0,'');
 insert into arqLanceOperacao values(100053,1,'Cadastro das agendas de retirada de medicação','arqAgRet',53,1,0,'');
 insert into arqLanceOperacao values(100054,1,'Cadastro as medicação da consulta','arqCMedica',54,1,0,'');
+insert into arqLanceOperacao values(100055,1,'Cadastro de lotes de medicamentos','arqLote',55,2,0,'');
+insert into arqLanceOperacao values(100056,1,'Cadastro de movimentos de estoque','arqMovEstoque',56,2,0,'');
+insert into arqLanceOperacao values(100057,1,'Cadastro de itens de movimento de estoque','arqItemMov',57,2,0,'');
 insert into arqLanceOperacao values(200193,2,'Rotina para excluir permissões de grupos de acesso','',193,null,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
@@ -3448,6 +3559,13 @@ ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_TStAgRet FOREIGN KEY ( TSTAGRET 
 ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Consulta FOREIGN KEY ( CONSULTA ) REFERENCES arqConsulta ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Medicamen FOREIGN KEY ( MEDICAMEN ) REFERENCES arqMedicamen ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Medicam FOREIGN KEY ( MEDICAM ) REFERENCES arqMedicamen ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqMovEstoque ADD CONSTRAINT arqMovEstoque_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_MovEstoque FOREIGN KEY ( MOVESTOQUE ) REFERENCES arqMovEstoque ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_Lote FOREIGN KEY ( LOTE ) REFERENCES arqLote ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_TMov FOREIGN KEY ( TMOV ) REFERENCES tabTMov ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Lote FOREIGN KEY ( LOTE ) REFERENCES arqLote ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 
@@ -5048,6 +5166,114 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Consulta', OLD.Consulta, NEW.Consulta );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
 	execute procedure set_log( 12, NEW.idPrimario, 'Qtd', OLD.Qtd, NEW.Qtd );
+	execute procedure set_log( 12, NEW.idPrimario, 'Lote', OLD.Lote, NEW.Lote );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataSepara', OLD.DataSepara, NEW.DataSepara );
+	execute procedure set_log( 12, NEW.idPrimario, 'QtdEntreg', OLD.QtdEntreg, NEW.QtdEntreg );
+	execute procedure set_log( 12, NEW.idPrimario, 'ObsEntreg', OLD.ObsEntreg, NEW.ObsEntreg );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqLote
+************************************************************/
+
+set term ^;
+
+recreate trigger arqLote_LOG for arqLote
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Medicam_Medicamen, ' ' ) || '-' || coalesce( Lote, ' ' ) from v_arqLote where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100055 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicam', OLD.Medicam, NEW.Medicam );
+	execute procedure set_log( 12, NEW.idPrimario, 'Lote', OLD.Lote, NEW.Lote );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Fabrica', OLD.Fabrica, NEW.Fabrica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Validade', OLD.Validade, NEW.Validade );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqMovEstoque
+************************************************************/
+
+set term ^;
+
+recreate trigger arqMovEstoque_LOG for arqMovEstoque
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Num,'' );
+else
+	valorChave = coalesce( NEW.Num,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100056 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'NumDoc', OLD.NumDoc, NEW.NumDoc );
+	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Fechado', OLD.Fechado, NEW.Fechado );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqItemMov
+************************************************************/
+
+set term ^;
+
+recreate trigger arqItemMov_LOG for arqItemMov
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( MovEstoque_Num, ' ' ) || '-' || coalesce( Item, ' ' ) from v_arqItemMov where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100057 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'MovEstoque', OLD.MovEstoque, NEW.MovEstoque );
+	execute procedure set_log( 12, NEW.idPrimario, 'Item', OLD.Item, NEW.Item );
+	execute procedure set_log( 12, NEW.idPrimario, 'Lote', OLD.Lote, NEW.Lote );
+	execute procedure set_log( 12, NEW.idPrimario, 'TMov', OLD.TMov, NEW.TMov );
+	execute procedure set_log( 12, NEW.idPrimario, 'Qtd', OLD.Qtd, NEW.Qtd );
 end
 end^
 
@@ -5269,6 +5495,30 @@ if( updating or deleting ) then begin
 update arqComCall set arqComCall.TrgQtoFx = arqComCall.TrgQtoFx - 
 1
  where arqComCall.IDPRIMARIO = OLD.ComCall;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqItemMov: Total - atua em arqLote.TrgItMov
+************************************************************/
+
+set term ^;
+
+recreate trigger arqLote_TrgItMov for arqItemMov
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqLote set arqLote.TrgItMov = arqLote.TrgItMov + 
+NEW.QtdCalc where arqLote.IDPRIMARIO = NEW.Lote;
+end
+if( updating or deleting ) then begin
+update arqLote set arqLote.TrgItMov = arqLote.TrgItMov - 
+OLD.QtdCalc where arqLote.IDPRIMARIO = OLD.Lote;
 end
 end^
 

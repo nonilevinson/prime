@@ -248,5 +248,7 @@ var Menu_8_1 = new Array( 1,"Contas","","C",96,"","",1,"","1","a_conta","arqCont
 var Menu_8_2 = new Array( 1,"Contas corrente","","t",150,"","",1,"","1","a_ccor","arqCCor","Folhear","Clinica","?","","", "","", 0,15,[],[20]);
 var Menu_8_3 = new Array( 1,"Recorrentes","","s",152,"","",1,"","1","a_recor","arqRecorrente","Folhear","Clinica","?","","", "","", 0,15,[],[46]);
 var Menu_9 = new Array( 1,"Usuários Permissão","","U",106,"","",1,"","1","a_usucli","arqUsuCli","Folhear","Clinica","?","","", "","", 0,20,[],[35]);
-parent.navegacao.MenuPrincQtdOpcoes=9;
+var Menu_10 = new Array( 1,"Mov.Estoque","","q",209,"","",1,"","1","a_movest","arqMovEstoque","Folhear","Clinica","?","","", "","", 0,20,[],[56]);
+var Menu_11 = new Array( 1,"Lotes","","t",210,"","",1,"","1","a_lote","arqLote","Folhear","Clinica","?","","", "","", 0,20,[],[55]);
+parent.navegacao.MenuPrincQtdOpcoes=11;
 }

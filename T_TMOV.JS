@@ -11,5 +11,6 @@ g_arquivoAtual = "tabTMov";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = new Array( 1,"ItemMov","","I",212,"","",1,"","1","a_itemmo","arqItemMov","Folhear","TMov","?","","", "","", 0,7,[],[57]);
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }
