@@ -257,6 +257,16 @@ Campo_arqCMedica_Qtd.prototype.Cabecalho = function()
 }
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqCMedica_Lote.prototype.FiltroPai = function()
+{
+		if( g_inserindo || QtdEntreg == 0 )
+			return( "A.Ativo = 1" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_arqCMedica_Lote_Medicam.prototype.ObrigatorioEspecial = function( p_comMsg )
@@ -361,8 +371,8 @@ Campo_arqCMedica_Lote_Medicam.prototype.ExistenciaEspecial = function()
 function IniciarDependencias_arqCMedica()
 {
 Medicamen.CalculosDependentes= [ UnidadeCal ];
+QtdEntreg.CalculosDependentes= [ Lote,Saldo ];
 Qtd.CalculosDependentes= [ Saldo ];
-QtdEntreg.CalculosDependentes= [ Saldo ];
 Consulta_Num.ExistenciasDependentes= [ Consulta ];
 Medicamen_Medicamen.ExistenciasDependentes= [ Medicamen ];
 Lote_Medicam.ExistenciasDependentes= [ Lote ];

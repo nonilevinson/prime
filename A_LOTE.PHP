@@ -142,7 +142,7 @@ class campo_arqLote_TrgItMov extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "TrgItMov", "TrgItMov", "TrgItMov", 4, "#.##z", "", "", EH_TOTALIZADO, 0, false );
+		parent::__construct( "TrgItMov", "TrgItMov", "TrgItMov", 4, "#.##z", "(", "", EH_TOTALIZADO, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -150,6 +150,46 @@ class campo_arqLote_TrgItMov extends Lance_CampoNumerico
 	{
 		global $g_regAtual;
 			return( "TrgItMov [0]" );
+	}
+
+}
+
+//======================================================
+//	Campo TrgCMedica
+//======================================================
+
+class campo_arqLote_TrgCMedica extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "TrgCMedica", "TrgCMedica", "TrgCMedica", 4, "#.##z", "", "", EH_TOTALIZADO, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "TrgCMedica [0]" );
+	}
+
+}
+
+//======================================================
+//	Campo Estoque
+//======================================================
+
+class campo_arqLote_Estoque extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Estoque", "Estoque", "Estoque", 4, "#.##z", "(", "", EH_CALCULADO, 0, false );
+	}
+
+	//--------------------------------------------------
+	function PodeTotalizar()
+	{
+		global $g_regAtual;
+		return( (true) );
 	}
 
 }
@@ -202,6 +242,8 @@ function listaCampos_arqLote( $p_prefixo )
 			new campo_arqLote_Fabrica(),
 			new campo_arqLote_Validade(),
 			new campo_arqLote_TrgItMov(),
+			new campo_arqLote_TrgCMedica(),
+			new campo_arqLote_Estoque(),
 			new campo_arqLote_Ativo() )
 	);
 	$g_prefixo = $prefixoAnt;
@@ -245,6 +287,7 @@ class arqLote extends Lance_Arquivo
  {
 			array_push( $vetAux, array( TrgItMov ) );
  }
+			array_push( $vetAux, array( Estoque ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
@@ -270,6 +313,8 @@ class arqLote extends Lance_Arquivo
 			array_push( $vetAux, array( Fabrica ) );
 			array_push( $vetAux, array( Validade ) );
 			array_push( $vetAux, array( TrgItMov ) );
+			array_push( $vetAux, array( TrgCMedica ) );
+			array_push( $vetAux, array( Estoque ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}

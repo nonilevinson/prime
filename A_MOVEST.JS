@@ -14,6 +14,17 @@ function Campo_arqMovEstoque_Num()
 var Num = new Campo_arqMovEstoque_Num;
 
 //------------------------------------------------------------
+Campo_arqMovEstoque_Data.prototype = new Lance_CampoData;
+
+function Campo_arqMovEstoque_Data()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "Data", "Data", "Data", 8, "dd/mm/aaaa", true);
+}
+
+var Data = new Campo_arqMovEstoque_Data;
+
+//------------------------------------------------------------
 Campo_arqMovEstoque_Clinica.prototype = new Lance_CampoHidden;
 
 function Campo_arqMovEstoque_Clinica()
@@ -34,17 +45,6 @@ function Campo_arqMovEstoque_Clinica_Clinica()
 }
 
 var Clinica_Clinica = new Campo_arqMovEstoque_Clinica_Clinica;
-
-//------------------------------------------------------------
-Campo_arqMovEstoque_Data.prototype = new Lance_CampoData;
-
-function Campo_arqMovEstoque_Data()
-{
-	this.superClass = Lance_CampoData;
-	this.superClass( "Data", "Data", "Data", 8, "dd/mm/aaaa", true);
-}
-
-var Data = new Campo_arqMovEstoque_Data;
 
 //------------------------------------------------------------
 Campo_arqMovEstoque_NumDoc.prototype = new Lance_CampoNumerico;
@@ -89,6 +89,37 @@ Campo_arqMovEstoque_Num.prototype.Cabecalho = function()
 
 Num.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqMovEstoque_Data.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( HOJE ) );
+}
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqMovEstoque_Data.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A data do movimento é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqMovEstoque_Clinica.prototype.FiltroPai = function()
+{
+		if( g_temMaisDeUmClinica )
+			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqMovEstoque_Clinica.prototype.Obrigatorio = function( p_comMsg )
@@ -116,27 +147,6 @@ Campo_arqMovEstoque_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_
 }
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
-Campo_arqMovEstoque_Data.prototype.Sugeriu = function()
-{
-{
-	return( this.AtribuiuSemCritica( HOJE ) );
-}
-}
-
-//-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqMovEstoque_Data.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "A data do movimento é obrigatória" );
-		return( true );
-	}
-}
-
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -195,7 +205,7 @@ function ListaDeCampos_arqMovEstoque( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, Data, NumDoc, Obs, Fechado ]	);
+		[ Num, Data, Clinica, Clinica_Clinica, NumDoc, Obs, Fechado ]	);
 	IniciarDependencias_arqMovEstoque();
 	g_prefixo = l_prefixo;
 	return( l_lista );

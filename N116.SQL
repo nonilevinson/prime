@@ -2334,7 +2334,9 @@ CREATE TABLE arqLote
 	/*  5*/	FABRICA DATE, /* Máscara = 4ano */
 	/*  6*/	VALIDADE DATE, /* Máscara = 4ano */
 	/*  7*/	TRGITMOV NUMERIC(18,0), /* Máscara = N */
-	/*  8*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  8*/	TRGCMEDICA NUMERIC(18,0), /* Máscara = N */
+	/*  9*/	/* ESTOQUE */
+	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqLote_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqLote_UK UNIQUE ( Medicam, Lote )
 );
@@ -2352,8 +2354,8 @@ CREATE TABLE arqMovEstoque
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	NUM NUMERIC(18,0), /* Máscara = N */
-	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  4*/	DATA DATE, /* Máscara = 4ano */
+	/*  3*/	DATA DATE, /* Máscara = 4ano */
+	/*  4*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
 	/*  5*/	NUMDOC NUMERIC(18,0), /* Máscara = N */
 	/*  6*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	/*  7*/	FECHADO campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -2922,6 +2924,8 @@ ALTER TABLE arqAgRet ADD NUMCELULAR VARCHAR( 11 ) computed by ( ( COALESCE( ( SE
 ALTER TABLE arqAgRet ALTER NUMCELULAR POSITION 9;
 ALTER TABLE arqCMedica ADD UNIDADECAL VARCHAR( 10 ) computed by ( (Select U.Unidade From arqMedicamen M join arqUnidade U on U.idPrimario=M.Unidade Where M.idPrimario=arqCMedica.Medicamen) ); 
 ALTER TABLE arqCMedica ALTER UNIDADECAL POSITION 4;
+ALTER TABLE arqLote ADD ESTOQUE NUMERIC(18,0) computed by ( TrgItMov - TrgCMedica ); 
+ALTER TABLE arqLote ALTER ESTOQUE POSITION 9;
 ALTER TABLE arqItemMov ADD QTDCALC NUMERIC(18,0) computed by ( CASE
 	WHEN( TMov in( 1 ) ) THEN( Qtd )
 	ELSE ( -Qtd )
@@ -3284,14 +3288,14 @@ RECREATE VIEW V_arqCMedica AS
 commit;
 
 RECREATE VIEW V_arqLote AS 
-	SELECT A0.IDPRIMARIO, A0.MEDICAM, A1.MEDICAMEN as MEDICAM_MEDICAMEN, A0.LOTE, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.FABRICA, A0.VALIDADE, A0.TRGITMOV, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.MEDICAM, A1.MEDICAMEN as MEDICAM_MEDICAMEN, A0.LOTE, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.FABRICA, A0.VALIDADE, A0.TRGITMOV, A0.TRGCMEDICA, A0.ESTOQUE, A0.ATIVO
 	FROM arqLote A0
 	left join arqMedicamen A1 on A1.IDPRIMARIO = A0.MEDICAM
 	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA;
 commit;
 
 RECREATE VIEW V_arqMovEstoque AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.NUMDOC, A0.OBS, A0.FECHADO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.DATA, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.NUMDOC, A0.OBS, A0.FECHADO
 	FROM arqMovEstoque A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA;
 commit;
@@ -5236,8 +5240,8 @@ if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
-	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
 	execute procedure set_log( 12, NEW.idPrimario, 'NumDoc', OLD.NumDoc, NEW.NumDoc );
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Fechado', OLD.Fechado, NEW.Fechado );
@@ -5519,6 +5523,30 @@ end
 if( updating or deleting ) then begin
 update arqLote set arqLote.TrgItMov = arqLote.TrgItMov - 
 OLD.QtdCalc where arqLote.IDPRIMARIO = OLD.Lote;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqCMedica: Total - atua em arqLote.TrgCMedica
+************************************************************/
+
+set term ^;
+
+recreate trigger arqLote_TrgCMedica for arqCMedica
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqLote set arqLote.TrgCMedica = arqLote.TrgCMedica + 
+NEW.QtdEntreg where arqLote.IDPRIMARIO = NEW.Lote;
+end
+if( updating or deleting ) then begin
+update arqLote set arqLote.TrgCMedica = arqLote.TrgCMedica - 
+OLD.QtdEntreg where arqLote.IDPRIMARIO = OLD.Lote;
 end
 end^
 

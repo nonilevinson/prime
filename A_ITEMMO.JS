@@ -167,6 +167,16 @@ Campo_arqItemMov_Item.prototype.Sugeriu = function()
 
 Item.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqItemMov_Lote.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqItemMov_Lote.prototype.Obrigatorio = function( p_comMsg )

@@ -32,6 +32,19 @@ class campo_arqMovEstoque_Num extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo Data
+//======================================================
+
+class campo_arqMovEstoque_Data extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "Data", "Data", "Data", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Clinica
 //======================================================
 
@@ -60,19 +73,6 @@ class campo_arqMovEstoque_Clinica_Clinica extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Clinica_Clinica", "Clinica_Clinica", "Clinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Clinica", false );
-	}
-
-}
-
-//======================================================
-//	Campo Data
-//======================================================
-
-class campo_arqMovEstoque_Data extends Lance_CampoData
-{
-	function __construct()
-	{
-		parent::__construct( "Data", "Data", "Data", 8, "dd/mm/aaaa", 0, 0, false );
 	}
 
 }
@@ -144,9 +144,9 @@ function listaCampos_arqMovEstoque( $p_prefixo )
 		array(
 			new Lance_CampoIdPrimario(),
 			new campo_arqMovEstoque_Num(),
+			new campo_arqMovEstoque_Data(),
 			new campo_arqMovEstoque_Clinica(),
 			new campo_arqMovEstoque_Clinica_Clinica(),
-			new campo_arqMovEstoque_Data(),
 			new campo_arqMovEstoque_NumDoc(),
 			new campo_arqMovEstoque_Obs(),
 			new campo_arqMovEstoque_Fechado() )
@@ -184,8 +184,8 @@ class arqMovEstoque extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Num ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Data ) );
+			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Fechado ) );
 		return( $vetAux );
 	}
@@ -206,8 +206,8 @@ class arqMovEstoque extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( Num ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Data ) );
+			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( NumDoc ) );
 			array_push( $vetAux, array( Obs ) );
 			array_push( $vetAux, array( Fechado ) );
@@ -223,19 +223,19 @@ class arqMovEstoque extends Lance_Arquivo
 	}
 
 	//-------------------------------------------------------------
-	// Visões do Arquivo: FilSel    
-	//-------------------------------------------------------------
-	function FilSel()
-	{
-	return( "~ . filrarSelecao() . ~" );
-	}
-
-	//-------------------------------------------------------------
 	// Visões do Arquivo: FilTodos  
 	//-------------------------------------------------------------
 	function FilTodos()
 	{
 	return( "~ . filtrarTodos() . ~" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilSel    
+	//-------------------------------------------------------------
+	function FilSel()
+	{
+	return( "~ . filrarSelecao() . ~" );
 	}
 
 }

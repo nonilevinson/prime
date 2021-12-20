@@ -85,10 +85,32 @@ Campo_arqLote_TrgItMov.prototype = new Lance_CampoNumerico;
 function Campo_arqLote_TrgItMov()
 {
 	this.superClass = Lance_CampoNumerico;
-	this.superClass( "TrgItMov", "TrgItMov", "TrgItMov", 4, "#.##z", true,"", "");
+	this.superClass( "TrgItMov", "TrgItMov", "TrgItMov", 4, "#.##z", true,"(", "");
 }
 
 var TrgItMov = new Campo_arqLote_TrgItMov;
+
+//------------------------------------------------------------
+Campo_arqLote_TrgCMedica.prototype = new Lance_CampoNumerico;
+
+function Campo_arqLote_TrgCMedica()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "TrgCMedica", "TrgCMedica", "TrgCMedica", 4, "#.##z", true,"", "");
+}
+
+var TrgCMedica = new Campo_arqLote_TrgCMedica;
+
+//------------------------------------------------------------
+Campo_arqLote_Estoque.prototype = new Lance_CampoNumerico;
+
+function Campo_arqLote_Estoque()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Estoque", "Estoque", "Estoque", 4, "#.##z", true,"(", "");
+}
+
+var Estoque = new Campo_arqLote_Estoque;
 
 //------------------------------------------------------------
 Campo_arqLote_Ativo.prototype = new Lance_CampoLogico;
@@ -134,6 +156,16 @@ Campo_arqLote_Lote.prototype.Obrigatorio = function( p_comMsg )
 }
 
 Lote.TipoCampo |= CAMPO_CHAVE;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqLote_Clinica.prototype.FiltroPai = function()
+{
+		if( g_temMaisDeUmClinica )
+			return( "A.idPrimario in ( " + g_vetIdClinica + " )" );
+		return( "" );
+}
+
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -187,9 +219,11 @@ Campo_arqLote_Fabrica.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqLote_Validade.prototype.TemAdvertencia = function()
 {
+		if( !tem( Validade ) )
 	{
 		return( !confirm( "Não informará a validade?" ) );
 	}
+	return( Lance_CampoLogico.prototype.TemAdvertencia.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -202,6 +236,27 @@ Campo_arqLote_TrgItMov.prototype.Cabecalho = function()
 
 TrgItMov.EhCalculado = true;
 TrgItMov.EhTotalizado = true;
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqLote_TrgCMedica.prototype.Cabecalho = function()
+{
+		return( "TrgCMedica [0]" );
+}
+
+TrgCMedica.EhCalculado = true;
+TrgCMedica.EhTotalizado = true;
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqLote_Estoque.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( TrgItMov - TrgCMedica ) );
+}
+}
+
+Estoque.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -238,6 +293,8 @@ Campo_arqLote_Clinica.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_arqLote()
 {
+TrgItMov.CalculosDependentes= [ Estoque ];
+TrgCMedica.CalculosDependentes= [ Estoque ];
 Medicam_Medicamen.ExistenciasDependentes= [ Medicam ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Medicam_Medicamen.ErrosDependentes= [ Medicam ];
@@ -261,7 +318,7 @@ function ListaDeCampos_arqLote( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Medicam, Medicam_Medicamen, Lote, Clinica, Clinica_Clinica, Fabrica, Validade, TrgItMov, Ativo ]	);
+		[ Medicam, Medicam_Medicamen, Lote, Clinica, Clinica_Clinica, Fabrica, Validade, TrgItMov, TrgCMedica, Estoque, Ativo ]	);
 	IniciarDependencias_arqLote();
 	g_prefixo = l_prefixo;
 	return( l_lista );
