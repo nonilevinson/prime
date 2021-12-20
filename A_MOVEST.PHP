@@ -26,7 +26,7 @@ class campo_arqMovEstoque_Num extends Lance_CampoNumerico
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Nª" );
+			return( "N°" );
 	}
 
 }
@@ -73,6 +73,32 @@ class campo_arqMovEstoque_Clinica_Clinica extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Clinica_Clinica", "Clinica_Clinica", "Clinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Clinica", false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor
+//======================================================
+
+class campo_arqMovEstoque_Fornecedor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor", "Fornecedor", "Fornecedor", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor_Nome
+//======================================================
+
+class campo_arqMovEstoque_Fornecedor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Fornecedor", false );
 	}
 
 }
@@ -147,6 +173,8 @@ function listaCampos_arqMovEstoque( $p_prefixo )
 			new campo_arqMovEstoque_Data(),
 			new campo_arqMovEstoque_Clinica(),
 			new campo_arqMovEstoque_Clinica_Clinica(),
+			new campo_arqMovEstoque_Fornecedor(),
+			new campo_arqMovEstoque_Fornecedor_Nome(),
 			new campo_arqMovEstoque_NumDoc(),
 			new campo_arqMovEstoque_Obs(),
 			new campo_arqMovEstoque_Fechado() )
@@ -208,6 +236,7 @@ class arqMovEstoque extends Lance_Arquivo
 			array_push( $vetAux, array( Num ) );
 			array_push( $vetAux, array( Data ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
+			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( NumDoc ) );
 			array_push( $vetAux, array( Obs ) );
 			array_push( $vetAux, array( Fechado ) );
@@ -227,7 +256,7 @@ class arqMovEstoque extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function FilTodos()
 	{
-	return( "~ . filtrarTodos() . ~" );
+	return( "" . filtrarTodos() . "" );
 	}
 
 	//-------------------------------------------------------------
@@ -235,7 +264,7 @@ class arqMovEstoque extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function FilSel()
 	{
-	return( "~ . filrarSelecao() . ~" );
+	return( "" . filrarSelecao() . "" );
 	}
 
 }

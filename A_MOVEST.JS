@@ -47,6 +47,28 @@ function Campo_arqMovEstoque_Clinica_Clinica()
 var Clinica_Clinica = new Campo_arqMovEstoque_Clinica_Clinica;
 
 //------------------------------------------------------------
+Campo_arqMovEstoque_Fornecedor.prototype = new Lance_CampoHidden;
+
+function Campo_arqMovEstoque_Fornecedor()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Fornecedor", "Fornecedor", "Fornecedor", "arqFornecedor", "a_fornec", null, "",42);
+}
+
+var Fornecedor = new Campo_arqMovEstoque_Fornecedor;
+
+//------------------------------------------------------------
+Campo_arqMovEstoque_Fornecedor_Nome.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqMovEstoque_Fornecedor_Nome()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var Fornecedor_Nome = new Campo_arqMovEstoque_Fornecedor_Nome;
+
+//------------------------------------------------------------
 Campo_arqMovEstoque_NumDoc.prototype = new Lance_CampoNumerico;
 
 function Campo_arqMovEstoque_NumDoc()
@@ -84,7 +106,7 @@ var Fechado = new Campo_arqMovEstoque_Fechado;
 //-------------------------------------------------------------
 Campo_arqMovEstoque_Num.prototype.Cabecalho = function()
 {
-		return( "Nª" );
+		return( "N°" );
 }
 
 Num.TipoCampo |= CAMPO_CHAVE;
@@ -148,6 +170,33 @@ Campo_arqMovEstoque_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqMovEstoque_Fornecedor.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1" );
+		return( "" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqMovEstoque_Fornecedor_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Fornecedor.Obrigatorio( p_comMsg ) );
+}
+
+Fornecedor_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqMovEstoque_NumDoc.prototype.Existencia = function()
+{
+	return( tem( Fornecedor_Nome ) );
+}
+
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_arqMovEstoque_Fechado.prototype.Sugeriu = function()
@@ -183,11 +232,23 @@ Campo_arqMovEstoque_Clinica.prototype.ExistenciaEspecial = function()
 	return( ( !Clinica_Clinica.Obrigatorio( false ) || tem(Clinica_Clinica) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqMovEstoque_Fornecedor.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Fornecedor_Nome.Obrigatorio( false ) || tem(Fornecedor_Nome) ) );
+}
+
 function IniciarDependencias_arqMovEstoque()
 {
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
+Fornecedor_Nome.ExistenciasDependentes= [ Fornecedor ];
+Fornecedor.ExistenciasDependentes= [ NumDoc ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
+Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
 Clinica.CamposChave= [ Clinica_Clinica ];
+Fornecedor.CamposChave= [ Fornecedor_Nome ];
 }
 
 
@@ -205,7 +266,7 @@ function ListaDeCampos_arqMovEstoque( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Data, Clinica, Clinica_Clinica, NumDoc, Obs, Fechado ]	);
+		[ Num, Data, Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, NumDoc, Obs, Fechado ]	);
 	IniciarDependencias_arqMovEstoque();
 	g_prefixo = l_prefixo;
 	return( l_lista );

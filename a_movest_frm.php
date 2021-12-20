@@ -11,18 +11,23 @@ echo
 		$this->NaoPedir( Num ),
 		$this->Pedir( "Nº",
 			[ " ", '',
-			[ "(será atribuido pelo sistema )" . brHtml(2) . "Data ", Data ] ] );
+			[ "(será atribuido pelo sistema )" . brHtml(2) . "Data ", Data,
+         [ brHtml(4) . "Fechado? ", Fechado ] ] ] );
 	}
 	else
+   {
 		echo $this->Pedir( "Nº",
          [ '', Num,
-         [ brHtml(4) . "Data ", Data ] ] );
-
+         [ brHtml(4) . "Data ", Data,
+         [ brHtml(4) . "Fechado? ", Fechado ] ] ] );
+   }
+   
    echo
 	$this->Pedir( "Clínica", Clinica ),
+   $this->Pedir( "Fornecedor",
+      [ "", Fornecedor, "<br>(opcional, use se quiser fazer uma entrada de somente um fornecedor)" ] ),
    $this->Pedir( "Documento Nº",
       [ "", NumDoc, " (opcional, pode ter o número da NF do fornecedor)" . brHtml(1) ] ),
-   $this->Pedir( "Fechado?", Fechado ),
 "</table>
 <br>
 <table class='tabFormulario'>",

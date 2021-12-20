@@ -2356,9 +2356,10 @@ CREATE TABLE arqMovEstoque
 	/*  2*/	NUM NUMERIC(18,0), /* Máscara = N */
 	/*  3*/	DATA DATE, /* Máscara = 4ano */
 	/*  4*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  5*/	NUMDOC NUMERIC(18,0), /* Máscara = N */
-	/*  6*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/*  7*/	FECHADO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+	/*  6*/	NUMDOC NUMERIC(18,0), /* Máscara = N */
+	/*  7*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/*  8*/	FECHADO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqMovEstoque_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqMovEstoque_UK UNIQUE ( Num )
 );
@@ -3295,9 +3296,10 @@ RECREATE VIEW V_arqLote AS
 commit;
 
 RECREATE VIEW V_arqMovEstoque AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.DATA, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.NUMDOC, A0.OBS, A0.FECHADO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.DATA, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.FORNECEDOR, A2.NOME as FORNECEDOR_NOME, A0.NUMDOC, A0.OBS, A0.FECHADO
 	FROM arqMovEstoque A0
-	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA;
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join arqFornecedor A2 on A2.IDPRIMARIO = A0.FORNECEDOR;
 commit;
 
 RECREATE VIEW V_arqItemMov AS 
@@ -3566,6 +3568,7 @@ ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Medicamen FOREIGN KEY ( MEDI
 ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Medicam FOREIGN KEY ( MEDICAM ) REFERENCES arqMedicamen ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqMovEstoque ADD CONSTRAINT arqMovEstoque_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqMovEstoque ADD CONSTRAINT arqMovEstoque_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_MovEstoque FOREIGN KEY ( MOVESTOQUE ) REFERENCES arqMovEstoque ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_Lote FOREIGN KEY ( LOTE ) REFERENCES arqLote ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_TMov FOREIGN KEY ( TMOV ) REFERENCES tabTMov ON DELETE SET NULL ON UPDATE CASCADE;
@@ -5242,6 +5245,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Fornecedor', OLD.Fornecedor, NEW.Fornecedor );
 	execute procedure set_log( 12, NEW.idPrimario, 'NumDoc', OLD.NumDoc, NEW.NumDoc );
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Fechado', OLD.Fechado, NEW.Fechado );
