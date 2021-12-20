@@ -205,7 +205,7 @@ CREATE DESC INDEX arqItemMov_IdPrimario_Desc ON arqItemMov (IDPRIMARIO);
 commit;
 
 ALTER TABLE arqItemMov ADD QTDCALC NUMERIC(18,0) computed by ( CASE
-	WHEN( TMov in( 1 ) ) THEN( Qtd )
+	WHEN( TMov in( 2 ) ) THEN( Qtd )
 	ELSE ( -Qtd )
 	END  ); 
 ALTER TABLE arqItemMov ALTER QTDCALC POSITION 7;

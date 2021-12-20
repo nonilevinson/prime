@@ -161,7 +161,7 @@ MovEstoque_Num.TipoCampo |= CAMPO_CHAVE_PAI;
 Campo_arqItemMov_Item.prototype.Sugeriu = function()
 {
 {
-	return( this.AtribuiuSemCritica( maior( ~Item+1~, 1, MovEstoque ) ) );
+	return( this.AtribuiuSemCritica( maior( "Item+1", 1, MovEstoque ) ) );
 }
 }
 
@@ -252,7 +252,7 @@ Campo_arqItemMov_Qtd.prototype.Obrigatorio = function( p_comMsg )
 Campo_arqItemMov_QtdCalc.prototype.Calculou = function()
 {
 {
-		if( estaContido( TMov, [ 1 ] ) )
+		if( estaContido( TMov, [ 2 ] ) )
 	return( this.Atribuiu( Qtd ) );
 }
 {

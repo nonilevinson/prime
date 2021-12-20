@@ -39,7 +39,7 @@ class campo_arqItemMov_MovEstoque_Num extends Lance_CampoNumerico
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Nª" );
+			return( "N°" );
 	}
 
 }
@@ -289,6 +289,18 @@ class arqItemMov extends Lance_Arquivo
 			array_push( $vetAux, array( QtdCalc ) );
 			array_push( $vetAux, array( CUnidade ) );
 		return( $vetAux );
+	}
+
+	//-------------------------------------------------------------
+	// Acionar
+	//-------------------------------------------------------------
+	function AcionarBotao( $p_tecla )
+	{
+		switch( $p_tecla )
+		{
+			case _GRAVAR: return( MovAberto() == '' );
+		}
+		return( parent::AcionarBotao( $p_tecla ) );
 	}
 
 	//-------------------------------------------------------------
