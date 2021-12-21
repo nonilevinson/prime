@@ -214,6 +214,7 @@ class arqMovEstoque extends Lance_Arquivo
 			array_push( $vetAux, array( Num ) );
 			array_push( $vetAux, array( Data ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
+			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( Fechado ) );
 		return( $vetAux );
 	}
@@ -223,7 +224,7 @@ class arqMovEstoque extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ) ) );
+		return( array( array( Clinica ), array( Fornecedor ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -264,7 +265,7 @@ class arqMovEstoque extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function FilSel()
 	{
-	return( "" . filrarSelecao() . "" );
+	return( "" . filtrarSelecao() . "" );
 	}
 
 }

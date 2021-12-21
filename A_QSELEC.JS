@@ -388,6 +388,39 @@ function Campo_parQSelecao_Gran6Fim()
 var Gran6Fim = new Campo_parQSelecao_Gran6Fim;
 
 //------------------------------------------------------------
+Campo_parQSelecao_Gran9.prototype = new Lance_CampoNumerico;
+
+function Campo_parQSelecao_Gran9()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Gran9", "Gran9", "Gran9", 9, "###.###.##z", true,"", "");
+}
+
+var Gran9 = new Campo_parQSelecao_Gran9;
+
+//------------------------------------------------------------
+Campo_parQSelecao_Gran9Fim.prototype = new Lance_CampoNumerico;
+
+function Campo_parQSelecao_Gran9Fim()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Gran9Fim", "Gran9Fim", "Gran9Fim", 9, "###.###.##z", true,"", "");
+}
+
+var Gran9Fim = new Campo_parQSelecao_Gran9Fim;
+
+//------------------------------------------------------------
+Campo_parQSelecao_Gran13.prototype = new Lance_CampoNumerico;
+
+function Campo_parQSelecao_Gran13()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Gran13", "Gran13", "Gran13", 13, "#.###.###.###.##z", true,"", "");
+}
+
+var Gran13 = new Campo_parQSelecao_Gran13;
+
+//------------------------------------------------------------
 Campo_parQSelecao_Real6.prototype = new Lance_CampoNumerico;
 
 function Campo_parQSelecao_Real6()
@@ -408,17 +441,6 @@ function Campo_parQSelecao_Real6Fim()
 }
 
 var Real6Fim = new Campo_parQSelecao_Real6Fim;
-
-//------------------------------------------------------------
-Campo_parQSelecao_Gran13.prototype = new Lance_CampoNumerico;
-
-function Campo_parQSelecao_Gran13()
-{
-	this.superClass = Lance_CampoNumerico;
-	this.superClass( "Gran13", "Gran13", "Gran13", 13, "#.###.###.###.##z", true,"", "");
-}
-
-var Gran13 = new Campo_parQSelecao_Gran13;
 
 //------------------------------------------------------------
 Campo_parQSelecao_Senha1.prototype = new Lance_CampoCadeia;
@@ -525,7 +547,7 @@ Campo_parQSelecao_TMov_Descritor.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQSelecao_TMov_Descritor()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TMov_Descritor", "TMov_Descritor", "TMov", TMov, 14, "xxxxxxxxxxxxxx", false);
+	this.superClass( "TMov_Descritor", "TMov_Descritor", "TMov", TMov, 19, "xxxxxxxxxxxxxxxxxxx", false);
 }
 
 var TMov_Descritor = new Campo_parQSelecao_TMov_Descritor;
@@ -1138,6 +1160,19 @@ Campo_parQSelecao_HoraFim.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Gran6Fim.prototype.TemErro = function()
+{
+		if( tem(this) && ( Gran6Fim < Gran6 ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_parQSelecao_Gran6Fim.prototype.Existencia = function()
@@ -1146,11 +1181,24 @@ Campo_parQSelecao_Gran6Fim.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Gran9Fim.prototype.TemErro = function()
+{
+		if( tem(this) && ( Gran9Fim < Gran9 ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
-Campo_parQSelecao_Real6Fim.prototype.Existencia = function()
+Campo_parQSelecao_Gran9Fim.prototype.Existencia = function()
 {
-	return( tem( Real6 ) );
+	return( tem( Gran9 ) );
 }
 
 //-------------------------------------------------------------
@@ -1164,6 +1212,27 @@ Campo_parQSelecao_Gran13.prototype.Obrigatorio = function( p_comMsg )
 		return( true );
 	}
 	return( false );
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Real6Fim.prototype.TemErro = function()
+{
+		if( tem(this) && ( Real6Fim < Real6 ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Real6Fim.prototype.Existencia = function()
+{
+	return( tem( Real6 ) );
 }
 
 //-------------------------------------------------------------
@@ -1480,6 +1549,7 @@ DataIni1.ExistenciasDependentes= [ DataFim1 ];
 MesIni.ExistenciasDependentes= [ MesFim ];
 HoraIni.ExistenciasDependentes= [ HoraFim ];
 Gran6.ExistenciasDependentes= [ Gran6Fim ];
+Gran9.ExistenciasDependentes= [ Gran9Fim ];
 Real6.ExistenciasDependentes= [ Real6Fim ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 SubPlano_Plano.ExistenciasDependentes= [ SubPlano,SubPlano_Plano_Plano ];
@@ -1499,6 +1569,9 @@ DataIni.ErrosDependentes= [ DataFim,HoraIni ];
 DataIni1.ErrosDependentes= [ DataFim1 ];
 MesIni.ErrosDependentes= [ MesFim ];
 HoraIni.ErrosDependentes= [ HoraFim ];
+Gran6.ErrosDependentes= [ Gran6Fim ];
+Gran9.ErrosDependentes= [ Gran9Fim ];
+Real6.ErrosDependentes= [ Real6Fim ];
 Senha1.ErrosDependentes= [ Senha2 ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 SubPlano_Plano_CodPlano.ErrosDependentes= [ SubPlano_Plano ];
@@ -1536,7 +1609,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Real6, Real6Fim, Gran13, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

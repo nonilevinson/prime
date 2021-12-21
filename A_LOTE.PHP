@@ -145,13 +145,6 @@ class campo_arqLote_TrgItMov extends Lance_CampoNumerico
 		parent::__construct( "TrgItMov", "TrgItMov", "TrgItMov", 4, "#.##z", "(", "", EH_TOTALIZADO, 0, false );
 	}
 
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "TrgItMov [0]" );
-	}
-
 }
 
 //======================================================
@@ -163,13 +156,6 @@ class campo_arqLote_TrgCMedica extends Lance_CampoNumerico
 	function __construct()
 	{
 		parent::__construct( "TrgCMedica", "TrgCMedica", "TrgCMedica", 4, "#.##z", "", "", EH_TOTALIZADO, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "TrgCMedica [0]" );
 	}
 
 }
@@ -283,10 +269,6 @@ class arqLote extends Lance_Arquivo
 			array_push( $vetAux, array( Clinica_Clinica ) );
 			array_push( $vetAux, array( Fabrica ) );
 			array_push( $vetAux, array( Validade ) );
-		if( GrupoAtualEm() )
- {
-			array_push( $vetAux, array( TrgItMov ) );
- }
 			array_push( $vetAux, array( Estoque ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );

@@ -19,7 +19,7 @@ class campo_arqCMedica_Consulta extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Consulta", "Consulta", "Consulta", EH_CHAVE, "arqConsulta", "arqConsulta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+		parent::__construct( "Consulta", "Consulta", "Consulta", 0, "arqConsulta", "arqConsulta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
 }
@@ -52,7 +52,7 @@ class campo_arqCMedica_Medicamen extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Medicamen", "Medicamen", "Medicamen", EH_CHAVE, "arqMedicamen", "arqMedicamen.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+		parent::__construct( "Medicamen", "Medicamen", "Medicamen", 0, "arqMedicamen", "arqMedicamen.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -320,7 +320,7 @@ class arqCMedica extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Consulta_Num, Medicamen_Medicamen) );
+		return( array( ) );
 	}
 
 	//-------------------------------------------------------------

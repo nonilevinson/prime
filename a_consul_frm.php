@@ -85,10 +85,12 @@ CriarForms(
 	$this->Pedir( "Observações", SaldoObs ),
 	
 	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
 	$this->Pedir( "Conduta" ),
 "</table>",
 
 "<table id='M' class='tabFormulario' style='display:none'>",
+	$this->Cabecalhos( [ "Transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
 	$this->Pedir( "Medicação<br>Recomendada", Medicacao ),
 "</table>",
 

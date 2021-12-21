@@ -58,46 +58,6 @@ class campo_arqMedicamen_Unidade_Unidade extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo EstoqueMin
-//======================================================
-
-class campo_arqMedicamen_EstoqueMin extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "EstoqueMin", "EstoqueMin", "EstoqueMin", 4, "#.##z", "", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Est.Min." );
-	}
-
-}
-
-//======================================================
-//	Campo EstoqueMax
-//======================================================
-
-class campo_arqMedicamen_EstoqueMax extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "EstoqueMax", "EstoqueMax", "EstoqueMax", 4, "#.##z", "", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Est.Max." );
-	}
-
-}
-
-//======================================================
 //	Campo Ativo
 //======================================================
 
@@ -140,8 +100,6 @@ function listaCampos_arqMedicamen( $p_prefixo )
 			new campo_arqMedicamen_Medicamen(),
 			new campo_arqMedicamen_Unidade(),
 			new campo_arqMedicamen_Unidade_Unidade(),
-			new campo_arqMedicamen_EstoqueMin(),
-			new campo_arqMedicamen_EstoqueMax(),
 			new campo_arqMedicamen_Ativo() )
 	);
 	$g_prefixo = $prefixoAnt;
@@ -178,8 +136,6 @@ class arqMedicamen extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Medicamen ) );
 			array_push( $vetAux, array( Unidade_Unidade ) );
-			array_push( $vetAux, array( EstoqueMin ) );
-			array_push( $vetAux, array( EstoqueMax ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
@@ -201,8 +157,6 @@ class arqMedicamen extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Medicamen ) );
 			array_push( $vetAux, array( Unidade_Unidade ) );
-			array_push( $vetAux, array( EstoqueMin ) );
-			array_push( $vetAux, array( EstoqueMax ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}

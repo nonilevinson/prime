@@ -36,28 +36,6 @@ function Campo_arqMedicamen_Unidade_Unidade()
 var Unidade_Unidade = new Campo_arqMedicamen_Unidade_Unidade;
 
 //------------------------------------------------------------
-Campo_arqMedicamen_EstoqueMin.prototype = new Lance_CampoNumerico;
-
-function Campo_arqMedicamen_EstoqueMin()
-{
-	this.superClass = Lance_CampoNumerico;
-	this.superClass( "EstoqueMin", "EstoqueMin", "EstoqueMin", 4, "#.##z", true,"", "");
-}
-
-var EstoqueMin = new Campo_arqMedicamen_EstoqueMin;
-
-//------------------------------------------------------------
-Campo_arqMedicamen_EstoqueMax.prototype = new Lance_CampoNumerico;
-
-function Campo_arqMedicamen_EstoqueMax()
-{
-	this.superClass = Lance_CampoNumerico;
-	this.superClass( "EstoqueMax", "EstoqueMax", "EstoqueMax", 4, "#.##z", true,"", "");
-}
-
-var EstoqueMax = new Campo_arqMedicamen_EstoqueMax;
-
-//------------------------------------------------------------
 Campo_arqMedicamen_Ativo.prototype = new Lance_CampoLogico;
 
 function Campo_arqMedicamen_Ativo()
@@ -108,22 +86,6 @@ Campo_arqMedicamen_Unidade_Unidade.prototype.ObrigatorioEspecial = function( p_c
 
 Unidade_Unidade.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqMedicamen_EstoqueMin.prototype.Cabecalho = function()
-{
-		return( "Est.Min." );
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqMedicamen_EstoqueMax.prototype.Cabecalho = function()
-{
-		return( "Est.Max." );
-}
-
-//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_arqMedicamen_Ativo.prototype.Sugeriu = function()
@@ -171,7 +133,7 @@ function ListaDeCampos_arqMedicamen( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Medicamen, Unidade, Unidade_Unidade, EstoqueMin, EstoqueMax, Ativo ]	);
+		[ Medicamen, Unidade, Unidade_Unidade, Ativo ]	);
 	IniciarDependencias_arqMedicamen();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -11,6 +11,58 @@ insert into arqLanceOperacao values(100054,1,'Cadastro as medicação da consulta'
 insert into arqLanceOperacao values(100055,1,'Cadastro de lotes de medicamentos','arqLote',55,2,0,'');
 insert into arqLanceOperacao values(100056,1,'Cadastro de movimentos de estoque','arqMovEstoque',56,2,0,'');
 insert into arqLanceOperacao values(100057,1,'Cadastro de itens de movimento de estoque','arqItemMov',57,2,0,'');
+insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
+insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de estoque','',221,2,0,'');
+commit;
+
+/************************************************************
+	Arquivo Medicamen 
+************************************************************/
+drop trigger arqMedicamen_log;
+drop view v_arqMedicamen;
+commit;
+
+ALTER TABLE arqMedicamen drop EstoqueMin, drop EstoqueMax;
+commit;
+
+RECREATE VIEW V_arqMedicamen AS 
+	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.ATIVO
+	FROM arqMedicamen A0
+	left join arqUnidade A1 on A1.IDPRIMARIO = A0.UNIDADE;
+commit;
+
+/************************************************************
+	Trigger para Log de arqMedicamen
+************************************************************/
+
+set term ^;
+
+recreate trigger arqMedicamen_LOG for arqMedicamen
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Medicamen,'' );
+else
+	valorChave = coalesce( NEW.Medicamen,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100052 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
+	execute procedure set_log( 12, NEW.idPrimario, 'Unidade', OLD.Unidade, NEW.Unidade );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
 commit;
 
 /************************************************************
@@ -276,8 +328,7 @@ CREATE TABLE arqCMedica
 	/*  8*/	QTDENTREG NUMERIC(18,0), /* Máscara = N */
 	/*  9*/	/* SALDO */
 	/* 10*/	OBSENTREG VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
-	CONSTRAINT arqCMedica_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqCMedica_UK UNIQUE ( Consulta, Medicamen )
+	CONSTRAINT arqCMedica_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
 

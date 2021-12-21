@@ -466,6 +466,45 @@ class campo_parQSelecao_Gran6Fim extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo Gran9
+//======================================================
+
+class campo_parQSelecao_Gran9 extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Gran9", "Gran9", "Gran9", 9, "###.###.##z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Gran9Fim
+//======================================================
+
+class campo_parQSelecao_Gran9Fim extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Gran9Fim", "Gran9Fim", "Gran9Fim", 9, "###.###.##z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Gran13
+//======================================================
+
+class campo_parQSelecao_Gran13 extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Gran13", "Gran13", "Gran13", 13, "#.###.###.###.##z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Real6
 //======================================================
 
@@ -487,19 +526,6 @@ class campo_parQSelecao_Real6Fim extends Lance_CampoNumerico
 	function __construct()
 	{
 		parent::__construct( "Real6Fim", "Real6Fim", "Real6Fim", 8, "###.##z,zz", "", "", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo Gran13
-//======================================================
-
-class campo_parQSelecao_Gran13 extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "Gran13", "Gran13", "Gran13", 13, "#.###.###.###.##z", "", "", 0, 0, false );
 	}
 
 }
@@ -851,9 +877,11 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_HoraFim(),
 			new campo_parQSelecao_Gran6(),
 			new campo_parQSelecao_Gran6Fim(),
+			new campo_parQSelecao_Gran9(),
+			new campo_parQSelecao_Gran9Fim(),
+			new campo_parQSelecao_Gran13(),
 			new campo_parQSelecao_Real6(),
 			new campo_parQSelecao_Real6Fim(),
-			new campo_parQSelecao_Gran13(),
 			new campo_parQSelecao_Senha1(),
 			new campo_parQSelecao_Senha2(),
 			new campo_parQSelecao_Clinica(),
@@ -863,7 +891,7 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 18, "xxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
 			new campo_parQSelecao_TMov(),
 			new Lance_CampoCadeia( "TMov_Chave", "TMov_Chave", "Chave", 1, "x", EH_CHAVE, TMov ),
-			new Lance_CampoCadeia( "TMov_Descritor", "TMov_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TMov ),
+			new Lance_CampoCadeia( "TMov_Descritor", "TMov_Descritor", "Descritor", 19, "xxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TMov ),
 			new campo_parQSelecao_TPgRec(),
 			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
 			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ),

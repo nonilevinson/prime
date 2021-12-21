@@ -292,5 +292,19 @@ if( $op == 203 ) //* r_agret
 	$this->Pedir( "Assessor" );
 }
 
+if( $op == 217 ) //* seleção arqMovEstoq
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Entre as datas",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Fechados?", TSimNao ),
+	$this->Pedir( "Fornecedor" ),
+	$this->Pedir( "Entre os movimentos",
+		[ "", Gran9,
+		[ brHtml(1) . "e ", Gran9Fim, "" ] ] );	
+}
+
 //==================================================================================
 echo 	"</table>";

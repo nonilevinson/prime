@@ -226,24 +226,8 @@ Campo_arqLote_Validade.prototype.TemAdvertencia = function()
 	return( Lance_CampoLogico.prototype.TemAdvertencia.call( this ) );
 }
 
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqLote_TrgItMov.prototype.Cabecalho = function()
-{
-		return( "TrgItMov [0]" );
-}
-
 TrgItMov.EhCalculado = true;
 TrgItMov.EhTotalizado = true;
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqLote_TrgCMedica.prototype.Cabecalho = function()
-{
-		return( "TrgCMedica [0]" );
-}
-
 TrgCMedica.EhCalculado = true;
 TrgCMedica.EhTotalizado = true;
 //-------------------------------------------------------------

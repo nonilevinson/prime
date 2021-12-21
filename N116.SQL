@@ -2053,9 +2053,7 @@ CREATE TABLE arqMedicamen
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	MEDICAMEN VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	UNIDADE ligadoComArquivo, /* Ligado com o Arquivo Unidade */
-	/*  4*/	ESTOQUEMIN INTEGER, /* Máscara = N */
-	/*  5*/	ESTOQUEMAX INTEGER, /* Máscara = N */
-	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqMedicamen_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqMedicamen_UK UNIQUE ( Medicamen )
 );
@@ -2755,8 +2753,7 @@ CREATE TABLE arqCMedica
 	/*  8*/	QTDENTREG NUMERIC(18,0), /* Máscara = N */
 	/*  9*/	/* SALDO */
 	/* 10*/	OBSENTREG VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
-	CONSTRAINT arqCMedica_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqCMedica_UK UNIQUE ( Consulta, Medicamen )
+	CONSTRAINT arqCMedica_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
 
@@ -2928,7 +2925,7 @@ ALTER TABLE arqCMedica ALTER UNIDADECAL POSITION 4;
 ALTER TABLE arqLote ADD ESTOQUE NUMERIC(18,0) computed by ( TrgItMov - TrgCMedica ); 
 ALTER TABLE arqLote ALTER ESTOQUE POSITION 9;
 ALTER TABLE arqItemMov ADD QTDCALC NUMERIC(18,0) computed by ( CASE
-	WHEN( TMov in( 1 ) ) THEN( Qtd )
+	WHEN( TMov in( 2 ) ) THEN( Qtd )
 	ELSE ( -Qtd )
 	END  ); 
 ALTER TABLE arqItemMov ALTER QTDCALC POSITION 7;
@@ -3265,7 +3262,7 @@ RECREATE VIEW V_arqUnidade AS
 commit;
 
 RECREATE VIEW V_arqMedicamen AS 
-	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.ESTOQUEMIN, A0.ESTOQUEMAX, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.ATIVO
 	FROM arqMedicamen A0
 	left join arqUnidade A1 on A1.IDPRIMARIO = A0.UNIDADE;
 commit;
@@ -3451,6 +3448,8 @@ insert into arqLanceOperacao values(200156,2,'Rotina para informar que o pacient
 insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
 insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'');
 insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'');
+insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
+insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de estoque','',221,2,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -5104,8 +5103,6 @@ if( deleting ) then
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
 	execute procedure set_log( 12, NEW.idPrimario, 'Unidade', OLD.Unidade, NEW.Unidade );
-	execute procedure set_log( 12, NEW.idPrimario, 'EstoqueMin', OLD.EstoqueMin, NEW.EstoqueMin );
-	execute procedure set_log( 12, NEW.idPrimario, 'EstoqueMax', OLD.EstoqueMax, NEW.EstoqueMax );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end
 end^
@@ -5161,7 +5158,7 @@ position 999
 as
 	declare variable valorChave varchar(1000);
 begin
-select coalesce( Consulta_Num, ' ' ) || '-' || coalesce( Medicamen_Medicamen, ' ' ) from v_arqCMedica where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+	valorChave='';
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100054 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then

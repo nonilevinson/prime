@@ -167,7 +167,6 @@ Campo_arqCMedica_Consulta.prototype.Obrigatorio = function( p_comMsg )
 	}
 }
 
-Consulta.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
@@ -208,7 +207,6 @@ Campo_arqCMedica_Medicamen.prototype.TrazOutrosDoPai = function()
 		return( vetPai );
 }
 
-Medicamen.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------

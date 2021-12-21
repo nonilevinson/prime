@@ -5,12 +5,19 @@ function filtrarSelecao()
 {
    $parQSelecao = lerParametro( 'parQSelecao' );
 
-   return( substr(
+   switch( $parQSelecao->TSIMNAO )
+   {
+      case 0: $fechados = ""; break;
+      case 1: $fechados = "A.Fechado = 0 and "; break;
+      case 2: $fechados = "A.Fechado = 1 and "; break;
+   }
+
+   return( substr( $fechados .
       ( SQL_VETIDCLINICA ? "A.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
-      filtrarPorLig( "A.TStCon", $parQSelecao->TSTCON ) .
+      filtrarPorIntervaloData( "A.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
+      filtrarPorIntervalo( "A.Num", $parQSelecao->GRAN9, $parQSelecao->GRAN9FIM ) .
       filtrarPorLig( "A.Clinica", $parQSelecao->CLINICA ) .
-      filtrarPorLig( "A.Medico", $parQSelecao->MEDICO ) .
-      filtrarPorLig( "A.Pessoa", $parQSelecao->PESSOA ), 0, -4 )
+      filtrarPorLig( "A.Fornecedor", $parQSelecao->FORNECEDOR ), 0, -4 )
    );
 }
 
