@@ -308,5 +308,6 @@ var Menu_1 = new Array( 1,"Contatos","","C",143,"","",1,"","1","a_contpe","arqCo
 var Menu_2 = new Array( 1,"Contas","","t",144,"","",1,"","1","a_conta","arqConta","Folhear","Fornecedor","?","","", "","", 0,11,[],[33]);
 var Menu_3 = new Array( 1,"Recorrentes","","R",154,"","",1,"","1","a_recor","arqRecorrente","Folhear","Fornecedor","?","","", "","", 0,11,[],[46]);
 var Menu_4 = new Array( 1,"Mov.Estoque","","q",219,"","",1,"","1","a_movest","arqMovEstoque","Folhear","Fornecedor","?","","", "","", 0,11,[],[56]);
-parent.navegacao.MenuPrincQtdOpcoes=4;
+var Menu_5 = new Array( 1,"Lotes","","L",222,"","",1,"","1","a_lote","arqLote","Folhear","Fornecedor","?","","", "","", 0,11,[],[55]);
+parent.navegacao.MenuPrincQtdOpcoes=5;
 }

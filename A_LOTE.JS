@@ -3,26 +3,26 @@
 =========================================================================*/
 
 //------------------------------------------------------------
-Campo_arqLote_Medicam.prototype = new Lance_CampoHidden;
+Campo_arqLote_Medicamen.prototype = new Lance_CampoHidden;
 
-function Campo_arqLote_Medicam()
+function Campo_arqLote_Medicamen()
 {
 	this.superClass = Lance_CampoHidden;
-	this.superClass( "Medicam", "Medicam", "Medicam", "arqMedicamen", "a_medica", null, "",52);
+	this.superClass( "Medicamen", "Medicamen", "Medicamen", "arqMedicamen", "a_medica", null, "",52);
 }
 
-var Medicam = new Campo_arqLote_Medicam;
+var Medicamen = new Campo_arqLote_Medicamen;
 
 //------------------------------------------------------------
-Campo_arqLote_Medicam_Medicamen.prototype = new Lance_CampoCadeiaLigado;
+Campo_arqLote_Medicamen_Medicamen.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqLote_Medicam_Medicamen()
+function Campo_arqLote_Medicamen_Medicamen()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Medicam_Medicamen", "Medicam_Medicamen", "Medicamen", Medicam, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "Medicamen_Medicamen", "Medicamen_Medicamen", "Medicamen", Medicamen, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
-var Medicam_Medicamen = new Campo_arqLote_Medicam_Medicamen;
+var Medicamen_Medicamen = new Campo_arqLote_Medicamen_Medicamen;
 
 //------------------------------------------------------------
 Campo_arqLote_Lote.prototype = new Lance_CampoCadeia;
@@ -56,6 +56,28 @@ function Campo_arqLote_Clinica_Clinica()
 }
 
 var Clinica_Clinica = new Campo_arqLote_Clinica_Clinica;
+
+//------------------------------------------------------------
+Campo_arqLote_Fornecedor.prototype = new Lance_CampoHidden;
+
+function Campo_arqLote_Fornecedor()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Fornecedor", "Fornecedor", "Fornecedor", "arqFornecedor", "a_fornec", null, "",42);
+}
+
+var Fornecedor = new Campo_arqLote_Fornecedor;
+
+//------------------------------------------------------------
+Campo_arqLote_Fornecedor_Nome.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqLote_Fornecedor_Nome()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", Fornecedor, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var Fornecedor_Nome = new Campo_arqLote_Fornecedor_Nome;
 
 //------------------------------------------------------------
 Campo_arqLote_Fabrica.prototype = new Lance_CampoData;
@@ -126,7 +148,7 @@ var Ativo = new Campo_arqLote_Ativo;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
-Campo_arqLote_Medicam.prototype.Obrigatorio = function( p_comMsg )
+Campo_arqLote_Medicamen.prototype.Obrigatorio = function( p_comMsg )
 {
 	{
 		if( p_comMsg ) alert( "O medicamento é obrigatório" );
@@ -134,16 +156,16 @@ Campo_arqLote_Medicam.prototype.Obrigatorio = function( p_comMsg )
 	}
 }
 
-Medicam.TipoCampo |= CAMPO_CHAVE;
+Medicamen.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqLote_Medicam_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqLote_Medicamen_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
-	return( Medicam.Obrigatorio( p_comMsg ) );
+	return( Medicamen.Obrigatorio( p_comMsg ) );
 }
 
-Medicam_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
+Medicamen_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -194,6 +216,15 @@ Campo_arqLote_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_comMsg
 }
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqLote_Fornecedor_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Fornecedor.Obrigatorio( p_comMsg ) );
+}
+
+Fornecedor_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição de advertência do campo
 //-------------------------------------------------------------
@@ -262,9 +293,9 @@ Campo_arqLote_Ativo.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_arqLote_Medicam.prototype.ExistenciaEspecial = function()
+Campo_arqLote_Medicamen.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Medicam_Medicamen.Obrigatorio( false ) || tem(Medicam_Medicamen) ) );
+	return( ( !Medicamen_Medicamen.Obrigatorio( false ) || tem(Medicamen_Medicamen) ) );
 }
 
 //-------------------------------------------------------------
@@ -275,16 +306,27 @@ Campo_arqLote_Clinica.prototype.ExistenciaEspecial = function()
 	return( ( !Clinica_Clinica.Obrigatorio( false ) || tem(Clinica_Clinica) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqLote_Fornecedor.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Fornecedor_Nome.Obrigatorio( false ) || tem(Fornecedor_Nome) ) );
+}
+
 function IniciarDependencias_arqLote()
 {
 TrgItMov.CalculosDependentes= [ Estoque ];
 TrgCMedica.CalculosDependentes= [ Estoque ];
-Medicam_Medicamen.ExistenciasDependentes= [ Medicam ];
+Medicamen_Medicamen.ExistenciasDependentes= [ Medicamen ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
-Medicam_Medicamen.ErrosDependentes= [ Medicam ];
+Fornecedor_Nome.ExistenciasDependentes= [ Fornecedor ];
+Medicamen_Medicamen.ErrosDependentes= [ Medicamen ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
-Medicam.CamposChave= [ Medicam_Medicamen ];
+Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
+Medicamen.CamposChave= [ Medicamen_Medicamen ];
 Clinica.CamposChave= [ Clinica_Clinica ];
+Fornecedor.CamposChave= [ Fornecedor_Nome ];
 }
 
 
@@ -302,7 +344,7 @@ function ListaDeCampos_arqLote( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Medicam, Medicam_Medicamen, Lote, Clinica, Clinica_Clinica, Fabrica, Validade, TrgItMov, TrgCMedica, Estoque, Ativo ]	);
+		[ Medicamen, Medicamen_Medicamen, Lote, Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Fabrica, Validade, TrgItMov, TrgCMedica, Estoque, Ativo ]	);
 	IniciarDependencias_arqLote();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -47,26 +47,26 @@ function Campo_arqItemMov_Lote()
 var Lote = new Campo_arqItemMov_Lote;
 
 //------------------------------------------------------------
-Campo_arqItemMov_Lote_Medicam.prototype = new Lance_CampoHidden;
+Campo_arqItemMov_Lote_Medicamen.prototype = new Lance_CampoHidden;
 
-function Campo_arqItemMov_Lote_Medicam()
+function Campo_arqItemMov_Lote_Medicamen()
 {
 	this.superClass = Lance_CampoHidden;
-	this.superClass( "Lote_Medicam", "Lote_Medicam", "Medicam", "arqMedicamen", "a_medica", Lote, "",52);
+	this.superClass( "Lote_Medicamen", "Lote_Medicamen", "Medicamen", "arqMedicamen", "a_medica", Lote, "",52);
 }
 
-var Lote_Medicam = new Campo_arqItemMov_Lote_Medicam;
+var Lote_Medicamen = new Campo_arqItemMov_Lote_Medicamen;
 
 //------------------------------------------------------------
-Campo_arqItemMov_Lote_Medicam_Medicamen.prototype = new Lance_CampoCadeiaLigado;
+Campo_arqItemMov_Lote_Medicamen_Medicamen.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqItemMov_Lote_Medicam_Medicamen()
+function Campo_arqItemMov_Lote_Medicamen_Medicamen()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Lote_Medicam_Medicamen", "Lote_Medicam_Medicamen", "Medicamen", Lote_Medicam, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "Lote_Medicamen_Medicamen", "Lote_Medicamen_Medicamen", "Medicamen", Lote_Medicamen, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
-var Lote_Medicam_Medicamen = new Campo_arqItemMov_Lote_Medicam_Medicamen;
+var Lote_Medicamen_Medicamen = new Campo_arqItemMov_Lote_Medicamen_Medicamen;
 
 //------------------------------------------------------------
 Campo_arqItemMov_Lote_Lote.prototype = new Lance_CampoCadeiaLigado;
@@ -190,21 +190,21 @@ Campo_arqItemMov_Lote.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqItemMov_Lote_Medicam.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqItemMov_Lote_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Lote.Obrigatorio( p_comMsg ) );
 }
 
-Lote_Medicam.TipoCampo |= CAMPO_CHAVE_PAI;
+Lote_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqItemMov_Lote_Medicam_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqItemMov_Lote_Medicamen_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Lote.Obrigatorio( p_comMsg ) );
 }
 
-Lote_Medicam_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
+Lote_Medicamen_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
@@ -279,7 +279,7 @@ Campo_arqItemMov_CUnidade.prototype.Calculou = function()
 	if( !Lote.ValorFoiPreenchido() )
 		this.Atribuiu( "" );
 	else
-		g_strConexao += " ( SELECT Unidade FROM arqUnidade WHERE arqUnidade.IdPrimario=( COALESCE( ( SELECT Unidade FROM arqMedicamen WHERE arqMedicamen.IdPrimario=( COALESCE( ( SELECT Medicam FROM arqLote WHERE arqLote.IdPrimario=( " + Lote + " ) ), 0 ) ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "CUnidade" + LANCE_FIM_PARAMETRO;
+		g_strConexao += " ( SELECT Unidade FROM arqUnidade WHERE arqUnidade.IdPrimario=( COALESCE( ( SELECT Unidade FROM arqMedicamen WHERE arqMedicamen.IdPrimario=( COALESCE( ( SELECT Medicamen FROM arqLote WHERE arqLote.IdPrimario=( " + Lote + " ) ), 0 ) ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "CUnidade" + LANCE_FIM_PARAMETRO;
 	return( true );
 }
 }
@@ -299,15 +299,15 @@ Campo_arqItemMov_MovEstoque.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqItemMov_Lote.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Lote_Medicam.Obrigatorio( false ) || tem(Lote_Medicam) ) && ( !Lote_Lote.Obrigatorio( false ) || tem(Lote_Lote) ) );
+	return( ( !Lote_Medicamen.Obrigatorio( false ) || tem(Lote_Medicamen) ) && ( !Lote_Lote.Obrigatorio( false ) || tem(Lote_Lote) ) );
 }
 
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_arqItemMov_Lote_Medicam.prototype.ExistenciaEspecial = function()
+Campo_arqItemMov_Lote_Medicamen.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Lote_Medicam_Medicamen.Obrigatorio( false ) || tem(Lote_Medicam_Medicamen) ) );
+	return( ( !Lote_Medicamen_Medicamen.Obrigatorio( false ) || tem(Lote_Medicamen_Medicamen) ) );
 }
 
 function IniciarDependencias_arqItemMov()
@@ -316,15 +316,15 @@ TMov.CalculosDependentes= [ QtdCalc ];
 Qtd.CalculosDependentes= [ QtdCalc ];
 Lote.CalculosDependentes= [ CUnidade ];
 MovEstoque_Num.ExistenciasDependentes= [ MovEstoque ];
-Lote_Medicam.ExistenciasDependentes= [ Lote ];
-Lote_Medicam_Medicamen.ExistenciasDependentes= [ Lote_Medicam ];
+Lote_Medicamen.ExistenciasDependentes= [ Lote ];
+Lote_Medicamen_Medicamen.ExistenciasDependentes= [ Lote_Medicamen ];
 Lote_Lote.ExistenciasDependentes= [ Lote ];
 MovEstoque_Num.ErrosDependentes= [ MovEstoque ];
-Lote_Medicam_Medicamen.ErrosDependentes= [ Lote_Medicam ];
+Lote_Medicamen_Medicamen.ErrosDependentes= [ Lote_Medicamen ];
 Lote_Lote.ErrosDependentes= [ Lote ];
 MovEstoque.CamposChave= [ MovEstoque_Num ];
-Lote.CamposChave= [ Lote_Medicam,Lote_Lote ];
-Lote_Medicam.CamposChave= [ Lote_Medicam_Medicamen ];
+Lote.CamposChave= [ Lote_Medicamen,Lote_Lote ];
+Lote_Medicamen.CamposChave= [ Lote_Medicamen_Medicamen ];
 }
 
 
@@ -342,7 +342,7 @@ function ListaDeCampos_arqItemMov( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ MovEstoque, MovEstoque_Num, Item, Lote, Lote_Medicam, Lote_Medicam_Medicamen, Lote_Lote, TMov, TMov_Chave, TMov_Descritor, Qtd, QtdCalc, CUnidade ]	);
+		[ MovEstoque, MovEstoque_Num, Item, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, TMov, TMov_Chave, TMov_Descritor, Qtd, QtdCalc, CUnidade ]	);
 	IniciarDependencias_arqItemMov();
 	g_prefixo = l_prefixo;
 	return( l_lista );

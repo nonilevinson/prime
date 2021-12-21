@@ -12,27 +12,27 @@ include_once( SISTEMA_DIR_ABSOLUTO . "a_lote_ext.php" );
 include_once( SISTEMA_DIR_ABSOLUTO . "externo.php" );
 
 //======================================================
-//	Campo Medicam
+//	Campo Medicamen
 //======================================================
 
-class campo_arqLote_Medicam extends Lance_CampoLigado
+class campo_arqLote_Medicamen extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Medicam", "Medicam", "Medicam", EH_CHAVE, "arqMedicamen", "arqMedicamen.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+		parent::__construct( "Medicamen", "Medicamen", "Medicamen", EH_CHAVE, "arqMedicamen", "arqMedicamen.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
 }
 
 //======================================================
-//	Campo Medicam_Medicamen
+//	Campo Medicamen_Medicamen
 //======================================================
 
-class campo_arqLote_Medicam_Medicamen extends Lance_CampoCadeia
+class campo_arqLote_Medicamen_Medicamen extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Medicam_Medicamen", "Medicam_Medicamen", "Medicamen", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Medicam", false );
+		parent::__construct( "Medicamen_Medicamen", "Medicamen_Medicamen", "Medicamen", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Medicamen", false );
 	}
 
 	//--------------------------------------------------
@@ -86,6 +86,32 @@ class campo_arqLote_Clinica_Clinica extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Clinica_Clinica", "Clinica_Clinica", "Clinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Clinica", false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor
+//======================================================
+
+class campo_arqLote_Fornecedor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor", "Fornecedor", "Fornecedor", 0, "arqFornecedor", "arqFornecedor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Fornecedor_Nome
+//======================================================
+
+class campo_arqLote_Fornecedor_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Fornecedor_Nome", "Fornecedor_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Fornecedor", false );
 	}
 
 }
@@ -220,11 +246,13 @@ function listaCampos_arqLote( $p_prefixo )
 	$lista = array_merge(
 		array(
 			new Lance_CampoIdPrimario(),
-			new campo_arqLote_Medicam(),
-			new campo_arqLote_Medicam_Medicamen(),
+			new campo_arqLote_Medicamen(),
+			new campo_arqLote_Medicamen_Medicamen(),
 			new campo_arqLote_Lote(),
 			new campo_arqLote_Clinica(),
 			new campo_arqLote_Clinica_Clinica(),
+			new campo_arqLote_Fornecedor(),
+			new campo_arqLote_Fornecedor_Nome(),
 			new campo_arqLote_Fabrica(),
 			new campo_arqLote_Validade(),
 			new campo_arqLote_TrgItMov(),
@@ -254,7 +282,7 @@ class arqLote extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Medicam_Medicamen, Lote) );
+		return( array( Medicamen_Medicamen, Lote) );
 	}
 
 	//-------------------------------------------------------------
@@ -264,9 +292,10 @@ class arqLote extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( Medicam_Medicamen ) );
+			array_push( $vetAux, array( Medicamen_Medicamen ) );
 			array_push( $vetAux, array( Lote ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
+			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( Fabrica ) );
 			array_push( $vetAux, array( Validade ) );
 			array_push( $vetAux, array( Estoque ) );
@@ -279,7 +308,7 @@ class arqLote extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Medicam ), array( Clinica ) ) );
+		return( array( array( Medicamen ), array( Clinica ), array( Fornecedor ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -289,9 +318,10 @@ class arqLote extends Lance_Arquivo
 	{
 		global $g_acaoAtual;
 		$vetAux = array();
-			array_push( $vetAux, array( Medicam_Medicamen ) );
+			array_push( $vetAux, array( Medicamen_Medicamen ) );
 			array_push( $vetAux, array( Lote ) );
 			array_push( $vetAux, array( Clinica_Clinica ) );
+			array_push( $vetAux, array( Fornecedor_Nome ) );
 			array_push( $vetAux, array( Fabrica ) );
 			array_push( $vetAux, array( Validade ) );
 			array_push( $vetAux, array( TrgItMov ) );

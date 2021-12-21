@@ -80,26 +80,26 @@ function Campo_arqCMedica_Lote()
 var Lote = new Campo_arqCMedica_Lote;
 
 //------------------------------------------------------------
-Campo_arqCMedica_Lote_Medicam.prototype = new Lance_CampoHidden;
+Campo_arqCMedica_Lote_Medicamen.prototype = new Lance_CampoHidden;
 
-function Campo_arqCMedica_Lote_Medicam()
+function Campo_arqCMedica_Lote_Medicamen()
 {
 	this.superClass = Lance_CampoHidden;
-	this.superClass( "Lote_Medicam", "Lote_Medicam", "Medicam", "arqMedicamen", "a_medica", Lote, "",52);
+	this.superClass( "Lote_Medicamen", "Lote_Medicamen", "Medicamen", "arqMedicamen", "a_medica", Lote, "",52);
 }
 
-var Lote_Medicam = new Campo_arqCMedica_Lote_Medicam;
+var Lote_Medicamen = new Campo_arqCMedica_Lote_Medicamen;
 
 //------------------------------------------------------------
-Campo_arqCMedica_Lote_Medicam_Medicamen.prototype = new Lance_CampoCadeiaLigado;
+Campo_arqCMedica_Lote_Medicamen_Medicamen.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqCMedica_Lote_Medicam_Medicamen()
+function Campo_arqCMedica_Lote_Medicamen_Medicamen()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Lote_Medicam_Medicamen", "Lote_Medicam_Medicamen", "Medicamen", Lote_Medicam, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "Lote_Medicamen_Medicamen", "Lote_Medicamen_Medicamen", "Medicamen", Lote_Medicamen, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
-var Lote_Medicam_Medicamen = new Campo_arqCMedica_Lote_Medicam_Medicamen;
+var Lote_Medicamen_Medicamen = new Campo_arqCMedica_Lote_Medicamen_Medicamen;
 
 //------------------------------------------------------------
 Campo_arqCMedica_Lote_Lote.prototype = new Lance_CampoCadeiaLigado;
@@ -176,6 +176,19 @@ Campo_arqCMedica_Consulta_Num.prototype.ObrigatorioEspecial = function( p_comMsg
 }
 
 Consulta_Num.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Pós Campo
+//-------------------------------------------------------------
+Campo_arqCMedica_Medicamen.prototype.PosCampo = function()
+{
+		if( !g_inserindo )
+	{
+		alt( Lote_Medicamen_Medicamen, Medicamen_Medicamen );
+		alt( Lote_Medicamen, Medicamen );
+	}
+	return( true );
+}
+
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -265,23 +278,36 @@ Campo_arqCMedica_Lote.prototype.FiltroPai = function()
 }
 
 //-------------------------------------------------------------
+// Pré Campo
+//-------------------------------------------------------------
+Campo_arqCMedica_Lote.prototype.PreCampo = function()
+{
+		if( g_inserindo )
+	{
+		alt( Lote_Medicamen_Medicamen, Medicamen_Medicamen );
+		alt( Lote_Medicamen, Medicamen );
+	}
+	return( true );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqCMedica_Lote_Medicam.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqCMedica_Lote_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Lote.Obrigatorio( p_comMsg ) );
 }
 
-Lote_Medicam.TipoCampo |= CAMPO_CHAVE_PAI;
+Lote_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_arqCMedica_Lote_Medicam_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
+Campo_arqCMedica_Lote_Medicamen_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( Lote.Obrigatorio( p_comMsg ) );
 }
 
-Lote_Medicam_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
+Lote_Medicamen_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
@@ -355,15 +381,15 @@ Campo_arqCMedica_Medicamen.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 Campo_arqCMedica_Lote.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Lote_Medicam.Obrigatorio( false ) || tem(Lote_Medicam) ) && ( !Lote_Lote.Obrigatorio( false ) || tem(Lote_Lote) ) );
+	return( ( !Lote_Medicamen.Obrigatorio( false ) || tem(Lote_Medicamen) ) && ( !Lote_Lote.Obrigatorio( false ) || tem(Lote_Lote) ) );
 }
 
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_arqCMedica_Lote_Medicam.prototype.ExistenciaEspecial = function()
+Campo_arqCMedica_Lote_Medicamen.prototype.ExistenciaEspecial = function()
 {
-	return( ( !Lote_Medicam_Medicamen.Obrigatorio( false ) || tem(Lote_Medicam_Medicamen) ) );
+	return( ( !Lote_Medicamen_Medicamen.Obrigatorio( false ) || tem(Lote_Medicamen_Medicamen) ) );
 }
 
 function IniciarDependencias_arqCMedica()
@@ -373,18 +399,18 @@ QtdEntreg.CalculosDependentes= [ Lote,Saldo ];
 Qtd.CalculosDependentes= [ Saldo ];
 Consulta_Num.ExistenciasDependentes= [ Consulta ];
 Medicamen_Medicamen.ExistenciasDependentes= [ Medicamen ];
-Lote_Medicam.ExistenciasDependentes= [ Lote ];
-Lote_Medicam_Medicamen.ExistenciasDependentes= [ Lote_Medicam ];
+Lote_Medicamen.ExistenciasDependentes= [ Lote ];
+Lote_Medicamen_Medicamen.ExistenciasDependentes= [ Lote_Medicamen ];
 Lote_Lote.ExistenciasDependentes= [ Lote ];
 Lote.ExistenciasDependentes= [ DataSepara,QtdEntreg,ObsEntreg ];
 Consulta_Num.ErrosDependentes= [ Consulta ];
 Medicamen_Medicamen.ErrosDependentes= [ Medicamen ];
-Lote_Medicam_Medicamen.ErrosDependentes= [ Lote_Medicam ];
+Lote_Medicamen_Medicamen.ErrosDependentes= [ Lote_Medicamen ];
 Lote_Lote.ErrosDependentes= [ Lote ];
 Consulta.CamposChave= [ Consulta_Num ];
 Medicamen.CamposChave= [ Medicamen_Medicamen ];
-Lote.CamposChave= [ Lote_Medicam,Lote_Lote ];
-Lote_Medicam.CamposChave= [ Lote_Medicam_Medicamen ];
+Lote.CamposChave= [ Lote_Medicamen,Lote_Lote ];
+Lote_Medicamen.CamposChave= [ Lote_Medicamen_Medicamen ];
 }
 
 
@@ -403,7 +429,7 @@ function ListaDeCampos_arqCMedica( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Consulta, Consulta_Num, Medicamen, Medicamen_Medicamen, UnidadeCal, Qtd, Lote, Lote_Medicam, Lote_Medicam_Medicamen, Lote_Lote, DataSepara, QtdEntreg, Saldo, ObsEntreg ]	);
+		[ Consulta, Consulta_Num, Medicamen, Medicamen_Medicamen, UnidadeCal, Qtd, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, DataSepara, QtdEntreg, Saldo, ObsEntreg ]	);
 	IniciarDependencias_arqCMedica();
 	g_prefixo = l_prefixo;
 	return( l_lista );

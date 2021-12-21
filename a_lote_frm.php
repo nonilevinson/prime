@@ -2,9 +2,10 @@
 
 echo
 "<table class='tabFormulario'>",
-	$this->Pedir( "Medicamento", Medicam ),
+	$this->Pedir( "Medicamento", Medicamen ),
    $this->Pedir( "Lote" ),
    $this->Pedir( "Clínica", Clinica ),
+   $this->Pedir( "Fornecedor" ),
    $this->Pedir( "Datas",
       [ "Fabricação ", Fabrica,
       [ brHtml(4) . "Validade ", Validade ] ] );

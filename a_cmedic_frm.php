@@ -8,11 +8,13 @@ echo
    $this->Pedir( "Quantidade<br>Prescrita", Qtd ),
    $this->Pular1Linha(2),
    $this->Cabecalhos( [ "Estoque", 'FormCab alinhaMeio', '2' ] ),
-   
-   $this->Pedir( "Medicamento", Lote_Medicam ),
-   $this->Pedir( "Lote", 
+
+   $this->NaoPedir( Lote_Medicamen, Medicamen ),
+   $this->NaoPedir( Lote_Medicamen_Medicamen, Medicamen_Medicamen ),
+   $this->Pedir( "Lote",
       [ "", Lote_Lote,
       [ "", Lote ] ] ),
+
    $this->Pedir( "Separado em", DataSepara ),
    $this->Pedir( "Quantidades",
       [ "Separado/Entregue", QtdEntreg,

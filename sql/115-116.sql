@@ -97,36 +97,39 @@ commit;
 CREATE TABLE arqLote
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	MEDICAM ligadoComArquivo, /* Ligado com o Arquivo Medicamen */
+	/*  2*/	MEDICAMEN ligadoComArquivo, /* Ligado com o Arquivo Medicamen */
 	/*  3*/	LOTE VARCHAR( 15 ) COLLATE PT_BR, /* Máscara = M */
 	/*  4*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  5*/	FABRICA DATE, /* Máscara = 4ano */
-	/*  6*/	VALIDADE DATE, /* Máscara = 4ano */
-	/*  7*/	TRGITMOV NUMERIC(18,0), /* Máscara = N */
-	/*  8*/	TRGCMEDICA NUMERIC(18,0), /* Máscara = N */
-	/*  9*/	/* ESTOQUE */
-	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	FORNECEDOR ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+	/*  6*/	FABRICA DATE, /* Máscara = 4ano */
+	/*  7*/	VALIDADE DATE, /* Máscara = 4ano */
+	/*  8*/	TRGITMOV NUMERIC(18,0), /* Máscara = N */
+	/*  9*/	TRGCMEDICA NUMERIC(18,0), /* Máscara = N */
+	/* 10*/	/* ESTOQUE */
+	/* 11*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqLote_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqLote_UK UNIQUE ( Medicam, Lote )
+	CONSTRAINT arqLote_UK UNIQUE ( Medicamen, Lote )
 );
+commit;
+
+CREATE DESC INDEX arqLote_IdPrimario_Desc ON arqLote (IDPRIMARIO);
 commit;
 
 ALTER TABLE arqLote ADD ESTOQUE NUMERIC(18,0) computed by ( TrgItMov - TrgCMedica ); 
 ALTER TABLE arqLote ALTER ESTOQUE POSITION 9;
 commit;
 
-CREATE DESC INDEX arqLote_IdPrimario_Desc ON arqLote (IDPRIMARIO);
-commit;
-
-ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Medicam FOREIGN KEY ( MEDICAM ) REFERENCES arqMedicamen ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Medicamen FOREIGN KEY ( MEDICAMEN ) REFERENCES arqMedicamen ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 RECREATE VIEW V_arqLote AS 
-	SELECT A0.IDPRIMARIO, A0.MEDICAM, A1.MEDICAMEN as MEDICAM_MEDICAMEN, A0.LOTE, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.FABRICA, A0.VALIDADE, A0.TRGITMOV, A0.TRGCMEDICA, A0.ESTOQUE, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A1.MEDICAMEN as MEDICAMEN_MEDICAMEN, A0.LOTE, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.FORNECEDOR, A3.NOME as FORNECEDOR_NOME, A0.FABRICA, A0.VALIDADE, A0.TRGITMOV, A0.TRGCMEDICA, A0.ESTOQUE, A0.ATIVO
 	FROM arqLote A0
-	left join arqMedicamen A1 on A1.IDPRIMARIO = A0.MEDICAM
-	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA;
+	left join arqMedicamen A1 on A1.IDPRIMARIO = A0.MEDICAMEN
+	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA
+	left join arqFornecedor A3 on A3.IDPRIMARIO = A0.FORNECEDOR;
 commit;
 
 /************************************************************
@@ -141,7 +144,7 @@ position 999
 as
 	declare variable valorChave varchar(1000);
 begin
-select coalesce( Medicam_Medicamen, ' ' ) || '-' || coalesce( Lote, ' ' ) from v_arqLote where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+select coalesce( Medicamen_Medicamen, ' ' ) || '-' || coalesce( Lote, ' ' ) from v_arqLote where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100055 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
@@ -150,9 +153,10 @@ else
 if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
-	execute procedure set_log( 12, NEW.idPrimario, 'Medicam', OLD.Medicam, NEW.Medicam );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
 	execute procedure set_log( 12, NEW.idPrimario, 'Lote', OLD.Lote, NEW.Lote );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Fornecedor', OLD.Fornecedor, NEW.Fornecedor );
 	execute procedure set_log( 12, NEW.idPrimario, 'Fabrica', OLD.Fabrica, NEW.Fabrica );
 	execute procedure set_log( 12, NEW.idPrimario, 'Validade', OLD.Validade, NEW.Validade );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
@@ -261,7 +265,7 @@ ALTER TABLE arqItemMov ADD QTDCALC NUMERIC(18,0) computed by ( CASE
 	ELSE ( -Qtd )
 	END  ); 
 ALTER TABLE arqItemMov ALTER QTDCALC POSITION 7;
-ALTER TABLE arqItemMov ADD CUNIDADE VARCHAR( 10 ) computed by ( ( COALESCE( ( SELECT Unidade FROM arqUnidade WHERE arqUnidade.IdPrimario=( COALESCE( ( SELECT Unidade FROM arqMedicamen WHERE arqMedicamen.IdPrimario=( COALESCE( ( SELECT Medicam FROM arqLote WHERE arqLote.IdPrimario=( arqItemMov.Lote ) ), 0 ) ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqItemMov ADD CUNIDADE VARCHAR( 10 ) computed by ( ( COALESCE( ( SELECT Unidade FROM arqUnidade WHERE arqUnidade.IdPrimario=( COALESCE( ( SELECT Unidade FROM arqMedicamen WHERE arqMedicamen.IdPrimario=( COALESCE( ( SELECT Medicamen FROM arqLote WHERE arqLote.IdPrimario=( arqItemMov.Lote ) ), 0 ) ) ), 0 ) )  ), '' ) ) ); 
 ALTER TABLE arqItemMov ALTER CUNIDADE POSITION 8;
 commit;
 
@@ -271,11 +275,11 @@ ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_TMov FOREIGN KEY ( TMOV ) RE
 commit;
 
 RECREATE VIEW V_arqItemMov AS 
-	SELECT A0.IDPRIMARIO, A0.MOVESTOQUE, A1.NUM as MOVESTOQUE_NUM, A0.ITEM, A0.LOTE, A2.MEDICAM as LOTE_MEDICAM, A3.MEDICAMEN as LOTE_MEDICAM_MEDICAMEN, A2.LOTE as LOTE_LOTE, A0.TMOV, A4.CHAVE as TMov_CHAVE, A4.DESCRITOR as TMov_DESCRITOR, A0.QTD, A0.QTDCALC, A0.CUNIDADE
+	SELECT A0.IDPRIMARIO, A0.MOVESTOQUE, A1.NUM as MOVESTOQUE_NUM, A0.ITEM, A0.LOTE, A2.MEDICAMEN as LOTE_MEDICAMEN, A3.MEDICAMEN as LOTE_MEDICAMEN_MEDICAMEN, A2.LOTE as LOTE_LOTE, A0.TMOV, A4.CHAVE as TMov_CHAVE, A4.DESCRITOR as TMov_DESCRITOR, A0.QTD, A0.QTDCALC, A0.CUNIDADE
 	FROM arqItemMov A0
 	left join arqMovEstoque A1 on A1.IDPRIMARIO = A0.MOVESTOQUE
 	left join arqLote A2 on A2.IDPRIMARIO = A0.LOTE
-	left join arqMedicamen A3 on A3.IDPRIMARIO = A2.MEDICAM
+	left join arqMedicamen A3 on A3.IDPRIMARIO = A2.MEDICAMEN
 	left join tabTMov A4 on A4.IDPRIMARIO=A0.TMOV;
 commit;
 
@@ -347,12 +351,12 @@ ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Lote FOREIGN KEY ( LOTE ) RE
 commit;
 
 RECREATE VIEW V_arqCMedica AS 
-	SELECT A0.IDPRIMARIO, A0.CONSULTA, A1.NUM as CONSULTA_NUM, A0.MEDICAMEN, A2.MEDICAMEN as MEDICAMEN_MEDICAMEN, A0.UNIDADECAL, A0.QTD, A0.LOTE, A3.MEDICAM as LOTE_MEDICAM, A4.MEDICAMEN as LOTE_MEDICAM_MEDICAMEN, A3.LOTE as LOTE_LOTE, A0.DATASEPARA, A0.QTDENTREG, A0.SALDO, A0.OBSENTREG
+	SELECT A0.IDPRIMARIO, A0.CONSULTA, A1.NUM as CONSULTA_NUM, A0.MEDICAMEN, A2.MEDICAMEN as MEDICAMEN_MEDICAMEN, A0.UNIDADECAL, A0.QTD, A0.LOTE, A3.MEDICAMEN as LOTE_MEDICAMEN, A4.MEDICAMEN as LOTE_MEDICAMEN_MEDICAMEN, A3.LOTE as LOTE_LOTE, A0.DATASEPARA, A0.QTDENTREG, A0.SALDO, A0.OBSENTREG
 	FROM arqCMedica A0
 	left join arqConsulta A1 on A1.IDPRIMARIO = A0.CONSULTA
 	left join arqMedicamen A2 on A2.IDPRIMARIO = A0.MEDICAMEN
 	left join arqLote A3 on A3.IDPRIMARIO = A0.LOTE
-	left join arqMedicamen A4 on A4.IDPRIMARIO = A3.MEDICAM;
+	left join arqMedicamen A4 on A4.IDPRIMARIO = A3.MEDICAMEN;
 commit;
 
 /************************************************************

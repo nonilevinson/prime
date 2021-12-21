@@ -143,27 +143,27 @@ class campo_arqCMedica_Lote extends Lance_CampoLigado
 }
 
 //======================================================
-//	Campo Lote_Medicam
+//	Campo Lote_Medicamen
 //======================================================
 
-class campo_arqCMedica_Lote_Medicam extends Lance_CampoLigado
+class campo_arqCMedica_Lote_Medicamen extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "Lote_Medicam", "Lote_Medicam", "Medicam", EH_CHAVE, "arqMedicamen", "arqMedicamen.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, "Lote", false );
+		parent::__construct( "Lote_Medicamen", "Lote_Medicamen", "Medicamen", EH_CHAVE, "arqMedicamen", "arqMedicamen.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, "Lote", false );
 	}
 
 }
 
 //======================================================
-//	Campo Lote_Medicam_Medicamen
+//	Campo Lote_Medicamen_Medicamen
 //======================================================
 
-class campo_arqCMedica_Lote_Medicam_Medicamen extends Lance_CampoCadeia
+class campo_arqCMedica_Lote_Medicamen_Medicamen extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Lote_Medicam_Medicamen", "Lote_Medicam_Medicamen", "Medicamen", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Lote_Medicam", false );
+		parent::__construct( "Lote_Medicamen_Medicamen", "Lote_Medicamen_Medicamen", "Medicamen", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Lote_Medicamen", false );
 	}
 
 	//--------------------------------------------------
@@ -290,8 +290,8 @@ function listaCampos_arqCMedica( $p_prefixo )
 			new campo_arqCMedica_UnidadeCal(),
 			new campo_arqCMedica_Qtd(),
 			new campo_arqCMedica_Lote(),
-			new campo_arqCMedica_Lote_Medicam(),
-			new campo_arqCMedica_Lote_Medicam_Medicamen(),
+			new campo_arqCMedica_Lote_Medicamen(),
+			new campo_arqCMedica_Lote_Medicamen_Medicamen(),
 			new campo_arqCMedica_Lote_Lote(),
 			new campo_arqCMedica_DataSepara(),
 			new campo_arqCMedica_QtdEntreg(),
@@ -334,7 +334,7 @@ class arqCMedica extends Lance_Arquivo
 			array_push( $vetAux, array( Medicamen_Medicamen ) );
 			array_push( $vetAux, array( UnidadeCal ) );
 			array_push( $vetAux, array( Qtd ) );
-			array_push( $vetAux, array( Lote_Medicam_Medicamen ) );
+			array_push( $vetAux, array( Lote_Medicamen_Medicamen ) );
 			array_push( $vetAux, array( Lote_Lote ) );
 			array_push( $vetAux, array( QtdEntreg ) );
 			array_push( $vetAux, array( Saldo ) );
@@ -360,7 +360,7 @@ class arqCMedica extends Lance_Arquivo
 			array_push( $vetAux, array( Medicamen_Medicamen ) );
 			array_push( $vetAux, array( UnidadeCal ) );
 			array_push( $vetAux, array( Qtd ) );
-			array_push( $vetAux, array( Lote_Medicam_Medicamen ) );
+			array_push( $vetAux, array( Lote_Medicamen_Medicamen ) );
 			array_push( $vetAux, array( Lote_Lote ) );
 			array_push( $vetAux, array( DataSepara ) );
 			array_push( $vetAux, array( QtdEntreg ) );
