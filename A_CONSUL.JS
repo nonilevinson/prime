@@ -574,6 +574,39 @@ function Campo_arqConsulta_ContaPTra_Transacao()
 
 var ContaPTra_Transacao = new Campo_arqConsulta_ContaPTra_Transacao;
 
+//------------------------------------------------------------
+Campo_arqConsulta_TrgQtdM.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_TrgQtdM()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "TrgQtdM", "TrgQtdM", "TrgQtdM", 4, "#.##z", true,"", "");
+}
+
+var TrgQtdM = new Campo_arqConsulta_TrgQtdM;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TrgQtdMEnt.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_TrgQtdMEnt()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "TrgQtdMEnt", "TrgQtdMEnt", "TrgQtdMEnt", 4, "#.##z", true,"", "");
+}
+
+var TrgQtdMEnt = new Campo_arqConsulta_TrgQtdMEnt;
+
+//------------------------------------------------------------
+Campo_arqConsulta_Saldo.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_Saldo()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Saldo", "Saldo", "Saldo", 4, "#.##z", true,"(", "");
+}
+
+var Saldo = new Campo_arqConsulta_Saldo;
+
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -999,7 +1032,7 @@ Campo_arqConsulta_ValPTrata.prototype.TemErro = function()
 		alert( "Valor inválido! Está abaixo da margem de desconto permitida" );
 		return( true );
 	}
-	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1087,7 +1120,7 @@ Campo_arqConsulta_EntraVal.prototype.TemErro = function()
 		alert( "Valor inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1139,7 +1172,7 @@ Campo_arqConsulta_EntraValP.prototype.TemErro = function()
 		alert( "Valor inválido! O total ficará acima do mínimo" );
 		return( true );
 	}
-	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1257,7 +1290,7 @@ Campo_arqConsulta_SaldoVal.prototype.TemErro = function()
 		alert( "Valor inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumericoLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1417,6 +1450,29 @@ Campo_arqConsulta_ContaPTra_Transacao.prototype.ObrigatorioEspecial = function( 
 }
 
 ContaPTra_Transacao.TipoCampo |= CAMPO_CHAVE_PAI;
+TrgQtdM.EhCalculado = true;
+TrgQtdM.EhTotalizado = true;
+TrgQtdMEnt.EhCalculado = true;
+TrgQtdMEnt.EhTotalizado = true;
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_Saldo.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( TrgQtdM - TrgQtdMEnt ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_Saldo.prototype.Cabecalho = function()
+{
+		return( "Saldo<br>Medicamentos" );
+}
+
+Saldo.EhCalculado = true;
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
@@ -1512,6 +1568,8 @@ EntraParc.CalculosDependentes= [ EntraTotP ];
 EntraValP.CalculosDependentes= [ EntraTotP ];
 SaldoParc.CalculosDependentes= [ SaldoTotP ];
 SaldoVal.CalculosDependentes= [ SaldoTotP ];
+TrgQtdM.CalculosDependentes= [ Saldo ];
+TrgQtdMEnt.CalculosDependentes= [ Saldo ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
@@ -1588,7 +1646,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, EntraValP, EntraTotP, BoletoMin, EntraObs, SaldoParc, SaldoVal, SaldoTotP, SaldoFPg, SaldoFPg_FormaPg, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, EntraValP, EntraTotP, BoletoMin, EntraObs, SaldoParc, SaldoVal, SaldoTotP, SaldoFPg, SaldoFPg_FormaPg, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

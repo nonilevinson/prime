@@ -523,3 +523,153 @@ end^
 
 set term ;^
 commit;
+
+/************************************************************
+	Arquivo Consulta  
+************************************************************/
+drop trigger arqConsulta_log;
+drop view v_arqConsulta;
+commit;
+
+ALTER TABLE arqConsulta
+add/* 37*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
+add/* 38*/	TRGQTDMENT NUMERIC(18,0); /* Máscara = N */
+commit;
+
+ALTER TABLE arqConsulta ADD SALDO NUMERIC(18,0) computed by ( TrgQtdM - TrgQtdMEnt ); 
+commit;
+
+update arqConsulta set TrgQtdM=0, TrgQtdMEnt=0;
+commit;
+
+RECREATE VIEW V_arqConsulta AS 
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO
+	FROM arqConsulta A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
+	left join arqTiAgenda A3 on A3.IDPRIMARIO = A0.TIAGENDA
+	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA
+	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MEDICO
+	left join arqUsuario A6 on A6.IDPRIMARIO = A0.ASSESSOR
+	left join arqUsuario A7 on A7.IDPRIMARIO = A0.CALLCENTER
+	left join tabTMotivo A8 on A8.IDPRIMARIO=A0.TMOTIVO
+	left join arqFormaPg A9 on A9.IDPRIMARIO = A0.FORMAPG
+	left join arqPTrata A10 on A10.IDPRIMARIO = A0.PTRATA
+	left join arqFormaPg A11 on A11.IDPRIMARIO = A0.ENTRAFPG
+	left join arqFormaPg A12 on A12.IDPRIMARIO = A0.SALDOFPG
+	left join arqConta A13 on A13.IDPRIMARIO = A0.CONTACONS
+	left join arqConta A14 on A14.IDPRIMARIO = A0.CONTAPTRA;
+commit;
+
+/************************************************************
+	Trigger para Log de arqConsulta
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConsulta_LOG for arqConsulta
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Num,'' );
+else
+	valorChave = coalesce( NEW.Num,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100039 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TStCon', OLD.TStCon, NEW.TStCon );
+	execute procedure set_log( 12, NEW.idPrimario, 'TiAgenda', OLD.TiAgenda, NEW.TiAgenda );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraChega', OLD.HoraChega, NEW.HoraChega );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'CallCenter', OLD.CallCenter, NEW.CallCenter );
+	execute procedure set_log( 12, NEW.idPrimario, 'MedicaAtua', substring( OLD.MedicaAtua from 1 for 255 ), substring( NEW.MedicaAtua from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'TMotivo', OLD.TMotivo, NEW.TMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'PTrata', OLD.PTrata, NEW.PTrata );
+	execute procedure set_log( 12, NEW.idPrimario, 'ValPTrata', OLD.ValPTrata, NEW.ValPTrata );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraFPg', OLD.EntraFPg, NEW.EntraFPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraVal', OLD.EntraVal, NEW.EntraVal );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraParc', OLD.EntraParc, NEW.EntraParc );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraValP', OLD.EntraValP, NEW.EntraValP );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraObs', OLD.EntraObs, NEW.EntraObs );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoParc', OLD.SaldoParc, NEW.SaldoParc );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoVal', OLD.SaldoVal, NEW.SaldoVal );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoTotP', OLD.SaldoTotP, NEW.SaldoTotP );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoFPg', OLD.SaldoFPg, NEW.SaldoFPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoObs', OLD.SaldoObs, NEW.SaldoObs );
+	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'ContaCons', OLD.ContaCons, NEW.ContaCons );
+	execute procedure set_log( 12, NEW.idPrimario, 'ContaPTra', OLD.ContaPTra, NEW.ContaPTra );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.BoletoMin is distinct from OLD.BoletoMin )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para arqCMedica: Total - atua em arqConsulta.TrgQtdM
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConsulta_TrgQtdM for arqCMedica
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqConsulta set arqConsulta.TrgQtdM = arqConsulta.TrgQtdM + 
+NEW.Qtd where arqConsulta.IDPRIMARIO = NEW.Consulta;
+end
+if( updating or deleting ) then begin
+update arqConsulta set arqConsulta.TrgQtdM = arqConsulta.TrgQtdM - 
+OLD.Qtd where arqConsulta.IDPRIMARIO = OLD.Consulta;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqCMedica: Total - atua em arqConsulta.TrgQtdMEnt
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConsulta_TrgQtdMEnt for arqCMedica
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqConsulta set arqConsulta.TrgQtdMEnt = arqConsulta.TrgQtdMEnt + 
+NEW.QtdEntreg where arqConsulta.IDPRIMARIO = NEW.Consulta;
+end
+if( updating or deleting ) then begin
+update arqConsulta set arqConsulta.TrgQtdMEnt = arqConsulta.TrgQtdMEnt - 
+OLD.QtdEntreg where arqConsulta.IDPRIMARIO = OLD.Consulta;
+end
+end^
+
+set term ;^
+commit;

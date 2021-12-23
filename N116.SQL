@@ -2143,6 +2143,9 @@ CREATE TABLE arqConsulta
 	/* 34*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	/* 35*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
 	/* 36*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 37*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
+	/* 38*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
+	/* 39*/	/* SALDO */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2939,6 +2942,8 @@ ALTER TABLE arqItemMov ADD CUNIDADE VARCHAR( 10 ) computed by ( ( COALESCE( ( SE
 ALTER TABLE arqItemMov ALTER CUNIDADE POSITION 8;
 ALTER TABLE arqCMedica ADD SALDO NUMERIC(18,0) computed by ( Qtd - QtdEntreg ); 
 ALTER TABLE arqCMedica ALTER SALDO POSITION 9;
+ALTER TABLE arqConsulta ADD SALDO NUMERIC(18,0) computed by ( TrgQtdM - TrgQtdMEnt ); 
+ALTER TABLE arqConsulta ALTER SALDO POSITION 39;
 commit;
 
 
@@ -3184,7 +3189,7 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
@@ -5605,6 +5610,54 @@ end
 if( updating or deleting ) then begin
 update arqLote set arqLote.TrgCMedica = arqLote.TrgCMedica - 
 OLD.QtdEntreg where arqLote.IDPRIMARIO = OLD.Lote;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqCMedica: Total - atua em arqConsulta.TrgQtdM
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConsulta_TrgQtdM for arqCMedica
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqConsulta set arqConsulta.TrgQtdM = arqConsulta.TrgQtdM + 
+NEW.Qtd where arqConsulta.IDPRIMARIO = NEW.Consulta;
+end
+if( updating or deleting ) then begin
+update arqConsulta set arqConsulta.TrgQtdM = arqConsulta.TrgQtdM - 
+OLD.Qtd where arqConsulta.IDPRIMARIO = OLD.Consulta;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqCMedica: Total - atua em arqConsulta.TrgQtdMEnt
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConsulta_TrgQtdMEnt for arqCMedica
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqConsulta set arqConsulta.TrgQtdMEnt = arqConsulta.TrgQtdMEnt + 
+NEW.QtdEntreg where arqConsulta.IDPRIMARIO = NEW.Consulta;
+end
+if( updating or deleting ) then begin
+update arqConsulta set arqConsulta.TrgQtdMEnt = arqConsulta.TrgQtdMEnt - 
+OLD.QtdEntreg where arqConsulta.IDPRIMARIO = OLD.Consulta;
 end
 end^
 

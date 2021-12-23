@@ -863,6 +863,65 @@ class campo_arqConsulta_ContaPTra_Transacao extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo TrgQtdM
+//======================================================
+
+class campo_arqConsulta_TrgQtdM extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "TrgQtdM", "TrgQtdM", "TrgQtdM", 4, "#.##z", "", "", EH_TOTALIZADO, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo TrgQtdMEnt
+//======================================================
+
+class campo_arqConsulta_TrgQtdMEnt extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "TrgQtdMEnt", "TrgQtdMEnt", "TrgQtdMEnt", 4, "#.##z", "", "", EH_TOTALIZADO, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Saldo
+//======================================================
+
+class campo_arqConsulta_Saldo extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Saldo", "Saldo", "Saldo", 4, "#.##z", "(", "", EH_CALCULADO, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->SALDO < 0 )
+			return( "VermelhoFundoCentro" );
+		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->SALDO == 0 )
+			return( "AzulFundoDir" );
+		if( $g_regAtual->SALDO > 0 )
+			return( "CinzaArdosiaDir" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Saldo<br>Medicamentos" );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqConsulta
 //======================================================
 function listaCampos_arqConsulta( $p_prefixo )
@@ -924,7 +983,10 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_ContaCons(),
 			new campo_arqConsulta_ContaCons_Transacao(),
 			new campo_arqConsulta_ContaPTra(),
-			new campo_arqConsulta_ContaPTra_Transacao() )
+			new campo_arqConsulta_ContaPTra_Transacao(),
+			new campo_arqConsulta_TrgQtdM(),
+			new campo_arqConsulta_TrgQtdMEnt(),
+			new campo_arqConsulta_Saldo() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -975,6 +1037,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( FormaPg_FormaPg ) );
 			array_push( $vetAux, array( Valor ) );
 			array_push( $vetAux, array( ValPTrata ) );
+			array_push( $vetAux, array( Saldo ) );
 		return( $vetAux );
 	}
 
@@ -1029,6 +1092,9 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( Obs ) );
 			array_push( $vetAux, array( ContaCons_Transacao ) );
 			array_push( $vetAux, array( ContaPTra_Transacao ) );
+			array_push( $vetAux, array( TrgQtdM ) );
+			array_push( $vetAux, array( TrgQtdMEnt ) );
+			array_push( $vetAux, array( Saldo ) );
 		return( $vetAux );
 	}
 
