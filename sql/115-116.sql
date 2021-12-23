@@ -428,7 +428,6 @@ commit;
 update arqMedicamen set TrgItLote=0, TrgCMLote=0;
 commit;
 
-
 RECREATE VIEW V_arqMedicamen AS 
 	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.TRGITLOTE, A0.TRGCMLOTE, A0.ESTOQUE, A0.ATIVO
 	FROM arqMedicamen A0
@@ -501,7 +500,6 @@ end^
 
 set term ;^
 commit;
-
 
 /************************************************************
 	Trigger para arqLote: Total - atua em arqMedicamen.TrgCMLote
