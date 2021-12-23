@@ -2053,7 +2053,10 @@ CREATE TABLE arqMedicamen
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	MEDICAMEN VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	UNIDADE ligadoComArquivo, /* Ligado com o Arquivo Unidade */
-	/*  4*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	TRGITLOTE NUMERIC(18,0), /* Máscara = N */
+	/*  5*/	TRGCMLOTE NUMERIC(18,0), /* Máscara = N */
+	/*  6*/	/* ESTOQUE */
+	/*  7*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqMedicamen_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqMedicamen_UK UNIQUE ( Medicamen )
 );
@@ -2905,6 +2908,8 @@ ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
 	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqRecorrente.Fornecedor )  ), '' ) ) )
 	END  ); 
 ALTER TABLE arqRecorrente ALTER NOME POSITION 5;
+ALTER TABLE arqMedicamen ADD ESTOQUE NUMERIC(18,0) computed by ( TrgItLote - TrgCMLote ); 
+ALTER TABLE arqMedicamen ALTER ESTOQUE POSITION 6;
 ALTER TABLE arqAgRet ADD DIA VARCHAR( 15 ) computed by ( CASE
 	WHEN( extract( weekday from Data ) = 0 ) THEN( 'DOMINGO' )
 	WHEN( extract( weekday from Data ) = 1 ) THEN( 'SEGUNDA-FEIRA' )
@@ -3263,7 +3268,7 @@ RECREATE VIEW V_arqUnidade AS
 commit;
 
 RECREATE VIEW V_arqMedicamen AS 
-	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.TRGITLOTE, A0.TRGCMLOTE, A0.ESTOQUE, A0.ATIVO
 	FROM arqMedicamen A0
 	left join arqUnidade A1 on A1.IDPRIMARIO = A0.UNIDADE;
 commit;
@@ -5504,6 +5509,54 @@ if( updating or deleting ) then begin
 update arqComCall set arqComCall.TrgQtoFx = arqComCall.TrgQtoFx - 
 1
  where arqComCall.IDPRIMARIO = OLD.ComCall;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqLote: Total - atua em arqMedicamen.TrgItLote
+************************************************************/
+
+set term ^;
+
+recreate trigger arqMedicamen_TrgItLote for arqLote
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqMedicamen set arqMedicamen.TrgItLote = arqMedicamen.TrgItLote + 
+NEW.TrgItMov where arqMedicamen.IDPRIMARIO = NEW.Medicamen;
+end
+if( updating or deleting ) then begin
+update arqMedicamen set arqMedicamen.TrgItLote = arqMedicamen.TrgItLote - 
+OLD.TrgItMov where arqMedicamen.IDPRIMARIO = OLD.Medicamen;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqLote: Total - atua em arqMedicamen.TrgCMLote
+************************************************************/
+
+set term ^;
+
+recreate trigger arqMedicamen_TrgCMLote for arqLote
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqMedicamen set arqMedicamen.TrgCMLote = arqMedicamen.TrgCMLote + 
+NEW.TrgCMedica where arqMedicamen.IDPRIMARIO = NEW.Medicamen;
+end
+if( updating or deleting ) then begin
+update arqMedicamen set arqMedicamen.TrgCMLote = arqMedicamen.TrgCMLote - 
+OLD.TrgCMedica where arqMedicamen.IDPRIMARIO = OLD.Medicamen;
 end
 end^
 

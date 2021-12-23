@@ -16,53 +16,13 @@ insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de 
 commit;
 
 /************************************************************
-	Arquivo Medicamen 
+	Arquivo Medicamen
 ************************************************************/
 drop trigger arqMedicamen_log;
 drop view v_arqMedicamen;
 commit;
 
 ALTER TABLE arqMedicamen drop EstoqueMin, drop EstoqueMax;
-commit;
-
-RECREATE VIEW V_arqMedicamen AS 
-	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.ATIVO
-	FROM arqMedicamen A0
-	left join arqUnidade A1 on A1.IDPRIMARIO = A0.UNIDADE;
-commit;
-
-/************************************************************
-	Trigger para Log de arqMedicamen
-************************************************************/
-
-set term ^;
-
-recreate trigger arqMedicamen_LOG for arqMedicamen
-active after Insert or Delete or Update
-position 999
-as
-	declare variable valorChave varchar(1000);
-begin
-if( deleting ) then
-	valorChave = coalesce( OLD.Medicamen,'' );
-else
-	valorChave = coalesce( NEW.Medicamen,'' );
-rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100052 );
-rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
-if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
-else
-if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
-else begin
-	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
-	execute procedure set_log( 12, NEW.idPrimario, 'Unidade', OLD.Unidade, NEW.Unidade );
-	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
-end
-end^
-
-set term ;^
-
 commit;
 
 /************************************************************
@@ -91,7 +51,7 @@ INSERT INTO tabTMov VALUES ( 7, '7', 'Saída diversa' );
 commit;
 
 /************************************************************
-	Arquivo Lote      
+	Arquivo Lote
 ************************************************************/
 
 CREATE TABLE arqLote
@@ -115,7 +75,7 @@ commit;
 CREATE DESC INDEX arqLote_IdPrimario_Desc ON arqLote (IDPRIMARIO);
 commit;
 
-ALTER TABLE arqLote ADD ESTOQUE NUMERIC(18,0) computed by ( TrgItMov - TrgCMedica ); 
+ALTER TABLE arqLote ADD ESTOQUE NUMERIC(18,0) computed by ( TrgItMov - TrgCMedica );
 ALTER TABLE arqLote ALTER ESTOQUE POSITION 9;
 commit;
 
@@ -124,7 +84,7 @@ ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Clinica FOREIGN KEY ( CLINICA ) RE
 ALTER TABLE arqLote ADD CONSTRAINT arqLote_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
-RECREATE VIEW V_arqLote AS 
+RECREATE VIEW V_arqLote AS
 	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A1.MEDICAMEN as MEDICAMEN_MEDICAMEN, A0.LOTE, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.FORNECEDOR, A3.NOME as FORNECEDOR_NOME, A0.FABRICA, A0.VALIDADE, A0.TRGITMOV, A0.TRGCMEDICA, A0.ESTOQUE, A0.ATIVO
 	FROM arqLote A0
 	left join arqMedicamen A1 on A1.IDPRIMARIO = A0.MEDICAMEN
@@ -148,10 +108,10 @@ select coalesce( Medicamen_Medicamen, ' ' ) || '-' || coalesce( Lote, ' ' ) from
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100055 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
 	execute procedure set_log( 12, NEW.idPrimario, 'Lote', OLD.Lote, NEW.Lote );
@@ -193,7 +153,7 @@ ALTER TABLE arqMovEstoque ADD CONSTRAINT arqMovEstoque_FK_Clinica FOREIGN KEY ( 
 ALTER TABLE arqMovEstoque ADD CONSTRAINT arqMovEstoque_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
-RECREATE VIEW V_arqMovEstoque AS 
+RECREATE VIEW V_arqMovEstoque AS
 	SELECT A0.IDPRIMARIO, A0.NUM, A0.DATA, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.FORNECEDOR, A2.NOME as FORNECEDOR_NOME, A0.NUMDOC, A0.OBS, A0.FECHADO
 	FROM arqMovEstoque A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
@@ -219,10 +179,10 @@ else
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100056 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Num', OLD.Num, NEW.Num );
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
@@ -239,7 +199,7 @@ set term ;^
 commit;
 
 /************************************************************
-	Arquivo ItemMov   
+	Arquivo ItemMov
 ************************************************************/
 
 CREATE TABLE arqItemMov
@@ -263,9 +223,9 @@ commit;
 ALTER TABLE arqItemMov ADD QTDCALC NUMERIC(18,0) computed by ( CASE
 	WHEN( TMov in( 2 ) ) THEN( Qtd )
 	ELSE ( -Qtd )
-	END  ); 
+	END  );
 ALTER TABLE arqItemMov ALTER QTDCALC POSITION 7;
-ALTER TABLE arqItemMov ADD CUNIDADE VARCHAR( 10 ) computed by ( ( COALESCE( ( SELECT Unidade FROM arqUnidade WHERE arqUnidade.IdPrimario=( COALESCE( ( SELECT Unidade FROM arqMedicamen WHERE arqMedicamen.IdPrimario=( COALESCE( ( SELECT Medicamen FROM arqLote WHERE arqLote.IdPrimario=( arqItemMov.Lote ) ), 0 ) ) ), 0 ) )  ), '' ) ) ); 
+ALTER TABLE arqItemMov ADD CUNIDADE VARCHAR( 10 ) computed by ( ( COALESCE( ( SELECT Unidade FROM arqUnidade WHERE arqUnidade.IdPrimario=( COALESCE( ( SELECT Unidade FROM arqMedicamen WHERE arqMedicamen.IdPrimario=( COALESCE( ( SELECT Medicamen FROM arqLote WHERE arqLote.IdPrimario=( arqItemMov.Lote ) ), 0 ) ) ), 0 ) )  ), '' ) ) );
 ALTER TABLE arqItemMov ALTER CUNIDADE POSITION 8;
 commit;
 
@@ -274,7 +234,7 @@ ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_Lote FOREIGN KEY ( LOTE ) RE
 ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_TMov FOREIGN KEY ( TMOV ) REFERENCES tabTMov ON DELETE SET NULL ON UPDATE CASCADE;
 commit;
 
-RECREATE VIEW V_arqItemMov AS 
+RECREATE VIEW V_arqItemMov AS
 	SELECT A0.IDPRIMARIO, A0.MOVESTOQUE, A1.NUM as MOVESTOQUE_NUM, A0.ITEM, A0.LOTE, A2.MEDICAMEN as LOTE_MEDICAMEN, A3.MEDICAMEN as LOTE_MEDICAMEN_MEDICAMEN, A2.LOTE as LOTE_LOTE, A0.TMOV, A4.CHAVE as TMov_CHAVE, A4.DESCRITOR as TMov_DESCRITOR, A0.QTD, A0.QTDCALC, A0.CUNIDADE
 	FROM arqItemMov A0
 	left join arqMovEstoque A1 on A1.IDPRIMARIO = A0.MOVESTOQUE
@@ -299,10 +259,10 @@ select coalesce( MovEstoque_Num, ' ' ) || '-' || coalesce( Item, ' ' ) from v_ar
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100057 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'MovEstoque', OLD.MovEstoque, NEW.MovEstoque );
 	execute procedure set_log( 12, NEW.idPrimario, 'Item', OLD.Item, NEW.Item );
@@ -317,7 +277,7 @@ set term ;^
 commit;
 
 /************************************************************
-	Arquivo CMedica   
+	Arquivo CMedica
 ************************************************************/
 
 CREATE TABLE arqCMedica
@@ -339,9 +299,9 @@ commit;
 CREATE DESC INDEX arqCMedica_IdPrimario_Desc ON arqCMedica (IDPRIMARIO);
 commit;
 
-ALTER TABLE arqCMedica ADD UNIDADECAL VARCHAR( 10 ) computed by ( (Select U.Unidade From arqMedicamen M join arqUnidade U on U.idPrimario=M.Unidade Where M.idPrimario=arqCMedica.Medicamen) ); 
+ALTER TABLE arqCMedica ADD UNIDADECAL VARCHAR( 10 ) computed by ( (Select U.Unidade From arqMedicamen M join arqUnidade U on U.idPrimario=M.Unidade Where M.idPrimario=arqCMedica.Medicamen) );
 ALTER TABLE arqCMedica ALTER UNIDADECAL POSITION 4;
-ALTER TABLE arqCMedica ADD SALDO NUMERIC(18,0) computed by ( Qtd - QtdEntreg ); 
+ALTER TABLE arqCMedica ADD SALDO NUMERIC(18,0) computed by ( Qtd - QtdEntreg );
 ALTER TABLE arqCMedica ALTER SALDO POSITION 9;
 commit;
 
@@ -350,7 +310,7 @@ ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Medicamen FOREIGN KEY ( MEDI
 ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Lote FOREIGN KEY ( LOTE ) REFERENCES arqLote ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
-RECREATE VIEW V_arqCMedica AS 
+RECREATE VIEW V_arqCMedica AS
 	SELECT A0.IDPRIMARIO, A0.CONSULTA, A1.NUM as CONSULTA_NUM, A0.MEDICAMEN, A2.MEDICAMEN as MEDICAMEN_MEDICAMEN, A0.UNIDADECAL, A0.QTD, A0.LOTE, A3.MEDICAMEN as LOTE_MEDICAMEN, A4.MEDICAMEN as LOTE_MEDICAMEN_MEDICAMEN, A3.LOTE as LOTE_LOTE, A0.DATASEPARA, A0.QTDENTREG, A0.SALDO, A0.OBSENTREG
 	FROM arqCMedica A0
 	left join arqConsulta A1 on A1.IDPRIMARIO = A0.CONSULTA
@@ -375,10 +335,10 @@ select coalesce( Consulta_Num, ' ' ) || '-' || coalesce( Medicamen_Medicamen, ' 
 rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100054 );
 rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
 if( inserting ) then
-	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null );
 else
 if( deleting ) then
-	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null );
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Consulta', OLD.Consulta, NEW.Consulta );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
@@ -405,11 +365,11 @@ active after Insert or Update or Delete
 as
 begin
 if( updating or inserting ) then begin
-update arqLote set arqLote.TrgItMov = arqLote.TrgItMov + 
+update arqLote set arqLote.TrgItMov = arqLote.TrgItMov +
 NEW.QtdCalc where arqLote.IDPRIMARIO = NEW.Lote;
 end
 if( updating or deleting ) then begin
-update arqLote set arqLote.TrgItMov = arqLote.TrgItMov - 
+update arqLote set arqLote.TrgItMov = arqLote.TrgItMov -
 OLD.QtdCalc where arqLote.IDPRIMARIO = OLD.Lote;
 end
 end^
@@ -428,11 +388,11 @@ active after Insert or Update or Delete
 as
 begin
 if( updating or inserting ) then begin
-update arqLote set arqLote.TrgCMedica = arqLote.TrgCMedica + 
+update arqLote set arqLote.TrgCMedica = arqLote.TrgCMedica +
 NEW.QtdEntreg where arqLote.IDPRIMARIO = NEW.Lote;
 end
 if( updating or deleting ) then begin
-update arqLote set arqLote.TrgCMedica = arqLote.TrgCMedica - 
+update arqLote set arqLote.TrgCMedica = arqLote.TrgCMedica -
 OLD.QtdEntreg where arqLote.IDPRIMARIO = OLD.Lote;
 end
 end^
@@ -452,4 +412,116 @@ begin
 end ^^
 SET TERM ; ^^
 
+commit;
+
+/************************************************************
+	Arquivo Medicamen
+************************************************************/
+ALTER TABLE arqMedicamen
+add /*  4*/	TRGITLOTE NUMERIC(18,0), /* Máscara = N */
+add /*  5*/	TRGCMLOTE NUMERIC(18,0); /* Máscara = N */
+commit;
+
+ALTER TABLE arqMedicamen ADD ESTOQUE NUMERIC(18,0) computed by ( TrgItLote - TrgCMLote );
+commit;
+
+update arqMedicamen set TrgItLote=0, TrgCMLote=0;
+commit;
+
+
+RECREATE VIEW V_arqMedicamen AS 
+	SELECT A0.IDPRIMARIO, A0.MEDICAMEN, A0.UNIDADE, A1.UNIDADE as UNIDADE_UNIDADE, A0.TRGITLOTE, A0.TRGCMLOTE, A0.ESTOQUE, A0.ATIVO
+	FROM arqMedicamen A0
+	left join arqUnidade A1 on A1.IDPRIMARIO = A0.UNIDADE;
+commit;
+
+/************************************************************
+	Trigger para Log de arqMedicamen
+************************************************************/
+
+set term ^;
+
+recreate trigger arqMedicamen_LOG for arqMedicamen
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Medicamen,'' );
+else
+	valorChave = coalesce( NEW.Medicamen,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100052 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Medicamen', OLD.Medicamen, NEW.Medicamen );
+	execute procedure set_log( 12, NEW.idPrimario, 'Unidade', OLD.Unidade, NEW.Unidade );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqMedicamen
+alter IDPRIMARIO position 1,
+alter MEDICAMEN position 2,
+alter UNIDADE position 3,
+alter TRGITLOTE position 4,
+alter TRGCMLOTE position 5,
+alter ESTOQUE position 6,
+alter ATIVO position 7;
+commit;
+
+/************************************************************
+	Trigger para arqLote: Total - atua em arqMedicamen.TrgItLote
+************************************************************/
+
+set term ^;
+
+recreate trigger arqMedicamen_TrgItLote for arqLote
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqMedicamen set arqMedicamen.TrgItLote = arqMedicamen.TrgItLote + 
+NEW.TrgItMov where arqMedicamen.IDPRIMARIO = NEW.Medicamen;
+end
+if( updating or deleting ) then begin
+update arqMedicamen set arqMedicamen.TrgItLote = arqMedicamen.TrgItLote - 
+OLD.TrgItMov where arqMedicamen.IDPRIMARIO = OLD.Medicamen;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqLote: Total - atua em arqMedicamen.TrgCMLote
+************************************************************/
+
+set term ^;
+
+recreate trigger arqMedicamen_TrgCMLote for arqLote
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqMedicamen set arqMedicamen.TrgCMLote = arqMedicamen.TrgCMLote + 
+NEW.TrgCMedica where arqMedicamen.IDPRIMARIO = NEW.Medicamen;
+end
+if( updating or deleting ) then begin
+update arqMedicamen set arqMedicamen.TrgCMLote = arqMedicamen.TrgCMLote - 
+OLD.TrgCMedica where arqMedicamen.IDPRIMARIO = OLD.Medicamen;
+end
+end^
+
+set term ;^
 commit;

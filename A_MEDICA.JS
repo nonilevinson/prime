@@ -36,6 +36,39 @@ function Campo_arqMedicamen_Unidade_Unidade()
 var Unidade_Unidade = new Campo_arqMedicamen_Unidade_Unidade;
 
 //------------------------------------------------------------
+Campo_arqMedicamen_TrgItLote.prototype = new Lance_CampoNumerico;
+
+function Campo_arqMedicamen_TrgItLote()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "TrgItLote", "TrgItLote", "TrgItLote", 6, "###.##z", true,"", "");
+}
+
+var TrgItLote = new Campo_arqMedicamen_TrgItLote;
+
+//------------------------------------------------------------
+Campo_arqMedicamen_TrgCMLote.prototype = new Lance_CampoNumerico;
+
+function Campo_arqMedicamen_TrgCMLote()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "TrgCMLote", "TrgCMLote", "TrgCMLote", 6, "###.##z", true,"", "");
+}
+
+var TrgCMLote = new Campo_arqMedicamen_TrgCMLote;
+
+//------------------------------------------------------------
+Campo_arqMedicamen_Estoque.prototype = new Lance_CampoNumerico;
+
+function Campo_arqMedicamen_Estoque()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Estoque", "Estoque", "Estoque", 6, "###.##z", true,"(", "");
+}
+
+var Estoque = new Campo_arqMedicamen_Estoque;
+
+//------------------------------------------------------------
 Campo_arqMedicamen_Ativo.prototype = new Lance_CampoLogico;
 
 function Campo_arqMedicamen_Ativo()
@@ -85,6 +118,21 @@ Campo_arqMedicamen_Unidade_Unidade.prototype.ObrigatorioEspecial = function( p_c
 }
 
 Unidade_Unidade.TipoCampo |= CAMPO_CHAVE_PAI;
+TrgItLote.EhCalculado = true;
+TrgItLote.EhTotalizado = true;
+TrgCMLote.EhCalculado = true;
+TrgCMLote.EhTotalizado = true;
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqMedicamen_Estoque.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( TrgItLote - TrgCMLote ) );
+}
+}
+
+Estoque.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -113,6 +161,8 @@ Campo_arqMedicamen_Unidade.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_arqMedicamen()
 {
+TrgItLote.CalculosDependentes= [ Estoque ];
+TrgCMLote.CalculosDependentes= [ Estoque ];
 Unidade_Unidade.ExistenciasDependentes= [ Unidade ];
 Unidade_Unidade.ErrosDependentes= [ Unidade ];
 Unidade.CamposChave= [ Unidade_Unidade ];
@@ -133,7 +183,7 @@ function ListaDeCampos_arqMedicamen( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Medicamen, Unidade, Unidade_Unidade, Ativo ]	);
+		[ Medicamen, Unidade, Unidade_Unidade, TrgItLote, TrgCMLote, Estoque, Ativo ]	);
 	IniciarDependencias_arqMedicamen();
 	g_prefixo = l_prefixo;
 	return( l_lista );

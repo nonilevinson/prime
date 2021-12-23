@@ -58,6 +58,52 @@ class campo_arqMedicamen_Unidade_Unidade extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo TrgItLote
+//======================================================
+
+class campo_arqMedicamen_TrgItLote extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "TrgItLote", "TrgItLote", "TrgItLote", 6, "###.##z", "", "", EH_TOTALIZADO, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo TrgCMLote
+//======================================================
+
+class campo_arqMedicamen_TrgCMLote extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "TrgCMLote", "TrgCMLote", "TrgCMLote", 6, "###.##z", "", "", EH_TOTALIZADO, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Estoque
+//======================================================
+
+class campo_arqMedicamen_Estoque extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Estoque", "Estoque", "Estoque", 6, "###.##z", "(", "", EH_CALCULADO, 0, false );
+	}
+
+	//--------------------------------------------------
+	function PodeTotalizar()
+	{
+		global $g_regAtual;
+		return( (true) );
+	}
+
+}
+
+//======================================================
 //	Campo Ativo
 //======================================================
 
@@ -100,6 +146,9 @@ function listaCampos_arqMedicamen( $p_prefixo )
 			new campo_arqMedicamen_Medicamen(),
 			new campo_arqMedicamen_Unidade(),
 			new campo_arqMedicamen_Unidade_Unidade(),
+			new campo_arqMedicamen_TrgItLote(),
+			new campo_arqMedicamen_TrgCMLote(),
+			new campo_arqMedicamen_Estoque(),
 			new campo_arqMedicamen_Ativo() )
 	);
 	$g_prefixo = $prefixoAnt;
@@ -136,6 +185,7 @@ class arqMedicamen extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Medicamen ) );
 			array_push( $vetAux, array( Unidade_Unidade ) );
+			array_push( $vetAux, array( Estoque ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
@@ -157,6 +207,9 @@ class arqMedicamen extends Lance_Arquivo
 		$vetAux = array();
 			array_push( $vetAux, array( Medicamen ) );
 			array_push( $vetAux, array( Unidade_Unidade ) );
+			array_push( $vetAux, array( TrgItLote ) );
+			array_push( $vetAux, array( TrgCMLote ) );
+			array_push( $vetAux, array( Estoque ) );
 			array_push( $vetAux, array( Ativo ) );
 		return( $vetAux );
 	}
