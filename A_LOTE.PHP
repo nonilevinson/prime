@@ -151,7 +151,7 @@ class campo_arqLote_Validade extends Lance_CampoData
 	function Estilo()
 	{
 		global $g_regAtual;
-		if( quantosDias( formatarData( $g_regAtual->VALIDADE ), HOJE ) < 0 )
+		if( $g_regAtual->ESTOQUE > 0 && quantosDias( formatarData( $g_regAtual->VALIDADE ), HOJE ) < 0 )
 			return( "DataAtrasada" );
 		if( formatarData( $g_regAtual->VALIDADE ) == HOJE )
 			return( "DataHoje" );

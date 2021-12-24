@@ -3464,6 +3464,7 @@ insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de
 insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de estoque','',221,2,0,'');
 insert into arqLanceOperacao values(200223,2,'Relatório de medicação prescrita','',223,50,0,'');
 insert into arqLanceOperacao values(200225,2,'Relatório de posição de estoque','',225,50,0,'');
+insert into arqLanceOperacao values(200226,2,'Relatório de lotes por validade','',226,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');

@@ -865,6 +865,65 @@ class campo_parQSelecao_Medicamen_Medicamen extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Lote
+//======================================================
+
+class campo_parQSelecao_Lote extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Lote", "Lote", "Lote", 0, "arqLote", "arqLote.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Lote_Medicamen
+//======================================================
+
+class campo_parQSelecao_Lote_Medicamen extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Lote_Medicamen", "Lote_Medicamen", "Medicamen", EH_CHAVE, "arqMedicamen", "arqMedicamen.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, "Lote", false );
+	}
+
+}
+
+//======================================================
+//	Campo Lote_Medicamen_Medicamen
+//======================================================
+
+class campo_parQSelecao_Lote_Medicamen_Medicamen extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Lote_Medicamen_Medicamen", "Lote_Medicamen_Medicamen", "Medicamen", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Lote_Medicamen", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Medicamento" );
+	}
+
+}
+
+//======================================================
+//	Campo Lote_Lote
+//======================================================
+
+class campo_parQSelecao_Lote_Lote extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Lote_Lote", "Lote_Lote", "Lote", 15, "xxxxxxxxxxxxxxx", EH_CHAVE, "Lote", false );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQSelecao
 //======================================================
 function listaCampos_parQSelecao( $p_prefixo )
@@ -951,7 +1010,11 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new Lance_CampoCadeia( "TStAgRet_Chave", "TStAgRet_Chave", "Chave", 1, "x", EH_CHAVE, TStAgRet ),
 			new Lance_CampoCadeia( "TStAgRet_Descritor", "TStAgRet_Descritor", "Descritor", 11, "xxxxxxxxxxx", EH_DESCRITOR, TStAgRet ),
 			new campo_parQSelecao_Medicamen(),
-			new campo_parQSelecao_Medicamen_Medicamen() )
+			new campo_parQSelecao_Medicamen_Medicamen(),
+			new campo_parQSelecao_Lote(),
+			new campo_parQSelecao_Lote_Medicamen(),
+			new campo_parQSelecao_Lote_Medicamen_Medicamen(),
+			new campo_parQSelecao_Lote_Lote() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

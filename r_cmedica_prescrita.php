@@ -14,11 +14,11 @@ class RelParcela extends Relatorios
 			' ' ];
 
       $this->DefinirCabColunas(
-         [ "Medicamento",        60, ALINHA_ESQ ],
+         [ "Medicamento",      60, ALINHA_ESQ ],
          [ "Qtd\nPrescrita",   20, ALINHA_DIR ],
-         [ "Unidade",            20, ALINHA_ESQ ],
+         [ "Unidade",          20, ALINHA_ESQ ],
          [ "Qtd\nSeparada",    20, ALINHA_DIR ],
-         [ "Qtd\nSaldo",	      20, ALINHA_DIR ] );
+         [ "Qtd\nSaldo",	    20, ALINHA_DIR ] );
 
       $this->DefinirQuebras(
          [ 'QuebraPorClinica',  SIM, NAO, SIM ],
@@ -37,7 +37,7 @@ class RelParcela extends Relatorios
 			$this->DefinirTotais( "totQ" . $umaMedicamen->MEDICAMEN );
 			$this->DefinirTotais( "totE" . $umaMedicamen->MEDICAMEN );
       }
-      
+
 		$this->cabPaginaTemCabColunas = false;
 		$this->DefinirAlturas();
       $this->alturaCabColunas	= 9;
@@ -45,11 +45,11 @@ class RelParcela extends Relatorios
 
 	//------------------------------------------------------------------------
 	function PeQuebra( $p_cabTotal, $p_totalizacao=false )
-	{     
+	{
       if( $p_totalizacao )
       {
          $this->ImprimirTotalEmUmaColuna( "Totalização de " . $p_cabTotal );
-         
+
          foreach( $this->regMedicam as $umaMedicamen )
          {
             if( $this->ValorTotal( "totQ" . $umaMedicamen->MEDICAMEN ) > 0 )
@@ -57,7 +57,7 @@ class RelParcela extends Relatorios
                $totQ = $this->ValorTotal( "totQ" . $umaMedicamen->MEDICAMEN );
                $totE = $this->ValorTotal( "totE" . $umaMedicamen->MEDICAMEN );
                $totS = $totQ - $totE;
-               
+
                $this->valores[ 0 ] = $umaMedicamen->MEDICAMEN;
                $this->valores[ 1 ] = formatarNum( $totQ );
                $this->valores[ 2 ] = $umaMedicamen->UNIDADE;
@@ -67,7 +67,7 @@ class RelParcela extends Relatorios
             }
          }
       }
-      
+
       $qtd       = $this->ValorTotal( "totQtd" );
       $qtdEntreg = $this->ValorTotal( "totQtdEntreg" );
       $saldo     = $qtd - $qtdEntreg;
@@ -114,6 +114,7 @@ class RelParcela extends Relatorios
 		$this->PeQuebra( $this->quebraClinica, true );
 		$this->PularLinha( 4 );
 	}
+
 	//------------------------------------------------------------------------
 	//	Quebra por Consulta
 	//------------------------------------------------------------------------
@@ -152,11 +153,11 @@ class RelParcela extends Relatorios
          formatarNum( $qtd ),
          $regA->UNIDADE,
          formatarNum( $qtdEntreg, 0, 0, 0, ')' ),
-         formatarNum( $saldo, 0, 0, 0, ')' )         
+         formatarNum( $saldo, 0, 0, 0, ')' )
       ];
-      
+
       $this->ImprimirValorColunas();
-      
+
 		$this->AcumularTotal( "totQ" . $medicamen, $qtd );
 		$this->AcumularTotal( "totE" . $medicamen, $qtdEntreg );
       $this->AcumularTotal( "totQtd", $qtd );

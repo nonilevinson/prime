@@ -57,14 +57,15 @@ var Menu_5_6_7 = new Array( 1,"Resumo emails enviados no mês","","R",52,"","",1,
 var Menu_5_6_8 = new Array( 1,"Clientes aniversariantes","","C",54,"","",1,"","5","m_cliente_aniversariantes","","","","","","", "","", 0,29,[54],[]);
 var Menu_5_6_9 = new Array( 1,"Funcionário Niver Dia","","F",48,"","",1,"","5","m_aniversariantes_usuarios_funcionarios_km","","","","","","", "","", 0,29,[48],[]);
 var Menu_5_6_10 = new Array( 1,"Avisa Niver Dia","","A",49,"","",1,"","5","m_funcionarios_avisa_niver","","","","","","", "","", 0,29,[49],[]);
-var Menu_6 = new Array( 1,"Relatórios","","R",27,"","",1,"","6", "", "", "", "", "", "", "", "", "", 9, 14,[175,203,190,170,223,225,166,38,39,56,28,73,74],[] );
+var Menu_6 = new Array( 1,"Relatórios","","R",27,"","",1,"","6", "", "", "", "", "", "", "", "", "", 9, 14,[175,203,190,170,223,225,226,166,38,39,56,28,73,74],[] );
 var Menu_6_1 = new Array( 1,"Relação de consultas","","n",175,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^r_consulta_relacao^^^^^^^^^^^^^^^^^^", "", 0,34,[175],[]);
 var Menu_6_2 = new Array( 1,"Agendas de retirada de medicação","","g",203,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^r_agret^^^^^^^^^^^^^^^^^^", "", 0,34,[203],[]);
 var Menu_6_3 = new Array( 1,"Comissionamento Call Center","","i",190,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^r_comcall^^^^^^^^^^^^^^^^^^", "", 0,34,[190],[]);
 var Menu_6_4 = new Array( 1,"Consultas dispensadas por médicos","","u",170,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^r_consulta_dispensada^^^^^^^^^^^^^^^^^^", "", 0,34,[170],[]);
-var Menu_6_5 = new Array( 1,"Estoque","","q",224,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 34,[223,225],[] );
+var Menu_6_5 = new Array( 1,"Estoque","","q",224,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 34,[223,225,226],[] );
 var Menu_6_5_1 = new Array( 1,"Medicação prescrita","","d",223,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^r_cmedica_prescrita^^^^^^^^^^^^^^^^^^", "", 0,19,[223],[]);
 var Menu_6_5_2 = new Array( 1,"Posição de estoque","","q",225,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^r_estoque_posicao^^^^^^^^^^^^^^^^^^", "", 0,19,[225],[]);
+var Menu_6_5_3 = new Array( 1,"Lotes por validade","","v",226,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^r_lote_validade^^^^^^^^^^^^^^^^^^", "", 0,19,[226],[]);
 var Menu_6_6 = new Array( 1,"Financeiro","","F",165,"","",1,"","6", "", "", "", "", "", "", "", "", "", 1, 34,[166],[] );
 var Menu_6_6_1 = new Array( 1,"Parcelas","","P",166,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^r_parcela^^^^^^^^^^^^^^^^^^", "", 0,8,[166],[]);
 var Menu_6_7 = new Array( 1,"Avisos internos","","A",37,"","",cnfConfig["AVISO"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 34,[38,39],[] );

@@ -29,11 +29,14 @@ class Relatorios extends Lance_RelatorioPDF_Colunar
 	//------------------------------------------------------------------------
 	function TituloData( $p_titulo, $p_dataIni, $p_dataFim=null )
 	{
-		return( $p_titulo . " entre " . formatarData( $p_dataIni ) . " e " . 
-			( $p_dataFim
-				? formatarData( $p_dataFim )
-				: "sem um final estipulado" )
-		);
+		if( $p_dataIni )
+		{
+			return( $p_titulo . " entre " . formatarData( $p_dataIni ) . " e " . 
+				( $p_dataFim
+					? formatarData( $p_dataFim )
+					: "sem um final estipulado" )
+			);
+		}
 	}
 
 	//------------------------------------------------------------------------

@@ -303,7 +303,7 @@ if( $op == 217 ) //* seleção arqMovEstoq
 	$this->Pedir( "Fornecedor" ),
 	$this->Pedir( "Entre os movimentos",
 		[ "", Gran9,
-		[ brHtml(1) . "e ", Gran9Fim, "" ] ] );	
+		[ brHtml(1) . "e ", Gran9Fim, "" ] ] );
 }
 
 if( $op == 223 ) //* r_cmedica_prescrita
@@ -313,14 +313,29 @@ if( $op == 223 ) //* r_cmedica_prescrita
 	$this->Pedir( "Consultas entre",
 		[ "", DataIni,
 		[ brHtml(1) . "e ", DataFim ] ] ),
-	$this->Pedir( "Com saldo?", TSimNao );	
+	$this->Pedir( "Com saldo?", TSimNao );
 }
 
 if( $op == 225 ) //* r_estoque_posicao
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Medicamento", Medicamen );	
+	$this->Pedir( "Medicamento", Medicamen );
+}
+
+if( $op == 226 ) //* r_lote_validade
+{
+	echo
+	$this->Pedir( "Validade entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Medicamento", Medicamen ),
+	$this->Pedir( "Lote",
+		[ "Medicamento ", Lote_Medicamen ] ),
+	$this->Pedir( " ",
+		[ "Lote ", Lote_Lote,
+		[ "", Lote ] ] );
 }
 
 //==================================================================================
