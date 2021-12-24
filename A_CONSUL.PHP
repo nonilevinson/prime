@@ -903,11 +903,11 @@ class campo_arqConsulta_Saldo extends Lance_CampoNumerico
 	function Estilo()
 	{
 		global $g_regAtual;
-		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->SALDO < 0 )
+		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM < $g_regAtual->TRGQTDMENT )
 			return( "VermelhoFundoCentro" );
-		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->SALDO == 0 )
-			return( "AzulFundoDir" );
-		if( $g_regAtual->SALDO > 0 )
+		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM == $g_regAtual->TRGQTDMENT )
+			return( "VerdeFundoDir" );
+		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM > $g_regAtual->TRGQTDMENT )
 			return( "CinzaArdosiaDir" );
 		return( parent::Estilo() );
 	}
