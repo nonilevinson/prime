@@ -832,6 +832,39 @@ class campo_parQSelecao_TStAgRet extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo Medicamen
+//======================================================
+
+class campo_parQSelecao_Medicamen extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Medicamen", "Medicamen", "Medicamen", 0, "arqMedicamen", "arqMedicamen.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Medicamen_Medicamen
+//======================================================
+
+class campo_parQSelecao_Medicamen_Medicamen extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Medicamen_Medicamen", "Medicamen_Medicamen", "Medicamen", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Medicamen", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Medicamento" );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQSelecao
 //======================================================
 function listaCampos_parQSelecao( $p_prefixo )
@@ -916,7 +949,9 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Consulta_Num(),
 			new campo_parQSelecao_TStAgRet(),
 			new Lance_CampoCadeia( "TStAgRet_Chave", "TStAgRet_Chave", "Chave", 1, "x", EH_CHAVE, TStAgRet ),
-			new Lance_CampoCadeia( "TStAgRet_Descritor", "TStAgRet_Descritor", "Descritor", 11, "xxxxxxxxxxx", EH_DESCRITOR, TStAgRet ) )
+			new Lance_CampoCadeia( "TStAgRet_Descritor", "TStAgRet_Descritor", "Descritor", 11, "xxxxxxxxxxx", EH_DESCRITOR, TStAgRet ),
+			new campo_parQSelecao_Medicamen(),
+			new campo_parQSelecao_Medicamen_Medicamen() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

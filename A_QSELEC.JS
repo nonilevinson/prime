@@ -827,6 +827,28 @@ function Campo_parQSelecao_TStAgRet_Descritor()
 
 var TStAgRet_Descritor = new Campo_parQSelecao_TStAgRet_Descritor;
 
+//------------------------------------------------------------
+Campo_parQSelecao_Medicamen.prototype = new Lance_CampoHidden;
+
+function Campo_parQSelecao_Medicamen()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Medicamen", "Medicamen", "Medicamen", "arqMedicamen", "a_medica", null, "",52);
+}
+
+var Medicamen = new Campo_parQSelecao_Medicamen;
+
+//------------------------------------------------------------
+Campo_parQSelecao_Medicamen_Medicamen.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_Medicamen_Medicamen()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Medicamen_Medicamen", "Medicamen_Medicamen", "Medicamen", Medicamen, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var Medicamen_Medicamen = new Campo_parQSelecao_Medicamen_Medicamen;
+
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -1422,6 +1444,15 @@ Consulta_Num.TipoCampo |= CAMPO_CHAVE_PAI;
 TStAgRet_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TStAgRet_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Medicamen_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Medicamen.Obrigatorio( p_comMsg ) );
+}
+
+Medicamen_Medicamen.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_parQSelecao_Usuario.prototype.ExistenciaEspecial = function()
@@ -1533,6 +1564,14 @@ Campo_parQSelecao_Consulta.prototype.ExistenciaEspecial = function()
 	return( ( !Consulta_Num.Obrigatorio( false ) || tem(Consulta_Num) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_Medicamen.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Medicamen_Medicamen.Obrigatorio( false ) || tem(Medicamen_Medicamen) ) );
+}
+
 function IniciarDependencias_parQSelecao()
 {
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
@@ -1558,6 +1597,7 @@ SubPlano_Codigo.ExistenciasDependentes= [ SubPlano ];
 SubPlano.ExistenciasDependentes= [ SubPlano_Nome ];
 CCor_Nome.ExistenciasDependentes= [ CCor ];
 Consulta_Num.ExistenciasDependentes= [ Consulta ];
+Medicamen_Medicamen.ExistenciasDependentes= [ Medicamen ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
 Assessor_Usuario.ErrosDependentes= [ Assessor ];
@@ -1578,6 +1618,7 @@ SubPlano_Plano_CodPlano.ErrosDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ErrosDependentes= [ SubPlano ];
 CCor_Nome.ErrosDependentes= [ CCor ];
 Consulta_Num.ErrosDependentes= [ Consulta ];
+Medicamen_Medicamen.ErrosDependentes= [ Medicamen ];
 SubPlano_Plano.DescritoresDependentes= [ SubPlano_Plano_Plano ];
 SubPlano.DescritoresDependentes= [ SubPlano_Nome ];
 Usuario.CamposChave= [ Usuario_Usuario ];
@@ -1592,6 +1633,7 @@ SubPlano.CamposChave= [ SubPlano_Plano,SubPlano_Codigo ];
 SubPlano_Plano.CamposChave= [ SubPlano_Plano_CodPlano ];
 CCor.CamposChave= [ CCor_Nome ];
 Consulta.CamposChave= [ Consulta_Num ];
+Medicamen.CamposChave= [ Medicamen_Medicamen ];
 }
 
 
@@ -1609,7 +1651,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Medicamen, Medicamen_Medicamen ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

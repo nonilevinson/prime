@@ -316,5 +316,12 @@ if( $op == 223 ) //* r_cmedica_prescrita
 	$this->Pedir( "Com saldo?", TSimNao );	
 }
 
+if( $op == 225 ) //* r_estoque_posicao
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Medicamento", Medicamen );	
+}
+
 //==================================================================================
 echo 	"</table>";
