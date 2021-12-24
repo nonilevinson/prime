@@ -306,5 +306,15 @@ if( $op == 217 ) //* seleção arqMovEstoq
 		[ brHtml(1) . "e ", Gran9Fim, "" ] ] );	
 }
 
+if( $op == 223 ) //* r_cmedica_prescrita
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Consultas entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Com saldo?", TSimNao );	
+}
+
 //==================================================================================
 echo 	"</table>";

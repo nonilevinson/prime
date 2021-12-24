@@ -13,6 +13,7 @@ insert into arqLanceOperacao values(100056,1,'Cadastro de movimentos de estoque'
 insert into arqLanceOperacao values(100057,1,'Cadastro de itens de movimento de estoque','arqItemMov',57,2,0,'');
 insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
 insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de estoque','',221,2,0,'');
+insert into arqLanceOperacao values(200223,2,'Relatório de medicação prescrita','',223,50,0,'');
 commit;
 
 /************************************************************

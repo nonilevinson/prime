@@ -110,6 +110,17 @@ Campo_arqMedicamen_Unidade.prototype.FiltroPai = function()
 }
 
 //-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqMedicamen_Unidade.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A unidade é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_arqMedicamen_Unidade_Unidade.prototype.ObrigatorioEspecial = function( p_comMsg )
