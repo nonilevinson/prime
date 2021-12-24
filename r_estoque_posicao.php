@@ -12,47 +12,47 @@ class RelEstoque extends Relatorios
 		$this->tituloRelatorio = [ 'Relatório de posição de estoque', ' ' ];
 
 		$this->DefinirCabColunas(
-			[ "Insumo", 		90, ALINHA_ESQ ],
+			[ "Medicamento",	90, ALINHA_ESQ ],
 			[ "Un",				18, ALINHA_CEN ],
-			[ "Almoxarifado",	45, ALINHA_ESQ ],
+			[ "Clínica",		45, ALINHA_ESQ ],
 			[ "Estoque",		20, ALINHA_DIR ] );
 
 		$this->DefinirQuebras(
-			[ 'QuebraPorInsumo', SIM, NAO, SIM ] );
+			[ 'QuebraPorMedicamen', SIM, NAO, SIM ] );
 
-		$this->DefinirTotais( "totEstoque", "totQtdAlmoxari" );
+		$this->DefinirTotais( "totEstoque", "totClinica" );
 
 		$this->cabPaginaTemCabColunas = true;
 		$this->DefinirAlturas();
 	}
 
 	//------------------------------------------------------------------------
-	//	Quebra por Insumo
+	//	Quebra por Medicamen
 	//------------------------------------------------------------------------
-	function QuebraPorInsumo()
+	function QuebraPorMedicamen()
 	{
-		return( $this->regAtual->INSUMO );
+		return( $this->regAtual->MEDICAMEN );
 	}
 
 	//------------------------------------------------------------------------
-	function CabQuebraPorInsumo()
+	function CabQuebraPorMedicamen()
 	{
 		$regA = &$this->regAtual;
 
-		$this->quebraInsumo = $regA->INSUMO;
-		$this->valores[ 0 ] = $this->quebraInsumo;
+		$this->quebraMedicamen = $regA->MEDICAMEN;
+		$this->valores[ 0 ] = $this->quebraMedicamen;
 		$this->valores[ 1 ] = $regA->UNIDADE;
 	}
 
 	//------------------------------------------------------------------------
-	function PeQuebraPorInsumo()
+	function PeQuebraPorMedicamen()
 	{
-		if( $this->ValorTotal( "totQtdAlmoxari" ) > 1 )
+		if( $this->ValorTotal( "totClinica" ) > 1 )
 		{
 			$this->FecharLinhas();
 			$this->JuntarColunas( [0,2] );
-			$this->valores[ 0 ] = $this->quebraInsumo;
-			$this->valores[ 3 ] = $this->FormatarTotal( "totEstoque", [ 2, '', '', ')' ] );
+			$this->valores[ 0 ] = $this->quebraMedicamen;
+			$this->valores[ 3 ] = $this->FormatarTotal( "totEstoque", [ 0, '', '', ')' ] );
 			$this->ImprimirValorColunas();
 			$this->RestaurarColunas();
 			$this->FecharLinhas();
@@ -70,12 +70,12 @@ class RelEstoque extends Relatorios
 
 		if( $estoque != 0 )
 		{
-			$this->valores[ 2 ] = $regA->ALMOXARI;
-			$this->valores[ 3 ] = formatarValor( $estoque, '', '', ')' );
+			$this->valores[ 2 ] = $regA->CLINICA;
+			$this->valores[ 3 ] = formatarNum( $estoque, 0, 0, 0, ')' );
 			$this->ImprimirValorColunas();
 
 			$this->AcumularTotal( "totEstoque", $estoque );
-			$this->AcumularTotal( "totQtdAlmoxari", 1 );
+			$this->AcumularTotal( "totClinica", 1 );
 		}
 	}
 }
@@ -89,16 +89,15 @@ $parQSelecao = lerParametro( "parQSelecao" );
 $proc = new RelEstoque( RETRATO, A4, "Estoque_Posicao.pdf", "", true );
 
 $filtro = substr(
-   filtrarPorLig( 'A.idPrimario', $parQSelecao->ALMOXARI ) .
-   filtrarPorLig( 'I.TInsumo', $parQSelecao->TINSUMO ) .
-   filtrarPorLig( 'I.idPrimario', $parQSelecao->INSUMO ), 0,-4);
+   filtrarPorLig( 'L.Clinica', $parQSelecao->CLINICA ) .
+   filtrarPorLig( 'L.Medicamen', $parQSelecao->MEDICAMEN ), 0,-4);
 
-$select = "Select I.Insumo, E.TrgItMov, E.TrgTraSai, E.TrgTraEnt, A.Almoxari, U.Unidade
-	From arqEstoque E
-		join arqAlmoxari		A on A.idPrimario=E.Almoxari
-		join arqInsumo 		I on I.idPrimario=E.Insumo
-		left join arqUnidade	U on U.idPrimario=I.Unidade " .
+$select = "Select M.Medicamen, L.TrgItMov, L.TrgCMedica, C.Clinica, U.Unidade
+	From arqLote L
+		join arqClinica	C on C.idPrimario=L.Clinica
+		join arqMedicamen	M on M.idPrimario=L.Medicamen
+		join arqUnidade	U on U.idPrimario=M.Unidade " .
    ( $filtro ? "Where " . $filtro : "" ) .
-   " Order by I.Insumo, A.Almoxari";
+   " Order by M.Medicamen, C.Clinica";
 
 $proc->Processar( $select );
