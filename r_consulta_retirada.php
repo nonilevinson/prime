@@ -1,5 +1,6 @@
 <?php
 
+
 require_once( 'ext_relatorios_colunares.php' );
 
 class RelAgenda extends Relatorios
@@ -86,14 +87,14 @@ class RelAgenda extends Relatorios
 	//------------------------------------------------------------------------
 	function QuebraPorData()
 	{
-		return( $this->regAtual->DATA );
+		return( $this->regAtual->DATARET );
 	}
 
 	//------------------------------------------------------------------------
 	function CabQuebraPorData()
 	{
 		$regA = &$this->regAtual;
-		$this->quebraData = formatarData( $regA->DATA) . " - " . formatarData( $regA->DATA, 'ddd' ) ;
+		$this->quebraData = formatarData( $regA->DATARET) . " - " . formatarData( $regA->DATARET, 'ddd' ) ;
 		$this->CabQuebra( $this->quebraData );
       $this->ImprimirCabColunas();
 	}
@@ -113,7 +114,7 @@ class RelAgenda extends Relatorios
 		$regA = &$this->regAtual;
 
       $this->valores = [
-         formatarHora( $regA->HORA, 'hh:mm' ),
+         formatarHora( $regA->HORARET, 'hh:mm' ),
          formatarNum( $regA->NUMCONSULTA ),
          $regA->PRONTUARIO,
 			cadEsq( $regA->NOME, 40 ),
@@ -136,22 +137,21 @@ $parQSelecao = lerParametro( "parQSelecao" );
 $proc = new RelAgenda( RETRATO, A4, 'Agendas_Retirada.pdf', '', true, .93 );
 
 $filtro = substr(
-   ( SQL_VETIDCLINICA ? "A.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
-	filtrarPorIntervaloData( 'A.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
-   filtrarPorLig( "A.Consulta,arqConsulta.Pessoa", $parQSelecao->CLIENTE ) .
-	filtrarPorLig( "A.TStAgRet", $parQSelecao->TSTAGRET ) .
-	filtrarPorLig( "A.Assessor", $parQSelecao->ASSESSOR ) .
-   filtrarPorLig( 'A.Clinica', $parQSelecao->CLINICA ), 0, -4 );
+   ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
+	filtrarPorIntervaloData( 'C.DataRet', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
+   filtrarPorLig( "C.Pessoa", $parQSelecao->CLIENTE ) .
+	filtrarPorLig( "C.TStAgRet", $parQSelecao->TSTAGRET ) .
+	filtrarPorLig( "C.AssesRet", $parQSelecao->ASSESSOR ) .
+   filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 );
 
-$select = "Select L.Clinica, C.Num as NumConsulta, A.Data, A.Hora, P.Nome, P.Prontuario,
+$select = "Select L.Clinica, C.Num as NumConsulta, C.DataRet, C.HoraRet, P.Nome, P.Prontuario,
       P.NumCelular, T.Descritor as TStAgRet, U.Nome as Assessor
-	From arqAgRet A
-      join arqClinica   		L on L.idPrimario=A.Clinica
-		join arqConsulta			C on C.idPrimario=A.Consulta
+	From arqConsulta C
+		join arqClinica 			L on L.idPrimario=C.Clinica
       join arqPessoa    		P on P.idPrimario=C.Pessoa
-      left join tabTStAgRet	T on T.idPrimario=A.TStAgRet
-		left join arqUsuario		U on U.idPrimario=A.Assessor
+      left join tabTStAgRet	T on T.idPrimario=C.TStAgRet
+		left join arqUsuario		U on U.idPrimario=C.AssesRet
 	Where " . $filtro . "
-	Order by L.Clinica, A.Data, A.Hora";
+	Order by L.Clinica, C.DataRet, C.HoraRet";
 
 $proc->Processar( $select );
