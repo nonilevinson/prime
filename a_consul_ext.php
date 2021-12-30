@@ -28,10 +28,16 @@ function ext_filtrarSelecao()
 
    return( substr(
       ( SQL_VETIDCLINICA ? "A.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
+      filtrarPorIntervaloData( "A.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
       filtrarPorLig( "A.TStCon", $parQSelecao->TSTCON ) .
       filtrarPorLig( "A.Clinica", $parQSelecao->CLINICA ) .
       filtrarPorLig( "A.Medico", $parQSelecao->MEDICO ) .
-      filtrarPorLig( "A.Pessoa", $parQSelecao->PESSOA ), 0, -4 )
+      filtrarPorLig( "A.Pessoa", $parQSelecao->PESSOA ) .
+      
+      filtrarPorIntervaloData( "A.DataRet", $parQSelecao->DATAINI1, $parQSelecao->DATAFIM1 ) .
+      filtrarPorIntervalo( 'A.HoraRet', $parQSelecao->HORAINI, $parQSelecao->HORAFIM, "'" ) .
+      filtrarPorLig( "A.TStAgRet", $parQSelecao->TSTAGRET ) .
+      filtrarPorLig( "A.AssesRet", $parQSelecao->ASSESSOR ), 0, -4 )
    );
 }
 

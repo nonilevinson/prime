@@ -47,7 +47,8 @@ CriarForms(
 	[ 'Observações', 'O', true ],
 	[ 'Atual', 'A', true ],
 	[ 'Conduta', 'C', true ],
-	[ 'Medicação', 'M', true ] ),
+	[ 'Medicação', 'M', true ],
+	[ 'Retirada', 'R', true ] ),
 
 "<table id='O' class='tabFormulario' style='display:none'>",
 	$this->Cabecalhos( [ "Observações", 'FormCab alinhaMeio', '2' ] ),
@@ -90,12 +91,28 @@ CriarForms(
 "</table>",
 
 "<table id='M' class='tabFormulario' style='display:none'>",
-	$this->Pedir( "Quantidades",
-		[ "Prescrita ", TrgQtdM,
-		[ brHtml(4) . "Separada/Entregue ", TrgQtdMEnt,
-		[ brHtml(4) . "Saldo ", Saldo ] ] ] ),
 	$this->Cabecalhos( [ "Transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
 	$this->Pedir( "Medicação<br>Recomendada", Medicacao ),
+"</table>",
+
+"<table id='R' class='tabFormulario' style='display:none'>",
+	$this->Pedir( "Medicação",
+		[ "Quantidades: Prescrita ", TrgQtdM,
+		[ brHtml(4) . "Separada/Entregue ", TrgQtdMEnt,
+		[ brHtml(4) . "Saldo ", Saldo ] ] ] ),
+	$this->Pular1Linha(2),
+   $this->Cabecalhos( [ "Os campos abaixo somente são editáveis se houver uma
+		quantidade de medicação prescrita e o saldo for zero", 'FormCab alinhaMeio', '2' ] ),
+	$this->Pedir( "Data",
+      [ "", DataRet,
+      [ " ", DiaRet,
+      [ brHtml(4) . "Hora ", HoraRet ] ] ] ),
+   $this->Pedir( "Status", TStAgRet ),
+   $this->Pedir( "Assessor",
+      [ "", AssesRet, "<br>(obrigatório se um Status for informado)" ] ),
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Observações da retirada", 'FormCab alinhaMeio', '2' ] ),
+	$this->Pedir( "", [ "", ObsRet, '', 'FormValor alinhaMeio', '2' ] ),
 "</table>",
 
 SelecionarForm();

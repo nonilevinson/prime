@@ -1,7 +1,7 @@
 var Menu_1 = new Array( 1,"Consultas","","u",111,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 14,[],[39,39,53,53] );
-var Menu_1_1 = new Array( 1,"Todas","","T",109,"","",1,"","1","a_consul","arqConsulta","Folhear","","?","FilTodas","", "","", 0,16,[],[39]);
-var Menu_1_2 = new Array( 1,"Seleção","","S",110,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_consul^^^arqConsulta^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,16,[],[39]);
-var Menu_1_3 = new Array( 1,"Agendas Retirada","","g",201,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 16,[],[53,53] );
+var Menu_1_1 = new Array( 1,"Todas","","T",109,"","",1,"","1","a_consul","arqConsulta","Folhear","","?","FilTodas","", "","", 0,20,[],[39]);
+var Menu_1_2 = new Array( 1,"Seleção","","S",110,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_consul^^^arqConsulta^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,20,[],[39]);
+var Menu_1_3 = new Array( 1,"Agendas Retirada [0]","","g",201,"","",GrupoAtualEm(),"","6", "", "", "", "", "", "", "", "", "", 2, 20,[],[53,53] );
 var Menu_1_3_1 = new Array( 1,"Todas","","T",199,"","",1,"","1","a_agret","arqAgRet","Folhear","","?","FilTodas","", "","", 0,7,[],[53]);
 var Menu_1_3_2 = new Array( 1,"Seleção","","S",200,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_agret^^^arqAgRet^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[53]);
 var Menu_2 = new Array( 1,"Cadastros","","C",7,"","",1,"","6", "", "", "", "", "", "", "", "", "", 6, 14,[151],[7,42,31,14,32,30,36,1,49,22,7] );

@@ -71,20 +71,12 @@
 	text-align: left;
 	/* font-weight:bold */
 }
-
-.StAgRetRecepcao{
+.StAgendado{
 	color:#ffffff;
 	background-color: #52a3ff;
 	text-align: left;
 	/* font-weight:bold */
 }
-.StAgRetProcesso{
-	color:#ffffff;
-	background-color: #949394;
-	text-align: left;
-	/* font-weight:bold */
-}
-
 .StRecepcao{
 	color:#ffffff;
 	background-color: #004499;

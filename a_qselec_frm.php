@@ -176,15 +176,29 @@ if( $op == 95 ) //* selecao Hoje arqParcela
 if( $op == 110 ) //* selecao arqConsulta
 {
 	echo
+	$this->Cabecalhos( [ "Consultas e Retiradas", 'FormCab alinhaMeio', '2' ] ),
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Paciente", Cliente_Nome ),
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
+	
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Consultas", 'FormCab alinhaMeio', '2' ] ),
 	$this->Pedir( "Médico", Medico ),
-	$this->Pedir( "Entre",
+	$this->Pedir( "Consultas entre",
 		[ "", DataIni,
-		[ brHtml(1) . "e ", DataFim ] ] );
+		[ brHtml(1) . "e ", DataFim ] ] ),
+		
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Retiradas", 'FormCab alinhaMeio', '2' ] ),
+	$this->Pedir( "Agendadas entre",
+		[ "", DataIni1,
+		[ brHtml(1) . "e ", DataFim1 ] ] ),
+	$this->Pedir( "Horário entre",
+		[ "", HoraIni,
+		[ brHtml(1) . "e ", HoraFim ] ] ),
+	$this->Pedir( "Status", TStAgRet );
 }
 
 if( $op == 137 ) //* p_consulta_alterar

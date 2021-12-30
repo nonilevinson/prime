@@ -137,7 +137,7 @@ $select = "Select L.Login, L.Data, L.Hora, L.Status, L.Quem, L.idQuem, L.Observa
 		filtrarPorNum( "L.idquem", $parQSelecao->GRAN13 ) .
 		filtrarPorLig( 'L.Usuario', $parQSelecao->USUARIO ) .
 		filtrarPorIntervaloData( 'L.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
-		filtrarPorIntervalo( 'L.Hora', $parQSelecao->HORAINI, $parQSelecao->HORAFIM ) .
+		filtrarPorIntervalo( 'L.Hora', $parQSelecao->HORAINI, $parQSelecao->HORAFIM, "'" ) .
 		" L.Login != 'null'
 	Order by L.Login, L.Data, L.Hora";
 

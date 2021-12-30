@@ -607,6 +607,105 @@ function Campo_arqConsulta_Saldo()
 
 var Saldo = new Campo_arqConsulta_Saldo;
 
+//------------------------------------------------------------
+Campo_arqConsulta_DataRet.prototype = new Lance_CampoData;
+
+function Campo_arqConsulta_DataRet()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "DataRet", "DataRet", "DataRet", 8, "dd/mm/aaaa", true);
+}
+
+var DataRet = new Campo_arqConsulta_DataRet;
+
+//------------------------------------------------------------
+Campo_arqConsulta_DiaRet.prototype = new Lance_CampoCadeia;
+
+function Campo_arqConsulta_DiaRet()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "DiaRet", "DiaRet", "DiaRet", 15, "uuuuuuuuuuuuuuu", false);
+}
+
+var DiaRet = new Campo_arqConsulta_DiaRet;
+
+//------------------------------------------------------------
+Campo_arqConsulta_HoraRet.prototype = new Lance_CampoHora;
+
+function Campo_arqConsulta_HoraRet()
+{
+	this.superClass = Lance_CampoHora;
+	this.superClass( "HoraRet", "HoraRet", "HoraRet", 4, "hh:mm", true);
+}
+
+var HoraRet = new Campo_arqConsulta_HoraRet;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TStAgRet.prototype = new Lance_CampoLigado;
+
+function Campo_arqConsulta_TStAgRet()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TStAgRet", "TStAgRet", "TStAgRet", "tabTStAgRet", "t_tstagr", null, "",0);
+}
+
+var TStAgRet = new Campo_arqConsulta_TStAgRet;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TStAgRet_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_TStAgRet_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TStAgRet_Chave", "TStAgRet_Chave", "TStAgRet", TStAgRet, 1, "u", false);
+}
+
+var TStAgRet_Chave = new Campo_arqConsulta_TStAgRet_Chave;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TStAgRet_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_TStAgRet_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TStAgRet_Descritor", "TStAgRet_Descritor", "TStAgRet", TStAgRet, 11, "xxxxxxxxxxx", false);
+}
+
+var TStAgRet_Descritor = new Campo_arqConsulta_TStAgRet_Descritor;
+
+//------------------------------------------------------------
+Campo_arqConsulta_AssesRet.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_AssesRet()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "AssesRet", "AssesRet", "AssesRet", "arqUsuario", "a_usuari", null, "",5);
+}
+
+var AssesRet = new Campo_arqConsulta_AssesRet;
+
+//------------------------------------------------------------
+Campo_arqConsulta_AssesRet_Usuario.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_AssesRet_Usuario()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "AssesRet_Usuario", "AssesRet_Usuario", "Usuario", AssesRet, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var AssesRet_Usuario = new Campo_arqConsulta_AssesRet_Usuario;
+
+//------------------------------------------------------------
+Campo_arqConsulta_ObsRet.prototype = new Lance_CampoTexto;
+
+function Campo_arqConsulta_ObsRet()
+{
+	this.superClass = Lance_CampoTexto;
+	this.superClass( "ObsRet", "ObsRet", "ObsRet", false);
+}
+
+var ObsRet = new Campo_arqConsulta_ObsRet;
+
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -1032,7 +1131,7 @@ Campo_arqConsulta_ValPTrata.prototype.TemErro = function()
 		alert( "Valor inválido! Está abaixo da margem de desconto permitida" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1120,7 +1219,7 @@ Campo_arqConsulta_EntraVal.prototype.TemErro = function()
 		alert( "Valor inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1172,7 +1271,7 @@ Campo_arqConsulta_EntraValP.prototype.TemErro = function()
 		alert( "Valor inválido! O total ficará acima do mínimo" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1290,7 +1389,7 @@ Campo_arqConsulta_SaldoVal.prototype.TemErro = function()
 		alert( "Valor inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1474,6 +1573,154 @@ Campo_arqConsulta_Saldo.prototype.Cabecalho = function()
 
 Saldo.EhCalculado = true;
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_DataRet.prototype.Cabecalho = function()
+{
+		return( "Agenda<br>Retirada" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_DataRet.prototype.Existencia = function()
+{
+	return( TrgQtdM > 0 && Saldo == 0 );
+}
+
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_DiaRet.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( diaDaSemanaExtenso( Data ) ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_DiaRet.prototype.Cabecalho = function()
+{
+		return( "Dia Semana" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_DiaRet.prototype.Existencia = function()
+{
+	return( tem( DataRet ) );
+}
+
+DiaRet.EhCalculado = true;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_HoraRet.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A hora é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_HoraRet.prototype.Cabecalho = function()
+{
+		return( "Hora<br>Retirada" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_HoraRet.prototype.Existencia = function()
+{
+	return( tem( DataRet ) );
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TStAgRet.prototype.Cabecalho = function()
+{
+		return( "Status<br>Retirada" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TStAgRet.prototype.Existencia = function()
+{
+	return( tem( DataRet ) );
+}
+
+TStAgRet_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TStAgRet_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_AssesRet.prototype.FiltroPai = function()
+{
+			return( "" + vijAssessor() + "" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_AssesRet.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O assessor é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_AssesRet.prototype.Cabecalho = function()
+{
+		return( "Assessor<br>Retirada" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_AssesRet.prototype.Existencia = function()
+{
+	return( tem( TStAgRet ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_AssesRet_Usuario.prototype.Existencia = function()
+{
+	return( tem( TStAgRet ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_AssesRet_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( AssesRet.Obrigatorio( p_comMsg ) );
+}
+
+AssesRet_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_ObsRet.prototype.Existencia = function()
+{
+	return( tem( DataRet ) );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_Clinica.prototype.ExistenciaEspecial = function()
@@ -1561,6 +1808,14 @@ Campo_arqConsulta_ContaPTra.prototype.ExistenciaEspecial = function()
 	return( ( !ContaPTra_Transacao.Obrigatorio( false ) || tem(ContaPTra_Transacao) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_AssesRet.prototype.ExistenciaEspecial = function()
+{
+	return( ( !AssesRet_Usuario.Obrigatorio( false ) || tem(AssesRet_Usuario) ) );
+}
+
 function IniciarDependencias_arqConsulta()
 {
 Pessoa.CalculosDependentes= [ Prontuario ];
@@ -1570,6 +1825,7 @@ SaldoParc.CalculosDependentes= [ SaldoTotP ];
 SaldoVal.CalculosDependentes= [ SaldoTotP ];
 TrgQtdM.CalculosDependentes= [ Saldo ];
 TrgQtdMEnt.CalculosDependentes= [ Saldo ];
+Data.CalculosDependentes= [ DiaRet ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
@@ -1586,6 +1842,11 @@ EntraParc.ExistenciasDependentes= [ EntraValP,EntraTotP ];
 SaldoFPg_FormaPg.ExistenciasDependentes= [ SaldoFPg ];
 ContaCons_Transacao.ExistenciasDependentes= [ ContaCons ];
 ContaPTra_Transacao.ExistenciasDependentes= [ ContaPTra ];
+TrgQtdM.ExistenciasDependentes= [ DataRet ];
+Saldo.ExistenciasDependentes= [ DataRet ];
+DataRet.ExistenciasDependentes= [ DiaRet,HoraRet,TStAgRet,ObsRet ];
+TStAgRet.ExistenciasDependentes= [ AssesRet,AssesRet_Usuario ];
+AssesRet_Usuario.ExistenciasDependentes= [ AssesRet ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 TiAgenda_TiAgenda.ErrosDependentes= [ TiAgenda ];
 Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
@@ -1605,6 +1866,7 @@ SaldoParc.ErrosDependentes= [ SaldoVal ];
 SaldoFPg_FormaPg.ErrosDependentes= [ SaldoFPg ];
 ContaCons_Transacao.ErrosDependentes= [ ContaCons ];
 ContaPTra_Transacao.ErrosDependentes= [ ContaPTra ];
+AssesRet_Usuario.ErrosDependentes= [ AssesRet ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 Medico.CamposChave= [ Medico_Usuario ];
@@ -1616,6 +1878,7 @@ EntraFPg.CamposChave= [ EntraFPg_FormaPg ];
 SaldoFPg.CamposChave= [ SaldoFPg_FormaPg ];
 ContaCons.CamposChave= [ ContaCons_Transacao ];
 ContaPTra.CamposChave= [ ContaPTra_Transacao ];
+AssesRet.CamposChave= [ AssesRet_Usuario ];
 }
 	//=========================================================================
 	function AcionaTecla( p_tecla )
@@ -1646,7 +1909,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, EntraValP, EntraTotP, BoletoMin, EntraObs, SaldoParc, SaldoVal, SaldoTotP, SaldoFPg, SaldoFPg_FormaPg, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, EntraValP, EntraTotP, BoletoMin, EntraObs, SaldoParc, SaldoVal, SaldoTotP, SaldoFPg, SaldoFPg_FormaPg, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

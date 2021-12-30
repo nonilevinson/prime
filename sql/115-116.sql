@@ -7,6 +7,10 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+update arqLanceOperacao set Assunto=99, SoZero=1 Where idPrimario = 100053;
+delete From arqLancePermissao where Operacao= 100053;
+commit;
+
 insert into arqLanceOperacao values(100054,1,'Cadastro as medicação da consulta','arqCMedica',54,1,0,'');
 insert into arqLanceOperacao values(100055,1,'Cadastro de lotes de medicamentos','arqLote',55,2,0,'');
 insert into arqLanceOperacao values(100056,1,'Cadastro de movimentos de estoque','arqMovEstoque',56,2,0,'');
@@ -542,11 +546,37 @@ commit;
 ALTER TABLE arqConsulta ADD SALDO NUMERIC(18,0) computed by ( TrgQtdM - TrgQtdMEnt ); 
 commit;
 
+ALTER TABLE arqConsulta
+add /* 40*/	DATARET DATE; /* Máscara = 4ano */
+commit;
+
+ALTER TABLE arqConsulta ADD DIARET VARCHAR( 15 ) computed by ( CASE WHEN ( DataRet is not null ) THEN ( CASE
+	WHEN( extract( weekday from Data ) = 0 ) THEN( 'DOMINGO' )
+	WHEN( extract( weekday from Data ) = 1 ) THEN( 'SEGUNDA-FEIRA' )
+	WHEN( extract( weekday from Data ) = 2 ) THEN( 'TERÇA-FEIRA' )
+	WHEN( extract( weekday from Data ) = 3 ) THEN( 'QUARTA-FEIRA' )
+	WHEN( extract( weekday from Data ) = 4 ) THEN( 'QUINTA-FEIRA' )
+	WHEN( extract( weekday from Data ) = 5 ) THEN( 'SEXTA-FEIRA' )
+	ELSE ( 'SÁBADO' )
+	END  ) ELSE ( '' ) END ); 
+commit;
+
+ALTER TABLE arqConsulta
+add /* 42*/	HORARET TIME, /* Máscara = Hhmm */
+add /* 43*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
+add /* 44*/	ASSESRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+add /* 45*/	OBSRET BLOB SUB_TYPE 1 COLLATE PT_BR; /* Máscara =  */
+commit;
+
 update arqConsulta set TrgQtdM=0, TrgQtdMEnt=0;
 commit;
 
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TStAgRet FOREIGN KEY ( TSTAGRET ) REFERENCES tabTStAgRet ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_AssesRet FOREIGN KEY ( ASSESRET ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+commit;
+
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.DATARET, A0.DIARET, A0.HORARET, A0.TSTAGRET, A15.CHAVE as TStAgRet_CHAVE, A15.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESRET, A16.USUARIO as ASSESRET_USUARIO, A0.OBSRET
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
@@ -561,7 +591,9 @@ RECREATE VIEW V_arqConsulta AS
 	left join arqFormaPg A11 on A11.IDPRIMARIO = A0.ENTRAFPG
 	left join arqFormaPg A12 on A12.IDPRIMARIO = A0.SALDOFPG
 	left join arqConta A13 on A13.IDPRIMARIO = A0.CONTACONS
-	left join arqConta A14 on A14.IDPRIMARIO = A0.CONTAPTRA;
+	left join arqConta A14 on A14.IDPRIMARIO = A0.CONTAPTRA
+	left join tabTStAgRet A15 on A15.IDPRIMARIO=A0.TSTAGRET
+	left join arqUsuario A16 on A16.IDPRIMARIO = A0.ASSESRET;
 commit;
 
 /************************************************************
@@ -620,6 +652,11 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'ContaCons', OLD.ContaCons, NEW.ContaCons );
 	execute procedure set_log( 12, NEW.idPrimario, 'ContaPTra', OLD.ContaPTra, NEW.ContaPTra );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataRet', OLD.DataRet, NEW.DataRet );
+	execute procedure set_log( 12, NEW.idPrimario, 'HoraRet', OLD.HoraRet, NEW.HoraRet );
+	execute procedure set_log( 12, NEW.idPrimario, 'TStAgRet', OLD.TStAgRet, NEW.TStAgRet );
+	execute procedure set_log( 12, NEW.idPrimario, 'AssesRet', OLD.AssesRet, NEW.AssesRet );
+	execute procedure set_log( 12, NEW.idPrimario, 'ObsRet', substring( OLD.ObsRet from 1 for 255 ), substring( NEW.ObsRet from 1 for 255 ) );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
 		( NEW.BoletoMin is distinct from OLD.BoletoMin )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );

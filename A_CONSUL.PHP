@@ -23,6 +23,21 @@ class campo_arqConsulta_Num extends Lance_CampoNumerico
 	}
 
 	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( !tem( $g_regAtual->DATARET ) && $g_regAtual->TSTAGRET != 3 && ($g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM == $g_regAtual->TRGQTDMENT) )
+			return( "VerdeFundoDir" );
+		if( tem( $g_regAtual->DATARET ) && !tem( $g_regAtual->TSTAGRET ) )
+			return( "StAgendado" );
+		if( tem( $g_regAtual->DATARET ) && $g_regAtual->TSTAGRET == 1 )
+			return( "StRecepcao" );
+		if( tem( $g_regAtual->DATARET ) && $g_regAtual->TSTAGRET == 2 )
+			return( "StAssessor" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
@@ -903,6 +918,8 @@ class campo_arqConsulta_Saldo extends Lance_CampoNumerico
 	function Estilo()
 	{
 		global $g_regAtual;
+		if( $g_regAtual->TRGQTDM == 0 )
+			return( "LaranjaDirBold" );
 		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM < $g_regAtual->TRGQTDMENT )
 			return( "VermelhoFundoCentro" );
 		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM == $g_regAtual->TRGQTDMENT )
@@ -917,6 +934,158 @@ class campo_arqConsulta_Saldo extends Lance_CampoNumerico
 	{
 		global $g_regAtual;
 			return( "Saldo<br>Medicamentos" );
+	}
+
+}
+
+//======================================================
+//	Campo DataRet
+//======================================================
+
+class campo_arqConsulta_DataRet extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "DataRet", "DataRet", "DataRet", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( !tem( $g_regAtual->DATARET ) || ( tem( $g_regAtual->DATARET ) && $g_regAtual->TSTAGRET == 3 ) )
+			return( "" );
+		if( formatarData( $g_regAtual->DATARET ) == HOJE )
+			return( "DataHoje" );
+		if( quantosDias( formatarData( $g_regAtual->DATARET ), HOJE ) > 0 )
+			return( "DataFutura" );
+		if( quantosDias( formatarData( $g_regAtual->DATARET ), HOJE ) < 0 && ( in_array( $g_regAtual->TSTAGRET, [1,2] ) || !tem( $g_regAtual->TSTAGRET ) ) )
+			return( "DataAtrasada" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Agenda<br>Retirada" );
+	}
+
+}
+
+//======================================================
+//	Campo DiaRet
+//======================================================
+
+class campo_arqConsulta_DiaRet extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "DiaRet", "DiaRet", "DiaRet", 15, "xxxxxxxxxxxxxxx", EH_CALCULADO, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Dia Semana" );
+	}
+
+}
+
+//======================================================
+//	Campo HoraRet
+//======================================================
+
+class campo_arqConsulta_HoraRet extends Lance_CampoHora
+{
+	function __construct()
+	{
+		parent::__construct( "HoraRet", "HoraRet", "HoraRet", 4, "hh:mm", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Hora<br>Retirada" );
+	}
+
+}
+
+//======================================================
+//	Campo TStAgRet
+//======================================================
+
+class campo_arqConsulta_TStAgRet extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TStAgRet", "TStAgRet", "TStAgRet", 0, "tabTStAgRet", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->TSTAGRET == 1 )
+			return( "StAgRetRecepcao" );
+		if( $g_regAtual->TSTAGRET == 2 )
+			return( "StAgRetProcesso" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Status<br>Retirada" );
+	}
+
+}
+
+//======================================================
+//	Campo AssesRet
+//======================================================
+
+class campo_arqConsulta_AssesRet extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "AssesRet", "AssesRet", "AssesRet", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Assessor<br>Retirada" );
+	}
+
+}
+
+//======================================================
+//	Campo AssesRet_Usuario
+//======================================================
+
+class campo_arqConsulta_AssesRet_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "AssesRet_Usuario", "AssesRet_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "AssesRet", false );
+	}
+
+}
+
+//======================================================
+//	Campo ObsRet
+//======================================================
+
+class campo_arqConsulta_ObsRet extends Lance_CampoTexto
+{
+	function __construct()
+	{
+		parent::__construct( "ObsRet", "ObsRet", "ObsRet", 8,80, false, false );
 	}
 
 }
@@ -986,7 +1155,16 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_ContaPTra_Transacao(),
 			new campo_arqConsulta_TrgQtdM(),
 			new campo_arqConsulta_TrgQtdMEnt(),
-			new campo_arqConsulta_Saldo() )
+			new campo_arqConsulta_Saldo(),
+			new campo_arqConsulta_DataRet(),
+			new campo_arqConsulta_DiaRet(),
+			new campo_arqConsulta_HoraRet(),
+			new campo_arqConsulta_TStAgRet(),
+			new Lance_CampoCadeia( "TStAgRet_Chave", "TStAgRet_Chave", "Chave", 1, "x", EH_CHAVE, TStAgRet ),
+			new Lance_CampoCadeia( "TStAgRet_Descritor", "TStAgRet_Descritor", "Descritor", 11, "xxxxxxxxxxx", EH_DESCRITOR, TStAgRet ),
+			new campo_arqConsulta_AssesRet(),
+			new campo_arqConsulta_AssesRet_Usuario(),
+			new campo_arqConsulta_ObsRet() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -1038,6 +1216,11 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( Valor ) );
 			array_push( $vetAux, array( ValPTrata ) );
 			array_push( $vetAux, array( Saldo ) );
+			array_push( $vetAux, array( DataRet ) );
+			array_push( $vetAux, array( DiaRet ) );
+			array_push( $vetAux, array( HoraRet ) );
+			array_push( $vetAux, array( TStAgRet_Descritor ) );
+			array_push( $vetAux, array( AssesRet_Usuario ) );
 		return( $vetAux );
 	}
 
@@ -1046,7 +1229,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( BoletoMin ), array( ContaCons ), array( ContaPTra ), array( TrgQtdM ), array( TrgQtdMEnt ) ) );
+		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( BoletoMin ), array( ContaCons ), array( ContaPTra ), array( TrgQtdM ), array( TrgQtdMEnt ), array( TStAgRet ), array( TStAgRet_Chave ), array( TStAgRet_Descritor ), array( AssesRet ) ) );
 	}
 
 	//-------------------------------------------------------------
@@ -1095,6 +1278,12 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( TrgQtdM ) );
 			array_push( $vetAux, array( TrgQtdMEnt ) );
 			array_push( $vetAux, array( Saldo ) );
+			array_push( $vetAux, array( DataRet ) );
+			array_push( $vetAux, array( DiaRet ) );
+			array_push( $vetAux, array( HoraRet ) );
+			array_push( $vetAux, array( TStAgRet_Descritor ) );
+			array_push( $vetAux, array( AssesRet_Usuario ) );
+			array_push( $vetAux, array( ObsRet ) );
 		return( $vetAux );
 	}
 
