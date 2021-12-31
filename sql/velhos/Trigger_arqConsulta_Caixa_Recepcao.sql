@@ -32,7 +32,7 @@ active before Insert or Update position 101 as
 begin
 
 --exception teste 'idConta= ' || coalesce( :idConta, 'null' ) || 'NEW valor= ' || NEW.Valor || ' old valor= ' || OLD.VALOR || ' NEW FormaPg= ' || NEW.FormaPg || ' OLD formaPg= ' || OLD.FormaPg;
-	if( updating and ( NEW.Valor <> OLD.Valor or NEW.FormaPg <> OLD.FormaPg ) ) then
+	if( updating and NEW.ContaCons > 0 and ( NEW.Valor <> OLD.Valor or NEW.FormaPg <> OLD.FormaPg ) ) then
 	begin
 		select idPrimario, Valor, ValorLiq, 100 - ( ValorLiq / Valor * 100.0 )
 		from arqParcela
@@ -52,7 +52,7 @@ begin
 			where idPrimario = :idParcela;
 	end
 	else
-	if( updating and OLD.FormaPg is null ) then
+	if( updating and OLD.FormaPg is null and NEW.ContaCons > 0 ) then
 	begin
 		idConta = gen_id( GENIDPRIMARIO, 1 );
 
