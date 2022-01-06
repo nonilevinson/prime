@@ -810,6 +810,21 @@ class campo_parQSelecao_Consulta_Num extends Lance_CampoNumerico
 	}
 
 	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( !tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET != 3 && ($g_regAtual->CONSULTA_TRGQTDM > 0 && $g_regAtual->CONSULTA_TRGQTDM == $g_regAtual->CONSULTA_TRGQTDMENT) )
+			return( "VerdeFundoDir" );
+		if( tem( $g_regAtual->CONSULTA_DATARET ) && !tem( $g_regAtual->CONSULTA_TSTAGRET ) )
+			return( "StAgendado" );
+		if( tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET == 1 )
+			return( "StRecepcao" );
+		if( tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET == 2 )
+			return( "StAssessor" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;

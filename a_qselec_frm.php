@@ -320,7 +320,7 @@ if( $op == 217 ) //* seleção arqMovEstoq
 		[ brHtml(1) . "e ", Gran9Fim, "" ] ] );
 }
 
-if( $op == 223 ) //* r_cmedica_prescrita
+if( in_array( $op, [223,230] ) ) //* r_cmedica_prescrita 223: analitico | 230: resumido
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),

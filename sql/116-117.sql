@@ -7,4 +7,7 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+update arqLanceOperacao set Operacao = 'Relatório analítico de medicação prescrita' Where idPrimario = 200223;
 
+insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação prescrita','',230,50,0,'');
+commit;

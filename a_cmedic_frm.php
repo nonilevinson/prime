@@ -17,7 +17,7 @@ echo
 
    $this->Pedir( "Separado em", DataSepara ),
    $this->Pedir( "Quantidades",
-      [ "Separado/Entregue", QtdEntreg,
+      [ "Separado/Entregue ", QtdEntreg,
       [ brHtml(4) . "Saldo ", Saldo ] ] ),
    $this->Pedir( "Observação", ObsEntreg ),
 "</table>";

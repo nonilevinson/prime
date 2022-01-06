@@ -2035,6 +2035,7 @@ CREATE TABLE arqUsuario
 	/* 14*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 15*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 16*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 17*/	EMCMEDISEP campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
 );
@@ -2984,7 +2985,7 @@ RECREATE VIEW V_arqGrupo AS
 commit;
 
 RECREATE VIEW V_arqUsuario AS 
-	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS, A0.EMAILFINAN
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS, A0.EMAILFINAN, A0.EMCMEDISEP
 	FROM arqUsuario A0
 	left join arqGrupo A1 on A1.IDPRIMARIO = A0.GRUPO
 	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.FOTO;
@@ -3480,9 +3481,10 @@ insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de t
 insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'');
 insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
 insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de estoque','',221,2,0,'');
-insert into arqLanceOperacao values(200223,2,'Relatório de medicação prescrita','',223,50,0,'');
+insert into arqLanceOperacao values(200223,2,'Relatório analítico de medicação prescrita','',223,50,0,'');
 insert into arqLanceOperacao values(200225,2,'Relatório de posição de estoque','',225,50,0,'');
 insert into arqLanceOperacao values(200226,2,'Relatório de lotes por validade','',226,50,0,'');
+insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação prescrita','',230,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -3744,6 +3746,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'EmailAces', OLD.EmailAces, NEW.EmailAces );
 	execute procedure set_log( 12, NEW.idPrimario, 'EmailAcesS', OLD.EmailAcesS, NEW.EmailAcesS );
 	execute procedure set_log( 12, NEW.idPrimario, 'EmailFinan', OLD.EmailFinan, NEW.EmailFinan );
+	execute procedure set_log( 12, NEW.idPrimario, 'EmCMediSep', OLD.EmCMediSep, NEW.EmCMediSep );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
 		( NEW.Senha is distinct from OLD.Senha )  OR 
 		( NEW.Versao is distinct from OLD.Versao )  OR 
