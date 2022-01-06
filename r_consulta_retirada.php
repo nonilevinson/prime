@@ -38,8 +38,8 @@ class RelAgenda extends Relatorios
 	function PeQuebra( $p_cabTotal, $p_colTotal=0 )
 	{
       $totAgendas = $this->ValorTotal( "totAgendas" );
-		
-		$this->ImprimirTotalEmUmaColuna( $p_cabTotal . ": " . formatarNum( $totAgendas ) . 
+
+		$this->ImprimirTotalEmUmaColuna( $p_cabTotal . ": " . formatarNum( $totAgendas ) .
 			" agenda" . ( $totAgendas > 1 ? "s" : "" ) );
 	}
 
