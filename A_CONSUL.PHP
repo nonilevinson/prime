@@ -939,6 +939,52 @@ class campo_arqConsulta_Saldo extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo QuemAgRet
+//======================================================
+
+class campo_arqConsulta_QuemAgRet extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "QuemAgRet", "QuemAgRet", "QuemAgRet", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo QuemAgRet_Usuario
+//======================================================
+
+class campo_arqConsulta_QuemAgRet_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "QuemAgRet_Usuario", "QuemAgRet_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "QuemAgRet", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Usuário" );
+	}
+
+}
+
+//======================================================
+//	Campo QdoAgRet
+//======================================================
+
+class campo_arqConsulta_QdoAgRet extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "QdoAgRet", "QdoAgRet", "QdoAgRet", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo DataRet
 //======================================================
 
@@ -1156,6 +1202,9 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_TrgQtdM(),
 			new campo_arqConsulta_TrgQtdMEnt(),
 			new campo_arqConsulta_Saldo(),
+			new campo_arqConsulta_QuemAgRet(),
+			new campo_arqConsulta_QuemAgRet_Usuario(),
+			new campo_arqConsulta_QdoAgRet(),
 			new campo_arqConsulta_DataRet(),
 			new campo_arqConsulta_DiaRet(),
 			new campo_arqConsulta_HoraRet(),
@@ -1278,6 +1327,8 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( TrgQtdM ) );
 			array_push( $vetAux, array( TrgQtdMEnt ) );
 			array_push( $vetAux, array( Saldo ) );
+			array_push( $vetAux, array( QuemAgRet_Usuario ) );
+			array_push( $vetAux, array( QdoAgRet ) );
 			array_push( $vetAux, array( DataRet ) );
 			array_push( $vetAux, array( DiaRet ) );
 			array_push( $vetAux, array( HoraRet ) );

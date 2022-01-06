@@ -608,6 +608,39 @@ function Campo_arqConsulta_Saldo()
 var Saldo = new Campo_arqConsulta_Saldo;
 
 //------------------------------------------------------------
+Campo_arqConsulta_QuemAgRet.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_QuemAgRet()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "QuemAgRet", "QuemAgRet", "QuemAgRet", "arqUsuario", "a_usuari", null, "",5);
+}
+
+var QuemAgRet = new Campo_arqConsulta_QuemAgRet;
+
+//------------------------------------------------------------
+Campo_arqConsulta_QuemAgRet_Usuario.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_QuemAgRet_Usuario()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "QuemAgRet_Usuario", "QuemAgRet_Usuario", "Usuario", QuemAgRet, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var QuemAgRet_Usuario = new Campo_arqConsulta_QuemAgRet_Usuario;
+
+//------------------------------------------------------------
+Campo_arqConsulta_QdoAgRet.prototype = new Lance_CampoData;
+
+function Campo_arqConsulta_QdoAgRet()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "QdoAgRet", "QdoAgRet", "QdoAgRet", 8, "dd/mm/aaaa", true);
+}
+
+var QdoAgRet = new Campo_arqConsulta_QdoAgRet;
+
+//------------------------------------------------------------
 Campo_arqConsulta_DataRet.prototype = new Lance_CampoData;
 
 function Campo_arqConsulta_DataRet()
@@ -1573,6 +1606,71 @@ Campo_arqConsulta_Saldo.prototype.Cabecalho = function()
 
 Saldo.EhCalculado = true;
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_QuemAgRet.prototype.FiltroPai = function()
+{
+			return( "" + vijCallCenter() + "" );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_QuemAgRet.prototype.Existencia = function()
+{
+	return( TrgQtdM > 0 && Saldo == 0 );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_QuemAgRet_Usuario.prototype.Existencia = function()
+{
+	return( TrgQtdM > 0 && Saldo == 0 );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_QuemAgRet_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( QuemAgRet.Obrigatorio( p_comMsg ) );
+}
+
+QuemAgRet_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_QdoAgRet.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A data de quando o agendamento de retirada foi feito é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_QdoAgRet.prototype.TemErro = function()
+{
+		if( tem(this) && ( quantosDias( QdoAgRet, HOJE ) > 0 ) )
+	{
+		alert( "Data inválida" );
+		return( true );
+	}
+	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_QdoAgRet.prototype.Existencia = function()
+{
+	return( tem( QuemAgRet_Usuario ) );
+}
+
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqConsulta_DataRet.prototype.Cabecalho = function()
@@ -1585,7 +1683,7 @@ Campo_arqConsulta_DataRet.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_DataRet.prototype.Existencia = function()
 {
-	return( TrgQtdM > 0 && Saldo == 0 );
+	return( tem( QuemAgRet_Usuario ) );
 }
 
 //-------------------------------------------------------------
@@ -1811,6 +1909,14 @@ Campo_arqConsulta_ContaPTra.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_arqConsulta_QuemAgRet.prototype.ExistenciaEspecial = function()
+{
+	return( ( !QuemAgRet_Usuario.Obrigatorio( false ) || tem(QuemAgRet_Usuario) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_arqConsulta_AssesRet.prototype.ExistenciaEspecial = function()
 {
 	return( ( !AssesRet_Usuario.Obrigatorio( false ) || tem(AssesRet_Usuario) ) );
@@ -1842,8 +1948,10 @@ EntraParc.ExistenciasDependentes= [ EntraValP,EntraTotP ];
 SaldoFPg_FormaPg.ExistenciasDependentes= [ SaldoFPg ];
 ContaCons_Transacao.ExistenciasDependentes= [ ContaCons ];
 ContaPTra_Transacao.ExistenciasDependentes= [ ContaPTra ];
-TrgQtdM.ExistenciasDependentes= [ DataRet ];
-Saldo.ExistenciasDependentes= [ DataRet ];
+TrgQtdM.ExistenciasDependentes= [ QuemAgRet,QuemAgRet_Usuario ];
+Saldo.ExistenciasDependentes= [ QuemAgRet,QuemAgRet_Usuario ];
+QuemAgRet_Usuario.ExistenciasDependentes= [ QuemAgRet ];
+QuemAgRet.ExistenciasDependentes= [ QdoAgRet,DataRet ];
 DataRet.ExistenciasDependentes= [ DiaRet,HoraRet,TStAgRet,ObsRet ];
 TStAgRet.ExistenciasDependentes= [ AssesRet,AssesRet_Usuario ];
 AssesRet_Usuario.ExistenciasDependentes= [ AssesRet ];
@@ -1866,6 +1974,7 @@ SaldoParc.ErrosDependentes= [ SaldoVal ];
 SaldoFPg_FormaPg.ErrosDependentes= [ SaldoFPg ];
 ContaCons_Transacao.ErrosDependentes= [ ContaCons ];
 ContaPTra_Transacao.ErrosDependentes= [ ContaPTra ];
+QuemAgRet_Usuario.ErrosDependentes= [ QuemAgRet ];
 AssesRet_Usuario.ErrosDependentes= [ AssesRet ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
@@ -1878,6 +1987,7 @@ EntraFPg.CamposChave= [ EntraFPg_FormaPg ];
 SaldoFPg.CamposChave= [ SaldoFPg_FormaPg ];
 ContaCons.CamposChave= [ ContaCons_Transacao ];
 ContaPTra.CamposChave= [ ContaPTra_Transacao ];
+QuemAgRet.CamposChave= [ QuemAgRet_Usuario ];
 AssesRet.CamposChave= [ AssesRet_Usuario ];
 }
 	//=========================================================================
@@ -1909,7 +2019,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, EntraValP, EntraTotP, BoletoMin, EntraObs, SaldoParc, SaldoVal, SaldoTotP, SaldoFPg, SaldoFPg_FormaPg, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, EntraValP, EntraTotP, BoletoMin, EntraObs, SaldoParc, SaldoVal, SaldoTotP, SaldoFPg, SaldoFPg_FormaPg, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

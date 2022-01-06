@@ -31,7 +31,9 @@ echo
 
 	$this->Pular1Linha(2),
 	$this->Cabecalhos( [ "Emails que receberá", "FormCab alinhaMeio", "2" ] ),
-	$this->Pedir( "Financeiro?", EmailFinan ),
+	$this->Pedir( "Financeiro?", 
+		[ "", EmailFinan,
+		[ brHtml(4) . "Medicamentos de consultas separados? ", EmCMediSep ] ] ),
 	$this->Pedir( "Acesso ao sistema",
 		[ "Diário? ", EmailAces,
 		[ brHtml(4) . "Semanal? ", EmailAcesS ] ] ),

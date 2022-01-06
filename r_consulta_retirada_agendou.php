@@ -11,7 +11,7 @@ class RelAgenda extends Relatorios
 		global $parQSelecao;
 
 		$this->tituloRelatorio = [ "Relatório de agendas de retirada de medicação",
-			$this->TituloData( "Agendadas para ", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ),
+			$this->TituloData( "Agendadas entre ", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ),
 			' ' ];
 
       $this->DefinirCabColunas(
@@ -25,7 +25,8 @@ class RelAgenda extends Relatorios
 
       $this->DefinirQuebras(
          [ 'QuebraPorClinica', 	SIM, NAO, SIM ],
-         [ 'QuebraPorData', 		SIM, NAO, SIM ] );
+         [ 'QuebraPorQuemAgRet',	SIM, NAO, SIM ],
+         [ 'QuebraPorQdoAgRet', 	SIM, NAO, SIM ] );
 
 		$this->DefinirTotais( "totAgendas" );
 
@@ -83,28 +84,51 @@ class RelAgenda extends Relatorios
 	}
 
 	//------------------------------------------------------------------------
-	//	Quebra por Data
+	//	Quebra por QuemAgRet
 	//------------------------------------------------------------------------
-	function QuebraPorData()
+	function QuebraPorQuemAgRet()
 	{
-		return( $this->regAtual->DATARET );
+		return( $this->regAtual->QUEMAGRET );
 	}
 
 	//------------------------------------------------------------------------
-	function CabQuebraPorData()
+	function CabQuebraPorQuemAgRet()
 	{
 		$regA = &$this->regAtual;
-		$this->quebraData = formatarData( $regA->DATARET) . " - " . formatarData( $regA->DATARET, 'ddd' ) ;
-		$this->CabQuebra( $this->quebraData );
+		$this->quebraQuemAgRet = $regA->QUEMAGRET;
+		$this->CabQuebra( $this->quebraQuemAgRet );
+	}
+
+	//------------------------------------------------------------------------
+	function PeQuebraPorQuemAgRet()
+	{
+   	$this->PeQuebra( "TOTAL DE " . $this->quebraQuemAgRet );
+		$this->PularLinha( 4 );
+	}
+   
+	//------------------------------------------------------------------------
+	//	Quebra por Data
+	//------------------------------------------------------------------------
+	function QuebraPorQdoAgRet()
+	{
+		return( $this->regAtual->QDOAGRET );
+	}
+
+	//------------------------------------------------------------------------
+	function CabQuebraPorQdoAgRet()
+	{
+		$regA = &$this->regAtual;
+		$this->quebraQdoAgRet = formatarData( $regA->QDOAGRET ) . " - " . formatarData( $regA->QDOAGRET, 'ddd' );
+		$this->CabQuebra( $this->quebraQdoAgRet );
       $this->ImprimirCabColunas();
 	}
 
 	//------------------------------------------------------------------------
-	function PeQuebraPorData()
+	function PeQuebraPorQdoAgRet()
 	{
 		global $g_debugProcesso, $parQSelecao;
 
-   	$this->PeQuebra( "TOTAL DE " . $this->quebraData );
+   	$this->PeQuebra( "TOTAL DE " . $this->quebraQdoAgRet );
 		$this->PularLinha( 4 );
 	}
 
@@ -134,24 +158,22 @@ class RelAgenda extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelAgenda( RETRATO, A4, 'Agendas_Retirada.pdf', '', true, .93 );
+$proc = new RelAgenda( RETRATO, A4, 'Agendou_Retirada.pdf', '', true, .93 );
 
 $filtro = substr(
    ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
-	filtrarPorIntervaloData( 'C.DataRet', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
-   filtrarPorLig( "C.Pessoa", $parQSelecao->CLIENTE ) .
-	filtrarPorLig( "C.TStAgRet", $parQSelecao->TSTAGRET ) .
-	filtrarPorLig( "C.AssesRet", $parQSelecao->ASSESSOR ) .
+	filtrarPorIntervaloData( 'C.QdoAgRet', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
+	filtrarPorLig( "C.QuemAgRet", $parQSelecao->CALLCENTER ) .
    filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 );
 
 $select = "Select L.Clinica, C.Num as NumConsulta, C.DataRet, C.HoraRet, P.Nome, P.Prontuario,
-      P.NumCelular, T.Descritor as TStAgRet, U.Nome as Assessor
+      P.NumCelular, T.Descritor as TStAgRet, U.Nome as QuemAgRet, C.QdoAgRet
 	From arqConsulta C
 		join arqClinica 			L on L.idPrimario=C.Clinica
       join arqPessoa    		P on P.idPrimario=C.Pessoa
       left join tabTStAgRet	T on T.idPrimario=C.TStAgRet
-		left join arqUsuario		U on U.idPrimario=C.AssesRet
+		left join arqUsuario		U on U.idPrimario=C.QuemAgRet
 	Where " . $filtro . "
-	Order by L.Clinica, C.DataRet, C.HoraRet";
+	Order by L.Clinica, U.Nome, C.QdoAgRet";
 
 $proc->Processar( $select );

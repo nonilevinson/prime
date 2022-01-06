@@ -478,5 +478,6 @@ var Menu_5 = new Array( 1,"Emails enviou","","E",23,"","",cnfConfig["EMAIL"] == 
 var Menu_6 = new Array( 1,"Alterar senha","","h",68,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_usuario_senha^^^^^^^^^^^^^^^^^^", "", 0,18,[68],[]);
 var Menu_7 = new Array( 1,"Ag. Retiradas","","d",202,"","",1,"","1","a_agret","arqAgRet","Folhear","Assessor","?","","", "","", 0,18,[],[53]);
 var Menu_8 = new Array( 1,"Retirada","","t",228,"","",1,"","1","a_consul","arqConsulta","Folhear","AssesRet","?","","", "","", 0,18,[],[39]);
-parent.navegacao.MenuPrincQtdOpcoes=8;
+var Menu_9 = new Array( 1,"Agendou retirada","","g",231,"","",1,"","1","a_consul","arqConsulta","Folhear","QuemAgRet","?","","", "","", 0,18,[],[39]);
+parent.navegacao.MenuPrincQtdOpcoes=9;
 }

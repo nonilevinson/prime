@@ -103,6 +103,9 @@ CriarForms(
 	$this->Pular1Linha(2),
    $this->Cabecalhos( [ "Os campos abaixo somente são editáveis se houver uma
 		quantidade de medicação prescrita e o saldo for zero", 'FormCab alinhaMeio', '2' ] ),
+	$this->Pedir( "Agendado por",
+		[ "", QuemAgRet,
+		[ brHtml(1) . "em ", QdoAgRet ] ] ),
 	$this->Pedir( "Data",
       [ "", DataRet,
       [ " ", DiaRet,

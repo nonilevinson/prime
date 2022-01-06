@@ -111,6 +111,39 @@ class campo_parQSelecao_Assessor_Usuario extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo CallCenter
+//======================================================
+
+class campo_parQSelecao_CallCenter extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "CallCenter", "CallCenter", "CallCenter", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo CallCenter_Usuario
+//======================================================
+
+class campo_parQSelecao_CallCenter_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "CallCenter_Usuario", "CallCenter_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CallCenter", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Usuário" );
+	}
+
+}
+
+//======================================================
 //	Campo StatusLog
 //======================================================
 
@@ -955,6 +988,8 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Medico_Usuario(),
 			new campo_parQSelecao_Assessor(),
 			new campo_parQSelecao_Assessor_Usuario(),
+			new campo_parQSelecao_CallCenter(),
+			new campo_parQSelecao_CallCenter_Usuario(),
 			new campo_parQSelecao_StatusLog(),
 			new Lance_CampoCadeia( "StatusLog_Chave", "StatusLog_Chave", "Chave", 2, "xx", EH_CHAVE, StatusLog ),
 			new Lance_CampoCadeia( "StatusLog_Descritor", "StatusLog_Descritor", "Descritor", 13, "xxxxxxxxxxxxx", EH_DESCRITOR, StatusLog ),

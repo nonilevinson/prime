@@ -2147,12 +2147,14 @@ CREATE TABLE arqConsulta
 	/* 37*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
 	/* 38*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
 	/* 39*/	/* SALDO */
-	/* 40*/	DATARET DATE, /* Máscara = 4ano */
-	/* 41*/	/* DIARET */
-	/* 42*/	HORARET TIME, /* Máscara = Hhmm */
-	/* 43*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
-	/* 44*/	ASSESRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 45*/	OBSRET BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 40*/	QUEMAGRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 41*/	QDOAGRET DATE, /* Máscara = 4ano */
+	/* 42*/	DATARET DATE, /* Máscara = 4ano */
+	/* 43*/	/* DIARET */
+	/* 44*/	HORARET TIME, /* Máscara = Hhmm */
+	/* 45*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
+	/* 46*/	ASSESRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 47*/	OBSRET BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2960,7 +2962,7 @@ ALTER TABLE arqConsulta ADD DIARET VARCHAR( 15 ) computed by ( CASE WHEN ( DataR
 	WHEN( extract( weekday from Data ) = 5 ) THEN( 'SEXTA-FEIRA' )
 	ELSE ( 'SÁBADO' )
 	END  ) ELSE ( '' ) END ); 
-ALTER TABLE arqConsulta ALTER DIARET POSITION 41;
+ALTER TABLE arqConsulta ALTER DIARET POSITION 43;
 commit;
 
 
@@ -3206,7 +3208,7 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.DATARET, A0.DIARET, A0.HORARET, A0.TSTAGRET, A15.CHAVE as TStAgRet_CHAVE, A15.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESRET, A16.USUARIO as ASSESRET_USUARIO, A0.OBSRET
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.ENTRAVALP, A0.ENTRATOTP, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A12.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A13.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A14.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.QUEMAGRET, A15.USUARIO as QUEMAGRET_USUARIO, A0.QDOAGRET, A0.DATARET, A0.DIARET, A0.HORARET, A0.TSTAGRET, A16.CHAVE as TStAgRet_CHAVE, A16.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESRET, A17.USUARIO as ASSESRET_USUARIO, A0.OBSRET
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
@@ -3222,8 +3224,9 @@ RECREATE VIEW V_arqConsulta AS
 	left join arqFormaPg A12 on A12.IDPRIMARIO = A0.SALDOFPG
 	left join arqConta A13 on A13.IDPRIMARIO = A0.CONTACONS
 	left join arqConta A14 on A14.IDPRIMARIO = A0.CONTAPTRA
-	left join tabTStAgRet A15 on A15.IDPRIMARIO=A0.TSTAGRET
-	left join arqUsuario A16 on A16.IDPRIMARIO = A0.ASSESRET;
+	left join arqUsuario A15 on A15.IDPRIMARIO = A0.QUEMAGRET
+	left join tabTStAgRet A16 on A16.IDPRIMARIO=A0.TSTAGRET
+	left join arqUsuario A17 on A17.IDPRIMARIO = A0.ASSESRET;
 commit;
 
 RECREATE VIEW V_arqPlantao AS 
@@ -3437,11 +3440,10 @@ insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de 
 insert into arqLanceOperacao values(200019,2,'Rotina para envio de teste de ação de email','',19,20,0,'');
 insert into arqLanceOperacao values(200020,2,'Visualizar ação de email','',20,20,0,'');
 insert into arqLanceOperacao values(200175,2,'Relatório da relação de consultas','',175,50,0,'');
-insert into arqLanceOperacao values(200203,2,'Relatório das agendas de retirada de medicação','',203,50,0,'');
+insert into arqLanceOperacao values(200203,2,'Relatório das agendas de retirada de medicação por dia','',203,50,0,'');
 insert into arqLanceOperacao values(200190,2,'Relatório de comissionamento do Call Center','',190,50,0,'');
 insert into arqLanceOperacao values(200170,2,'Relatório de consultas dispensadas por médicos','',170,50,0,'');
 insert into arqLanceOperacao values(200030,2,'Rotina para ver as operações do sistema','',30,null,0,'');
-insert into arqLanceOperacao values(200056,2,'Relatório resumido de emails enviados','',56,50,0,'cnfConfig["EMAIL"] == 1');
 insert into arqLanceOperacao values(200038,2,'Relatório avisos internos','',38,50,0,'');
 insert into arqLanceOperacao values(200039,2,'Relatório de avisos internos lidos','',39,50,0,'');
 insert into arqLanceOperacao values(200041,2,'Rotina para ver as operações do sistema','',41,90,0,'');
@@ -3469,6 +3471,7 @@ insert into arqLanceOperacao values(200151,2,'Rotina para gerar plantões médicos
 insert into arqLanceOperacao values(200130,2,'Rotina para criar conta e parcelas pelo menu Financeiro','',130,10,0,'');
 insert into arqLanceOperacao values(200162,2,'Gerar conta e parcela de recorrentes','',162,10,0,'');
 insert into arqLanceOperacao values(200061,2,'Rotina 1','',61,99,1,'GrupoAtualEm()');
+insert into arqLanceOperacao values(200056,2,'Relatório resumido de emails enviados','',56,50,0,'cnfConfig["EMAIL"] == 1');
 insert into arqLanceOperacao values(200166,2,'Relatório de parcelas de contas a pagar e a receber','',166,50,0,'');
 insert into arqLanceOperacao values(200176,2,'Rotina para criar Saída de caixa da Recepção','',176,10,0,'');
 insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa da Recepção','',177,10,0,'');
@@ -3485,6 +3488,7 @@ insert into arqLanceOperacao values(200223,2,'Relatório analítico de medicação p
 insert into arqLanceOperacao values(200225,2,'Relatório de posição de estoque','',225,50,0,'');
 insert into arqLanceOperacao values(200226,2,'Relatório de lotes por validade','',226,50,0,'');
 insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação prescrita','',230,50,0,'');
+insert into arqLanceOperacao values(200233,2,'Relatório das agendas de retirada de medicação por quem agendou','',233,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -3608,6 +3612,7 @@ ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_MovEstoque FOREIGN KEY ( MOV
 ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_Lote FOREIGN KEY ( LOTE ) REFERENCES arqLote ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqItemMov ADD CONSTRAINT arqItemMov_FK_TMov FOREIGN KEY ( TMOV ) REFERENCES tabTMov ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Lote FOREIGN KEY ( LOTE ) REFERENCES arqLote ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_QuemAgRet FOREIGN KEY ( QUEMAGRET ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TStAgRet FOREIGN KEY ( TSTAGRET ) REFERENCES tabTStAgRet ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_AssesRet FOREIGN KEY ( ASSESRET ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
@@ -4814,6 +4819,8 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'ContaCons', OLD.ContaCons, NEW.ContaCons );
 	execute procedure set_log( 12, NEW.idPrimario, 'ContaPTra', OLD.ContaPTra, NEW.ContaPTra );
+	execute procedure set_log( 12, NEW.idPrimario, 'QuemAgRet', OLD.QuemAgRet, NEW.QuemAgRet );
+	execute procedure set_log( 12, NEW.idPrimario, 'QdoAgRet', OLD.QdoAgRet, NEW.QdoAgRet );
 	execute procedure set_log( 12, NEW.idPrimario, 'DataRet', OLD.DataRet, NEW.DataRet );
 	execute procedure set_log( 12, NEW.idPrimario, 'HoraRet', OLD.HoraRet, NEW.HoraRet );
 	execute procedure set_log( 12, NEW.idPrimario, 'TStAgRet', OLD.TStAgRet, NEW.TStAgRet );

@@ -295,7 +295,7 @@ if( $op == 200 ) //* selecao arqAgRet
 	$this->Pedir( "Assessor" );
 }
 
-if( $op == 203 ) //* r_agret
+if( $op == 203 ) //* r_consulta_retirada
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),
@@ -350,6 +350,16 @@ if( $op == 226 ) //* r_lote_validade
 	$this->Pedir( " ",
 		[ "Lote ", Lote_Lote,
 		[ "", Lote ] ] );
+}
+
+if( $op == 233 ) //* r_consulta_retirada_agendou
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Agendadas entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Call Center", CallCenter );
 }
 
 //==================================================================================
