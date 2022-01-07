@@ -3470,6 +3470,7 @@ insert into arqLanceOperacao values(200039,2,'Relatório de avisos internos lidos
 insert into arqLanceOperacao values(200041,2,'Rotina para ver as operações do sistema','',41,90,0,'');
 insert into arqLanceOperacao values(200040,2,'Acesso ao configurador geral do sistema','',40,90,0,'');
 insert into arqLanceOperacao values(200053,2,'Rotina para programar envio de ações de email','',53,20,0,'');
+insert into arqLanceOperacao values(200234,2,'Envia o m_cmedica_separado','',234,99,1,'');
 insert into arqLanceOperacao values(200169,2,'Envia o m_clinica_ativa','',169,99,1,'');
 insert into arqLanceOperacao values(200167,2,'Envia o m_parcela_padrao Hojes','',167,99,1,'');
 insert into arqLanceOperacao values(200168,2,'Envia o m_parcela_aberta','',168,99,1,'');
