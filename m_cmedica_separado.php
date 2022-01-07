@@ -19,8 +19,6 @@ class EmailUsuario extends EmailParaUsuario
 	}
 
 	//------------------------------------------------------------------------
-	//	Quebra por Clinica
-	//------------------------------------------------------------------------
 	function QuebraPorClinica()
 	{
 		return( $this->regAtual->CLINICA );
@@ -39,7 +37,6 @@ class EmailUsuario extends EmailParaUsuario
 				<td class='centro'>Prontuário</td>
 				<td class='centro'>Celular</td>
 			</tr>";
-
 	}
 
 	//------------------------------------------------------------------------
@@ -49,6 +46,27 @@ class EmailUsuario extends EmailParaUsuario
 	}
 
 	//------------------------------------------------------------------------
+	function QuebraPorConsulta()
+	{
+		return( $this->regAtual->NUM );
+	}
+
+	//------------------------------------------------------------------------
+	function CabQuebraPorConsulta()
+	{
+		$regA = &$this->regAtual;
+
+		$this->msgEmail .= "
+			<tr>
+				<td class='centro'>" . formatarNum( $regA->NUM ) . "</td>
+				<td>" . $regA->NOME . "</td>
+				<td class='centro'>" . $regA->PRONTUARIO . "</td>
+				<td class='centro'>" . formatarStr( $regA->NUMCELULAR, 'xx x.xxxx.xxxx' ) . "</td>
+			</tr>";
+	}
+	
+	//------------------------------------------------------------------------
+/*
 	function Basico()
 	{
 		$regA = &$this->regAtual;
@@ -60,8 +78,8 @@ class EmailUsuario extends EmailParaUsuario
 				<td class='centro'>" . $regA->PRONTUARIO . "</td>
 				<td class='centro'>" . formatarStr( $regA->NUMCELULAR, 'xx x.xxxx.xxxx' ) . "</td>
 			</tr>";
-//echo '<br>M_= '.$this->msgEmail;
 	}
+*/
 }
 
 //------------------------------------------------------------------------
@@ -76,7 +94,10 @@ $proc->comSupervisor   = false;
 $proc->campoHabilitado = "EmCMediSep";
 $proc->tituloEmail = CLIENTE_NOME . ": Consultas com a medicação separada em " . formatarData( $ontem );
 
-$proc->DefinirQuebras( [ 'QuebraPorClinica', SIM, NAO, SIM ] );
+$proc->DefinirQuebras( 
+	[ 'QuebraPorClinica', 	SIM, NAO, SIM ],
+	[ 'QuebraPorConsulta',	SIM, NAO, NAO ]
+	 );
 
 $select = "Select C.Num, L.Clinica, P.Nome, P.Prontuario, P.NumCelular
 	From arqCMedica M
