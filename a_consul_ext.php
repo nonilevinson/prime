@@ -26,7 +26,26 @@ function ext_filtrarSelecao()
 {
    $parQSelecao = lerParametro( 'parQSelecao' );
 
-   return( substr(
+   switch( $parQSelecao->TCMEDICA )
+   {
+      case 1: //* nada separado
+         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdMEnt = 0 ) and "; 
+         break; 
+         
+      case 2: /// parcialmente separado;
+         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdMEnt > 0 and A.TrgQtdM > A.TrgQtdMEnt ) and "; 
+         break; 
+      
+      case 3: /// Totalmente separado e não entregue;
+         $tCMedica = "( (A.TstAgRet is null or A.TstAgRet < 3) and A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and "; 
+         break; 
+      
+      case 4: /// Totalmente separado e entregue;
+         $tCMedica = "( A.TstAgRet = 3 and A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and "; 
+         break;       
+   }
+
+   return( substr( $tCMedica .
       ( SQL_VETIDCLINICA ? "A.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
       filtrarPorIntervaloData( "A.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
       filtrarPorLig( "A.TStCon", $parQSelecao->TSTCON ) .

@@ -915,6 +915,39 @@ function Campo_parQSelecao_Lote_Lote()
 
 var Lote_Lote = new Campo_parQSelecao_Lote_Lote;
 
+//------------------------------------------------------------
+Campo_parQSelecao_TCMedica.prototype = new Lance_CampoLigado;
+
+function Campo_parQSelecao_TCMedica()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TCMedica", "TCMedica", "TCMedica", "tabTCMedica", "t_tcmedi", null, "",0);
+}
+
+var TCMedica = new Campo_parQSelecao_TCMedica;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TCMedica_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TCMedica_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TCMedica_Chave", "TCMedica_Chave", "TCMedica", TCMedica, 1, "u", false);
+}
+
+var TCMedica_Chave = new Campo_parQSelecao_TCMedica_Chave;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TCMedica_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TCMedica_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TCMedica_Descritor", "TCMedica_Descritor", "TCMedica", TCMedica, 34, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var TCMedica_Descritor = new Campo_parQSelecao_TCMedica_Descritor;
+
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -1522,6 +1555,8 @@ Campo_parQSelecao_Lote_Lote.prototype.ObrigatorioEspecial = function( p_comMsg )
 }
 
 Lote_Lote.TipoCampo |= CAMPO_CHAVE_PAI;
+TCMedica_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TCMedica_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
@@ -1755,7 +1790,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Medicamen, Medicamen_Medicamen, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Medicamen, Medicamen_Medicamen, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, TCMedica, TCMedica_Chave, TCMedica_Descritor ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

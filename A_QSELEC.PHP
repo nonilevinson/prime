@@ -972,6 +972,19 @@ class campo_parQSelecao_Lote_Lote extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo TCMedica
+//======================================================
+
+class campo_parQSelecao_TCMedica extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TCMedica", "TCMedica", "TCMedica", 0, "tabTCMedica", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQSelecao
 //======================================================
 function listaCampos_parQSelecao( $p_prefixo )
@@ -1064,7 +1077,10 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Lote(),
 			new campo_parQSelecao_Lote_Medicamen(),
 			new campo_parQSelecao_Lote_Medicamen_Medicamen(),
-			new campo_parQSelecao_Lote_Lote() )
+			new campo_parQSelecao_Lote_Lote(),
+			new campo_parQSelecao_TCMedica(),
+			new Lance_CampoCadeia( "TCMedica_Chave", "TCMedica_Chave", "Chave", 1, "x", EH_CHAVE, TCMedica ),
+			new Lance_CampoCadeia( "TCMedica_Descritor", "TCMedica_Descritor", "Descritor", 34, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TCMedica ) )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

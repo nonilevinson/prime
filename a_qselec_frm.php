@@ -189,6 +189,8 @@ if( $op == 110 ) //* selecao arqConsulta
 	$this->Pedir( "Consultas entre",
 		[ "", DataIni,
 		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Separação",
+		[ "", TCMedica, " (de medicamentos)" ] ),
 		
 	$this->Pular1Linha(2),
 	$this->Cabecalhos( [ "Retiradas", 'FormCab alinhaMeio', '2' ] ),

@@ -1596,6 +1596,27 @@ commit;
 
 
 /************************************************************
+	TABELA tabTCMedica
+************************************************************/
+
+CREATE TABLE tabTCMedica
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTCMedica_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTCMedica_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTCMedica VALUES ( 1, '1', 'Nada separado' );
+INSERT INTO tabTCMedica VALUES ( 2, '2', 'Parcialmente separado' );
+INSERT INTO tabTCMedica VALUES ( 3, '3', 'Totalmente separado e não entregue' );
+INSERT INTO tabTCMedica VALUES ( 4, '4', 'Totalmente separado e entregue' );
+commit;
+
+
+/************************************************************
 	Arquivo Bairro    
 ************************************************************/
 
