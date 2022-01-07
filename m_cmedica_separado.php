@@ -8,7 +8,6 @@ class EmailUsuario extends EmailParaUsuario
 	function Inicio()
 	{
 		$this->msgEmail = "<tr><td colspan='4' class='centro'>" . $this->tituloEmail . "</td></tr>";
-
 		parent::Inicio();
 	}
 
