@@ -28,8 +28,6 @@ class campo_arqConsulta_Num extends Lance_CampoNumerico
 		global $g_regAtual;
 		if( !tem( $g_regAtual->DATARET ) && $g_regAtual->TSTAGRET != 3 && ($g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM == $g_regAtual->TRGQTDMENT) )
 			return( "VerdeFundoDir" );
-		if( $g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM < $g_regAtual->TRGQTDMENT )
-			return( "VermelhoFundoCentro" );
 		if( tem( $g_regAtual->DATARET ) && !tem( $g_regAtual->TSTAGRET ) )
 			return( "StAgendado" );
 		if( tem( $g_regAtual->DATARET ) && $g_regAtual->TSTAGRET == 1 )
