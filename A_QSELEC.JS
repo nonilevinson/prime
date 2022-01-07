@@ -1093,32 +1093,12 @@ Campo_parQSelecao_Cadeia100.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_parQSelecao_DataIni.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( ultimaLigOpcaoEm( 53,155,170,175,203,223,230 ) )
+		if( ultimaLigOpcaoEm( 53,155,170,175,203,223,230,233 ) )
 	{
 		if( p_comMsg ) alert( "A data é obrigatória" );
 		return( true );
 	}
 	return( false );
-}
-
-//-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
-Campo_parQSelecao_DataFim.prototype.Sugeriu = function()
-{
-{
-		if( !tem( DataIni ) )
-	return( this.AtribuiuSemCritica(  ) );
-}
-{
-		if( quantosDias( DataFim, DataIni ) < 0 )
-	return( this.AtribuiuSemCritica( DataIni ) );
-}
-{
-		if( quantosDias( DataFim, DataIni ) > 0 )
-	return( this.AtribuiuSemCritica( DataFim ) );
-}
-		return( true );
 }
 
 //-------------------------------------------------------------
@@ -1140,26 +1120,6 @@ Campo_parQSelecao_DataFim.prototype.TemErro = function()
 Campo_parQSelecao_DataFim.prototype.Existencia = function()
 {
 	return( tem( DataIni ) );
-}
-
-//-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
-Campo_parQSelecao_DataFim1.prototype.Sugeriu = function()
-{
-{
-		if( !tem( DataFim1 ) )
-	return( this.AtribuiuSemCritica(  ) );
-}
-{
-		if( quantosDias( DataFim1, DataIni1 ) < 0 )
-	return( this.AtribuiuSemCritica( DataIni1 ) );
-}
-{
-		if( quantosDias( DataFim1, DataIni1 ) > 0 )
-	return( this.AtribuiuSemCritica( DataFim1 ) );
-}
-		return( true );
 }
 
 //-------------------------------------------------------------
