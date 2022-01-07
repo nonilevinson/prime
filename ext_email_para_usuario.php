@@ -84,7 +84,7 @@ $teste = true;
 				$this->ProcessarMultiEmail( $vetEmail, $this->tituloEmail );
 		}
 
-//$this->ProcessarEmail( 'noni.levinson@gmail.com', "Usuário - " . $this->tituloEmail );
+// $this->ProcessarEmail( 'noni.levinson@gmail.com', "Usuário - " . $this->tituloEmail );
 
 		$this->txtEmailSemRodape = $this->txtEmail . "<br>I=" . $g_horaIni . " F=" . AGORA();
 

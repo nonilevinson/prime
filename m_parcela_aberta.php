@@ -2,7 +2,7 @@
 
 require_once( 'ext_email_para_usuario.php' );
 
-class EmailUsuario extends EmailParaUsuario 
+class EmailUsuario extends EmailParaUsuario
 {
 	//------------------------------------------------------------------------
 	function Inicio()
@@ -32,8 +32,8 @@ class EmailUsuario extends EmailParaUsuario
 		$totQtdPagar   = $this->ValorTotal( 'totQtdPagar' );
 		$totQtd        = $totQtdReceber + $totQtdPagar;
 
-		$this->msgEmail .=
-			"<tr>
+		$this->msgEmail .= "
+			<tr>
 				<td colspan='6'>A receber</td>
 				<td align='right'>" . formatarValor( $totReceber ) . "</td>
 				<td colspan='2'>" . formatarNum( $totQtdReceber ) . " parcelas</td>
@@ -49,8 +49,6 @@ class EmailUsuario extends EmailParaUsuario
 				<td colspan='2'>" . formatarNum( $totQtd ) . " parcelas</td>
 			</tr>
 			<tr><td colspan='10'>&nbsp;</td></tr>";
-
-		$this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );
 	}
 
 	//------------------------------------------------------------------------
@@ -87,7 +85,7 @@ class EmailUsuario extends EmailParaUsuario
 	{
 		$this->PeQuebra();
 	}
-	
+
 	//------------------------------------------------------------------------
 	function Basico()
 	{
@@ -95,8 +93,8 @@ class EmailUsuario extends EmailParaUsuario
 		$tPgRec = $regA->IDTPGREC;
 		$valor = $tPgRec == 1 ? -$regA->VALORLIQ : $regA->VALORLIQ;
 
-		$this->msgEmail .=
-			"<tr class='" . $this->estilo . "'>
+		$this->msgEmail .= "
+			<tr>
 				<td  class='centro'>" . formatarData( $regA->VENCIMENTO ) . "</td>
 				<td>" . $regA->TPGREC . "</td>
 				<td>" . $regA->TFCOBRA . "</td>
@@ -112,8 +110,6 @@ class EmailUsuario extends EmailParaUsuario
 		$this->acumularTotal( 'totPagar',	$tPgRec == 1 ? $valor : 0 );
 		$this->acumularTotal( 'totQtdReceber', $tPgRec == 2 ? 1 : 0 );
 		$this->acumularTotal( 'totQtdPagar', $tPgRec == 1 ? 1 : 0 );
-
-		$this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );
 	}
 }
 
@@ -125,7 +121,7 @@ global $g_debugProcesso;
 $ehUtil = ehUtil( HOJE );
 if( $g_debugProcesso ) echo '<br><b>ehUtil=</b> '.simNao($ehUtil).' - '.HOJE;
 
-if( $ehUtil ) 
+if( $ehUtil )
 {
 	$proc = new EmailUsuario();
 

@@ -32,8 +32,8 @@ class EmailUsuario extends EmailParaUsuario
 		$totQtdPagar   = $this->ValorTotal( 'totQtdPagar' );
 		$totQtd        = $totQtdReceber + $totQtdPagar;
 
-		$this->msgEmail .=
-			"<tr>
+		$this->msgEmail .= "
+			<tr>
 				<td colspan='6'>A receber</td>
 				<td align='right'>" . formatarValor( $totReceber ) . "</td>
 				<td colspan='2'>" . formatarNum( $totQtdReceber ) . " parcelas</td>
@@ -49,9 +49,6 @@ class EmailUsuario extends EmailParaUsuario
 				<td colspan='2'>" . formatarNum( $totQtd ) . " parcelas</td>
 			</tr>
 			<tr><td colspan='10'>&nbsp;</td></tr>";
-
-		$this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );
-
 	}
 
 	//------------------------------------------------------------------------
@@ -96,8 +93,8 @@ class EmailUsuario extends EmailParaUsuario
 		$tPgRec = $regA->IDTPGREC;
 		$valor  = $tPgRec == 1 ? -$regA->VALORLIQ : $regA->VALORLIQ;
 
-		$this->msgEmail .=
-			"<tr class='" . $this->estilo . "'>
+		$this->msgEmail .= "
+			<tr>
 				<td>" . $regA->TPGREC . "</td>
 				<td>" . $regA->TFCOBRA . "</td>
 				<td class='centro'>" . ($regA->DATAPAGTO ? "<b>Sim</b>" : "Não") . "</td>
@@ -116,8 +113,7 @@ class EmailUsuario extends EmailParaUsuario
 			$this->acumularTotal( 'totQtdReceber', $tPgRec == 2 ? 1 : 0 );
 			$this->acumularTotal( 'totQtdPagar', $tPgRec == 1 ? 1 : 0 );
 		}
-//echo '<br>M_PARCELA_PADRAO= '.$this->msgEmail;
-		$this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );
+//echo '<br>M_= '.$this->msgEmail;
 	}
 }
 
