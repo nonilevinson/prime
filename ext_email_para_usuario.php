@@ -74,7 +74,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 Envia para=</b> '.$umEmail->EMAIL;
 				$vetEmail[] = [ $umEmail->EMAIL, $umEmail->USUARIO ];
 			}
 
-$teste = true;
+$teste = false;
 			if( $teste )
 			{
 				$this->comSupervisor = false;

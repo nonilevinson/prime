@@ -7,7 +7,7 @@ class EmailUsuario extends EmailParaUsuario
 	//------------------------------------------------------------------------
 	function Inicio()
 	{
-		$this->msgEmail = "<tr><td colspan='9' class='centro'>" . $this->tituloEmail . "</td></tr>";
+		$this->msgEmail = "<tr><td colspan='4' class='centro'>" . $this->tituloEmail . "</td></tr>";
 
 		parent::Inicio();
 	}
@@ -63,23 +63,7 @@ class EmailUsuario extends EmailParaUsuario
 				<td class='centro'>" . $regA->PRONTUARIO . "</td>
 				<td class='centro'>" . formatarStr( $regA->NUMCELULAR, 'xx x.xxxx.xxxx' ) . "</td>
 			</tr>";
-	}
-	
-	//------------------------------------------------------------------------
-/*
-	function Basico()
-	{
-		$regA = &$this->regAtual;
-
-		$this->msgEmail .= "
-			<tr>
-				<td class='centro'>" . formatarNum( $regA->NUM ) . "</td>
-				<td>" . $regA->NOME . "</td>
-				<td class='centro'>" . $regA->PRONTUARIO . "</td>
-				<td class='centro'>" . formatarStr( $regA->NUMCELULAR, 'xx x.xxxx.xxxx' ) . "</td>
-			</tr>";
-	}
-*/
+	}	
 }
 
 //------------------------------------------------------------------------
@@ -100,12 +84,14 @@ $proc->DefinirQuebras(
 	 );
 
 $select = "Select C.Num, L.Clinica, P.Nome, P.Prontuario, P.NumCelular
-	From arqCMedica M
-		join arqConsulta 			C on C.idPrimario=M.Consulta
-		join arqClinica			L on L.idPrimario=C.Clinica
-		left join arqPessoa  	P on P.idPrimario=C.Pessoa
-	Where M.DataSepara = dateadd( day, -1, current_date ) and C.TStAgRet is null and
-		C.TrgQtdM > 0 and C.TrgQtdM = C.TrgQtdMEnt
+	From( Select M.Consulta
+			From arqCMedica M
+			Where M.DataSepara = dateadd( day, -1, current_date )
+			Group by 1 ) M
+		join arqConsulta 	C on C.idPrimario=M.Consulta
+		join arqClinica	L on L.idPrimario=C.Clinica
+		join arqPessoa  	P on P.idPrimario=C.Pessoa
+	Where C.TStAgRet is null and C.TrgQtdM > 0 and C.TrgQtdM = C.TrgQtdMEnt
 	Order by L.Clinica, C.Num";
 
 $proc->Processar( $select );

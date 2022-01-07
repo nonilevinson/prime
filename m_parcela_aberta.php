@@ -7,7 +7,7 @@ class EmailUsuario extends EmailParaUsuario
 	//------------------------------------------------------------------------
 	function Inicio()
 	{
-		$this->msgEmail = "<tr><td colspan='10' class='centro'>" . $this->tituloEmail . "</td></tr>";
+		$this->msgEmail = "<tr><td colspan='9' class='centro'>" . $this->tituloEmail . "</td></tr>";
 
 		parent::Inicio();
 	}
@@ -23,7 +23,7 @@ class EmailUsuario extends EmailParaUsuario
 	function PeQuebra( $p_cabTotal )
 	{
 		if( $p_cabTotal )
-			$this->msgEmail .= "<tr><td colspan='10' class='centro'> " . $p_cabTotal . "</td></tr>";
+			$this->msgEmail .= "<tr><td colspan='9' class='centro'> " . $p_cabTotal . "</td></tr>";
 
 		$totReceber    = $this->ValorTotal( 'totReceber' );
 		$totPagar      = $this->ValorTotal('totPagar' );
@@ -48,7 +48,7 @@ class EmailUsuario extends EmailParaUsuario
 				<td align='right'>" . formatarValor( $balanco, 2, 0, ')' ) . "</td>
 				<td colspan='2'>" . formatarNum( $totQtd ) . " parcelas</td>
 			</tr>
-			<tr><td colspan='10'>&nbsp;</td></tr>";
+			<tr><td colspan='9'>&nbsp;</td></tr>";
 	}
 
 	//------------------------------------------------------------------------
@@ -65,7 +65,7 @@ class EmailUsuario extends EmailParaUsuario
 		$regA = &$this->regAtual;
 
 		$this->msgEmail .= "
-			<tr><td colspan='8' align='center'> " . $regA->CLINICA  . "</td></tr>
+			<tr><td colspan='9' align='center'> " . $regA->CLINICA  . "</td></tr>
 			<tr>
 				<td class='centro'>Tipo</td>
 				<td class='centro'>Forma</td>
