@@ -2,13 +2,13 @@
 
 require_once( 'ext_email_para_usuario.php' );
 
-class EmailPadrao extends EmailParaUsuario 
+class EmailPadrao extends EmailParaUsuario
 {
 	//------------------------------------------------------------------------
 	function Inicio()
-	{ 
-		$this->msgEmail .= 
-			"<tr><td colspan='7' class='centro'>" . $this->tituloEmail . "</td></tr>
+	{
+		$this->msgEmail .= "
+			<tr><td colspan='7' class='centro'>" . $this->tituloEmail . "</td></tr>
 			<tr>
 				<td class='centro'>Data</td>
 				<td class='centro'>Hora</td>
@@ -18,7 +18,7 @@ class EmailPadrao extends EmailParaUsuario
 				<td class='centro'>Não Enviados</td>
 				<td class='centro'>Total</td>
 			</tr>";
-		
+
 		parent::Inicio();
 	}
 
@@ -26,15 +26,15 @@ class EmailPadrao extends EmailParaUsuario
 	function Fim()
 	{
 		$regA = &$this->regAtual;
-		
-		$this->msgEmail .= 
-			"<tr>
+
+		$this->msgEmail .= "
+			<tr>
 			<td colspan='4'>Total</td>
 				<td class='centro'>" . $this->FormatarTotal( 'totEnviados' ) . "</td>
 				<td class='centro'>" . $this->FormatarTotal( 'totNao' ) . "</td>
-				<td class='centro'>" . $this->FormatarTotal( 'totTotal' ) . "</td>		
+				<td class='centro'>" . $this->FormatarTotal( 'totTotal' ) . "</td>
 			</tr>";
-		
+
 		parent::Fim();
 	}
 
@@ -43,12 +43,13 @@ class EmailPadrao extends EmailParaUsuario
 	//------------------------------------------------------------------------
 	function Basico()
 	{
+		global $g_debugProcesso;
 		$regA = &$this->regAtual;
 		$regA->NOME 	= "[[ NOME ]]";
 		$regA->APELIDO	= "[[ APELIDO ]]";
 
-		$this->msgEmail .= 
-			"<tr class='" . $this->estilo . "'>
+		$this->msgEmail .= "
+			<tr>
 				<td>" . formatarData( $regA->DATA ) . "</td>
 				<td>" . formatarHora( $regA->HORA ) . "</td>
 				<td>" . $regA->USUARIO . "</td>
@@ -61,30 +62,28 @@ class EmailPadrao extends EmailParaUsuario
 		$this->acumularTotal( 'totEnviados', $regA->ENVIADOS );
 		$this->acumularTotal( 'totNao',		 $regA->NENVIADOS );
 		$this->acumularTotal( 'totTotal',	 $regA->TOTAL );
-		
-		$this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );
-		
-		// ALTERA O CAMPO ENVIOU
-		$update = "UPdate arqLogEmail set Enviou = 1 Where idPrimario = " . $regA->IDLOGEMAIL;
-//echo '<br><br>U= '.$update;
-		sql_ExecutarComando( $update );
-	}	
+
+		//* ALTERA O CAMPO ENVIOU
+		sql_update( "arqLogEmail", [
+				"Enviou" => 1 ],
+			"idPrimario = " . $regA->IDLOGEMAIL );
+	}
 }
 
 //------------------------------------------------------------------------
 // Declaração do Relatório
 //------------------------------------------------------------------------
 global $g_debugProcesso;
-$hoje = formatarData( HOJE, 'aaaa/mm/dd' );
+$hoje  = formatarData( HOJE, 'aaaa/mm/dd' );
+$agora = formatarHora( AGORA, 'hh:mm:00' );
 
-$select = "Select L.Data, L.Hora, A.Titulo,
-		U.Usuario, L.idPrimario as idLogEmail, L.Enviados, L.NEnviados, L.Total
+$select = "Select L.Data, L.Hora, A.Titulo, U.Usuario, L.idPrimario as idLogEmail,
+		L.Enviados, L.NEnviados, L.Total
 	From arqLogEmail L
-		inner join arqAcaoEmail	A on A.idPrimario=L.Titulo
-		left join arqUsuario 	U on U.idPrimario=L.Usuario
+		join arqAcaoEmail		A on A.idPrimario=L.Titulo
+		left join arqUsuario U on U.idPrimario=L.Usuario
 	Where  L.Enviou = 0 and
-		( ( L.Data = '" . $hoje . "' and L.Hora <= '" . AGORA() . "') or 
-			( L.Data < '" . $hoje . "') ) 
+		( ( L.Data = " . $hoje . " and L.Hora <= '" . $agora . "' ) or ( L.Data < " . $hoje . " ) )
 	Order by L.Data, L.Hora";
 //if( $g_debugProcesso ) echo '<br>S= '.$select;
 
@@ -92,6 +91,6 @@ $proc = new EmailPadrao();
 
 $proc->campoHabilitado = "EmailPed";
 $proc->tituloEmail     = CLIENTE_NOME . ": Emails enviados";
-$proc->vetTotais       = array( "totEnviados", 'totNao', 'totTotal' );
+$proc->vetTotais       = [ "totEnviados", 'totNao', 'totTotal' ];
 
 $proc->Processar( $select );

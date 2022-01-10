@@ -8,7 +8,7 @@ class EmailCliente extends EmailPadrao
 	function EmailParaQuem()
 	{
 		$regA = &$this->regAtual;
-		
+
 		$this->idCliente = $regA->IDCLIENTE;
 		$this->emailPara = $regA->CLIENTE;
 	}
@@ -32,6 +32,7 @@ function enviarCRM()
 	}
 	else
 	{
+		$hoje = formatarData( HOJE, 'aaaa/mm/dd' );
 		$proc->idEmailProgramado = $g_idLogEmail;	//* idLogEmail = email programado para sair
 
 		$filtro = filtrarPorLig( "P.idPrimario", $g_idCliente ) .
@@ -44,7 +45,7 @@ function enviarCRM()
 				? filtrarPorIntervaloData( 'extract( day from P.Nascimento )', $parQSelecao->DIAINI, $parQSelecao->DIAFIM )
 				: '' ) .
 			( $parQSelecao->NUMPEQINI != 0
-				? filtrarPorIntervalo( "( extract( year from current_date ) - extract( year from P.Nascimento ) )", $parQSelecao->NUMPEQINI, $parQSelecao->NUMPEQFIM ) 
+				? filtrarPorIntervalo( "( extract( year from '" . $hoje . "' ) - extract( year from P.Nascimento ) )", $parQSelecao->NUMPEQINI, $parQSelecao->NUMPEQFIM )
 				: '' ) .
 			( $parQSelecao->MESPEQ != 0
 				? 'P.Nascimento is not null and '
@@ -53,11 +54,11 @@ function enviarCRM()
 	}
 
 	$proc->idLogEmail = $g_idLogEmail;
-	$proc->paraQuem   = PARA_CLIENTES; 
+	$proc->paraQuem   = PARA_CLIENTES;
 
 	$select = "Select P.idPrimario as idCliente, P.Email, P.Nome as Cliente, P.Apelido, P.Nascimento, P.Sexo
 		From arqPessoa P
-		Where ". $filtro . 			
+		Where ". $filtro .
 		" Order by P.Nome";
 //echo '<br><b>m_acao_cliente arqPessoa S=</b> '.$select;
 

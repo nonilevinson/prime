@@ -7,14 +7,15 @@ class EmailPadrao extends EmailParaUsuario
 	//------------------------------------------------------------------------
 	function CabPorEmpresa()
 	{ 
-		$this->msgEmail .= 
-			"<tr><td colspan='4' class='centro'>" . $this->regAtual->EMPRESA . ": " . 
-				$this->tituloEmail . "</td></tr>
+		$this->msgEmail .= "
 			<tr>
-			<td>Hora</td>
-			<td>Assunto do email</td>
-			<td>Usuário</td>
-			<td>Previsão de envio</td>
+				<td colspan='4' class='centro'>" . $this->regAtual->EMPRESA . ": " . $this->tituloEmail . "</td>
+			</tr>
+			<tr>
+				<td>Hora</td>
+				<td>Assunto do email</td>
+				<td>Usuário</td>
+				<td>Previsão de envio</td>
 			</tr>";			
 	}
 
@@ -23,8 +24,8 @@ class EmailPadrao extends EmailParaUsuario
 	{
 		$regA = &$this->regAtual;
 		
-		$this->msgEmail .= 
-			"<tr><td colspan='4'>&nbsp;</td></tr> 
+		$this->msgEmail .= "
+			<tr><td colspan='4'>&nbsp;</td></tr> 
 			</table></center>";
 	}
 
@@ -53,12 +54,12 @@ class EmailPadrao extends EmailParaUsuario
 			case 2: $nasc = "C.Nascimento is null and "; break;
 		}
 
-		$select = "select count(*) as QtosEmails
-			from arqCliente C
+		$select = "Select count(*) as QtosEmails
+			From arqCliente C
 				left join arqPrefer 		P on P.Cliente=C.idPrimario
 				left join arqClassifica	A on A.idPrimario=C.Classifica
 				left join arqEmpresa		E on E.idPrimario=C.Empresa
-			where E.Ativo = 1 and " . $ativo . $nasc .
+			Where E.Ativo = 1 and " . $ativo . $nasc .
 			filtrarPorLig( 'C.Empresa', $regA->EMPRESA ) .
 			filtrarPorLig( 'C.Loja', $regA->LOJA ) .
 			filtrarPorLig( 'C.Vendedor', $regA->VENDEDOR ) .
@@ -77,7 +78,7 @@ class EmailPadrao extends EmailParaUsuario
 				? filtrarPorIntervaloData( 'extract( day from C.DadosPF_Nascimento )', $regA->DIAINI, $regA->DIAFIM )
 				: '' ) .
 			( $regA->PEQINI1 != 0
-				? filtrarPorIntervalo( "( extract( year from current_date ) - extract( year from C.DadosPF_NASCIMENTO ) )" , $regA->PEQINI1, $regA->PEQFIM1 )
+				? filtrarPorIntervalo( "( extract( year from '" . $this->hoje . "' ) - extract( year from C.DadosPF_NASCIMENTO ) )" , $regA->PEQINI1, $regA->PEQFIM1 )
 				: '' ) .
 			( $regA->NUMERO
 				? filtrarPorIntervaloData( "C.NumCli", $regA->NUMERO, $regA->NUMEROFIM )
@@ -90,15 +91,13 @@ class EmailPadrao extends EmailParaUsuario
 		$qtosEmails = sql_lerUmRegistro( $select )->QTOSEMAILS;
 if( $g_debugProcesso ) echo '<br>QTDO S= '.$select.' >> '.$qtosEmails;
 
-		$this->msgEmail .= 
-			"<tr class='" . $this->estilo . "'>
-			<td>" . formatarHora( $regA->HORA ) . "</td>
-			<td>" . $regA->TITULO . "</td>
-			<td>" . $regA->USUARIO . "</td>
-			<td class='direita'>" . formatarNum( $qtosEmails ) . "</td>
+		$this->msgEmail .= "
+			<tr>
+				<td>" . formatarHora( $regA->HORA ) . "</td>
+				<td>" . $regA->TITULO . "</td>
+				<td>" . $regA->USUARIO . "</td>
+				<td class='direita'>" . formatarNum( $qtosEmails ) . "</td>
 			</tr>";
-
-		$this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );		
 	}	
 }
 
@@ -107,20 +106,18 @@ if( $g_debugProcesso ) echo '<br>QTDO S= '.$select.' >> '.$qtosEmails;
 //------------------------------------------------------------------------
 
 global $g_debugProcesso;
-$hoje = formatarData( HOJE, 'aaaa/mm/dd' );
-
-sql_abrirBD( false );
-
-$select = "Select L.Data, L.Hora, A.Titulo, U.Usuario, L.Cliente
-		From arqLogEmail L
-			inner join arqAcaoEmail	A on A.idPrimario=L.Titulo
-			left join arqUsuario 	U ON U.idPrimario=L.Usuario
-		Where  L.HoraIni is null and L.Data = '" . $hoje . 
-		"' Order by L.Hora";
-
-sql_fecharBD();
 
 $proc = new EmailPadrao();
+
 $proc->campoHabilitado = "EmailAces";
-$proc->tituloEmail = "Emails programados para hoje";
+$proc->tituloEmail     = "Emails programados para hoje";
+$proc->hoje            = formatarData( HOJE, 'aaaa/mm/dd' );
+
+$select = "Select L.Data, L.Hora, A.Titulo, U.Usuario, L.Cliente
+	From arqLogEmail L
+		join arqAcaoEmail		A on A.idPrimario=L.Titulo
+		left join arqUsuario	U ON U.idPrimario=L.Usuario
+	Where  L.HoraIni is null and L.Data = '" . $proc->hoje . "'
+	Order by L.Hora";
+
 $proc->Processar( $select );

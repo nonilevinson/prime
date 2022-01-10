@@ -12,7 +12,7 @@ class EmailUsuario extends EmailParaUsuario
 				<td colspan='2' class='centro'>" . $this->tituloEmail . " em " .
 					formatarData( incDia( HOJE, -1 ) ) . "</td>
 			</tr>
-			<tr class='" . $this->estilo . "'>
+			<tr>
 				<td class='centro'>Usuário</td>
 				<td class='centro'>Interações</td>
 			</tr>";
@@ -32,12 +32,11 @@ class EmailUsuario extends EmailParaUsuario
 		$regA = &$this->regAtual;
 
 		$this->msgEmail .=
-			"<tr class='" . $this->estilo . "'>
+			"<tr>
 				<td>" . $regA->LOGIN . "</td>
 				<td class='centro'>" . $regA->QTD . "</td>
 			</tr>";
 
-		$this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );
 		parent::Basico();
 	}
 }
@@ -49,6 +48,7 @@ $proc = new EmailUsuario();
 
 global $g_debugProcesso, $g_horaIni;
 $g_horaIni = AGORA();
+$hoje      = formatarData( HOJE, 'aaaa/mm/dd' );
 
 $proc->campoHabilitado = "EmailAces";
 $proc->tituloEmail     = CLIENTE_NOME . ": Interações no sistema";
@@ -61,7 +61,7 @@ $proc->comSupervisor = sql_lerUmRegistro( $select )->LOGACESSO;
 
 $select = "Select L.Login, count(*) as Qtd
 	From arqLanceLogAcesso L
-	Where ( current_date - L.Data ) = 1
+	Where ( '" . $hoje . "' - L.Data ) = 1
 		and ( L.Login not starting 'Noni' and L.Login not starting 'Kogut' and L.Login != 'null' )
 	group by 1";
 $reg = sql_lerRegistros( $select );

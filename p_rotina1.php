@@ -3,7 +3,11 @@
 global $g_debugProcesso;
 
 // sql_abrirBD( OperacaoAtual() );
-sql_abrirBD( false );
+// sql_abrirBD( false );
+
+/*
+sql_executarComando( 'alter trigger ARQCONSULTA_AI_AU inactive;' );
+commit;
 
 $select = "Select C.idPrimario as idConta
    From arqConta C
@@ -17,13 +21,19 @@ foreach( $regConta as $umaConta )
 
    sql_update( "arqConsulta", [
          "ContaCons" => null ],
-      "ContaCons = " . $idConta );
+      "ContaCons = " . $idConta,1,true );
 
-   sql_executarComando( "delete From arqConta Where idPrimario = " . $idConta );
-   commit;      
+   $delete = "delete From arqConta Where idPrimario = " . $idConta;
+if( $g_debugProcesso ) echo '<br><b>GR0 delete S=</b> '.$delete;
+
+   
+   sql_executarComando( $delete );
+   commit;
 }
 
-
+sql_executarComando( 'alter trigger ARQCONSULTA_AI_AU active;' );
+commit;
+*/
 
 /*
 $select = "Select RecorDia From cnfXConfig";

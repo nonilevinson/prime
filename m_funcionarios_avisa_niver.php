@@ -14,8 +14,9 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 			return( false );
 
 		$this->tituloEmail = CLIENTE_NOME . ": Aniversariantes em " . formatarData( HOJE );
-		$this->msgEmail =
-			"<style>
+
+		$this->msgEmail = "
+			<style>
 				table{ font-family: Arial }
 				th{ font-size: 13px; color: #ffffff; background-color: #666666; font-weight: bold; padding:5px }
 				td{ font-size: 12px; color: #000000; }
@@ -29,8 +30,6 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 			<th>Nome</th>
 			<th>Email</th>
 			</tr>";
-
-		$this->estilo = 'regImpar';
 	}
 
 	//------------------------------------------------------------------------
@@ -39,39 +38,38 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 		global $g_debugProcesso;
 		$regA = &$this->regAtual;
 
-		$this->msgEmail .=
-			"<tr>
-			<th colspan='2'>Não perca a oportunidade e deseje Parabéns!</th></tr>
-			<tr>
-			<th colspan='2'>Se quiser utilize o email indicado.</th>
-			</tr>
+		$this->msgEmail .= "
+			<tr><th colspan='2'>Não perca a oportunidade e deseje Parabéns!</th></tr>
+			<tr><th colspan='2'>Se quiser utilize o email indicado.</th></tr>
 			</table>
-			<br/>
-			<br/>
+			<br>
+			<br>
 			<table cellSpacing='0' cellPadding='0' border='0'>
-			<tr><td style='font-size:7.5pt; font-family:Lucida Sans,sans-serif'>Enviado pelo 
-				<a href='https://www.swsm.com.br' target='_blank'>
-				<img src='https://www.swsm.com.br/swsm_peq.png' align='absbottom' alt='SWSM' title='SWSM' border='0'></a>
-				<br>Sistemas Web Sob Medida<br>
-			</td></tr>
+			<tr>
+				<td style='font-size:7.5pt; font-family:Lucida Sans,sans-serif'>Enviado pelo
+					<a href='https://www.swsm.com.br' target='_blank'>
+					<img src='https://www.swsm.com.br/swsm_peq.png' align='absbottom' alt='SWSM' title='SWSM' border='0'></a>
+					<br>Sistemas Web Sob Medida<br>
+				</td>
+			</tr>
 			</table>";
 
 		$this->PrepararEmail( '', $this->msgEmail, $g_remetentePadrao );
 
 		//* ENVIA PARA OS CONFIGURADOS
-		$select = "Select U.Email 
+		$select = "Select U.Email
 			From arqUsuario U
 			Where U.Email <> '' and U.Ativo = 1 and U.Grupo is not null and
-				( 
+				(
 					cast( extract( day from U.Nascimento ) ||'/'|| extract( month from U.Nascimento as varchar(5) ) !=
-					cast( extract( day from current_date ) ||'/'|| extract( month from current_date as varchar(5) ) 
-				) 
+					cast( extract( day from '" . $this->hoje . "' ) ||'/'|| extract( month from '" . $this->hoje . "' as varchar(5) )
+				)
 			Order by U.Usuario";
 //if( $g_debugProcesso ) echo '<br>SEL= '. $select;
 		$regEmail = sql_lerRegistros( $select );
 		foreach( $regEmail as $umEmail )
 		{
-if( $g_debugProcesso ) echo '<br>EMAIL= '.$umEmail->EMAIL;
+// if( $g_debugProcesso ) echo '<br>EMAIL= '.$umEmail->EMAIL;
 			$this->ProcessarEmail( $umEmail->EMAIL, $this->tituloEmail );
 		}
 //$this->ProcessarEmail( 'noni@kogumelo.com', $this->tituloEmail );
@@ -86,13 +84,12 @@ if( $g_debugProcesso ) echo $this->msgEmail;
 	{
 		$regA = &$this->regAtual;
 
-		$this->msgEmail .=
-			"<tr class='" . $this->estilo . "'>
-			<td>" . $regA->USUARIO . "</td>
-			<td>" . $regA->EMAIL . "</td>
+		$this->msgEmail .= "
+			<tr>
+				<td>" . $regA->USUARIO . "</td>
+				<td>" . $regA->EMAIL . "</td>
 			</tr>";
 
-		$this->estilo = ( $this->estilo == 'regPar' ? 'regImpar' : 'regPar' );
 		parent::Basico();
 	}
 }
@@ -101,12 +98,13 @@ if( $g_debugProcesso ) echo $this->msgEmail;
 // Declaração do Relatório
 //------------------------------------------------------------------------
 $proc = new EmailPadrao();
+$proc->hoje = formatarData( HOJE, 'aaaa/mm/dd' );
 
 $select = "Select U.Usuario, U.Email
 	From arqUsuario U
 	Where U.Grupo is not null and U.Ativo = 1 and U.Nascimento is not null and
-		extract( day from U.Nascimento ) = extract( day from current_date ) and
-		extract( month from U.Nascimento ) = extract( month from current_date ) and
+		extract( day from U.Nascimento ) = extract( day from '" . $proc->hoje . "' ) and
+		extract( month from U.Nascimento ) = extract( month from '" . $proc->hoje . "' ) and
 	Order by U.Usuario";
 
 $proc->Processar( $select );
