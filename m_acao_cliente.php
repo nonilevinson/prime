@@ -45,7 +45,7 @@ function enviarCRM()
 				? filtrarPorIntervaloData( 'extract( day from P.Nascimento )', $parQSelecao->DIAINI, $parQSelecao->DIAFIM )
 				: '' ) .
 			( $parQSelecao->NUMPEQINI != 0
-				? filtrarPorIntervalo( "( extract( year from '" . $hoje . "' ) - extract( year from P.Nascimento ) )", $parQSelecao->NUMPEQINI, $parQSelecao->NUMPEQFIM )
+				? filtrarPorIntervalo( "( extract( year from cast( '" . $hoje . "' as date ) ) - extract( year from P.Nascimento ) )", $parQSelecao->NUMPEQINI, $parQSelecao->NUMPEQFIM )
 				: '' ) .
 			( $parQSelecao->MESPEQ != 0
 				? 'P.Nascimento is not null and '

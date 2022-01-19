@@ -83,7 +83,7 @@ $select = "Select L.Data, L.Hora, A.Titulo, U.Usuario, L.idPrimario as idLogEmai
 		join arqAcaoEmail		A on A.idPrimario=L.Titulo
 		left join arqUsuario U on U.idPrimario=L.Usuario
 	Where  L.Enviou = 0 and
-		( ( L.Data = " . $hoje . " and L.Hora <= '" . $agora . "' ) or ( L.Data < " . $hoje . " ) )
+		( ( L.Data = " . $hoje . " and L.Hora <= '" . $agora . "' ) or ( L.Data < '" . $hoje . "' ) )
 	Order by L.Data, L.Hora";
 //if( $g_debugProcesso ) echo '<br>S= '.$select;
 
