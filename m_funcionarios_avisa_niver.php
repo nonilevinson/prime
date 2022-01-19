@@ -62,7 +62,8 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 			Where U.Email <> '' and U.Ativo = 1 and U.Grupo is not null and
 				(
 					cast( extract( day from U.Nascimento ) ||'/'|| extract( month from U.Nascimento as varchar(5) ) !=
-					cast( extract( day from '" . $this->hoje . "' ) ||'/'|| extract( month from '" . $this->hoje . "' as varchar(5) )
+					cast( extract( day from cast( '" . $hoje . "' as date ) ) ||'/'|| 
+						extract( month from cast( '" . $hoje . "' as date ) as varchar(5) )
 				)
 			Order by U.Usuario";
 //if( $g_debugProcesso ) echo '<br>SEL= '. $select;
