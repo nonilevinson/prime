@@ -39,6 +39,8 @@ if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
 			}
 			break;
 
+//* 21/01/2022 passei a fazer pelo p_conta_parcela_gerar_tratamento
+/*
 		case 184:	//* gerar Tratamento, menu navegação arqConsulta
 			$hoje    = formatarData( HOJE, 'aaaa/mm/dd' );
 			$compete = dataAno( $hoje ) . "/" . dataMes( $hoje ) . "/01";
@@ -53,6 +55,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
 			$compete       = $compete;
 			$historico     = $parGeraParc->HISTORICO;
 			break;
+*/
 	}
 
 	$idConta = sql_IdPrimario();
@@ -78,14 +81,14 @@ if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
       "RecEnvia"   => $recEnvia,
       "Compete"    => $compete,
       "Historico"  => $historico,
-      "Arq1"       => null ],1,true );
+      "Arq1"       => null ] );
 
 		$idConsulta = navegouDe( 'arqConsulta' );
-
+/*
 		sql_update( "arqConsulta", [
 				"ContaPTra" => $idConta ],
-			"idPrimario = " . $idConsulta ,1,true,false );
-
+			"idPrimario = " . $idConsulta );
+*/
 	return( $idConta );
 }
 //----------------------------------------------------------------------------------------

@@ -453,6 +453,17 @@ function Campo_arqParcela_DataRem()
 
 var DataRem = new Campo_arqParcela_DataRem;
 
+//------------------------------------------------------------
+Campo_arqParcela_Historico.prototype = new Lance_CampoCadeia;
+
+function Campo_arqParcela_Historico()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "Historico", "Historico", "Historico", 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var Historico = new Campo_arqParcela_Historico;
+
 //-------------------------------------------------------------
 // Campos a mais que o ligado traz do pai
 //-------------------------------------------------------------
@@ -595,7 +606,7 @@ Campo_arqParcela_Vencimento.prototype.TemAdvertencia = function()
 	{
 		return( !confirm( "Esta data já passou. Continua?" ) );
 	}
-	return( Lance_CampoData.prototype.TemAdvertencia.call( this ) );
+	return( Lance_CampoCadeia.prototype.TemAdvertencia.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -972,6 +983,14 @@ Campo_arqParcela_DataRem.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqParcela_Historico.prototype.Cabecalho = function()
+{
+		return( "Histórico" );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqParcela_Conta.prototype.ExistenciaEspecial = function()
@@ -1077,7 +1096,7 @@ function ListaDeCampos_arqParcela( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, FormaPg, FormaPg_FormaPg, Cheque, Arq1, StRetorno, Remessa, DataRem ]	);
+		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, FormaPg, FormaPg_FormaPg, Cheque, Arq1, StRetorno, Remessa, DataRem, Historico ]	);
 	IniciarDependencias_arqParcela();
 	g_prefixo = l_prefixo;
 	return( l_lista );

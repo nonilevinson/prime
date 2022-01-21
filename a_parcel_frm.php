@@ -44,6 +44,7 @@ echo
    $this->Pedir( "Pagamento",
       [ "", DataPagto,
       [ brHtml(4) . "Compensado ", DataComp ] ] ),
+   $this->Pedir( "Histórico", Historico ),
 
    $this->Pular1Linha(2),
    $this->Cabecalhos( [ "Se conta a Receber", 'FormCab alinhaMeio', '2' ] ),

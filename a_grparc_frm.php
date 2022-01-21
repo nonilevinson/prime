@@ -103,6 +103,8 @@ if( $op == 130 ) //* menu Finaneiro
 
 }
 
+//* 22/01/2022 Descontinuei por aqui e passei para o p_conta_parcela_gerar_tratamento sem parametro
+/*
 if( $op == 184 ) //* criar de tratamento de uma consulta no menu de navegação
 {
    echo
@@ -148,6 +150,8 @@ if( $op == 184 ) //* criar de tratamento de uma consulta no menu de navegação
       $this->NaoPedir( 'TotValor' ),
    "</table>";
 }
+*/
 
+//------------------------------------------------------------------
 echo
 "</table>";

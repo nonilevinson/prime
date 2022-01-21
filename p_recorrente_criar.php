@@ -139,7 +139,8 @@ if( $recorDia == $diaHoje || $recorDia > $ultDia || ultimaLigOpcaoEm( 162 ) )
          "Arq1"        => null,
          "StRetorno"   => '',
          "Remessa"     => 0,
-         "DataRem"     => null ] );
+         "DataRem"     => null,
+         "Historico"   => '' ] );
 
 
       if( $peloServer )

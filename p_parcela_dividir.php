@@ -74,7 +74,8 @@ if( $g_debugProcesso ) echo '<br><b>GR0 taxa=</b> '.$taxaLiq;
       "Cheque"     => 0,
       "StRetorno"  => '',
       "Remessa"    => 0,
-      "DataRem"    => null ] );
+      "DataRem"    => null,
+      "Historico"  => '' ] );
 }
 
 sql_gravarTransacao();

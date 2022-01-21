@@ -643,6 +643,26 @@ class campo_arqParcela_DataRem extends Lance_CampoData
 }
 
 //======================================================
+//	Campo Historico
+//======================================================
+
+class campo_arqParcela_Historico extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Historico", "Historico", "Historico", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Histórico" );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqParcela
 //======================================================
 function listaCampos_arqParcela( $p_prefixo )
@@ -693,7 +713,8 @@ function listaCampos_arqParcela( $p_prefixo )
 			new campo_arqParcela_Arq1(),
 			new campo_arqParcela_StRetorno(),
 			new campo_arqParcela_Remessa(),
-			new campo_arqParcela_DataRem() )
+			new campo_arqParcela_DataRem(),
+			new campo_arqParcela_Historico() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -738,6 +759,7 @@ class arqParcela extends Lance_Arquivo
 			array_push( $vetAux, array( TFCobra_Descritor ) );
 			array_push( $vetAux, array( LinhaDig ) );
 			array_push( $vetAux, array( DataPagto ) );
+			array_push( $vetAux, array( Historico ) );
 		return( $vetAux );
 	}
 
@@ -786,6 +808,7 @@ class arqParcela extends Lance_Arquivo
 			array_push( $vetAux, array( StRetorno ) );
 			array_push( $vetAux, array( Remessa ) );
 			array_push( $vetAux, array( DataRem ) );
+			array_push( $vetAux, array( Historico ) );
 		return( $vetAux );
 	}
 

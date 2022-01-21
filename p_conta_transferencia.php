@@ -62,7 +62,8 @@ function CriarContaParcela( $p_ccor, $p_tPgRec, $p_idFornecedor, $p_historico, $
       "Cheque"     => 0,
       "StRetorno"  => '',
       "Remessa"    => 0,
-      "DataRem"    => null ] );
+      "DataRem"    => null,
+      "Historico"  => '' ] );
 }
 //------------------------------------------------------------------
 

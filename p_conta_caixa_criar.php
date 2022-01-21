@@ -94,7 +94,8 @@ sql_insert( "arqParcela", [
    "Arq1"       => null,
    "StRetorno"  => '',
    "Remessa"    => 0,
-   "DataRem"    => null ] );
+   "DataRem"    => null,
+   "Historico"  => '' ] );
 
 sql_gravarTransacao();
 sql_fecharBD();
