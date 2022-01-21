@@ -8,6 +8,7 @@ execute procedure reindexartudo;
 commit;
 
 insert into arqLanceOperacao values(200236,2,'Rotina para dividir uma parcela','',236,10,0,'');
+insert into arqLanceOperacao values(200237,2,'Rotina para criar transferências entre contas','',237,10,0,'');
 commit;
 
 /************************************************************

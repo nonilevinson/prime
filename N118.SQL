@@ -3520,6 +3520,7 @@ insert into arqLanceOperacao values(200226,2,'Relatório de lotes por validade','
 insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação prescrita','',230,50,0,'');
 insert into arqLanceOperacao values(200233,2,'Relatório das agendas de retirada de medicação por quem agendou','',233,50,0,'');
 insert into arqLanceOperacao values(200236,2,'Rotina para dividir uma parcela','',236,10,0,'');
+insert into arqLanceOperacao values(200237,2,'Rotina para criar transferências entre contas','',237,10,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');

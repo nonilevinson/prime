@@ -455,6 +455,17 @@ Campo_arqCCor_Nome.prototype.Obrigatorio = function( p_comMsg )
 
 Nome.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqCCor_Clinica.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A clínica é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqCCor_Clinica.prototype.Cabecalho = function()
