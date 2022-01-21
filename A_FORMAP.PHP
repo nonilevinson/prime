@@ -32,6 +32,35 @@ class campo_arqFormaPg_FormaPg extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo PodeEntra
+//======================================================
+
+class campo_arqFormaPg_PodeEntra extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "PodeEntra", "PodeEntra", "PodeEntra", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->PODEENTRA == 0 )
+			return( "CorInativo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Pode na<br>entrada?" );
+	}
+
+}
+
+//======================================================
 //	Campo Dinheiro
 //======================================================
 
@@ -232,6 +261,7 @@ function listaCampos_arqFormaPg( $p_prefixo )
 		array(
 			new Lance_CampoIdPrimario(),
 			new campo_arqFormaPg_FormaPg(),
+			new campo_arqFormaPg_PodeEntra(),
 			new campo_arqFormaPg_Dinheiro(),
 			new campo_arqFormaPg_Boleto(),
 			new campo_arqFormaPg_Cartao(),
@@ -274,6 +304,7 @@ class arqFormaPg extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( FormaPg ) );
+			array_push( $vetAux, array( PodeEntra ) );
 			array_push( $vetAux, array( Dinheiro ) );
 			array_push( $vetAux, array( Boleto ) );
 			array_push( $vetAux, array( Cartao ) );
@@ -293,6 +324,7 @@ class arqFormaPg extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = array();
 			array_push( $vetAux, array( FormaPg ) );
+			array_push( $vetAux, array( PodeEntra ) );
 			array_push( $vetAux, array( Dinheiro ) );
 			array_push( $vetAux, array( Boleto ) );
 			array_push( $vetAux, array( Cartao ) );

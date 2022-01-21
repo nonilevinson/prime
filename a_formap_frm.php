@@ -3,6 +3,8 @@
 echo
 "<table class='tabFormulario'>",
 	$this->Pedir( "Forma", FormaPg ),
+   $this->Pedir( "Pode na entrada?",
+      [ "", PodeEntra, " (entrada do Tratamento)" ] ),
    $this->Pedir( "Dinheiro?",
       [ "", Dinheiro,
       [ brHtml(4) . "Boleto? ", Boleto,

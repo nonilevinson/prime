@@ -1184,6 +1184,16 @@ Campo_arqConsulta_ValPTrata.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraFPg.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1 and A.PodeEntra = 1" );
+			return( "A.PodeEntra = 1" );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraFPg.prototype.Obrigatorio = function( p_comMsg )

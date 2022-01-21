@@ -347,6 +347,17 @@ function Campo_cnfXConfig_BoletoMin()
 
 var BoletoMin = new Campo_cnfXConfig_BoletoMin;
 
+//------------------------------------------------------------
+Campo_cnfXConfig_DiasSdEntr.prototype = new Lance_CampoNumerico;
+
+function Campo_cnfXConfig_DiasSdEntr()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "DiasSdEntr", "DiasSdEntr", "DiasSdEntr", 2, "#z", false,"", "");
+}
+
+var DiasSdEntr = new Campo_cnfXConfig_DiasSdEntr;
+
 //-------------------------------------------------------------
 // Condição de erro do campo
 //-------------------------------------------------------------
@@ -513,6 +524,19 @@ Campo_cnfXConfig_FornRec_Nome.prototype.ObrigatorioEspecial = function( p_comMsg
 
 FornRec_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_cnfXConfig_DiasSdEntr.prototype.TemErro = function()
+{
+		if( tem(this) && ( DiasSdEntr > 30 ) )
+	{
+		alert( "O valor precisa ser menor do que 30" );
+		return( true );
+	}
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_cnfXConfig_CCorRec.prototype.ExistenciaEspecial = function()
@@ -650,7 +674,7 @@ function ListaDeCampos_cnfXConfig( p_prefixo )
 
 		[ CPF, LogAcesso, LogAcessoS, Qtd, Qtd2, Empresa ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia, CCorRec, CCorRec_Nome, CCorAss, CCorAss_Nome, SubPlaRRec, SubPlaRRec_Plano, SubPlaRRec_Plano_CodPlano, SubPlaRRec_Plano_Plano, SubPlaRRec_Codigo, SubPlaRRec_Nome, SubPlaRAss, SubPlaRAss_Plano, SubPlaRAss_Plano_CodPlano, SubPlaRAss_Plano_Plano, SubPlaRAss_Codigo, SubPlaRAss_Nome, FornRec, FornRec_Nome, BoletoMin ]	);
+		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia, CCorRec, CCorRec_Nome, CCorAss, CCorAss_Nome, SubPlaRRec, SubPlaRRec_Plano, SubPlaRRec_Plano_CodPlano, SubPlaRRec_Plano_Plano, SubPlaRRec_Codigo, SubPlaRRec_Nome, SubPlaRAss, SubPlaRAss_Plano, SubPlaRAss_Plano_CodPlano, SubPlaRAss_Plano_Plano, SubPlaRAss_Codigo, SubPlaRAss_Nome, FornRec, FornRec_Nome, BoletoMin, DiasSdEntr ]	);
 	IniciarDependencias_cnfXConfig();
 	g_prefixo = l_prefixo;
 	return( l_lista );

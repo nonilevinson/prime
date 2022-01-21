@@ -2017,14 +2017,15 @@ CREATE TABLE arqFormaPg
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	FORMAPG VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	DINHEIRO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  4*/	BOLETO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	CARTAO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	DIAS SMALLINT, /* Máscara = N */
-	/*  7*/	TAXADEB NUMERIC( 4, 2 ), /* Máscara = N */
-	/*  8*/	TAXA2 NUMERIC( 4, 2 ), /* Máscara = N */
-	/*  9*/	TAXA3 NUMERIC( 4, 2 ), /* Máscara = N */
-	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  3*/	PODEENTRA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	DINHEIRO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	BOLETO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	CARTAO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  7*/	DIAS SMALLINT, /* Máscara = N */
+	/*  8*/	TAXADEB NUMERIC( 4, 2 ), /* Máscara = N */
+	/*  9*/	TAXA2 NUMERIC( 4, 2 ), /* Máscara = N */
+	/* 10*/	TAXA3 NUMERIC( 4, 2 ), /* Máscara = N */
+	/* 11*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqFormaPg_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqFormaPg_UK UNIQUE ( FormaPg )
 );
@@ -2832,6 +2833,7 @@ CREATE TABLE cnfXConfig
 	/* 26*/	SUBPLARASS ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
 	/* 27*/	FORNREC ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
 	/* 28*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 29*/	DIASSDENTR SMALLINT, /* Máscara = N */
 	CONSTRAINT cnfXConfig_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
@@ -3092,7 +3094,7 @@ RECREATE VIEW V_arqLido AS
 commit;
 
 RECREATE VIEW V_cnfXConfig AS 
-	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR, A0.RECORDIA, A0.CCORREC, A4.NOME as CCORREC_NOME, A0.CCORASS, A5.NOME as CCORASS_NOME, A0.SUBPLARREC, A6.PLANO as SUBPLARREC_PLANO, A7.CODPLANO as SUBPLARREC_PLANO_CODPLANO, A7.PLANO as SUBPLARREC_PLANO_PLANO, A6.CODIGO as SUBPLARREC_CODIGO, A6.NOME as SUBPLARREC_NOME, A0.SUBPLARASS, A8.PLANO as SUBPLARASS_PLANO, A9.CODPLANO as SUBPLARASS_PLANO_CODPLANO, A9.PLANO as SUBPLARASS_PLANO_PLANO, A8.CODIGO as SUBPLARASS_CODIGO, A8.NOME as SUBPLARASS_NOME, A0.FORNREC, A10.NOME as FORNREC_NOME, A0.BOLETOMIN
+	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR, A0.RECORDIA, A0.CCORREC, A4.NOME as CCORREC_NOME, A0.CCORASS, A5.NOME as CCORASS_NOME, A0.SUBPLARREC, A6.PLANO as SUBPLARREC_PLANO, A7.CODPLANO as SUBPLARREC_PLANO_CODPLANO, A7.PLANO as SUBPLARREC_PLANO_PLANO, A6.CODIGO as SUBPLARREC_CODIGO, A6.NOME as SUBPLARREC_NOME, A0.SUBPLARASS, A8.PLANO as SUBPLARASS_PLANO, A9.CODPLANO as SUBPLARASS_PLANO_CODPLANO, A9.PLANO as SUBPLARASS_PLANO_PLANO, A8.CODIGO as SUBPLARASS_CODIGO, A8.NOME as SUBPLARASS_NOME, A0.FORNREC, A10.NOME as FORNREC_NOME, A0.BOLETOMIN, A0.DIASSDENTR
 	FROM cnfXConfig A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
@@ -3273,7 +3275,7 @@ RECREATE VIEW V_arqTiAgenda AS
 commit;
 
 RECREATE VIEW V_arqFormaPg AS 
-	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.DINHEIRO, A0.BOLETO, A0.CARTAO, A0.DIAS, A0.TAXADEB, A0.TAXA2, A0.TAXA3, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.FORMAPG, A0.PODEENTRA, A0.DINHEIRO, A0.BOLETO, A0.CARTAO, A0.DIAS, A0.TAXADEB, A0.TAXA2, A0.TAXA3, A0.ATIVO
 	FROM arqFormaPg A0;
 commit;
 
@@ -4172,6 +4174,7 @@ begin
 	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRAss', OLD.SubPlaRAss, NEW.SubPlaRAss );
 	execute procedure set_log( 12, NEW.idPrimario, 'FornRec', OLD.FornRec, NEW.FornRec );
 	execute procedure set_log( 12, NEW.idPrimario, 'BoletoMin', OLD.BoletoMin, NEW.BoletoMin );
+	execute procedure set_log( 12, NEW.idPrimario, 'DiasSdEntr', OLD.DiasSdEntr, NEW.DiasSdEntr );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
 		( NEW.CPF is distinct from OLD.CPF )  OR 
 		( NEW.LogAcesso is distinct from OLD.LogAcesso )  OR 
@@ -4968,6 +4971,7 @@ if( deleting ) then
 	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'PodeEntra', OLD.PodeEntra, NEW.PodeEntra );
 	execute procedure set_log( 12, NEW.idPrimario, 'Dinheiro', OLD.Dinheiro, NEW.Dinheiro );
 	execute procedure set_log( 12, NEW.idPrimario, 'Boleto', OLD.Boleto, NEW.Boleto );
 	execute procedure set_log( 12, NEW.idPrimario, 'Cartao', OLD.Cartao, NEW.Cartao );

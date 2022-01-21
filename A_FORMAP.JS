@@ -14,6 +14,17 @@ function Campo_arqFormaPg_FormaPg()
 var FormaPg = new Campo_arqFormaPg_FormaPg;
 
 //------------------------------------------------------------
+Campo_arqFormaPg_PodeEntra.prototype = new Lance_CampoLogico;
+
+function Campo_arqFormaPg_PodeEntra()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "PodeEntra", "PodeEntra", "PodeEntra");
+}
+
+var PodeEntra = new Campo_arqFormaPg_PodeEntra;
+
+//------------------------------------------------------------
 Campo_arqFormaPg_Dinheiro.prototype = new Lance_CampoLogico;
 
 function Campo_arqFormaPg_Dinheiro()
@@ -110,6 +121,24 @@ Campo_arqFormaPg_FormaPg.prototype.Cabecalho = function()
 }
 
 FormaPg.TipoCampo |= CAMPO_CHAVE;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqFormaPg_PodeEntra.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 1 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqFormaPg_PodeEntra.prototype.Cabecalho = function()
+{
+		return( "Pode na<br>entrada?" );
+}
+
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -292,7 +321,7 @@ function ListaDeCampos_arqFormaPg( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ FormaPg, Dinheiro, Boleto, Cartao, Dias, TaxaDeb, Taxa2, Taxa3, Ativo ]	);
+		[ FormaPg, PodeEntra, Dinheiro, Boleto, Cartao, Dias, TaxaDeb, Taxa2, Taxa3, Ativo ]	);
 	IniciarDependencias_arqFormaPg();
 	g_prefixo = l_prefixo;
 	return( l_lista );

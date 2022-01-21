@@ -99,7 +99,8 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->PDF->Cell( $larg1, $altura, "Tempo:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $regA->TEMPO, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg3, $altura, "Consulta:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, formatarData( $regA->DATA ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, formatarNum( $regA->NUMCONSULTA ) . "em " .
+         formatarData( $regA->DATA ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       //* fim de procedimento e consulta
 
       //* início de preços e condições
@@ -166,16 +167,16 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->WriteTxt( "6- ASSINATURAS", 100, [ '', BOLD ] );
 		$this->WriteTxt( $cidade . ", " . maiuscula( formatarData( HOJE, 'dd de mmm de aaaa' ) ), 100 );
-		
+
       $largQuem = 17;
       $largSub  = 70;
-      
+
       $this->PDF->Cell( $larg2, $altura2 + 5, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->PDF->Cell( $largQuem, $altura,  "Paciente:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->PDF->Cell( $largSub, $altura,  repete( '_', 35 ), SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->PDF->Cell( $largQuem, $altura,  "Assessor:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->PDF->Cell( $largSub, $altura,  repete( '_', 35 ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-		      
+
       $this->PDF->Cell( $largQuem, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->PDF->Cell( $largSub, $altura, " " . $paciente, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $largQuem, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
@@ -196,7 +197,7 @@ $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade
       V.Descritor as EstCivil, P.Ende_Endereco as Endereco, B.Bairro, I.Cidade, upper( U.Descritor ) as UF,
       P.Ende_CEP as CEP, P.Nascimento, F.Profissao, I.DDD, P.Ende_Telefone as Telefone, P.NumCelular, P.Email,
       C.Data, A.Nome as Assessor, R.PTrata, R.Tempo, FE.FormaPg as EntraFPg, FS.FormaPg as SaldoFPg,
-      C.EntraVal, C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoVal, C.SaldoObs
+      C.EntraVal, C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoVal, C.SaldoObs, C.Num as NumConsulta
 	From arqConsulta C
 		join arqClinica          L on  L.idPrimario=C.Clinica
       join arqPessoa           P on  P.idPrimario=C.Pessoa
