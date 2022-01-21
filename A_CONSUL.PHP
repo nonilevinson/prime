@@ -636,6 +636,52 @@ class campo_arqConsulta_EntraParc extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo SdEntrFPg
+//======================================================
+
+class campo_arqConsulta_SdEntrFPg extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "SdEntrFPg", "SdEntrFPg", "SdEntrFPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SdEntrFPg_FormaPg
+//======================================================
+
+class campo_arqConsulta_SdEntrFPg_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "SdEntrFPg_FormaPg", "SdEntrFPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "SdEntrFPg", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
+	}
+
+}
+
+//======================================================
+//	Campo SdVenc1Par
+//======================================================
+
+class campo_arqConsulta_SdVenc1Par extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "SdVenc1Par", "SdVenc1Par", "SdVenc1Par", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo EntraValP
 //======================================================
 
@@ -1182,6 +1228,9 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_EntraFPg_FormaPg(),
 			new campo_arqConsulta_EntraVal(),
 			new campo_arqConsulta_EntraParc(),
+			new campo_arqConsulta_SdEntrFPg(),
+			new campo_arqConsulta_SdEntrFPg_FormaPg(),
+			new campo_arqConsulta_SdVenc1Par(),
 			new campo_arqConsulta_EntraValP(),
 			new campo_arqConsulta_EntraTotP(),
 			new campo_arqConsulta_BoletoMin(),
@@ -1310,6 +1359,8 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( EntraFPg_FormaPg ) );
 			array_push( $vetAux, array( EntraVal ) );
 			array_push( $vetAux, array( EntraParc ) );
+			array_push( $vetAux, array( SdEntrFPg_FormaPg ) );
+			array_push( $vetAux, array( SdVenc1Par ) );
 			array_push( $vetAux, array( EntraValP ) );
 			array_push( $vetAux, array( EntraTotP ) );
 			array_push( $vetAux, array( BoletoMin ) );

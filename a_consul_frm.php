@@ -61,23 +61,28 @@ CriarForms(
 "</table>",
 
 "<table id='C' class='tabFormulario' style='display:none'>",
+	$this->Cabecalhos( [ "Tratamento", 'FormCab alinhaEsq', '2' ] ),
 	$this->Pedir( "Plano de tratamento", PTrata ),
 	$this->Pedir( "Valor do tratamento",
 		[ "", ValPTrata,
 		[ brHtml(4) . "Conta ", ContaPTra, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ] ),
 	
-	$this->Cabecalhos( [ "Entrada", 'FormCab alinhaEsq', '2' ] ),
+	$this->Cabecalhos( [ "Entrada", "FormCabPrime FundoAzul alinhaEsq", "2" ] ),
 	$this->Pedir( "Forma de pagamento",
 		[ "", EntraFPg,
 		[ brHtml(4) . "Valor ", EntraVal ] ] ),
-	$this->Pedir( "Se boleto e dividiu",
-		[ "Parcelas do saldo da entrada ", EntraParc,
-		[ brHtml(4) . "Valor das parcelas ", EntraValP,
+
+	$this->Pedir( "Se dividiu",
+		[ "Parcelas ", EntraParc,
+		[ brHtml(4) . "Forma de pagamento ", SdEntrFPg,
+		[ brHtml(4) . "1º vencimento ", SdVenc1Par ] ] ] ),
+	$this->Pedir( " ",		
+		[ "Valor das parcelas ", EntraValP,
 		[ brHtml(4) . "Total ", EntraTotP,
-		[ brHtml(4) . "Mínimo ", BoletoMin, '','','','','FormCalculado' ] ] ] ] ),
+		[ brHtml(4) . "Mínimo ", BoletoMin, '','','','','FormCalculado' ] ] ] ),
 	$this->Pedir( "Observações", EntraObs ),
 	
-	$this->Cabecalhos( [ "Saldo", 'FormCab alinhaEsq', '2' ] ),
+	$this->Cabecalhos( [ "Saldo", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),
 	$this->Pedir( "Forma de pagamento",
 		[ "", SaldoFPg,
 		[ brHtml(4) . "Parcelas ", SaldoParc,
@@ -86,7 +91,7 @@ CriarForms(
 	$this->Pedir( "Observações", SaldoObs ),
 	
 	$this->Pular1Linha(2),
-	$this->Cabecalhos( [ "Transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
+	$this->Cabecalhos( [ "Conduta - transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
 	$this->Pedir( "Conduta" ),
 "</table>",
 

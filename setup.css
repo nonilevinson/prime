@@ -65,6 +65,33 @@
 	background-color: #99ccdd;
 }
 
+.FormCabPrime{
+	font-weight			: bold; 
+	font-size			: 12px;
+	color					: #ffffff;
+	padding				: 6px 4px 6px 14px;
+}
+.FundoVerde{
+	background-color	: green;
+}
+.FundoVermelho{
+	background-color	: red;
+}
+.FundoVermelho1{
+	color: #ffffff;
+	background-color: #ff0000;
+	font-weight: BOLD;
+	text-align: center;
+}
+.FundoAzul{
+	background-color	: #000044;
+}
+.FundoAmarelo{
+	background-color	: yellow;
+}
+.FonteAzul{
+	color					: #000044;
+}
 .StRecepcao{
 	color:#ffffff;
 	background-color: #004499;
