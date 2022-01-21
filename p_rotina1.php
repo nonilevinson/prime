@@ -5,7 +5,7 @@ global $g_debugProcesso;
 // sql_abrirBD( OperacaoAtual() );
 // sql_abrirBD( false );
 
-/*
+
 sql_executarComando( 'alter trigger ARQCONSULTA_AI_AU inactive;' );
 commit;
 
@@ -33,7 +33,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 delete S=</b> '.$delete;
 
 sql_executarComando( 'alter trigger ARQCONSULTA_AI_AU active;' );
 commit;
-*/
+
 
 /*
 $select = "Select RecorDia From cnfXConfig";

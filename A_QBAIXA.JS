@@ -69,6 +69,39 @@ function Campo_parQBaixa_TDetPg_Descritor()
 var TDetPg_Descritor = new Campo_parQBaixa_TDetPg_Descritor;
 
 //------------------------------------------------------------
+Campo_parQBaixa_TFCobra.prototype = new Lance_CampoLigado;
+
+function Campo_parQBaixa_TFCobra()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TFCobra", "TFCobra", "TFCobra", "tabTFCobra", "t_tfcobr", null, "",0);
+}
+
+var TFCobra = new Campo_parQBaixa_TFCobra;
+
+//------------------------------------------------------------
+Campo_parQBaixa_TFCobra_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQBaixa_TFCobra_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TFCobra_Chave", "TFCobra_Chave", "TFCobra", TFCobra, 1, "u", false);
+}
+
+var TFCobra_Chave = new Campo_parQBaixa_TFCobra_Chave;
+
+//------------------------------------------------------------
+Campo_parQBaixa_TFCobra_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQBaixa_TFCobra_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TFCobra_Descritor", "TFCobra_Descritor", "TFCobra", TFCobra, 10, "xxxxxxxxxx", false);
+}
+
+var TFCobra_Descritor = new Campo_parQBaixa_TFCobra_Descritor;
+
+//------------------------------------------------------------
 Campo_parQBaixa_CCor.prototype = new Lance_CampoHidden;
 
 function Campo_parQBaixa_CCor()
@@ -85,7 +118,7 @@ Campo_parQBaixa_CCor_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQBaixa_CCor_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "CCor_Nome", "CCor_Nome", "Nome", CCor, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var CCor_Nome = new Campo_parQBaixa_CCor_Nome;
@@ -100,6 +133,17 @@ function Campo_parQBaixa_Cheque()
 }
 
 var Cheque = new Campo_parQBaixa_Cheque;
+
+//------------------------------------------------------------
+Campo_parQBaixa_DataIni.prototype = new Lance_CampoData;
+
+function Campo_parQBaixa_DataIni()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "DataIni", "DataIni", "DataIni", 8, "dd/mm/aaaa", true);
+}
+
+var DataIni = new Campo_parQBaixa_DataIni;
 
 //------------------------------------------------------------
 Campo_parQBaixa_DataPagto.prototype = new Lance_CampoData;
@@ -122,6 +166,17 @@ function Campo_parQBaixa_DataComp()
 }
 
 var DataComp = new Campo_parQBaixa_DataComp;
+
+//------------------------------------------------------------
+Campo_parQBaixa_Valor.prototype = new Lance_CampoNumerico;
+
+function Campo_parQBaixa_Valor()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Valor", "Valor", "Valor", 8, "###.##z,zz", true,"", "");
+}
+
+var Valor = new Campo_parQBaixa_Valor;
 
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
@@ -151,6 +206,8 @@ Campo_parQBaixa_TDetPg.prototype.Obrigatorio = function( p_comMsg )
 
 TDetPg_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TDetPg_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+TFCobra_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TFCobra_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -209,6 +266,19 @@ Campo_parQBaixa_Cheque.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
+Campo_parQBaixa_DataIni.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 236 ) )
+	{
+		if( p_comMsg ) alert( "O vencimento é obrigatório" );
+		return( true );
+	}
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
 Campo_parQBaixa_DataPagto.prototype.Obrigatorio = function( p_comMsg )
 {
 	{
@@ -226,7 +296,7 @@ Campo_parQBaixa_DataPagto.prototype.TemAdvertencia = function()
 	{
 		return( !confirm( "Esse não é um dia útil. Continua?" ) );
 	}
-	return( Lance_CampoData.prototype.TemAdvertencia.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemAdvertencia.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -250,7 +320,20 @@ Campo_parQBaixa_DataComp.prototype.TemAdvertencia = function()
 	{
 		return( !confirm( "Esse não é um dia útil. Continua?" ) );
 	}
-	return( Lance_CampoData.prototype.TemAdvertencia.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemAdvertencia.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_parQBaixa_Valor.prototype.Obrigatorio = function( p_comMsg )
+{
+		if( ultimaLigOpcaoEm( 236 ) )
+	{
+		if( p_comMsg ) alert( "O valor é obrigatório" );
+		return( true );
+	}
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -263,10 +346,11 @@ Campo_parQBaixa_CCor.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_parQBaixa()
 {
-TFPagto.ExistenciasDependentes= [ TDetPg,CCor,CCor_Nome ];
+TFPagto.ExistenciasDependentes= [ CCor,CCor_Nome ];
 CCor_Nome.ExistenciasDependentes= [ CCor ];
 TDetPg.ExistenciasDependentes= [ Cheque ];
 CCor_Nome.ErrosDependentes= [ CCor ];
+TFPagto.AdvertenciasDependentes= [ TDetPg ];
 CCor.CamposChave= [ CCor_Nome ];
 }
 
@@ -285,7 +369,7 @@ function ListaDeCampos_parQBaixa( p_prefixo )
 	var l_lista = new Array();
 	l_lista = l_lista.concat(
 
-		[ TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, CCor, CCor_Nome, Cheque, DataPagto, DataComp ]	);
+		[ TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, TFCobra, TFCobra_Chave, TFCobra_Descritor, CCor, CCor_Nome, Cheque, DataIni, DataPagto, DataComp, Valor ]	);
 	IniciarDependencias_parQBaixa();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -83,5 +83,18 @@ if( $op == 129 ) //* baixar parcelas
    $this->PedirZerando( "Data compensação", DataComp );
 }
 
+if( $op == 236 ) //* p_parcela_dividir
+{
+	echo
+	$this->Cabecalhos( [ "Parcela atual", 'FormCab alinhaMeio', '2' ] ),
+	$this->PedirZerando( "Valor",
+		[ "", Valor, "<br>(informe o novo valor da parcela que será dividida. Precisa ser menor que o atual)" ] ),
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Para a parcela que será criada", 'FormCab alinhaMeio', '2' ] ),
+	$this->PedirZerando( "Vencimento", DataIni ),
+	$this->PedirZerando( "Cobrança",
+		[ "", TFCobra, brHtml(2) . "(opcional)" ] );
+}
+
 //==================================================================================
 echo 	"</table>";

@@ -38,6 +38,19 @@ class campo_parQBaixa_TDetPg extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo TFCobra
+//======================================================
+
+class campo_parQBaixa_TFCobra extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TFCobra", "TFCobra", "TFCobra", 0, "tabTFCobra", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo CCor
 //======================================================
 
@@ -77,6 +90,19 @@ class campo_parQBaixa_Cheque extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo DataIni
+//======================================================
+
+class campo_parQBaixa_DataIni extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "DataIni", "DataIni", "DataIni", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo DataPagto
 //======================================================
 
@@ -103,6 +129,19 @@ class campo_parQBaixa_DataComp extends Lance_CampoData
 }
 
 //======================================================
+//	Campo Valor
+//======================================================
+
+class campo_parQBaixa_Valor extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Valor", "Valor", "Valor", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQBaixa
 //======================================================
 function listaCampos_parQBaixa( $p_prefixo )
@@ -119,11 +158,16 @@ function listaCampos_parQBaixa( $p_prefixo )
 			new campo_parQBaixa_TDetPg(),
 			new Lance_CampoCadeia( "TDetPg_Chave", "TDetPg_Chave", "Chave", 1, "x", EH_CHAVE, TDetPg ),
 			new Lance_CampoCadeia( "TDetPg_Descritor", "TDetPg_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TDetPg ),
+			new campo_parQBaixa_TFCobra(),
+			new Lance_CampoCadeia( "TFCobra_Chave", "TFCobra_Chave", "Chave", 1, "x", EH_CHAVE, TFCobra ),
+			new Lance_CampoCadeia( "TFCobra_Descritor", "TFCobra_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TFCobra ),
 			new campo_parQBaixa_CCor(),
 			new campo_parQBaixa_CCor_Nome(),
 			new campo_parQBaixa_Cheque(),
+			new campo_parQBaixa_DataIni(),
 			new campo_parQBaixa_DataPagto(),
-			new campo_parQBaixa_DataComp() )
+			new campo_parQBaixa_DataComp(),
+			new campo_parQBaixa_Valor() )
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

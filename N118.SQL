@@ -2156,29 +2156,30 @@ CREATE TABLE arqConsulta
 	/* 24*/	SDVENC1PAR DATE, /* Máscara = 4ano */
 	/* 25*/	ENTRAVALP NUMERIC( 8, 2 ), /* Máscara = N */
 	/* 26*/	/* ENTRATOTP */
-	/* 27*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 28*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/* 29*/	SALDOPARC SMALLINT, /* Máscara = N */
-	/* 30*/	SALDOVAL NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 31*/	/* SALDOTOTP */
-	/* 32*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 33*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/* 34*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 35*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 36*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 37*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 38*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 39*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
-	/* 40*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
-	/* 41*/	/* SALDO */
-	/* 42*/	QUEMAGRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 43*/	QDOAGRET DATE, /* Máscara = 4ano */
-	/* 44*/	DATARET DATE, /* Máscara = 4ano */
-	/* 45*/	/* DIARET */
-	/* 46*/	HORARET TIME, /* Máscara = Hhmm */
-	/* 47*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
-	/* 48*/	ASSESRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 49*/	OBSRET BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 27*/	/* ENTRATOTAL */
+	/* 28*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 29*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 30*/	SALDOPARC SMALLINT, /* Máscara = N */
+	/* 31*/	SALDOVAL NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 32*/	/* SALDOTOTP */
+	/* 33*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 34*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 35*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 36*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 37*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 38*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 39*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 40*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
+	/* 41*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
+	/* 42*/	/* SALDO */
+	/* 43*/	QUEMAGRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 44*/	QDOAGRET DATE, /* Máscara = 4ano */
+	/* 45*/	DATARET DATE, /* Máscara = 4ano */
+	/* 46*/	/* DIARET */
+	/* 47*/	HORARET TIME, /* Máscara = Hhmm */
+	/* 48*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
+	/* 49*/	ASSESRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 50*/	OBSRET BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2938,8 +2939,10 @@ ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
 ALTER TABLE arqClinica ALTER ATIVO POSITION 17;
 ALTER TABLE arqConsulta ADD ENTRATOTP NUMERIC( 8, 2 ) computed by ( EntraParc * EntraValP ); 
 ALTER TABLE arqConsulta ALTER ENTRATOTP POSITION 26;
+ALTER TABLE arqConsulta ADD ENTRATOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP ); 
+ALTER TABLE arqConsulta ALTER ENTRATOTAL POSITION 27;
 ALTER TABLE arqConsulta ADD SALDOTOTP NUMERIC( 8, 2 ) computed by ( SaldoParc * SaldoVal ); 
-ALTER TABLE arqConsulta ALTER SALDOTOTP POSITION 31;
+ALTER TABLE arqConsulta ALTER SALDOTOTP POSITION 32;
 ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
 	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqRecorrente.Pessoa )  ), '' ) ) )
 	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqRecorrente.Fornecedor )  ), '' ) ) )
@@ -2977,7 +2980,7 @@ ALTER TABLE arqItemMov ALTER CUNIDADE POSITION 8;
 ALTER TABLE arqCMedica ADD SALDO NUMERIC(18,0) computed by ( Qtd - QtdEntreg ); 
 ALTER TABLE arqCMedica ALTER SALDO POSITION 9;
 ALTER TABLE arqConsulta ADD SALDO NUMERIC(18,0) computed by ( TrgQtdM - TrgQtdMEnt ); 
-ALTER TABLE arqConsulta ALTER SALDO POSITION 41;
+ALTER TABLE arqConsulta ALTER SALDO POSITION 42;
 ALTER TABLE arqConsulta ADD DIARET VARCHAR( 15 ) computed by ( CASE WHEN ( DataRet is not null ) THEN ( CASE
 	WHEN( extract( weekday from Data ) = 0 ) THEN( 'DOMINGO' )
 	WHEN( extract( weekday from Data ) = 1 ) THEN( 'SEGUNDA-FEIRA' )
@@ -2987,7 +2990,7 @@ ALTER TABLE arqConsulta ADD DIARET VARCHAR( 15 ) computed by ( CASE WHEN ( DataR
 	WHEN( extract( weekday from Data ) = 5 ) THEN( 'SEXTA-FEIRA' )
 	ELSE ( 'SÁBADO' )
 	END  ) ELSE ( '' ) END ); 
-ALTER TABLE arqConsulta ALTER DIARET POSITION 45;
+ALTER TABLE arqConsulta ALTER DIARET POSITION 46;
 commit;
 
 
@@ -3233,7 +3236,7 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.SDENTRFPG, A12.FORMAPG as SDENTRFPG_FORMAPG, A0.SDVENC1PAR, A0.ENTRAVALP, A0.ENTRATOTP, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A13.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A14.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A15.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.QUEMAGRET, A16.USUARIO as QUEMAGRET_USUARIO, A0.QDOAGRET, A0.DATARET, A0.DIARET, A0.HORARET, A0.TSTAGRET, A17.CHAVE as TStAgRet_CHAVE, A17.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESRET, A18.USUARIO as ASSESRET_USUARIO, A0.OBSRET
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR, A0.PTRATA, A10.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A11.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARC, A0.SDENTRFPG, A12.FORMAPG as SDENTRFPG_FORMAPG, A0.SDVENC1PAR, A0.ENTRAVALP, A0.ENTRATOTP, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOPARC, A0.SALDOVAL, A0.SALDOTOTP, A0.SALDOFPG, A13.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A14.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A15.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.QUEMAGRET, A16.USUARIO as QUEMAGRET_USUARIO, A0.QDOAGRET, A0.DATARET, A0.DIARET, A0.HORARET, A0.TSTAGRET, A17.CHAVE as TStAgRet_CHAVE, A17.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESRET, A18.USUARIO as ASSESRET_USUARIO, A0.OBSRET
 	FROM arqConsulta A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
@@ -3516,6 +3519,7 @@ insert into arqLanceOperacao values(200225,2,'Relatório de posição de estoque','
 insert into arqLanceOperacao values(200226,2,'Relatório de lotes por validade','',226,50,0,'');
 insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação prescrita','',230,50,0,'');
 insert into arqLanceOperacao values(200233,2,'Relatório das agendas de retirada de medicação por quem agendou','',233,50,0,'');
+insert into arqLanceOperacao values(200236,2,'Rotina para dividir uma parcela','',236,10,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');

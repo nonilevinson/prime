@@ -708,6 +708,19 @@ class campo_arqConsulta_EntraTotP extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo EntraTotal
+//======================================================
+
+class campo_arqConsulta_EntraTotal extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "EntraTotal", "EntraTotal", "EntraTotal", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo BoletoMin
 //======================================================
 
@@ -781,6 +794,18 @@ class campo_arqConsulta_SaldoFPg extends Lance_CampoLigado
 	function __construct()
 	{
 		parent::__construct( "SaldoFPg", "SaldoFPg", "SaldoFPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = array();
+			array_push( $vetPai, 
+				array( "Boleto", 
+					"A.SaldoFPg, arqFormaPg",
+					"0" ) );
+		return( $vetPai );
 	}
 
 }
@@ -1233,6 +1258,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_SdVenc1Par(),
 			new campo_arqConsulta_EntraValP(),
 			new campo_arqConsulta_EntraTotP(),
+			new campo_arqConsulta_EntraTotal(),
 			new campo_arqConsulta_BoletoMin(),
 			new campo_arqConsulta_EntraObs(),
 			new campo_arqConsulta_SaldoParc(),
@@ -1363,6 +1389,7 @@ class arqConsulta extends Lance_Arquivo
 			array_push( $vetAux, array( SdVenc1Par ) );
 			array_push( $vetAux, array( EntraValP ) );
 			array_push( $vetAux, array( EntraTotP ) );
+			array_push( $vetAux, array( EntraTotal ) );
 			array_push( $vetAux, array( BoletoMin ) );
 			array_push( $vetAux, array( EntraObs ) );
 			array_push( $vetAux, array( SaldoParc ) );

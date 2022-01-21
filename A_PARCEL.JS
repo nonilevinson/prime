@@ -864,19 +864,6 @@ Campo_arqParcela_TFPagto.prototype.Existencia = function()
 TFPagto_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TFPagto_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqParcela_TDetPg.prototype.Obrigatorio = function( p_comMsg )
-{
-		if( TFPagto == 1 )
-	{
-		if( p_comMsg ) alert( "O detalhe do pagamento é obrigatório" );
-		return( true );
-	}
-	return( false );
-}
-
-//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqParcela_TDetPg.prototype.Existencia = function()
@@ -1047,7 +1034,7 @@ Emissao.CalculosDependentes= [ NumBoleto ];
 Conta_Transacao.ExistenciasDependentes= [ Conta ];
 TFCobra.ExistenciasDependentes= [ Emissao,LinhaDig,NomePdf,TFPagto,TDetPg,StRetorno,Remessa ];
 Conta.ExistenciasDependentes= [ Emissao,NomePdf,CCor,FormaPg,FormaPg_FormaPg,StRetorno,Remessa ];
-TFPagto.ExistenciasDependentes= [ CCor,DataPagto,TDetPg ];
+TFPagto.ExistenciasDependentes= [ CCor,DataPagto ];
 CCor_Nome.ExistenciasDependentes= [ CCor ];
 SubPlano_Plano.ExistenciasDependentes= [ SubPlano,SubPlano_Plano_Plano ];
 SubPlano_Plano_CodPlano.ExistenciasDependentes= [ SubPlano_Plano ];
@@ -1100,6 +1087,7 @@ g_arquivoCampos = ListaDeCampos_arqParcela( '' );
 g_idOperacao = 34;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Baixar","","x",129,"","",1,"temMarcados()","1", "a_qbaixa", "parQBaixa", "Alterar", "", "", "", "", "5^^^p_parcela_baixar^^^^^^^^^^^^^^^^^^", "", 0,6,[129],[]);
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_1 = new Array( 1,"Baixar","","x",129,"","",1,"temMarcados()","1", "a_qbaixa", "parQBaixa", "Alterar", "", "", "", "", "5^^^p_parcela_baixar^^^^^^^^^^^^^^^^^^", "", 0,7,[129],[]);
+var Menu_2 = new Array( 1,"Dividir","","v",236,"","",1,"","1", "a_qbaixa", "parQBaixa", "Alterar", "", "", "", "", "5^^^p_parcela_dividir^^^^^^^^^^^^^^^^^^", "", 0,7,[236],[]);
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }

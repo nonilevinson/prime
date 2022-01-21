@@ -1,4 +1,11 @@
 //----------------------------------------------------------
+function sugereSdVenc1Par()
+{
+	Lance_ExecutarPhp( 'sugereSdVenc1Par()', 'a_consul_ext', '' );
+	return( '' );
+}
+
+//----------------------------------------------------------
 function sugereBoletoMin()
 {
 	Lance_ExecutarPhp( 'sugereBoletoMin()', 'a_consul_ext', '' );

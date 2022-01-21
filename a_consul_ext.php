@@ -1,6 +1,27 @@
 <?php
 
 //==================================================================
+function sugereSdVenc1Par()
+{
+	sql_abrirBD( false );
+   
+   $select = "Select X.DiasSdEntr
+		From cnfXConfig X";
+	$umXConfig = sql_lerUmRegistro( $select );
+   $sdVenc1Par = formatarData( incDia( HOJE, $umXConfig->DIASSDENTR ), 'aaaa/mm/dd' );
+// echo '<br><b>cnfXConfig S=</b> '.$select.'<br><b>sdVenc1Par=</b> '.$sdVenc1Par;
+
+   sql_fecharBD();
+   
+	echo
+		javaScriptIni(),
+		'with( parent ) {
+			alt( SdVenc1Par, \'' . $sdVenc1Par . '\' );
+		}',
+		javaScriptFim();
+}
+
+//==================================================================
 function sugereBoletoMin()
 {
 	sql_abrirBD( false );
@@ -8,7 +29,7 @@ function sugereBoletoMin()
    $select = "Select X.BoletoMin
 		From cnfXConfig X";
 	$umXConfig = sql_lerUmRegistro( $select );
-echo '<br><b>cnfXConfig S=</b> '.$select;
+// echo '<br><b>cnfXConfig S=</b> '.$select;
 
    sql_fecharBD();
    
@@ -16,7 +37,6 @@ echo '<br><b>cnfXConfig S=</b> '.$select;
 		javaScriptIni(),
 		'with( parent ) {
 			alt( BoletoMin, ' . $umXConfig->BOLETOMIN . ' );
-         console.warn( \'BOLETOMIN= \'+\''.$umXConfig->BOLETOMIN.'\');
 		}',
 		javaScriptFim();
 }

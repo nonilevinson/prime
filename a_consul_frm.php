@@ -79,7 +79,8 @@ CriarForms(
 	$this->Pedir( " ",		
 		[ "Valor das parcelas ", EntraValP,
 		[ brHtml(4) . "Total ", EntraTotP,
-		[ brHtml(4) . "Mínimo ", BoletoMin, '','','','','FormCalculado' ] ] ] ),
+		[ brHtml(2) . "= ", EntraTotal,
+		[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ] ),
 	$this->Pedir( "Observações", EntraObs ),
 	
 	$this->Cabecalhos( [ "Saldo", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),

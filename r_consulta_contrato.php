@@ -118,8 +118,18 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       if( $entraParc )
       {
          $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-         $this->PDF->Cell( $larg2, $altura, "Saldo da entrada em " . $entraParc . " parcelas de R$ " .
-            $this->valorExtenso( $entraValP ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+         $this->PDF->Cell( $larg2, $altura, "Saldo da entrada em " . $entraParc . " parcela" .
+            ( $entraParc == 1 ? "" : "s" ) . "de R$ " . $this->valorExtenso( $entraValP ),
+            SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+
+         $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+         $this->PDF->Cell( $larg1, $altura, "Forma de pagamento: " . $regA->SDENTRFPG,
+            SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+
+         $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+         $this->PDF->Cell( $larg1, $altura, "Vencimento" .
+            ( $entraParc == 1 ? ": " : " da primeira parcela: " ) . formatarData( $regA->SDVENC1PAR ),
+            SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
          if( $entraObs )
          {
@@ -196,8 +206,9 @@ $proc = new RelConsulta( RETRATO, A4, 'Contrato.pdf', '' );
 $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade, P.Orgao, X.Descritor as Sexo,
       V.Descritor as EstCivil, P.Ende_Endereco as Endereco, B.Bairro, I.Cidade, upper( U.Descritor ) as UF,
       P.Ende_CEP as CEP, P.Nascimento, F.Profissao, I.DDD, P.Ende_Telefone as Telefone, P.NumCelular, P.Email,
-      C.Data, A.Nome as Assessor, R.PTrata, R.Tempo, FE.FormaPg as EntraFPg, FS.FormaPg as SaldoFPg,
-      C.EntraVal, C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoVal, C.SaldoObs, C.Num as NumConsulta
+      C.Data, A.Nome as Assessor, R.PTrata, R.Tempo, FE.FormaPg as EntraFPg, FS.FormaPg as SaldoFPg, C.EntraVal,
+      C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoVal, C.SaldoObs, C.Num as NumConsulta,
+      C.SdVenc1Par, FD.FormaPg as SdEntrFPg
 	From arqConsulta C
 		join arqClinica          L on  L.idPrimario=C.Clinica
       join arqPessoa           P on  P.idPrimario=C.Pessoa
@@ -210,6 +221,7 @@ $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade
       left join arqBairro      B on  B.idPrimario=P.Ende_Bairro
       left join arqProfissao   F on  F.idPrimario=P.Profissao
       left join arqFormaPg    FE on FE.idPrimario=C.EntraFPg
+      left join arqFormaPg    FD on FD.idPrimario=C.SdEntrFPg
       left join arqFormaPg    FS on FS.idPrimario=C.SaldoFPg
 	Where C.idPrimario = " . navegouDe( 'arqConsulta' );
 
