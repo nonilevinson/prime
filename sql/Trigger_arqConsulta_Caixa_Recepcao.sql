@@ -9,7 +9,6 @@ set term ^;
 
 recreate trigger ARQCONSULTA_AI_AU for ARQCONSULTA
 active before Insert or Update position 101 as
-	declare idConsulta bigInt;
 	declare idConta bigInt;
 	declare idParcela bigInt;
 	declare vencimento date;
@@ -18,7 +17,6 @@ active before Insert or Update position 101 as
 	declare valor numeric(18,2);
 	declare valorLiq numeric(18,2);
 	declare txCartao numeric(18,2);
-	declare idFormaPg bigInt;
 	declare transacao bigInt;
 	declare idCCor bigInt;
 	declare idSubPlano bigInt;
@@ -96,7 +94,7 @@ begin
 					txCartao = taxa2;
 				end
 				
-				vencimento = dateadd( day, dias, current_date );
+				vencimento = dateadd( day, :dias, current_date );
 				dataPagto  = null;
 				dataComp   = null;
 				valorLiq   = NEW.Valor * ( 100 - txCartao ) / 100.0;
