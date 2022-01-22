@@ -1353,7 +1353,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( BoletoMin ), array( ContaCons ), array( ContaPTra ), array( TrgQtdM ), array( TrgQtdMEnt ), array( TStAgRet ), array( TStAgRet_Chave ), array( TStAgRet_Descritor ), array( AssesRet ) ) );
+		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( PTrata ), array( BoletoMin ), array( ContaCons ), array( ContaPTra ), array( TrgQtdM ), array( TrgQtdMEnt ), array( TStAgRet ), array( TStAgRet_Chave ), array( TStAgRet_Descritor ), array( AssesRet ) ) );
 	}
 
 	//-------------------------------------------------------------

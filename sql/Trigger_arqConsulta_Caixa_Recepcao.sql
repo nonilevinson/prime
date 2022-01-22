@@ -90,9 +90,14 @@ begin
 					txCartao = taxaDeb;
 				end
 				else
-				begin
-					txCartao = taxa2;
-				end
+            if( taxa2 > 0 ) then
+            begin
+               txCartao = taxa2;
+            end
+            else
+            begin
+               txCartao = taxa3;
+            end
 				
 				vencimento = dateadd( day, :dias, current_date );
 				dataPagto  = null;

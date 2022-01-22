@@ -78,14 +78,15 @@ $select = "Select X.SubPlaRAss
 $g_idSubPlano = sql_lerUmRegistro( $select )->SUBPLARASS;
 
 $select = "Select C.Num as NumConsulta, C.Clinica as idClinica, P.idPrimario as idPessoa,
-      C.Prontuario, T.PTrata, C.EntraParc, C.SaldoParc, C.EntraFPg, C.SdEntrFPG, C.SaldoFPG,
-      C.EntraVal, C.EntraValP, C.SdVenc1Par, (C.SaldoVal * C.SaldoParc) as SaldoValor
+      C.Prontuario, T.PTrata, C.EntraParc, C.SaldoParc, C.EntraFPg, C.SdEntrFPG, C.SaldoFPg,
+      C.EntraVal, C.EntraValP, C.SdVenc1Par, (C.SaldoVal * C.SaldoParc) as SaldoValor,
+      (Select F.Cartao From arqFormaPg F Where F.idprimario = C.SdEntrFPg) as SdEntrFPgEhCartao
    From arqConsulta C
       join arqPTrata T on T.idPrimario=C.PTrata
       join arqPessoa P on P.idPrimario=C.Pessoa
    Where C.idPrimario = " . $idConsulta;
 $umaConsulta = sql_lerUmRegistro( $select );
-// if( $g_debugProcesso ) echo '<br><b>GR0 arqConsulta S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>GR0 1 arqConsulta S=</b> '.$select;
 
 $idConta = sql_IdPrimario();
 $idClinica     = $parGeraParc->CLINICA;
@@ -129,14 +130,25 @@ $entraParc = $umaConsulta->ENTRAPARC;
 
 if( $entraParc > 0 )
 {
-   for( $i=1; $i<=$entraParc; $i++ )
+   if( $umaConsulta->SDENTRFPGEHCARTAO )
+   {
+      $iFinal       = 1;
+      $valorSdEntra = $umaConsulta->ENTRAVALP * $entraParc;
+   }
+   else
+   {
+      $iFinal       = $entraParc;
+      $valorSdEntra = $umaConsulta->ENTRAVALP;
+   }
+   
+   for( $i=1; $i<=$iFinal; $i++ )
    {
       if( $i == 1 )
          $vencimento = $umaConsulta->SDVENC1PAR;
       else
          $vencimento = incDia( $vencimento, 10 );
 
-      CriarParcela( $idConta, $vencimento, $umaConsulta->ENTRAVALP, $umaConsulta->SDENTRFPG,
+      CriarParcela( $idConta, $vencimento, $valorSdEntra, $umaConsulta->SDENTRFPG,
          'Saldo da Entrada' );
    }
 }
