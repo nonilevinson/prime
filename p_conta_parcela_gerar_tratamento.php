@@ -79,8 +79,9 @@ $g_idSubPlano = sql_lerUmRegistro( $select )->SUBPLARASS;
 
 $select = "Select C.Num as NumConsulta, C.Clinica as idClinica, P.idPrimario as idPessoa,
       C.Prontuario, T.PTrata, C.EntraParc, C.SaldoParc, C.EntraFPg, C.SdEntrFPG, C.SaldoFPg,
-      C.EntraVal, C.EntraValP, C.SdVenc1Par, (C.SaldoVal * C.SaldoParc) as SaldoValor,
-      (Select F.Cartao From arqFormaPg F Where F.idprimario = C.SdEntrFPg) as SdEntrFPgEhCartao
+      C.EntraVal, C.EntraValP, C.SdVenc1Par, C.SaldoVal, (C.SaldoVal * C.SaldoParc) as SaldoValor,
+      (Select F.Cartao From arqFormaPg F Where F.idprimario = C.SdEntrFPg) as SdEntrFPgEhCartao,
+      (Select F.Cartao From arqFormaPg F Where F.idprimario = C.SaldoFPg) as SaldoFPgEhCartao
    From arqConsulta C
       join arqPTrata T on T.idPrimario=C.PTrata
       join arqPessoa P on P.idPrimario=C.Pessoa
@@ -101,6 +102,8 @@ $select = "Select coalesce( max( Transacao ), 0 ) as Transacao
    From arqConta";
 $proxTransacao = sql_lerUmRegistro( $select )->TRANSACAO + 1;
 
+$historicoConta = "C:" . $umaConsulta->NUMCONSULTA . " Pr:" . $umaConsulta->PRONTUARIO . " Tr:" . $umaConsulta->PTRATA;
+
 sql_insert( "arqConta", [
    "idPrimario" => $idConta,
    "Transacao"  => $proxTransacao,
@@ -118,12 +121,12 @@ sql_insert( "arqConta", [
    "Emissao"    => $hoje,
    "RecEnvia"   => $hoje,
    "Compete"    => $compete,
-   "Historico"  => "C:" . $umaConsulta->NUMCONSULTA . " Pr:" . $umaConsulta->PRONTUARIO . " Tr:" . $umaConsulta->PTRATA,
+   "Historico"  => $historicoConta,
    "Arq1"       => null ] );
 
 // function CriarParcela( $idConta, $p_vencimento, $p_valor, $p_formaPg, $p_historico='' )
 //* entrada
-CriarParcela( $idConta, $hoje, $umaConsulta->ENTRAVAL, $umaConsulta->ENTRAFPG, 'Entrada' );
+CriarParcela( $idConta, $hoje, $umaConsulta->ENTRAVAL, $umaConsulta->ENTRAFPG, $historicoConta . ': Entrada' );
 
 //* saldo da entrada
 $entraParc = $umaConsulta->ENTRAPARC;
@@ -148,14 +151,34 @@ if( $entraParc > 0 )
       else
          $vencimento = incDia( $vencimento, 10 );
 
-      CriarParcela( $idConta, $vencimento, $valorSdEntra, $umaConsulta->SDENTRFPG,
-         'Saldo da Entrada' );
+      CriarParcela( $idConta, $vencimento, $valorSdEntra, $umaConsulta->SDENTRFPG, $historicoConta . ':Saldo Entrada' );
    }
 }
 
 //* saldo do tratamento
-CriarParcela( $idConta, $hoje, $umaConsulta->SALDOVALOR, $umaConsulta->SALDOFPG, 'Saldo do tratamento' );
+if( $umaConsulta->SALDOFPGEHCARTAO )
+{
+      $iFinal  = 1;
+      $valorSd = $umaConsulta->SALDOVALOR;   
+}
+else
+{
+      $iFinal     = $umaConsulta->SALDOPARC;
+      $valorSd    = $umaConsulta->SALDOVAL;
+}
 
+for( $i=1; $i<=$iFinal; $i++ )
+{
+   if( $i == 1 )
+      $vencimento = formatarData( HOJE, 'aaaa/mm/dd' );
+   else
+      $vencimento = incDia( $vencimento, 10 );
+
+   CriarParcela( $idConta, $vencimento, $valorSd, $umaConsulta->SALDOFPG, $historicoConta . ': Saldo Tratamento' );
+}
+
+
+//* amarra a consulta com a conta criada
 sql_update( "arqConsulta", [
       "ContaPTra" => $idConta ],
    "idPrimario = " . $idConsulta );
@@ -164,6 +187,6 @@ sql_fecharBD();
 
 $teste = false;
 if( $teste )
-	echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE ***</p>';
+	echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE - liberar o Update arqConsulta ***</p>';
 else
 	tecleAlgoVolta( 'Conta e parcelas criadas. Verifique!', true, $g_tecleAlgo );

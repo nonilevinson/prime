@@ -26,19 +26,19 @@ class campo_arqParcela_Conta extends Lance_CampoLigado
 	function PegaPai()
 	{
 		global $g_regAtual;
-		$vetPai = array();
-			array_push( $vetPai, 
-				array( "TPgRec, Clinica, Fornecedor", 
+		$vetPai = [];
+			$vetPai[]=
+				[ "TPgRec, Clinica, Fornecedor", 
 					"A.Conta, arqConta",
-					"0,0,0" ) );
-			array_push( $vetPai, 
-				array( "Clinica", 
+					"0,0,0" ];
+			$vetPai[]=
+				[ "Clinica", 
 					"A.Conta, arqConta.Clinica, arqClinica",
-					"1" ) );
-			array_push( $vetPai, 
-				array( "Nome", 
+					"1" ];
+			$vetPai[]=
+				[ "Nome", 
 					"A.Conta, arqConta.Pessoa, arqPessoa",
-					"1" ) );
+					"1" ];
 		return( $vetPai );
 	}
 
@@ -650,7 +650,7 @@ class campo_arqParcela_Historico extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Historico", "Historico", "Historico", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
+		parent::__construct( "Historico", "Historico", "Historico", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -671,7 +671,7 @@ function listaCampos_arqParcela( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqParcela_Conta(),
 			new campo_arqParcela_Conta_Transacao(),
@@ -714,7 +714,7 @@ function listaCampos_arqParcela( $p_prefixo )
 			new campo_arqParcela_StRetorno(),
 			new campo_arqParcela_Remessa(),
 			new campo_arqParcela_DataRem(),
-			new campo_arqParcela_Historico() )
+			new campo_arqParcela_Historico() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -738,7 +738,7 @@ class arqParcela extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Conta_Transacao, Parcela) );
+		return( [ Conta_Transacao, Parcela ] );
 	}
 
 	//-------------------------------------------------------------
@@ -747,19 +747,19 @@ class arqParcela extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Conta_Transacao ) );
-			array_push( $vetAux, array( ClinicaCal ) );
-			array_push( $vetAux, array( TPgRecCal ) );
-			array_push( $vetAux, array( PessoaCal ) );
-			array_push( $vetAux, array( Parcela ) );
-			array_push( $vetAux, array( Vencimento ) );
-			array_push( $vetAux, array( Valor ) );
-			array_push( $vetAux, array( ValorLiq ) );
-			array_push( $vetAux, array( TFCobra_Descritor ) );
-			array_push( $vetAux, array( LinhaDig ) );
-			array_push( $vetAux, array( DataPagto ) );
-			array_push( $vetAux, array( Historico ) );
+		$vetAux = [];
+			$vetAux[] = [ Conta_Transacao ];
+			$vetAux[] = [ ClinicaCal ];
+			$vetAux[] = [ TPgRecCal ];
+			$vetAux[] = [ PessoaCal ];
+			$vetAux[] = [ Parcela ];
+			$vetAux[] = [ Vencimento ];
+			$vetAux[] = [ Valor ];
+			$vetAux[] = [ ValorLiq ];
+			$vetAux[] = [ TFCobra_Descritor ];
+			$vetAux[] = [ LinhaDig ];
+			$vetAux[] = [ DataPagto ];
+			$vetAux[] = [ Historico ];
 		return( $vetAux );
 	}
 
@@ -768,7 +768,7 @@ class arqParcela extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Conta ), array( VencEst ), array( Estimado ), array( TFCobra ), array( TFCobra_Chave ), array( TFCobra_Descritor ) ) );
+		return( [ [ Conta ], [ VencEst ], [ Estimado ], [ TFCobra ], [ TFCobra_Chave ], [ TFCobra_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -777,38 +777,38 @@ class arqParcela extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Conta_Transacao ) );
-			array_push( $vetAux, array( ClinicaCal ) );
-			array_push( $vetAux, array( TPgRecCal ) );
-			array_push( $vetAux, array( PessoaCal ) );
-			array_push( $vetAux, array( Parcela ) );
-			array_push( $vetAux, array( Vencimento ) );
-			array_push( $vetAux, array( VencEst ) );
-			array_push( $vetAux, array( Valor ) );
-			array_push( $vetAux, array( ValorLiq ) );
-			array_push( $vetAux, array( Estimado ) );
-			array_push( $vetAux, array( TFCobra_Descritor ) );
-			array_push( $vetAux, array( Emissao ) );
-			array_push( $vetAux, array( NumBoleto ) );
-			array_push( $vetAux, array( LinhaDig ) );
-			array_push( $vetAux, array( NomePdf ) );
-			array_push( $vetAux, array( CCor_Nome ) );
-			array_push( $vetAux, array( SubPlano_Plano_CodPlano ) );
-			array_push( $vetAux, array( SubPlano_Plano_Plano ) );
-			array_push( $vetAux, array( SubPlano_Codigo ) );
-			array_push( $vetAux, array( SubPlano_Nome ) );
-			array_push( $vetAux, array( DataPagto ) );
-			array_push( $vetAux, array( DataComp ) );
-			array_push( $vetAux, array( TFPagto_Descritor ) );
-			array_push( $vetAux, array( TDetPg_Descritor ) );
-			array_push( $vetAux, array( FormaPg_FormaPg ) );
-			array_push( $vetAux, array( Cheque ) );
-			array_push( $vetAux, array( Arq1 ) );
-			array_push( $vetAux, array( StRetorno ) );
-			array_push( $vetAux, array( Remessa ) );
-			array_push( $vetAux, array( DataRem ) );
-			array_push( $vetAux, array( Historico ) );
+		$vetAux = [];
+			$vetAux[] = [ Conta_Transacao ];
+			$vetAux[] = [ ClinicaCal ];
+			$vetAux[] = [ TPgRecCal ];
+			$vetAux[] = [ PessoaCal ];
+			$vetAux[] = [ Parcela ];
+			$vetAux[] = [ Vencimento ];
+			$vetAux[] = [ VencEst ];
+			$vetAux[] = [ Valor ];
+			$vetAux[] = [ ValorLiq ];
+			$vetAux[] = [ Estimado ];
+			$vetAux[] = [ TFCobra_Descritor ];
+			$vetAux[] = [ Emissao ];
+			$vetAux[] = [ NumBoleto ];
+			$vetAux[] = [ LinhaDig ];
+			$vetAux[] = [ NomePdf ];
+			$vetAux[] = [ CCor_Nome ];
+			$vetAux[] = [ SubPlano_Plano_CodPlano ];
+			$vetAux[] = [ SubPlano_Plano_Plano ];
+			$vetAux[] = [ SubPlano_Codigo ];
+			$vetAux[] = [ SubPlano_Nome ];
+			$vetAux[] = [ DataPagto ];
+			$vetAux[] = [ DataComp ];
+			$vetAux[] = [ TFPagto_Descritor ];
+			$vetAux[] = [ TDetPg_Descritor ];
+			$vetAux[] = [ FormaPg_FormaPg ];
+			$vetAux[] = [ Cheque ];
+			$vetAux[] = [ Arq1 ];
+			$vetAux[] = [ StRetorno ];
+			$vetAux[] = [ Remessa ];
+			$vetAux[] = [ DataRem ];
+			$vetAux[] = [ Historico ];
 		return( $vetAux );
 	}
 
@@ -917,4 +917,3 @@ class arqParcela extends Lance_Arquivo
 	}
 
 }
-?>

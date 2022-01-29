@@ -459,7 +459,7 @@ Campo_arqParcela_Historico.prototype = new Lance_CampoCadeia;
 function Campo_arqParcela_Historico()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Historico", "Historico", "Historico", 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "Historico", "Historico", "Historico", 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Historico = new Campo_arqParcela_Historico;
@@ -469,7 +469,7 @@ var Historico = new Campo_arqParcela_Historico;
 //-------------------------------------------------------------
 Campo_arqParcela_Conta.prototype.TrazOutrosDoPai = function()
 {
-	var vetPai = new Array();
+	var vetPai = [];
 			vetPai[0] = [ "TPgRec, Clinica, Fornecedor",
 					"A.Conta, arqConta",
 					"0,0,0" ];
@@ -1093,7 +1093,7 @@ function ListaDeCampos_arqParcela( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, FormaPg, FormaPg_FormaPg, Cheque, Arq1, StRetorno, Remessa, DataRem, Historico ]	);
@@ -1106,7 +1106,7 @@ g_arquivoCampos = ListaDeCampos_arqParcela( '' );
 g_idOperacao = 34;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Baixar","","x",129,"","",1,"temMarcados()","1", "a_qbaixa", "parQBaixa", "Alterar", "", "", "", "", "5^^^p_parcela_baixar^^^^^^^^^^^^^^^^^^", "", 0,7,[129],[]);
-var Menu_2 = new Array( 1,"Dividir","","v",236,"","",1,"","1", "a_qbaixa", "parQBaixa", "Alterar", "", "", "", "", "5^^^p_parcela_dividir^^^^^^^^^^^^^^^^^^", "", 0,7,[236],[]);
+var Menu_1 = [ 1,"Baixar","","x",129,"","",1,"temMarcados()","1", "a_qbaixa", "parQBaixa", "Alterar", "", "", "", "", "5^^^p_parcela_baixar^^^^^^^^^^^^^^^^^^", "", 0,7,[129],[]];
+var Menu_2 = [ 1,"Dividir","","v",236,"","",1,"","1", "a_qbaixa", "parQBaixa", "Alterar", "", "", "", "", "5^^^p_parcela_dividir^^^^^^^^^^^^^^^^^^", "", 0,7,[236],[]];
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }

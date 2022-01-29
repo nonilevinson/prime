@@ -1,5 +1,5 @@
 <?php
-	$setup["SISTEMA"] = array(
+	$setup["SISTEMA"] = [
 		"NOME"						=> "Sistema de Gestão de Consultas",	// Nome do Sistema
 		"SESSAO"						=> "",	// Variáveis de Sessão
 		"LOGO_ABERTURA"			=> SISTEMA_DIR . "km.gif",	// Imagem do logotipo do sistema
@@ -9,9 +9,9 @@
 		"LOGO_FUNDOSUAVE"			=> SISTEMA_DIR . "km_suave.gif",	// Imagem para pano de fundo suavizado
 		"LOGO_FUNDOSUAVE_POS"	=> "bottom center",	// Posição onde a imagem aparecerá nas telas
 		"PARAMETRO"			=> "cnfConfig",	// Parâmetro com informações do sistema
-		"LATERALPDF"		=> "swsm.com.br" );	// Texto que aparecerá na lateral dos relatórios
+		"LATERALPDF"		=> "swsm.com.br" ];	// Texto que aparecerá na lateral dos relatórios
 
-	$setup["BANCO"] = array(
+	$setup["BANCO"] = [
 		"TIPO"				=> "firebird",	// Tipo
 		"NOME"				=> "dado118.fdb",	// Nome
 		"LOGINLOCAL"		=> "SYSDBA",	// Login Local
@@ -20,16 +20,16 @@
 		"LOGINSERV"			=> "SYSDBA",	// Login para Servidor
 		"SENHASERV"			=> "masterkey",	// Senha
 		"CAMINHOSERV"		=> "j:/www.swsm.com.br/firebird",	// Caminho
-		"ACENTO"				=> "ISO8859_1" );	// Acentuação do banco
+		"ACENTO"				=> "ISO8859_1" ];	// Acentuação do banco
 
 	$txtRodape = '<a href="https://www.swsm.com.br" target="_blank" class="Rodape">&copy; Kogumelo Informática</a>';
 
 
 	global $g_vetPerfil;
-	$g_vetPerfil = array(
-		array( 'Usuários', 'arqUsuario', 'Usuario', 'Senha', 'Grupo', '', 'Ativo', 'Email', 'Versao', 'principa' )	);
+	$g_vetPerfil = [
+		[ 'Usuários', 'arqUsuario', 'Usuario', 'Senha', 'Grupo', '', 'Ativo', 'Email', 'Versao', 'principa' ]	];
 
-	$versoes = array(
+	$versoes = [
 		"1.18"	=> "21/01/2022",
 		"1.17"	=> "10/01/2022",
 		"1.16"	=> "30/12/2021",
@@ -48,16 +48,15 @@
 		"1.03"	=> "07/07/2021",
 		"1.02"	=> "18/06/2021",
 		"1.01"	=> "15/06/2021",
-		"1.00"	=> "25/05/2021" );
+		"1.00"	=> "25/05/2021" ];
 
-	$vetDependencia = array(
-		array( "a_fornec", "a_endere" ),
-		array( "a_clini", "a_endere" ),
-		array( "a_pessoa", "a_endere" ),
-		array( "a_xconfi", "a_endere" ) );
+	$vetDependencia = [
+		[ "a_fornec", "a_endere" ],
+		[ "a_clini", "a_endere" ],
+		[ "a_pessoa", "a_endere" ],
+		[ "a_xconfi", "a_endere" ] ];
 
 include_once( SISTEMA_DIR_ABSOLUTO . 'cores.php' );
 include_once( CLIENTE_DIR_ABSOLUTO . 'cores.php' );
 require_once( CLIENTE_DIR_ABSOLUTO . 'setup.php' );
 
-?>

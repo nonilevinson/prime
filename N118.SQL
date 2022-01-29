@@ -1875,10 +1875,10 @@ CREATE TABLE arqAcaoEmail
 	/*  6*/	PADRAOACAO ligadoComTabela, /* Ligado com a Tabela PadraoAcao */
 	/*  7*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  8*/	ARQUIVO VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/*  9*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'AcaoEmail/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
+	/*  9*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( lower( 'AcaoEmail/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
 	/* 10*/	HTML BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
 	/* 11*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 12*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'AcaoEmail/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
+	/* 12*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( lower( 'AcaoEmail/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
 	/* 13*/	LINK VARCHAR( 200 ) COLLATE PT_BR, /* Máscara = X */
 	/* 14*/	IMAGEMALT VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
 	/* 15*/	QTDTESTE SMALLINT, /* Máscara = N */
@@ -1941,7 +1941,7 @@ CREATE TABLE arqConta
 	/* 18*/	COMPETE DATE, /* Máscara = A4mm */
 	/* 19*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	/* 20*/	ARQ1 VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 21*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'Conta/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
+	/* 21*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Conta/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
 	CONSTRAINT arqConta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConta_UK UNIQUE ( Transacao )
 );
@@ -2053,7 +2053,7 @@ CREATE TABLE arqUsuario
 	/* 10*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 11*/	NASCIMENTO DATE, /* Máscara = 4ano */
 	/* 12*/	FOTO campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 13*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
+	/* 13*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) ),
 	/* 14*/	EMAILACES campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 15*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 16*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
@@ -2336,14 +2336,14 @@ CREATE TABLE arqDocMod
 	/* 10*/	TEMPLATE ligadoComArquivo, /* Ligado com o Arquivo Template */
 	/* 11*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 12*/	HEADER VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 13*/	HEADER_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( HEADER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_HEADER.' || HEADER ) END ) ),
+	/* 13*/	HEADER_ARQUIVO VARCHAR(128) computed by ( lower( 'DocMod/' || CASE WHEN ( HEADER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_HEADER.' || HEADER ) END ) ),
 	/* 14*/	ARQUIVO VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 15*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
+	/* 15*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( lower( 'DocMod/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
 	/* 16*/	FOOTER VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 17*/	FOOTER_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'DocMod/' || CASE WHEN ( FOOTER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_FOOTER.' || FOOTER ) END ) ),
+	/* 17*/	FOOTER_ARQUIVO VARCHAR(128) computed by ( lower( 'DocMod/' || CASE WHEN ( FOOTER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_FOOTER.' || FOOTER ) END ) ),
 	/* 18*/	HTML BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
 	/* 19*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 20*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'DocMod/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
+	/* 20*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( lower( 'DocMod/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
 	/* 21*/	LISTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	/* 22*/	MARGEMESQ SMALLINT, /* Máscara = N */
 	/* 23*/	MARGEMDIR SMALLINT, /* Máscara = N */
@@ -2489,11 +2489,11 @@ CREATE TABLE arqParcela
 	/* 23*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
 	/* 24*/	CHEQUE NUMERIC(18,0), /* Máscara = Z */
 	/* 25*/	ARQ1 VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 26*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( udf_lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
+	/* 26*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
 	/* 27*/	STRETORNO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
 	/* 28*/	REMESSA NUMERIC(18,0), /* Máscara = N */
 	/* 29*/	DATAREM DATE, /* Máscara = 4ano */
-	/* 30*/	HISTORICO VARCHAR( 40 ) COLLATE PT_BR, /* Máscara = M */
+	/* 30*/	HISTORICO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqParcela_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqParcela_UK UNIQUE ( Conta, Parcela )
 );
@@ -2532,7 +2532,7 @@ CREATE TABLE arqImagemCRM
 	/*  3*/	NUMIMG NUMERIC(18,0), /* Máscara = N */
 	/*  4*/	NOME VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
 	/*  5*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/*  6*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( udf_lower( 'ImagemCRM/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
+	/*  6*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( lower( 'ImagemCRM/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
 	/*  7*/	LINK VARCHAR( 200 ) COLLATE PT_BR, /* Máscara = X */
 	CONSTRAINT arqImagemCRM_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqImagemCRM_UK UNIQUE ( AcaoEmail, NumImg )
