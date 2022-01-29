@@ -8,7 +8,7 @@ sql_iniciarTransacao();
 $parQBaixa = lerParametro( 'parQBaixa' );
 $idParcela = navegouDe( 'arqParcela' );
 
-$select = "Select P.Conta as idConta, P.Parcela, P.Valor, P.ValorLiq, P.SubPlano as idSubPlano
+$select = "Select P.Conta as idConta, P.Parcela, P.Valor, P.ValorLiq, P.SubPlano as idSubPlano, P.Historico
 		From arqParcela P
 		Where P.idPrimario = " . $idParcela;
 $umaParcela    = sql_lerUmRegistro( $select );
@@ -75,7 +75,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 taxa=</b> '.$taxaLiq;
       "StRetorno"  => '',
       "Remessa"    => 0,
       "DataRem"    => null,
-      "Historico"  => '' ] );
+      "Historico"  => $umaParcela->HISTORICO ] );
 }
 
 sql_gravarTransacao();
