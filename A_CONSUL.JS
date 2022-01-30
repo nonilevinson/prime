@@ -1143,7 +1143,7 @@ Campo_arqConsulta_PTrata.prototype.FiltroPai = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_PTrata.prototype.TrazOutrosDoPai = function()
 {
-	var vetPai = new Array();
+	var vetPai = [];
 			vetPai[0] = [ "Valor, MrgDesc",
 					"A.PTrata, arqPTrata",
 					"0,0" ];
@@ -1253,7 +1253,7 @@ Campo_arqConsulta_EntraFPg.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraFPg.prototype.TrazOutrosDoPai = function()
 {
-	var vetPai = new Array();
+	var vetPai = [];
 			vetPai[0] = [ "Boleto",
 					"A.EntraFPg, arqFormaPg",
 					"0" ];
@@ -1519,7 +1519,7 @@ Campo_arqConsulta_SaldoVal.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoVal.prototype.TemErro = function()
 {
-		if( tem(this) && ( ValPTrata != EntraVal + (EntraParc *  EntraValP ) + ( SaldoParc * SaldoVal ) ) )
+		if( tem(this) && ( false /*ValPTrata != EntraVal + (EntraParc *  EntraValP) + (SaldoParc * SaldoVal)*/ ) )
 	{
 		alert( "Valor inválido" );
 		return( true );
@@ -1580,7 +1580,7 @@ Campo_arqConsulta_SaldoFPg.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg.prototype.TrazOutrosDoPai = function()
 {
-	var vetPai = new Array();
+	var vetPai = [];
 			vetPai[0] = [ "Boleto",
 					"A.SaldoFPg, arqFormaPg",
 					"0" ];
@@ -2155,7 +2155,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, FormaPg, FormaPg_FormaPg, Valor, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoParc, SaldoVal, SaldoTotP, SaldoFPg, SaldoFPg_FormaPg, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
@@ -2168,10 +2168,10 @@ g_arquivoCampos = ListaDeCampos_arqConsulta( '' );
 g_idOperacao = 39;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Medicação","","d",206,"","",1,"","1","a_cmedic","arqCMedica","Folhear","Consulta","?","","", "","", 0,24,[],[54]);
-var Menu_2 = new Array( 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,24,[137],[]);
-var Menu_3 = new Array( 1,"Ag. Retirada","","t",197,"","",1,"","1","a_agret","arqAgRet","Folhear","Consulta","?","","", "","", 0,24,[],[53]);
-var Menu_4 = new Array( 1,"Gerar Receber Tratamento","","G",184,"","",1,"tem( PTrata ) && !tem( ContaPTra )","5","p_conta_parcela_gerar_tratamento","","","","","","", "","", 0,24,[184],[]);
-var Menu_5 = new Array( 1,"Emitir Contrato","","m",191,"","",1,"","5","r_consulta_contrato","","","","","","", "","", 0,24,[191],[]);
+var Menu_1 = [ 1,"Medicação","","d",206,"","",1,"","1","a_cmedic","arqCMedica","Folhear","Consulta","?","","", "","", 0,24,[],[54]];
+var Menu_2 = [ 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,24,[137],[]];
+var Menu_3 = [ 1,"Ag. Retirada","","t",197,"","",1,"","1","a_agret","arqAgRet","Folhear","Consulta","?","","", "","", 0,24,[],[53]];
+var Menu_4 = [ 1,"Gerar Receber Tratamento","","G",184,"","",1,"tem( PTrata ) && !tem( ContaPTra )","5","p_conta_parcela_gerar_tratamento","","","","","","", "","", 0,24,[184],[]];
+var Menu_5 = [ 1,"Emitir Contrato","","m",191,"","",1,"","5","r_consulta_contrato","","","","","","", "","", 0,24,[191],[]];
 parent.navegacao.MenuPrincQtdOpcoes=5;
 }

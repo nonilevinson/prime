@@ -507,11 +507,11 @@ class campo_arqConsulta_PTrata extends Lance_CampoLigado
 	function PegaPai()
 	{
 		global $g_regAtual;
-		$vetPai = array();
-			array_push( $vetPai, 
-				array( "Valor, MrgDesc", 
+		$vetPai = [];
+			$vetPai[]=
+				[ "Valor, MrgDesc", 
 					"A.PTrata, arqPTrata",
-					"0,0" ) );
+					"0,0" ];
 		return( $vetPai );
 	}
 
@@ -579,11 +579,11 @@ class campo_arqConsulta_EntraFPg extends Lance_CampoLigado
 	function PegaPai()
 	{
 		global $g_regAtual;
-		$vetPai = array();
-			array_push( $vetPai, 
-				array( "Boleto", 
+		$vetPai = [];
+			$vetPai[]=
+				[ "Boleto", 
 					"A.EntraFPg, arqFormaPg",
-					"0" ) );
+					"0" ];
 		return( $vetPai );
 	}
 
@@ -800,11 +800,11 @@ class campo_arqConsulta_SaldoFPg extends Lance_CampoLigado
 	function PegaPai()
 	{
 		global $g_regAtual;
-		$vetPai = array();
-			array_push( $vetPai, 
-				array( "Boleto", 
+		$vetPai = [];
+			$vetPai[]=
+				[ "Boleto", 
 					"A.SaldoFPg, arqFormaPg",
-					"0" ) );
+					"0" ];
 		return( $vetPai );
 	}
 
@@ -1216,7 +1216,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqConsulta_Num(),
 			new campo_arqConsulta_Clinica(),
@@ -1288,7 +1288,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new Lance_CampoCadeia( "TStAgRet_Descritor", "TStAgRet_Descritor", "Descritor", 11, "xxxxxxxxxxx", EH_DESCRITOR, TStAgRet ),
 			new campo_arqConsulta_AssesRet(),
 			new campo_arqConsulta_AssesRet_Usuario(),
-			new campo_arqConsulta_ObsRet() )
+			new campo_arqConsulta_ObsRet() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -1312,7 +1312,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Num) );
+		return( [ Num ] );
 	}
 
 	//-------------------------------------------------------------
@@ -1321,30 +1321,30 @@ class arqConsulta extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Num ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( TStCon_Descritor ) );
-			array_push( $vetAux, array( TiAgenda_TiAgenda ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Hora ) );
-			array_push( $vetAux, array( HoraChega ) );
-			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_NumCelular ) );
-			array_push( $vetAux, array( Prontuario ) );
-			array_push( $vetAux, array( Medico_Usuario ) );
-			array_push( $vetAux, array( Assessor_Usuario ) );
-			array_push( $vetAux, array( CallCenter_Usuario ) );
-			array_push( $vetAux, array( TMotivo_Descritor ) );
-			array_push( $vetAux, array( FormaPg_FormaPg ) );
-			array_push( $vetAux, array( Valor ) );
-			array_push( $vetAux, array( ValPTrata ) );
-			array_push( $vetAux, array( Saldo ) );
-			array_push( $vetAux, array( DataRet ) );
-			array_push( $vetAux, array( DiaRet ) );
-			array_push( $vetAux, array( HoraRet ) );
-			array_push( $vetAux, array( TStAgRet_Descritor ) );
-			array_push( $vetAux, array( AssesRet_Usuario ) );
+		$vetAux = [];
+			$vetAux[] = [ Num ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ TStCon_Descritor ];
+			$vetAux[] = [ TiAgenda_TiAgenda ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Hora ];
+			$vetAux[] = [ HoraChega ];
+			$vetAux[] = [ Pessoa_Nome ];
+			$vetAux[] = [ Pessoa_NumCelular ];
+			$vetAux[] = [ Prontuario ];
+			$vetAux[] = [ Medico_Usuario ];
+			$vetAux[] = [ Assessor_Usuario ];
+			$vetAux[] = [ CallCenter_Usuario ];
+			$vetAux[] = [ TMotivo_Descritor ];
+			$vetAux[] = [ FormaPg_FormaPg ];
+			$vetAux[] = [ Valor ];
+			$vetAux[] = [ ValPTrata ];
+			$vetAux[] = [ Saldo ];
+			$vetAux[] = [ DataRet ];
+			$vetAux[] = [ DiaRet ];
+			$vetAux[] = [ HoraRet ];
+			$vetAux[] = [ TStAgRet_Descritor ];
+			$vetAux[] = [ AssesRet_Usuario ];
 		return( $vetAux );
 	}
 
@@ -1353,7 +1353,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TStCon ), array( TStCon_Chave ), array( TStCon_Descritor ), array( TiAgenda ), array( Pessoa ), array( Medico ), array( Assessor ), array( CallCenter ), array( TMotivo ), array( TMotivo_Chave ), array( TMotivo_Descritor ), array( FormaPg ), array( PTrata ), array( BoletoMin ), array( ContaCons ), array( ContaPTra ), array( TrgQtdM ), array( TrgQtdMEnt ), array( TStAgRet ), array( TStAgRet_Chave ), array( TStAgRet_Descritor ), array( AssesRet ) ) );
+		return( [ [ Clinica ], [ TStCon ], [ TStCon_Chave ], [ TStCon_Descritor ], [ TiAgenda ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ TMotivo ], [ TMotivo_Chave ], [ TMotivo_Descritor ], [ FormaPg ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ], [ TStAgRet ], [ TStAgRet_Chave ], [ TStAgRet_Descritor ], [ AssesRet ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -1362,57 +1362,57 @@ class arqConsulta extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Num ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( TStCon_Descritor ) );
-			array_push( $vetAux, array( TiAgenda_TiAgenda ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Hora ) );
-			array_push( $vetAux, array( HoraChega ) );
-			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_NumCelular ) );
-			array_push( $vetAux, array( Prontuario ) );
-			array_push( $vetAux, array( Medico_Usuario ) );
-			array_push( $vetAux, array( Assessor_Usuario ) );
-			array_push( $vetAux, array( CallCenter_Usuario ) );
-			array_push( $vetAux, array( MedicaAtua ) );
-			array_push( $vetAux, array( TMotivo_Descritor ) );
-			array_push( $vetAux, array( FormaPg_FormaPg ) );
-			array_push( $vetAux, array( Valor ) );
-			array_push( $vetAux, array( PTrata_PTrata ) );
-			array_push( $vetAux, array( ValPTrata ) );
-			array_push( $vetAux, array( EntraFPg_FormaPg ) );
-			array_push( $vetAux, array( EntraVal ) );
-			array_push( $vetAux, array( EntraParc ) );
-			array_push( $vetAux, array( SdEntrFPg_FormaPg ) );
-			array_push( $vetAux, array( SdVenc1Par ) );
-			array_push( $vetAux, array( EntraValP ) );
-			array_push( $vetAux, array( EntraTotP ) );
-			array_push( $vetAux, array( EntraTotal ) );
-			array_push( $vetAux, array( BoletoMin ) );
-			array_push( $vetAux, array( EntraObs ) );
-			array_push( $vetAux, array( SaldoParc ) );
-			array_push( $vetAux, array( SaldoVal ) );
-			array_push( $vetAux, array( SaldoTotP ) );
-			array_push( $vetAux, array( SaldoFPg_FormaPg ) );
-			array_push( $vetAux, array( SaldoObs ) );
-			array_push( $vetAux, array( Conduta ) );
-			array_push( $vetAux, array( Medicacao ) );
-			array_push( $vetAux, array( Obs ) );
-			array_push( $vetAux, array( ContaCons_Transacao ) );
-			array_push( $vetAux, array( ContaPTra_Transacao ) );
-			array_push( $vetAux, array( TrgQtdM ) );
-			array_push( $vetAux, array( TrgQtdMEnt ) );
-			array_push( $vetAux, array( Saldo ) );
-			array_push( $vetAux, array( QuemAgRet_Usuario ) );
-			array_push( $vetAux, array( QdoAgRet ) );
-			array_push( $vetAux, array( DataRet ) );
-			array_push( $vetAux, array( DiaRet ) );
-			array_push( $vetAux, array( HoraRet ) );
-			array_push( $vetAux, array( TStAgRet_Descritor ) );
-			array_push( $vetAux, array( AssesRet_Usuario ) );
-			array_push( $vetAux, array( ObsRet ) );
+		$vetAux = [];
+			$vetAux[] = [ Num ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ TStCon_Descritor ];
+			$vetAux[] = [ TiAgenda_TiAgenda ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Hora ];
+			$vetAux[] = [ HoraChega ];
+			$vetAux[] = [ Pessoa_Nome ];
+			$vetAux[] = [ Pessoa_NumCelular ];
+			$vetAux[] = [ Prontuario ];
+			$vetAux[] = [ Medico_Usuario ];
+			$vetAux[] = [ Assessor_Usuario ];
+			$vetAux[] = [ CallCenter_Usuario ];
+			$vetAux[] = [ MedicaAtua ];
+			$vetAux[] = [ TMotivo_Descritor ];
+			$vetAux[] = [ FormaPg_FormaPg ];
+			$vetAux[] = [ Valor ];
+			$vetAux[] = [ PTrata_PTrata ];
+			$vetAux[] = [ ValPTrata ];
+			$vetAux[] = [ EntraFPg_FormaPg ];
+			$vetAux[] = [ EntraVal ];
+			$vetAux[] = [ EntraParc ];
+			$vetAux[] = [ SdEntrFPg_FormaPg ];
+			$vetAux[] = [ SdVenc1Par ];
+			$vetAux[] = [ EntraValP ];
+			$vetAux[] = [ EntraTotP ];
+			$vetAux[] = [ EntraTotal ];
+			$vetAux[] = [ BoletoMin ];
+			$vetAux[] = [ EntraObs ];
+			$vetAux[] = [ SaldoParc ];
+			$vetAux[] = [ SaldoVal ];
+			$vetAux[] = [ SaldoTotP ];
+			$vetAux[] = [ SaldoFPg_FormaPg ];
+			$vetAux[] = [ SaldoObs ];
+			$vetAux[] = [ Conduta ];
+			$vetAux[] = [ Medicacao ];
+			$vetAux[] = [ Obs ];
+			$vetAux[] = [ ContaCons_Transacao ];
+			$vetAux[] = [ ContaPTra_Transacao ];
+			$vetAux[] = [ TrgQtdM ];
+			$vetAux[] = [ TrgQtdMEnt ];
+			$vetAux[] = [ Saldo ];
+			$vetAux[] = [ QuemAgRet_Usuario ];
+			$vetAux[] = [ QdoAgRet ];
+			$vetAux[] = [ DataRet ];
+			$vetAux[] = [ DiaRet ];
+			$vetAux[] = [ HoraRet ];
+			$vetAux[] = [ TStAgRet_Descritor ];
+			$vetAux[] = [ AssesRet_Usuario ];
+			$vetAux[] = [ ObsRet ];
 		return( $vetAux );
 	}
 
@@ -1454,4 +1454,3 @@ class arqConsulta extends Lance_Arquivo
 	}
 
 }
-?>
