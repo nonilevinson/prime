@@ -180,8 +180,7 @@ else
          $valorSd = round( $valorSd - $totValor, 2 );
       else
          $totValor += $valorSd;
-   if( $g_debugProcesso ) echo '<br>GR0 i=</b> '.$i.' <b>Valor=</b> '.$valorSd.' - ' .$totValor.' = '.$valorSd;
-
+if( $g_debugProcesso ) echo '<br>GR0 i=</b> '.$i.' <b>Valor=</b> '.$valorSd.' - ' .$totValor.' = '.$valorSd;
 
       CriarParcela( $idConta, $vencimento, $valorSd, $umaConsulta->SALDOFPG, $historicoConta . ': Saldo Tratamento' );
    }
