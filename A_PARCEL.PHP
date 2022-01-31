@@ -650,7 +650,7 @@ class campo_arqParcela_Historico extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "Historico", "Historico", "Historico", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
+		parent::__construct( "Historico", "Historico", "Historico", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
 	}
 
 	//--------------------------------------------------

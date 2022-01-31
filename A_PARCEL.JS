@@ -459,7 +459,7 @@ Campo_arqParcela_Historico.prototype = new Lance_CampoCadeia;
 function Campo_arqParcela_Historico()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Historico", "Historico", "Historico", 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+	this.superClass( "Historico", "Historico", "Historico", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Historico = new Campo_arqParcela_Historico;

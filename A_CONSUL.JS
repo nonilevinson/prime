@@ -1630,7 +1630,7 @@ Campo_arqConsulta_SaldoCond.prototype.Existencia = function()
 Campo_arqConsulta_SaldoVal.prototype.Calculou = function()
 {
 {
-	return( this.Atribuiu( ( ValPTrata - EntraVal - ( EntraParc * EntraValP ) ) / SaldoParc ) );
+	return( this.Atribuiu( Math.ceil( (ValPTrata - EntraVal - ( EntraParc * EntraValP ) ) / SaldoParc * 100 ) / 100 ) );
 }
 }
 
