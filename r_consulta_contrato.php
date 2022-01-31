@@ -27,18 +27,21 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 	//------------------------------------------------------------------------
 	function Basico()
 	{
-		$regA = &$this->regAtual;
+		global $g_debugProcesso;
+
+      $regA = &$this->regAtual;
 		$pdf = $this->PDF;
 
-      $paciente  = $regA->PACIENTE;
-      $cidade    = $regA->CIDADE;
-      $entraVal  = $regA->ENTRAVAL;
+      $paciente   = $regA->PACIENTE;
+      $cidade     = $regA->CIDADE;
+      $entraVal   = $regA->ENTRAVAL;
       $entraParc  = $regA->ENTRAPARC;
       $entraValP  = $regA->ENTRAVALP;
       $entraSaldo = $entraParc * $entraValP;
       $entraObs   = $regA->ENTRAOBS;
       $saldoParc  = $regA->SALDOPARC;
-      $saldoVal   = $regA->SALDOVAL;
+      $saldoValor = $regA->SALDOVALOR;
+      $saldoVal   = round( $saldoValor / $saldoParc, 2 );
 
       $larg1   = 27;
       $larg2   = 55;
@@ -49,7 +52,6 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $altura2 = $altura + 1;
 
       //* início dos dados do paciente
-		// $this->WriteTxt( "CONTRATANTE: " . $regA->SIGLA . " " . $regA->PRONTUARIO, 100, [ '', BOLD, 0, [0], [195] ] );
 		$this->WriteTxt( "1- CONTRATANTE: " . $regA->SIGLA . " " . $regA->PRONTUARIO, 100, [ '', BOLD ] );
 
       $this->PDF->Cell( $larg1, $altura, "Nome:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
@@ -163,11 +165,6 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 
       if( $entraObs )
          $this->PDF->Cell( $larg1, $altura, "Observações: " . $entraObs, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-/*
-      $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg1, $altura, "Assessor:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, $regA->ASSESSOR, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-*/
       //* fim do recibo
 
       $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
@@ -207,8 +204,9 @@ $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade
       V.Descritor as EstCivil, P.Ende_Endereco as Endereco, B.Bairro, I.Cidade, upper( U.Descritor ) as UF,
       P.Ende_CEP as CEP, P.Nascimento, F.Profissao, I.DDD, P.Ende_Telefone as Telefone, P.NumCelular, P.Email,
       C.Data, A.Nome as Assessor, R.PTrata, R.Tempo, FE.FormaPg as EntraFPg, FS.FormaPg as SaldoFPg, C.EntraVal,
-      C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoVal, C.SaldoObs, C.Num as NumConsulta,
-      C.SdVenc1Par, FD.FormaPg as SdEntrFPg
+      C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoObs, C.Num as NumConsulta,
+      C.SdVenc1Par, FD.FormaPg as SdEntrFPg,
+      (C.ValPTrata - ( C.EntraVal + ( C.EntraParc * C.EntraValP  ) ) ) as SaldoValor
 	From arqConsulta C
 		join arqClinica          L on  L.idPrimario=C.Clinica
       join arqPessoa           P on  P.idPrimario=C.Pessoa
