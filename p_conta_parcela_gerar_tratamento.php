@@ -79,8 +79,8 @@ $g_idSubPlano = sql_lerUmRegistro( $select )->SUBPLARASS;
 
 $select = "Select C.Num as NumConsulta, C.Clinica as idClinica, P.idPrimario as idPessoa,
       C.Prontuario, T.PTrata, C.EntraParc, C.SaldoParc, C.EntraFPg, C.SdEntrFPG, C.SaldoFPg,
-      C.EntraVal, C.EntraValP, C.SdVenc1Par, C.SaldoVal, (C.SaldoVal * C.SaldoParc) as SaldoValor,
-      C.SdCond, C.SaldoCond,
+      C.EntraVal, C.EntraValP, C.SdVenc1Par, C.SaldoVal, C.SdCond, C.SaldoCond,
+      (C.ValPTrata - ( C.EntraVal + ( C.EntraParc * C.EntraValP  ) ) ) as SaldoValor,
       (Select F.Cartao From arqFormaPg F Where F.idprimario = C.SdEntrFPg) as SdEntrFPgEhCartao,
       (Select F.Cartao From arqFormaPg F Where F.idprimario = C.SaldoFPg) as SaldoFPgEhCartao
    From arqConsulta C
@@ -157,7 +157,6 @@ if( $entraParc > 0 )
 }
 
 //* saldo do tratamento
-$totValor   = 0;
 $saldoValor = $umaConsulta->SALDOVALOR;
 
 if( $umaConsulta->SALDOFPGEHCARTAO )
@@ -166,9 +165,10 @@ if( $umaConsulta->SALDOFPGEHCARTAO )
 }
 else
 {
-   $iFinal  = $umaConsulta->SALDOPARC;
-   $valorSd = $saldoValor / $iFinal;
-
+   $iFinal   = $umaConsulta->SALDOPARC;
+   $valorSd  = round( $saldoValor / $iFinal, 2 );
+   $totValor = 0;
+   
    for( $i=1; $i<=$iFinal; $i++ )
    {
       if( $i == 1 )
@@ -177,16 +177,16 @@ else
          $vencimento = incDia( $vencimento, $umaConsulta->SALDOCOND );
 
       if( $i == $iFinal )
-         $valorSd = round( $valorSd - $totValor, 2 );
+         $valorSd = round( $saldoValor - $totValor, 2 );
       else
          $totValor += $valorSd;
-if( $g_debugProcesso ) echo '<br>GR0 i=</b> '.$i.' <b>Valor=</b> '.$valorSd.' - ' .$totValor.' = '.$valorSd;
+// if( $g_debugProcesso ) echo '<br>GR0 i=</b> '.$i.' <b>saldoValor=</b> '.$saldoValor.' - ' .$totValor.' = '.$valorSd;
 
       CriarParcela( $idConta, $vencimento, $valorSd, $umaConsulta->SALDOFPG, $historicoConta . ': Saldo Tratamento' );
    }
 }
 
-$teste = true;
+$teste = false;
 
 if( !$teste )
 {
