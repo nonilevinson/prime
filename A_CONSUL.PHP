@@ -682,6 +682,19 @@ class campo_arqConsulta_SdVenc1Par extends Lance_CampoData
 }
 
 //======================================================
+//	Campo SdCond
+//======================================================
+
+class campo_arqConsulta_SdCond extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SdCond", "SdCond", "SdCond", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo EntraValP
 //======================================================
 
@@ -800,6 +813,19 @@ class campo_arqConsulta_SaldoParc extends Lance_CampoNumerico
 	function __construct()
 	{
 		parent::__construct( "SaldoParc", "SaldoParc", "SaldoParc", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoCond
+//======================================================
+
+class campo_arqConsulta_SaldoCond extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoCond", "SaldoCond", "SaldoCond", 2, "#z", "", "", 0, 0, false );
 	}
 
 }
@@ -1243,6 +1269,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_SdEntrFPg(),
 			new campo_arqConsulta_SdEntrFPg_FormaPg(),
 			new campo_arqConsulta_SdVenc1Par(),
+			new campo_arqConsulta_SdCond(),
 			new campo_arqConsulta_EntraValP(),
 			new campo_arqConsulta_EntraTotP(),
 			new campo_arqConsulta_EntraTotal(),
@@ -1251,6 +1278,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_SaldoFPg(),
 			new campo_arqConsulta_SaldoFPg_FormaPg(),
 			new campo_arqConsulta_SaldoParc(),
+			new campo_arqConsulta_SaldoCond(),
 			new campo_arqConsulta_SaldoVal(),
 			new campo_arqConsulta_SaldoObs(),
 			new campo_arqConsulta_Conduta(),
@@ -1373,6 +1401,7 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ EntraParc ];
 			$vetAux[] = [ SdEntrFPg_FormaPg ];
 			$vetAux[] = [ SdVenc1Par ];
+			$vetAux[] = [ SdCond ];
 			$vetAux[] = [ EntraValP ];
 			$vetAux[] = [ EntraTotP ];
 			$vetAux[] = [ EntraTotal ];
@@ -1380,6 +1409,7 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ EntraObs ];
 			$vetAux[] = [ SaldoFPg_FormaPg ];
 			$vetAux[] = [ SaldoParc ];
+			$vetAux[] = [ SaldoCond ];
 			$vetAux[] = [ SaldoVal ];
 			$vetAux[] = [ SaldoObs ];
 			$vetAux[] = [ Conduta ];
