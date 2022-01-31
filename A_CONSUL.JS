@@ -1260,18 +1260,6 @@ Campo_arqConsulta_EntraFPg.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
-// Campos a mais que o ligado traz do pai
-//-------------------------------------------------------------
-Campo_arqConsulta_EntraFPg.prototype.TrazOutrosDoPai = function()
-{
-	var vetPai = [];
-			vetPai[0] = [ "Boleto",
-					"A.EntraFPg, arqFormaPg",
-					"0" ];
-		return( vetPai );
-}
-
-//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraFPg.prototype.Existencia = function()
@@ -1366,6 +1354,18 @@ Campo_arqConsulta_SdEntrFPg.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
+// Campos a mais que o ligado traz do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_SdEntrFPg.prototype.TrazOutrosDoPai = function()
+{
+	var vetPai = [];
+			vetPai[0] = [ "Cartao",
+					"A.SdEntrFPg, arqFormaPg",
+					"0" ];
+		return( vetPai );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_SdEntrFPg.prototype.Existencia = function()
@@ -1407,6 +1407,39 @@ Campo_arqConsulta_SdVenc1Par.prototype.Obrigatorio = function( p_comMsg )
 Campo_arqConsulta_SdVenc1Par.prototype.Existencia = function()
 {
 	return( tem( EntraParc ) );
+}
+
+//-------------------------------------------------------------
+// Pré Campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SdCond.prototype.PreCampo = function()
+{
+		if( SdEntrFPg_Cartao == 1 )
+	{
+		alt( SdCond, 1 );
+	}
+	return( true );
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqConsulta_SdCond.prototype.PodeAlterar = function()
+{
+		if( SdEntrFPg_Cartao == 0 )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_SdCond.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A condição é obrigatória" );
+		return( true );
+	}
 }
 
 //-------------------------------------------------------------
@@ -1511,7 +1544,7 @@ Campo_arqConsulta_SaldoFPg.prototype.Obrigatorio = function( p_comMsg )
 Campo_arqConsulta_SaldoFPg.prototype.TrazOutrosDoPai = function()
 {
 	var vetPai = [];
-			vetPai[0] = [ "Boleto",
+			vetPai[0] = [ "Cartao",
 					"A.SaldoFPg, arqFormaPg",
 					"0" ];
 		return( vetPai );
@@ -1551,11 +1584,44 @@ Campo_arqConsulta_SaldoParc.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Pré Campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoCond.prototype.PreCampo = function()
+{
+		if( SaldoFPg_Cartao == 1 )
+	{
+		alt( SaldoCond, 1 );
+	}
+	return( true );
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoCond.prototype.PodeAlterar = function()
+{
+		if( SaldoFPg_Cartao == 0 )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoCond.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A condição é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoCond.prototype.Existencia = function()
 {
-	return( ( tem( PTrata_PTrata ) ) && SaldoParc > 1 );
+	return( SaldoParc > 1 );
 }
 
 //-------------------------------------------------------------
@@ -2040,7 +2106,7 @@ CallCenter_Usuario.ExistenciasDependentes= [ CallCenter ];
 Valor.ExistenciasDependentes= [ FormaPg,FormaPg_FormaPg,ContaCons,ContaCons_Transacao ];
 FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 PTrata_PTrata.ExistenciasDependentes= [ PTrata ];
-PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoFPg,SaldoFPg_FormaPg,SaldoParc,SaldoCond,SaldoVal,SaldoObs,ContaPTra,ContaPTra_Transacao ];
+PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoFPg,SaldoFPg_FormaPg,SaldoParc,SaldoVal,SaldoObs,ContaPTra,ContaPTra_Transacao ];
 EntraFPg_FormaPg.ExistenciasDependentes= [ EntraFPg ];
 EntraFPg.ExistenciasDependentes= [ EntraVal,EntraObs ];
 EntraParc.ExistenciasDependentes= [ SdEntrFPg,SdEntrFPg_FormaPg,SdVenc1Par,SdCond,EntraValP,EntraTotP ];
@@ -2108,8 +2174,8 @@ AssesRet.CamposChave= [ AssesRet_Usuario ];
 g_arquivoAtual = "arqConsulta";
 var PTrata_Valor;
 var PTrata_MrgDesc;
-var EntraFPg_Boleto;
-var SaldoFPg_Boleto;
+var SdEntrFPg_Cartao;
+var SaldoFPg_Cartao;
 //------------------------------------------------------------
 function ListaDeCampos_arqConsulta( p_prefixo )
 {

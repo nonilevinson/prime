@@ -575,18 +575,6 @@ class campo_arqConsulta_EntraFPg extends Lance_CampoLigado
 		parent::__construct( "EntraFPg", "EntraFPg", "EntraFPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
-	//--------------------------------------------------
-	function PegaPai()
-	{
-		global $g_regAtual;
-		$vetPai = [];
-			$vetPai[]=
-				[ "Boleto", 
-					"A.EntraFPg, arqFormaPg",
-					"0" ];
-		return( $vetPai );
-	}
-
 }
 
 //======================================================
@@ -644,6 +632,18 @@ class campo_arqConsulta_SdEntrFPg extends Lance_CampoLigado
 	function __construct()
 	{
 		parent::__construct( "SdEntrFPg", "SdEntrFPg", "SdEntrFPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = [];
+			$vetPai[]=
+				[ "Cartao", 
+					"A.SdEntrFPg, arqFormaPg",
+					"0" ];
+		return( $vetPai );
 	}
 
 }
@@ -776,7 +776,7 @@ class campo_arqConsulta_SaldoFPg extends Lance_CampoLigado
 		global $g_regAtual;
 		$vetPai = [];
 			$vetPai[]=
-				[ "Boleto", 
+				[ "Cartao", 
 					"A.SaldoFPg, arqFormaPg",
 					"0" ];
 		return( $vetPai );

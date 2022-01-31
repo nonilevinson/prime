@@ -78,7 +78,7 @@ CriarForms(
 		[ "Parcelas ", EntraParc,
 		[ brHtml(4) . "Forma de pagamento ", SdEntrFPg,
 		[ brHtml(4) . "1º vencimento ", SdVenc1Par,
-		[ brHtml(4) . "Condição ", SdCond, "<br>(Condição deve ser usado se for mais de uma parcela e será o intervalo entre elas)"  ] ] ] ] ),
+		[ brHtml(4) . "Condição ", SdCond, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)"  ] ] ] ] ),
 	$this->Pedir( " ",		
 		[ "Valor das parcelas ", EntraValP,
 		[ brHtml(4) . "Total ", EntraTotP,
@@ -91,7 +91,7 @@ CriarForms(
 		[ "", SaldoFPg,
 		[ brHtml(4) . "Parcelas ", SaldoParc,
 		[ brHtml(4) . "Condição ", SaldoCond,
-		[ brHtml(4) . "Valor das parcelas ", SaldoVal, "<br>(Condição deve ser usado se for mais de uma parcela e será o intervalo entre elas)" ] ] ] ] ),
+		[ brHtml(4) . "Valor das parcelas ", SaldoVal, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)" ] ] ] ] ),
 	$this->Pedir( "Observações", SaldoObs ),
 	
 	$this->Pular1Linha(2),
