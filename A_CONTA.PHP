@@ -466,7 +466,7 @@ function listaCampos_arqConta( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqConta_Transacao(),
 			new campo_arqConta_Clinica(),
@@ -492,7 +492,7 @@ function listaCampos_arqConta( $p_prefixo )
 			new campo_arqConta_RecEnvia(),
 			new campo_arqConta_Compete(),
 			new campo_arqConta_Historico(),
-			new campo_arqConta_Arq1() )
+			new campo_arqConta_Arq1() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -516,7 +516,7 @@ class arqConta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Transacao) );
+		return( [ Transacao ] );
 	}
 
 	//-------------------------------------------------------------
@@ -525,18 +525,18 @@ class arqConta extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Transacao ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( TPgRec_Descritor ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( TrgValor ) );
-			array_push( $vetAux, array( TrgValLiq ) );
-			array_push( $vetAux, array( TrgQtdParc ) );
-			array_push( $vetAux, array( TrgQParcPg ) );
-			array_push( $vetAux, array( ProxVenc ) );
-			array_push( $vetAux, array( Saldo ) );
-			array_push( $vetAux, array( Historico ) );
+		$vetAux = [];
+			$vetAux[] = [ Transacao ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ TPgRec_Descritor ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ TrgValor ];
+			$vetAux[] = [ TrgValLiq ];
+			$vetAux[] = [ TrgQtdParc ];
+			$vetAux[] = [ TrgQParcPg ];
+			$vetAux[] = [ ProxVenc ];
+			$vetAux[] = [ Saldo ];
+			$vetAux[] = [ Historico ];
 		return( $vetAux );
 	}
 
@@ -545,7 +545,7 @@ class arqConta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TPgRec ), array( TPgRec_Chave ), array( TPgRec_Descritor ) ) );
+		return( [ [ Clinica ], [ TPgRec ], [ TPgRec_Chave ], [ TPgRec_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -554,26 +554,26 @@ class arqConta extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Transacao ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( TPgRec_Descritor ) );
-			array_push( $vetAux, array( Fornecedor_Nome ) );
-			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_NumCelular ) );
-			array_push( $vetAux, array( TrgValor ) );
-			array_push( $vetAux, array( TrgValLiq ) );
-			array_push( $vetAux, array( TrgQtdParc ) );
-			array_push( $vetAux, array( TrgQParcPg ) );
-			array_push( $vetAux, array( ProxVenc ) );
-			array_push( $vetAux, array( TrgPago ) );
-			array_push( $vetAux, array( Saldo ) );
-			array_push( $vetAux, array( Documento ) );
-			array_push( $vetAux, array( Emissao ) );
-			array_push( $vetAux, array( RecEnvia ) );
-			array_push( $vetAux, array( Compete ) );
-			array_push( $vetAux, array( Historico ) );
-			array_push( $vetAux, array( Arq1 ) );
+		$vetAux = [];
+			$vetAux[] = [ Transacao ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ TPgRec_Descritor ];
+			$vetAux[] = [ Fornecedor_Nome ];
+			$vetAux[] = [ Pessoa_Nome ];
+			$vetAux[] = [ Pessoa_NumCelular ];
+			$vetAux[] = [ TrgValor ];
+			$vetAux[] = [ TrgValLiq ];
+			$vetAux[] = [ TrgQtdParc ];
+			$vetAux[] = [ TrgQParcPg ];
+			$vetAux[] = [ ProxVenc ];
+			$vetAux[] = [ TrgPago ];
+			$vetAux[] = [ Saldo ];
+			$vetAux[] = [ Documento ];
+			$vetAux[] = [ Emissao ];
+			$vetAux[] = [ RecEnvia ];
+			$vetAux[] = [ Compete ];
+			$vetAux[] = [ Historico ];
+			$vetAux[] = [ Arq1 ];
 		return( $vetAux );
 	}
 
@@ -601,5 +601,20 @@ class arqConta extends Lance_Arquivo
 	return( "" . filtrarTodos() . "" );
 	}
 
+	//-------------------------------------------------------------
+	// Visões do Arquivo: NavCons   
+	//-------------------------------------------------------------
+	function NavCons()
+	{
+	return( "" . navContaConsulta() . "" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: NavPTrata 
+	//-------------------------------------------------------------
+	function NavPTrata()
+	{
+	return( "" . navContaTratamento() . "" );
+	}
+
 }
-?>

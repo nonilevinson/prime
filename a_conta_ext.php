@@ -1,5 +1,21 @@
 <?php
 
+//======================================================================
+function navContaConsulta()
+{
+	return( "( Select C.idPrimario
+		From arqConsulta C
+		Where C.ContaCons = A.idPrimario ) = " . navegouDe('arqConsulta') );
+}
+
+//======================================================================
+function navContaTratamento()
+{
+	return( "( Select C.idPrimario
+		From arqConsulta C
+		Where C.ContaPTra = A.idPrimario ) = " . navegouDe('arqConsulta') );
+}
+
 //===========================================================
 function filtrarSelecao()
 {

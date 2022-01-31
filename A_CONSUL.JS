@@ -2200,6 +2200,9 @@ var Menu_1 = [ 1,"Medicação","","d",206,"","",1,"","1","a_cmedic","arqCMedica","
 var Menu_2 = [ 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,24,[137],[]];
 var Menu_3 = [ 1,"Ag. Retirada","","t",197,"","",1,"","1","a_agret","arqAgRet","Folhear","Consulta","?","","", "","", 0,24,[],[53]];
 var Menu_4 = [ 1,"Gerar Receber Tratamento","","G",184,"","",1,"tem( PTrata ) && !tem( ContaPTra )","5","p_conta_parcela_gerar_tratamento","","","","","","", "","", 0,24,[184],[]];
-var Menu_5 = [ 1,"Emitir Contrato","","m",191,"","",1,"","5","r_consulta_contrato","","","","","","", "","", 0,24,[191],[]];
-parent.navegacao.MenuPrincQtdOpcoes=5;
+var Menu_5 = [ 1,"Contas","","o",240,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 24,[],[33,33] ];
+var Menu_5_1 = [ 1,"Consulta","","u",239,"","",1,"","1","a_conta","arqConta","Folhear","","?","NavCons","", "","", 0,11,[],[33]];
+var Menu_5_2 = [ 1,"Tratamentos","","T",241,"","",1,"","1","a_conta","arqConta","Folhear","","?","NavPTrata","", "","", 0,11,[],[33]];
+var Menu_6 = [ 1,"Emitir Contrato","","m",191,"","",1,"","5","r_consulta_contrato","","","","","","", "","", 0,24,[191],[]];
+parent.navegacao.MenuPrincQtdOpcoes=6;
 }

@@ -263,7 +263,7 @@ function ListaDeCampos_arqMovEstoque( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Num, Data, Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, NumDoc, Obs, Fechado ]	);
@@ -276,8 +276,8 @@ g_arquivoCampos = ListaDeCampos_arqMovEstoque( '' );
 g_idOperacao = 56;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Itens","","I",211,"","",1,"","1","a_itemmo","arqItemMov","Folhear","MovEstoque","?","","", "","", 0,6,[],[57]);
-var Menu_2 = new Array( 1,"Fechar","","F",220,"","",1,"temMarcados()","5","p_movestoque_fechar_abrir","","","","","","", "","", 0,6,[220],[]);
-var Menu_3 = new Array( 1,"Abrir","","A",221,"","",1,"temMarcados()","5","p_movestoque_fechar_abrir","","","","","","", "","", 0,6,[221],[]);
+var Menu_1 = [ 1,"Itens","","I",211,"","",1,"","1","a_itemmo","arqItemMov","Folhear","MovEstoque","?","","", "","", 0,6,[],[57]];
+var Menu_2 = [ 1,"Fechar","","F",220,"","",1,"temMarcados()","5","p_movestoque_fechar_abrir","","","","","","", "","", 0,6,[220],[]];
+var Menu_3 = [ 1,"Abrir","","A",221,"","",1,"temMarcados()","5","p_movestoque_fechar_abrir","","","","","","", "","", 0,6,[221],[]];
 parent.navegacao.MenuPrincQtdOpcoes=3;
 }

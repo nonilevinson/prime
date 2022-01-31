@@ -610,7 +610,7 @@ function ListaDeCampos_arqConta( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Transacao, Clinica, Clinica_Clinica, TPgRec, TPgRec_Chave, TPgRec_Descritor, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Nome, TrgValor, TrgValLiq, TrgQtdParc, TrgQParcPg, ProxVenc, TrgPago, Saldo, Documento, Emissao, RecEnvia, Compete, Historico, Arq1 ]	);
@@ -623,9 +623,9 @@ g_arquivoCampos = ListaDeCampos_arqConta( '' );
 g_idOperacao = 33;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Parcelas","","P",99,"","",1,"","1","a_parcel","arqParcela","Folhear","Conta","?","","", "","", 0,15,[],[34]);
-var Menu_2 = new Array( 1,"Consultas pagas","","g",238,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 15,[],[39,39] );
-var Menu_2_1 = new Array( 1,"Consultas","","u",182,"","",1,"","1","a_consul","arqConsulta","Folhear","ContaCons","?","","", "","", 0,11,[],[39]);
-var Menu_2_2 = new Array( 1,"Tratamentos","","T",183,"","",1,"","1","a_consul","arqConsulta","Folhear","ContaPTra","?","","", "","", 0,11,[],[39]);
+var Menu_1 = [ 1,"Parcelas","","P",99,"","",1,"","1","a_parcel","arqParcela","Folhear","Conta","?","","", "","", 0,15,[],[34]];
+var Menu_2 = [ 1,"Consultas pagas","","g",238,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 15,[],[39,39] ];
+var Menu_2_1 = [ 1,"Consultas","","u",182,"","",1,"","1","a_consul","arqConsulta","Folhear","ContaCons","?","","", "","", 0,11,[],[39]];
+var Menu_2_2 = [ 1,"Tratamentos","","T",183,"","",1,"","1","a_consul","arqConsulta","Folhear","ContaPTra","?","","", "","", 0,11,[],[39]];
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }

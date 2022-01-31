@@ -167,7 +167,7 @@ function listaCampos_arqMovEstoque( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqMovEstoque_Num(),
 			new campo_arqMovEstoque_Data(),
@@ -177,7 +177,7 @@ function listaCampos_arqMovEstoque( $p_prefixo )
 			new campo_arqMovEstoque_Fornecedor_Nome(),
 			new campo_arqMovEstoque_NumDoc(),
 			new campo_arqMovEstoque_Obs(),
-			new campo_arqMovEstoque_Fechado() )
+			new campo_arqMovEstoque_Fechado() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -201,7 +201,7 @@ class arqMovEstoque extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Num) );
+		return( [ Num ] );
 	}
 
 	//-------------------------------------------------------------
@@ -210,12 +210,12 @@ class arqMovEstoque extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Num ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Fornecedor_Nome ) );
-			array_push( $vetAux, array( Fechado ) );
+		$vetAux = [];
+			$vetAux[] = [ Num ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Fornecedor_Nome ];
+			$vetAux[] = [ Fechado ];
 		return( $vetAux );
 	}
 
@@ -224,7 +224,7 @@ class arqMovEstoque extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( Fornecedor ) ) );
+		return( [ [ Clinica ], [ Fornecedor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -233,14 +233,14 @@ class arqMovEstoque extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Num ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Fornecedor_Nome ) );
-			array_push( $vetAux, array( NumDoc ) );
-			array_push( $vetAux, array( Obs ) );
-			array_push( $vetAux, array( Fechado ) );
+		$vetAux = [];
+			$vetAux[] = [ Num ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Fornecedor_Nome ];
+			$vetAux[] = [ NumDoc ];
+			$vetAux[] = [ Obs ];
+			$vetAux[] = [ Fechado ];
 		return( $vetAux );
 	}
 
@@ -269,4 +269,3 @@ class arqMovEstoque extends Lance_Arquivo
 	}
 
 }
-?>
