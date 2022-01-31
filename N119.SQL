@@ -2941,7 +2941,7 @@ ALTER TABLE arqConsulta ADD ENTRATOTP NUMERIC( 8, 2 ) computed by ( EntraParc * 
 ALTER TABLE arqConsulta ALTER ENTRATOTP POSITION 26;
 ALTER TABLE arqConsulta ADD ENTRATOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP ); 
 ALTER TABLE arqConsulta ALTER ENTRATOTAL POSITION 27;
-ALTER TABLE arqConsulta ADD SALDOVAL NUMERIC( 8, 2 ) computed by ( ( ValPTrata - EntraVal - ( EntraParc * EntraValP ) ) / SaldoParc ); 
+ALTER TABLE arqConsulta ADD SALDOVAL NUMERIC( 8, 2 ) computed by ( CASE WHEN ( PTrata is not null ) THEN ( ( ValPTrata - EntraVal - ( EntraParc * EntraValP ) ) / SaldoParc ) ELSE ( 0 ) END ); 
 ALTER TABLE arqConsulta ALTER SALDOVAL POSITION 32;
 ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
 	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqRecorrente.Pessoa )  ), '' ) ) )

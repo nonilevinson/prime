@@ -1438,12 +1438,4 @@ class arqConsulta extends Lance_Arquivo
 	return( "" . ext_filtrarSelecao() . "" );
 	}
 
-	//-------------------------------------------------------------
-	// Visões do Arquivo: ComPTrata 
-	//-------------------------------------------------------------
-	function ComPTrata()
-	{
-	return( "PTrata is not null" );
-	}
-
 }

@@ -71,7 +71,8 @@ CriarForms(
 	$this->Cabecalhos( [ "Entrada", "FormCabPrime FundoAzul alinhaEsq", "2" ] ),
 	$this->Pedir( "Forma de pagamento",
 		[ "", EntraFPg,
-		[ brHtml(4) . "Valor ", EntraVal ] ] ),
+		[ brHtml(4) . "Valor ", EntraVal,
+		[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ),
 
 	$this->Pedir( "Se dividiu",
 		[ "Parcelas ", EntraParc,
@@ -80,8 +81,8 @@ CriarForms(
 	$this->Pedir( " ",		
 		[ "Valor das parcelas ", EntraValP,
 		[ brHtml(4) . "Total ", EntraTotP,
-		[ brHtml(2) . "= ", EntraTotal,
-		[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ] ),
+		[ brHtml(4) . "Total da Entrada ", EntraTotal ] ] ] ),
+
 	$this->Pedir( "Observações", EntraObs ),
 	
 	$this->Cabecalhos( [ "Saldo", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),
