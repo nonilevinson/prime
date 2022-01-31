@@ -747,45 +747,6 @@ class campo_arqConsulta_EntraObs extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo SaldoParc
-//======================================================
-
-class campo_arqConsulta_SaldoParc extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "SaldoParc", "SaldoParc", "SaldoParc", 2, "#z", "", "", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo SaldoVal
-//======================================================
-
-class campo_arqConsulta_SaldoVal extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "SaldoVal", "SaldoVal", "SaldoVal", 8, "###.##z,zz", "", "", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo SaldoTotP
-//======================================================
-
-class campo_arqConsulta_SaldoTotP extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "SaldoTotP", "SaldoTotP", "SaldoTotP", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
-	}
-
-}
-
-//======================================================
 //	Campo SaldoFPg
 //======================================================
 
@@ -826,6 +787,32 @@ class campo_arqConsulta_SaldoFPg_FormaPg extends Lance_CampoCadeia
 	{
 		global $g_regAtual;
 			return( "Forma" );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoParc
+//======================================================
+
+class campo_arqConsulta_SaldoParc extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoParc", "SaldoParc", "SaldoParc", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoVal
+//======================================================
+
+class campo_arqConsulta_SaldoVal extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoVal", "SaldoVal", "SaldoVal", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
 	}
 
 }
@@ -1261,11 +1248,10 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_EntraTotal(),
 			new campo_arqConsulta_BoletoMin(),
 			new campo_arqConsulta_EntraObs(),
-			new campo_arqConsulta_SaldoParc(),
-			new campo_arqConsulta_SaldoVal(),
-			new campo_arqConsulta_SaldoTotP(),
 			new campo_arqConsulta_SaldoFPg(),
 			new campo_arqConsulta_SaldoFPg_FormaPg(),
+			new campo_arqConsulta_SaldoParc(),
+			new campo_arqConsulta_SaldoVal(),
 			new campo_arqConsulta_SaldoObs(),
 			new campo_arqConsulta_Conduta(),
 			new campo_arqConsulta_Medicacao(),
@@ -1392,10 +1378,9 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ EntraTotal ];
 			$vetAux[] = [ BoletoMin ];
 			$vetAux[] = [ EntraObs ];
+			$vetAux[] = [ SaldoFPg_FormaPg ];
 			$vetAux[] = [ SaldoParc ];
 			$vetAux[] = [ SaldoVal ];
-			$vetAux[] = [ SaldoTotP ];
-			$vetAux[] = [ SaldoFPg_FormaPg ];
 			$vetAux[] = [ SaldoObs ];
 			$vetAux[] = [ Conduta ];
 			$vetAux[] = [ Medicacao ];
@@ -1451,6 +1436,14 @@ class arqConsulta extends Lance_Arquivo
 	function FilSel()
 	{
 	return( "" . ext_filtrarSelecao() . "" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: ComPTrata 
+	//-------------------------------------------------------------
+	function ComPTrata()
+	{
+	return( "PTrata is not null" );
 	}
 
 }

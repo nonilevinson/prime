@@ -258,7 +258,7 @@ function listaCampos_arqFormaPg( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqFormaPg_FormaPg(),
 			new campo_arqFormaPg_PodeEntra(),
@@ -269,7 +269,7 @@ function listaCampos_arqFormaPg( $p_prefixo )
 			new campo_arqFormaPg_TaxaDeb(),
 			new campo_arqFormaPg_Taxa2(),
 			new campo_arqFormaPg_Taxa3(),
-			new campo_arqFormaPg_Ativo() )
+			new campo_arqFormaPg_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -293,7 +293,7 @@ class arqFormaPg extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( FormaPg) );
+		return( [ FormaPg ] );
 	}
 
 	//-------------------------------------------------------------
@@ -302,17 +302,17 @@ class arqFormaPg extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( FormaPg ) );
-			array_push( $vetAux, array( PodeEntra ) );
-			array_push( $vetAux, array( Dinheiro ) );
-			array_push( $vetAux, array( Boleto ) );
-			array_push( $vetAux, array( Cartao ) );
-			array_push( $vetAux, array( Dias ) );
-			array_push( $vetAux, array( TaxaDeb ) );
-			array_push( $vetAux, array( Taxa2 ) );
-			array_push( $vetAux, array( Taxa3 ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ FormaPg ];
+			$vetAux[] = [ PodeEntra ];
+			$vetAux[] = [ Dinheiro ];
+			$vetAux[] = [ Boleto ];
+			$vetAux[] = [ Cartao ];
+			$vetAux[] = [ Dias ];
+			$vetAux[] = [ TaxaDeb ];
+			$vetAux[] = [ Taxa2 ];
+			$vetAux[] = [ Taxa3 ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -322,17 +322,17 @@ class arqFormaPg extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( FormaPg ) );
-			array_push( $vetAux, array( PodeEntra ) );
-			array_push( $vetAux, array( Dinheiro ) );
-			array_push( $vetAux, array( Boleto ) );
-			array_push( $vetAux, array( Cartao ) );
-			array_push( $vetAux, array( Dias ) );
-			array_push( $vetAux, array( TaxaDeb ) );
-			array_push( $vetAux, array( Taxa2 ) );
-			array_push( $vetAux, array( Taxa3 ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ FormaPg ];
+			$vetAux[] = [ PodeEntra ];
+			$vetAux[] = [ Dinheiro ];
+			$vetAux[] = [ Boleto ];
+			$vetAux[] = [ Cartao ];
+			$vetAux[] = [ Dias ];
+			$vetAux[] = [ TaxaDeb ];
+			$vetAux[] = [ Taxa2 ];
+			$vetAux[] = [ Taxa3 ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -345,4 +345,3 @@ class arqFormaPg extends Lance_Arquivo
 	}
 
 }
-?>
