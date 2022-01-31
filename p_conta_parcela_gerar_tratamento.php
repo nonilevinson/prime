@@ -80,6 +80,7 @@ $g_idSubPlano = sql_lerUmRegistro( $select )->SUBPLARASS;
 $select = "Select C.Num as NumConsulta, C.Clinica as idClinica, P.idPrimario as idPessoa,
       C.Prontuario, T.PTrata, C.EntraParc, C.SaldoParc, C.EntraFPg, C.SdEntrFPG, C.SaldoFPg,
       C.EntraVal, C.EntraValP, C.SdVenc1Par, C.SaldoVal, (C.SaldoVal * C.SaldoParc) as SaldoValor,
+      C.SdCond, C.SaldoCond,
       (Select F.Cartao From arqFormaPg F Where F.idprimario = C.SdEntrFPg) as SdEntrFPgEhCartao,
       (Select F.Cartao From arqFormaPg F Where F.idprimario = C.SaldoFPg) as SaldoFPgEhCartao
    From arqConsulta C
@@ -87,7 +88,7 @@ $select = "Select C.Num as NumConsulta, C.Clinica as idClinica, P.idPrimario as 
       join arqPessoa P on P.idPrimario=C.Pessoa
    Where C.idPrimario = " . $idConsulta;
 $umaConsulta = sql_lerUmRegistro( $select );
-// if( $g_debugProcesso ) echo '<br><b>GR0 1 arqConsulta S=</b> '.$select;
+if( $g_debugProcesso ) echo '<br><b>GR0 1 arqConsulta S=</b> '.$select;
 
 $idConta = sql_IdPrimario();
 $idClinica     = $parGeraParc->CLINICA;
@@ -143,50 +144,62 @@ if( $entraParc > 0 )
       $iFinal       = $entraParc;
       $valorSdEntra = $umaConsulta->ENTRAVALP;
    }
-   
+
    for( $i=1; $i<=$iFinal; $i++ )
    {
       if( $i == 1 )
          $vencimento = $umaConsulta->SDVENC1PAR;
       else
-         $vencimento = incDia( $vencimento, 10 );
+         $vencimento = incDia( $vencimento, $umaConsulta->SDCOND );
 
       CriarParcela( $idConta, $vencimento, $valorSdEntra, $umaConsulta->SDENTRFPG, $historicoConta . ':Saldo Entrada' );
    }
 }
 
 //* saldo do tratamento
+$totValor   = 0;
+$saldoValor = $umaConsulta->SALDOVALOR;
+
 if( $umaConsulta->SALDOFPGEHCARTAO )
 {
-      $iFinal  = 1;
-      $valorSd = $umaConsulta->SALDOVALOR;   
+   CriarParcela( $idConta, $hoje, $saldoValor, $umaConsulta->SALDOFPG, $historicoConta . ': Saldo Tratamento' );
 }
 else
 {
-      $iFinal     = $umaConsulta->SALDOPARC;
-      $valorSd    = $umaConsulta->SALDOVAL;
+   $iFinal  = $umaConsulta->SALDOPARC;
+   $valorSd = $saldoValor / $iFinal;
+
+   for( $i=1; $i<=$iFinal; $i++ )
+   {
+      if( $i == 1 )
+         $vencimento = $hoje;
+      else
+         $vencimento = incDia( $vencimento, $umaConsulta->SALDOCOND );
+
+      if( $i == $iFinal )
+         $valorSd = round( $valorSd - $totValor, 2 );
+      else
+         $totValor += $valorSd;
+   if( $g_debugProcesso ) echo '<br>GR0 i=</b> '.$i.' <b>Valor=</b> '.$valorSd.' - ' .$totValor.' = '.$valorSd;
+
+
+      CriarParcela( $idConta, $vencimento, $valorSd, $umaConsulta->SALDOFPG, $historicoConta . ': Saldo Tratamento' );
+   }
 }
 
-for( $i=1; $i<=$iFinal; $i++ )
+$teste = true;
+
+if( !$teste )
 {
-   if( $i == 1 )
-      $vencimento = formatarData( HOJE, 'aaaa/mm/dd' );
-   else
-      $vencimento = incDia( $vencimento, 10 );
-
-   CriarParcela( $idConta, $vencimento, $valorSd, $umaConsulta->SALDOFPG, $historicoConta . ': Saldo Tratamento' );
+   //* amarra a consulta com a conta criada
+   sql_update( "arqConsulta", [
+         "ContaPTra" => $idConta ],
+      "idPrimario = " . $idConsulta );
 }
-
-
-//* amarra a consulta com a conta criada
-sql_update( "arqConsulta", [
-      "ContaPTra" => $idConta ],
-   "idPrimario = " . $idConsulta );
 
 sql_fecharBD();
 
-$teste = false;
 if( $teste )
-	echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE - liberar o Update arqConsulta ***</p>';
+	echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE - não faz o Update arqConsulta ***</p>';
 else
 	tecleAlgoVolta( 'Conta e parcelas criadas. Verifique!', true, $g_tecleAlgo );
