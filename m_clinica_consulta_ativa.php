@@ -69,7 +69,6 @@ $testeFim = true;
          
       $this->AcumularTotal( "totClinicas", 1 );
       $this->AcumularTotal( "totConsultas", $qtasConsultas );
-      
 	}
 }
 
