@@ -64,7 +64,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 txtEmail=</b><br>'.$this->txtEmail;
 			Where U.Email != '' and U." . $this->campoHabilitado . " = 1 and U.Ativo = 1
 				and U.Grupo is not null";
 			$emailLog = sql_lerRegistros( $select );
-//if( $g_debugProcesso ) echo '<br><b>GR0 arqUsuario S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>GR0 arqUsuario S=</b> '.$select;
 			$emailLog = sql_lerRegistros( $select );
 			$vetEmail = [];
 
@@ -84,7 +84,7 @@ $teste = false;
 				$this->ProcessarMultiEmail( $vetEmail, $this->tituloEmail );
 		}
 
-// $this->ProcessarEmail( 'noni.levinson@gmail.com', "Usuário - " . $this->tituloEmail );
+$this->ProcessarEmail( 'noni.levinson@gmail.com', "Usuário - " . $this->tituloEmail );
 
 		$this->txtEmailSemRodape = $this->txtEmail . "<br>I=" . $g_horaIni . " F=" . AGORA();
 
