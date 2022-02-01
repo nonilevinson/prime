@@ -705,7 +705,7 @@ function ListaDeCampos_arqRecorrente( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Nome, TPgRec, TPgRec_Chave, TPgRec_Descritor, TCompete, TCompete_Chave, TCompete_Descritor, Venc, Antecipa, Valor, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Historico, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, Ativo ]	);
@@ -718,6 +718,6 @@ g_arquivoCampos = ListaDeCampos_arqRecorrente( '' );
 g_idOperacao = 46;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Gerar conta e parcela","","G",162,"","",1,"temMarcados()","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_recorrente_criar^^^^^^^^^^^^^^^^^^", "", 0,21,[162],[]);
+var Menu_1 = [ 1,"Gerar conta e parcela","","G",162,"","",1,"temMarcados()","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_recorrente_criar^^^^^^^^^^^^^^^^^^", "", 0,21,[162],[]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

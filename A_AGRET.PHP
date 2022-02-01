@@ -292,7 +292,7 @@ function listaCampos_arqAgRet( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqAgRet_Clinica(),
 			new campo_arqAgRet_Clinica_Clinica(),
@@ -309,7 +309,7 @@ function listaCampos_arqAgRet( $p_prefixo )
 			new Lance_CampoCadeia( "TStAgRet_Descritor", "TStAgRet_Descritor", "Descritor", 11, "xxxxxxxxxxx", EH_DESCRITOR, TStAgRet ),
 			new campo_arqAgRet_Assessor(),
 			new campo_arqAgRet_Assessor_Usuario(),
-			new campo_arqAgRet_Obs() )
+			new campo_arqAgRet_Obs() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -333,7 +333,7 @@ class arqAgRet extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Clinica_Clinica, Data, Hora) );
+		return( [ Clinica_Clinica, Data, Hora ] );
 	}
 
 	//-------------------------------------------------------------
@@ -342,17 +342,17 @@ class arqAgRet extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Dia ) );
-			array_push( $vetAux, array( Hora ) );
-			array_push( $vetAux, array( Consulta_Num ) );
-			array_push( $vetAux, array( Prontuario ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( NumCelular ) );
-			array_push( $vetAux, array( TStAgRet_Descritor ) );
-			array_push( $vetAux, array( Assessor_Usuario ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Dia ];
+			$vetAux[] = [ Hora ];
+			$vetAux[] = [ Consulta_Num ];
+			$vetAux[] = [ Prontuario ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ NumCelular ];
+			$vetAux[] = [ TStAgRet_Descritor ];
+			$vetAux[] = [ Assessor_Usuario ];
 		return( $vetAux );
 	}
 
@@ -361,7 +361,7 @@ class arqAgRet extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( Consulta ), array( TStAgRet ), array( TStAgRet_Chave ), array( TStAgRet_Descritor ), array( Assessor ) ) );
+		return( [ [ Clinica ], [ Consulta ], [ TStAgRet ], [ TStAgRet_Chave ], [ TStAgRet_Descritor ], [ Assessor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -370,18 +370,18 @@ class arqAgRet extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Dia ) );
-			array_push( $vetAux, array( Hora ) );
-			array_push( $vetAux, array( Consulta_Num ) );
-			array_push( $vetAux, array( Prontuario ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( NumCelular ) );
-			array_push( $vetAux, array( TStAgRet_Descritor ) );
-			array_push( $vetAux, array( Assessor_Usuario ) );
-			array_push( $vetAux, array( Obs ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Dia ];
+			$vetAux[] = [ Hora ];
+			$vetAux[] = [ Consulta_Num ];
+			$vetAux[] = [ Prontuario ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ NumCelular ];
+			$vetAux[] = [ TStAgRet_Descritor ];
+			$vetAux[] = [ Assessor_Usuario ];
+			$vetAux[] = [ Obs ];
 		return( $vetAux );
 	}
 
@@ -410,4 +410,3 @@ class arqAgRet extends Lance_Arquivo
 	}
 
 }
-?>

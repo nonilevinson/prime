@@ -2494,7 +2494,7 @@ CREATE TABLE arqParcela
 	/* 27*/	STRETORNO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
 	/* 28*/	REMESSA NUMERIC(18,0), /* Máscara = N */
 	/* 29*/	DATAREM DATE, /* Máscara = 4ano */
-	/* 30*/	HISTORICO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = M */
+	/* 30*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqParcela_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqParcela_UK UNIQUE ( Conta, Parcela )
 );
@@ -3482,6 +3482,7 @@ insert into arqLanceOperacao values(200040,2,'Acesso ao configurador geral do si
 insert into arqLanceOperacao values(200053,2,'Rotina para programar envio de ações de email','',53,20,0,'');
 insert into arqLanceOperacao values(200234,2,'Envia o m_cmedica_separado','',234,99,1,'');
 insert into arqLanceOperacao values(200169,2,'Envia o m_clinica_ativa','',169,99,1,'');
+insert into arqLanceOperacao values(200242,2,'Envia o m_clinica_consulta_ativa','',242,99,1,'');
 insert into arqLanceOperacao values(200167,2,'Envia o m_parcela_padrao Hojes','',167,99,1,'');
 insert into arqLanceOperacao values(200168,2,'Envia o m_parcela_aberta','',168,99,1,'');
 insert into arqLanceOperacao values(200055,2,'Envio de emails programados','',55,99,1,'');

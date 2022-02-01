@@ -875,7 +875,7 @@ function ListaDeCampos_arqCCor( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Nome, Clinica, Clinica_Clinica, Banco, Banco_Num, Banco_Banco, Agencia, DvAgencia, Conta, DvConta, Carteira, CodCedente, Multa, Juros, CBoleto, Instrucoes, UltRemessa, Convenio, Variacao, Ativo, TPix1, TPix1_Chave, TPix1_Descritor, Pix1, TPix2, TPix2_Chave, TPix2_Descritor, Pix2, TPix3, TPix3_Chave, TPix3_Descritor, Pix3, TPix4, TPix4_Chave, TPix4_Descritor, Pix4, TPix5, TPix5_Chave, TPix5_Descritor, Pix5 ]	);
@@ -888,6 +888,6 @@ g_arquivoCampos = ListaDeCampos_arqCCor( '' );
 g_idOperacao = 20;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Parcelas","","P",101,"","",1,"","1","a_parcel","arqParcela","Folhear","CCor","?","","", "","", 0,8,[],[34]);
+var Menu_1 = [ 1,"Parcelas","","P",101,"","",1,"","1","a_parcel","arqParcela","Folhear","CCor","?","","", "","", 0,8,[],[34]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

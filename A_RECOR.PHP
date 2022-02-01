@@ -448,7 +448,7 @@ function listaCampos_arqRecorrente( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqRecorrente_Clinica(),
 			new campo_arqRecorrente_Clinica_Clinica(),
@@ -478,7 +478,7 @@ function listaCampos_arqRecorrente( $p_prefixo )
 			new campo_arqRecorrente_SubPlano_Plano_Plano(),
 			new campo_arqRecorrente_SubPlano_Codigo(),
 			new campo_arqRecorrente_SubPlano_Nome(),
-			new campo_arqRecorrente_Ativo() )
+			new campo_arqRecorrente_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -502,7 +502,7 @@ class arqRecorrente extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ) );
+		return( [  ] );
 	}
 
 	//-------------------------------------------------------------
@@ -511,17 +511,17 @@ class arqRecorrente extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( TPgRec_Descritor ) );
-			array_push( $vetAux, array( Venc ) );
-			array_push( $vetAux, array( Antecipa ) );
-			array_push( $vetAux, array( Valor ) );
-			array_push( $vetAux, array( Estimado ) );
-			array_push( $vetAux, array( TFCobra_Descritor ) );
-			array_push( $vetAux, array( Historico ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ TPgRec_Descritor ];
+			$vetAux[] = [ Venc ];
+			$vetAux[] = [ Antecipa ];
+			$vetAux[] = [ Valor ];
+			$vetAux[] = [ Estimado ];
+			$vetAux[] = [ TFCobra_Descritor ];
+			$vetAux[] = [ Historico ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -530,7 +530,7 @@ class arqRecorrente extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TPgRec ), array( TPgRec_Chave ), array( TPgRec_Descritor ), array( TFCobra ), array( TFCobra_Chave ), array( TFCobra_Descritor ) ) );
+		return( [ [ Clinica ], [ TPgRec ], [ TPgRec_Chave ], [ TPgRec_Descritor ], [ TFCobra ], [ TFCobra_Chave ], [ TFCobra_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -539,24 +539,24 @@ class arqRecorrente extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Fornecedor_Nome ) );
-			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_NumCelular ) );
-			array_push( $vetAux, array( TPgRec_Descritor ) );
-			array_push( $vetAux, array( TCompete_Descritor ) );
-			array_push( $vetAux, array( Venc ) );
-			array_push( $vetAux, array( Antecipa ) );
-			array_push( $vetAux, array( Valor ) );
-			array_push( $vetAux, array( Estimado ) );
-			array_push( $vetAux, array( TFCobra_Descritor ) );
-			array_push( $vetAux, array( Historico ) );
-			array_push( $vetAux, array( SubPlano_Plano_CodPlano ) );
-			array_push( $vetAux, array( SubPlano_Plano_Plano ) );
-			array_push( $vetAux, array( SubPlano_Codigo ) );
-			array_push( $vetAux, array( SubPlano_Nome ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Fornecedor_Nome ];
+			$vetAux[] = [ Pessoa_Nome ];
+			$vetAux[] = [ Pessoa_NumCelular ];
+			$vetAux[] = [ TPgRec_Descritor ];
+			$vetAux[] = [ TCompete_Descritor ];
+			$vetAux[] = [ Venc ];
+			$vetAux[] = [ Antecipa ];
+			$vetAux[] = [ Valor ];
+			$vetAux[] = [ Estimado ];
+			$vetAux[] = [ TFCobra_Descritor ];
+			$vetAux[] = [ Historico ];
+			$vetAux[] = [ SubPlano_Plano_CodPlano ];
+			$vetAux[] = [ SubPlano_Plano_Plano ];
+			$vetAux[] = [ SubPlano_Codigo ];
+			$vetAux[] = [ SubPlano_Nome ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -577,4 +577,3 @@ class arqRecorrente extends Lance_Arquivo
 	}
 
 }
-?>

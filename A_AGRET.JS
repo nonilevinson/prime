@@ -452,7 +452,7 @@ function ListaDeCampos_arqAgRet( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Clinica, Clinica_Clinica, Data, Dia, Hora, Consulta, Consulta_Num, Prontuario, Nome, NumCelular, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Assessor, Assessor_Usuario, Obs ]	);

@@ -452,7 +452,7 @@ function listaCampos_arqCCor( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqCCor_Nome(),
 			new campo_arqCCor_Clinica(),
@@ -493,7 +493,7 @@ function listaCampos_arqCCor( $p_prefixo )
 			new campo_arqCCor_TPix5(),
 			new Lance_CampoCadeia( "TPix5_Chave", "TPix5_Chave", "Chave", 1, "x", EH_CHAVE, TPix5 ),
 			new Lance_CampoCadeia( "TPix5_Descritor", "TPix5_Descritor", "Descritor", 9, "xxxxxxxxx", EH_DESCRITOR, TPix5 ),
-			new campo_arqCCor_Pix5() )
+			new campo_arqCCor_Pix5() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -517,7 +517,7 @@ class arqCCor extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Nome) );
+		return( [ Nome ] );
 	}
 
 	//-------------------------------------------------------------
@@ -526,16 +526,16 @@ class arqCCor extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Banco_Num ) );
-			array_push( $vetAux, array( Banco_Banco ) );
-			array_push( $vetAux, array( Agencia ) );
-			array_push( $vetAux, array( DvAgencia ) );
-			array_push( $vetAux, array( Conta ) );
-			array_push( $vetAux, array( DvConta ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Banco_Num ];
+			$vetAux[] = [ Banco_Banco ];
+			$vetAux[] = [ Agencia ];
+			$vetAux[] = [ DvAgencia ];
+			$vetAux[] = [ Conta ];
+			$vetAux[] = [ DvConta ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -544,7 +544,7 @@ class arqCCor extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( Banco ) ) );
+		return( [ [ Clinica ], [ Banco ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -553,35 +553,35 @@ class arqCCor extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Banco_Num ) );
-			array_push( $vetAux, array( Banco_Banco ) );
-			array_push( $vetAux, array( Agencia ) );
-			array_push( $vetAux, array( DvAgencia ) );
-			array_push( $vetAux, array( Conta ) );
-			array_push( $vetAux, array( DvConta ) );
-			array_push( $vetAux, array( Carteira ) );
-			array_push( $vetAux, array( CodCedente ) );
-			array_push( $vetAux, array( Multa ) );
-			array_push( $vetAux, array( Juros ) );
-			array_push( $vetAux, array( CBoleto ) );
-			array_push( $vetAux, array( Instrucoes ) );
-			array_push( $vetAux, array( UltRemessa ) );
-			array_push( $vetAux, array( Convenio ) );
-			array_push( $vetAux, array( Variacao ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( TPix1_Descritor ) );
-			array_push( $vetAux, array( Pix1 ) );
-			array_push( $vetAux, array( TPix2_Descritor ) );
-			array_push( $vetAux, array( Pix2 ) );
-			array_push( $vetAux, array( TPix3_Descritor ) );
-			array_push( $vetAux, array( Pix3 ) );
-			array_push( $vetAux, array( TPix4_Descritor ) );
-			array_push( $vetAux, array( Pix4 ) );
-			array_push( $vetAux, array( TPix5_Descritor ) );
-			array_push( $vetAux, array( Pix5 ) );
+		$vetAux = [];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Banco_Num ];
+			$vetAux[] = [ Banco_Banco ];
+			$vetAux[] = [ Agencia ];
+			$vetAux[] = [ DvAgencia ];
+			$vetAux[] = [ Conta ];
+			$vetAux[] = [ DvConta ];
+			$vetAux[] = [ Carteira ];
+			$vetAux[] = [ CodCedente ];
+			$vetAux[] = [ Multa ];
+			$vetAux[] = [ Juros ];
+			$vetAux[] = [ CBoleto ];
+			$vetAux[] = [ Instrucoes ];
+			$vetAux[] = [ UltRemessa ];
+			$vetAux[] = [ Convenio ];
+			$vetAux[] = [ Variacao ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ TPix1_Descritor ];
+			$vetAux[] = [ Pix1 ];
+			$vetAux[] = [ TPix2_Descritor ];
+			$vetAux[] = [ Pix2 ];
+			$vetAux[] = [ TPix3_Descritor ];
+			$vetAux[] = [ Pix3 ];
+			$vetAux[] = [ TPix4_Descritor ];
+			$vetAux[] = [ Pix4 ];
+			$vetAux[] = [ TPix5_Descritor ];
+			$vetAux[] = [ Pix5 ];
 		return( $vetAux );
 	}
 
@@ -602,4 +602,3 @@ class arqCCor extends Lance_Arquivo
 	}
 
 }
-?>
