@@ -197,9 +197,7 @@ TDiaSem_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
 Campo_arqPlantao_Usuario.prototype.FiltroPai = function()
 {
-		if( g_inserindo )
-			return( "A.Medico = 1 and A.Ativo = 1 and A.Grupo is not null" );
-			return( "A.Medico = 1 and A.Grupo is not null" );
+			return( "" + vijMedico() + "" );
 }
 
 //-------------------------------------------------------------
@@ -269,7 +267,7 @@ function ListaDeCampos_arqPlantao( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Clinica, Clinica_Clinica, DataIni, DataFim, TDiaSem, TDiaSem_Chave, TDiaSem_Descritor, Usuario, Usuario_Usuario ]	);

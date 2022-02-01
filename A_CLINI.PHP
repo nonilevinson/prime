@@ -161,19 +161,19 @@ function listaCampos_arqClinica( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqClinica_Clinica(),
 			new campo_arqClinica_Razao(),
 			new campo_arqClinica_Email(),
-			new campo_arqClinica_CNPJ() ),
+			new campo_arqClinica_CNPJ() ],
 		listaCampos_domEndereco( "Ende_" ),
-		array( 
+		[ 
 			new campo_arqClinica_DataIni(),
 			new campo_arqClinica_DataFim(),
 			new campo_arqClinica_Ativo(),
 			new campo_arqClinica_MaxAgenda(),
-			new campo_arqClinica_Sigla() )
+			new campo_arqClinica_Sigla() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -197,7 +197,7 @@ class arqClinica extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Clinica) );
+		return( [ Clinica ] );
 	}
 
 	//-------------------------------------------------------------
@@ -206,9 +206,9 @@ class arqClinica extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -218,26 +218,26 @@ class arqClinica extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica ) );
-			array_push( $vetAux, array( Razao ) );
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( CNPJ ) );
-			array_push( $vetAux, array( Ende_CEP ) );
-			array_push( $vetAux, array( Ende_Endereco ) );
-			array_push( $vetAux, array( Ende_Bairro_Bairro ) );
-			array_push( $vetAux, array( Ende_Cidade_UF_Chave ) );
-			array_push( $vetAux, array( Ende_Cidade_Cidade ) );
-			array_push( $vetAux, array( Ende_DDD ) );
-			array_push( $vetAux, array( Ende_Telefone ) );
-			array_push( $vetAux, array( Ende_DDDCelular ) );
-			array_push( $vetAux, array( Ende_Celular ) );
-			array_push( $vetAux, array( Ende_WhatsApp ) );
-			array_push( $vetAux, array( DataIni ) );
-			array_push( $vetAux, array( DataFim ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( MaxAgenda ) );
-			array_push( $vetAux, array( Sigla ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica ];
+			$vetAux[] = [ Razao ];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ CNPJ ];
+			$vetAux[] = [ Ende_CEP ];
+			$vetAux[] = [ Ende_Endereco ];
+			$vetAux[] = [ Ende_Bairro_Bairro ];
+			$vetAux[] = [ Ende_Cidade_UF_Chave ];
+			$vetAux[] = [ Ende_Cidade_Cidade ];
+			$vetAux[] = [ Ende_DDD ];
+			$vetAux[] = [ Ende_Telefone ];
+			$vetAux[] = [ Ende_DDDCelular ];
+			$vetAux[] = [ Ende_Celular ];
+			$vetAux[] = [ Ende_WhatsApp ];
+			$vetAux[] = [ DataIni ];
+			$vetAux[] = [ DataFim ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ MaxAgenda ];
+			$vetAux[] = [ Sigla ];
 		return( $vetAux );
 	}
 
@@ -258,4 +258,3 @@ class arqClinica extends Lance_Arquivo
 	}
 
 }
-?>

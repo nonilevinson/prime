@@ -146,7 +146,7 @@ function listaCampos_arqPlantao( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqPlantao_Clinica(),
 			new campo_arqPlantao_Clinica_Clinica(),
@@ -156,7 +156,7 @@ function listaCampos_arqPlantao( $p_prefixo )
 			new Lance_CampoCadeia( "TDiaSem_Chave", "TDiaSem_Chave", "Chave", 1, "x", EH_CHAVE, TDiaSem ),
 			new Lance_CampoCadeia( "TDiaSem_Descritor", "TDiaSem_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TDiaSem ),
 			new campo_arqPlantao_Usuario(),
-			new campo_arqPlantao_Usuario_Usuario() )
+			new campo_arqPlantao_Usuario_Usuario() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -180,7 +180,7 @@ class arqPlantao extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ) );
+		return( [  ] );
 	}
 
 	//-------------------------------------------------------------
@@ -189,12 +189,12 @@ class arqPlantao extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( DataIni ) );
-			array_push( $vetAux, array( DataFim ) );
-			array_push( $vetAux, array( TDiaSem_Descritor ) );
-			array_push( $vetAux, array( Usuario_Usuario ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ DataIni ];
+			$vetAux[] = [ DataFim ];
+			$vetAux[] = [ TDiaSem_Descritor ];
+			$vetAux[] = [ Usuario_Usuario ];
 		return( $vetAux );
 	}
 
@@ -203,7 +203,7 @@ class arqPlantao extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( TDiaSem ), array( TDiaSem_Chave ), array( TDiaSem_Descritor ), array( Usuario ) ) );
+		return( [ [ Clinica ], [ TDiaSem ], [ TDiaSem_Chave ], [ TDiaSem_Descritor ], [ Usuario ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -212,12 +212,12 @@ class arqPlantao extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( DataIni ) );
-			array_push( $vetAux, array( DataFim ) );
-			array_push( $vetAux, array( TDiaSem_Descritor ) );
-			array_push( $vetAux, array( Usuario_Usuario ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ DataIni ];
+			$vetAux[] = [ DataFim ];
+			$vetAux[] = [ TDiaSem_Descritor ];
+			$vetAux[] = [ Usuario_Usuario ];
 		return( $vetAux );
 	}
 
@@ -230,4 +230,3 @@ class arqPlantao extends Lance_Arquivo
 	}
 
 }
-?>
