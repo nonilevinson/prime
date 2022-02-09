@@ -1630,7 +1630,11 @@ Campo_arqConsulta_SaldoCond.prototype.Existencia = function()
 Campo_arqConsulta_SaldoVal.prototype.Calculou = function()
 {
 {
+		if( SaldoParc > 0 )
 	return( this.Atribuiu( Math.ceil( (ValPTrata - EntraVal - ( EntraParc * EntraValP ) ) / SaldoParc * 100 ) / 100 ) );
+}
+{
+	return( this.Atribuiu( 0 ) );
 }
 }
 
@@ -2092,8 +2096,8 @@ EntraParc.CalculosDependentes= [ EntraTotP,SaldoVal ];
 EntraValP.CalculosDependentes= [ EntraTotP,SaldoVal ];
 EntraVal.CalculosDependentes= [ EntraTotal,SaldoVal ];
 EntraTotP.CalculosDependentes= [ EntraTotal ];
-ValPTrata.CalculosDependentes= [ SaldoVal ];
 SaldoParc.CalculosDependentes= [ SaldoVal ];
+ValPTrata.CalculosDependentes= [ SaldoVal ];
 TrgQtdM.CalculosDependentes= [ Saldo ];
 TrgQtdMEnt.CalculosDependentes= [ Saldo ];
 Data.CalculosDependentes= [ DiaRet ];
