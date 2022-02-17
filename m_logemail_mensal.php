@@ -107,6 +107,6 @@ $select = "Select A.Titulo, L.Enviados
 		join arqAcaoEmail A on A.idPrimario=L.Titulo
 	Where L.Data >= '" . dataAno( $proc->diaAnterior ) . "/" . dataMes( $proc->diaAnterior) . "/01' and
 		L.Data <= '" . dataUltDiaDoMes( $proc->diaAnterior ) . "'
- 	Order by L.Titulo_Titulo";
+ 	Order by A.Titulo";
 
 $proc->Processar( $select );
