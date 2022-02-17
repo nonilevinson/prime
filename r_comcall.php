@@ -13,7 +13,7 @@ class RelParcela extends Relatorios
       $clinica = $parQSelecao->CLINICA->CLINICA;
 
 		$this->tituloRelatorio = [ "Relação de comissão de Call Center",
-			"Mês: " . formatarData( $parQSelecao->MESINI, 'mmm/aaaa' ),
+			"Mês: " . formatarData( $this->mesIni, 'mmm/aaaa' ),
          ( $parQSelecao->CLINICA ? "Clínica: " . $clinica : ' ' ),
          ' ' ];
 
@@ -87,7 +87,7 @@ class RelParcela extends Relatorios
       //* Procura arqComCall no mês informado em QSelecao
       $select = "Select C.idPrimario as idComCall
          From arqComCall C
-         Where C.Clinica = " . $regA->IDCLINICA . " and C.Mes = '" . $parQSelecao->MESINI . "'";
+         Where C.Clinica = " . $regA->IDCLINICA . " and C.Mes = '" . $this->mesIni . "'";
       $umComCall = sql_lerUmRegistro( $select );
 // if( $g_debugProcesso ) echo '<br><b>GR0 cabQuebraPorClinica arqComCall S=</b> '.$select;
 
@@ -96,7 +96,7 @@ class RelParcela extends Relatorios
       {
          $select = "Select C.idPrimario as idComCall, C.Mes
             From arqComCall C
-            Where C.Clinica = " . $regA->IDCLINICA . "
+            Where C.Clinica = " . $regA->IDCLINICA . " and C.Mes <= '" . $this->mesIni . "'
             Order by C.Mes Desc
             rows 1";
          $umComCall = sql_lerUmRegistro( $select );
@@ -174,10 +174,11 @@ global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
 $proc = new RelParcela( RETRATO, A4, 'Consultas_Relacao.pdf', '', true, .97 );
+$proc->mesIni = $parQSelecao->MESINI;
 
 $filtro = substr(
    ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
-   filtrarPorIntervaloData( 'C.Data', $parQSelecao->MESINI, dataUltDiaDoMes( $parQSelecao->MESINI ) ) .
+   filtrarPorIntervaloData( 'C.Data', $proc->mesIni, dataUltDiaDoMes( $proc->mesIni ) ) .
    filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ) .
    filtrarPorLig( 'C.Callcenter', $parQSelecao->USUARIO ), 0, -4 );
 
