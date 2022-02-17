@@ -24,7 +24,7 @@ class RelParcela extends Relatorios
          [ "Conversão\n%", 20, ALINHA_DIR, 2 ],
          [ "Valor",	      22, ALINHA_DIR, 2 ],
          [ "Faixa",	      12, ALINHA_DIR, 2 ],
-         
+
          [ "Comissão %",	40, ALINHA_DIR, 1, [
             [ "%",	18, ALINHA_DIR ],
             [ "R$",  22, ALINHA_DIR ] ] ] );
@@ -42,8 +42,6 @@ class RelParcela extends Relatorios
 	//------------------------------------------------------------------------
 	function PeQuebra( $p_cabTotal )
 	{
-		// $total = $this->ValorTotal( "totenviado" ) + $this->ValorTotal( "totNenviado" );
-
 		$this->JuntarColunas( [5,6] );
       $this->valores[ 0 ] = $p_cabTotal;
 		$this->valores[ 1 ] = $this->FormatarTotal( "totContato" );
@@ -81,28 +79,39 @@ class RelParcela extends Relatorios
 	{
 		global $g_debugProcesso, $parQSelecao;
       $regA = &$this->regAtual;
-      
+
 		$this->quebraClinica = $regA->CLINICA;
 		$this->CabQuebra( $this->quebraClinica );
       $this->ImprimirCabColunas();
-      
+
+      //* Procura arqComCall no mês informado em QSelecao
       $select = "Select C.idPrimario as idComCall
          From arqComCall C
          Where C.Clinica = " . $regA->IDCLINICA . " and C.Mes = '" . $parQSelecao->MESINI . "'";
       $umComCall = sql_lerUmRegistro( $select );
-// if( $g_debugProcesso ) echo '<br><b>GR0 1 arqComCall S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>GR0 cabQuebraPorClinica arqComCall S=</b> '.$select;
 
+      //* Não achou arqComCall no mês informado, procura a última cadastrada
       if( !$umComCall )
       {
-         $select = "Select C.idPrimario as idComCall
+         $select = "Select C.idPrimario as idComCall, C.Mes
             From arqComCall C
-            Where C.Clinica = " . $regA->IDCLINICA . " 
+            Where C.Clinica = " . $regA->IDCLINICA . "
             Order by C.Mes Desc
             rows 1";
          $umComCall = sql_lerUmRegistro( $select );
 // if( $g_debugProcesso ) echo '<br><b>GR0 2 arqComCall S=</b> '.$select;
+
+         if( $umComCall )
+         {
+            $this->ImprimirTotalEmUmaColuna( "O comissionamento configurado é o de " . 
+               formatarData( $umComCall->MES, 'mm/aaaa' ) );
+         }
       }
       
+      if( !$umComCall )
+         $this->ImprimirTotalEmUmaColuna( "A clínica está sem comissionamento configurado" );
+
       $this->idComCall = $umComCall->IDCOMCALL;
 	}
 
@@ -118,14 +127,14 @@ class RelParcela extends Relatorios
 	//------------------------------------------------------------------------
 	function Basico()
 	{
-		global $g_debugProcesso, $parQSelecao;      
+		global $g_debugProcesso, $parQSelecao;
       $regA = &$this->regAtual;
-      
+
       $todas      = $regA->TODAS;
       $compareceu = $regA->COMPARECEU;
       $conversao = $compareceu / $todas * 100.00;
       $valor     = $regA->VALOR;
-      
+
       //* ver a faixa da comissão
       $select = "Select F.Faixa, F.PercAte, F.Comissao
          From arqFxComCall F
@@ -137,7 +146,7 @@ class RelParcela extends Relatorios
 
       $percAte  = $umFxComCall->PERCATE;
       $comissao = $valor * $percAte / 100.0;
-      
+
       $this->valores = [
          $regA->NOME,
          formatarNum( $todas ),
