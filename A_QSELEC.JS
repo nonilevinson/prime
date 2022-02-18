@@ -948,6 +948,28 @@ function Campo_parQSelecao_TCMedica_Descritor()
 
 var TCMedica_Descritor = new Campo_parQSelecao_TCMedica_Descritor;
 
+//------------------------------------------------------------
+Campo_parQSelecao_TiAgenda.prototype = new Lance_CampoHidden;
+
+function Campo_parQSelecao_TiAgenda()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "TiAgenda", "TiAgenda", "TiAgenda", "arqTiAgenda", "a_tiagen", null, "",43);
+}
+
+var TiAgenda = new Campo_parQSelecao_TiAgenda;
+
+//------------------------------------------------------------
+Campo_parQSelecao_TiAgenda_TiAgenda.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_parQSelecao_TiAgenda_TiAgenda()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TiAgenda_TiAgenda", "TiAgenda_TiAgenda", "TiAgenda", TiAgenda, 20, "uuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var TiAgenda_TiAgenda = new Campo_parQSelecao_TiAgenda_TiAgenda;
+
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -1558,6 +1580,15 @@ Lote_Lote.TipoCampo |= CAMPO_CHAVE_PAI;
 TCMedica_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TCMedica_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_TiAgenda_TiAgenda.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( TiAgenda.Obrigatorio( p_comMsg ) );
+}
+
+TiAgenda_TiAgenda.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_parQSelecao_Usuario.prototype.ExistenciaEspecial = function()
@@ -1701,6 +1732,14 @@ Campo_parQSelecao_Lote_Medicamen.prototype.ExistenciaEspecial = function()
 	return( ( !Lote_Medicamen_Medicamen.Obrigatorio( false ) || tem(Lote_Medicamen_Medicamen) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_TiAgenda.prototype.ExistenciaEspecial = function()
+{
+	return( ( !TiAgenda_TiAgenda.Obrigatorio( false ) || tem(TiAgenda_TiAgenda) ) );
+}
+
 function IniciarDependencias_parQSelecao()
 {
 Usuario_Usuario.ExistenciasDependentes= [ Usuario ];
@@ -1731,6 +1770,7 @@ Medicamen_Medicamen.ExistenciasDependentes= [ Medicamen ];
 Lote_Medicamen.ExistenciasDependentes= [ Lote ];
 Lote_Medicamen_Medicamen.ExistenciasDependentes= [ Lote_Medicamen ];
 Lote_Lote.ExistenciasDependentes= [ Lote ];
+TiAgenda_TiAgenda.ExistenciasDependentes= [ TiAgenda ];
 Usuario_Usuario.ErrosDependentes= [ Usuario ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
 Assessor_Usuario.ErrosDependentes= [ Assessor ];
@@ -1755,6 +1795,7 @@ Consulta_Num.ErrosDependentes= [ Consulta ];
 Medicamen_Medicamen.ErrosDependentes= [ Medicamen ];
 Lote_Medicamen_Medicamen.ErrosDependentes= [ Lote_Medicamen ];
 Lote_Lote.ErrosDependentes= [ Lote ];
+TiAgenda_TiAgenda.ErrosDependentes= [ TiAgenda ];
 SubPlano_Plano.DescritoresDependentes= [ SubPlano_Plano_Plano ];
 SubPlano.DescritoresDependentes= [ SubPlano_Nome ];
 Usuario.CamposChave= [ Usuario_Usuario ];
@@ -1773,6 +1814,7 @@ Consulta.CamposChave= [ Consulta_Num ];
 Medicamen.CamposChave= [ Medicamen_Medicamen ];
 Lote.CamposChave= [ Lote_Medicamen,Lote_Lote ];
 Lote_Medicamen.CamposChave= [ Lote_Medicamen_Medicamen ];
+TiAgenda.CamposChave= [ TiAgenda_TiAgenda ];
 }
 
 
@@ -1787,10 +1829,10 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Medicamen, Medicamen_Medicamen, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, TCMedica, TCMedica_Chave, TCMedica_Descritor ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Medicamen, Medicamen_Medicamen, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, TCMedica, TCMedica_Chave, TCMedica_Descritor, TiAgenda, TiAgenda_TiAgenda ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

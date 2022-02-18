@@ -985,6 +985,39 @@ class campo_parQSelecao_TCMedica extends Lance_CampoLigado
 }
 
 //======================================================
+//	Campo TiAgenda
+//======================================================
+
+class campo_parQSelecao_TiAgenda extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TiAgenda", "TiAgenda", "TiAgenda", 0, "arqTiAgenda", "arqTiAgenda.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo TiAgenda_TiAgenda
+//======================================================
+
+class campo_parQSelecao_TiAgenda_TiAgenda extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "TiAgenda_TiAgenda", "TiAgenda_TiAgenda", "TiAgenda", 20, "xxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "TiAgenda", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Tipo" );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQSelecao
 //======================================================
 function listaCampos_parQSelecao( $p_prefixo )
@@ -993,7 +1026,7 @@ function listaCampos_parQSelecao( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_parQSelecao_Usuario(),
 			new campo_parQSelecao_Usuario_Usuario(),
@@ -1080,7 +1113,9 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Lote_Lote(),
 			new campo_parQSelecao_TCMedica(),
 			new Lance_CampoCadeia( "TCMedica_Chave", "TCMedica_Chave", "Chave", 1, "x", EH_CHAVE, TCMedica ),
-			new Lance_CampoCadeia( "TCMedica_Descritor", "TCMedica_Descritor", "Descritor", 34, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TCMedica ) )
+			new Lance_CampoCadeia( "TCMedica_Descritor", "TCMedica_Descritor", "Descritor", 34, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TCMedica ),
+			new campo_parQSelecao_TiAgenda(),
+			new campo_parQSelecao_TiAgenda_TiAgenda() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -1100,4 +1135,3 @@ class parQSelecao extends Lance_Parametro
 	}
 
 }
-?>

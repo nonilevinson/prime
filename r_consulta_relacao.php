@@ -19,7 +19,8 @@ class RelParcela extends Relatorios
          [ "Hora",         12, ALINHA_CEN ],
          [ "Paciente",     83, ALINHA_ESQ ],
          [ "Celular",	   27, ALINHA_CEN ], 
-         [ "Prontuário",   25, ALINHA_CEN ] );
+         [ "Prontuário",   25, ALINHA_CEN ],
+         [ "Call Center",  30, ALINHA_ESQ ] );
 
       $this->DefinirQuebras(
          [ 'QuebraPorClinica',   SIM, NAO, SIM ] );
@@ -88,7 +89,9 @@ class RelParcela extends Relatorios
          formatarHora( $regA->HORA, 'hh:mm' ),
          cadEsq( $regA->NOME, 40 ),
          formatarStr( $regA->NUMCELULAR, '(nn) n.nnnn.nnnn' ),
-         $regA->PRONTUARIO ];
+         $regA->PRONTUARIO,
+			cadEsq( $regA->CALLCENTER, 14 )
+			 ];
 
       $this->ImprimirValorColunas();
       
@@ -102,19 +105,22 @@ class RelParcela extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelParcela( RETRATO, A4, 'Consultas_Relacao.pdf', '', true );
+$proc = new RelParcela( RETRATO, A4, 'Consultas_Relacao.pdf', '', true, .89 );
 
 $filtro = substr(
    ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
    filtrarPorIntervaloData( 'C.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
-   filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 );
+   filtrarPorLig( "C.CallCenter", $parQSelecao->CALLCENTER ) .
+	filtrarPorLig( "C.TiAgenda", $parQSelecao->TIAGENDA ) .
+	filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 );
 
 $select = "Select L.Clinica, C.Num as NumConsulta, T.TiAgenda, C.Hora, P.Nome, P.Prontuario,
-      P.NumCelular
+      P.NumCelular, U.Nome as CallCenter
 	From arqConsulta C
-      join arqClinica   L on L.idPrimario=C.Clinica
-      join arqTiAgenda  T on T.idPrimario=C.TiAgenda
-      join arqPessoa    P on P.idPrimario=C.Pessoa
+      join arqClinica   	L on L.idPrimario=C.Clinica
+      join arqTiAgenda  	T on T.idPrimario=C.TiAgenda
+      join arqPessoa    	P on P.idPrimario=C.Pessoa
+		left join arqUsuario	U on U.idPrimario=C.CallCenter
 	Where " . $filtro . "
 	Order by L.Clinica, C.Hora";
 

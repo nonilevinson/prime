@@ -268,6 +268,8 @@ if( $op == 175 ) //* r_consulta_relacao
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Tipo da consulta", TiAgenda ),
+	$this->Pedir( "Call Center", CallCenter ),
 	$this->Pedir( "Entre",
 		[ "", DataIni,
 		[ brHtml(1) . "e ", DataFim ] ] );
