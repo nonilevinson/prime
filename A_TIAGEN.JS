@@ -138,7 +138,7 @@ function ListaDeCampos_arqTiAgenda( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ TiAgenda, Ativo, DobroTempo, Pagamento, Midia ]	);
@@ -151,6 +151,6 @@ g_arquivoCampos = ListaDeCampos_arqTiAgenda( '' );
 g_idOperacao = 43;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Consultas","","C",148,"","",1,"","1","a_consul","arqConsulta","Folhear","TiAgenda","?","","", "","", 0,9,[],[39]);
+var Menu_1 = [ 1,"Consultas","","C",148,"","",1,"","1","a_consul","arqConsulta","Folhear","TiAgenda","?","","", "","", 0,9,[],[39]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

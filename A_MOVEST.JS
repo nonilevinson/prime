@@ -250,6 +250,18 @@ Fornecedor_Nome.ErrosDependentes= [ Fornecedor ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Fornecedor.CamposChave= [ Fornecedor_Nome ];
 }
+	//=========================================================================
+	function AcionaTecla( p_tecla )
+	{
+		switch( p_tecla )
+		{
+			case _ALT: return( Fechado == 'Não'|| Fechado == 0 );
+			case _DEL: return( Fechado == 'Não'|| Fechado == 0 );
+			case _SDEL: return( Fechado == 'Não'|| Fechado == 0 );
+		}
+		return( true );
+	}
+	g_acionaTecla="AcionaTecla";
 
 
 //======================================================

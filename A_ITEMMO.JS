@@ -285,6 +285,14 @@ Campo_arqItemMov_CUnidade.prototype.Calculou = function()
 }
 }
 
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqItemMov_CUnidade.prototype.Cabecalho = function()
+{
+		return( "Unidade" );
+}
+
 CUnidade.EhCalculado = true;
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
@@ -339,7 +347,7 @@ function ListaDeCampos_arqItemMov( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ MovEstoque, MovEstoque_Num, Item, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, TMov, TMov_Chave, TMov_Descritor, Qtd, QtdCalc, CUnidade ]	);

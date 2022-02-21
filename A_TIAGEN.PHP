@@ -142,13 +142,13 @@ function listaCampos_arqTiAgenda( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqTiAgenda_TiAgenda(),
 			new campo_arqTiAgenda_Ativo(),
 			new campo_arqTiAgenda_DobroTempo(),
 			new campo_arqTiAgenda_Pagamento(),
-			new campo_arqTiAgenda_Midia() )
+			new campo_arqTiAgenda_Midia() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -173,7 +173,7 @@ class arqTiAgenda extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( TiAgenda) );
+		return( [ TiAgenda ] );
 	}
 
 	//-------------------------------------------------------------
@@ -182,12 +182,12 @@ class arqTiAgenda extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( TiAgenda ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( DobroTempo ) );
-			array_push( $vetAux, array( Pagamento ) );
-			array_push( $vetAux, array( Midia ) );
+		$vetAux = [];
+			$vetAux[] = [ TiAgenda ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ DobroTempo ];
+			$vetAux[] = [ Pagamento ];
+			$vetAux[] = [ Midia ];
 		return( $vetAux );
 	}
 
@@ -197,12 +197,12 @@ class arqTiAgenda extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( TiAgenda ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( DobroTempo ) );
-			array_push( $vetAux, array( Pagamento ) );
-			array_push( $vetAux, array( Midia ) );
+		$vetAux = [];
+			$vetAux[] = [ TiAgenda ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ DobroTempo ];
+			$vetAux[] = [ Pagamento ];
+			$vetAux[] = [ Midia ];
 		return( $vetAux );
 	}
 
@@ -215,4 +215,3 @@ class arqTiAgenda extends Lance_Arquivo
 	}
 
 }
-?>
