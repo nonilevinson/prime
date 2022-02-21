@@ -336,5 +336,6 @@ var Menu_2 = [ 1,"Parcelas","","P",185,"","",1,"","1","a_parcel","arqParcela","F
 var Menu_3 = [ 1,"Entradas de tratamentos","","E",204,"","",1,"","1","a_consul","arqConsulta","Folhear","EntraFPg","?","","", "","", 0,25,[],[39]];
 var Menu_4 = [ 1,"Saldos de tratamentos","","S",205,"","",1,"","1","a_consul","arqConsulta","Folhear","SaldoFPg","?","","", "","", 0,25,[],[39]];
 var Menu_5 = [ 1,"Consultas - saldo entrada","","u",235,"","",1,"","1","a_consul","arqConsulta","Folhear","SdEntrFPg","?","","", "","", 0,25,[],[39]];
-parent.navegacao.MenuPrincQtdOpcoes=5;
+var Menu_6 = [ 1,"Consultas","","C",248,"","",1,"","1","a_consul","arqConsulta","Folhear","FormaPg2","?","","", "","", 0,25,[],[39]];
+parent.navegacao.MenuPrincQtdOpcoes=6;
 }

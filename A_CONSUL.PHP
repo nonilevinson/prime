@@ -433,34 +433,30 @@ class campo_arqConsulta_TMotivo extends Lance_CampoLigado
 }
 
 //======================================================
-//	Campo FormaPg
+//	Campo Cortesia
 //======================================================
 
-class campo_arqConsulta_FormaPg extends Lance_CampoLigado
+class campo_arqConsulta_Cortesia extends Lance_CampoLogico
 {
 	function __construct()
 	{
-		parent::__construct( "FormaPg", "FormaPg", "FormaPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+		parent::__construct( "Cortesia", "Cortesia", "Cortesia", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->CORTESIA == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
 	}
 
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Forma Pagto" );
-	}
-
-}
-
-//======================================================
-//	Campo FormaPg_FormaPg
-//======================================================
-
-class campo_arqConsulta_FormaPg_FormaPg extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "FormaPg", false );
+			return( "Cortesia?" );
 	}
 
 }
@@ -488,6 +484,92 @@ class campo_arqConsulta_Valor extends Lance_CampoNumerico
 	{
 		global $g_regAtual;
 			return( "Valor<br>Consulta" );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg
+//======================================================
+
+class campo_arqConsulta_FormaPg extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg", "FormaPg", "FormaPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma Pagto<br>Consulta" );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg_FormaPg
+//======================================================
+
+class campo_arqConsulta_FormaPg_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg_FormaPg", "FormaPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "FormaPg", false );
+	}
+
+}
+
+//======================================================
+//	Campo Valor2
+//======================================================
+
+class campo_arqConsulta_Valor2 extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Valor2", "Valor2", "Valor2", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "2° Valor<br>Consulta" );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg2
+//======================================================
+
+class campo_arqConsulta_FormaPg2 extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg2", "FormaPg2", "FormaPg2", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "2ª Forma Pagto<br>Consulta" );
+	}
+
+}
+
+//======================================================
+//	Campo FormaPg2_FormaPg
+//======================================================
+
+class campo_arqConsulta_FormaPg2_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "FormaPg2_FormaPg", "FormaPg2_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "FormaPg2", false );
 	}
 
 }
@@ -1256,9 +1338,13 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_TMotivo(),
 			new Lance_CampoCadeia( "TMotivo_Chave", "TMotivo_Chave", "Chave", 1, "x", EH_CHAVE, TMotivo ),
 			new Lance_CampoCadeia( "TMotivo_Descritor", "TMotivo_Descritor", "Descritor", 32, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TMotivo ),
+			new campo_arqConsulta_Cortesia(),
+			new campo_arqConsulta_Valor(),
 			new campo_arqConsulta_FormaPg(),
 			new campo_arqConsulta_FormaPg_FormaPg(),
-			new campo_arqConsulta_Valor(),
+			new campo_arqConsulta_Valor2(),
+			new campo_arqConsulta_FormaPg2(),
+			new campo_arqConsulta_FormaPg2_FormaPg(),
 			new campo_arqConsulta_PTrata(),
 			new campo_arqConsulta_PTrata_PTrata(),
 			new campo_arqConsulta_ValPTrata(),
@@ -1350,8 +1436,11 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ Assessor_Usuario ];
 			$vetAux[] = [ CallCenter_Usuario ];
 			$vetAux[] = [ TMotivo_Descritor ];
-			$vetAux[] = [ FormaPg_FormaPg ];
+			$vetAux[] = [ Cortesia ];
 			$vetAux[] = [ Valor ];
+			$vetAux[] = [ FormaPg_FormaPg ];
+			$vetAux[] = [ Valor2 ];
+			$vetAux[] = [ FormaPg2_FormaPg ];
 			$vetAux[] = [ ValPTrata ];
 			$vetAux[] = [ Saldo ];
 			$vetAux[] = [ DataRet ];
@@ -1367,7 +1456,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( [ [ Clinica ], [ TStCon ], [ TStCon_Chave ], [ TStCon_Descritor ], [ TiAgenda ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ TMotivo ], [ TMotivo_Chave ], [ TMotivo_Descritor ], [ FormaPg ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ], [ TStAgRet ], [ TStAgRet_Chave ], [ TStAgRet_Descritor ], [ AssesRet ] ] );
+		return( [ [ Clinica ], [ TStCon ], [ TStCon_Chave ], [ TStCon_Descritor ], [ TiAgenda ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ TMotivo ], [ TMotivo_Chave ], [ TMotivo_Descritor ], [ FormaPg ], [ FormaPg2 ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ], [ TStAgRet ], [ TStAgRet_Chave ], [ TStAgRet_Descritor ], [ AssesRet ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -1392,8 +1481,11 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ CallCenter_Usuario ];
 			$vetAux[] = [ MedicaAtua ];
 			$vetAux[] = [ TMotivo_Descritor ];
-			$vetAux[] = [ FormaPg_FormaPg ];
+			$vetAux[] = [ Cortesia ];
 			$vetAux[] = [ Valor ];
+			$vetAux[] = [ FormaPg_FormaPg ];
+			$vetAux[] = [ Valor2 ];
+			$vetAux[] = [ FormaPg2_FormaPg ];
 			$vetAux[] = [ PTrata_PTrata ];
 			$vetAux[] = [ ValPTrata ];
 			$vetAux[] = [ EntraFPg_FormaPg ];
