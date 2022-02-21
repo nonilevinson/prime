@@ -79,6 +79,28 @@ function Campo_arqHoraBloq_HoraFim()
 
 var HoraFim = new Campo_arqHoraBloq_HoraFim;
 
+//------------------------------------------------------------
+Campo_arqHoraBloq_Medico.prototype = new Lance_CampoHidden;
+
+function Campo_arqHoraBloq_Medico()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Medico", "Medico", "Medico", "arqUsuario", "a_usuari", null, "",5);
+}
+
+var Medico = new Campo_arqHoraBloq_Medico;
+
+//------------------------------------------------------------
+Campo_arqHoraBloq_Medico_Usuario.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqHoraBloq_Medico_Usuario()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Medico_Usuario", "Medico_Usuario", "Usuario", Medico, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var Medico_Usuario = new Campo_arqHoraBloq_Medico_Usuario;
+
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
@@ -188,7 +210,7 @@ Campo_arqHoraBloq_HoraFim.prototype.TemErro = function()
 		alert( "Final precisa ser posterior a inicial" );
 		return( true );
 	}
-	return( Lance_CampoHora.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -200,6 +222,31 @@ Campo_arqHoraBloq_HoraFim.prototype.Cabecalho = function()
 }
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqHoraBloq_Medico.prototype.FiltroPai = function()
+{
+			return( "" + vijMedico() + "" );
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqHoraBloq_Medico.prototype.Cabecalho = function()
+{
+		return( "Médico" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqHoraBloq_Medico_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Medico.Obrigatorio( p_comMsg ) );
+}
+
+Medico_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqHoraBloq_Clinica.prototype.ExistenciaEspecial = function()
@@ -207,12 +254,23 @@ Campo_arqHoraBloq_Clinica.prototype.ExistenciaEspecial = function()
 	return( ( !Clinica_Clinica.Obrigatorio( false ) || tem(Clinica_Clinica) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqHoraBloq_Medico.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Medico_Usuario.Obrigatorio( false ) || tem(Medico_Usuario) ) );
+}
+
 function IniciarDependencias_arqHoraBloq()
 {
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
+Medico_Usuario.ExistenciasDependentes= [ Medico ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 HoraIni.ErrosDependentes= [ HoraFim ];
+Medico_Usuario.ErrosDependentes= [ Medico ];
 Clinica.CamposChave= [ Clinica_Clinica ];
+Medico.CamposChave= [ Medico_Usuario ];
 }
 
 
@@ -227,10 +285,10 @@ function ListaDeCampos_arqHoraBloq( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, Nome, DataIni, HoraIni, DataFim, HoraFim ]	);
+		[ Clinica, Clinica_Clinica, Nome, DataIni, HoraIni, DataFim, HoraFim, Medico, Medico_Usuario ]	);
 	IniciarDependencias_arqHoraBloq();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -138,6 +138,39 @@ class campo_arqHoraBloq_HoraFim extends Lance_CampoHora
 }
 
 //======================================================
+//	Campo Medico
+//======================================================
+
+class campo_arqHoraBloq_Medico extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Medico", "Medico", "Medico", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Médico" );
+	}
+
+}
+
+//======================================================
+//	Campo Medico_Usuario
+//======================================================
+
+class campo_arqHoraBloq_Medico_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Medico_Usuario", "Medico_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Medico", false );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqHoraBloq
 //======================================================
 function listaCampos_arqHoraBloq( $p_prefixo )
@@ -146,7 +179,7 @@ function listaCampos_arqHoraBloq( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqHoraBloq_Clinica(),
 			new campo_arqHoraBloq_Clinica_Clinica(),
@@ -154,7 +187,9 @@ function listaCampos_arqHoraBloq( $p_prefixo )
 			new campo_arqHoraBloq_DataIni(),
 			new campo_arqHoraBloq_HoraIni(),
 			new campo_arqHoraBloq_DataFim(),
-			new campo_arqHoraBloq_HoraFim() )
+			new campo_arqHoraBloq_HoraFim(),
+			new campo_arqHoraBloq_Medico(),
+			new campo_arqHoraBloq_Medico_Usuario() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -178,7 +213,7 @@ class arqHoraBloq extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ) );
+		return( [  ] );
 	}
 
 	//-------------------------------------------------------------
@@ -187,13 +222,14 @@ class arqHoraBloq extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( DataIni ) );
-			array_push( $vetAux, array( HoraIni ) );
-			array_push( $vetAux, array( DataFim ) );
-			array_push( $vetAux, array( HoraFim ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ DataIni ];
+			$vetAux[] = [ HoraIni ];
+			$vetAux[] = [ DataFim ];
+			$vetAux[] = [ HoraFim ];
+			$vetAux[] = [ Medico_Usuario ];
 		return( $vetAux );
 	}
 
@@ -202,7 +238,7 @@ class arqHoraBloq extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ) ) );
+		return( [ [ Clinica ], [ Medico ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -211,13 +247,14 @@ class arqHoraBloq extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( DataIni ) );
-			array_push( $vetAux, array( HoraIni ) );
-			array_push( $vetAux, array( DataFim ) );
-			array_push( $vetAux, array( HoraFim ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ DataIni ];
+			$vetAux[] = [ HoraIni ];
+			$vetAux[] = [ DataFim ];
+			$vetAux[] = [ HoraFim ];
+			$vetAux[] = [ Medico_Usuario ];
 		return( $vetAux );
 	}
 
@@ -230,4 +267,3 @@ class arqHoraBloq extends Lance_Arquivo
 	}
 
 }
-?>

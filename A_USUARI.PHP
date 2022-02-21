@@ -267,7 +267,7 @@ function listaCampos_arqUsuario( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqUsuario_Usuario(),
 			new campo_arqUsuario_Nome(),
@@ -285,7 +285,7 @@ function listaCampos_arqUsuario( $p_prefixo )
 			new campo_arqUsuario_EmailAces(),
 			new campo_arqUsuario_EmailAcesS(),
 			new campo_arqUsuario_EmailFinan(),
-			new campo_arqUsuario_EmCMediSep() )
+			new campo_arqUsuario_EmCMediSep() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -309,7 +309,7 @@ class arqUsuario extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Usuario) );
+		return( [ Usuario ] );
 	}
 
 	//-------------------------------------------------------------
@@ -318,13 +318,13 @@ class arqUsuario extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Usuario ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Grupo_Grupo ) );
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( PodeAgenda ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Usuario ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Grupo_Grupo ];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ PodeAgenda ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -333,7 +333,7 @@ class arqUsuario extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Grupo ) ) );
+		return( [ [ Grupo ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -342,21 +342,21 @@ class arqUsuario extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Usuario ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Grupo_Grupo ) );
-			array_push( $vetAux, array( Versao ) );
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( CRM ) );
-			array_push( $vetAux, array( PodeAgenda ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( Nascimento ) );
-			array_push( $vetAux, array( Foto ) );
-			array_push( $vetAux, array( EmailAces ) );
-			array_push( $vetAux, array( EmailAcesS ) );
-			array_push( $vetAux, array( EmailFinan ) );
-			array_push( $vetAux, array( EmCMediSep ) );
+		$vetAux = [];
+			$vetAux[] = [ Usuario ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Grupo_Grupo ];
+			$vetAux[] = [ Versao ];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ CRM ];
+			$vetAux[] = [ PodeAgenda ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ Nascimento ];
+			$vetAux[] = [ Foto ];
+			$vetAux[] = [ EmailAces ];
+			$vetAux[] = [ EmailAcesS ];
+			$vetAux[] = [ EmailFinan ];
+			$vetAux[] = [ EmCMediSep ];
 		return( $vetAux );
 	}
 
@@ -385,4 +385,3 @@ class arqUsuario extends Lance_Arquivo
 	}
 
 }
-?>

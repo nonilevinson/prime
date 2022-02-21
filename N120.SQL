@@ -2557,6 +2557,7 @@ CREATE TABLE arqHoraBloq
 	/*  5*/	HORAINI TIME, /* Máscara = Hhmm */
 	/*  6*/	DATAFIM DATE, /* Máscara = 4ano */
 	/*  7*/	HORAFIM TIME, /* Máscara = Hhmm */
+	/*  8*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
 	CONSTRAINT arqHoraBloq_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
@@ -3229,9 +3230,10 @@ RECREATE VIEW V_arqProfissao AS
 commit;
 
 RECREATE VIEW V_arqHoraBloq AS 
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.NOME, A0.DATAINI, A0.HORAINI, A0.DATAFIM, A0.HORAFIM
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.NOME, A0.DATAINI, A0.HORAINI, A0.DATAFIM, A0.HORAFIM, A0.MEDICO, A2.USUARIO as MEDICO_USUARIO
 	FROM arqHoraBloq A0
-	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA;
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join arqUsuario A2 on A2.IDPRIMARIO = A0.MEDICO;
 commit;
 
 RECREATE VIEW V_arqDuracao AS 
@@ -3654,6 +3656,7 @@ ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Lote FOREIGN KEY ( LOTE ) RE
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_QuemAgRet FOREIGN KEY ( QUEMAGRET ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TStAgRet FOREIGN KEY ( TSTAGRET ) REFERENCES tabTStAgRet ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_AssesRet FOREIGN KEY ( ASSESRET ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqHoraBloq ADD CONSTRAINT arqHoraBloq_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 commit;
 
 
@@ -4762,6 +4765,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'HoraIni', OLD.HoraIni, NEW.HoraIni );
 	execute procedure set_log( 12, NEW.idPrimario, 'DataFim', OLD.DataFim, NEW.DataFim );
 	execute procedure set_log( 12, NEW.idPrimario, 'HoraFim', OLD.HoraFim, NEW.HoraFim );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
 end
 end^
 
