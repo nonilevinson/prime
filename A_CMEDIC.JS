@@ -213,7 +213,7 @@ Campo_arqCMedica_Medicamen.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqCMedica_Medicamen.prototype.TrazOutrosDoPai = function()
 {
-	var vetPai = new Array();
+	var vetPai = [];
 			vetPai[0] = [ "Unidade",
 					"A.Medicamen, arqMedicamen.Unidade, arqUnidade",
 					"1" ];
@@ -291,6 +291,16 @@ Campo_arqCMedica_Lote.prototype.PreCampo = function()
 }
 
 //-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqCMedica_Lote.prototype.PodeAlterar = function()
+{
+		if( PodeExecutarOperacao(5) )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_arqCMedica_Lote_Medicamen.prototype.ObrigatorioEspecial = function( p_comMsg )
@@ -318,11 +328,31 @@ Campo_arqCMedica_Lote_Lote.prototype.ObrigatorioEspecial = function( p_comMsg )
 
 Lote_Lote.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqCMedica_DataSepara.prototype.PodeAlterar = function()
+{
+		if( PodeExecutarOperacao(5) )
+		return( true );
+	return( false );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqCMedica_DataSepara.prototype.Existencia = function()
 {
 	return( tem( Lote_Lote ) );
+}
+
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqCMedica_QtdEntreg.prototype.PodeAlterar = function()
+{
+		if( PodeExecutarOperacao(5) )
+		return( true );
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -352,6 +382,16 @@ Campo_arqCMedica_Saldo.prototype.Calculou = function()
 }
 
 Saldo.EhCalculado = true;
+//-------------------------------------------------------------
+// Campo pode ser alterado?
+//-------------------------------------------------------------
+Campo_arqCMedica_ObsEntreg.prototype.PodeAlterar = function()
+{
+		if( PodeExecutarOperacao(5) )
+		return( true );
+	return( false );
+}
+
 //-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
@@ -426,7 +466,7 @@ function ListaDeCampos_arqCMedica( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Consulta, Consulta_Num, Medicamen, Medicamen_Medicamen, UnidadeCal, Qtd, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, DataSepara, QtdEntreg, Saldo, ObsEntreg ]	);

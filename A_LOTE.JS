@@ -341,7 +341,7 @@ function ListaDeCampos_arqLote( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Medicamen, Medicamen_Medicamen, Lote, Clinica, Clinica_Clinica, Fornecedor, Fornecedor_Nome, Fabrica, Validade, TrgItMov, TrgCMedica, Estoque, Ativo ]	);
@@ -354,7 +354,7 @@ g_arquivoCampos = ListaDeCampos_arqLote( '' );
 g_idOperacao = 55;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Itens Mov.","","I",213,"","",1,"","1","a_itemmo","arqItemMov","Folhear","Lote","?","","", "","", 0,10,[],[57]);
-var Menu_2 = new Array( 1,"Entregue","","g",214,"","",1,"","1","a_cmedic","arqCMedica","Folhear","Lote","?","","", "","", 0,10,[],[54]);
+var Menu_1 = [ 1,"Itens Mov.","","I",213,"","",1,"","1","a_itemmo","arqItemMov","Folhear","Lote","?","","", "","", 0,10,[],[57]];
+var Menu_2 = [ 1,"Entregue","","g",214,"","",1,"","1","a_cmedic","arqCMedica","Folhear","Lote","?","","", "","", 0,10,[],[54]];
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }

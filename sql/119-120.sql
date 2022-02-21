@@ -7,6 +7,9 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+insert into arqLanceOperacao values(300005,3,'Pode alterar campos de separação de medicação da consulta - Estoque?','',5,1,0,'');
+commit;
+
 /************************************************************
 	Arquivo HoraBloq  
 ************************************************************/

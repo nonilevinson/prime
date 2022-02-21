@@ -3533,6 +3533,7 @@ insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
 insert into arqLanceOperacao values(300004,3,'Gravação pelo Portal da Agenda','',4,99,1,'');
+insert into arqLanceOperacao values(300005,3,'Pode alterar campos de separação de medicação da consulta - Estoque?','',5,1,0,'');
 
 
 /************************************************************

@@ -36,6 +36,21 @@ class campo_arqCMedica_Consulta_Num extends Lance_CampoNumerico
 	}
 
 	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( !tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET != 3 && ($g_regAtual->CONSULTA_TRGQTDM > 0 && $g_regAtual->CONSULTA_TRGQTDM == $g_regAtual->CONSULTA_TRGQTDMENT) )
+			return( "VerdeFundoDir" );
+		if( tem( $g_regAtual->CONSULTA_DATARET ) && !tem( $g_regAtual->CONSULTA_TSTAGRET ) )
+			return( "StAgendado" );
+		if( tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET == 1 )
+			return( "StRecepcao" );
+		if( tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET == 2 )
+			return( "StAssessor" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
@@ -66,11 +81,11 @@ class campo_arqCMedica_Medicamen extends Lance_CampoLigado
 	function PegaPai()
 	{
 		global $g_regAtual;
-		$vetPai = array();
-			array_push( $vetPai, 
-				array( "Unidade", 
+		$vetPai = [];
+			$vetPai[]=
+				[ "Unidade", 
 					"A.Medicamen, arqMedicamen.Unidade, arqUnidade",
-					"1" ) );
+					"1" ];
 		return( $vetPai );
 	}
 
@@ -281,7 +296,7 @@ function listaCampos_arqCMedica( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqCMedica_Consulta(),
 			new campo_arqCMedica_Consulta_Num(),
@@ -296,7 +311,7 @@ function listaCampos_arqCMedica( $p_prefixo )
 			new campo_arqCMedica_DataSepara(),
 			new campo_arqCMedica_QtdEntreg(),
 			new campo_arqCMedica_Saldo(),
-			new campo_arqCMedica_ObsEntreg() )
+			new campo_arqCMedica_ObsEntreg() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -320,7 +335,7 @@ class arqCMedica extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ) );
+		return( [  ] );
 	}
 
 	//-------------------------------------------------------------
@@ -329,15 +344,15 @@ class arqCMedica extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Consulta_Num ) );
-			array_push( $vetAux, array( Medicamen_Medicamen ) );
-			array_push( $vetAux, array( UnidadeCal ) );
-			array_push( $vetAux, array( Qtd ) );
-			array_push( $vetAux, array( Lote_Medicamen_Medicamen ) );
-			array_push( $vetAux, array( Lote_Lote ) );
-			array_push( $vetAux, array( QtdEntreg ) );
-			array_push( $vetAux, array( Saldo ) );
+		$vetAux = [];
+			$vetAux[] = [ Consulta_Num ];
+			$vetAux[] = [ Medicamen_Medicamen ];
+			$vetAux[] = [ UnidadeCal ];
+			$vetAux[] = [ Qtd ];
+			$vetAux[] = [ Lote_Medicamen_Medicamen ];
+			$vetAux[] = [ Lote_Lote ];
+			$vetAux[] = [ QtdEntreg ];
+			$vetAux[] = [ Saldo ];
 		return( $vetAux );
 	}
 
@@ -346,7 +361,7 @@ class arqCMedica extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Consulta ), array( Medicamen ), array( Lote ) ) );
+		return( [ [ Consulta ], [ Medicamen ], [ Lote ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -355,17 +370,17 @@ class arqCMedica extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Consulta_Num ) );
-			array_push( $vetAux, array( Medicamen_Medicamen ) );
-			array_push( $vetAux, array( UnidadeCal ) );
-			array_push( $vetAux, array( Qtd ) );
-			array_push( $vetAux, array( Lote_Medicamen_Medicamen ) );
-			array_push( $vetAux, array( Lote_Lote ) );
-			array_push( $vetAux, array( DataSepara ) );
-			array_push( $vetAux, array( QtdEntreg ) );
-			array_push( $vetAux, array( Saldo ) );
-			array_push( $vetAux, array( ObsEntreg ) );
+		$vetAux = [];
+			$vetAux[] = [ Consulta_Num ];
+			$vetAux[] = [ Medicamen_Medicamen ];
+			$vetAux[] = [ UnidadeCal ];
+			$vetAux[] = [ Qtd ];
+			$vetAux[] = [ Lote_Medicamen_Medicamen ];
+			$vetAux[] = [ Lote_Lote ];
+			$vetAux[] = [ DataSepara ];
+			$vetAux[] = [ QtdEntreg ];
+			$vetAux[] = [ Saldo ];
+			$vetAux[] = [ ObsEntreg ];
 		return( $vetAux );
 	}
 
@@ -378,4 +393,3 @@ class arqCMedica extends Lance_Arquivo
 	}
 
 }
-?>

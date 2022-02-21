@@ -244,7 +244,7 @@ function listaCampos_arqLote( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqLote_Medicamen(),
 			new campo_arqLote_Medicamen_Medicamen(),
@@ -258,7 +258,7 @@ function listaCampos_arqLote( $p_prefixo )
 			new campo_arqLote_TrgItMov(),
 			new campo_arqLote_TrgCMedica(),
 			new campo_arqLote_Estoque(),
-			new campo_arqLote_Ativo() )
+			new campo_arqLote_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -282,7 +282,7 @@ class arqLote extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Medicamen_Medicamen, Lote) );
+		return( [ Medicamen_Medicamen, Lote ] );
 	}
 
 	//-------------------------------------------------------------
@@ -291,15 +291,15 @@ class arqLote extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Medicamen_Medicamen ) );
-			array_push( $vetAux, array( Lote ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Fornecedor_Nome ) );
-			array_push( $vetAux, array( Fabrica ) );
-			array_push( $vetAux, array( Validade ) );
-			array_push( $vetAux, array( Estoque ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Medicamen_Medicamen ];
+			$vetAux[] = [ Lote ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Fornecedor_Nome ];
+			$vetAux[] = [ Fabrica ];
+			$vetAux[] = [ Validade ];
+			$vetAux[] = [ Estoque ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -308,7 +308,7 @@ class arqLote extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Medicamen ), array( Clinica ), array( Fornecedor ) ) );
+		return( [ [ Medicamen ], [ Clinica ], [ Fornecedor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -317,17 +317,17 @@ class arqLote extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Medicamen_Medicamen ) );
-			array_push( $vetAux, array( Lote ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Fornecedor_Nome ) );
-			array_push( $vetAux, array( Fabrica ) );
-			array_push( $vetAux, array( Validade ) );
-			array_push( $vetAux, array( TrgItMov ) );
-			array_push( $vetAux, array( TrgCMedica ) );
-			array_push( $vetAux, array( Estoque ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Medicamen_Medicamen ];
+			$vetAux[] = [ Lote ];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Fornecedor_Nome ];
+			$vetAux[] = [ Fabrica ];
+			$vetAux[] = [ Validade ];
+			$vetAux[] = [ TrgItMov ];
+			$vetAux[] = [ TrgCMedica ];
+			$vetAux[] = [ Estoque ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -340,4 +340,3 @@ class arqLote extends Lance_Arquivo
 	}
 
 }
-?>
