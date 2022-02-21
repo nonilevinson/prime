@@ -7,6 +7,7 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+insert into arqLanceOperacao values(200249,2,'Rotina para criar aviso de que pode agendar a retirada da medicação','',249,1,0,'');
 insert into arqLanceOperacao values(300005,3,'Pode alterar campos de separação de medicação da consulta - Estoque?','',5,1,0,'');
 commit;
 
@@ -242,4 +243,60 @@ alter HORARET position 51,
 alter TSTAGRET position 52,
 alter ASSESRET position 53,
 alter OBSRET position 54;
+commit;
+
+/************************************************************
+	Arquivo Grupo     
+************************************************************/
+drop trigger arqGrupo_log;
+drop view v_arqGrupo;
+commit;
+
+ALTER TABLE arqGrupo
+add /*  6*/	AVRETIRA campoLogico; /* Lógico: 0=Não 1=Sim */
+commit;
+
+update arqGrupo set AvRetira=0;
+update arqGrupo set AvRetira=1 Where idPrimario = 2;
+commit;
+
+RECREATE VIEW V_arqGrupo AS 
+	SELECT A0.IDPRIMARIO, A0.GRUPO, A0.CALLCENTER, A0.MEDICO, A0.ASSESSOR, A0.AVRETIRA
+	FROM arqGrupo A0;
+commit;
+
+/************************************************************
+	Trigger para Log de arqGrupo
+************************************************************/
+
+set term ^;
+
+recreate trigger arqGrupo_LOG for arqGrupo
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Grupo,'' );
+else
+	valorChave = coalesce( NEW.Grupo,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100004 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Grupo', OLD.Grupo, NEW.Grupo );
+	execute procedure set_log( 12, NEW.idPrimario, 'CallCenter', OLD.CallCenter, NEW.CallCenter );
+	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'AvRetira', OLD.AvRetira, NEW.AvRetira );
+end
+end^
+
+set term ;^
+
 commit;

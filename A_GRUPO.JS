@@ -46,6 +46,17 @@ function Campo_arqGrupo_Assessor()
 
 var Assessor = new Campo_arqGrupo_Assessor;
 
+//------------------------------------------------------------
+Campo_arqGrupo_AvRetira.prototype = new Lance_CampoLogico;
+
+function Campo_arqGrupo_AvRetira()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "AvRetira", "AvRetira", "AvRetira");
+}
+
+var AvRetira = new Campo_arqGrupo_AvRetira;
+
 Grupo.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
@@ -101,6 +112,24 @@ Campo_arqGrupo_Assessor.prototype.Cabecalho = function()
 		return( "Assessor?" );
 }
 
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqGrupo_AvRetira.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqGrupo_AvRetira.prototype.Cabecalho = function()
+{
+		return( "Aviso<br>Retirada?" );
+}
+
 function IniciarDependencias_arqGrupo()
 {
 }
@@ -120,7 +149,7 @@ function ListaDeCampos_arqGrupo( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Grupo, CallCenter, Medico, Assessor ]	);
+		[ Grupo, CallCenter, Medico, Assessor, AvRetira ]	);
 	IniciarDependencias_arqGrupo();
 	g_prefixo = l_prefixo;
 	return( l_lista );

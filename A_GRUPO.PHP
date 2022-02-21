@@ -112,6 +112,35 @@ class campo_arqGrupo_Assessor extends Lance_CampoLogico
 }
 
 //======================================================
+//	Campo AvRetira
+//======================================================
+
+class campo_arqGrupo_AvRetira extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "AvRetira", "AvRetira", "AvRetira", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->AVRETIRA == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Aviso<br>Retirada?" );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqGrupo
 //======================================================
 function listaCampos_arqGrupo( $p_prefixo )
@@ -125,7 +154,8 @@ function listaCampos_arqGrupo( $p_prefixo )
 			new campo_arqGrupo_Grupo(),
 			new campo_arqGrupo_CallCenter(),
 			new campo_arqGrupo_Medico(),
-			new campo_arqGrupo_Assessor() ]
+			new campo_arqGrupo_Assessor(),
+			new campo_arqGrupo_AvRetira() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -163,6 +193,7 @@ class arqGrupo extends Lance_Arquivo
 			$vetAux[] = [ CallCenter ];
 			$vetAux[] = [ Medico ];
 			$vetAux[] = [ Assessor ];
+			$vetAux[] = [ AvRetira ];
 		return( $vetAux );
 	}
 
@@ -177,6 +208,7 @@ class arqGrupo extends Lance_Arquivo
 			$vetAux[] = [ CallCenter ];
 			$vetAux[] = [ Medico ];
 			$vetAux[] = [ Assessor ];
+			$vetAux[] = [ AvRetira ];
 		return( $vetAux );
 	}
 

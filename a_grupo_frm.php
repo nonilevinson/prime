@@ -9,4 +9,8 @@ echo
 		[ "", Medico, " (os usuários deste Grupo poderão ser selecionados como <b>Médico</b> nas consultas?)" ] ),
 	$this->Pedir( "Assessor?",
 		[ "", Assessor, " (os usuários deste Grupo poderão ser selecionados como <b>Assessor</b> nas consultas?)" ] ),
+
+	$this->Pular1Linha(2),
+	$this->Cabecalhos( [ "Avisos Internos", 'FormCab alinhaMeio', '2' ] ),
+	$this->Pedir( "Agendar retirada?", AvRetira ),
 "</table>";

@@ -1717,6 +1717,7 @@ CREATE TABLE arqGrupo
 	/*  3*/	CALLCENTER campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  4*/	MEDICO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  5*/	ASSESSOR campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	AVRETIRA campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqGrupo_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqGrupo_UK UNIQUE ( Grupo )
 );
@@ -3019,7 +3020,7 @@ RECREATE VIEW V_arqCidade AS
 commit;
 
 RECREATE VIEW V_arqGrupo AS 
-	SELECT A0.IDPRIMARIO, A0.GRUPO, A0.CALLCENTER, A0.MEDICO, A0.ASSESSOR
+	SELECT A0.IDPRIMARIO, A0.GRUPO, A0.CALLCENTER, A0.MEDICO, A0.ASSESSOR, A0.AVRETIRA
 	FROM arqGrupo A0;
 commit;
 
@@ -3519,11 +3520,11 @@ insert into arqLanceOperacao values(200176,2,'Rotina para criar Saída de caixa d
 insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa da Recepção','',177,10,0,'');
 insert into arqLanceOperacao values(200180,2,'Rotina para criar Saída de caixa de Assesor','',180,10,0,'');
 insert into arqLanceOperacao values(200181,2,'Rotina para criar Entrada de caixa de Assesor','',181,10,0,'');
-insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
 insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'');
 insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'');
+insert into arqLanceOperacao values(200249,2,'Rotina para criar aviso de que pode agendar a retirada da medicação','',249,1,0,'');
 insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
 insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de estoque','',221,2,0,'');
 insert into arqLanceOperacao values(200223,2,'Relatório analítico de medicação prescrita','',223,50,0,'');
@@ -3533,6 +3534,7 @@ insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação pr
 insert into arqLanceOperacao values(200233,2,'Relatório das agendas de retirada de medicação por quem agendou','',233,50,0,'');
 insert into arqLanceOperacao values(200236,2,'Rotina para dividir uma parcela','',236,10,0,'');
 insert into arqLanceOperacao values(200237,2,'Rotina para criar transferências entre contas','',237,10,0,'');
+insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'GrupoAtualEm()');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -3757,6 +3759,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'CallCenter', OLD.CallCenter, NEW.CallCenter );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
 	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'AvRetira', OLD.AvRetira, NEW.AvRetira );
 end
 end^
 
