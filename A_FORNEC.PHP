@@ -213,15 +213,15 @@ function listaCampos_arqFornecedor( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqFornecedor_Nome(),
 			new campo_arqFornecedor_Apelido(),
 			new campo_arqFornecedor_TPFPJ(),
 			new Lance_CampoCadeia( "TPFPJ_Chave", "TPFPJ_Chave", "Chave", 1, "x", EH_CHAVE, TPFPJ ),
-			new Lance_CampoCadeia( "TPFPJ_Descritor", "TPFPJ_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TPFPJ ) ),
+			new Lance_CampoCadeia( "TPFPJ_Descritor", "TPFPJ_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TPFPJ ) ],
 		listaCampos_domEndereco( "Ende_" ),
-		array( 
+		[ 
 			new campo_arqFornecedor_CNPJ(),
 			new campo_arqFornecedor_InscEstad(),
 			new campo_arqFornecedor_InscMunic(),
@@ -231,7 +231,7 @@ function listaCampos_arqFornecedor( $p_prefixo )
 			new campo_arqFornecedor_Emissao(),
 			new campo_arqFornecedor_Ativo(),
 			new campo_arqFornecedor_Obs(),
-			new campo_arqFornecedor_Desde() )
+			new campo_arqFornecedor_Desde() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -255,7 +255,7 @@ class arqFornecedor extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Nome) );
+		return( [ Nome ] );
 	}
 
 	//-------------------------------------------------------------
@@ -264,10 +264,10 @@ class arqFornecedor extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( TPFPJ_Descritor ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ TPFPJ_Descritor ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -276,7 +276,7 @@ class arqFornecedor extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( TPFPJ ), array( TPFPJ_Chave ), array( TPFPJ_Descritor ) ) );
+		return( [ [ TPFPJ ], [ TPFPJ_Chave ], [ TPFPJ_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -285,30 +285,30 @@ class arqFornecedor extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Apelido ) );
-			array_push( $vetAux, array( TPFPJ_Descritor ) );
-			array_push( $vetAux, array( Ende_CEP ) );
-			array_push( $vetAux, array( Ende_Endereco ) );
-			array_push( $vetAux, array( Ende_Bairro_Bairro ) );
-			array_push( $vetAux, array( Ende_Cidade_UF_Chave ) );
-			array_push( $vetAux, array( Ende_Cidade_Cidade ) );
-			array_push( $vetAux, array( Ende_DDD ) );
-			array_push( $vetAux, array( Ende_Telefone ) );
-			array_push( $vetAux, array( Ende_DDDCelular ) );
-			array_push( $vetAux, array( Ende_Celular ) );
-			array_push( $vetAux, array( Ende_WhatsApp ) );
-			array_push( $vetAux, array( CNPJ ) );
-			array_push( $vetAux, array( InscEstad ) );
-			array_push( $vetAux, array( InscMunic ) );
-			array_push( $vetAux, array( CPF ) );
-			array_push( $vetAux, array( Identidade ) );
-			array_push( $vetAux, array( Orgao ) );
-			array_push( $vetAux, array( Emissao ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( Obs ) );
-			array_push( $vetAux, array( Desde ) );
+		$vetAux = [];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Apelido ];
+			$vetAux[] = [ TPFPJ_Descritor ];
+			$vetAux[] = [ Ende_CEP ];
+			$vetAux[] = [ Ende_Endereco ];
+			$vetAux[] = [ Ende_Bairro_Bairro ];
+			$vetAux[] = [ Ende_Cidade_UF_Chave ];
+			$vetAux[] = [ Ende_Cidade_Cidade ];
+			$vetAux[] = [ Ende_DDD ];
+			$vetAux[] = [ Ende_Telefone ];
+			$vetAux[] = [ Ende_DDDCelular ];
+			$vetAux[] = [ Ende_Celular ];
+			$vetAux[] = [ Ende_WhatsApp ];
+			$vetAux[] = [ CNPJ ];
+			$vetAux[] = [ InscEstad ];
+			$vetAux[] = [ InscMunic ];
+			$vetAux[] = [ CPF ];
+			$vetAux[] = [ Identidade ];
+			$vetAux[] = [ Orgao ];
+			$vetAux[] = [ Emissao ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ Obs ];
+			$vetAux[] = [ Desde ];
 		return( $vetAux );
 	}
 
@@ -321,4 +321,3 @@ class arqFornecedor extends Lance_Arquivo
 	}
 
 }
-?>

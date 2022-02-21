@@ -22,4 +22,3 @@ class tabTDiaSem extends Lance_Tabela
 		parent::__construct( "tabTDiaSem", "t_tdiase", "TDiaSem", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

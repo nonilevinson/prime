@@ -156,7 +156,7 @@ function ListaDeCampos_arqImagemCRM( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, NumImg, Nome, Imagem, Link ]	);

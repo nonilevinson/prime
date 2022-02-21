@@ -125,7 +125,7 @@ function listaCampos_arqImagemCRM( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqImagemCRM_AcaoEmail(),
 			new campo_arqImagemCRM_AcaoEmail_Titulo(),
@@ -134,7 +134,7 @@ function listaCampos_arqImagemCRM( $p_prefixo )
 			new campo_arqImagemCRM_Nome(),
 			new campo_arqImagemCRM_Imagem(),
 			new Lance_CampoCadeia( "Imagem_Arquivo", "Imagem_Arquivo", "Descritor", 0, "", EH_DESCRITOR, Imagem ),
-			new campo_arqImagemCRM_Link() )
+			new campo_arqImagemCRM_Link() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -158,7 +158,7 @@ class arqImagemCRM extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( AcaoEmail_Titulo, AcaoEmail_Versao, NumImg) );
+		return( [ AcaoEmail_Titulo, AcaoEmail_Versao, NumImg ] );
 	}
 
 	//-------------------------------------------------------------
@@ -167,11 +167,11 @@ class arqImagemCRM extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( AcaoEmail_Titulo ) );
-			array_push( $vetAux, array( AcaoEmail_Versao ) );
-			array_push( $vetAux, array( NumImg ) );
-			array_push( $vetAux, array( Nome ) );
+		$vetAux = [];
+			$vetAux[] = [ AcaoEmail_Titulo ];
+			$vetAux[] = [ AcaoEmail_Versao ];
+			$vetAux[] = [ NumImg ];
+			$vetAux[] = [ Nome ];
 		return( $vetAux );
 	}
 
@@ -180,7 +180,7 @@ class arqImagemCRM extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( AcaoEmail ) ) );
+		return( [ [ AcaoEmail ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -189,13 +189,13 @@ class arqImagemCRM extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( AcaoEmail_Titulo ) );
-			array_push( $vetAux, array( AcaoEmail_Versao ) );
-			array_push( $vetAux, array( NumImg ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Imagem ) );
-			array_push( $vetAux, array( Link ) );
+		$vetAux = [];
+			$vetAux[] = [ AcaoEmail_Titulo ];
+			$vetAux[] = [ AcaoEmail_Versao ];
+			$vetAux[] = [ NumImg ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Imagem ];
+			$vetAux[] = [ Link ];
 		return( $vetAux );
 	}
 
@@ -220,4 +220,3 @@ class arqImagemCRM extends Lance_Arquivo
 	}
 
 }
-?>

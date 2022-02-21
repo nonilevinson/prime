@@ -203,7 +203,7 @@ function listaCampos_parGeraPlant( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_parGeraPlant_Clinica(),
 			new campo_parGeraPlant_Clinica_Clinica(),
@@ -217,7 +217,7 @@ function listaCampos_parGeraPlant( $p_prefixo )
 			new campo_parGeraPlant_Qua(),
 			new campo_parGeraPlant_Qui(),
 			new campo_parGeraPlant_Sex(),
-			new campo_parGeraPlant_Sab() )
+			new campo_parGeraPlant_Sab() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -237,4 +237,3 @@ class parGeraPlant extends Lance_Parametro
 	}
 
 }
-?>

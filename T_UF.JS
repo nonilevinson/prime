@@ -11,6 +11,6 @@ g_arquivoAtual = "tabUF";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Cidade","","C",1,"","",1,"","1","a_cidade","arqCidade","Folhear","UF","?","","", "","", 0,6,[],[2]);
+var Menu_1 = [ 1,"Cidade","","C",1,"","",1,"","1","a_cidade","arqCidade","Folhear","UF","?","","", "","", 0,6,[],[2]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

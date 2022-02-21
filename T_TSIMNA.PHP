@@ -22,4 +22,3 @@ class tabTSimNao extends Lance_Tabela
 		parent::__construct( "tabTSimNao", "t_tsimna", "TSimNao", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

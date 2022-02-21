@@ -41,7 +41,7 @@ Campo_arqUsuCli_Clinica_Clinica.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqUsuCli_Clinica_Clinica()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Clinica_Clinica", "Clinica_Clinica", "Clinica", Clinica, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Clinica_Clinica = new Campo_arqUsuCli_Clinica_Clinica;
@@ -122,7 +122,7 @@ function ListaDeCampos_arqUsuCli( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Usuario, Usuario_Usuario, Clinica, Clinica_Clinica ]	);

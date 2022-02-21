@@ -22,4 +22,3 @@ class tabTCor extends Lance_Tabela
 		parent::__construct( "tabTCor", "t_tcor", "TCor", 4, "uuuu", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

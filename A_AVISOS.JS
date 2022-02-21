@@ -346,7 +346,7 @@ function ListaDeCampos_arqAvisos( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Numero, Data, Hora, Quem, Quem_Usuario, Assunto, Prioridade, Prioridade_Chave, Prioridade_Descritor, Texto, IdQuem, AvisoPai, AvisoPai_Numero ]	);
@@ -359,8 +359,8 @@ g_arquivoCampos = ListaDeCampos_arqAvisos( '' );
 g_idOperacao = 14;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Para","","P",31,"","",1,"","1","a_paragr","arqParaGrupo","Folhear","Avisos","?","","", "","", 0,9,[],[15]);
-var Menu_2 = new Array( 1,"Lidos","","L",34,"","",1,"","1","a_lido","arqLido","Folhear","Avisos","?","","", "","", 0,9,[],[16]);
-var Menu_3 = new Array( 1,"Respostas","","R",57,"","",1,"","1","a_avisos","arqAvisos","Folhear","AvisoPai","?","","", "","", 0,9,[],[14]);
+var Menu_1 = [ 1,"Para","","P",31,"","",1,"","1","a_paragr","arqParaGrupo","Folhear","Avisos","?","","", "","", 0,9,[],[15]];
+var Menu_2 = [ 1,"Lidos","","L",34,"","",1,"","1","a_lido","arqLido","Folhear","Avisos","?","","", "","", 0,9,[],[16]];
+var Menu_3 = [ 1,"Respostas","","R",57,"","",1,"","1","a_avisos","arqAvisos","Folhear","AvisoPai","?","","", "","", 0,9,[],[14]];
 parent.navegacao.MenuPrincQtdOpcoes=3;
 }

@@ -67,7 +67,7 @@ function ListaDeCampos_arqProfissao( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Profissao, Ativo ]	);
@@ -80,6 +80,6 @@ g_arquivoCampos = ListaDeCampos_arqProfissao( '' );
 g_idOperacao = 36;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Pessoas","","P",108,"","",1,"","1","a_pessoa","arqPessoa","Folhear","Profissao","?","","", "","", 0,7,[],[7]);
+var Menu_1 = [ 1,"Pessoas","","P",108,"","",1,"","1","a_pessoa","arqPessoa","Folhear","Profissao","?","","", "","", 0,7,[],[7]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

@@ -19,7 +19,7 @@ Campo_parQDoc_DocMod_Documento.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQDoc_DocMod_Documento()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "DocMod_Documento", "DocMod_Documento", "Documento", DocMod, 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "DocMod_Documento", "DocMod_Documento", "Documento", DocMod, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var DocMod_Documento = new Campo_parQDoc_DocMod_Documento;
@@ -41,7 +41,7 @@ Campo_parQDoc_Pessoa_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_parQDoc_Pessoa_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Pessoa_Nome = new Campo_parQDoc_Pessoa_Nome;
@@ -232,7 +232,7 @@ function ListaDeCampos_parQDoc( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ DocMod, DocMod_Documento, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Cad1, Cad2, Cad3, Cad4, Cad5, Txt1, Txt2, Salvar ]	);

@@ -357,7 +357,7 @@ function listaCampos_arqDocMod( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqDocMod_Documento(),
 			new campo_arqDocMod_TArqDoc(),
@@ -389,7 +389,7 @@ function listaCampos_arqDocMod( $p_prefixo )
 			new Lance_CampoCadeia( "TPapel_Descritor", "TPapel_Descritor", "Descritor", 6, "xxxxxx", EH_DESCRITOR, TPapel ),
 			new campo_arqDocMod_TOrienta(),
 			new Lance_CampoCadeia( "TOrienta_Chave", "TOrienta_Chave", "Chave", 1, "x", EH_CHAVE, TOrienta ),
-			new Lance_CampoCadeia( "TOrienta_Descritor", "TOrienta_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TOrienta ) )
+			new Lance_CampoCadeia( "TOrienta_Descritor", "TOrienta_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TOrienta ) ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -413,7 +413,7 @@ class arqDocMod extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Documento) );
+		return( [ Documento ] );
 	}
 
 	//-------------------------------------------------------------
@@ -422,15 +422,15 @@ class arqDocMod extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Documento ) );
-			array_push( $vetAux, array( TArqDoc_Descritor ) );
-			array_push( $vetAux, array( TOrDoc_Descritor ) );
-			array_push( $vetAux, array( Logo ) );
-			array_push( $vetAux, array( Marca ) );
-			array_push( $vetAux, array( Rodape ) );
-			array_push( $vetAux, array( Template_Nome ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Documento ];
+			$vetAux[] = [ TArqDoc_Descritor ];
+			$vetAux[] = [ TOrDoc_Descritor ];
+			$vetAux[] = [ Logo ];
+			$vetAux[] = [ Marca ];
+			$vetAux[] = [ Rodape ];
+			$vetAux[] = [ Template_Nome ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -439,7 +439,7 @@ class arqDocMod extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( TArqDoc ), array( TArqDoc_Chave ), array( TArqDoc_Descritor ), array( TOrDoc ), array( TOrDoc_Chave ), array( TOrDoc_Descritor ), array( Template ) ) );
+		return( [ [ TArqDoc ], [ TArqDoc_Chave ], [ TArqDoc_Descritor ], [ TOrDoc ], [ TOrDoc_Chave ], [ TOrDoc_Descritor ], [ Template ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -448,28 +448,28 @@ class arqDocMod extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Documento ) );
-			array_push( $vetAux, array( TArqDoc_Descritor ) );
-			array_push( $vetAux, array( TOrDoc_Descritor ) );
-			array_push( $vetAux, array( Logo ) );
-			array_push( $vetAux, array( Marca ) );
-			array_push( $vetAux, array( NomeArq ) );
-			array_push( $vetAux, array( Rodape ) );
-			array_push( $vetAux, array( AltRodape ) );
-			array_push( $vetAux, array( Template_Nome ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( Header ) );
-			array_push( $vetAux, array( Arquivo ) );
-			array_push( $vetAux, array( Footer ) );
-			array_push( $vetAux, array( Html ) );
-			array_push( $vetAux, array( Imagem ) );
-			array_push( $vetAux, array( Lista ) );
-			array_push( $vetAux, array( MargemEsq ) );
-			array_push( $vetAux, array( MargemDir ) );
-			array_push( $vetAux, array( MargemTop ) );
-			array_push( $vetAux, array( TPapel_Descritor ) );
-			array_push( $vetAux, array( TOrienta_Descritor ) );
+		$vetAux = [];
+			$vetAux[] = [ Documento ];
+			$vetAux[] = [ TArqDoc_Descritor ];
+			$vetAux[] = [ TOrDoc_Descritor ];
+			$vetAux[] = [ Logo ];
+			$vetAux[] = [ Marca ];
+			$vetAux[] = [ NomeArq ];
+			$vetAux[] = [ Rodape ];
+			$vetAux[] = [ AltRodape ];
+			$vetAux[] = [ Template_Nome ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ Header ];
+			$vetAux[] = [ Arquivo ];
+			$vetAux[] = [ Footer ];
+			$vetAux[] = [ Html ];
+			$vetAux[] = [ Imagem ];
+			$vetAux[] = [ Lista ];
+			$vetAux[] = [ MargemEsq ];
+			$vetAux[] = [ MargemDir ];
+			$vetAux[] = [ MargemTop ];
+			$vetAux[] = [ TPapel_Descritor ];
+			$vetAux[] = [ TOrienta_Descritor ];
 		return( $vetAux );
 	}
 
@@ -482,4 +482,3 @@ class arqDocMod extends Lance_Arquivo
 	}
 
 }
-?>

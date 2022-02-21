@@ -67,7 +67,7 @@ function ListaDeCampos_arqMidia( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Midia, Ativo ]	);
@@ -80,7 +80,7 @@ g_arquivoCampos = ListaDeCampos_arqMidia( '' );
 g_idOperacao = 30;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Clínicas","","C",172,"","",1,"","1","a_climid","arqCliMidia","Folhear","Midia","?","","", "","", 0,8,[],[47]);
-var Menu_2 = new Array( 1,"Pessoas","","P",127,"","",1,"","1","a_pessoa","arqPessoa","Folhear","Midia","?","","", "","", 0,8,[],[7]);
+var Menu_1 = [ 1,"Clínicas","","C",172,"","",1,"","1","a_climid","arqCliMidia","Folhear","Midia","?","","", "","", 0,8,[],[47]];
+var Menu_2 = [ 1,"Pessoas","","P",127,"","",1,"","1","a_pessoa","arqPessoa","Folhear","Midia","?","","", "","", 0,8,[],[7]];
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }

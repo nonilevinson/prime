@@ -173,7 +173,7 @@ function listaCampos_arqDuracao( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqDuracao_Clinica(),
 			new campo_arqDuracao_Clinica_Clinica(),
@@ -182,7 +182,7 @@ function listaCampos_arqDuracao( $p_prefixo )
 			new campo_arqDuracao_HoraFim(),
 			new campo_arqDuracao_ConsSab(),
 			new campo_arqDuracao_ConsDom(),
-			new campo_arqDuracao_Duracao() )
+			new campo_arqDuracao_Duracao() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -206,7 +206,7 @@ class arqDuracao extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ) );
+		return( [  ] );
 	}
 
 	//-------------------------------------------------------------
@@ -215,14 +215,14 @@ class arqDuracao extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Inicio ) );
-			array_push( $vetAux, array( HoraIni ) );
-			array_push( $vetAux, array( HoraFim ) );
-			array_push( $vetAux, array( ConsSab ) );
-			array_push( $vetAux, array( ConsDom ) );
-			array_push( $vetAux, array( Duracao ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Inicio ];
+			$vetAux[] = [ HoraIni ];
+			$vetAux[] = [ HoraFim ];
+			$vetAux[] = [ ConsSab ];
+			$vetAux[] = [ ConsDom ];
+			$vetAux[] = [ Duracao ];
 		return( $vetAux );
 	}
 
@@ -231,7 +231,7 @@ class arqDuracao extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ) ) );
+		return( [ [ Clinica ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -240,14 +240,14 @@ class arqDuracao extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Inicio ) );
-			array_push( $vetAux, array( HoraIni ) );
-			array_push( $vetAux, array( HoraFim ) );
-			array_push( $vetAux, array( ConsSab ) );
-			array_push( $vetAux, array( ConsDom ) );
-			array_push( $vetAux, array( Duracao ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Inicio ];
+			$vetAux[] = [ HoraIni ];
+			$vetAux[] = [ HoraFim ];
+			$vetAux[] = [ ConsSab ];
+			$vetAux[] = [ ConsDom ];
+			$vetAux[] = [ Duracao ];
 		return( $vetAux );
 	}
 
@@ -260,4 +260,3 @@ class arqDuracao extends Lance_Arquivo
 	}
 
 }
-?>

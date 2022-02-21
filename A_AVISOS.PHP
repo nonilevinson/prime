@@ -184,7 +184,7 @@ function listaCampos_arqAvisos( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqAvisos_Numero(),
 			new campo_arqAvisos_Data(),
@@ -198,7 +198,7 @@ function listaCampos_arqAvisos( $p_prefixo )
 			new campo_arqAvisos_Texto(),
 			new campo_arqAvisos_IdQuem(),
 			new campo_arqAvisos_AvisoPai(),
-			new campo_arqAvisos_AvisoPai_Numero() )
+			new campo_arqAvisos_AvisoPai_Numero() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -222,7 +222,7 @@ class arqAvisos extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Numero) );
+		return( [ Numero ] );
 	}
 
 	//-------------------------------------------------------------
@@ -231,13 +231,13 @@ class arqAvisos extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Numero ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Hora ) );
-			array_push( $vetAux, array( Quem_Usuario ) );
-			array_push( $vetAux, array( Assunto ) );
-			array_push( $vetAux, array( Prioridade_Descritor ) );
+		$vetAux = [];
+			$vetAux[] = [ Numero ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Hora ];
+			$vetAux[] = [ Quem_Usuario ];
+			$vetAux[] = [ Assunto ];
+			$vetAux[] = [ Prioridade_Descritor ];
 		return( $vetAux );
 	}
 
@@ -246,7 +246,7 @@ class arqAvisos extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Quem ), array( Prioridade ), array( Prioridade_Chave ), array( Prioridade_Descritor ), array( IdQuem ) ) );
+		return( [ [ Quem ], [ Prioridade ], [ Prioridade_Chave ], [ Prioridade_Descritor ], [ IdQuem ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -255,16 +255,16 @@ class arqAvisos extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Numero ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Hora ) );
-			array_push( $vetAux, array( Quem_Usuario ) );
-			array_push( $vetAux, array( Assunto ) );
-			array_push( $vetAux, array( Prioridade_Descritor ) );
-			array_push( $vetAux, array( Texto ) );
-			array_push( $vetAux, array( IdQuem ) );
-			array_push( $vetAux, array( AvisoPai_Numero ) );
+		$vetAux = [];
+			$vetAux[] = [ Numero ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Hora ];
+			$vetAux[] = [ Quem_Usuario ];
+			$vetAux[] = [ Assunto ];
+			$vetAux[] = [ Prioridade_Descritor ];
+			$vetAux[] = [ Texto ];
+			$vetAux[] = [ IdQuem ];
+			$vetAux[] = [ AvisoPai_Numero ];
 		return( $vetAux );
 	}
 
@@ -305,4 +305,3 @@ class arqAvisos extends Lance_Arquivo
 	}
 
 }
-?>

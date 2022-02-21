@@ -429,7 +429,7 @@ function listaCampos_arqLogEmail( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqLogEmail_Titulo(),
 			new campo_arqLogEmail_Titulo_Titulo(),
@@ -451,7 +451,7 @@ function listaCampos_arqLogEmail( $p_prefixo )
 			new campo_arqLogEmail_Opcao(),
 			new campo_arqLogEmail_Cliente(),
 			new campo_arqLogEmail_Cliente_Nome(),
-			new campo_arqLogEmail_Cliente_NumCelular() )
+			new campo_arqLogEmail_Cliente_NumCelular() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -475,7 +475,7 @@ class arqLogEmail extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Titulo_Titulo, Titulo_Versao, Data, Hora) );
+		return( [ Titulo_Titulo, Titulo_Versao, Data, Hora ] );
 	}
 
 	//-------------------------------------------------------------
@@ -484,27 +484,27 @@ class arqLogEmail extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Titulo_Titulo ) );
-			array_push( $vetAux, array( Titulo_Versao ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Hora ) );
-			array_push( $vetAux, array( Usuario_Usuario ) );
-			array_push( $vetAux, array( Enviados ) );
-			array_push( $vetAux, array( NEnviados ) );
-			array_push( $vetAux, array( Total ) );
-			array_push( $vetAux, array( Lidos ) );
-			array_push( $vetAux, array( PercLidos ) );
-			array_push( $vetAux, array( HoraIni ) );
-			array_push( $vetAux, array( HoraFim ) );
-			array_push( $vetAux, array( HoraReenv ) );
+		$vetAux = [];
+			$vetAux[] = [ Titulo_Titulo ];
+			$vetAux[] = [ Titulo_Versao ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Hora ];
+			$vetAux[] = [ Usuario_Usuario ];
+			$vetAux[] = [ Enviados ];
+			$vetAux[] = [ NEnviados ];
+			$vetAux[] = [ Total ];
+			$vetAux[] = [ Lidos ];
+			$vetAux[] = [ PercLidos ];
+			$vetAux[] = [ HoraIni ];
+			$vetAux[] = [ HoraFim ];
+			$vetAux[] = [ HoraReenv ];
 		if( GrupoAtualEm() )
  {
-			array_push( $vetAux, array( Enviou ) );
+			$vetAux[] = [ Enviou ];
  }
 		if( GrupoAtualEm() )
  {
-			array_push( $vetAux, array( Opcao ) );
+			$vetAux[] = [ Opcao ];
  }
 		return( $vetAux );
 	}
@@ -514,7 +514,7 @@ class arqLogEmail extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Titulo ), array( Usuario ) ) );
+		return( [ [ Titulo ], [ Usuario ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -523,25 +523,25 @@ class arqLogEmail extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Titulo_Titulo ) );
-			array_push( $vetAux, array( Titulo_Versao ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Hora ) );
-			array_push( $vetAux, array( Usuario_Usuario ) );
-			array_push( $vetAux, array( Enviados ) );
-			array_push( $vetAux, array( NEnviados ) );
-			array_push( $vetAux, array( Total ) );
-			array_push( $vetAux, array( Lidos ) );
-			array_push( $vetAux, array( PercLidos ) );
-			array_push( $vetAux, array( EmailRemet ) );
-			array_push( $vetAux, array( HoraIni ) );
-			array_push( $vetAux, array( HoraFim ) );
-			array_push( $vetAux, array( HoraReenv ) );
-			array_push( $vetAux, array( Enviou ) );
-			array_push( $vetAux, array( Opcao ) );
-			array_push( $vetAux, array( Cliente_Nome ) );
-			array_push( $vetAux, array( Cliente_NumCelular ) );
+		$vetAux = [];
+			$vetAux[] = [ Titulo_Titulo ];
+			$vetAux[] = [ Titulo_Versao ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Hora ];
+			$vetAux[] = [ Usuario_Usuario ];
+			$vetAux[] = [ Enviados ];
+			$vetAux[] = [ NEnviados ];
+			$vetAux[] = [ Total ];
+			$vetAux[] = [ Lidos ];
+			$vetAux[] = [ PercLidos ];
+			$vetAux[] = [ EmailRemet ];
+			$vetAux[] = [ HoraIni ];
+			$vetAux[] = [ HoraFim ];
+			$vetAux[] = [ HoraReenv ];
+			$vetAux[] = [ Enviou ];
+			$vetAux[] = [ Opcao ];
+			$vetAux[] = [ Cliente_Nome ];
+			$vetAux[] = [ Cliente_NumCelular ];
 		return( $vetAux );
 	}
 
@@ -574,4 +574,3 @@ class arqLogEmail extends Lance_Arquivo
 	}
 
 }
-?>

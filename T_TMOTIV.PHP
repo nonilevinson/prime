@@ -22,4 +22,3 @@ class tabTMotivo extends Lance_Tabela
 		parent::__construct( "tabTMotivo", "t_tmotiv", "TMotivo", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

@@ -669,7 +669,7 @@ function ListaDeCampos_cnfXConfig( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ CPF, LogAcesso, LogAcessoS, Qtd, Qtd2, Empresa ], 

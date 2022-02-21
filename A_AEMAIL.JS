@@ -74,7 +74,7 @@ Campo_arqAcaoEmail_Template_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqAcaoEmail_Template_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Template_Nome", "Template_Nome", "Nome", Template, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Template_Nome", "Template_Nome", "Nome", Template, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Template_Nome = new Campo_arqAcaoEmail_Template_Nome;
@@ -352,7 +352,7 @@ function ListaDeCampos_arqAcaoEmail( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Titulo, Versao, TipoAcao, TipoAcao_Chave, TipoAcao_Descritor, Template, Template_Nome, PadraoAcao, PadraoAcao_Chave, PadraoAcao_Descritor, Ativo, Arquivo, Html, Imagem, Link, ImagemAlt, QtdTeste ]	);
@@ -365,9 +365,9 @@ g_arquivoCampos = ListaDeCampos_arqAcaoEmail( '' );
 g_idOperacao = 10;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Emails enviados","","m",22,"","",1,"","1","a_logema","arqLogEmail","Folhear","Titulo","?","","", "","", 0,15,[],[12]);
-var Menu_2 = new Array( 1,"Imagens","","I",21,"","",1,"","1","a_imgcrm","arqImagemCRM","Folhear","AcaoEmail","?","","", "","", 0,15,[],[11]);
-var Menu_3 = new Array( 1,"Envio de teste","","E",19,"","",1,"QtdTeste < 10","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^m_envio_teste^^^^^^^^^^^^^^^^^^", "", 0,15,[19],[]);
-var Menu_4 = new Array( 1,"Visualizar","","V",20,"","",1,"","5","m_visualizar_acao","","","","","","", "","", 0,15,[20],[]);
+var Menu_1 = [ 1,"Emails enviados","","m",22,"","",1,"","1","a_logema","arqLogEmail","Folhear","Titulo","?","","", "","", 0,15,[],[12]];
+var Menu_2 = [ 1,"Imagens","","I",21,"","",1,"","1","a_imgcrm","arqImagemCRM","Folhear","AcaoEmail","?","","", "","", 0,15,[],[11]];
+var Menu_3 = [ 1,"Envio de teste","","E",19,"","",1,"QtdTeste < 10","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^m_envio_teste^^^^^^^^^^^^^^^^^^", "", 0,15,[19],[]];
+var Menu_4 = [ 1,"Visualizar","","V",20,"","",1,"","5","m_visualizar_acao","","","","","","", "","", 0,15,[20],[]];
 parent.navegacao.MenuPrincQtdOpcoes=4;
 }

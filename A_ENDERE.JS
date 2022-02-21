@@ -263,7 +263,7 @@ function ListaDeCampos_domEndereco( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ eval( this.Prefixo + 'CEP' ), eval( this.Prefixo + 'Endereco' ), eval( this.Prefixo + 'Bairro' ), eval( this.Prefixo + 'Bairro_Bairro' ), eval( this.Prefixo + 'Cidade' ), eval( this.Prefixo + 'Cidade_UF' ), eval( this.Prefixo + 'Cidade_UF_Chave' ), eval( this.Prefixo + 'Cidade_UF_Descritor' ), eval( this.Prefixo + 'Cidade_Cidade' ), eval( this.Prefixo + 'DDD' ), eval( this.Prefixo + 'Telefone' ), eval( this.Prefixo + 'DDDCelular' ), eval( this.Prefixo + 'Celular' ), eval( this.Prefixo + 'WhatsApp' ) ]	);

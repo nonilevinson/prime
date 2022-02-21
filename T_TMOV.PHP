@@ -22,4 +22,3 @@ class tabTMov extends Lance_Tabela
 		parent::__construct( "tabTMov", "t_tmov", "TMov", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

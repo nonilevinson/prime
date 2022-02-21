@@ -11,6 +11,6 @@ g_arquivoAtual = "tabEstCivil";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Pessoa","","P",14,"","",1,"","1","a_pessoa","arqPessoa","Folhear","EstCivil","?","","", "","", 0,6,[],[7]);
+var Menu_1 = [ 1,"Pessoa","","P",14,"","",1,"","1","a_pessoa","arqPessoa","Folhear","EstCivil","?","","", "","", 0,6,[],[7]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

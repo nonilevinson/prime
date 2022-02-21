@@ -85,7 +85,7 @@ Campo_arqItLogEmail_Cliente_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqItLogEmail_Cliente_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Cliente_Nome", "Cliente_Nome", "Nome", Cliente, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Cliente_Nome", "Cliente_Nome", "Nome", Cliente, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Cliente_Nome = new Campo_arqItLogEmail_Cliente_Nome;
@@ -326,7 +326,7 @@ function ListaDeCampos_arqItLogEmail( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ LogEmail, LogEmail_Titulo, LogEmail_Titulo_Titulo, LogEmail_Titulo_Versao, LogEmail_Data, LogEmail_Hora, Cliente, Cliente_Nome, Cliente_NumCelular, Email, Enviado, Lido, LinkEmp, LinkKm ]	);

@@ -59,11 +59,11 @@ function listaCampos_cnfConfig( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_cnfConfig_Email(),
 			new campo_cnfConfig_Aviso(),
-			new campo_cnfConfig_DocMod() )
+			new campo_cnfConfig_DocMod() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -84,4 +84,3 @@ class cnfConfig extends Lance_Configuracao
 	}
 
 }
-?>

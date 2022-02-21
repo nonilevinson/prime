@@ -114,7 +114,7 @@ function ListaDeCampos_arqPlano( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ CodPlano, Plano, TPgRec, TPgRec_Chave, TPgRec_Descritor ]	);
@@ -127,6 +127,6 @@ g_arquivoCampos = ListaDeCampos_arqPlano( '' );
 g_idOperacao = 27;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"SubPlanos","","S",85,"","",1,"","1","a_subpla","arqSubPlano","Folhear","Plano","?","","", "","", 0,9,[],[28]);
+var Menu_1 = [ 1,"SubPlanos","","S",85,"","",1,"","1","a_subpla","arqSubPlano","Folhear","Plano","?","","", "","", 0,9,[],[28]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

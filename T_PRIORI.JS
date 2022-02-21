@@ -11,6 +11,6 @@ g_arquivoAtual = "tabPrioridade";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Avisos","","A",30,"","",1,"","1","a_avisos","arqAvisos","Folhear","Prioridade","?","","", "","", 0,6,[],[14]);
+var Menu_1 = [ 1,"Avisos","","A",30,"","",1,"","1","a_avisos","arqAvisos","Folhear","Prioridade","?","","", "","", 0,6,[],[14]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

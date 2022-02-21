@@ -41,7 +41,7 @@ Campo_arqParaGrupo_Grupo_Grupo.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqParaGrupo_Grupo_Grupo()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Grupo_Grupo", "Grupo_Grupo", "Grupo", Grupo, 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Grupo_Grupo", "Grupo_Grupo", "Grupo", Grupo, 50, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Grupo_Grupo = new Campo_arqParaGrupo_Grupo_Grupo;
@@ -183,7 +183,7 @@ function ListaDeCampos_arqParaGrupo( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Avisos, Avisos_Numero, Grupo, Grupo_Grupo, Usuario, Usuario_Usuario ]	);

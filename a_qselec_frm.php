@@ -366,5 +366,19 @@ if( $op == 233 ) //* r_consulta_retirada_agendou
 	$this->Pedir( "Call Center", CallCenter );
 }
 
+if( $op == 246 ) //* seleção arqLote
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Medicamento", Medicamen ),
+	$this->Pedir( "Validade entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pedir( "Fabricação entre",
+		[ "", DataIni1,
+		[ brHtml(1) . "e ", DataFim1 ] ] ),
+	$this->Pedir( "Fornecedor" );
+}
+
 //==================================================================================
 echo 	"</table>";

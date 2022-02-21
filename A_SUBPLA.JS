@@ -126,7 +126,7 @@ function ListaDeCampos_arqSubPlano( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Plano, Plano_CodPlano, Plano_Plano, Codigo, Nome ]	);
@@ -139,7 +139,7 @@ g_arquivoCampos = ListaDeCampos_arqSubPlano( '' );
 g_idOperacao = 28;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Parcelas","","P",102,"","",1,"","1","a_parcel","arqParcela","Folhear","SubPlano","?","","", "","", 0,11,[],[34]);
-var Menu_2 = new Array( 1,"Recorrentes","","R",159,"","",1,"","1","a_recor","arqRecorrente","Folhear","SubPlano","?","","", "","", 0,11,[],[46]);
+var Menu_1 = [ 1,"Parcelas","","P",102,"","",1,"","1","a_parcel","arqParcela","Folhear","SubPlano","?","","", "","", 0,11,[],[34]];
+var Menu_2 = [ 1,"Recorrentes","","R",159,"","",1,"","1","a_recor","arqRecorrente","Folhear","SubPlano","?","","", "","", 0,11,[],[46]];
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }

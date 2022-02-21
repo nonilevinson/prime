@@ -59,11 +59,11 @@ class campo_arqLido_Usuario extends Lance_CampoLigado
 	function PegaPai()
 	{
 		global $g_regAtual;
-		$vetPai = array();
-			array_push( $vetPai, 
-				array( "Grupo", 
+		$vetPai = [];
+			$vetPai[]=
+				[ "Grupo", 
 					"A.Usuario, arqUsuario.Grupo, arqGrupo",
-					"1" ) );
+					"1" ];
 		return( $vetPai );
 	}
 
@@ -131,14 +131,14 @@ function listaCampos_arqLido( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqLido_Avisos(),
 			new campo_arqLido_Avisos_Numero(),
 			new campo_arqLido_Usuario(),
 			new campo_arqLido_Usuario_Usuario(),
 			new campo_arqLido_Grupo(),
-			new campo_arqLido_Data() )
+			new campo_arqLido_Data() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -162,7 +162,7 @@ class arqLido extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Avisos_Numero, Usuario_Usuario) );
+		return( [ Avisos_Numero, Usuario_Usuario ] );
 	}
 
 	//-------------------------------------------------------------
@@ -171,11 +171,11 @@ class arqLido extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Avisos_Numero ) );
-			array_push( $vetAux, array( Usuario_Usuario ) );
-			array_push( $vetAux, array( Grupo ) );
-			array_push( $vetAux, array( Data ) );
+		$vetAux = [];
+			$vetAux[] = [ Avisos_Numero ];
+			$vetAux[] = [ Usuario_Usuario ];
+			$vetAux[] = [ Grupo ];
+			$vetAux[] = [ Data ];
 		return( $vetAux );
 	}
 
@@ -184,7 +184,7 @@ class arqLido extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Avisos ), array( Usuario ) ) );
+		return( [ [ Avisos ], [ Usuario ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -193,11 +193,11 @@ class arqLido extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Avisos_Numero ) );
-			array_push( $vetAux, array( Usuario_Usuario ) );
-			array_push( $vetAux, array( Grupo ) );
-			array_push( $vetAux, array( Data ) );
+		$vetAux = [];
+			$vetAux[] = [ Avisos_Numero ];
+			$vetAux[] = [ Usuario_Usuario ];
+			$vetAux[] = [ Grupo ];
+			$vetAux[] = [ Data ];
 		return( $vetAux );
 	}
 
@@ -210,4 +210,3 @@ class arqLido extends Lance_Arquivo
 	}
 
 }
-?>

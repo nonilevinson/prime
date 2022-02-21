@@ -99,13 +99,13 @@ function listaCampos_arqSubPlano( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqSubPlano_Plano(),
 			new campo_arqSubPlano_Plano_CodPlano(),
 			new campo_arqSubPlano_Plano_Plano(),
 			new campo_arqSubPlano_Codigo(),
-			new campo_arqSubPlano_Nome() )
+			new campo_arqSubPlano_Nome() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -129,7 +129,7 @@ class arqSubPlano extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Plano_CodPlano, Codigo) );
+		return( [ Plano_CodPlano, Codigo ] );
 	}
 
 	//-------------------------------------------------------------
@@ -138,11 +138,11 @@ class arqSubPlano extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Plano_CodPlano ) );
-			array_push( $vetAux, array( Plano_Plano ) );
-			array_push( $vetAux, array( Codigo ) );
-			array_push( $vetAux, array( Nome ) );
+		$vetAux = [];
+			$vetAux[] = [ Plano_CodPlano ];
+			$vetAux[] = [ Plano_Plano ];
+			$vetAux[] = [ Codigo ];
+			$vetAux[] = [ Nome ];
 		return( $vetAux );
 	}
 
@@ -151,7 +151,7 @@ class arqSubPlano extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Plano ) ) );
+		return( [ [ Plano ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -160,11 +160,11 @@ class arqSubPlano extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Plano_CodPlano ) );
-			array_push( $vetAux, array( Plano_Plano ) );
-			array_push( $vetAux, array( Codigo ) );
-			array_push( $vetAux, array( Nome ) );
+		$vetAux = [];
+			$vetAux[] = [ Plano_CodPlano ];
+			$vetAux[] = [ Plano_Plano ];
+			$vetAux[] = [ Codigo ];
+			$vetAux[] = [ Nome ];
 		return( $vetAux );
 	}
 
@@ -177,4 +177,3 @@ class arqSubPlano extends Lance_Arquivo
 	}
 
 }
-?>

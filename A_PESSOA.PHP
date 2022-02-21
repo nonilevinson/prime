@@ -376,14 +376,14 @@ function listaCampos_arqPessoa( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqPessoa_Nome(),
 			new campo_arqPessoa_Apelido(),
 			new campo_arqPessoa_NumCelular(),
-			new campo_arqPessoa_Prontuario() ),
+			new campo_arqPessoa_Prontuario() ],
 		listaCampos_domEndereco( "Ende_" ),
-		array( 
+		[ 
 			new campo_arqPessoa_Nascimento(),
 			new campo_arqPessoa_Idade(),
 			new campo_arqPessoa_Sexo(),
@@ -405,7 +405,7 @@ function listaCampos_arqPessoa( $p_prefixo )
 			new campo_arqPessoa_Desde(),
 			new campo_arqPessoa_QtoDesmar(),
 			new campo_arqPessoa_Midia(),
-			new campo_arqPessoa_Midia_Midia() )
+			new campo_arqPessoa_Midia_Midia() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -429,7 +429,7 @@ class arqPessoa extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Nome, NumCelular) );
+		return( [ Nome, NumCelular ] );
 	}
 
 	//-------------------------------------------------------------
@@ -438,17 +438,17 @@ class arqPessoa extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( NumCelular ) );
+		$vetAux = [];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ NumCelular ];
 		if( ultimaLigOpcaoEm( 15,135 ) )
  {
-			array_push( $vetAux, array( Prontuario ) );
+			$vetAux[] = [ Prontuario ];
  }
-			array_push( $vetAux, array( Ativo ) );
+			$vetAux[] = [ Ativo ];
 		if( ultimaLigOpcaoEm( 15,135 ) )
  {
-			array_push( $vetAux, array( QtoDesmar ) );
+			$vetAux[] = [ QtoDesmar ];
  }
 		return( $vetAux );
 	}
@@ -459,37 +459,37 @@ class arqPessoa extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Apelido ) );
-			array_push( $vetAux, array( NumCelular ) );
-			array_push( $vetAux, array( Prontuario ) );
-			array_push( $vetAux, array( Ende_CEP ) );
-			array_push( $vetAux, array( Ende_Endereco ) );
-			array_push( $vetAux, array( Ende_Bairro_Bairro ) );
-			array_push( $vetAux, array( Ende_Cidade_UF_Chave ) );
-			array_push( $vetAux, array( Ende_Cidade_Cidade ) );
-			array_push( $vetAux, array( Ende_DDD ) );
-			array_push( $vetAux, array( Ende_Telefone ) );
-			array_push( $vetAux, array( Ende_DDDCelular ) );
-			array_push( $vetAux, array( Ende_Celular ) );
-			array_push( $vetAux, array( Ende_WhatsApp ) );
-			array_push( $vetAux, array( Nascimento ) );
-			array_push( $vetAux, array( Idade ) );
-			array_push( $vetAux, array( Sexo_Descritor ) );
-			array_push( $vetAux, array( EstCivil_Descritor ) );
-			array_push( $vetAux, array( Profissao_Profissao ) );
-			array_push( $vetAux, array( CPF ) );
-			array_push( $vetAux, array( Identidade ) );
-			array_push( $vetAux, array( Orgao ) );
-			array_push( $vetAux, array( Emissao ) );
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( RecEmail ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( Obs ) );
-			array_push( $vetAux, array( Desde ) );
-			array_push( $vetAux, array( QtoDesmar ) );
-			array_push( $vetAux, array( Midia_Midia ) );
+		$vetAux = [];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Apelido ];
+			$vetAux[] = [ NumCelular ];
+			$vetAux[] = [ Prontuario ];
+			$vetAux[] = [ Ende_CEP ];
+			$vetAux[] = [ Ende_Endereco ];
+			$vetAux[] = [ Ende_Bairro_Bairro ];
+			$vetAux[] = [ Ende_Cidade_UF_Chave ];
+			$vetAux[] = [ Ende_Cidade_Cidade ];
+			$vetAux[] = [ Ende_DDD ];
+			$vetAux[] = [ Ende_Telefone ];
+			$vetAux[] = [ Ende_DDDCelular ];
+			$vetAux[] = [ Ende_Celular ];
+			$vetAux[] = [ Ende_WhatsApp ];
+			$vetAux[] = [ Nascimento ];
+			$vetAux[] = [ Idade ];
+			$vetAux[] = [ Sexo_Descritor ];
+			$vetAux[] = [ EstCivil_Descritor ];
+			$vetAux[] = [ Profissao_Profissao ];
+			$vetAux[] = [ CPF ];
+			$vetAux[] = [ Identidade ];
+			$vetAux[] = [ Orgao ];
+			$vetAux[] = [ Emissao ];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ RecEmail ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ Obs ];
+			$vetAux[] = [ Desde ];
+			$vetAux[] = [ QtoDesmar ];
+			$vetAux[] = [ Midia_Midia ];
 		return( $vetAux );
 	}
 
@@ -502,4 +502,3 @@ class arqPessoa extends Lance_Arquivo
 	}
 
 }
-?>

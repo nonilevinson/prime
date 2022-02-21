@@ -112,14 +112,14 @@ function listaCampos_arqParaGrupo( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqParaGrupo_Avisos(),
 			new campo_arqParaGrupo_Avisos_Numero(),
 			new campo_arqParaGrupo_Grupo(),
 			new campo_arqParaGrupo_Grupo_Grupo(),
 			new campo_arqParaGrupo_Usuario(),
-			new campo_arqParaGrupo_Usuario_Usuario() )
+			new campo_arqParaGrupo_Usuario_Usuario() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -143,7 +143,7 @@ class arqParaGrupo extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Avisos_Numero, Grupo_Grupo, Usuario_Usuario) );
+		return( [ Avisos_Numero, Grupo_Grupo, Usuario_Usuario ] );
 	}
 
 	//-------------------------------------------------------------
@@ -152,10 +152,10 @@ class arqParaGrupo extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Avisos_Numero ) );
-			array_push( $vetAux, array( Grupo_Grupo ) );
-			array_push( $vetAux, array( Usuario_Usuario ) );
+		$vetAux = [];
+			$vetAux[] = [ Avisos_Numero ];
+			$vetAux[] = [ Grupo_Grupo ];
+			$vetAux[] = [ Usuario_Usuario ];
 		return( $vetAux );
 	}
 
@@ -164,7 +164,7 @@ class arqParaGrupo extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Avisos ), array( Grupo ), array( Usuario ) ) );
+		return( [ [ Avisos ], [ Grupo ], [ Usuario ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -173,10 +173,10 @@ class arqParaGrupo extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Avisos_Numero ) );
-			array_push( $vetAux, array( Grupo_Grupo ) );
-			array_push( $vetAux, array( Usuario_Usuario ) );
+		$vetAux = [];
+			$vetAux[] = [ Avisos_Numero ];
+			$vetAux[] = [ Grupo_Grupo ];
+			$vetAux[] = [ Usuario_Usuario ];
 		return( $vetAux );
 	}
 
@@ -201,4 +201,3 @@ class arqParaGrupo extends Lance_Arquivo
 	}
 
 }
-?>

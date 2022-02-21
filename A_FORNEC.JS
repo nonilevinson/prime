@@ -289,7 +289,7 @@ function ListaDeCampos_arqFornecedor( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Nome, Apelido, TPFPJ, TPFPJ_Chave, TPFPJ_Descritor ], 
@@ -304,10 +304,10 @@ g_arquivoCampos = ListaDeCampos_arqFornecedor( '' );
 g_idOperacao = 42;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Contatos","","C",143,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Fornecedor","?","","", "","", 0,11,[],[21]);
-var Menu_2 = new Array( 1,"Contas","","t",144,"","",1,"","1","a_conta","arqConta","Folhear","Fornecedor","?","","", "","", 0,11,[],[33]);
-var Menu_3 = new Array( 1,"Recorrentes","","R",154,"","",1,"","1","a_recor","arqRecorrente","Folhear","Fornecedor","?","","", "","", 0,11,[],[46]);
-var Menu_4 = new Array( 1,"Mov.Estoque","","q",219,"","",1,"","1","a_movest","arqMovEstoque","Folhear","Fornecedor","?","","", "","", 0,11,[],[56]);
-var Menu_5 = new Array( 1,"Lotes","","L",222,"","",1,"","1","a_lote","arqLote","Folhear","Fornecedor","?","","", "","", 0,11,[],[55]);
+var Menu_1 = [ 1,"Contatos","","C",143,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Fornecedor","?","","", "","", 0,11,[],[21]];
+var Menu_2 = [ 1,"Contas","","t",144,"","",1,"","1","a_conta","arqConta","Folhear","Fornecedor","?","","", "","", 0,11,[],[33]];
+var Menu_3 = [ 1,"Recorrentes","","R",154,"","",1,"","1","a_recor","arqRecorrente","Folhear","Fornecedor","?","","", "","", 0,11,[],[46]];
+var Menu_4 = [ 1,"Mov.Estoque","","q",219,"","",1,"","1","a_movest","arqMovEstoque","Folhear","Fornecedor","?","","", "","", 0,11,[],[56]];
+var Menu_5 = [ 1,"Lotes","","L",222,"","",1,"","1","a_lote","arqLote","Folhear","Fornecedor","?","","", "","", 0,11,[],[55]];
 parent.navegacao.MenuPrincQtdOpcoes=5;
 }

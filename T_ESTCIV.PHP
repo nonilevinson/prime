@@ -22,4 +22,3 @@ class tabEstCivil extends Lance_Tabela
 		parent::__construct( "tabEstCivil", "t_estciv", "EstCivil", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

@@ -339,4 +339,20 @@ class arqLote extends Lance_Arquivo
 		return( 'Lotes' );
 	}
 
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilTodos  
+	//-------------------------------------------------------------
+	function FilTodos()
+	{
+	return( "" . filtrarTodos() . "" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilSel    
+	//-------------------------------------------------------------
+	function FilSel()
+	{
+	return( "" . filtrarSelecao() . "" );
+	}
+
 }

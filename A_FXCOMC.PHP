@@ -139,7 +139,7 @@ function listaCampos_arqFxComCall( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqFxComCall_ComCall(),
 			new campo_arqFxComCall_ComCall_Clinica(),
@@ -147,7 +147,7 @@ function listaCampos_arqFxComCall( $p_prefixo )
 			new campo_arqFxComCall_ComCall_Mes(),
 			new campo_arqFxComCall_Faixa(),
 			new campo_arqFxComCall_PercAte(),
-			new campo_arqFxComCall_Comissao() )
+			new campo_arqFxComCall_Comissao() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -171,7 +171,7 @@ class arqFxComCall extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ComCall_Clinica_Clinica, ComCall_Mes, Faixa) );
+		return( [ ComCall_Clinica_Clinica, ComCall_Mes, Faixa ] );
 	}
 
 	//-------------------------------------------------------------
@@ -180,12 +180,12 @@ class arqFxComCall extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( ComCall_Clinica_Clinica ) );
-			array_push( $vetAux, array( ComCall_Mes ) );
-			array_push( $vetAux, array( Faixa ) );
-			array_push( $vetAux, array( PercAte ) );
-			array_push( $vetAux, array( Comissao ) );
+		$vetAux = [];
+			$vetAux[] = [ ComCall_Clinica_Clinica ];
+			$vetAux[] = [ ComCall_Mes ];
+			$vetAux[] = [ Faixa ];
+			$vetAux[] = [ PercAte ];
+			$vetAux[] = [ Comissao ];
 		return( $vetAux );
 	}
 
@@ -194,7 +194,7 @@ class arqFxComCall extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( ComCall ) ) );
+		return( [ [ ComCall ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -203,12 +203,12 @@ class arqFxComCall extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( ComCall_Clinica_Clinica ) );
-			array_push( $vetAux, array( ComCall_Mes ) );
-			array_push( $vetAux, array( Faixa ) );
-			array_push( $vetAux, array( PercAte ) );
-			array_push( $vetAux, array( Comissao ) );
+		$vetAux = [];
+			$vetAux[] = [ ComCall_Clinica_Clinica ];
+			$vetAux[] = [ ComCall_Mes ];
+			$vetAux[] = [ Faixa ];
+			$vetAux[] = [ PercAte ];
+			$vetAux[] = [ Comissao ];
 		return( $vetAux );
 	}
 
@@ -221,4 +221,3 @@ class arqFxComCall extends Lance_Arquivo
 	}
 
 }
-?>

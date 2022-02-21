@@ -59,13 +59,13 @@ function listaCampos_arqCidade( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqCidade_UF(),
 			new Lance_CampoCadeia( "UF_Chave", "UF_Chave", "Chave", 2, "xx", EH_CHAVE, UF ),
 			new Lance_CampoCadeia( "UF_Descritor", "UF_Descritor", "Descritor", 19, "xxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, UF ),
 			new campo_arqCidade_Cidade(),
-			new campo_arqCidade_DDD() )
+			new campo_arqCidade_DDD() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -89,7 +89,7 @@ class arqCidade extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( UF_Chave, Cidade) );
+		return( [ UF_Chave, Cidade ] );
 	}
 
 	//-------------------------------------------------------------
@@ -98,10 +98,10 @@ class arqCidade extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( UF_Chave ) );
-			array_push( $vetAux, array( Cidade ) );
-			array_push( $vetAux, array( DDD ) );
+		$vetAux = [];
+			$vetAux[] = [ UF_Chave ];
+			$vetAux[] = [ Cidade ];
+			$vetAux[] = [ DDD ];
 		return( $vetAux );
 	}
 
@@ -110,7 +110,7 @@ class arqCidade extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( UF ), array( UF_Chave ), array( UF_Descritor ) ) );
+		return( [ [ UF ], [ UF_Chave ], [ UF_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -119,10 +119,10 @@ class arqCidade extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( UF_Chave ) );
-			array_push( $vetAux, array( Cidade ) );
-			array_push( $vetAux, array( DDD ) );
+		$vetAux = [];
+			$vetAux[] = [ UF_Chave ];
+			$vetAux[] = [ Cidade ];
+			$vetAux[] = [ DDD ];
 		return( $vetAux );
 	}
 
@@ -135,4 +135,3 @@ class arqCidade extends Lance_Arquivo
 	}
 
 }
-?>

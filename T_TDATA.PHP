@@ -22,4 +22,3 @@ class tabTData extends Lance_Tabela
 		parent::__construct( "tabTData", "t_tdata", "TData", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

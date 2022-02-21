@@ -22,4 +22,3 @@ class tabTArqDoc extends Lance_Tabela
 		parent::__construct( "tabTArqDoc", "t_tarqdo", "TArqDoc", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

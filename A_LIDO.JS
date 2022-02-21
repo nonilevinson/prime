@@ -83,7 +83,7 @@ Avisos_Numero.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqLido_Usuario.prototype.TrazOutrosDoPai = function()
 {
-	var vetPai = new Array();
+	var vetPai = [];
 			vetPai[0] = [ "Grupo",
 					"A.Usuario, arqUsuario.Grupo, arqGrupo",
 					"1" ];
@@ -165,7 +165,7 @@ function ListaDeCampos_arqLido( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Avisos, Avisos_Numero, Usuario, Usuario_Usuario, Grupo, Data ]	);

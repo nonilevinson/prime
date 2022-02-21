@@ -120,12 +120,12 @@ function listaCampos_arqGrupo( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqGrupo_Grupo(),
 			new campo_arqGrupo_CallCenter(),
 			new campo_arqGrupo_Medico(),
-			new campo_arqGrupo_Assessor() )
+			new campo_arqGrupo_Assessor() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -149,7 +149,7 @@ class arqGrupo extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Grupo) );
+		return( [ Grupo ] );
 	}
 
 	//-------------------------------------------------------------
@@ -158,11 +158,11 @@ class arqGrupo extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Grupo ) );
-			array_push( $vetAux, array( CallCenter ) );
-			array_push( $vetAux, array( Medico ) );
-			array_push( $vetAux, array( Assessor ) );
+		$vetAux = [];
+			$vetAux[] = [ Grupo ];
+			$vetAux[] = [ CallCenter ];
+			$vetAux[] = [ Medico ];
+			$vetAux[] = [ Assessor ];
 		return( $vetAux );
 	}
 
@@ -172,11 +172,11 @@ class arqGrupo extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Grupo ) );
-			array_push( $vetAux, array( CallCenter ) );
-			array_push( $vetAux, array( Medico ) );
-			array_push( $vetAux, array( Assessor ) );
+		$vetAux = [];
+			$vetAux[] = [ Grupo ];
+			$vetAux[] = [ CallCenter ];
+			$vetAux[] = [ Medico ];
+			$vetAux[] = [ Assessor ];
 		return( $vetAux );
 	}
 
@@ -197,4 +197,3 @@ class arqGrupo extends Lance_Arquivo
 	}
 
 }
-?>

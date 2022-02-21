@@ -46,10 +46,10 @@ function listaCampos_arqTemplate( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqTemplate_Nome(),
-			new campo_arqTemplate_Template() )
+			new campo_arqTemplate_Template() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -73,7 +73,7 @@ class arqTemplate extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Nome) );
+		return( [ Nome ] );
 	}
 
 	//-------------------------------------------------------------
@@ -82,8 +82,8 @@ class arqTemplate extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Nome ) );
+		$vetAux = [];
+			$vetAux[] = [ Nome ];
 		return( $vetAux );
 	}
 
@@ -93,9 +93,9 @@ class arqTemplate extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Template ) );
+		$vetAux = [];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Template ];
 		return( $vetAux );
 	}
 
@@ -108,4 +108,3 @@ class arqTemplate extends Lance_Arquivo
 	}
 
 }
-?>

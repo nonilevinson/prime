@@ -11,6 +11,6 @@ g_arquivoAtual = "tabTipoAcao";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"AcaoEmail","","A",16,"","",1,"","1","a_aemail","arqAcaoEmail","Folhear","TipoAcao","?","","", "","", 0,9,[],[10]);
+var Menu_1 = [ 1,"AcaoEmail","","A",16,"","",1,"","1","a_aemail","arqAcaoEmail","Folhear","TipoAcao","?","","", "","", 0,9,[],[10]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

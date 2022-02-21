@@ -11,6 +11,6 @@ g_arquivoAtual = "tabTArqDoc";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"ModDoc","","M",62,"","",1,"","1","a_docmod","arqDocMod","Folhear","TArqDoc","?","","", "","", 0,6,[],[22]);
+var Menu_1 = [ 1,"ModDoc","","M",62,"","",1,"","1","a_docmod","arqDocMod","Folhear","TArqDoc","?","","", "","", 0,6,[],[22]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

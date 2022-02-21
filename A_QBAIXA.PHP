@@ -150,7 +150,7 @@ function listaCampos_parQBaixa( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_parQBaixa_TFPagto(),
 			new Lance_CampoCadeia( "TFPagto_Chave", "TFPagto_Chave", "Chave", 1, "x", EH_CHAVE, TFPagto ),
@@ -167,7 +167,7 @@ function listaCampos_parQBaixa( $p_prefixo )
 			new campo_parQBaixa_DataIni(),
 			new campo_parQBaixa_DataPagto(),
 			new campo_parQBaixa_DataComp(),
-			new campo_parQBaixa_Valor() )
+			new campo_parQBaixa_Valor() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -188,4 +188,3 @@ class parQBaixa extends Lance_Parametro
 	}
 
 }
-?>

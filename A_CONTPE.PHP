@@ -267,7 +267,7 @@ function listaCampos_arqContPessoa( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqContPessoa_Fornecedor(),
 			new campo_arqContPessoa_Fornecedor_Nome(),
@@ -286,7 +286,7 @@ function listaCampos_arqContPessoa( $p_prefixo )
 			new Lance_CampoCadeia( "Sexo_Chave", "Sexo_Chave", "Chave", 1, "x", EH_CHAVE, Sexo ),
 			new Lance_CampoCadeia( "Sexo_Descritor", "Sexo_Descritor", "Descritor", 9, "xxxxxxxxx", EH_DESCRITOR, Sexo ),
 			new campo_arqContPessoa_Obs(),
-			new campo_arqContPessoa_Ativo() )
+			new campo_arqContPessoa_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -310,7 +310,7 @@ class arqContPessoa extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ) );
+		return( [  ] );
 	}
 
 	//-------------------------------------------------------------
@@ -319,22 +319,22 @@ class arqContPessoa extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
+		$vetAux = [];
 		if( ultimaLigOpcaoEm( 143 ) )
  {
-			array_push( $vetAux, array( Fornecedor_Nome ) );
+			$vetAux[] = [ Fornecedor_Nome ];
  }
 		if( ultimaLigOpcaoEm( 75 ) )
  {
-			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_NumCelular ) );
+			$vetAux[] = [ Pessoa_Nome ];
+			$vetAux[] = [ Pessoa_NumCelular ];
  }
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Funcao ) );
-			array_push( $vetAux, array( Celular ) );
-			array_push( $vetAux, array( Telefone ) );
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( Ativo ) );
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Funcao ];
+			$vetAux[] = [ Celular ];
+			$vetAux[] = [ Telefone ];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -344,21 +344,21 @@ class arqContPessoa extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Fornecedor_Nome ) );
-			array_push( $vetAux, array( Pessoa_Nome ) );
-			array_push( $vetAux, array( Pessoa_NumCelular ) );
-			array_push( $vetAux, array( Nome ) );
-			array_push( $vetAux, array( Apelido ) );
-			array_push( $vetAux, array( Funcao ) );
-			array_push( $vetAux, array( Celular ) );
-			array_push( $vetAux, array( Telefone ) );
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( RecEmail ) );
-			array_push( $vetAux, array( Nascimento ) );
-			array_push( $vetAux, array( Sexo_Descritor ) );
-			array_push( $vetAux, array( Obs ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Fornecedor_Nome ];
+			$vetAux[] = [ Pessoa_Nome ];
+			$vetAux[] = [ Pessoa_NumCelular ];
+			$vetAux[] = [ Nome ];
+			$vetAux[] = [ Apelido ];
+			$vetAux[] = [ Funcao ];
+			$vetAux[] = [ Celular ];
+			$vetAux[] = [ Telefone ];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ RecEmail ];
+			$vetAux[] = [ Nascimento ];
+			$vetAux[] = [ Sexo_Descritor ];
+			$vetAux[] = [ Obs ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -371,4 +371,3 @@ class arqContPessoa extends Lance_Arquivo
 	}
 
 }
-?>

@@ -117,7 +117,7 @@ function ListaDeCampos_arqGrupo( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Grupo, CallCenter, Medico, Assessor ]	);
@@ -130,10 +130,10 @@ g_arquivoCampos = ListaDeCampos_arqGrupo( '' );
 g_idOperacao = 4;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Usuários","","U",4,"","",1,"","1","a_usuari","arqUsuario","Folhear","Grupo","?","","", "","", 0,40,[],[5]);
-var Menu_2 = new Array( 1,"Criar ou alterar permissões","","C",9,"","",1,"","5","lance_permissoes_criar","","","","","","", "","", 0,40,[9],[]);
-var Menu_3 = new Array( 1,"Copiar permissões do ATUAL para marcados","","o",10,"","",1,"","5","lance_permissoes_copiar","","","","","","", "","", 0,40,[10],[]);
-var Menu_4 = new Array( 1,"Excluir permissões","","E",11,"","",1,"","5","lance_permissoes_excluir","","","","","","", "","", 0,40,[11],[]);
-var Menu_5 = new Array( 1,"Para grupo","","P",32,"","",1,"","1","a_paragr","arqParaGrupo","Folhear","Grupo","?","","", "","", 0,40,[],[15]);
+var Menu_1 = [ 1,"Usuários","","U",4,"","",1,"","1","a_usuari","arqUsuario","Folhear","Grupo","?","","", "","", 0,40,[],[5]];
+var Menu_2 = [ 1,"Criar ou alterar permissões","","C",9,"","",1,"","5","lance_permissoes_criar","","","","","","", "","", 0,40,[9],[]];
+var Menu_3 = [ 1,"Copiar permissões do ATUAL para marcados","","o",10,"","",1,"","5","lance_permissoes_copiar","","","","","","", "","", 0,40,[10],[]];
+var Menu_4 = [ 1,"Excluir permissões","","E",11,"","",1,"","5","lance_permissoes_excluir","","","","","","", "","", 0,40,[11],[]];
+var Menu_5 = [ 1,"Para grupo","","P",32,"","",1,"","1","a_paragr","arqParaGrupo","Folhear","Grupo","?","","", "","", 0,40,[],[15]];
 parent.navegacao.MenuPrincQtdOpcoes=5;
 }

@@ -90,7 +90,7 @@ function ListaDeCampos_domRedeSocial( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ eval( this.Prefixo + 'Facebook' ), eval( this.Prefixo + 'YouTube' ), eval( this.Prefixo + 'Instagram' ), eval( this.Prefixo + 'Twitter' ), eval( this.Prefixo + 'LinkedIn' ), eval( this.Prefixo + 'SnapChat' ), eval( this.Prefixo + 'Pinterest' ) ]	);

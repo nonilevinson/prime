@@ -59,7 +59,7 @@ function ListaDeCampos_arqUnidade( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Unidade, Ativo ]	);
@@ -72,6 +72,6 @@ g_arquivoCampos = ListaDeCampos_arqUnidade( '' );
 g_idOperacao = 51;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Medicamentos","","M",194,"","",1,"","1","a_medica","arqMedicamen","Folhear","Unidade","?","","", "","", 0,12,[],[52]);
+var Menu_1 = [ 1,"Medicamentos","","M",194,"","",1,"","1","a_medica","arqMedicamen","Folhear","Unidade","?","","", "","", 0,12,[],[52]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

@@ -11,6 +11,6 @@ g_arquivoAtual = "tabTFPagto";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Parcela","","P",103,"","",1,"","1","a_parcel","arqParcela","Folhear","TFPagto","?","","", "","", 0,7,[],[34]);
+var Menu_1 = [ 1,"Parcela","","P",103,"","",1,"","1","a_parcel","arqParcela","Folhear","TFPagto","?","","", "","", 0,7,[],[34]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

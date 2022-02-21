@@ -161,7 +161,7 @@ function listaCampos_arqPTrata( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqPTrata_PTrata(),
 			new campo_arqPTrata_Apelido(),
@@ -170,7 +170,7 @@ function listaCampos_arqPTrata( $p_prefixo )
 			new campo_arqPTrata_ValMinimo(),
 			new campo_arqPTrata_Descricao(),
 			new campo_arqPTrata_Ativo(),
-			new campo_arqPTrata_Tempo() )
+			new campo_arqPTrata_Tempo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -194,7 +194,7 @@ class arqPTrata extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( PTrata) );
+		return( [ PTrata ] );
 	}
 
 	//-------------------------------------------------------------
@@ -203,12 +203,12 @@ class arqPTrata extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( PTrata ) );
-			array_push( $vetAux, array( Valor ) );
-			array_push( $vetAux, array( MrgDesc ) );
-			array_push( $vetAux, array( ValMinimo ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ PTrata ];
+			$vetAux[] = [ Valor ];
+			$vetAux[] = [ MrgDesc ];
+			$vetAux[] = [ ValMinimo ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -218,15 +218,15 @@ class arqPTrata extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( PTrata ) );
-			array_push( $vetAux, array( Apelido ) );
-			array_push( $vetAux, array( Valor ) );
-			array_push( $vetAux, array( MrgDesc ) );
-			array_push( $vetAux, array( ValMinimo ) );
-			array_push( $vetAux, array( Descricao ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( Tempo ) );
+		$vetAux = [];
+			$vetAux[] = [ PTrata ];
+			$vetAux[] = [ Apelido ];
+			$vetAux[] = [ Valor ];
+			$vetAux[] = [ MrgDesc ];
+			$vetAux[] = [ ValMinimo ];
+			$vetAux[] = [ Descricao ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ Tempo ];
 		return( $vetAux );
 	}
 
@@ -239,4 +239,3 @@ class arqPTrata extends Lance_Arquivo
 	}
 
 }
-?>

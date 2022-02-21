@@ -22,4 +22,3 @@ class tabTFPagto extends Lance_Tabela
 		parent::__construct( "tabTFPagto", "t_tfpagt", "TFPagto", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

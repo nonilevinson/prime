@@ -22,4 +22,3 @@ class tabPrioridade extends Lance_Tabela
 		parent::__construct( "tabPrioridade", "t_priori", "Prioridade", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

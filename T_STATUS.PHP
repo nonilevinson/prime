@@ -22,4 +22,3 @@ class tabStatusLog extends Lance_Tabela
 		parent::__construct( "tabStatusLog", "t_status", "StatusLog", 2, "uu", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

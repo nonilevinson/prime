@@ -22,4 +22,3 @@ class tabSexo extends Lance_Tabela
 		parent::__construct( "tabSexo", "t_sexo", "Sexo", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

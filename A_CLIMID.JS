@@ -155,7 +155,7 @@ function ListaDeCampos_arqCliMidia( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Clinica, Clinica_Clinica, Midia, Midia_Midia, Ativo ]	);

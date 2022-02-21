@@ -22,4 +22,3 @@ class tabTipoAcao extends Lance_Tabela
 		parent::__construct( "tabTipoAcao", "t_tipoac", "TipoAcao", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

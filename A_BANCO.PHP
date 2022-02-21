@@ -53,10 +53,10 @@ function listaCampos_arqBanco( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqBanco_Num(),
-			new campo_arqBanco_Banco() )
+			new campo_arqBanco_Banco() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -80,7 +80,7 @@ class arqBanco extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Num) );
+		return( [ Num ] );
 	}
 
 	//-------------------------------------------------------------
@@ -89,9 +89,9 @@ class arqBanco extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Num ) );
-			array_push( $vetAux, array( Banco ) );
+		$vetAux = [];
+			$vetAux[] = [ Num ];
+			$vetAux[] = [ Banco ];
 		return( $vetAux );
 	}
 
@@ -101,9 +101,9 @@ class arqBanco extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Num ) );
-			array_push( $vetAux, array( Banco ) );
+		$vetAux = [];
+			$vetAux[] = [ Num ];
+			$vetAux[] = [ Banco ];
 		return( $vetAux );
 	}
 
@@ -116,4 +116,3 @@ class arqBanco extends Lance_Arquivo
 	}
 
 }
-?>

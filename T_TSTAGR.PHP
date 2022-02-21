@@ -22,4 +22,3 @@ class tabTStAgRet extends Lance_Tabela
 		parent::__construct( "tabTStAgRet", "t_tstagr", "TStAgRet", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

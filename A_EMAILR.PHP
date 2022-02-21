@@ -111,12 +111,12 @@ function listaCampos_arqEmailRemet( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqEmailRemet_Email(),
 			new campo_arqEmailRemet_NomeEmail(),
 			new campo_arqEmailRemet_Padrao(),
-			new campo_arqEmailRemet_Ativo() )
+			new campo_arqEmailRemet_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -140,7 +140,7 @@ class arqEmailRemet extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Email) );
+		return( [ Email ] );
 	}
 
 	//-------------------------------------------------------------
@@ -149,11 +149,11 @@ class arqEmailRemet extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( NomeEmail ) );
-			array_push( $vetAux, array( Padrao ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ NomeEmail ];
+			$vetAux[] = [ Padrao ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -163,11 +163,11 @@ class arqEmailRemet extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( NomeEmail ) );
-			array_push( $vetAux, array( Padrao ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ NomeEmail ];
+			$vetAux[] = [ Padrao ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -180,4 +180,3 @@ class arqEmailRemet extends Lance_Arquivo
 	}
 
 }
-?>

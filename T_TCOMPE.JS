@@ -11,6 +11,6 @@ g_arquivoAtual = "tabTCompete";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Recorrente","","R",157,"","",1,"","1","a_recorr","arqRecorrente","Folhear","TCompete","?","","", "","", 0,10,[],[46]);
+var Menu_1 = [ 1,"Recorrente","","R",157,"","",1,"","1","a_recor","arqRecorrente","Folhear","TCompete","?","","", "","", 0,10,[],[46]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

@@ -22,4 +22,3 @@ class tabUF extends Lance_Tabela
 		parent::__construct( "tabUF", "t_uf", "UF", 2, "uu", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

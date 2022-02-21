@@ -451,7 +451,7 @@ function listaCampos_parGeraTransf( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_parGeraTransf_Emissao(),
 			new campo_parGeraTransf_Vencimento(),
@@ -495,7 +495,7 @@ function listaCampos_parGeraTransf( $p_prefixo )
 			new Lance_CampoCadeia( "TFPagtoCR_Descritor", "TFPagtoCR_Descritor", "Descritor", 8, "xxxxxxxx", EH_DESCRITOR, TFPagtoCR ),
 			new campo_parGeraTransf_TDetPgCR(),
 			new Lance_CampoCadeia( "TDetPgCR_Chave", "TDetPgCR_Chave", "Chave", 1, "x", EH_CHAVE, TDetPgCR ),
-			new Lance_CampoCadeia( "TDetPgCR_Descritor", "TDetPgCR_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TDetPgCR ) )
+			new Lance_CampoCadeia( "TDetPgCR_Descritor", "TDetPgCR_Descritor", "Descritor", 14, "xxxxxxxxxxxxxx", EH_DESCRITOR, TDetPgCR ) ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -515,4 +515,3 @@ class parGeraTransf extends Lance_Parametro
 	}
 
 }
-?>

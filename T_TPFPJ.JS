@@ -11,6 +11,6 @@ g_arquivoAtual = "tabTPFPJ";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Fornecedor","","F",142,"","",1,"","1","a_fornec","arqFornecedor","Folhear","TPFPJ","?","","", "","", 0,10,[],[42]);
+var Menu_1 = [ 1,"Fornecedor","","F",142,"","",1,"","1","a_fornec","arqFornecedor","Folhear","TPFPJ","?","","", "","", 0,10,[],[42]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

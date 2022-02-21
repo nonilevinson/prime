@@ -217,7 +217,7 @@ Campo_arqLogEmail_Cliente_Nome.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqLogEmail_Cliente_Nome()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "Cliente_Nome", "Cliente_Nome", "Nome", Cliente, 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Cliente_Nome", "Cliente_Nome", "Nome", Cliente, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Cliente_Nome = new Campo_arqLogEmail_Cliente_Nome;
@@ -543,7 +543,7 @@ function ListaDeCampos_arqLogEmail( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Titulo, Titulo_Titulo, Titulo_Versao, Data, Hora, Usuario, Usuario_Usuario, Enviados, NEnviados, Total, Lidos, PercLidos, EmailRemet, HoraIni, HoraFim, HoraReenv, Enviou, Opcao, Cliente, Cliente_Nome, Cliente_NumCelular ]	);
@@ -556,6 +556,6 @@ g_arquivoCampos = ListaDeCampos_arqLogEmail( '' );
 g_idOperacao = 12;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Destinatários","","D",24,"","",1,"","1","a_itloge","arqItLogEmail","Folhear","LogEmail","?","","", "","", 0,13,[],[13]);
+var Menu_1 = [ 1,"Destinatários","","D",24,"","",1,"","1","a_itloge","arqItLogEmail","Folhear","LogEmail","?","","", "","", 0,13,[],[13]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

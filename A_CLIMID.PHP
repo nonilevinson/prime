@@ -115,13 +115,13 @@ function listaCampos_arqCliMidia( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqCliMidia_Clinica(),
 			new campo_arqCliMidia_Clinica_Clinica(),
 			new campo_arqCliMidia_Midia(),
 			new campo_arqCliMidia_Midia_Midia(),
-			new campo_arqCliMidia_Ativo() )
+			new campo_arqCliMidia_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -145,7 +145,7 @@ class arqCliMidia extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Clinica_Clinica, Midia_Midia) );
+		return( [ Clinica_Clinica, Midia_Midia ] );
 	}
 
 	//-------------------------------------------------------------
@@ -154,10 +154,10 @@ class arqCliMidia extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Midia_Midia ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Midia_Midia ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -166,7 +166,7 @@ class arqCliMidia extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Clinica ), array( Midia ) ) );
+		return( [ [ Clinica ], [ Midia ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -175,10 +175,10 @@ class arqCliMidia extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Clinica_Clinica ) );
-			array_push( $vetAux, array( Midia_Midia ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ Midia_Midia ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -191,4 +191,3 @@ class arqCliMidia extends Lance_Arquivo
 	}
 
 }
-?>

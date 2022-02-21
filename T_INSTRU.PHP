@@ -22,4 +22,3 @@ class tabInstrucao extends Lance_Tabela
 		parent::__construct( "tabInstrucao", "t_instru", "Instrucao", 2, "uu", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

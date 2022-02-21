@@ -242,7 +242,7 @@ function listaCampos_arqAcaoEmail( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqAcaoEmail_Titulo(),
 			new campo_arqAcaoEmail_Versao(),
@@ -261,7 +261,7 @@ function listaCampos_arqAcaoEmail( $p_prefixo )
 			new Lance_CampoCadeia( "Imagem_Arquivo", "Imagem_Arquivo", "Descritor", 0, "", EH_DESCRITOR, Imagem ),
 			new campo_arqAcaoEmail_Link(),
 			new campo_arqAcaoEmail_ImagemAlt(),
-			new campo_arqAcaoEmail_QtdTeste() )
+			new campo_arqAcaoEmail_QtdTeste() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -285,7 +285,7 @@ class arqAcaoEmail extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Titulo, Versao) );
+		return( [ Titulo, Versao ] );
 	}
 
 	//-------------------------------------------------------------
@@ -294,14 +294,14 @@ class arqAcaoEmail extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Titulo ) );
-			array_push( $vetAux, array( Versao ) );
-			array_push( $vetAux, array( TipoAcao_Descritor ) );
-			array_push( $vetAux, array( Template_Nome ) );
-			array_push( $vetAux, array( PadraoAcao_Descritor ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( QtdTeste ) );
+		$vetAux = [];
+			$vetAux[] = [ Titulo ];
+			$vetAux[] = [ Versao ];
+			$vetAux[] = [ TipoAcao_Descritor ];
+			$vetAux[] = [ Template_Nome ];
+			$vetAux[] = [ PadraoAcao_Descritor ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ QtdTeste ];
 		return( $vetAux );
 	}
 
@@ -310,7 +310,7 @@ class arqAcaoEmail extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( TipoAcao ), array( TipoAcao_Chave ), array( TipoAcao_Descritor ), array( Template ), array( PadraoAcao ), array( PadraoAcao_Chave ), array( PadraoAcao_Descritor ) ) );
+		return( [ [ TipoAcao ], [ TipoAcao_Chave ], [ TipoAcao_Descritor ], [ Template ], [ PadraoAcao ], [ PadraoAcao_Chave ], [ PadraoAcao_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -319,19 +319,19 @@ class arqAcaoEmail extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Titulo ) );
-			array_push( $vetAux, array( Versao ) );
-			array_push( $vetAux, array( TipoAcao_Descritor ) );
-			array_push( $vetAux, array( Template_Nome ) );
-			array_push( $vetAux, array( PadraoAcao_Descritor ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( Arquivo ) );
-			array_push( $vetAux, array( Html ) );
-			array_push( $vetAux, array( Imagem ) );
-			array_push( $vetAux, array( Link ) );
-			array_push( $vetAux, array( ImagemAlt ) );
-			array_push( $vetAux, array( QtdTeste ) );
+		$vetAux = [];
+			$vetAux[] = [ Titulo ];
+			$vetAux[] = [ Versao ];
+			$vetAux[] = [ TipoAcao_Descritor ];
+			$vetAux[] = [ Template_Nome ];
+			$vetAux[] = [ PadraoAcao_Descritor ];
+			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ Arquivo ];
+			$vetAux[] = [ Html ];
+			$vetAux[] = [ Imagem ];
+			$vetAux[] = [ Link ];
+			$vetAux[] = [ ImagemAlt ];
+			$vetAux[] = [ QtdTeste ];
 		return( $vetAux );
 	}
 
@@ -344,4 +344,3 @@ class arqAcaoEmail extends Lance_Arquivo
 	}
 
 }
-?>

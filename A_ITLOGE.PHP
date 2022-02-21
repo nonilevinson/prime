@@ -280,7 +280,7 @@ function listaCampos_arqItLogEmail( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqItLogEmail_LogEmail(),
 			new campo_arqItLogEmail_LogEmail_Titulo(),
@@ -295,7 +295,7 @@ function listaCampos_arqItLogEmail( $p_prefixo )
 			new campo_arqItLogEmail_Enviado(),
 			new campo_arqItLogEmail_Lido(),
 			new campo_arqItLogEmail_LinkEmp(),
-			new campo_arqItLogEmail_LinkKm() )
+			new campo_arqItLogEmail_LinkKm() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -320,7 +320,7 @@ class arqItLogEmail extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ) );
+		return( [  ] );
 	}
 
 	//-------------------------------------------------------------
@@ -329,20 +329,20 @@ class arqItLogEmail extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( LogEmail_Titulo_Titulo ) );
-			array_push( $vetAux, array( LogEmail_Titulo_Versao ) );
-			array_push( $vetAux, array( LogEmail_Data ) );
-			array_push( $vetAux, array( LogEmail_Hora ) );
-			array_push( $vetAux, array( Cliente_Nome ) );
-			array_push( $vetAux, array( Cliente_NumCelular ) );
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( Enviado ) );
-			array_push( $vetAux, array( Lido ) );
-			array_push( $vetAux, array( LinkEmp ) );
+		$vetAux = [];
+			$vetAux[] = [ LogEmail_Titulo_Titulo ];
+			$vetAux[] = [ LogEmail_Titulo_Versao ];
+			$vetAux[] = [ LogEmail_Data ];
+			$vetAux[] = [ LogEmail_Hora ];
+			$vetAux[] = [ Cliente_Nome ];
+			$vetAux[] = [ Cliente_NumCelular ];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ Enviado ];
+			$vetAux[] = [ Lido ];
+			$vetAux[] = [ LinkEmp ];
 		if( GrupoAtualEm() )
  {
-			array_push( $vetAux, array( LinkKm ) );
+			$vetAux[] = [ LinkKm ];
  }
 		return( $vetAux );
 	}
@@ -352,7 +352,7 @@ class arqItLogEmail extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( LogEmail ), array( Cliente ) ) );
+		return( [ [ LogEmail ], [ Cliente ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -361,18 +361,18 @@ class arqItLogEmail extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( LogEmail_Titulo_Titulo ) );
-			array_push( $vetAux, array( LogEmail_Titulo_Versao ) );
-			array_push( $vetAux, array( LogEmail_Data ) );
-			array_push( $vetAux, array( LogEmail_Hora ) );
-			array_push( $vetAux, array( Cliente_Nome ) );
-			array_push( $vetAux, array( Cliente_NumCelular ) );
-			array_push( $vetAux, array( Email ) );
-			array_push( $vetAux, array( Enviado ) );
-			array_push( $vetAux, array( Lido ) );
-			array_push( $vetAux, array( LinkEmp ) );
-			array_push( $vetAux, array( LinkKm ) );
+		$vetAux = [];
+			$vetAux[] = [ LogEmail_Titulo_Titulo ];
+			$vetAux[] = [ LogEmail_Titulo_Versao ];
+			$vetAux[] = [ LogEmail_Data ];
+			$vetAux[] = [ LogEmail_Hora ];
+			$vetAux[] = [ Cliente_Nome ];
+			$vetAux[] = [ Cliente_NumCelular ];
+			$vetAux[] = [ Email ];
+			$vetAux[] = [ Enviado ];
+			$vetAux[] = [ Lido ];
+			$vetAux[] = [ LinkEmp ];
+			$vetAux[] = [ LinkKm ];
 		return( $vetAux );
 	}
 
@@ -397,4 +397,3 @@ class arqItLogEmail extends Lance_Arquivo
 	}
 
 }
-?>

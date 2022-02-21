@@ -69,10 +69,10 @@ function listaCampos_arqProfissao( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqProfissao_Profissao(),
-			new campo_arqProfissao_Ativo() )
+			new campo_arqProfissao_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -96,7 +96,7 @@ class arqProfissao extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Profissao) );
+		return( [ Profissao ] );
 	}
 
 	//-------------------------------------------------------------
@@ -105,9 +105,9 @@ class arqProfissao extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Profissao ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Profissao ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -117,9 +117,9 @@ class arqProfissao extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Profissao ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Profissao ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -132,4 +132,3 @@ class arqProfissao extends Lance_Arquivo
 	}
 
 }
-?>

@@ -496,7 +496,7 @@ function ListaDeCampos_arqDocMod( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Documento, TArqDoc, TArqDoc_Chave, TArqDoc_Descritor, TOrDoc, TOrDoc_Chave, TOrDoc_Descritor, Logo, Marca, NomeArq, Rodape, AltRodape, Template, Template_Nome, Ativo, Header, Arquivo, Footer, Html, Imagem, Lista, MargemEsq, MargemDir, MargemTop, TPapel, TPapel_Chave, TPapel_Descritor, TOrienta, TOrienta_Chave, TOrienta_Descritor ]	);

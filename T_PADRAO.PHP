@@ -22,4 +22,3 @@ class tabPadraoAcao extends Lance_Tabela
 		parent::__construct( "tabPadraoAcao", "t_padrao", "PadraoAcao", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

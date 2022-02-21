@@ -22,4 +22,3 @@ class tabTDetPg extends Lance_Tabela
 		parent::__construct( "tabTDetPg", "t_tdetpg", "TDetPg", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

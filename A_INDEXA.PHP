@@ -106,13 +106,13 @@ function listaCampos_arqIndexAtua( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqIndexAtua_Indice(),
 			new campo_arqIndexAtua_Data(),
 			new campo_arqIndexAtua_Dias(),
 			new campo_arqIndexAtua_DataProx(),
-			new campo_arqIndexAtua_Estatis() )
+			new campo_arqIndexAtua_Estatis() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -137,7 +137,7 @@ class arqIndexAtua extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( ) );
+		return( [  ] );
 	}
 
 	//-------------------------------------------------------------
@@ -146,12 +146,12 @@ class arqIndexAtua extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Indice ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Dias ) );
-			array_push( $vetAux, array( DataProx ) );
-			array_push( $vetAux, array( Estatis ) );
+		$vetAux = [];
+			$vetAux[] = [ Indice ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Dias ];
+			$vetAux[] = [ DataProx ];
+			$vetAux[] = [ Estatis ];
 		return( $vetAux );
 	}
 
@@ -161,12 +161,12 @@ class arqIndexAtua extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Indice ) );
-			array_push( $vetAux, array( Data ) );
-			array_push( $vetAux, array( Dias ) );
-			array_push( $vetAux, array( DataProx ) );
-			array_push( $vetAux, array( Estatis ) );
+		$vetAux = [];
+			$vetAux[] = [ Indice ];
+			$vetAux[] = [ Data ];
+			$vetAux[] = [ Dias ];
+			$vetAux[] = [ DataProx ];
+			$vetAux[] = [ Estatis ];
 		return( $vetAux );
 	}
 
@@ -179,4 +179,3 @@ class arqIndexAtua extends Lance_Arquivo
 	}
 
 }
-?>

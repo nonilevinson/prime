@@ -205,7 +205,7 @@ function listaCampos_parQDoc( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_parQDoc_DocMod(),
 			new campo_parQDoc_DocMod_Documento(),
@@ -219,7 +219,7 @@ function listaCampos_parQDoc( $p_prefixo )
 			new campo_parQDoc_Cad5(),
 			new campo_parQDoc_Txt1(),
 			new campo_parQDoc_Txt2(),
-			new campo_parQDoc_Salvar() )
+			new campo_parQDoc_Salvar() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -239,4 +239,3 @@ class parQDoc extends Lance_Parametro
 	}
 
 }
-?>

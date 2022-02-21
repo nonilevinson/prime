@@ -22,4 +22,3 @@ class tabTFCobra extends Lance_Tabela
 		parent::__construct( "tabTFCobra", "t_tfcobr", "TFCobra", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

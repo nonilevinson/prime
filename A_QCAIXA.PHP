@@ -298,7 +298,7 @@ function listaCampos_parQCaixa( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_parQCaixa_Clinica(),
 			new campo_parQCaixa_Clinica_Clinica(),
@@ -317,7 +317,7 @@ function listaCampos_parQCaixa( $p_prefixo )
 			new campo_parQCaixa_SubPlano_Codigo(),
 			new campo_parQCaixa_SubPlano_Nome(),
 			new campo_parQCaixa_FormaPg(),
-			new campo_parQCaixa_FormaPg_FormaPg() )
+			new campo_parQCaixa_FormaPg_FormaPg() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -338,4 +338,3 @@ class parQCaixa extends Lance_Parametro
 	}
 
 }
-?>

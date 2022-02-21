@@ -22,4 +22,3 @@ class tabTPessoa extends Lance_Tabela
 		parent::__construct( "tabTPessoa", "t_tpesso", "TPessoa", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

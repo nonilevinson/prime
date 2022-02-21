@@ -73,13 +73,13 @@ function listaCampos_arqPlano( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqPlano_CodPlano(),
 			new campo_arqPlano_Plano(),
 			new campo_arqPlano_TPgRec(),
 			new Lance_CampoCadeia( "TPgRec_Chave", "TPgRec_Chave", "Chave", 1, "x", EH_CHAVE, TPgRec ),
-			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ) )
+			new Lance_CampoCadeia( "TPgRec_Descritor", "TPgRec_Descritor", "Descritor", 7, "xxxxxxx", EH_DESCRITOR, TPgRec ) ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -103,7 +103,7 @@ class arqPlano extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( CodPlano) );
+		return( [ CodPlano ] );
 	}
 
 	//-------------------------------------------------------------
@@ -112,10 +112,10 @@ class arqPlano extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( CodPlano ) );
-			array_push( $vetAux, array( Plano ) );
-			array_push( $vetAux, array( TPgRec_Descritor ) );
+		$vetAux = [];
+			$vetAux[] = [ CodPlano ];
+			$vetAux[] = [ Plano ];
+			$vetAux[] = [ TPgRec_Descritor ];
 		return( $vetAux );
 	}
 
@@ -124,7 +124,7 @@ class arqPlano extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( TPgRec ), array( TPgRec_Chave ), array( TPgRec_Descritor ) ) );
+		return( [ [ TPgRec ], [ TPgRec_Chave ], [ TPgRec_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -133,10 +133,10 @@ class arqPlano extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( CodPlano ) );
-			array_push( $vetAux, array( Plano ) );
-			array_push( $vetAux, array( TPgRec_Descritor ) );
+		$vetAux = [];
+			$vetAux[] = [ CodPlano ];
+			$vetAux[] = [ Plano ];
+			$vetAux[] = [ TPgRec_Descritor ];
 		return( $vetAux );
 	}
 
@@ -149,4 +149,3 @@ class arqPlano extends Lance_Arquivo
 	}
 
 }
-?>

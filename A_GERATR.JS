@@ -898,7 +898,7 @@ function ListaDeCampos_parGeraTransf( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Emissao, Vencimento, Valor, ForneDB, ForneDB_Nome, CCorDB, CCorDB_Nome, SubPlaDB, SubPlaDB_Plano, SubPlaDB_Plano_CodPlano, SubPlaDB_Plano_Plano, SubPlaDB_Codigo, SubPlaDB_Nome, HistDB, TFCobraDB, TFCobraDB_Chave, TFCobraDB_Descritor, TFPagtoDB, TFPagtoDB_Chave, TFPagtoDB_Descritor, TDetPgDB, TDetPgDB_Chave, TDetPgDB_Descritor, ForneCR, ForneCR_Nome, CCorCR, CCorCR_Nome, SubPlaCR, SubPlaCR_Plano, SubPlaCR_Plano_CodPlano, SubPlaCR_Plano_Plano, SubPlaCR_Codigo, SubPlaCR_Nome, HistCR, TFCobraCR, TFCobraCR_Chave, TFCobraCR_Descritor, TFPagtoCR, TFPagtoCR_Chave, TFPagtoCR_Descritor, TDetPgCR, TDetPgCR_Chave, TDetPgCR_Descritor ]	);

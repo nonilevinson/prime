@@ -77,7 +77,7 @@ function ListaDeCampos_arqCidade( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ UF, UF_Chave, UF_Descritor, Cidade, DDD ]	);
@@ -90,6 +90,6 @@ g_arquivoCampos = ListaDeCampos_arqCidade( '' );
 g_idOperacao = 2;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Endereço","","E",3,"","",1,"","1","a_endere","domEndereco","Folhear","Cidade","?","","", "","", 0,8,[],[3]);
+var Menu_1 = [ 1,"Endereço","","E",3,"","",1,"","1","a_endere","domEndereco","Folhear","Cidade","?","","", "","", 0,8,[],[3]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

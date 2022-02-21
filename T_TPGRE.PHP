@@ -22,4 +22,3 @@ class tabTPgRec extends Lance_Tabela
 		parent::__construct( "tabTPgRec", "t_tpgre", "TPgRec", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

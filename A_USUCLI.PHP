@@ -86,12 +86,12 @@ function listaCampos_arqUsuCli( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqUsuCli_Usuario(),
 			new campo_arqUsuCli_Usuario_Usuario(),
 			new campo_arqUsuCli_Clinica(),
-			new campo_arqUsuCli_Clinica_Clinica() )
+			new campo_arqUsuCli_Clinica_Clinica() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -115,7 +115,7 @@ class arqUsuCli extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Usuario_Usuario, Clinica_Clinica) );
+		return( [ Usuario_Usuario, Clinica_Clinica ] );
 	}
 
 	//-------------------------------------------------------------
@@ -124,9 +124,9 @@ class arqUsuCli extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Usuario_Usuario ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
+		$vetAux = [];
+			$vetAux[] = [ Usuario_Usuario ];
+			$vetAux[] = [ Clinica_Clinica ];
 		return( $vetAux );
 	}
 
@@ -135,7 +135,7 @@ class arqUsuCli extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( Usuario ), array( Clinica ) ) );
+		return( [ [ Usuario ], [ Clinica ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -144,9 +144,9 @@ class arqUsuCli extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Usuario_Usuario ) );
-			array_push( $vetAux, array( Clinica_Clinica ) );
+		$vetAux = [];
+			$vetAux[] = [ Usuario_Usuario ];
+			$vetAux[] = [ Clinica_Clinica ];
 		return( $vetAux );
 	}
 
@@ -167,4 +167,3 @@ class arqUsuCli extends Lance_Arquivo
 	}
 
 }
-?>

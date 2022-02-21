@@ -11,7 +11,7 @@ g_arquivoAtual = "tabTStAgRet";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"AgRet","","A",198,"","",1,"","1","a_agret","arqAgRet","Folhear","TStAgRet","?","","", "","", 0,8,[],[53]);
-var Menu_2 = new Array( 1,"Consulta","","C",227,"","",1,"","1","a_consul","arqConsulta","Folhear","TStAgRet","?","","", "","", 0,8,[],[39]);
+var Menu_1 = [ 1,"AgRet","","A",198,"","",1,"","1","a_agret","arqAgRet","Folhear","TStAgRet","?","","", "","", 0,8,[],[53]];
+var Menu_2 = [ 1,"Consulta","","C",227,"","",1,"","1","a_consul","arqConsulta","Folhear","TStAgRet","?","","", "","", 0,8,[],[39]];
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }

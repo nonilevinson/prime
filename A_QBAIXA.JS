@@ -346,11 +346,10 @@ Campo_parQBaixa_CCor.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_parQBaixa()
 {
-TFPagto.ExistenciasDependentes= [ CCor,CCor_Nome ];
+TFPagto.ExistenciasDependentes= [ TDetPg,CCor,CCor_Nome ];
 CCor_Nome.ExistenciasDependentes= [ CCor ];
 TDetPg.ExistenciasDependentes= [ Cheque ];
 CCor_Nome.ErrosDependentes= [ CCor ];
-TFPagto.AdvertenciasDependentes= [ TDetPg ];
 CCor.CamposChave= [ CCor_Nome ];
 }
 
@@ -366,7 +365,7 @@ function ListaDeCampos_parQBaixa( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, TFCobra, TFCobra_Chave, TFCobra_Descritor, CCor, CCor_Nome, Cheque, DataIni, DataPagto, DataComp, Valor ]	);

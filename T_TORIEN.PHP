@@ -22,4 +22,3 @@ class tabTOrienta extends Lance_Tabela
 		parent::__construct( "tabTOrienta", "t_torien", "TOrienta", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

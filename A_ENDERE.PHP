@@ -177,7 +177,7 @@ function listaCampos_domEndereco( $p_prefixo )
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
 
-		array( 
+		[ 
 			new campo_domEndereco_CEP(),
 			new campo_domEndereco_Endereco(),
 			new campo_domEndereco_Bairro(),
@@ -191,10 +191,9 @@ function listaCampos_domEndereco( $p_prefixo )
 			new campo_domEndereco_Telefone(),
 			new campo_domEndereco_DDDCelular(),
 			new campo_domEndereco_Celular(),
-			new campo_domEndereco_WhatsApp() )
+			new campo_domEndereco_WhatsApp() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
 }
 
-?>

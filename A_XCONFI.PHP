@@ -465,16 +465,16 @@ function listaCampos_cnfXConfig( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_cnfXConfig_CPF(),
 			new campo_cnfXConfig_LogAcesso(),
 			new campo_cnfXConfig_LogAcessoS(),
 			new campo_cnfXConfig_Qtd(),
 			new campo_cnfXConfig_Qtd2(),
-			new campo_cnfXConfig_Empresa() ),
+			new campo_cnfXConfig_Empresa() ],
 		listaCampos_domEndereco( "Ende_" ),
-		array( 
+		[ 
 			new campo_cnfXConfig_CNPJ(),
 			new campo_cnfXConfig_Email(),
 			new campo_cnfXConfig_Site(),
@@ -500,7 +500,7 @@ function listaCampos_cnfXConfig( $p_prefixo )
 			new campo_cnfXConfig_FornRec(),
 			new campo_cnfXConfig_FornRec_Nome(),
 			new campo_cnfXConfig_BoletoMin(),
-			new campo_cnfXConfig_DiasSdEntr() )
+			new campo_cnfXConfig_DiasSdEntr() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -520,4 +520,3 @@ class cnfXConfig extends Lance_Configuracao
 	}
 
 }
-?>

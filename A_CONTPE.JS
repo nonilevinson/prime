@@ -373,7 +373,7 @@ function ListaDeCampos_arqContPessoa( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Fornecedor, Fornecedor_Nome, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Nome, Apelido, Funcao, Celular, Telefone, Email, RecEmail, Nascimento, Sexo, Sexo_Chave, Sexo_Descritor, Obs, Ativo ]	);

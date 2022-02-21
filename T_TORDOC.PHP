@@ -22,4 +22,3 @@ class tabTOrDoc extends Lance_Tabela
 		parent::__construct( "tabTOrDoc", "t_tordoc", "TOrDoc", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

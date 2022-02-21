@@ -120,7 +120,7 @@ function ListaDeCampos_arqIndexAtua( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Indice, Data, Dias, DataProx, Estatis ]	);

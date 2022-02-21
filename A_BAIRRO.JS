@@ -30,7 +30,7 @@ function ListaDeCampos_arqBairro( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Bairro ]	);
@@ -43,6 +43,6 @@ g_arquivoCampos = ListaDeCampos_arqBairro( '' );
 g_idOperacao = 1;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Endereço","","E",2,"","",1,"","1","a_endere","domEndereco","Folhear","Bairro","?","","", "","", 0,8,[],[3]);
+var Menu_1 = [ 1,"Endereço","","E",2,"","",1,"","1","a_endere","domEndereco","Folhear","Bairro","?","","", "","", 0,8,[],[3]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

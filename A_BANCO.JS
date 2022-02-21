@@ -61,7 +61,7 @@ function ListaDeCampos_arqBanco( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Num, Banco ]	);
@@ -74,6 +74,6 @@ g_arquivoCampos = ListaDeCampos_arqBanco( '' );
 g_idOperacao = 19;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Contas da empresa","","C",58,"","",1,"","1","a_ccor","arqCCor","Folhear","Banco","?","","", "","", 0,17,[],[20]);
+var Menu_1 = [ 1,"Contas da empresa","","C",58,"","",1,"","1","a_ccor","arqCCor","Folhear","Banco","?","","", "","", 0,17,[],[20]];
 parent.navegacao.MenuPrincQtdOpcoes=1;
 }

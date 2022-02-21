@@ -22,4 +22,3 @@ class tabTPFPJ extends Lance_Tabela
 		parent::__construct( "tabTPFPJ", "t_tpfpj", "TPFPJ", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

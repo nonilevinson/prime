@@ -22,4 +22,3 @@ class tabTCMedica extends Lance_Tabela
 		parent::__construct( "tabTCMedica", "t_tcmedi", "TCMedica", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

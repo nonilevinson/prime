@@ -112,17 +112,16 @@ function listaCampos_domRedeSocial( $p_prefixo )
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
 
-		array( 
+		[ 
 			new campo_domRedeSocial_Facebook(),
 			new campo_domRedeSocial_YouTube(),
 			new campo_domRedeSocial_Instagram(),
 			new campo_domRedeSocial_Twitter(),
 			new campo_domRedeSocial_LinkedIn(),
 			new campo_domRedeSocial_SnapChat(),
-			new campo_domRedeSocial_Pinterest() )
+			new campo_domRedeSocial_Pinterest() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
 }
 
-?>

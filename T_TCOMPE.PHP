@@ -22,4 +22,3 @@ class tabTCompete extends Lance_Tabela
 		parent::__construct( "tabTCompete", "t_tcompe", "TCompete", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

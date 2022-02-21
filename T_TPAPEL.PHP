@@ -22,4 +22,3 @@ class tabTPapel extends Lance_Tabela
 		parent::__construct( "tabTPapel", "t_tpapel", "TPapel", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

@@ -52,7 +52,7 @@ function ListaDeCampos_arqTemplate( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ Nome, Template ]	);
@@ -65,7 +65,7 @@ g_arquivoCampos = ListaDeCampos_arqTemplate( '' );
 g_idOperacao = 8;
 
 if( parent.navegacao ) {
-var Menu_1 = new Array( 1,"Ações de email","","A",17,"","",1,"","1","a_aemail","arqAcaoEmail","Folhear","Template","?","","", "","", 0,21,[],[10]);
-var Menu_2 = new Array( 1,"Modelos de documentos","","M",64,"","",cnfConfig["DOCMOD"] == 1,"","1","a_docmod","arqDocMod","Folhear","Template","?","","", "","", 0,21,[],[22]);
+var Menu_1 = [ 1,"Ações de email","","A",17,"","",1,"","1","a_aemail","arqAcaoEmail","Folhear","Template","?","","", "","", 0,21,[],[10]];
+var Menu_2 = [ 1,"Modelos de documentos","","M",64,"","",cnfConfig["DOCMOD"] == 1,"","1","a_docmod","arqDocMod","Folhear","Template","?","","", "","", 0,21,[],[22]];
 parent.navegacao.MenuPrincQtdOpcoes=2;
 }

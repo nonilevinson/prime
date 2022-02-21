@@ -22,4 +22,3 @@ class tabTPix extends Lance_Tabela
 		parent::__construct( "tabTPix", "t_tpix", "TPix", 1, "u", 75, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" );
 	}
 }
-?>

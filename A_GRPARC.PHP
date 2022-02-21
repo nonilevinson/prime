@@ -2938,7 +2938,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_parGeraParc_Clinica(),
 			new campo_parGeraParc_Clinica_Clinica(),
@@ -3159,7 +3159,7 @@ function listaCampos_parGeraParc( $p_prefixo )
 			new campo_parGeraParc_Cc12_Plano_Plano(),
 			new campo_parGeraParc_Cc12_Codigo(),
 			new campo_parGeraParc_Cc12_Nome(),
-			new campo_parGeraParc_Linha12() )
+			new campo_parGeraParc_Linha12() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -3179,4 +3179,3 @@ class parGeraParc extends Lance_Parametro
 	}
 
 }
-?>

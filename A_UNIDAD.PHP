@@ -62,10 +62,10 @@ function listaCampos_arqUnidade( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqUnidade_Unidade(),
-			new campo_arqUnidade_Ativo() )
+			new campo_arqUnidade_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -89,7 +89,7 @@ class arqUnidade extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( Unidade) );
+		return( [ Unidade ] );
 	}
 
 	//-------------------------------------------------------------
@@ -98,9 +98,9 @@ class arqUnidade extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Unidade ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Unidade ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -110,9 +110,9 @@ class arqUnidade extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( Unidade ) );
-			array_push( $vetAux, array( Ativo ) );
+		$vetAux = [];
+			$vetAux[] = [ Unidade ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -125,4 +125,3 @@ class arqUnidade extends Lance_Arquivo
 	}
 
 }
-?>

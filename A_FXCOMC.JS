@@ -195,7 +195,7 @@ function ListaDeCampos_arqFxComCall( p_prefixo )
 	g_prefixo += p_prefixo;
 	this.Prefixo = g_prefixo;
 
-	var l_lista = new Array();
+	var l_lista = []
 	l_lista = l_lista.concat(
 
 		[ ComCall, ComCall_Clinica, ComCall_Clinica_Clinica, ComCall_Mes, Faixa, PercAte, Comissao ]	);
