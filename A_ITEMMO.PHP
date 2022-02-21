@@ -196,6 +196,13 @@ class campo_arqItemMov_CUnidade extends Lance_CampoCadeia
 		parent::__construct( "CUnidade", "CUnidade", "CUnidade", 10, "xxxxxxxxxx", EH_CALCULADO, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Unidade" );
+	}
+
 }
 
 //======================================================
@@ -207,7 +214,7 @@ function listaCampos_arqItemMov( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqItemMov_MovEstoque(),
 			new campo_arqItemMov_MovEstoque_Num(),
@@ -221,7 +228,7 @@ function listaCampos_arqItemMov( $p_prefixo )
 			new Lance_CampoCadeia( "TMov_Descritor", "TMov_Descritor", "Descritor", 19, "xxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TMov ),
 			new campo_arqItemMov_Qtd(),
 			new campo_arqItemMov_QtdCalc(),
-			new campo_arqItemMov_CUnidade() )
+			new campo_arqItemMov_CUnidade() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -245,7 +252,7 @@ class arqItemMov extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( MovEstoque_Num, Item) );
+		return( [ MovEstoque_Num, Item ] );
 	}
 
 	//-------------------------------------------------------------
@@ -254,14 +261,14 @@ class arqItemMov extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( MovEstoque_Num ) );
-			array_push( $vetAux, array( Item ) );
-			array_push( $vetAux, array( Lote_Medicamen_Medicamen ) );
-			array_push( $vetAux, array( Lote_Lote ) );
-			array_push( $vetAux, array( TMov_Descritor ) );
-			array_push( $vetAux, array( QtdCalc ) );
-			array_push( $vetAux, array( CUnidade ) );
+		$vetAux = [];
+			$vetAux[] = [ MovEstoque_Num ];
+			$vetAux[] = [ Item ];
+			$vetAux[] = [ Lote_Medicamen_Medicamen ];
+			$vetAux[] = [ Lote_Lote ];
+			$vetAux[] = [ TMov_Descritor ];
+			$vetAux[] = [ QtdCalc ];
+			$vetAux[] = [ CUnidade ];
 		return( $vetAux );
 	}
 
@@ -270,7 +277,7 @@ class arqItemMov extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( array( array( MovEstoque ), array( Lote ), array( TMov ), array( TMov_Chave ), array( TMov_Descritor ) ) );
+		return( [ [ MovEstoque ], [ Lote ], [ TMov ], [ TMov_Chave ], [ TMov_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -279,15 +286,15 @@ class arqItemMov extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( MovEstoque_Num ) );
-			array_push( $vetAux, array( Item ) );
-			array_push( $vetAux, array( Lote_Medicamen_Medicamen ) );
-			array_push( $vetAux, array( Lote_Lote ) );
-			array_push( $vetAux, array( TMov_Descritor ) );
-			array_push( $vetAux, array( Qtd ) );
-			array_push( $vetAux, array( QtdCalc ) );
-			array_push( $vetAux, array( CUnidade ) );
+		$vetAux = [];
+			$vetAux[] = [ MovEstoque_Num ];
+			$vetAux[] = [ Item ];
+			$vetAux[] = [ Lote_Medicamen_Medicamen ];
+			$vetAux[] = [ Lote_Lote ];
+			$vetAux[] = [ TMov_Descritor ];
+			$vetAux[] = [ Qtd ];
+			$vetAux[] = [ QtdCalc ];
+			$vetAux[] = [ CUnidade ];
 		return( $vetAux );
 	}
 
@@ -312,4 +319,3 @@ class arqItemMov extends Lance_Arquivo
 	}
 
 }
-?>
