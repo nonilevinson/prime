@@ -6,7 +6,7 @@ echo
 			array( '', Numero,
 			array( brHtml(10) . 'Data ', Data,
 			array( brHtml(4) . "Hora ", Hora, " (o Aviso só será visto a partir da data e hora informados)" ) ) ) ),
-		$this->Pedir( 'De',
+		$this->Pedir( 'Criado por',
 			array( '', Quem,
 			array( brHtml(6) . 'Prioridade ', Prioridade ) ) ),
 		$this->Pedir( 'Assunto' ),

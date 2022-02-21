@@ -239,6 +239,14 @@ Campo_arqAvisos_Quem.prototype.PodeAlterar = function()
 }
 
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqAvisos_Quem.prototype.Cabecalho = function()
+{
+		return( "Criado por" );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_arqAvisos_Quem_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )

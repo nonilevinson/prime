@@ -6,7 +6,7 @@ include_once( 'ext_aviso_criar.php' );
 sql_abrirBD( OperacaoAtual() );
 
 $assunto = "AGENDAMENTO - RETIRADA DE MEDICAÇÕES";
-$texto   = $assunto . "<b>";
+$texto   = $assunto . "<br>";
 
 $select = "Select C.Num, P.Nome, P.NumCelular, P.Prontuario, C.Clinica as idClinica
    From " . FromMarcados( "arqConsulta", "C" ) ."
@@ -29,3 +29,8 @@ criarAviso( $assunto, 2, $texto, '', null, 'AvRetira' );
 $teste = true;
 if( $teste )
    echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE - Criou o Aviso ***</p>';
+else
+{
+   desmarcarMarcados( "arqConsulta" );
+   tecleAlgoVolta( 'Aviso criado.\nVerifique', true );
+}

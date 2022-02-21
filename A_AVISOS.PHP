@@ -68,6 +68,13 @@ class campo_arqAvisos_Quem extends Lance_CampoLigado
 		parent::__construct( "Quem", "Quem", "Quem", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Criado por" );
+	}
+
 }
 
 //======================================================
@@ -79,13 +86,6 @@ class campo_arqAvisos_Quem_Usuario extends Lance_CampoCadeia
 	function __construct()
 	{
 		parent::__construct( "Quem_Usuario", "Quem_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Quem", false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Usuário" );
 	}
 
 }
