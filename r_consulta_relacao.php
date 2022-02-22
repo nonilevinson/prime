@@ -2,7 +2,7 @@
 
 require_once( 'ext_relatorios_colunares.php' );
 
-class RelParcela extends Relatorios
+class RelConsulta extends Relatorios
 {
 	//------------------------------------------------------------------------
 	function DefinirRelatorio()
@@ -105,7 +105,7 @@ class RelParcela extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelParcela( RETRATO, A4, 'Consultas_Relacao.pdf', '', true, .89 );
+$proc = new RelConsulta( RETRATO, A4, 'Consultas_Relacao.pdf', '', true, .89 );
 
 $filtro = substr(
    ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .

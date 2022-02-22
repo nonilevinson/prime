@@ -42,7 +42,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 USU=</b> '.USUARIO_ATUAL;
 			From arqGrupo
 			Where " . $p_campoGrupo . " = 1";
 		$regGrupo =sql_lerRegistros( $select );
-if( $g_debugProcesso ) echo '<br><b>GR0 ext_aviso_criar arqGrupo S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>GR0 ext_aviso_criar arqGrupo S=</b> '.$select;
 
 		foreach( $regGrupo as $umGrupo )
 			criarParaGrupo( $idAvisos, $umGrupo->IDPRIMARIO, null );

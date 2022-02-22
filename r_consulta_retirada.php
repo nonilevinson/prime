@@ -11,23 +11,25 @@ class RelAgenda extends Relatorios
 		global $parQSelecao;
 
 		$this->tituloRelatorio = [ "Relatório de agendas de retirada de medicação",
-			$this->TituloData( "Agendadas para ", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ),
+			$this->TituloData( "Agendadas ", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ),
 			' ' ];
 
       $this->DefinirCabColunas(
-         [ "Hora",         12, ALINHA_CEN ],
+         [ "Hora",         11, ALINHA_CEN ],
          [ "Consulta",     17, ALINHA_DIR ],
          [ "Prontuário",	18, ALINHA_DIR ],
          [ "Paciente",     83, ALINHA_ESQ ],
          [ "Celular",	   27, ALINHA_CEN ],
-         [ "Assessor",   	35, ALINHA_ESQ ],
+         [ "Call Center", 	42, ALINHA_ESQ ],
+			[ "Agendada em",  21, ALINHA_CEN ],
+         [ "Assessor",   	42, ALINHA_ESQ ],
          [ "Status",   		26, ALINHA_ESQ ] );
 
       $this->DefinirQuebras(
          [ 'QuebraPorClinica', 	SIM, NAO, SIM ],
          [ 'QuebraPorData', 		SIM, NAO, SIM ] );
 
-		$this->DefinirTotais( "totAgendas" );
+		$this->DefinirTotais( "totAgendas", ["totClinica". QuebraPorClinica], ["totData", QuebraPorData] );
 
 		$this->cabPaginaTemCabColunas = false;
 		$this->comCodigoRel           = false;
@@ -48,7 +50,7 @@ class RelAgenda extends Relatorios
 	{
 		global $g_debugProcesso, $parQSelecao;
 
-		if( !$parQSelecao->CLINICA )
+		if( !$parQSelecao->CLINICA && $this->ValorTotal( "totClinica" ) > 1 )
 		{
 			$this->MarcarPosicao( 'TOTAL GERAL' );
 			$this->PeQuebra( 'TOTAL GERAL' );
@@ -77,8 +79,11 @@ class RelAgenda extends Relatorios
 	function PeQuebraPorClinica()
 	{
 		global $g_debugProcesso, $parQSelecao;
-
-   	$this->PeQuebra( "TOTAL DE " . $this->quebraClinica );
+		$this->AcumularTotal( "totClinica", 1 );
+		
+   	if( $this->ValorTotal( "totData" ) > 1 )
+			$this->PeQuebra( "TOTAL DE " . $this->quebraClinica );
+		
 		$this->PularLinha( 4 );
 	}
 
@@ -103,6 +108,7 @@ class RelAgenda extends Relatorios
 	function PeQuebraPorData()
 	{
 		global $g_debugProcesso, $parQSelecao;
+		$this->AcumularTotal( "totData", 1 );		
 
    	$this->PeQuebra( "TOTAL DE " . $this->quebraData );
 		$this->PularLinha( 4 );
@@ -119,7 +125,9 @@ class RelAgenda extends Relatorios
          $regA->PRONTUARIO,
 			cadEsq( $regA->NOME, 40 ),
          formatarStr( $regA->NUMCELULAR, '(nn) n.nnnn.nnnn' ),
-			cadEsq( $regA->ASSESSOR, 30 ),
+			cadEsq( $regA->CALLCENTER, 20 ),			
+			formatarData( $regA->QDOAGRET ),
+			cadEsq( $regA->ASSESSOR, 20 ),
 			$regA->TSTAGRET ];
 
       $this->ImprimirValorColunas();
@@ -134,7 +142,7 @@ class RelAgenda extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelAgenda( RETRATO, A4, 'Agendas_Retirada.pdf', '', true, .93 );
+$proc = new RelAgenda( PAISAGEM, A4, 'Agendas_Retirada.pdf', '', true );
 
 $filtro = substr(
    ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
@@ -145,11 +153,12 @@ $filtro = substr(
    filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 );
 
 $select = "Select L.Clinica, C.Num as NumConsulta, C.DataRet, C.HoraRet, P.Nome, P.Prontuario,
-      P.NumCelular, T.Descritor as TStAgRet, U.Nome as Assessor
+      P.NumCelular, T.Descritor as TStAgRet, U.Nome as Assessor, Q.Nome as CallCenter, C.QdoAgRet
 	From arqConsulta C
 		join arqClinica 			L on L.idPrimario=C.Clinica
       join arqPessoa    		P on P.idPrimario=C.Pessoa
       left join tabTStAgRet	T on T.idPrimario=C.TStAgRet
+		left join arqUsuario		Q on Q.idPrimario=C.QuemAgRet
 		left join arqUsuario		U on U.idPrimario=C.AssesRet
 	Where " . $filtro . "
 	Order by L.Clinica, C.DataRet, C.HoraRet";

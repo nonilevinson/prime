@@ -26,7 +26,7 @@ foreach( $regConsulta as $umaConsulta )
 //function criarAviso( $p_assunto, $p_prioridade, $p_texto, $p_campo='', $p_idUsuario=null, $p_idGrupo='' )
 criarAviso( $assunto, 2, $texto, '', null, 'AvRetira' );
 
-$teste = true;
+$teste = false;
 if( $teste )
    echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE - Criou o Aviso ***</p>';
 else
