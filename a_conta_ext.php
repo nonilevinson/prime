@@ -35,9 +35,8 @@ function filtrarSelecao()
 function filtrarTodos()
 {
    return(
-	   ( SQL_VETIDCLINICA
-         ? substr( 'A.Clinica in ' . SQL_VETIDCLINICA . ' and ', 0, -4 )
-         : ''
-      )
+	   ( SQL_VETIDCLINICA ? 'A.Clinica in ' . SQL_VETIDCLINICA : '' ) /*.
+      ( SQL_VETIDCLINICA && SQL_VETIDCCOR ? ' and ' : '' ) .
+		( SQL_VETIDCCOR ? 'A.CCor in ' . SQL_VETIDCCOR : '' ) */
    );
 }

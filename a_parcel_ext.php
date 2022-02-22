@@ -1,7 +1,7 @@
 <?php
 
 //===========================================================
-function ext_filtrarSelecao()
+function filtrarSelecao()
 {
    $parQSelecao = lerParametro( 'parQSelecao' );
 
@@ -17,7 +17,8 @@ function ext_filtrarSelecao()
 	}
 
    return( substr( $filtroData .
-      ( SQL_VETIDCLINICA ? "A.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
+      ( SQL_VETIDCLINICA ? "Conta.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
+      ( SQL_VETIDCCOR ? "A.CCor in " . SQL_VETIDCCOR . ' and ': '' ) .
       filtrarPorIntervaloData( "A.DataPagto", $parQSelecao->DATAINI1, $parQSelecao->DATAFIM1 ) .
       filtrarPorLig( "A.Conta,arqConta.TPgRec", $parQSelecao->TPGREC ) .
       filtrarPorLig( "A.Conta,arqConta.Clinica", $parQSelecao->CLINICA ) .
@@ -27,12 +28,11 @@ function ext_filtrarSelecao()
 }
 
 //===========================================================
-function ext_filtrarTodas()
+function filtrarTodas()
 {
 	return(
-		( SQL_VETIDCLINICA
-         ? substr( 'Conta.Clinica in ' . SQL_VETIDCLINICA . ' and ', 0, -4 )
-         : ''
-      )
-    );
+		( SQL_VETIDCLINICA ? 'Conta.Clinica in ' . SQL_VETIDCLINICA : '' ) .
+      ( SQL_VETIDCLINICA && SQL_VETIDCCOR ? ' and ' : '' ) .
+		( SQL_VETIDCCOR ? 'A.CCor in ' . SQL_VETIDCCOR : '' ) 
+   );
 }

@@ -11,7 +11,6 @@ $select = "Select C.idPrimario as idClinica, C.Clinica
 		join arqClinica C on C.idPrimario=U.Clinica
 	Where U.Usuario = " . USUARIO_ATUAL;
 // if( $g_debugProcesso ) echo '<br><b>GR0 lance_executar_sempre arqUsuCen S=</b> '.$select;
-
 $regUsuCen = sql_lerRegistros( $select );
 
 if( $regUsuCen )
@@ -19,7 +18,7 @@ if( $regUsuCen )
 	foreach( $regUsuCen as $umRegUsuCen )
 	{
 		$vetIdClinica[] = $umRegUsuCen->IDCLINICA;
-		$vetClinica[]   = $umRegUsuCen->CLINICA;
+		// $vetClinica[]   = $umRegUsuCen->CLINICA;
 	}
 
 	//* implode o vetor criado na variável SQL_VETIDCLINICA, assim nos ext.php de cada arqvuivo basta
@@ -29,7 +28,33 @@ if( $regUsuCen )
 else //* NÃO TEM ESPECÍFICO MONTA VETOR VAZIO
 	define( 'SQL_VETIDCLINICA', "" );
 
-if( $g_debugProcesso ) echo '<br><b>GR0 lance_executar_sempre vetIdClinica Size=</b> '.sizeof( $vetIdClinica ).' <b>VETIDCLINICA=</b> '.SQL_VETIDCLINICA;
+//=============================================================================================
+//* verificar que contas correntes o usuario pode manipular
+$select = "Select C.idPrimario as idCCor, C.Nome
+	From arqUsuCCor U
+		join arqCCor C on C.idPrimario=U.CCor
+	Where U.Usuario = " . USUARIO_ATUAL;
+// if( $g_debugProcesso ) echo '<br><b>GR0 lance_executar_sempre arqUsuCCor S=</b> '.$select;
+$regUsuCCor = sql_lerRegistros( $select );
+
+if( $regUsuCCor )
+{
+	foreach( $regUsuCCor as $umRegUsuCCor )
+		$vetIdCCor[] = $umRegUsuCCor->IDCCOR;
+
+	//* implode o vetor criado na variável SQL_VETIDCCOR, assim nos ext.php de cada arqvuivo basta
+	//*	criar um return: return( "CAMPO in " . $vetIdCCor  );
+	define( 'SQL_VETIDCCOR', "( " . implode( ",", $vetIdCCor ) . " )" );
+}
+else //* NÃO TEM ESPECÍFICO MONTA VETOR VAZIO
+	define( 'SQL_VETIDCCOR', "" );
+
+if( $g_debugProcesso )
+{
+	echo '<br><b>GR0 lance_executar_sempre vetIdClinica Size=</b> '.sizeof( $vetIdClinica ).
+		' <b>VETIDCLINICA=</b> '.SQL_VETIDCLINICA.' | <b>vetIdCCor Size=</b> '.
+		sizeof( $vetIdCCor ).' <b>VETIDCLINICA=</b> '.SQL_VETIDCCOR;
+}
 
 //=============================================================================================
 //* sobre desmarcações

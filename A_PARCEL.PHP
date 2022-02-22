@@ -821,6 +821,22 @@ class arqParcela extends Lance_Arquivo
 	}
 
 	//-------------------------------------------------------------
+	// Visões do Arquivo: FilTodas  
+	//-------------------------------------------------------------
+	function FilTodas()
+	{
+	return( "" . filtrarTodas() . "" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: FilSel    
+	//-------------------------------------------------------------
+	function FilSel()
+	{
+	return( "" . filtrarSelecao() . "" );
+	}
+
+	//-------------------------------------------------------------
 	// Visões do Arquivo: EhHoje    
 	//-------------------------------------------------------------
 	function EhHoje()
@@ -874,22 +890,6 @@ class arqParcela extends Lance_Arquivo
 	function RecFuturo()
 	{
 	return( "". $this->ContaRec() . " and A.Vencimento > current_date and A.DataPagto is null" );
-	}
-
-	//-------------------------------------------------------------
-	// Visões do Arquivo: FilSel    
-	//-------------------------------------------------------------
-	function FilSel()
-	{
-	return( "" . ext_filtrarSelecao() . "" );
-	}
-
-	//-------------------------------------------------------------
-	// Visões do Arquivo: FilTodas  
-	//-------------------------------------------------------------
-	function FilTodas()
-	{
-	return( "" . ext_filtrarTodas() . "" );
 	}
 
 	//-------------------------------------------------------------
