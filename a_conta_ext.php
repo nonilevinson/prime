@@ -21,8 +21,20 @@ function filtrarSelecao()
 {
    $parQSelecao = lerParametro( 'parQSelecao' );
 
+   if( SQL_VETIDCCOR )
+   {
+      $select = "Select P.Conta as idConta
+         From arqParcela P
+         Where P.CCor in " . SQL_VETIDCCOR;
+      $regParcela =sql_lerRegistros( $select );
+
+      foreach( $regParcela as $umaParcela )
+         $vetIdConta[] = $umaParcela->IDCONTA;
+   }
+   
    return( substr(
       ( SQL_VETIDCLINICA ? "A.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
+      ( SQL_VETIDCCOR ? 'A.idPrimario in (' . implode( ",", $vetIdConta ) . ") and " : '' ) .
       ( $parQSelecao->CADEIA30 != '' ? filtrarPorUpper( "A.Historico", $parQSelecao->CADEIA30 ) : '' ) .
       filtrarPorLig( "A.TPgRec", $parQSelecao->TPGREC ) .
       filtrarPorLig( "A.Clinica", $parQSelecao->CLINICA ) .
@@ -34,9 +46,20 @@ function filtrarSelecao()
 //===========================================================
 function filtrarTodos()
 {
+   if( SQL_VETIDCCOR )
+   {
+      $select = "Select P.Conta as idConta
+         From arqParcela P
+         Where P.CCor in " . SQL_VETIDCCOR;
+      $regParcela =sql_lerRegistros( $select );
+
+      foreach( $regParcela as $umaParcela )
+         $vetIdConta[] = $umaParcela->IDCONTA;
+   }
+
    return(
-	   ( SQL_VETIDCLINICA ? 'A.Clinica in ' . SQL_VETIDCLINICA : '' ) /*.
+	   ( SQL_VETIDCLINICA ? 'A.Clinica in ' . SQL_VETIDCLINICA : '' ) .
       ( SQL_VETIDCLINICA && SQL_VETIDCCOR ? ' and ' : '' ) .
-		( SQL_VETIDCCOR ? 'A.CCor in ' . SQL_VETIDCCOR : '' ) */
+		( SQL_VETIDCCOR ? 'A.idPrimario in (' . implode( ",", $vetIdConta ) . " )" : '' )
    );
 }

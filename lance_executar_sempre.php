@@ -23,7 +23,7 @@ if( $regUsuCen )
 
 	//* implode o vetor criado na variável SQL_VETIDCLINICA, assim nos ext.php de cada arqvuivo basta
 	//*	criar um return: return( "CAMPO in " . SQL_VETIDCLINICA  );
-	define( 'SQL_VETIDCLINICA', "( " . implode( ",", $vetIdClinica ) . " )" );
+	define( 'SQL_VETIDCLINICA', "(" . implode( ",", $vetIdClinica ) . ")" );
 }
 else //* NÃO TEM ESPECÍFICO MONTA VETOR VAZIO
 	define( 'SQL_VETIDCLINICA', "" );
@@ -44,7 +44,7 @@ if( $regUsuCCor )
 
 	//* implode o vetor criado na variável SQL_VETIDCCOR, assim nos ext.php de cada arqvuivo basta
 	//*	criar um return: return( "CAMPO in " . $vetIdCCor  );
-	define( 'SQL_VETIDCCOR', "( " . implode( ",", $vetIdCCor ) . " )" );
+	define( 'SQL_VETIDCCOR', "(" . implode( ",", $vetIdCCor ) . ")" );
 }
 else //* NÃO TEM ESPECÍFICO MONTA VETOR VAZIO
 	define( 'SQL_VETIDCCOR', "" );

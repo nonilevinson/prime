@@ -245,6 +245,7 @@ $select = "Select P.Parcela, P.Vencimento, P.ValorLiq, P.Estimado, P.VencEst, P.
 		left join arqPessoa  	S on S.idPrimario=C.Pessoa
 	Where " . substr(
       ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
+		( SQL_VETIDCCOR ? "P.CCor in " . SQL_VETIDCCOR . ' and ': '' ) .
 		filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ) .
 		filtrarPorLig( 'C.Fornecedor', $parQSelecao->FORNECEDOR ) .
 		filtrarPorLig( 'C.Pessoa', $parQSelecao->CLIENTE ) .
