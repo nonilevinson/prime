@@ -888,6 +888,7 @@ g_arquivoCampos = ListaDeCampos_arqCCor( '' );
 g_idOperacao = 20;
 
 if( parent.navegacao ) {
-var Menu_1 = [ 1,"Parcelas","","P",101,"","",1,"","1","a_parcel","arqParcela","Folhear","CCor","?","","", "","", 0,8,[],[34]];
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_1 = [ 1,"Parcelas","","P",101,"","",1,"","1","a_parcel","arqParcela","Folhear","CCor","?","","", "","", 0,18,[],[34]];
+var Menu_2 = [ 1,"Usuários Permissão","","U",251,"","",1,"","1","a_usucco","arqUsuCCor","Folhear","CCor","?","","", "","", 0,18,[],[59]];
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }

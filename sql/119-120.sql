@@ -7,6 +7,7 @@ commit;
 execute procedure reindexartudo;
 commit;
 
+insert into arqLanceOperacao values(100059,1,'Cadastro da relação entre usuários e contas correntes','arqUsuCCor',59,90,0,'');
 insert into arqLanceOperacao values(200249,2,'Rotina para criar aviso de que pode agendar a retirada da medicação','',249,1,0,'');
 insert into arqLanceOperacao values(300005,3,'Pode alterar campos de separação de medicação da consulta - Estoque?','',5,1,0,'');
 commit;
@@ -294,6 +295,64 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Medico', OLD.Medico, NEW.Medico );
 	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
 	execute procedure set_log( 12, NEW.idPrimario, 'AvRetira', OLD.AvRetira, NEW.AvRetira );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Arquivo UsuCCor   
+************************************************************/
+
+CREATE TABLE arqUsuCCor
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  3*/	CCOR ligadoComArquivo, /* Ligado com o Arquivo CCor */
+	CONSTRAINT arqUsuCCor_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqUsuCCor_UK UNIQUE ( Usuario, CCor )
+);
+commit;
+
+CREATE DESC INDEX arqUsuCCor_IdPrimario_Desc ON arqUsuCCor (IDPRIMARIO);
+commit;
+
+ALTER TABLE arqUsuCCor ADD CONSTRAINT arqUsuCCor_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqUsuCCor ADD CONSTRAINT arqUsuCCor_FK_CCor FOREIGN KEY ( CCOR ) REFERENCES arqCCor ON DELETE CASCADE ON UPDATE CASCADE;
+commit;
+
+RECREATE VIEW V_arqUsuCCor AS 
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A1.USUARIO as USUARIO_USUARIO, A0.CCOR, A2.NOME as CCOR_NOME
+	FROM arqUsuCCor A0
+	left join arqUsuario A1 on A1.IDPRIMARIO = A0.USUARIO
+	left join arqCCor A2 on A2.IDPRIMARIO = A0.CCOR;
+commit;
+
+/************************************************************
+	Trigger para Log de arqUsuCCor
+************************************************************/
+
+set term ^;
+
+recreate trigger arqUsuCCor_LOG for arqUsuCCor
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Usuario_Usuario, ' ' ) || '-' || coalesce( CCor_Nome, ' ' ) from v_arqUsuCCor where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100059 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
+	execute procedure set_log( 12, NEW.idPrimario, 'CCor', OLD.CCor, NEW.CCor );
 end
 end^
 

@@ -2877,6 +2877,24 @@ commit;
 
 
 /************************************************************
+	Arquivo UsuCCor   
+************************************************************/
+
+CREATE TABLE arqUsuCCor
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  3*/	CCOR ligadoComArquivo, /* Ligado com o Arquivo CCor */
+	CONSTRAINT arqUsuCCor_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqUsuCCor_UK UNIQUE ( Usuario, CCor )
+);
+commit;
+
+CREATE DESC INDEX arqUsuCCor_IdPrimario_Desc ON arqUsuCCor (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -3383,6 +3401,13 @@ RECREATE VIEW V_arqItemMov AS
 	left join tabTMov A4 on A4.IDPRIMARIO=A0.TMOV;
 commit;
 
+RECREATE VIEW V_arqUsuCCor AS 
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A1.USUARIO as USUARIO_USUARIO, A0.CCOR, A2.NOME as CCOR_NOME
+	FROM arqUsuCCor A0
+	left join arqUsuario A1 on A1.IDPRIMARIO = A0.USUARIO
+	left join arqCCor A2 on A2.IDPRIMARIO = A0.CCOR;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -3474,6 +3499,7 @@ insert into arqLanceOperacao values(100054,1,'Cadastro as medicação da consulta'
 insert into arqLanceOperacao values(100055,1,'Cadastro de lotes de medicamentos','arqLote',55,2,0,'');
 insert into arqLanceOperacao values(100056,1,'Cadastro de movimentos de estoque','arqMovEstoque',56,2,0,'');
 insert into arqLanceOperacao values(100057,1,'Cadastro de itens de movimento de estoque','arqItemMov',57,2,0,'');
+insert into arqLanceOperacao values(100059,1,'Cadastro da relação entre usuários e contas correntes','arqUsuCCor',59,90,0,'');
 insert into arqLanceOperacao values(200193,2,'Rotina para excluir permissões de grupos de acesso','',193,null,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
@@ -3665,6 +3691,8 @@ ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_QuemAgRet FOREIGN KEY ( QU
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TStAgRet FOREIGN KEY ( TSTAGRET ) REFERENCES tabTStAgRet ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_AssesRet FOREIGN KEY ( ASSESRET ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqHoraBloq ADD CONSTRAINT arqHoraBloq_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqUsuCCor ADD CONSTRAINT arqUsuCCor_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqUsuCCor ADD CONSTRAINT arqUsuCCor_FK_CCor FOREIGN KEY ( CCOR ) REFERENCES arqCCor ON DELETE CASCADE ON UPDATE CASCADE;
 commit;
 
 
@@ -5391,6 +5419,36 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Lote', OLD.Lote, NEW.Lote );
 	execute procedure set_log( 12, NEW.idPrimario, 'TMov', OLD.TMov, NEW.TMov );
 	execute procedure set_log( 12, NEW.idPrimario, 'Qtd', OLD.Qtd, NEW.Qtd );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqUsuCCor
+************************************************************/
+
+set term ^;
+
+recreate trigger arqUsuCCor_LOG for arqUsuCCor
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Usuario_Usuario, ' ' ) || '-' || coalesce( CCor_Nome, ' ' ) from v_arqUsuCCor where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100059 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
+	execute procedure set_log( 12, NEW.idPrimario, 'CCor', OLD.CCor, NEW.CCor );
 end
 end^
 
