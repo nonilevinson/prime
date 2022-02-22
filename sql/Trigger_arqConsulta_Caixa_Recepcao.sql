@@ -30,7 +30,7 @@ active before Insert or Update position 101 as
 	declare taxa3 numeric(18,2);
 begin
 
-	if( NEW.TiAgenda = 1 ) then
+	if( NEW.TiAgenda = 1 && ( ( inserting and NEW.Valor > 0 ) or updating ) ) then
 	begin
 	--exception teste 'idConta= ' || coalesce( :idConta, 'null' ) || 'NEW valor= ' || NEW.Valor || ' old valor= ' || OLD.VALOR || ' NEW FormaPg= ' || NEW.FormaPg || ' OLD formaPg= ' || OLD.FormaPg;
 		if( updating and NEW.ContaCons > 0 and ( NEW.Valor <> OLD.Valor or NEW.FormaPg <> OLD.FormaPg ) ) then
