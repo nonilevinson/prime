@@ -361,3 +361,15 @@ end^
 set term ;^
 
 commit;
+
+/************************************************************
+	Arquivo Consulta  
+************************************************************/
+
+ALTER TABLE arqConsulta Drop CONSTRAINT arqConsulta_FK_ContaCons, drop CONSTRAINT arqConsulta_FK_ContaPTra;
+commit;
+
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaCons FOREIGN KEY ( CONTACONS ) REFERENCES arqConta ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaPTra FOREIGN KEY ( CONTAPTRA ) REFERENCES arqConta ON DELETE CASCADE ON UPDATE CASCADE;
+commit;
+

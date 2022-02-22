@@ -16,12 +16,15 @@ active before Insert or Update position 101 as
 	declare dataComp date;
 	declare valor numeric(18,2);
 	declare valorLiq numeric(18,2);
+	declare valor2 numeric(18,2);
+	declare valorLiq2 numeric(18,2);
 	declare txCartao numeric(18,2);
 	declare transacao bigInt;
 	declare idCCor bigInt;
 	declare idSubPlano bigInt;
 	declare idTFCobra bigInt;
 	declare idTFPagto bigInt;
+	declare idTFPagto2 bigInt;
 	declare dinheiro smallint;
 	declare cartao smallint;
 	declare dias smallint;
@@ -30,7 +33,7 @@ active before Insert or Update position 101 as
 	declare taxa3 numeric(18,2);
 begin
 
-	if( NEW.TiAgenda = 1 && ( ( inserting and NEW.Valor > 0 ) or updating ) ) then
+	if( NEW.TiAgenda = 1 ) then
 	begin
 	--exception teste 'idConta= ' || coalesce( :idConta, 'null' ) || 'NEW valor= ' || NEW.Valor || ' old valor= ' || OLD.VALOR || ' NEW FormaPg= ' || NEW.FormaPg || ' OLD formaPg= ' || OLD.FormaPg;
 		if( updating and NEW.ContaCons > 0 and ( NEW.Valor <> OLD.Valor or NEW.FormaPg <> OLD.FormaPg ) ) then

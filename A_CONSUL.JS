@@ -2292,16 +2292,6 @@ ContaPTra.CamposChave= [ ContaPTra_Transacao ];
 QuemAgRet.CamposChave= [ QuemAgRet_Usuario ];
 AssesRet.CamposChave= [ AssesRet_Usuario ];
 }
-	//=========================================================================
-	function AcionaTecla( p_tecla )
-	{
-		switch( p_tecla )
-		{
-			case _DEL: return( !tem( ContaCons ) && !tem( ContaPTra ) );
-		}
-		return( true );
-	}
-	g_acionaTecla="AcionaTecla";
 
 
 //======================================================
