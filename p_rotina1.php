@@ -3,17 +3,18 @@
 global $g_debugProcesso;
 
 // sql_abrirBD( OperacaoAtual() );
-// sql_abrirBD( false );
+sql_abrirBD( false );
 
 
 sql_executarComando( 'alter trigger ARQCONSULTA_AI_AU inactive;' );
-commit;
+sql_commit();
+
 
 $select = "Select C.idPrimario as idConta
    From arqConta C
    Where C.TrgValor = 0";
 $regConta =sql_lerRegistros( $select );
-if( $g_debugProcesso ) echo '<br><b>GR0 arqConta S=</b> '.$select;
+echo '<br><b>GR0 arqConta S=</b> '.$select;
 
 foreach( $regConta as $umaConta )
 {
@@ -24,16 +25,14 @@ foreach( $regConta as $umaConta )
       "ContaCons = " . $idConta,1,true );
 
    $delete = "delete From arqConta Where idPrimario = " . $idConta;
-if( $g_debugProcesso ) echo '<br><b>GR0 delete S=</b> '.$delete;
-
+echo '<br><b>GR0 delete S=</b> '.$delete;
    
    sql_executarComando( $delete );
-   commit;
+   sql_commit();
 }
 
 sql_executarComando( 'alter trigger ARQCONSULTA_AI_AU active;' );
-commit;
-
+sql_commit();
 
 /*
 $select = "Select RecorDia From cnfXConfig";
@@ -55,4 +54,5 @@ else
 
 sql_fecharBD();
 
-if( $g_debugProcesso ) echo '<br><b>FIM p_rotina1 ÀS '.AGORA().'</b>';
+echo '<p style="text-align: center; font-weight: bold; font-size:16px">*** Fim às ' .
+   formatarHora( AGORA, 'hh:mm' ) . ' ***</p>';

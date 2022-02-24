@@ -3530,6 +3530,7 @@ insert into arqLanceOperacao values(200048,2,'Rotina de envio de email Funcionár
 insert into arqLanceOperacao values(200049,2,'Rotina de envio de email Avisa Niver Dia','',49,99,1,'');
 insert into arqLanceOperacao values(200028,2,'Relatório de log de acessos ao sistema','',28,90,0,'');
 insert into arqLanceOperacao values(200107,2,'Rotina para alterar as senhas dos usuários','',107,null,0,'');
+insert into arqLanceOperacao values(200254,2,'Rotina para atualizar o vencimento','',254,99,1,'');
 insert into arqLanceOperacao values(200163,2,'Rotina para criar contas recorrentes','',163,99,1,'');
 insert into arqLanceOperacao values(200083,2,'Rotina para reindexar os índices','',83,99,1,'');
 insert into arqLanceOperacao values(200073,2,'Relatório analítico de interações no sistema','',73,90,0,'');

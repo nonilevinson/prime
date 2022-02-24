@@ -21,14 +21,17 @@ foreach( $regPessoa as $umaPessoa )
    
    $deleteConta = "delete from arqConta Where Pessoa = " . $idPessoa;
    sql_executarComando( $deleteConta );
+   sql_commit();
 // if( $g_debugProcesso ) echo '<br><b>GR0 delete arqConta=</b> '.$deleteConta;
    
    $deleteConsulta = "delete from arqConsulta Where Pessoa = " . $idPessoa;
    sql_executarComando( $deleteConsulta );
+   sql_commit();
 // if( $g_debugProcesso ) echo '<br><b>GR0 delete arqConsulta=</b> '.$deleteConsulta;
 
    $deletePessoa = "delete from arqPessoa Where idPrimario = " . $idPessoa;
    sql_executarComando( $deletePessoa );
+   sql_commit();
 // if( $g_debugProcesso ) echo '<br><b>GR0 delete arqConsulta=</b> '.$deletePessoa;
 }
 
