@@ -582,12 +582,13 @@ g_arquivoCampos = ListaDeCampos_arqPessoa( '' );
 g_idOperacao = 7;
 
 if( parent.navegacao ) {
-var Menu_1 = [ 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,11,[],[39]];
-var Menu_2 = [ 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,11,[],[33]];
-var Menu_3 = [ 1,"Recorrentes","","R",155,"","",1,"","1","a_recor","arqRecorrente","Folhear","Pessoa","?","","", "","", 0,11,[],[46]];
-var Menu_4 = [ 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,11,[],[21]];
-var Menu_5 = [ 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 11,[],[12,13] ];
+var Menu_1 = [ 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,15,[],[39]];
+var Menu_2 = [ 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,15,[],[33]];
+var Menu_3 = [ 1,"Recorrentes","","R",155,"","",1,"","1","a_recor","arqRecorrente","Folhear","Pessoa","?","","", "","", 0,15,[],[46]];
+var Menu_4 = [ 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,15,[],[21]];
+var Menu_5 = [ 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 15,[],[12,13] ];
 var Menu_5_1 = [ 1,"Programado","","P",26,"","",1,"","1","a_logema","arqLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[12]];
 var Menu_5_2 = [ 1,"Recebeu","","R",25,"","",1,"","1","a_itloge","arqItLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[13]];
-parent.navegacao.MenuPrincQtdOpcoes=5;
+var Menu_6 = [ 1,"Excluir Relação","","x",253,"","",1,"temMarcados()","5","p_pessoa_excluir","","","","","","", "","", 0,15,[253],[]];
+parent.navegacao.MenuPrincQtdOpcoes=6;
 }
