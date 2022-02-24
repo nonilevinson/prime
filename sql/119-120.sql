@@ -375,3 +375,535 @@ ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaCons FOREIGN KEY ( CO
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaPTra FOREIGN KEY ( CONTAPTRA ) REFERENCES arqConta ON DELETE CASCADE ON UPDATE CASCADE;
 commit;
 
+/************************************************************
+	Arquivo AcaoEmail 
+************************************************************/
+drop trigger arqAcaoEmail_log;
+drop view v_arqAcaoEmail;
+commit;
+
+ALTER TABLE arqAcaoEmail drop ARQUIVO_ARQUIVO, drop IMAGEM_ARQUIVO;
+
+ALTER TABLE arqAcaoEmail
+add /*  9*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( lower( 'AcaoEmail/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
+add /* 12*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( lower( 'AcaoEmail/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) );
+commit;
+
+RECREATE VIEW V_arqAcaoEmail AS 
+	SELECT A0.IDPRIMARIO, A0.TITULO, A0.VERSAO, A0.TIPOACAO, A1.CHAVE as TipoAcao_CHAVE, A1.DESCRITOR as TipoAcao_DESCRITOR, A0.TEMPLATE, A2.NOME as TEMPLATE_NOME, A0.PADRAOACAO, A3.CHAVE as PadraoAcao_CHAVE, A3.DESCRITOR as PadraoAcao_DESCRITOR, A0.ATIVO, A0.ARQUIVO, A0.Arquivo_ARQUIVO, A0.HTML, A0.IMAGEM, A4.CHAVE as Imagem_CHAVE, A4.DESCRITOR as Imagem_DESCRITOR, A0.IMAGEM_ARQUIVO, A0.LINK, A0.IMAGEMALT, A0.QTDTESTE
+	FROM arqAcaoEmail A0
+	left join tabTipoAcao A1 on A1.IDPRIMARIO=A0.TIPOACAO
+	left join arqTemplate A2 on A2.IDPRIMARIO = A0.TEMPLATE
+	left join tabPadraoAcao A3 on A3.IDPRIMARIO=A0.PADRAOACAO
+	left join tabLanceTipoImg A4 on A4.IDPRIMARIO = A0.IMAGEM;
+commit;
+
+/************************************************************
+	Trigger para Log de arqAcaoEmail
+************************************************************/
+
+set term ^;
+
+recreate trigger arqAcaoEmail_LOG for arqAcaoEmail
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Titulo,'' ) || coalesce( OLD.Versao,'' );
+else
+	valorChave = coalesce( NEW.Titulo,'' ) || coalesce( NEW.Versao,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100010 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Titulo', OLD.Titulo, NEW.Titulo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Versao', OLD.Versao, NEW.Versao );
+	execute procedure set_log( 12, NEW.idPrimario, 'TipoAcao', OLD.TipoAcao, NEW.TipoAcao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Template', OLD.Template, NEW.Template );
+	execute procedure set_log( 12, NEW.idPrimario, 'PadraoAcao', OLD.PadraoAcao, NEW.PadraoAcao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Link', OLD.Link, NEW.Link );
+	execute procedure set_log( 12, NEW.idPrimario, 'ImagemAlt', OLD.ImagemAlt, NEW.ImagemAlt );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.Arquivo is distinct from OLD.Arquivo )  OR 
+		( NEW.Html is distinct from OLD.Html )  OR 
+		( NEW.Imagem is distinct from OLD.Imagem )  OR 
+		( NEW.QtdTeste is distinct from OLD.QtdTeste )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqAcaoEmail
+alter IDPRIMARIO position 1,
+alter TITULO position 2,
+alter VERSAO position 3,
+alter TIPOACAO position 4,
+alter TEMPLATE position 5,
+alter PADRAOACAO position 6,
+alter ATIVO position 7,
+alter ARQUIVO position 8,
+alter ARQUIVO_ARQUIVO position 9,
+alter HTML position 10,
+alter IMAGEM position 11,
+alter IMAGEM_ARQUIVO  position 12,
+alter LINK position 13,
+alter IMAGEMALT position 14,
+alter QTDTESTE position 15;
+commit;
+
+/************************************************************
+	Arquivo Conta     
+************************************************************/
+drop trigger arqParcela_log;
+drop view v_arqParcela;
+commit;
+
+drop trigger arqConta_log;
+drop view v_arqConta;
+commit;
+
+ALTER TABLE arqConta drop ARQ1_ARQUIVO;
+commit;
+
+ALTER TABLE arqConta 
+add /* 21*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Conta/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) );
+commit;
+
+RECREATE VIEW V_arqConta AS 
+	SELECT A0.IDPRIMARIO, A0.TRANSACAO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TPGREC, A2.CHAVE as TPgRec_CHAVE, A2.DESCRITOR as TPgRec_DESCRITOR, A0.FORNECEDOR, A3.NOME as FORNECEDOR_NOME, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.NOME, A0.TRGVALOR, A0.TRGVALLIQ, A0.TRGQTDPARC, A0.TRGQPARCPG, A0.PROXVENC, A0.TRGPAGO, A0.SALDO, A0.DOCUMENTO, A0.EMISSAO, A0.RECENVIA, A0.COMPETE, A0.HISTORICO, A0.ARQ1, A0.Arq1_ARQUIVO
+	FROM arqConta A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join tabTPgRec A2 on A2.IDPRIMARIO=A0.TPGREC
+	left join arqFornecedor A3 on A3.IDPRIMARIO = A0.FORNECEDOR
+	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA;
+commit;
+
+/************************************************************
+	Trigger para Log de arqConta
+************************************************************/
+
+set term ^;
+
+recreate trigger arqConta_LOG for arqConta
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Transacao,'' );
+else
+	valorChave = coalesce( NEW.Transacao,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100033 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Transacao', OLD.Transacao, NEW.Transacao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPgRec', OLD.TPgRec, NEW.TPgRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'Fornecedor', OLD.Fornecedor, NEW.Fornecedor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Documento', OLD.Documento, NEW.Documento );
+	execute procedure set_log( 12, NEW.idPrimario, 'Emissao', OLD.Emissao, NEW.Emissao );
+	execute procedure set_log( 12, NEW.idPrimario, 'RecEnvia', OLD.RecEnvia, NEW.RecEnvia );
+	execute procedure set_log( 12, NEW.idPrimario, 'Compete', OLD.Compete, NEW.Compete );
+	execute procedure set_log( 12, NEW.idPrimario, 'Historico', OLD.Historico, NEW.Historico );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.Arq1 is distinct from OLD.Arq1 )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Arquivo Parcela   
+************************************************************/
+ALTER TABLE arqParcela drop ARQ1_ARQUIVO;
+commit;
+
+ALTER TABLE arqParcela
+add /* 26*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) );
+commit;
+
+RECREATE VIEW V_arqParcela AS 
+	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, A0.CLINICACAL, A0.TPGRECCAL, A0.PESSOACAL, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.NOME as CCOR_NOME, A0.SUBPLANO, A4.PLANO as SUBPLANO_PLANO, A5.CODPLANO as SUBPLANO_PLANO_CODPLANO, A5.PLANO as SUBPLANO_PLANO_PLANO, A4.CODIGO as SUBPLANO_CODIGO, A4.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A6.CHAVE as TFPagto_CHAVE, A6.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A7.CHAVE as TDetPg_CHAVE, A7.DESCRITOR as TDetPg_DESCRITOR, A0.FORMAPG, A8.FORMAPG as FORMAPG_FORMAPG, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM, A0.HISTORICO
+	FROM arqParcela A0
+	left join arqConta A1 on A1.IDPRIMARIO = A0.CONTA
+	left join tabTFCobra A2 on A2.IDPRIMARIO=A0.TFCOBRA
+	left join arqCCor A3 on A3.IDPRIMARIO = A0.CCOR
+	left join arqSubPlano A4 on A4.IDPRIMARIO = A0.SUBPLANO
+	left join arqPlano A5 on A5.IDPRIMARIO = A4.PLANO
+	left join tabTFPagto A6 on A6.IDPRIMARIO=A0.TFPAGTO
+	left join tabTDetPg A7 on A7.IDPRIMARIO=A0.TDETPG
+	left join arqFormaPg A8 on A8.IDPRIMARIO = A0.FORMAPG;
+commit;
+
+/************************************************************
+	Trigger para Log de arqParcela
+************************************************************/
+
+set term ^;
+
+recreate trigger arqParcela_LOG for arqParcela
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Conta_Transacao, ' ' ) || '-' || coalesce( Parcela, ' ' ) from v_arqParcela where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100034 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Conta', OLD.Conta, NEW.Conta );
+	execute procedure set_log( 12, NEW.idPrimario, 'Parcela', OLD.Parcela, NEW.Parcela );
+	execute procedure set_log( 12, NEW.idPrimario, 'Vencimento', OLD.Vencimento, NEW.Vencimento );
+	execute procedure set_log( 12, NEW.idPrimario, 'VencEst', OLD.VencEst, NEW.VencEst );
+	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'ValorLiq', OLD.ValorLiq, NEW.ValorLiq );
+	execute procedure set_log( 12, NEW.idPrimario, 'Estimado', OLD.Estimado, NEW.Estimado );
+	execute procedure set_log( 12, NEW.idPrimario, 'TFCobra', OLD.TFCobra, NEW.TFCobra );
+	execute procedure set_log( 12, NEW.idPrimario, 'Emissao', OLD.Emissao, NEW.Emissao );
+	execute procedure set_log( 12, NEW.idPrimario, 'CCor', OLD.CCor, NEW.CCor );
+	execute procedure set_log( 12, NEW.idPrimario, 'SubPlano', OLD.SubPlano, NEW.SubPlano );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataPagto', OLD.DataPagto, NEW.DataPagto );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataComp', OLD.DataComp, NEW.DataComp );
+	execute procedure set_log( 12, NEW.idPrimario, 'TFPagto', OLD.TFPagto, NEW.TFPagto );
+	execute procedure set_log( 12, NEW.idPrimario, 'TDetPg', OLD.TDetPg, NEW.TDetPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'FormaPg', OLD.FormaPg, NEW.FormaPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'Cheque', OLD.Cheque, NEW.Cheque );
+	execute procedure set_log( 12, NEW.idPrimario, 'Historico', OLD.Historico, NEW.Historico );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.LinhaDig is distinct from OLD.LinhaDig )  OR 
+		( NEW.NomePdf is distinct from OLD.NomePdf )  OR 
+		( NEW.Arq1 is distinct from OLD.Arq1 )  OR 
+		( NEW.StRetorno is distinct from OLD.StRetorno )  OR 
+		( NEW.Remessa is distinct from OLD.Remessa )  OR 
+		( NEW.DataRem is distinct from OLD.DataRem )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqParcela
+alter IDPRIMARIO position 1,
+alter CONTA position 2,
+alter CLINICACAL position 3,
+alter TPGRECCAL position 4,
+alter PESSOACAL position 5,
+alter PARCELA position 6,
+alter VENCIMENTO position 7,
+alter VENCEST position 8,
+alter VALOR position 9,
+alter VALORLIQ position 10,
+alter ESTIMADO position 11,
+alter TFCOBRA position 12,
+alter EMISSAO position 13,
+alter NUMBOLETO position 14,
+alter LINHADIG position 15,
+alter NOMEPDF position 16,
+alter CCOR position 17,
+alter SUBPLANO position 18,
+alter DATAPAGTO position 19,
+alter DATACOMP position 20,
+alter TFPAGTO position 21,
+alter TDETPG position 22,
+alter FORMAPG position 23,
+alter CHEQUE position 24,
+alter ARQ1 position 25,
+alter ARQ1_ARQUIVO position 26,
+alter STRETORNO position 27,
+alter REMESSA position 28,
+alter DATAREM position 29,
+alter HISTORICO position 30;
+commit;
+
+/************************************************************
+	Arquivo Usuario   
+************************************************************/
+drop trigger arqUsuario_log;
+drop view v_arqUsuario;
+commit;
+
+ALTER TABLE arqUsuario drop FOTO_ARQUIVO;
+commit;
+
+ALTER TABLE arqUsuario
+add /* 13*/	FOTO_ARQUIVO  VARCHAR(128)computed by ( lower( 'Usuario/' || CASE WHEN ( FOTO IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_FOTO.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=FOTO) ) END ) );
+commit;
+
+RECREATE VIEW V_arqUsuario AS 
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS, A0.EMAILFINAN, A0.EMCMEDISEP
+	FROM arqUsuario A0
+	left join arqGrupo A1 on A1.IDPRIMARIO = A0.GRUPO
+	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.FOTO;
+commit;
+
+/************************************************************
+	Trigger para Log de arqUsuario
+************************************************************/
+
+set term ^;
+
+recreate trigger arqUsuario_LOG for arqUsuario
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Usuario,'' );
+else
+	valorChave = coalesce( NEW.Usuario,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100005 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
+	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
+	execute procedure set_log( 12, NEW.idPrimario, 'Grupo', OLD.Grupo, NEW.Grupo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Email', OLD.Email, NEW.Email );
+	execute procedure set_log( 12, NEW.idPrimario, 'CRM', OLD.CRM, NEW.CRM );
+	execute procedure set_log( 12, NEW.idPrimario, 'PodeAgenda', OLD.PodeAgenda, NEW.PodeAgenda );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Nascimento', OLD.Nascimento, NEW.Nascimento );
+	execute procedure set_log( 12, NEW.idPrimario, 'EmailAces', OLD.EmailAces, NEW.EmailAces );
+	execute procedure set_log( 12, NEW.idPrimario, 'EmailAcesS', OLD.EmailAcesS, NEW.EmailAcesS );
+	execute procedure set_log( 12, NEW.idPrimario, 'EmailFinan', OLD.EmailFinan, NEW.EmailFinan );
+	execute procedure set_log( 12, NEW.idPrimario, 'EmCMediSep', OLD.EmCMediSep, NEW.EmCMediSep );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.Senha is distinct from OLD.Senha )  OR 
+		( NEW.Versao is distinct from OLD.Versao )  OR 
+		( NEW.Foto is distinct from OLD.Foto )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqUsuario
+alter IDPRIMARIO position 1,
+alter USUARIO position 2,
+alter NOME position 3,
+alter SENHA position 4,
+alter GRUPO position 5,
+alter VERSAO position 6,
+alter EMAIL position 7,
+alter CRM position 8,
+alter PODEAGENDA position 9,
+alter ATIVO position 10,
+alter NASCIMENTO position 11,
+alter FOTO position 12,
+alter FOTO_ARQUIVO  position 13,
+alter EMAILACES position 14,
+alter EMAILACESS position 15,
+alter EMAILFINAN position 16,
+alter EMCMEDISEP position 17;
+commit;
+
+/************************************************************
+	Arquivo DocMod    
+************************************************************/
+drop trigger arqDocMod_log;
+drop view v_arqDocMod;
+commit;
+
+ALTER TABLE arqDocMod drop HEADER_ARQUIVO, drop ARQUIVO_ARQUIVO, drop FOOTER_ARQUIVO, drop IMAGEM_ARQUIVO;
+commit;
+
+ALTER TABLE arqDocMod
+add /* 13*/	HEADER_ARQUIVO VARCHAR(128) computed by ( lower( 'DocMod/' || CASE WHEN ( HEADER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_HEADER.' || HEADER ) END ) ),
+add /* 15*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( lower( 'DocMod/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
+add /* 17*/	FOOTER_ARQUIVO VARCHAR(128) computed by ( lower( 'DocMod/' || CASE WHEN ( FOOTER IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_FOOTER.' || FOOTER ) END ) ),
+add /* 20*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( lower( 'DocMod/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) );
+commit;
+
+RECREATE VIEW V_arqDocMod AS 
+	SELECT A0.IDPRIMARIO, A0.DOCUMENTO, A0.TARQDOC, A1.CHAVE as TArqDoc_CHAVE, A1.DESCRITOR as TArqDoc_DESCRITOR, A0.TORDOC, A2.CHAVE as TOrDoc_CHAVE, A2.DESCRITOR as TOrDoc_DESCRITOR, A0.LOGO, A0.MARCA, A0.NOMEARQ, A0.RODAPE, A0.ALTRODAPE, A0.TEMPLATE, A3.NOME as TEMPLATE_NOME, A0.ATIVO, A0.HEADER, A0.Header_ARQUIVO, A0.ARQUIVO, A0.Arquivo_ARQUIVO, A0.FOOTER, A0.Footer_ARQUIVO, A0.HTML, A0.IMAGEM, A4.CHAVE as Imagem_CHAVE, A4.DESCRITOR as Imagem_DESCRITOR, A0.IMAGEM_ARQUIVO, A0.LISTA, A0.MARGEMESQ, A0.MARGEMDIR, A0.MARGEMTOP, A0.TPAPEL, A5.CHAVE as TPapel_CHAVE, A5.DESCRITOR as TPapel_DESCRITOR, A0.TORIENTA, A6.CHAVE as TOrienta_CHAVE, A6.DESCRITOR as TOrienta_DESCRITOR
+	FROM arqDocMod A0
+	left join tabTArqDoc A1 on A1.IDPRIMARIO=A0.TARQDOC
+	left join tabTOrDoc A2 on A2.IDPRIMARIO=A0.TORDOC
+	left join arqTemplate A3 on A3.IDPRIMARIO = A0.TEMPLATE
+	left join tabLanceTipoImg A4 on A4.IDPRIMARIO = A0.IMAGEM
+	left join tabTPapel A5 on A5.IDPRIMARIO=A0.TPAPEL
+	left join tabTOrienta A6 on A6.IDPRIMARIO=A0.TORIENTA;
+commit;
+
+/************************************************************
+	Trigger para Log de arqDocMod
+************************************************************/
+
+set term ^;
+
+recreate trigger arqDocMod_LOG for arqDocMod
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Documento,'' );
+else
+	valorChave = coalesce( NEW.Documento,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100022 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Documento', OLD.Documento, NEW.Documento );
+	execute procedure set_log( 12, NEW.idPrimario, 'TArqDoc', OLD.TArqDoc, NEW.TArqDoc );
+	execute procedure set_log( 12, NEW.idPrimario, 'TOrDoc', OLD.TOrDoc, NEW.TOrDoc );
+	execute procedure set_log( 12, NEW.idPrimario, 'Logo', OLD.Logo, NEW.Logo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Marca', OLD.Marca, NEW.Marca );
+	execute procedure set_log( 12, NEW.idPrimario, 'NomeArq', OLD.NomeArq, NEW.NomeArq );
+	execute procedure set_log( 12, NEW.idPrimario, 'Rodape', OLD.Rodape, NEW.Rodape );
+	execute procedure set_log( 12, NEW.idPrimario, 'AltRodape', OLD.AltRodape, NEW.AltRodape );
+	execute procedure set_log( 12, NEW.idPrimario, 'Template', OLD.Template, NEW.Template );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Html', substring( OLD.Html from 1 for 255 ), substring( NEW.Html from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Lista', substring( OLD.Lista from 1 for 255 ), substring( NEW.Lista from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'MargemEsq', OLD.MargemEsq, NEW.MargemEsq );
+	execute procedure set_log( 12, NEW.idPrimario, 'MargemDir', OLD.MargemDir, NEW.MargemDir );
+	execute procedure set_log( 12, NEW.idPrimario, 'MargemTop', OLD.MargemTop, NEW.MargemTop );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPapel', OLD.TPapel, NEW.TPapel );
+	execute procedure set_log( 12, NEW.idPrimario, 'TOrienta', OLD.TOrienta, NEW.TOrienta );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.Header is distinct from OLD.Header )  OR 
+		( NEW.Arquivo is distinct from OLD.Arquivo )  OR 
+		( NEW.Footer is distinct from OLD.Footer )  OR 
+		( NEW.Imagem is distinct from OLD.Imagem )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqDocMod
+alter IDPRIMARIO position 1,
+alter DOCUMENTO position 2,
+alter TARQDOC position 3,
+alter TORDOC position 4,
+alter LOGO position 5,
+alter MARCA position 6,
+alter NOMEARQ position 7,
+alter RODAPE position 8,
+alter ALTRODAPE position 9,
+alter TEMPLATE position 10,
+alter ATIVO position 11,
+alter HEADER position 12,
+alter HEADER_ARQUIVO position 13,
+alter ARQUIVO position 14,
+alter ARQUIVO_ARQUIVO position 15,
+alter FOOTER position 16,
+alter FOOTER_ARQUIVO position 17,
+alter HTML position 18,
+alter IMAGEM position 19,
+alter IMAGEM_ARQUIVO  position 20,
+alter LISTA position 21,
+alter MARGEMESQ position 22,
+alter MARGEMDIR position 23,
+alter MARGEMTOP position 24,
+alter TPAPEL position 25,
+alter TORIENTA position 26;
+commit;
+
+/************************************************************
+	Arquivo ImagemCRM 
+************************************************************/
+drop trigger arqImagemCRM_log;
+drop view v_arqImagemCRM;
+commit;
+
+ALTER TABLE arqImagemCRM drop IMAGEM_ARQUIVO;
+commit;
+
+ALTER TABLE arqImagemCRM
+add /*  6*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( lower( 'ImagemCRM/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) );
+commit;
+
+RECREATE VIEW V_arqImagemCRM AS 
+	SELECT A0.IDPRIMARIO, A0.ACAOEMAIL, A1.TITULO as ACAOEMAIL_TITULO, A1.VERSAO as ACAOEMAIL_VERSAO, A0.NUMIMG, A0.NOME, A0.IMAGEM, A2.CHAVE as Imagem_CHAVE, A2.DESCRITOR as Imagem_DESCRITOR, A0.IMAGEM_ARQUIVO, A0.LINK
+	FROM arqImagemCRM A0
+	left join arqAcaoEmail A1 on A1.IDPRIMARIO = A0.ACAOEMAIL
+	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.IMAGEM;
+commit;
+
+/************************************************************
+	Trigger para Log de arqImagemCRM
+************************************************************/
+
+set term ^;
+
+recreate trigger arqImagemCRM_LOG for arqImagemCRM
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( AcaoEmail_Titulo, ' ' ) || '-' || coalesce( AcaoEmail_Versao, ' ' ) || '-' || coalesce( NumImg, ' ' ) from v_arqImagemCRM where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100011 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'AcaoEmail', OLD.AcaoEmail, NEW.AcaoEmail );
+	execute procedure set_log( 12, NEW.idPrimario, 'NumImg', OLD.NumImg, NEW.NumImg );
+	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
+	execute procedure set_log( 12, NEW.idPrimario, 'Link', OLD.Link, NEW.Link );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.Imagem is distinct from OLD.Imagem )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqImagemCRM
+alter IDPRIMARIO position 1,
+alter ACAOEMAIL position 2,
+alter NUMIMG position 3,
+alter NOME position 4,
+alter IMAGEM position 5,
+alter IMAGEM_ARQUIVO  position 6,
+alter LINK position 7;
+commit;
