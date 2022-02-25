@@ -195,32 +195,6 @@ class campo_cnfXConfig_CCorRec_Nome extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo CCorAss
-//======================================================
-
-class campo_cnfXConfig_CCorAss extends Lance_CampoLigado
-{
-	function __construct()
-	{
-		parent::__construct( "CCorAss", "CCorAss", "CCorAss", 0, "arqCCor", "arqCCor.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo CCorAss_Nome
-//======================================================
-
-class campo_cnfXConfig_CCorAss_Nome extends Lance_CampoCadeia
-{
-	function __construct()
-	{
-		parent::__construct( "CCorAss_Nome", "CCorAss_Nome", "Nome", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "CCorAss", false );
-	}
-
-}
-
-//======================================================
 //	Campo SubPlaRRec
 //======================================================
 
@@ -483,8 +457,6 @@ function listaCampos_cnfXConfig( $p_prefixo )
 			new campo_cnfXConfig_RecorDia(),
 			new campo_cnfXConfig_CCorRec(),
 			new campo_cnfXConfig_CCorRec_Nome(),
-			new campo_cnfXConfig_CCorAss(),
-			new campo_cnfXConfig_CCorAss_Nome(),
 			new campo_cnfXConfig_SubPlaRRec(),
 			new campo_cnfXConfig_SubPlaRRec_Plano(),
 			new campo_cnfXConfig_SubPlaRRec_Plano_CodPlano(),

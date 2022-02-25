@@ -454,6 +454,17 @@ function Campo_arqParcela_DataRem()
 var DataRem = new Campo_arqParcela_DataRem;
 
 //------------------------------------------------------------
+Campo_arqParcela_VHistConta.prototype = new Lance_CampoCadeia;
+
+function Campo_arqParcela_VHistConta()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "VHistConta", "VHistConta", "VHistConta", 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var VHistConta = new Campo_arqParcela_VHistConta;
+
+//------------------------------------------------------------
 Campo_arqParcela_Historico.prototype = new Lance_CampoCadeia;
 
 function Campo_arqParcela_Historico()
@@ -983,11 +994,36 @@ Campo_arqParcela_DataRem.prototype.Existencia = function()
 }
 
 //-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqParcela_VHistConta.prototype.Calculou = function()
+{
+{
+{
+	if( !Conta.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Historico FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " )  )" + LANCE_SEPARADOR + this.Prefixo + "VHistConta" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqParcela_VHistConta.prototype.Cabecalho = function()
+{
+		return( "Histórico Conta" );
+}
+
+VHistConta.EhCalculado = true;
+//-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
 Campo_arqParcela_Historico.prototype.Cabecalho = function()
 {
-		return( "Histórico" );
+		return( "Histórico Parcela" );
 }
 
 //-------------------------------------------------------------
@@ -1048,7 +1084,7 @@ Campo_arqParcela_FormaPg.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_arqParcela()
 {
-Conta.CalculosDependentes= [ VClinica,VTPgRec,VPessoa ];
+Conta.CalculosDependentes= [ VClinica,VTPgRec,VPessoa,VHistConta ];
 Emissao.CalculosDependentes= [ NumBoleto ];
 Conta_Transacao.ExistenciasDependentes= [ Conta ];
 TFCobra.ExistenciasDependentes= [ Emissao,LinhaDig,NomePdf,TFPagto,TDetPg,StRetorno,Remessa ];
@@ -1096,7 +1132,7 @@ function ListaDeCampos_arqParcela( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Conta, Conta_Transacao, VClinica, VTPgRec, VPessoa, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, FormaPg, FormaPg_FormaPg, Cheque, Arq1, StRetorno, Remessa, DataRem, Historico ]	);
+		[ Conta, Conta_Transacao, VClinica, VTPgRec, VPessoa, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, FormaPg, FormaPg_FormaPg, Cheque, Arq1, StRetorno, Remessa, DataRem, VHistConta, Historico ]	);
 	IniciarDependencias_arqParcela();
 	g_prefixo = l_prefixo;
 	return( l_lista );

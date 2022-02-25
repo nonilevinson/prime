@@ -546,10 +546,10 @@ ALTER TABLE arqParcela drop ClinicaCal, drop TPgRecCal, drop PessoaCal;
 commit;
 
 RECREATE VIEW V_arqParcela AS 
-	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, (Select V.Clinica_Clinica From v_arqConta V Where V.idPrimario = A0.Conta) as VCLINICA, (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = A0.Conta) as VTPGREC, CASE
+	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, (Select V.Clinica_Clinica From v_arqConta V Where V.idPrimario = A0.Conta) as VCLINICA, (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario=A0.Conta) as VTPGREC, CASE
 	WHEN( (Select C.Fornecedor From arqConta C Where C.idPrimario=A0.Conta) is not null ) THEN( (Select F.Nome From arqConta C join arqFornecedor F on F.idPrimario=C.Fornecedor Where C.idPrimario=A0.Conta) )
 	ELSE ( (Select P.Nome From arqConta C join arqPessoa P on P.idPrimario=C.Pessoa Where C.idPrimario=A0.Conta) )
-	END  as VPESSOA, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.NOME as CCOR_NOME, A0.SUBPLANO, A4.PLANO as SUBPLANO_PLANO, A5.CODPLANO as SUBPLANO_PLANO_CODPLANO, A5.PLANO as SUBPLANO_PLANO_PLANO, A4.CODIGO as SUBPLANO_CODIGO, A4.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A6.CHAVE as TFPagto_CHAVE, A6.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A7.CHAVE as TDetPg_CHAVE, A7.DESCRITOR as TDetPg_DESCRITOR, A0.FORMAPG, A8.FORMAPG as FORMAPG_FORMAPG, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM, A0.HISTORICO
+	END  as VPESSOA, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.NOME as CCOR_NOME, A0.SUBPLANO, A4.PLANO as SUBPLANO_PLANO, A5.CODPLANO as SUBPLANO_PLANO_CODPLANO, A5.PLANO as SUBPLANO_PLANO_PLANO, A4.CODIGO as SUBPLANO_CODIGO, A4.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A6.CHAVE as TFPagto_CHAVE, A6.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A7.CHAVE as TDetPg_CHAVE, A7.DESCRITOR as TDetPg_DESCRITOR, A0.FORMAPG, A8.FORMAPG as FORMAPG_FORMAPG, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM, (Select C.Historico From arqConta C Where C.idPrimario=A0.Conta) as VHISTCONTA, A0.HISTORICO
 	FROM arqParcela A0
 	left join arqConta A1 on A1.IDPRIMARIO = A0.CONTA
 	left join tabTFCobra A2 on A2.IDPRIMARIO=A0.TFCOBRA
@@ -1078,3 +1078,75 @@ alter TPIX5 position 28,
 alter PIX5 position 29;
 commit;
 
+/************************************************************
+	Parâmetro XConfig   
+************************************************************/
+drop trigger cnfXConfig_log;
+drop view v_cnfXConfig;
+commit;
+
+ALTER TABLE cnfXConfig drop CCorAss;
+commit;
+
+RECREATE VIEW V_cnfXConfig AS 
+	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR, A0.RECORDIA, A0.CCORREC, A4.NOME as CCORREC_NOME, A0.SUBPLARREC, A5.PLANO as SUBPLARREC_PLANO, A6.CODPLANO as SUBPLARREC_PLANO_CODPLANO, A6.PLANO as SUBPLARREC_PLANO_PLANO, A5.CODIGO as SUBPLARREC_CODIGO, A5.NOME as SUBPLARREC_NOME, A0.SUBPLARASS, A7.PLANO as SUBPLARASS_PLANO, A8.CODPLANO as SUBPLARASS_PLANO_CODPLANO, A8.PLANO as SUBPLARASS_PLANO_PLANO, A7.CODIGO as SUBPLARASS_CODIGO, A7.NOME as SUBPLARASS_NOME, A0.FORNREC, A9.NOME as FORNREC_NOME, A0.BOLETOMIN, A0.DIASSDENTR
+	FROM cnfXConfig A0
+	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
+	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
+	left join tabUF A3 on A3.IDPRIMARIO=A2.UF
+	left join arqCCor A4 on A4.IDPRIMARIO = A0.CCORREC
+	left join arqSubPlano A5 on A5.IDPRIMARIO = A0.SUBPLARREC
+	left join arqPlano A6 on A6.IDPRIMARIO = A5.PLANO
+	left join arqSubPlano A7 on A7.IDPRIMARIO = A0.SUBPLARASS
+	left join arqPlano A8 on A8.IDPRIMARIO = A7.PLANO
+	left join arqFornecedor A9 on A9.IDPRIMARIO = A0.FORNREC;
+commit;
+
+/************************************************************
+	Trigger para Log de cnfXConfig
+************************************************************/
+
+set term ^;
+
+recreate trigger cnfXConfig_LOG for cnfXConfig
+active after Insert or Delete or Update
+position 999
+as
+begin
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100017 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', '' );
+begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Empresa', OLD.Empresa, NEW.Empresa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_CEP', OLD.Ende_CEP, NEW.Ende_CEP );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Endereco', OLD.Ende_Endereco, NEW.Ende_Endereco );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Bairro', OLD.Ende_Bairro, NEW.Ende_Bairro );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Cidade', OLD.Ende_Cidade, NEW.Ende_Cidade );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Telefone', OLD.Ende_Telefone, NEW.Ende_Telefone );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_DDDCelular', OLD.Ende_DDDCelular, NEW.Ende_DDDCelular );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Celular', OLD.Ende_Celular, NEW.Ende_Celular );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_WhatsApp', OLD.Ende_WhatsApp, NEW.Ende_WhatsApp );
+	execute procedure set_log( 12, NEW.idPrimario, 'Email', OLD.Email, NEW.Email );
+	execute procedure set_log( 12, NEW.idPrimario, 'Site', OLD.Site, NEW.Site );
+	execute procedure set_log( 12, NEW.idPrimario, 'QtasDesmar', OLD.QtasDesmar, NEW.QtasDesmar );
+	execute procedure set_log( 12, NEW.idPrimario, 'Declinar', OLD.Declinar, NEW.Declinar );
+	execute procedure set_log( 12, NEW.idPrimario, 'RecorDia', OLD.RecorDia, NEW.RecorDia );
+	execute procedure set_log( 12, NEW.idPrimario, 'CCorRec', OLD.CCorRec, NEW.CCorRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRRec', OLD.SubPlaRRec, NEW.SubPlaRRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRAss', OLD.SubPlaRAss, NEW.SubPlaRAss );
+	execute procedure set_log( 12, NEW.idPrimario, 'FornRec', OLD.FornRec, NEW.FornRec );
+	execute procedure set_log( 12, NEW.idPrimario, 'BoletoMin', OLD.BoletoMin, NEW.BoletoMin );
+	execute procedure set_log( 12, NEW.idPrimario, 'DiasSdEntr', OLD.DiasSdEntr, NEW.DiasSdEntr );
+	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.CPF is distinct from OLD.CPF )  OR 
+		( NEW.LogAcesso is distinct from OLD.LogAcesso )  OR 
+		( NEW.LogAcessoS is distinct from OLD.LogAcessoS )  OR 
+		( NEW.Qtd is distinct from OLD.Qtd )  OR 
+		( NEW.Qtd2 is distinct from OLD.Qtd2 )  OR 
+		( NEW.CNPJ is distinct from OLD.CNPJ )  ) ) then
+	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
+end
+end^
+
+set term ;^
+
+commit;

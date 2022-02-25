@@ -643,6 +643,26 @@ class campo_arqParcela_DataRem extends Lance_CampoData
 }
 
 //======================================================
+//	Campo VHistConta
+//======================================================
+
+class campo_arqParcela_VHistConta extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "VHistConta", "VHistConta", "VHistConta", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_VIEW, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Histórico Conta" );
+	}
+
+}
+
+//======================================================
 //	Campo Historico
 //======================================================
 
@@ -657,7 +677,7 @@ class campo_arqParcela_Historico extends Lance_CampoCadeia
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Histórico" );
+			return( "Histórico Parcela" );
 	}
 
 }
@@ -714,6 +734,7 @@ function listaCampos_arqParcela( $p_prefixo )
 			new campo_arqParcela_StRetorno(),
 			new campo_arqParcela_Remessa(),
 			new campo_arqParcela_DataRem(),
+			new campo_arqParcela_VHistConta(),
 			new campo_arqParcela_Historico() ]
 	);
 	$g_prefixo = $prefixoAnt;
@@ -759,6 +780,7 @@ class arqParcela extends Lance_Arquivo
 			$vetAux[] = [ TFCobra_Descritor ];
 			$vetAux[] = [ LinhaDig ];
 			$vetAux[] = [ DataPagto ];
+			$vetAux[] = [ VHistConta ];
 			$vetAux[] = [ Historico ];
 		return( $vetAux );
 	}
@@ -808,6 +830,7 @@ class arqParcela extends Lance_Arquivo
 			$vetAux[] = [ StRetorno ];
 			$vetAux[] = [ Remessa ];
 			$vetAux[] = [ DataRem ];
+			$vetAux[] = [ VHistConta ];
 			$vetAux[] = [ Historico ];
 		return( $vetAux );
 	}
