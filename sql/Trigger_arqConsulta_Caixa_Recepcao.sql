@@ -128,10 +128,10 @@ begin
 
 			insert into arqParcela (idPrimario, Conta, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado,
 				TFCobra, Emissao, LinhaDig, NomePdf, CCor, SubPlano, DataPagto, DataComp, TFPagto, TDetPg, FormaPg,
-				Cheque, Arq1, StRetorno, Remessa, DataRem )
+				Cheque, Arq1, StRetorno, Remessa, DataRem, Historico )
 				values( gen_id( GENIDPRIMARIO, 1 ), :idConta, 1, :vencimento, 0, NEW.Valor, NEW.Valor, 0,
 				:idTFCobra, null, '', '', :idCCor, :idSubPlano, :dataPagto, :dataComp, :idTFPagto, null, NEW.FormaPg,
-				0, null, '', null, null );
+				0, null, '', null, null, '' );
 
 			NEW.ContaCons = :idConta;
 		end

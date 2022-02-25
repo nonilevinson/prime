@@ -1,41 +1,49 @@
 <?php
 
-global $g_debugProcesso;
+//-----------------------------------------------------------
+function selectCCor( $p_tCCor )
+{
+   global $g_debugProcesso, $parQCaixa;
+   
+   $select = "Select C.idPrimario as idCCor
+      From arqCCor C
+      Where C.Clinica = " . $parQCaixa->CLINICA . " and C.TCCor = " . $p_tCCor;
+   $idCCor = sql_lerUmRegistro( $select )->IDCCOR;
+if( $g_debugProcesso ) echo '<br><b>GR0 arqCCor S=</b> '.$select.' <b>idCCor=</b> '.$idCCor;
+   return( $idCCor );
+}
+//-----------------------------------------------------------
 
-sql_abrirBD( OperacaoAtual() );
-sql_iniciarTransacao();
-
+global $g_debugProcesso, $parQCaixa;
 $parQCaixa = lerParametro( 'parQCaixa' );
 $op        = ultimaLigOpcao();
 
-$select = "Select X.CCorRec, X.CCorAss, X.SubPlaRRec, X.SubPlaRAss
-      From cnfXConfig X";
-$umXConfig = sql_lerUmRegistro( $select );
-// if( $g_debugProcesso ) echo '<br><br><b>GR0 cnfXConfig S=</b> '.$select;
+sql_abrirBD( OperacaoAtual() );
+sql_iniciarTransacao();
 
 switch( ultimaLigOpcao() )
 {
    case 176: //* saída recepção
       $tPgRec   = 1;
-      $cCor     = $umXConfig->CCORREC;
-      $subPlano = $parQCaixa->SUBPLANO;
+      $cCor     = selectCCor( 3 );
+      $subPlano = $parQCaixa->SUBPLARREC;
       break;
 
    case 177: //* entrada recepção
       $tPgRec   = 2;
-      $cCor     = $umXConfig->CCORREC;
+      $cCor     = selectCCor( 3 );
       $subPlano = $umXConfig->SUBPLARREC;
       break;
 
    case 180: //* saída assessor
       $tPgRec   = 1;
-      $cCor     = $umXConfig->CCORASS;
+      $cCor     = selectCCor( 2 );
       $subPlano = $umXConfig->SUBPLARASS;
       break;
 
    case 181: //* entrada assessor
       $tPgRec   = 2;
-      $cCor     = $umXConfig->CCORASS;
+      $cCor     = selectCCor( 2 );
       $subPlano = $umXConfig->SUBPLARASS;
       break;
 }
@@ -45,6 +53,7 @@ $idConta = sql_IdPrimario();
 $data    = $parQCaixa->DATA;
 $data1   = formatarData( $data, 'aaaa/mm/dd' );
 $compete = dataAno( $data ) . "/" . dataMes( $data ). "/01";
+$valor   = $parQCaixa->VALOR;
 
 $select = "Select coalesce( max( Transacao ), 0 ) as Transacao
    From arqConta";
@@ -76,8 +85,8 @@ sql_insert( "arqParcela", [
    "Parcela"    => 1,
    "Vencimento" => $data,
    "Vencest"    => 0,
-   "Valor"      => $parQCaixa->VALOR,
-   "ValorLiq"   => $parQCaixa->VALOR,
+   "Valor"      => $valor,
+   "ValorLiq"   => $valor,
    "Estimado"   => 0,
    "TFCobra"    => 3,
    "Emissao"    => null,

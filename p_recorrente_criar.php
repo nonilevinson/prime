@@ -5,7 +5,8 @@ global $g_debugProcesso, $g_qtd, $g_contas;
 //* verifica se o dia de hoje é o mesmo dia do XConfig ou se foi ativado manualmente pelo sistema
 sql_abrirBD( false );
 
-$select = "Select RecorDia From cnfXConfig";
+$select = "Select RecorDia 
+   From cnfXConfig";
 $recorDia = sql_lerUmRegistro( $select )->RECORDIA;
 // if( $g_debugProcesso ) echo '<br><b>GR0 cnfXConfig S=</b> '.$select.' <b>recorDia=</b> '.$recorDia;
 

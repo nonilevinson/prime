@@ -88,7 +88,7 @@ $select = "Select C.Num as NumConsulta, C.Clinica as idClinica, P.idPrimario as 
       join arqPessoa P on P.idPrimario=C.Pessoa
    Where C.idPrimario = " . $idConsulta;
 $umaConsulta = sql_lerUmRegistro( $select );
-if( $g_debugProcesso ) echo '<br><b>GR0 1 arqConsulta S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>GR0 1 arqConsulta S=</b> '.$select;
 
 $idConta = sql_IdPrimario();
 $idClinica     = $parGeraParc->CLINICA;

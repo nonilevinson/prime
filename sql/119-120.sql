@@ -911,3 +911,170 @@ alter IMAGEM_ARQUIVO  position 6,
 alter LINK position 7;
 commit;
 
+/************************************************************
+	TABELA tabTCCor
+************************************************************/
+
+CREATE TABLE tabTCCor
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTCCor_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTCCor_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTCCor VALUES ( 1, '1', 'Financeiro' );
+INSERT INTO tabTCCor VALUES ( 2, '2', 'Assessor' );
+INSERT INTO tabTCCor VALUES ( 3, '3', 'Recepção' );
+commit;
+
+/************************************************************
+	Arquivo CCor      
+************************************************************/
+drop trigger arqCCor_log;
+drop view v_arqCCor;
+commit;
+
+ALTER TABLE arqCCor
+add /*  4*/	TCCOR ligadoComTabela; /* Ligado com a Tabela TCCor */
+commit;
+
+ALTER TABLE arqCCor ADD CONSTRAINT arqCCor_FK_TCCor FOREIGN KEY ( TCCOR ) REFERENCES tabTCCor ON DELETE SET NULL ON UPDATE CASCADE;
+commit;
+
+update arqCCor set TCCor=1;
+update arqCCor set TCCor=2 Where idPrimario=3;
+update arqCCor set TCCor=3 Where idPrimario=2;
+commit;
+
+insert into arqCCor values(5,'CAIXA FINANCEIRO NITERÓI',1,1,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(6,'CAIXA ASSESSOR NITERÓI',1,2,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(7,'CAIXA RECEPÇÃO NITERÓI',1,3,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+
+insert into arqCCor values(8,'CAIXA FINANCEIRO RJ',2,1,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(9,'CAIXA ASSESSOR RJ',2,2,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(10,'CAIXA RECEPÇÃO RJ',2,3,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+
+insert into arqCCor values(11,'CAIXA FINANCEIRO JF',3,1,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(12,'CAIXA ASSESSOR JF',3,2,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(13,'CAIXA RECEPÇÃO JF',3,3,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+
+insert into arqCCor values(14,'CAIXA FINANCEIRO JOINVILLE',5,1,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(15,'CAIXA ASSESSOR JOINVILLE',5,2,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(16,'CAIXA RECEPÇÃO JOINVILLE',5,3,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+
+insert into arqCCor values(17,'CAIXA FINANCEIRO GOIANIA',6,1,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(18,'CAIXA ASSESSOR GOIANIA',6,2,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(19,'CAIXA RECEPÇÃO GOIANIA',6,3,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+
+insert into arqCCor values(20,'CAIXA FINANCEIRO BALNEÁRIO',7,1,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(21,'CAIXA ASSESSOR BALNEÁRIO',7,2,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+insert into arqCCor values(22,'CAIXA RECEPÇÃO BALNEÁRIO',7,3,NULL,'','','','',0,'',0,0,0,null,0,'',0,1,NULL,'',NULL,'',NULL,'',NULL,'',NULL,'');
+commit;
+
+RECREATE VIEW V_arqCCor AS 
+	SELECT A0.IDPRIMARIO, A0.NOME, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TCCOR, A2.CHAVE as TCCor_CHAVE, A2.DESCRITOR as TCCor_DESCRITOR, A0.BANCO, A3.NUM as BANCO_NUM, A3.BANCO as BANCO_BANCO, A0.AGENCIA, A0.DVAGENCIA, A0.CONTA, A0.DVCONTA, A0.CARTEIRA, A0.CODCEDENTE, A0.MULTA, A0.JUROS, A0.CBOLETO, A0.INSTRUCOES, A0.ULTREMESSA, A0.CONVENIO, A0.VARIACAO, A0.ATIVO, A0.TPIX1, A4.CHAVE as TPix1_CHAVE, A4.DESCRITOR as TPix1_DESCRITOR, A0.PIX1, A0.TPIX2, A5.CHAVE as TPix2_CHAVE, A5.DESCRITOR as TPix2_DESCRITOR, A0.PIX2, A0.TPIX3, A6.CHAVE as TPix3_CHAVE, A6.DESCRITOR as TPix3_DESCRITOR, A0.PIX3, A0.TPIX4, A7.CHAVE as TPix4_CHAVE, A7.DESCRITOR as TPix4_DESCRITOR, A0.PIX4, A0.TPIX5, A8.CHAVE as TPix5_CHAVE, A8.DESCRITOR as TPix5_DESCRITOR, A0.PIX5
+	FROM arqCCor A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join tabTCCor A2 on A2.IDPRIMARIO=A0.TCCOR
+	left join arqBanco A3 on A3.IDPRIMARIO = A0.BANCO
+	left join tabTPix A4 on A4.IDPRIMARIO=A0.TPIX1
+	left join tabTPix A5 on A5.IDPRIMARIO=A0.TPIX2
+	left join tabTPix A6 on A6.IDPRIMARIO=A0.TPIX3
+	left join tabTPix A7 on A7.IDPRIMARIO=A0.TPIX4
+	left join tabTPix A8 on A8.IDPRIMARIO=A0.TPIX5;
+commit;
+
+/************************************************************
+	Trigger para Log de arqCCor
+************************************************************/
+
+set term ^;
+
+recreate trigger arqCCor_LOG for arqCCor
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Nome,'' );
+else
+	valorChave = coalesce( NEW.Nome,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100020 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TCCor', OLD.TCCor, NEW.TCCor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Banco', OLD.Banco, NEW.Banco );
+	execute procedure set_log( 12, NEW.idPrimario, 'Agencia', OLD.Agencia, NEW.Agencia );
+	execute procedure set_log( 12, NEW.idPrimario, 'DvAgencia', OLD.DvAgencia, NEW.DvAgencia );
+	execute procedure set_log( 12, NEW.idPrimario, 'Conta', OLD.Conta, NEW.Conta );
+	execute procedure set_log( 12, NEW.idPrimario, 'DvConta', OLD.DvConta, NEW.DvConta );
+	execute procedure set_log( 12, NEW.idPrimario, 'Carteira', OLD.Carteira, NEW.Carteira );
+	execute procedure set_log( 12, NEW.idPrimario, 'CodCedente', OLD.CodCedente, NEW.CodCedente );
+	execute procedure set_log( 12, NEW.idPrimario, 'Multa', OLD.Multa, NEW.Multa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Juros', OLD.Juros, NEW.Juros );
+	execute procedure set_log( 12, NEW.idPrimario, 'CBoleto', OLD.CBoleto, NEW.CBoleto );
+	execute procedure set_log( 12, NEW.idPrimario, 'Instrucoes', substring( OLD.Instrucoes from 1 for 255 ), substring( NEW.Instrucoes from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'UltRemessa', OLD.UltRemessa, NEW.UltRemessa );
+	execute procedure set_log( 12, NEW.idPrimario, 'Convenio', OLD.Convenio, NEW.Convenio );
+	execute procedure set_log( 12, NEW.idPrimario, 'Variacao', OLD.Variacao, NEW.Variacao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPix1', OLD.TPix1, NEW.TPix1 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pix1', OLD.Pix1, NEW.Pix1 );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPix2', OLD.TPix2, NEW.TPix2 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pix2', OLD.Pix2, NEW.Pix2 );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPix3', OLD.TPix3, NEW.TPix3 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pix3', OLD.Pix3, NEW.Pix3 );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPix4', OLD.TPix4, NEW.TPix4 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pix4', OLD.Pix4, NEW.Pix4 );
+	execute procedure set_log( 12, NEW.idPrimario, 'TPix5', OLD.TPix5, NEW.TPix5 );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pix5', OLD.Pix5, NEW.Pix5 );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqCCor
+alter IDPRIMARIO position 1,
+alter NOME position 2,
+alter CLINICA position 3,
+alter TCCOR position 4,
+alter BANCO position 5,
+alter AGENCIA position 6,
+alter DVAGENCIA position 7,
+alter CONTA position 8,
+alter DVCONTA position 9,
+alter CARTEIRA position 10,
+alter CODCEDENTE position 11,
+alter MULTA position 12,
+alter JUROS position 13,
+alter CBOLETO position 14,
+alter INSTRUCOES position 15,
+alter ULTREMESSA position 16,
+alter CONVENIO position 17,
+alter VARIACAO position 18,
+alter ATIVO position 19,
+alter TPIX1 position 20,
+alter PIX1 position 21,
+alter TPIX2 position 22,
+alter PIX2 position 23,
+alter TPIX3 position 24,
+alter PIX3 position 25,
+alter TPIX4 position 26,
+alter PIX4 position 27,
+alter TPIX5 position 28,
+alter PIX5 position 29;
+commit;
+

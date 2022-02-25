@@ -35,7 +35,8 @@ sql_executarComando( 'alter trigger ARQCONSULTA_AI_AU active;' );
 sql_commit();
 
 /*
-$select = "Select RecorDia From cnfXConfig";
+$select = "Select RecorDia 
+   From cnfXConfig";
 $recorDia = sql_lerUmRegistro( $select )->RECORDIA;
 if( $g_debugProcesso ) echo '<br><b>GR0 cnfXConfig S=</b> '.$select.' <b>recorDia=</b> '.$recorDia;
 

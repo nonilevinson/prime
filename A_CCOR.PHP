@@ -58,6 +58,26 @@ class campo_arqCCor_Clinica_Clinica extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo TCCor
+//======================================================
+
+class campo_arqCCor_TCCor extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TCCor", "TCCor", "TCCor", 0, "tabTCCor", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Tipo" );
+	}
+
+}
+
+//======================================================
 //	Campo Banco
 //======================================================
 
@@ -457,6 +477,9 @@ function listaCampos_arqCCor( $p_prefixo )
 			new campo_arqCCor_Nome(),
 			new campo_arqCCor_Clinica(),
 			new campo_arqCCor_Clinica_Clinica(),
+			new campo_arqCCor_TCCor(),
+			new Lance_CampoCadeia( "TCCor_Chave", "TCCor_Chave", "Chave", 1, "x", EH_CHAVE, TCCor ),
+			new Lance_CampoCadeia( "TCCor_Descritor", "TCCor_Descritor", "Descritor", 10, "xxxxxxxxxx", EH_DESCRITOR, TCCor ),
 			new campo_arqCCor_Banco(),
 			new campo_arqCCor_Banco_Num(),
 			new campo_arqCCor_Banco_Banco(),
@@ -529,6 +552,7 @@ class arqCCor extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ Nome ];
 			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ TCCor_Descritor ];
 			$vetAux[] = [ Banco_Num ];
 			$vetAux[] = [ Banco_Banco ];
 			$vetAux[] = [ Agencia ];
@@ -544,7 +568,7 @@ class arqCCor extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( [ [ Clinica ], [ Banco ] ] );
+		return( [ [ Clinica ], [ TCCor ], [ TCCor_Chave ], [ TCCor_Descritor ], [ Banco ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -556,6 +580,7 @@ class arqCCor extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ Nome ];
 			$vetAux[] = [ Clinica_Clinica ];
+			$vetAux[] = [ TCCor_Descritor ];
 			$vetAux[] = [ Banco_Num ];
 			$vetAux[] = [ Banco_Banco ];
 			$vetAux[] = [ Agencia ];

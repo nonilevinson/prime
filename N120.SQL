@@ -1617,6 +1617,26 @@ commit;
 
 
 /************************************************************
+	TABELA tabTCCor
+************************************************************/
+
+CREATE TABLE tabTCCor
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTCCor_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTCCor_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTCCor VALUES ( 1, '1', 'Financeiro' );
+INSERT INTO tabTCCor VALUES ( 2, '2', 'Assessor' );
+INSERT INTO tabTCCor VALUES ( 3, '3', 'Recepção' );
+commit;
+
+
+/************************************************************
 	Arquivo Bairro    
 ************************************************************/
 
@@ -2289,31 +2309,32 @@ CREATE TABLE arqCCor
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  4*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
-	/*  5*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
-	/*  6*/	DVAGENCIA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
-	/*  7*/	CONTA VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
-	/*  8*/	DVCONTA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
-	/*  9*/	CARTEIRA INTEGER, /* Máscara = N */
-	/* 10*/	CODCEDENTE VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = M */
-	/* 11*/	MULTA NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 12*/	JUROS NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 13*/	CBOLETO NUMERIC( 5, 2 ), /* Máscara = N */
-	/* 14*/	INSTRUCOES BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 15*/	ULTREMESSA NUMERIC(18,0), /* Máscara = N */
-	/* 16*/	CONVENIO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = N */
-	/* 17*/	VARIACAO NUMERIC(18,0), /* Máscara = N */
-	/* 18*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 19*/	TPIX1 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 20*/	PIX1 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 21*/	TPIX2 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 22*/	PIX2 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 23*/	TPIX3 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 24*/	PIX3 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 25*/	TPIX4 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 26*/	PIX4 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
-	/* 27*/	TPIX5 ligadoComTabela, /* Ligado com a Tabela TPix */
-	/* 28*/	PIX5 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/*  4*/	TCCOR ligadoComTabela, /* Ligado com a Tabela TCCor */
+	/*  5*/	BANCO ligadoComArquivo, /* Ligado com o Arquivo Banco */
+	/*  6*/	AGENCIA VARCHAR( 4 ) COLLATE PT_BR, /* Máscara = M */
+	/*  7*/	DVAGENCIA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
+	/*  8*/	CONTA VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
+	/*  9*/	DVCONTA VARCHAR( 1 ) COLLATE PT_BR, /* Máscara = M */
+	/* 10*/	CARTEIRA INTEGER, /* Máscara = N */
+	/* 11*/	CODCEDENTE VARCHAR( 11 ) COLLATE PT_BR, /* Máscara = M */
+	/* 12*/	MULTA NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 13*/	JUROS NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 14*/	CBOLETO NUMERIC( 5, 2 ), /* Máscara = N */
+	/* 15*/	INSTRUCOES BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 16*/	ULTREMESSA NUMERIC(18,0), /* Máscara = N */
+	/* 17*/	CONVENIO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = N */
+	/* 18*/	VARIACAO NUMERIC(18,0), /* Máscara = N */
+	/* 19*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 20*/	TPIX1 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 21*/	PIX1 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 22*/	TPIX2 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 23*/	PIX2 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 24*/	TPIX3 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 25*/	PIX3 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 26*/	TPIX4 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 27*/	PIX4 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
+	/* 28*/	TPIX5 ligadoComTabela, /* Ligado com a Tabela TPix */
+	/* 29*/	PIX5 VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = X */
 	CONSTRAINT arqCCor_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqCCor_UK UNIQUE ( Nome )
 );
@@ -3135,15 +3156,16 @@ RECREATE VIEW V_arqBanco AS
 commit;
 
 RECREATE VIEW V_arqCCor AS 
-	SELECT A0.IDPRIMARIO, A0.NOME, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.BANCO, A2.NUM as BANCO_NUM, A2.BANCO as BANCO_BANCO, A0.AGENCIA, A0.DVAGENCIA, A0.CONTA, A0.DVCONTA, A0.CARTEIRA, A0.CODCEDENTE, A0.MULTA, A0.JUROS, A0.CBOLETO, A0.INSTRUCOES, A0.ULTREMESSA, A0.CONVENIO, A0.VARIACAO, A0.ATIVO, A0.TPIX1, A3.CHAVE as TPix1_CHAVE, A3.DESCRITOR as TPix1_DESCRITOR, A0.PIX1, A0.TPIX2, A4.CHAVE as TPix2_CHAVE, A4.DESCRITOR as TPix2_DESCRITOR, A0.PIX2, A0.TPIX3, A5.CHAVE as TPix3_CHAVE, A5.DESCRITOR as TPix3_DESCRITOR, A0.PIX3, A0.TPIX4, A6.CHAVE as TPix4_CHAVE, A6.DESCRITOR as TPix4_DESCRITOR, A0.PIX4, A0.TPIX5, A7.CHAVE as TPix5_CHAVE, A7.DESCRITOR as TPix5_DESCRITOR, A0.PIX5
+	SELECT A0.IDPRIMARIO, A0.NOME, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TCCOR, A2.CHAVE as TCCor_CHAVE, A2.DESCRITOR as TCCor_DESCRITOR, A0.BANCO, A3.NUM as BANCO_NUM, A3.BANCO as BANCO_BANCO, A0.AGENCIA, A0.DVAGENCIA, A0.CONTA, A0.DVCONTA, A0.CARTEIRA, A0.CODCEDENTE, A0.MULTA, A0.JUROS, A0.CBOLETO, A0.INSTRUCOES, A0.ULTREMESSA, A0.CONVENIO, A0.VARIACAO, A0.ATIVO, A0.TPIX1, A4.CHAVE as TPix1_CHAVE, A4.DESCRITOR as TPix1_DESCRITOR, A0.PIX1, A0.TPIX2, A5.CHAVE as TPix2_CHAVE, A5.DESCRITOR as TPix2_DESCRITOR, A0.PIX2, A0.TPIX3, A6.CHAVE as TPix3_CHAVE, A6.DESCRITOR as TPix3_DESCRITOR, A0.PIX3, A0.TPIX4, A7.CHAVE as TPix4_CHAVE, A7.DESCRITOR as TPix4_DESCRITOR, A0.PIX4, A0.TPIX5, A8.CHAVE as TPix5_CHAVE, A8.DESCRITOR as TPix5_DESCRITOR, A0.PIX5
 	FROM arqCCor A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
-	left join arqBanco A2 on A2.IDPRIMARIO = A0.BANCO
-	left join tabTPix A3 on A3.IDPRIMARIO=A0.TPIX1
-	left join tabTPix A4 on A4.IDPRIMARIO=A0.TPIX2
-	left join tabTPix A5 on A5.IDPRIMARIO=A0.TPIX3
-	left join tabTPix A6 on A6.IDPRIMARIO=A0.TPIX4
-	left join tabTPix A7 on A7.IDPRIMARIO=A0.TPIX5;
+	left join tabTCCor A2 on A2.IDPRIMARIO=A0.TCCOR
+	left join arqBanco A3 on A3.IDPRIMARIO = A0.BANCO
+	left join tabTPix A4 on A4.IDPRIMARIO=A0.TPIX1
+	left join tabTPix A5 on A5.IDPRIMARIO=A0.TPIX2
+	left join tabTPix A6 on A6.IDPRIMARIO=A0.TPIX3
+	left join tabTPix A7 on A7.IDPRIMARIO=A0.TPIX4
+	left join tabTPix A8 on A8.IDPRIMARIO=A0.TPIX5;
 commit;
 
 RECREATE VIEW V_arqContPessoa AS 
@@ -3595,6 +3617,7 @@ ALTER TABLE arqLido ADD CONSTRAINT arqLido_FK_Avisos FOREIGN KEY ( AVISOS ) REFE
 ALTER TABLE arqLido ADD CONSTRAINT arqLido_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqParaGrupo ADD CONSTRAINT arqParaGrupo_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqCCor ADD CONSTRAINT arqCCor_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqCCor ADD CONSTRAINT arqCCor_FK_TCCor FOREIGN KEY ( TCCOR ) REFERENCES tabTCCor ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqCCor ADD CONSTRAINT arqCCor_FK_Banco FOREIGN KEY ( BANCO ) REFERENCES arqBanco ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqAvisos ADD CONSTRAINT arqAvisos_FK_AvisoPai FOREIGN KEY ( AVISOPAI ) REFERENCES arqAvisos ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqDocMod ADD CONSTRAINT arqDocMod_FK_TArqDoc FOREIGN KEY ( TARQDOC ) REFERENCES tabTArqDoc ON DELETE SET NULL ON UPDATE CASCADE;
@@ -4297,6 +4320,7 @@ if( deleting ) then
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Nome', OLD.Nome, NEW.Nome );
 	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'TCCor', OLD.TCCor, NEW.TCCor );
 	execute procedure set_log( 12, NEW.idPrimario, 'Banco', OLD.Banco, NEW.Banco );
 	execute procedure set_log( 12, NEW.idPrimario, 'Agencia', OLD.Agencia, NEW.Agencia );
 	execute procedure set_log( 12, NEW.idPrimario, 'DvAgencia', OLD.DvAgencia, NEW.DvAgencia );

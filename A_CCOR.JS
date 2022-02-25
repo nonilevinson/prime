@@ -36,6 +36,39 @@ function Campo_arqCCor_Clinica_Clinica()
 var Clinica_Clinica = new Campo_arqCCor_Clinica_Clinica;
 
 //------------------------------------------------------------
+Campo_arqCCor_TCCor.prototype = new Lance_CampoLigado;
+
+function Campo_arqCCor_TCCor()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TCCor", "TCCor", "TCCor", "tabTCCor", "t_tccor", null, "",0);
+}
+
+var TCCor = new Campo_arqCCor_TCCor;
+
+//------------------------------------------------------------
+Campo_arqCCor_TCCor_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqCCor_TCCor_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TCCor_Chave", "TCCor_Chave", "TCCor", TCCor, 1, "u", false);
+}
+
+var TCCor_Chave = new Campo_arqCCor_TCCor_Chave;
+
+//------------------------------------------------------------
+Campo_arqCCor_TCCor_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqCCor_TCCor_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TCCor_Descritor", "TCCor_Descritor", "TCCor", TCCor, 10, "xxxxxxxxxx", false);
+}
+
+var TCCor_Descritor = new Campo_arqCCor_TCCor_Descritor;
+
+//------------------------------------------------------------
 Campo_arqCCor_Banco.prototype = new Lance_CampoHidden;
 
 function Campo_arqCCor_Banco()
@@ -483,6 +516,27 @@ Campo_arqCCor_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_comMsg
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqCCor_TCCor.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O tipo da conta é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqCCor_TCCor.prototype.Cabecalho = function()
+{
+		return( "Tipo" );
+}
+
+TCCor_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TCCor_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqCCor_Banco.prototype.Existencia = function()
@@ -878,7 +932,7 @@ function ListaDeCampos_arqCCor( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Nome, Clinica, Clinica_Clinica, Banco, Banco_Num, Banco_Banco, Agencia, DvAgencia, Conta, DvConta, Carteira, CodCedente, Multa, Juros, CBoleto, Instrucoes, UltRemessa, Convenio, Variacao, Ativo, TPix1, TPix1_Chave, TPix1_Descritor, Pix1, TPix2, TPix2_Chave, TPix2_Descritor, Pix2, TPix3, TPix3_Chave, TPix3_Descritor, Pix3, TPix4, TPix4_Chave, TPix4_Descritor, Pix4, TPix5, TPix5_Chave, TPix5_Descritor, Pix5 ]	);
+		[ Nome, Clinica, Clinica_Clinica, TCCor, TCCor_Chave, TCCor_Descritor, Banco, Banco_Num, Banco_Banco, Agencia, DvAgencia, Conta, DvConta, Carteira, CodCedente, Multa, Juros, CBoleto, Instrucoes, UltRemessa, Convenio, Variacao, Ativo, TPix1, TPix1_Chave, TPix1_Descritor, Pix1, TPix2, TPix2_Chave, TPix2_Descritor, Pix2, TPix3, TPix3_Chave, TPix3_Descritor, Pix3, TPix4, TPix4_Chave, TPix4_Descritor, Pix4, TPix5, TPix5_Chave, TPix5_Descritor, Pix5 ]	);
 	IniciarDependencias_arqCCor();
 	g_prefixo = l_prefixo;
 	return( l_lista );
