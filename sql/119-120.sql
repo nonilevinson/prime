@@ -542,8 +542,14 @@ ALTER TABLE arqParcela
 add /* 26*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) );
 commit;
 
+ALTER TABLE arqParcela drop ClinicaCal, drop TPgRecCal, drop PessoaCal;
+commit;
+
 RECREATE VIEW V_arqParcela AS 
-	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, A0.CLINICACAL, A0.TPGRECCAL, A0.PESSOACAL, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.NOME as CCOR_NOME, A0.SUBPLANO, A4.PLANO as SUBPLANO_PLANO, A5.CODPLANO as SUBPLANO_PLANO_CODPLANO, A5.PLANO as SUBPLANO_PLANO_PLANO, A4.CODIGO as SUBPLANO_CODIGO, A4.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A6.CHAVE as TFPagto_CHAVE, A6.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A7.CHAVE as TDetPg_CHAVE, A7.DESCRITOR as TDetPg_DESCRITOR, A0.FORMAPG, A8.FORMAPG as FORMAPG_FORMAPG, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM, A0.HISTORICO
+	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, (Select V.Clinica_Clinica From v_arqConta V Where V.idPrimario = A0.Conta) as VCLINICA, (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = A0.Conta) as VTPGREC, CASE
+	WHEN( (Select C.Fornecedor From arqConta C Where C.idPrimario=A0.Conta) is not null ) THEN( (Select F.Nome From arqConta C join arqFornecedor F on F.idPrimario=C.Fornecedor Where C.idPrimario=A0.Conta) )
+	ELSE ( (Select P.Nome From arqConta C join arqPessoa P on P.idPrimario=C.Pessoa Where C.idPrimario=A0.Conta) )
+	END  as VPESSOA, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.NOME as CCOR_NOME, A0.SUBPLANO, A4.PLANO as SUBPLANO_PLANO, A5.CODPLANO as SUBPLANO_PLANO_CODPLANO, A5.PLANO as SUBPLANO_PLANO_PLANO, A4.CODIGO as SUBPLANO_CODIGO, A4.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A6.CHAVE as TFPagto_CHAVE, A6.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A7.CHAVE as TDetPg_CHAVE, A7.DESCRITOR as TDetPg_DESCRITOR, A0.FORMAPG, A8.FORMAPG as FORMAPG_FORMAPG, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM, A0.HISTORICO
 	FROM arqParcela A0
 	left join arqConta A1 on A1.IDPRIMARIO = A0.CONTA
 	left join tabTFCobra A2 on A2.IDPRIMARIO=A0.TFCOBRA
@@ -612,34 +618,31 @@ commit;
 ALTER TABLE arqParcela
 alter IDPRIMARIO position 1,
 alter CONTA position 2,
-alter CLINICACAL position 3,
-alter TPGRECCAL position 4,
-alter PESSOACAL position 5,
-alter PARCELA position 6,
-alter VENCIMENTO position 7,
-alter VENCEST position 8,
-alter VALOR position 9,
-alter VALORLIQ position 10,
-alter ESTIMADO position 11,
-alter TFCOBRA position 12,
-alter EMISSAO position 13,
-alter NUMBOLETO position 14,
-alter LINHADIG position 15,
-alter NOMEPDF position 16,
-alter CCOR position 17,
-alter SUBPLANO position 18,
-alter DATAPAGTO position 19,
-alter DATACOMP position 20,
-alter TFPAGTO position 21,
-alter TDETPG position 22,
-alter FORMAPG position 23,
-alter CHEQUE position 24,
-alter ARQ1 position 25,
-alter ARQ1_ARQUIVO position 26,
-alter STRETORNO position 27,
-alter REMESSA position 28,
-alter DATAREM position 29,
-alter HISTORICO position 30;
+alter PARCELA position 3,
+alter VENCIMENTO position 4,
+alter VENCEST position 5,
+alter VALOR position 6,
+alter VALORLIQ position 7,
+alter ESTIMADO position 8,
+alter TFCOBRA position 9,
+alter EMISSAO position 10,
+alter NUMBOLETO position 11,
+alter LINHADIG position 12,
+alter NOMEPDF position 13,
+alter CCOR position 14,
+alter SUBPLANO position 15,
+alter DATAPAGTO position 16,
+alter DATACOMP position 17,
+alter TFPAGTO position 18,
+alter TDETPG position 19,
+alter FORMAPG position 20,
+alter CHEQUE position 21,
+alter ARQ1 position 22,
+alter ARQ1_ARQUIVO position 23,
+alter STRETORNO position 24,
+alter REMESSA position 25,
+alter DATAREM position 26,
+alter HISTORICO position 27;
 commit;
 
 /************************************************************
@@ -907,3 +910,4 @@ alter IMAGEM position 5,
 alter IMAGEM_ARQUIVO  position 6,
 alter LINK position 7;
 commit;
+

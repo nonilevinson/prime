@@ -25,37 +25,37 @@ function Campo_arqParcela_Conta_Transacao()
 var Conta_Transacao = new Campo_arqParcela_Conta_Transacao;
 
 //------------------------------------------------------------
-Campo_arqParcela_ClinicaCal.prototype = new Lance_CampoCadeia;
+Campo_arqParcela_VClinica.prototype = new Lance_CampoCadeia;
 
-function Campo_arqParcela_ClinicaCal()
+function Campo_arqParcela_VClinica()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "ClinicaCal", "ClinicaCal", "ClinicaCal", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "VClinica", "VClinica", "VClinica", 30, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var ClinicaCal = new Campo_arqParcela_ClinicaCal;
+var VClinica = new Campo_arqParcela_VClinica;
 
 //------------------------------------------------------------
-Campo_arqParcela_TPgRecCal.prototype = new Lance_CampoCadeia;
+Campo_arqParcela_VTPgRec.prototype = new Lance_CampoCadeia;
 
-function Campo_arqParcela_TPgRecCal()
+function Campo_arqParcela_VTPgRec()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "TPgRecCal", "TPgRecCal", "TPgRecCal", 7, "uxxxxxx", false);
+	this.superClass( "VTPgRec", "VTPgRec", "VTPgRec", 7, "uxxxxxx", false);
 }
 
-var TPgRecCal = new Campo_arqParcela_TPgRecCal;
+var VTPgRec = new Campo_arqParcela_VTPgRec;
 
 //------------------------------------------------------------
-Campo_arqParcela_PessoaCal.prototype = new Lance_CampoCadeia;
+Campo_arqParcela_VPessoa.prototype = new Lance_CampoCadeia;
 
-function Campo_arqParcela_PessoaCal()
+function Campo_arqParcela_VPessoa()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "PessoaCal", "PessoaCal", "PessoaCal", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "VPessoa", "VPessoa", "VPessoa", 60, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var PessoaCal = new Campo_arqParcela_PessoaCal;
+var VPessoa = new Campo_arqParcela_VPessoa;
 
 //------------------------------------------------------------
 Campo_arqParcela_Parcela.prototype = new Lance_CampoNumerico;
@@ -495,14 +495,14 @@ Conta_Transacao.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
-Campo_arqParcela_ClinicaCal.prototype.Calculou = function()
+Campo_arqParcela_VClinica.prototype.Calculou = function()
 {
 {
 {
 	if( !Conta.ValorFoiPreenchido() )
 		this.Atribuiu( "" );
 	else
-		g_strConexao += " ( SELECT Clinica FROM arqClinica WHERE arqClinica.IdPrimario=( COALESCE( ( SELECT Clinica FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "ClinicaCal" + LANCE_FIM_PARAMETRO;
+		g_strConexao += " ( SELECT Clinica FROM arqClinica WHERE arqClinica.IdPrimario=( COALESCE( ( SELECT Clinica FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "VClinica" + LANCE_FIM_PARAMETRO;
 	return( true );
 }
 }
@@ -511,16 +511,16 @@ Campo_arqParcela_ClinicaCal.prototype.Calculou = function()
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqParcela_ClinicaCal.prototype.Cabecalho = function()
+Campo_arqParcela_VClinica.prototype.Cabecalho = function()
 {
 		return( "Clínica" );
 }
 
-ClinicaCal.EhCalculado = true;
+VClinica.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
-Campo_arqParcela_TPgRecCal.prototype.Calculou = function()
+Campo_arqParcela_VTPgRec.prototype.Calculou = function()
 {
 {
 	return( this.Atribuiu( Conta_TPgRec ) );
@@ -530,24 +530,24 @@ Campo_arqParcela_TPgRecCal.prototype.Calculou = function()
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqParcela_TPgRecCal.prototype.Cabecalho = function()
+Campo_arqParcela_VTPgRec.prototype.Cabecalho = function()
 {
 		return( "Tipo" );
 }
 
-TPgRecCal.EhCalculado = true;
+VTPgRec.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
-Campo_arqParcela_PessoaCal.prototype.Calculou = function()
+Campo_arqParcela_VPessoa.prototype.Calculou = function()
 {
 {
-		if( tem( Conta_Fornecedor ) )
+		if( Conta_Fornecedor > 0 )
 {
 	if( !Conta.ValorFoiPreenchido() )
 		this.Atribuiu( "" );
 	else
-		g_strConexao += " ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( COALESCE( ( SELECT Fornecedor FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "PessoaCal" + LANCE_FIM_PARAMETRO;
+		g_strConexao += " ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( COALESCE( ( SELECT Fornecedor FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "VPessoa" + LANCE_FIM_PARAMETRO;
 	return( true );
 }
 }
@@ -556,7 +556,7 @@ Campo_arqParcela_PessoaCal.prototype.Calculou = function()
 	if( !Conta.ValorFoiPreenchido() )
 		this.Atribuiu( "" );
 	else
-		g_strConexao += " ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "PessoaCal" + LANCE_FIM_PARAMETRO;
+		g_strConexao += " ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConta WHERE arqConta.IdPrimario=( " + Conta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "VPessoa" + LANCE_FIM_PARAMETRO;
 	return( true );
 }
 }
@@ -565,12 +565,12 @@ Campo_arqParcela_PessoaCal.prototype.Calculou = function()
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqParcela_PessoaCal.prototype.Cabecalho = function()
+Campo_arqParcela_VPessoa.prototype.Cabecalho = function()
 {
 		return( "Pessoa" );
 }
 
-PessoaCal.EhCalculado = true;
+VPessoa.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -1048,7 +1048,7 @@ Campo_arqParcela_FormaPg.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_arqParcela()
 {
-Conta.CalculosDependentes= [ ClinicaCal,TPgRecCal,PessoaCal ];
+Conta.CalculosDependentes= [ VClinica,VTPgRec,VPessoa ];
 Emissao.CalculosDependentes= [ NumBoleto ];
 Conta_Transacao.ExistenciasDependentes= [ Conta ];
 TFCobra.ExistenciasDependentes= [ Emissao,LinhaDig,NomePdf,TFPagto,TDetPg,StRetorno,Remessa ];
@@ -1096,7 +1096,7 @@ function ListaDeCampos_arqParcela( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Conta, Conta_Transacao, ClinicaCal, TPgRecCal, PessoaCal, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, FormaPg, FormaPg_FormaPg, Cheque, Arq1, StRetorno, Remessa, DataRem, Historico ]	);
+		[ Conta, Conta_Transacao, VClinica, VTPgRec, VPessoa, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado, TFCobra, TFCobra_Chave, TFCobra_Descritor, Emissao, NumBoleto, LinhaDig, NomePdf, CCor, CCor_Nome, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, DataPagto, DataComp, TFPagto, TFPagto_Chave, TFPagto_Descritor, TDetPg, TDetPg_Chave, TDetPg_Descritor, FormaPg, FormaPg_FormaPg, Cheque, Arq1, StRetorno, Remessa, DataRem, Historico ]	);
 	IniciarDependencias_arqParcela();
 	g_prefixo = l_prefixo;
 	return( l_lista );

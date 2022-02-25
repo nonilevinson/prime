@@ -65,14 +65,14 @@ class campo_arqParcela_Conta_Transacao extends Lance_CampoNumerico
 }
 
 //======================================================
-//	Campo ClinicaCal
+//	Campo VClinica
 //======================================================
 
-class campo_arqParcela_ClinicaCal extends Lance_CampoCadeia
+class campo_arqParcela_VClinica extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "ClinicaCal", "ClinicaCal", "ClinicaCal", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CALCULADO, 0, false );
+		parent::__construct( "VClinica", "VClinica", "VClinica", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_VIEW, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -92,14 +92,14 @@ class campo_arqParcela_ClinicaCal extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo TPgRecCal
+//	Campo VTPgRec
 //======================================================
 
-class campo_arqParcela_TPgRecCal extends Lance_CampoCadeia
+class campo_arqParcela_VTPgRec extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "TPgRecCal", "TPgRecCal", "TPgRecCal", 7, "xxxxxxx", EH_CALCULADO, 0, false );
+		parent::__construct( "VTPgRec", "VTPgRec", "VTPgRec", 7, "xxxxxxx", EH_VIEW, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -121,14 +121,14 @@ class campo_arqParcela_TPgRecCal extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo PessoaCal
+//	Campo VPessoa
 //======================================================
 
-class campo_arqParcela_PessoaCal extends Lance_CampoCadeia
+class campo_arqParcela_VPessoa extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "PessoaCal", "PessoaCal", "PessoaCal", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CALCULADO, 0, false );
+		parent::__construct( "VPessoa", "VPessoa", "VPessoa", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_VIEW, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -675,9 +675,9 @@ function listaCampos_arqParcela( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqParcela_Conta(),
 			new campo_arqParcela_Conta_Transacao(),
-			new campo_arqParcela_ClinicaCal(),
-			new campo_arqParcela_TPgRecCal(),
-			new campo_arqParcela_PessoaCal(),
+			new campo_arqParcela_VClinica(),
+			new campo_arqParcela_VTPgRec(),
+			new campo_arqParcela_VPessoa(),
 			new campo_arqParcela_Parcela(),
 			new campo_arqParcela_Vencimento(),
 			new campo_arqParcela_VencEst(),
@@ -749,9 +749,9 @@ class arqParcela extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ Conta_Transacao ];
-			$vetAux[] = [ ClinicaCal ];
-			$vetAux[] = [ TPgRecCal ];
-			$vetAux[] = [ PessoaCal ];
+			$vetAux[] = [ VClinica ];
+			$vetAux[] = [ VTPgRec ];
+			$vetAux[] = [ VPessoa ];
 			$vetAux[] = [ Parcela ];
 			$vetAux[] = [ Vencimento ];
 			$vetAux[] = [ Valor ];
@@ -779,9 +779,9 @@ class arqParcela extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ Conta_Transacao ];
-			$vetAux[] = [ ClinicaCal ];
-			$vetAux[] = [ TPgRecCal ];
-			$vetAux[] = [ PessoaCal ];
+			$vetAux[] = [ VClinica ];
+			$vetAux[] = [ VTPgRec ];
+			$vetAux[] = [ VPessoa ];
 			$vetAux[] = [ Parcela ];
 			$vetAux[] = [ Vencimento ];
 			$vetAux[] = [ VencEst ];

@@ -2471,34 +2471,31 @@ CREATE TABLE arqParcela
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	CONTA ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/*  3*/	/* CLINICACAL */
-	/*  4*/	/* TPGRECCAL */
-	/*  5*/	/* PESSOACAL */
-	/*  6*/	PARCELA SMALLINT, /* Máscara = N */
-	/*  7*/	VENCIMENTO DATE, /* Máscara = 4ano */
-	/*  8*/	VENCEST campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  9*/	VALOR NUMERIC( 11, 2 ), /* Máscara = N */
-	/* 10*/	VALORLIQ NUMERIC( 11, 2 ), /* Máscara = N */
-	/* 11*/	ESTIMADO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 12*/	TFCOBRA ligadoComTabela, /* Ligado com a Tabela TFCobra */
-	/* 13*/	EMISSAO DATE, /* Máscara = 4ano */
-	/* 14*/	/* NUMBOLETO */
-	/* 15*/	LINHADIG VARCHAR( 54 ) COLLATE PT_BR, /* Máscara = X */
-	/* 16*/	NOMEPDF VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
-	/* 17*/	CCOR ligadoComArquivo, /* Ligado com o Arquivo CCor */
-	/* 18*/	SUBPLANO ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
-	/* 19*/	DATAPAGTO DATE, /* Máscara = 4ano */
-	/* 20*/	DATACOMP DATE, /* Máscara = 4ano */
-	/* 21*/	TFPAGTO ligadoComTabela, /* Ligado com a Tabela TFPagto */
-	/* 22*/	TDETPG ligadoComTabela, /* Ligado com a Tabela TDetPg */
-	/* 23*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 24*/	CHEQUE NUMERIC(18,0), /* Máscara = Z */
-	/* 25*/	ARQ1 VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 26*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
-	/* 27*/	STRETORNO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
-	/* 28*/	REMESSA NUMERIC(18,0), /* Máscara = N */
-	/* 29*/	DATAREM DATE, /* Máscara = 4ano */
-	/* 30*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	PARCELA SMALLINT, /* Máscara = N */
+	/*  4*/	VENCIMENTO DATE, /* Máscara = 4ano */
+	/*  5*/	VENCEST campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	VALOR NUMERIC( 11, 2 ), /* Máscara = N */
+	/*  7*/	VALORLIQ NUMERIC( 11, 2 ), /* Máscara = N */
+	/*  8*/	ESTIMADO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  9*/	TFCOBRA ligadoComTabela, /* Ligado com a Tabela TFCobra */
+	/* 10*/	EMISSAO DATE, /* Máscara = 4ano */
+	/* 11*/	/* NUMBOLETO */
+	/* 12*/	LINHADIG VARCHAR( 54 ) COLLATE PT_BR, /* Máscara = X */
+	/* 13*/	NOMEPDF VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
+	/* 14*/	CCOR ligadoComArquivo, /* Ligado com o Arquivo CCor */
+	/* 15*/	SUBPLANO ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
+	/* 16*/	DATAPAGTO DATE, /* Máscara = 4ano */
+	/* 17*/	DATACOMP DATE, /* Máscara = 4ano */
+	/* 18*/	TFPAGTO ligadoComTabela, /* Ligado com a Tabela TFPagto */
+	/* 19*/	TDETPG ligadoComTabela, /* Ligado com a Tabela TDetPg */
+	/* 20*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 21*/	CHEQUE NUMERIC(18,0), /* Máscara = Z */
+	/* 22*/	ARQ1 VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
+	/* 23*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
+	/* 24*/	STRETORNO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 25*/	REMESSA NUMERIC(18,0), /* Máscara = N */
+	/* 26*/	DATAREM DATE, /* Máscara = 4ano */
+	/* 27*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqParcela_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqParcela_UK UNIQUE ( Conta, Parcela )
 );
@@ -2933,20 +2930,11 @@ ALTER TABLE arqIndexAtua ADD DATAPROX DATE computed by ( dateadd( Dias day to Da
 ALTER TABLE arqIndexAtua ALTER DATAPROX POSITION 5;
 ALTER TABLE arqPTrata ADD VALMINIMO NUMERIC( 8, 2 ) computed by ( Valor - ( Valor * MrgDesc ) / 100.0 ); 
 ALTER TABLE arqPTrata ALTER VALMINIMO POSITION 6;
-ALTER TABLE arqParcela ADD CLINICACAL VARCHAR( 30 ) computed by ( ( COALESCE( ( SELECT Clinica FROM arqClinica WHERE arqClinica.IdPrimario=( COALESCE( ( SELECT Clinica FROM arqConta WHERE arqConta.IdPrimario=( arqParcela.Conta ) ), 0 ) )  ), '' ) ) ); 
-ALTER TABLE arqParcela ALTER CLINICACAL POSITION 3;
-ALTER TABLE arqParcela ADD TPGRECCAL VARCHAR( 7 ) computed by ( (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = arqParcela.Conta) ); 
-ALTER TABLE arqParcela ALTER TPGRECCAL POSITION 4;
-ALTER TABLE arqParcela ADD PESSOACAL VARCHAR( 60 ) computed by ( CASE
-	WHEN( (Select C.Fornecedor From arqConta C Where C.idPrimario=arqParcela.Conta) is not null ) THEN( (Select F.Nome From arqConta C join arqFornecedor F on F.idPrimario=C.Fornecedor Where C.idPrimario=arqParcela.Conta) )
-	ELSE ( (Select P.Nome From arqConta C join arqPessoa P on P.idPrimario=C.Pessoa Where C.idPrimario=arqParcela.Conta) )
-	END  ); 
-ALTER TABLE arqParcela ALTER PESSOACAL POSITION 5;
 ALTER TABLE arqParcela ADD NUMBOLETO NUMERIC(18,0) computed by ( CASE
 	WHEN( Emissao is not null ) THEN( IdPrimario )
 	ELSE ( 0 )
 	END  ); 
-ALTER TABLE arqParcela ALTER NUMBOLETO POSITION 14;
+ALTER TABLE arqParcela ALTER NUMBOLETO POSITION 11;
 ALTER TABLE arqConta ADD NOME VARCHAR( 60 ) computed by ( CASE
 	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqConta.Pessoa )  ), '' ) ) )
 	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqConta.Fornecedor )  ), '' ) ) )
@@ -3227,7 +3215,10 @@ RECREATE VIEW V_arqConta AS
 commit;
 
 RECREATE VIEW V_arqParcela AS 
-	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, A0.CLINICACAL, A0.TPGRECCAL, A0.PESSOACAL, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.NOME as CCOR_NOME, A0.SUBPLANO, A4.PLANO as SUBPLANO_PLANO, A5.CODPLANO as SUBPLANO_PLANO_CODPLANO, A5.PLANO as SUBPLANO_PLANO_PLANO, A4.CODIGO as SUBPLANO_CODIGO, A4.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A6.CHAVE as TFPagto_CHAVE, A6.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A7.CHAVE as TDetPg_CHAVE, A7.DESCRITOR as TDetPg_DESCRITOR, A0.FORMAPG, A8.FORMAPG as FORMAPG_FORMAPG, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM, A0.HISTORICO
+	SELECT A0.IDPRIMARIO, A0.CONTA, A1.TRANSACAO as CONTA_TRANSACAO, (Select V.Clinica_Clinica From v_arqConta V Where V.idPrimario = A0.Conta) as VCLINICA, (Select V.TPgRec_Descritor From v_arqConta V Where V.idPrimario = A0.Conta) as VTPGREC, CASE
+	WHEN( (Select C.Fornecedor From arqConta C Where C.idPrimario=A0.Conta) is not null ) THEN( (Select F.Nome From arqConta C join arqFornecedor F on F.idPrimario=C.Fornecedor Where C.idPrimario=A0.Conta) )
+	ELSE ( (Select P.Nome From arqConta C join arqPessoa P on P.idPrimario=C.Pessoa Where C.idPrimario=A0.Conta) )
+	END  as VPESSOA, A0.PARCELA, A0.VENCIMENTO, A0.VENCEST, A0.VALOR, A0.VALORLIQ, A0.ESTIMADO, A0.TFCOBRA, A2.CHAVE as TFCobra_CHAVE, A2.DESCRITOR as TFCobra_DESCRITOR, A0.EMISSAO, A0.NUMBOLETO, A0.LINHADIG, A0.NOMEPDF, A0.CCOR, A3.NOME as CCOR_NOME, A0.SUBPLANO, A4.PLANO as SUBPLANO_PLANO, A5.CODPLANO as SUBPLANO_PLANO_CODPLANO, A5.PLANO as SUBPLANO_PLANO_PLANO, A4.CODIGO as SUBPLANO_CODIGO, A4.NOME as SUBPLANO_NOME, A0.DATAPAGTO, A0.DATACOMP, A0.TFPAGTO, A6.CHAVE as TFPagto_CHAVE, A6.DESCRITOR as TFPagto_DESCRITOR, A0.TDETPG, A7.CHAVE as TDetPg_CHAVE, A7.DESCRITOR as TDetPg_DESCRITOR, A0.FORMAPG, A8.FORMAPG as FORMAPG_FORMAPG, A0.CHEQUE, A0.ARQ1, A0.Arq1_ARQUIVO, A0.STRETORNO, A0.REMESSA, A0.DATAREM, A0.HISTORICO
 	FROM arqParcela A0
 	left join arqConta A1 on A1.IDPRIMARIO = A0.CONTA
 	left join tabTFCobra A2 on A2.IDPRIMARIO=A0.TFCOBRA
