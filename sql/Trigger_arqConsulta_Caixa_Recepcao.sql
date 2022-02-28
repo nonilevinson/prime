@@ -45,19 +45,20 @@ active before Update position 101 as
 	declare taxa23 numeric(18,2);
 
 begin
-
+-- exception TESTE '1 NEWvalor= ' || NEW.Valor || ' OLDvalor= ' || OLD.Valor || ' NEWFormaPg= ' || NEW.FormaPg || ' OLDformaPg= ' || coalesce( OLD.FormaPg, 0 ) || ' NEWFormaPg2= ' || coalesce( NEW.FormaPg2, 0 ) || ' OLDformaPg2= ' || coalesce( OLD.FormaPg2, 0 );
 	if( NEW.TiAgenda = 1 and NEW.Cortesia = 0 and 
-		( NEW.Valor <> OLD.Valor or NEW.FormaPg <> OLD.FormaPg 
-			or NEW.Valor2 <> OLD.Valor2 or NEW.FormaPg2 <> OLD.FormaPg2 ) ) then
+		( NEW.Valor <> OLD.Valor or coalesce( NEW.FormaPg, 0 ) <> coalesce( OLD.FormaPg, 0 ) or
+			NEW.Valor2 <> OLD.Valor2 or coalesce( NEW.FormaPg2, 0 ) <> coalesce( OLD.FormaPg2, 0 ) ) 
+		) then
 	begin
-	--exception teste 'idConta= ' || coalesce( :idConta, 'null' ) || 'NEW valor= ' || NEW.Valor || ' old valor= ' || OLD.VALOR || ' NEW FormaPg= ' || NEW.FormaPg || ' OLD formaPg= ' || OLD.FormaPg;
+-- exception TESTE '2 NEWvalor= ' || NEW.Valor || ' OLDvalor= ' || OLD.Valor || ' NEWFormaPg= ' || NEW.FormaPg || ' OLDformaPg= ' || coalesce( OLD.FormaPg, 0 ) || ' NEWFormaPg2= ' || coalesce( NEW.FormaPg2, 0 ) || ' OLDformaPg2= ' || coalesce( OLD.FormaPg2, 0 );
 		if( NEW.ContaCons > 0 ) then
 		begin
-			if( NEW.Valor <> OLD.Valor or NEW.FormaPg <> OLD.FormaPg ) then
+			if( NEW.Valor <> OLD.Valor or coalesce( NEW.FormaPg, 0 ) <> coalesce( OLD.FormaPg, 0 ) ) then
 			begin 
-				select first 1 idPrimario, Valor, ValorLiq, 100 - ( ValorLiq / Valor * 100.0 )
+				select idPrimario, Valor, ValorLiq, 100 - ( ValorLiq / Valor * 100.0 )
 				from arqParcela
-				where Conta = OLD.ContaCons
+				where Parcela = 1 and Conta = OLD.ContaCons
 				into :idParcela, :valor, :valorLiq, :txCartao;
 
 				if( :valor <> :valorLiq ) then
@@ -73,12 +74,11 @@ begin
 					where idPrimario = :idParcela;
 			end
 
-			if( NEW.Valor <> OLD.Valor or NEW.FormaPg <> OLD.FormaPg ) then
+			if( NEW.Valor2 <> OLD.Valor2 or coalesce( NEW.FormaPg2, 0 ) <> coalesce( OLD.FormaPg2, 0 ) ) then
 			begin 
-				select first 1 idPrimario, Valor, ValorLiq, 100 - ( ValorLiq / Valor * 100.0 )
+				select idPrimario, Valor, ValorLiq, 100 - ( ValorLiq / Valor * 100.0 )
 				from arqParcela
-				where Conta = OLD.ContaCons
-				order by idPrimario desc
+				where Parcela = 2 and Conta = OLD.ContaCons
 				into :idParcela, :valor, :valorLiq, :txCartao;
 
 				if( :valor <> :valorLiq ) then
@@ -184,11 +184,11 @@ begin
 			begin
 				select Dinheiro, Cartao, Dias, TaxaDeb, Taxa2, Taxa3
 				from arqFormaPg
-				where idPrimario = NEW.FORMAPG
+				where idPrimario = NEW.FORMAPG2
 				into :dinheiro2, :cartao2, :dias2, :taxaDeb2, :taxa22, :taxa23;
 
 				--* idTFCobra: 2=Cartão 3=Carteira
-				if( cartao = 1 ) then
+				if( cartao2 = 1 ) then
 				begin
 					idTFCobra2 = 2;
 				end
@@ -197,7 +197,7 @@ begin
 					idTFCobra2 = 3;
 				end
 
-				if( dinheiro = 1 ) then
+				if( dinheiro2 = 1 ) then
 				begin
 					vencimento2 = current_date;
 					dataPagto2  = current_date;
@@ -231,7 +231,7 @@ begin
 				insert into arqParcela (idPrimario, Conta, Parcela, Vencimento, VencEst, Valor, ValorLiq, Estimado,
 					TFCobra, Emissao, LinhaDig, NomePdf, CCor, SubPlano, DataPagto, DataComp, TFPagto, TDetPg, FormaPg,
 					Cheque, Arq1, StRetorno, Remessa, DataRem, Historico )
-					values( gen_id( GENIDPRIMARIO, 1 ), :idConta, 1, :vencimento2, 0, NEW.Valor2, :valorLiq2, 0,
+					values( gen_id( GENIDPRIMARIO, 1 ), :idConta, 2, :vencimento2, 0, NEW.Valor2, :valorLiq2, 0,
 					:idTFCobra2, null, '', '', :idCCor, :idSubPlano, :dataPagto2, :dataComp2, :idTFPagto2, null, NEW.FormaPg,
 					0, null, '', null, null, '' );
 			end
