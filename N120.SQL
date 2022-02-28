@@ -3558,11 +3558,12 @@ insert into arqLanceOperacao values(200176,2,'Rotina para criar Saída de caixa d
 insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa da Recepção','',177,10,0,'');
 insert into arqLanceOperacao values(200180,2,'Rotina para criar Saída de caixa de Assesor','',180,10,0,'');
 insert into arqLanceOperacao values(200181,2,'Rotina para criar Entrada de caixa de Assesor','',181,10,0,'');
-insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
 insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'');
 insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'');
 insert into arqLanceOperacao values(200249,2,'Rotina para criar aviso de que pode agendar a retirada da medicação','',249,1,0,'');
+insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
+insert into arqLanceOperacao values(200256,2,'Rotina para excluir pessoas que tenham histórico de atividades - relação','',256,null,0,'');
 insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
 insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de estoque','',221,2,0,'');
 insert into arqLanceOperacao values(200223,2,'Relatório analítico de medicação prescrita','',223,50,0,'');
@@ -3679,8 +3680,8 @@ ALTER TABLE arqCliMidia ADD CONSTRAINT arqCliMidia_FK_Midia FOREIGN KEY ( MIDIA 
 ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_CCorRec FOREIGN KEY ( CCORREC ) REFERENCES arqCCor ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_SubPlaRRec FOREIGN KEY ( SUBPLARREC ) REFERENCES arqSubPlano ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_SubPlaRAss FOREIGN KEY ( SUBPLARASS ) REFERENCES arqSubPlano ON DELETE SET NULL ON UPDATE CASCADE;
-ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaCons FOREIGN KEY ( CONTACONS ) REFERENCES arqConta ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaPTra FOREIGN KEY ( CONTAPTRA ) REFERENCES arqConta ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaCons FOREIGN KEY ( CONTACONS ) REFERENCES arqConta ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaPTra FOREIGN KEY ( CONTAPTRA ) REFERENCES arqConta ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_FornRec FOREIGN KEY ( FORNREC ) REFERENCES arqFornecedor ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqComCall ADD CONSTRAINT arqComCall_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqFxComCall ADD CONSTRAINT arqFxComCall_FK_ComCall FOREIGN KEY ( COMCALL ) REFERENCES arqComCall ON DELETE CASCADE ON UPDATE CASCADE;
