@@ -121,7 +121,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       {
          $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
          $this->PDF->Cell( $larg2, $altura, "Saldo da entrada em " . $entraParc . " parcela" .
-            ( $entraParc == 1 ? "" : "s" ) . "de R$ " . $this->valorExtenso( $entraValP ),
+            ( $entraParc == 1 ? "" : "s" ) . " de R$ " . $this->valorExtenso( $entraValP ),
             SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
          $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
