@@ -8,7 +8,7 @@ echo
    if( GrupoAtualEm() )
    {
       echo
-      $this->Pedir( "Qtd",
+      $this->Pedir( "GR0 Qtd",
          [ "TrgItLote ", TrgItLote,
          [ brHtml(4) . "TrgCMLote ", TrgCMLote,
          [ brHtml(4) . "Estoque ", Estoque ] ] ] );      
