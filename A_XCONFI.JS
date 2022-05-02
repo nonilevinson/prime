@@ -139,28 +139,6 @@ function Campo_cnfXConfig_RecorDia()
 var RecorDia = new Campo_cnfXConfig_RecorDia;
 
 //------------------------------------------------------------
-Campo_cnfXConfig_CCorRec.prototype = new Lance_CampoHidden;
-
-function Campo_cnfXConfig_CCorRec()
-{
-	this.superClass = Lance_CampoHidden;
-	this.superClass( "CCorRec", "CCorRec", "CCorRec", "arqCCor", "a_ccor", null, "",20);
-}
-
-var CCorRec = new Campo_cnfXConfig_CCorRec;
-
-//------------------------------------------------------------
-Campo_cnfXConfig_CCorRec_Nome.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_cnfXConfig_CCorRec_Nome()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "CCorRec_Nome", "CCorRec_Nome", "Nome", CCorRec, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
-}
-
-var CCorRec_Nome = new Campo_cnfXConfig_CCorRec_Nome;
-
-//------------------------------------------------------------
 Campo_cnfXConfig_SubPlaRRec.prototype = new Lance_CampoHidden;
 
 function Campo_cnfXConfig_SubPlaRRec()
@@ -411,15 +389,6 @@ Campo_cnfXConfig_RecorDia.prototype.TemErro = function()
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
-Campo_cnfXConfig_CCorRec_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( CCorRec.Obrigatorio( p_comMsg ) );
-}
-
-CCorRec_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
 Campo_cnfXConfig_SubPlaRRec_Plano.prototype.ObrigatorioEspecial = function( p_comMsg )
 {
 	return( SubPlaRRec.Obrigatorio( p_comMsg ) );
@@ -508,14 +477,6 @@ Campo_cnfXConfig_DiasSdEntr.prototype.TemErro = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
-Campo_cnfXConfig_CCorRec.prototype.ExistenciaEspecial = function()
-{
-	return( ( !CCorRec_Nome.Obrigatorio( false ) || tem(CCorRec_Nome) ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
 Campo_cnfXConfig_SubPlaRRec.prototype.ExistenciaEspecial = function()
 {
 	return( ( !SubPlaRRec_Plano.Obrigatorio( false ) || tem(SubPlaRRec_Plano) ) && ( !SubPlaRRec_Codigo.Obrigatorio( false ) || tem(SubPlaRRec_Codigo) ) );
@@ -587,7 +548,6 @@ Campo_cnfXConfig_FornRec.prototype.ExistenciaEspecial = function()
 
 function IniciarDependencias_cnfXConfig()
 {
-CCorRec_Nome.ExistenciasDependentes= [ CCorRec ];
 SubPlaRRec_Plano.ExistenciasDependentes= [ SubPlaRRec,SubPlaRRec_Plano_Plano ];
 SubPlaRRec_Plano_CodPlano.ExistenciasDependentes= [ SubPlaRRec_Plano ];
 SubPlaRRec_Codigo.ExistenciasDependentes= [ SubPlaRRec ];
@@ -597,7 +557,6 @@ SubPlaRAss_Plano_CodPlano.ExistenciasDependentes= [ SubPlaRAss_Plano ];
 SubPlaRAss_Codigo.ExistenciasDependentes= [ SubPlaRAss ];
 SubPlaRAss.ExistenciasDependentes= [ SubPlaRAss_Nome ];
 FornRec_Nome.ExistenciasDependentes= [ FornRec ];
-CCorRec_Nome.ErrosDependentes= [ CCorRec ];
 SubPlaRRec_Plano_CodPlano.ErrosDependentes= [ SubPlaRRec_Plano ];
 SubPlaRRec_Codigo.ErrosDependentes= [ SubPlaRRec ];
 SubPlaRAss_Plano_CodPlano.ErrosDependentes= [ SubPlaRAss_Plano ];
@@ -607,7 +566,6 @@ SubPlaRRec_Plano.DescritoresDependentes= [ SubPlaRRec_Plano_Plano ];
 SubPlaRRec.DescritoresDependentes= [ SubPlaRRec_Nome ];
 SubPlaRAss_Plano.DescritoresDependentes= [ SubPlaRAss_Plano_Plano ];
 SubPlaRAss.DescritoresDependentes= [ SubPlaRAss_Nome ];
-CCorRec.CamposChave= [ CCorRec_Nome ];
 SubPlaRRec.CamposChave= [ SubPlaRRec_Plano,SubPlaRRec_Codigo ];
 SubPlaRRec_Plano.CamposChave= [ SubPlaRRec_Plano_CodPlano ];
 SubPlaRAss.CamposChave= [ SubPlaRAss_Plano,SubPlaRAss_Codigo ];
@@ -632,7 +590,7 @@ function ListaDeCampos_cnfXConfig( p_prefixo )
 
 		[ CPF, LogAcesso, LogAcessoS, Qtd, Qtd2, Empresa ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia, CCorRec, CCorRec_Nome, SubPlaRRec, SubPlaRRec_Plano, SubPlaRRec_Plano_CodPlano, SubPlaRRec_Plano_Plano, SubPlaRRec_Codigo, SubPlaRRec_Nome, SubPlaRAss, SubPlaRAss_Plano, SubPlaRAss_Plano_CodPlano, SubPlaRAss_Plano_Plano, SubPlaRAss_Codigo, SubPlaRAss_Nome, FornRec, FornRec_Nome, BoletoMin, DiasSdEntr ]	);
+		[ CNPJ, Email, Site, QtasDesmar, Declinar, RecorDia, SubPlaRRec, SubPlaRRec_Plano, SubPlaRRec_Plano_CodPlano, SubPlaRRec_Plano_Plano, SubPlaRRec_Codigo, SubPlaRRec_Nome, SubPlaRAss, SubPlaRAss_Plano, SubPlaRAss_Plano_CodPlano, SubPlaRAss_Plano_Plano, SubPlaRAss_Codigo, SubPlaRAss_Nome, FornRec, FornRec_Nome, BoletoMin, DiasSdEntr ]	);
 	IniciarDependencias_cnfXConfig();
 	g_prefixo = l_prefixo;
 	return( l_lista );

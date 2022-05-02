@@ -2855,12 +2855,11 @@ CREATE TABLE cnfXConfig
 	/* 20*/	QTASDESMAR SMALLINT, /* Máscara = N */
 	/* 21*/	DECLINAR SMALLINT, /* Máscara = N */
 	/* 22*/	RECORDIA SMALLINT, /* Máscara = N */
-	/* 23*/	CCORREC ligadoComArquivo, /* Ligado com o Arquivo CCor */
-	/* 24*/	SUBPLARREC ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
-	/* 25*/	SUBPLARASS ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
-	/* 26*/	FORNREC ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
-	/* 27*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 28*/	DIASSDENTR SMALLINT, /* Máscara = N */
+	/* 23*/	SUBPLARREC ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
+	/* 24*/	SUBPLARASS ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
+	/* 25*/	FORNREC ligadoComArquivo, /* Ligado com o Arquivo Fornecedor */
+	/* 26*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 27*/	DIASSDENTR SMALLINT, /* Máscara = N */
 	CONSTRAINT cnfXConfig_PK PRIMARY KEY ( IDPRIMARIO )
 );
 commit;
@@ -3135,17 +3134,16 @@ RECREATE VIEW V_arqLido AS
 commit;
 
 RECREATE VIEW V_cnfXConfig AS 
-	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR, A0.RECORDIA, A0.CCORREC, A4.NOME as CCORREC_NOME, A0.SUBPLARREC, A5.PLANO as SUBPLARREC_PLANO, A6.CODPLANO as SUBPLARREC_PLANO_CODPLANO, A6.PLANO as SUBPLARREC_PLANO_PLANO, A5.CODIGO as SUBPLARREC_CODIGO, A5.NOME as SUBPLARREC_NOME, A0.SUBPLARASS, A7.PLANO as SUBPLARASS_PLANO, A8.CODPLANO as SUBPLARASS_PLANO_CODPLANO, A8.PLANO as SUBPLARASS_PLANO_PLANO, A7.CODIGO as SUBPLARASS_CODIGO, A7.NOME as SUBPLARASS_NOME, A0.FORNREC, A9.NOME as FORNREC_NOME, A0.BOLETOMIN, A0.DIASSDENTR
+	SELECT A0.IDPRIMARIO, A0.CPF, A0.LOGACESSO, A0.LOGACESSOS, A0.QTD, A0.QTD2, A0.EMPRESA, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.CNPJ, A0.EMAIL, A0.SITE, A0.QTASDESMAR, A0.DECLINAR, A0.RECORDIA, A0.SUBPLARREC, A4.PLANO as SUBPLARREC_PLANO, A5.CODPLANO as SUBPLARREC_PLANO_CODPLANO, A5.PLANO as SUBPLARREC_PLANO_PLANO, A4.CODIGO as SUBPLARREC_CODIGO, A4.NOME as SUBPLARREC_NOME, A0.SUBPLARASS, A6.PLANO as SUBPLARASS_PLANO, A7.CODPLANO as SUBPLARASS_PLANO_CODPLANO, A7.PLANO as SUBPLARASS_PLANO_PLANO, A6.CODIGO as SUBPLARASS_CODIGO, A6.NOME as SUBPLARASS_NOME, A0.FORNREC, A8.NOME as FORNREC_NOME, A0.BOLETOMIN, A0.DIASSDENTR
 	FROM cnfXConfig A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
 	left join tabUF A3 on A3.IDPRIMARIO=A2.UF
-	left join arqCCor A4 on A4.IDPRIMARIO = A0.CCORREC
-	left join arqSubPlano A5 on A5.IDPRIMARIO = A0.SUBPLARREC
-	left join arqPlano A6 on A6.IDPRIMARIO = A5.PLANO
-	left join arqSubPlano A7 on A7.IDPRIMARIO = A0.SUBPLARASS
-	left join arqPlano A8 on A8.IDPRIMARIO = A7.PLANO
-	left join arqFornecedor A9 on A9.IDPRIMARIO = A0.FORNREC;
+	left join arqSubPlano A4 on A4.IDPRIMARIO = A0.SUBPLARREC
+	left join arqPlano A5 on A5.IDPRIMARIO = A4.PLANO
+	left join arqSubPlano A6 on A6.IDPRIMARIO = A0.SUBPLARASS
+	left join arqPlano A7 on A7.IDPRIMARIO = A6.PLANO
+	left join arqFornecedor A8 on A8.IDPRIMARIO = A0.FORNREC;
 commit;
 
 RECREATE VIEW V_arqBanco AS 
@@ -3567,14 +3565,15 @@ insert into arqLanceOperacao values(200256,2,'Rotina para excluir pessoas que te
 insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
 insert into arqLanceOperacao values(200221,2,'Rotina para abrir um movimento de estoque','',221,2,0,'');
 insert into arqLanceOperacao values(200223,2,'Relatório analítico de medicação prescrita','',223,50,0,'');
-insert into arqLanceOperacao values(200225,2,'Relatório de posição de estoque','',225,50,0,'');
 insert into arqLanceOperacao values(200226,2,'Relatório de lotes por validade','',226,50,0,'');
+insert into arqLanceOperacao values(200225,2,'Relatório de posição de estoque','',225,50,0,'');
 insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação prescrita','',230,50,0,'');
 insert into arqLanceOperacao values(200233,2,'Relatório das agendas de retirada de medicação por quem agendou','',233,50,0,'');
 insert into arqLanceOperacao values(200236,2,'Rotina para dividir uma parcela','',236,10,0,'');
 insert into arqLanceOperacao values(200237,2,'Rotina para criar transferências entre contas','',237,10,0,'');
 insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'GrupoAtualEm()');
 insert into arqLanceOperacao values(200253,2,'Rotina para excluir pessoas que tenham histórico de atividades - relação','',253,90,0,'');
+insert into arqLanceOperacao values(200257,2,'Relatório de hístorico de estoque','',257,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
@@ -3677,7 +3676,6 @@ ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_TFCobra FOREIGN KEY ( 
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_SubPlano FOREIGN KEY ( SUBPLANO ) REFERENCES arqSubPlano ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqCliMidia ADD CONSTRAINT arqCliMidia_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqCliMidia ADD CONSTRAINT arqCliMidia_FK_Midia FOREIGN KEY ( MIDIA ) REFERENCES arqMidia ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_CCorRec FOREIGN KEY ( CCORREC ) REFERENCES arqCCor ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_SubPlaRRec FOREIGN KEY ( SUBPLARREC ) REFERENCES arqSubPlano ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE cnfXConfig ADD CONSTRAINT cnfXConfig_FK_SubPlaRAss FOREIGN KEY ( SUBPLARASS ) REFERENCES arqSubPlano ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_ContaCons FOREIGN KEY ( CONTACONS ) REFERENCES arqConta ON DELETE SET NULL ON UPDATE CASCADE;
@@ -4237,7 +4235,6 @@ begin
 	execute procedure set_log( 12, NEW.idPrimario, 'QtasDesmar', OLD.QtasDesmar, NEW.QtasDesmar );
 	execute procedure set_log( 12, NEW.idPrimario, 'Declinar', OLD.Declinar, NEW.Declinar );
 	execute procedure set_log( 12, NEW.idPrimario, 'RecorDia', OLD.RecorDia, NEW.RecorDia );
-	execute procedure set_log( 12, NEW.idPrimario, 'CCorRec', OLD.CCorRec, NEW.CCorRec );
 	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRRec', OLD.SubPlaRRec, NEW.SubPlaRRec );
 	execute procedure set_log( 12, NEW.idPrimario, 'SubPlaRAss', OLD.SubPlaRAss, NEW.SubPlaRAss );
 	execute procedure set_log( 12, NEW.idPrimario, 'FornRec', OLD.FornRec, NEW.FornRec );

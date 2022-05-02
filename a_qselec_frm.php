@@ -380,5 +380,15 @@ if( $op == 246 ) //* seleção arqLote
 	$this->Pedir( "Fornecedor" );
 }
 
+if( $op == 257 ) //* r_estoque_historico
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Medicamento", Medicamen ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
 //==================================================================================
 echo 	"</table>";

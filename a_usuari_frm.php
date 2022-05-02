@@ -30,10 +30,11 @@ echo
 		[ brHtml(4) . "Versão ", Versao, "", "", "", "", "FormCalculado" ] ] ),
 
 	$this->Pular1Linha(2),
+	$this->NaoPedir( EmailFinan ),
+	
 	$this->Cabecalhos( [ "Emails que receberá", "FormCab alinhaMeio", "2" ] ),
-	$this->Pedir( "Financeiro?", 
-		[ "", EmailFinan,
-		[ brHtml(4) . "Medicamentos de consultas separados? ", EmCMediSep ] ] ),
+	$this->Pedir( "Medicamentos separados?", 
+		[ "", EmCMediSep, " (de consultas)" ] ),
 	$this->Pedir( "Acesso ao sistema",
 		[ "Diário? ", EmailAces,
 		[ brHtml(4) . "Semanal? ", EmailAcesS ] ] ),
