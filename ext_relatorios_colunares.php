@@ -1,6 +1,5 @@
 <?php
 
-//require_once( 'externo.php' );
 require_once( LANCE_PHP_ABSOLUTO . 'lance_relatorio_pdf_colunar.php' );
 
 class Relatorios extends Lance_RelatorioPDF_Colunar
@@ -18,9 +17,11 @@ class Relatorios extends Lance_RelatorioPDF_Colunar
 	//------------------------------------------------------------------------
 	//	Rotina para fazer imprimir um cabeçalho de quebra genérico
 	//------------------------------------------------------------------------
-	function CabQuebra( $p_txtCabQuebra, $p_txtMarcacao='' )
+	function CabQuebra( $p_txtCabQuebra, $p_txtMarcacao='', $p_comMarcacao=true )
 	{
-		$this->MarcarPosicao( $p_txtMarcacao ? $p_txtMarcacao : $p_txtCabQuebra, $this->nivelQuebra );
+		if( $p_comMarcacao )
+			$this->MarcarPosicao( $p_txtMarcacao ? $p_txtMarcacao : $p_txtCabQuebra, $this->nivelQuebra );
+
 		$this->ImprimirTotalEmUmaColuna( $p_txtCabQuebra );
 	}
 
@@ -29,14 +30,11 @@ class Relatorios extends Lance_RelatorioPDF_Colunar
 	//------------------------------------------------------------------------
 	function TituloData( $p_titulo, $p_dataIni, $p_dataFim=null )
 	{
-		if( $p_dataIni )
-		{
-			return( $p_titulo . " entre " . formatarData( $p_dataIni ) . " e " . 
-				( $p_dataFim
-					? formatarData( $p_dataFim )
-					: "sem um final estipulado" )
-			);
-		}
+		return( $p_titulo . ( $p_titulo ? " e" : "E" ) . "ntre " . formatarData( $p_dataIni ) . " e " . 
+			( $p_dataFim
+				? formatarData( $p_dataFim )
+				: "sem um final estipulado" )
+		);
 	}
 
 	//------------------------------------------------------------------------

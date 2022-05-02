@@ -9,27 +9,30 @@ class RelEstoque extends Relatorios
 	{
 		global $g_debugProcesso, $parQSelecao;
       
-      $insumo = $this->insumo;
-      lerRegistroPai( 'arqInsumo', $insumo );
+      $clinica = $this->idClinica;
+      lerRegistroPai( 'arqClinica', $clinica );
 
-      $this->tituloRelatorio = [ 'Relatório de histórico de movimentos e transferências de estoque',
-         "Insumo: " . $insumo->INSUMO,
-         "De " . formatarData( $this->dataIni, 'dd/mm/aaaa' ) .
-            ( $parQSelecao->DATAFIM != "" ? ( " até " . formatarData( $parQSelecao->DATAFIM, 'dd/mm/aaaa' ) ) : "" ),
+      $medicamen = $this->idMedicamen;
+      lerRegistroPai( 'arqMedicamen', $medicamen );
+
+      $this->tituloRelatorio = [ 'Relatório de histórico de estoque',
+			"Clínica: " . ( $clinica->CLINICA ? $clinica->CLINICA : "Todas" ),
+         "Medicamento: " . $medicamen->MEDICAMEN,
+			$this->TituloData( '', $this->dataIni, $this->dataFim ),
          ' ' ];
 
 		$this->DefinirCabColunas(
-			[ 'Data ', 	   	20, ALINHA_CEN ],
-			[ 'M/T',    		10, ALINHA_CEN ],
-			[ 'Item',   		10, ALINHA_CEN ],
-			[ 'Almoxarifado',	40, ALINHA_ESQ ],
-			[ 'Tipo',	   	55, ALINHA_ESQ ],
-			[ 'Qtd',		   	20, ALINHA_DIR ],
-			[ 'Saldo',	   	20, ALINHA_DIR ] );
+			[ 'Data ', 	20, ALINHA_CEN ],
+			[ 'C/M',    19, ALINHA_ESQ ],
+			[ 'Nº',    	13, ALINHA_CEN ],
+			[ 'Item',	11, ALINHA_CEN ],
+			[ 'Tipo',	50, ALINHA_ESQ ],
+			[ 'Qtd',		20, ALINHA_DIR ],
+			[ 'Saldo',	20, ALINHA_DIR ] );
 		
 		$this->DefinirQuebras(
-			[ 'QuebraPorData',	      SIM, NAO, NAO ],
-			[ 'QuebraPorMovEstoque',   SIM, NAO, NAO ] );
+			[ 'QuebraPorData',	   SIM, NAO, NAO ],
+			[ 'QuebraPorMovimento',	SIM, NAO, NAO ] );
 
 		$this->cabPaginaTemCabColunas = true;
 		$this->DefinirAlturas();
@@ -42,14 +45,29 @@ class RelEstoque extends Relatorios
       $g_ehPrimeiro = true;
       $g_saldo = 0;
 
-      $select = "Select sum(
-         case when( I.Tmov in( 1,7 ) ) then ( I.Qtd ) else ( -I.Qtd ) end ) as Qtd
-         From arqItemMov I 
-            join arqMovEstoque	M on M.idPrimario=I.MovEstoque
-				join arqEstoque		E on E.idPrimario=I.Estoque
-         Where E.Insumo = " . $this->insumo . " and M.Data < '" . $this->dataIni . "'";
-      $g_saldoIni = sql_lerUmRegistro( $select )->QTD;
-// if( $g_debugProcesso ) echo '<br><b>GR0 INI arqItemMov S=</b> '.$select.' <b>SALDOINI=</b> '.$g_saldoIni;
+/*
+	Select M.DataSepara, C.Num, '0' as Item, M.Qtd, 6 as idTMov, 'Saída consulta' as TMov,
+			'Consulta' as Tipo
+		From arqCMedica M
+			join arqMedicamen	E on E.idPrimario=M.Medicamen
+			join arqConsulta	C on C.idPrimario=M.Consulta
+	Where " . substr(
+      filtrarPorIntervaloData( 'M.DataSepara', $proc->dataIni, $proc->dataFim ) .
+		filtrarPorLig( 'C.Clinica', $proc->idClinica ) .
+      filtrarPorLig( 'M.Medicamen', $proc->insumo ), 0, -4 ) .	
+*/
+      $select = "Select sum( iif( I.Tmov = 2, I.Qtd, -I.Qtd ) ) as QtdMov,
+				(Select C.Qtd as QtdCMedica
+				From arqCMedica C
+				Where M.Medicamen = " . $this->idMedicamen . " and M.DataSepara < '" . $this->dataIni . "')
+			From arqItemMov I 
+				join arqMovEstoque	M on M.idPrimario=I.MovEstoque
+				join arqLote			L on L.idPrimario=I.Lote
+			Where L.Medicamen = " . $this->idMedicamen . " and M.Data < '" . $this->dataIni . "'";      
+		$g_saldoIni = sql_lerUmRegistro( $select )->QTD;
+
+
+if( $g_debugProcesso ) echo '<br><b>GR0 SALDOINI S=</b> '.$select.'<br><b>SALDOINI=</b> '.$g_saldoIni;
 
       $this->JuntarColunas( [0,5, ALINHA_ESQ] );
 		$this->valores[ 0 ] = "Saldo inicial";
@@ -75,15 +93,17 @@ class RelEstoque extends Relatorios
 	//------------------------------------------------------------------------
 	//	Quebra por MovEstoque
 	//------------------------------------------------------------------------
-	function QuebraPorMovEstoque()
+	function QuebraPorMovimento()
 	{
 		return( $this->regAtual->NUM );
 	}
 
 	//------------------------------------------------------------------------
-	function CabQuebraPorMovEstoque()
+	function CabQuebraPorMovimento()
 	{
-		$this->valores[ 1 ] = formatarNum( $this->regAtual->NUM );
+		$regA = &$this->regAtual;
+		$this->valores[ 1 ] = $regA->TIPO;
+		$this->valores[ 2 ] = formatarNum( $regA->NUM );
 	}
 
 	//------------------------------------------------------------------------
@@ -94,7 +114,7 @@ class RelEstoque extends Relatorios
 		global $g_debugProcesso, $g_saldoIni, $g_ehPrimeiro, $g_saldo;
       $regA = &$this->regAtual;
 
-      $qtdCal = in_array( $regA->IDTMOV, [ 1,7 ] ) ? $regA->QTD : -$regA->QTD;
+      $qtdCal = $regA->IDTMOV == 2 ? $regA->QTD : -$regA->QTD;
       
 		if( $g_ehPrimeiro )
          $g_saldo = $g_saldo + $g_saldoIni + $qtdCal;
@@ -102,8 +122,7 @@ class RelEstoque extends Relatorios
          $g_saldo = $g_saldo + $qtdCal;
 // if( $g_debugProcesso ) echo '<br><b>GR0 SALDO=</b> '.$g_saldo;
       
-      $this->valores[ 2 ] = formatarNum( $regA->ITEM );
-      $this->valores[ 3 ] = $regA->ALMOXARI;
+      $this->valores[ 3 ] = formatarNum( $regA->ITEM );
       $this->valores[ 4 ] = $regA->TMOV;
       $this->valores[ 5 ] = formatarNum( $qtdCal, 2, 0, 0, ')' );
       $this->valores[ 6 ] = formatarNum( $g_saldo, 2, 0, 0, ')' );
@@ -120,43 +139,34 @@ global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
 $proc = new RelEstoque( RETRATO, A4, 'Estoque_Historico.pdf', '', true );
-$proc->dataIni = $parQSelecao->DATAINI;
-$proc->insumo  = $parQSelecao->INSUMO;
+$proc->dataIni      = $parQSelecao->DATAINI;
+$proc->dataFim      = $parQSelecao->DATAFIM;
+$proc->idClinica    = $parQSelecao->CLINICA;
+$proc->idMedicamen  = $parQSelecao->MEDICAMEN;
 
-$select = "Select M.Data, M.Num, I.Item, A.Almoxari, N.Insumo, I.Qtd, T.idPrimario as idTMov, T.Descritor as TMov
+$select = "Select M.Data, M.Num, I.Item, I.Qtd, T.idPrimario as idTMov, T.Descritor as TMov,
+		'Movimento' as Tipo
 	From arqItemMov I 
-		join arqMovEstoque   M on M.idPrimario=I.MovEstoque
-		join arqEstoque		E on E.idPrimario=I.Estoque
-      join arqInsumo       N on N.idPrimario=E.Insumo
-		join arqAlmoxari		A on A.idPrimario=E.Almoxari
       join tabTMov         T on T.idPrimario=I.TMov
+		join arqMovEstoque	M on M.idPrimario=I.MovEstoque
+      join arqLote			L on L.idPrimario=I.Lote
+		join arqMedicamen    E on E.idPrimario=L.Medicamen
 	Where " . substr(
-      filtrarPorIntervaloData( 'M.Data', $proc->dataIni, $parQSelecao->DATAFIM ) .
-      filtrarPorLig( 'E.Insumo', $proc->insumo ), 0, -4 ) .
+      filtrarPorIntervaloData( 'M.Data', $proc->dataIni, $proc->dataFim ) .
+      filtrarPorLig( 'M.Clinica', $proc->idClinica ) .
+		filtrarPorLig( 'L.Medicamen', $proc->insumo ), 0, -4 ) .
 	
 	" UNION ALL
 
-	Select T.Data, T.Num, I.Item, A.Almoxari, N.Insumo, I.Qtd, 2 as idTMov, 'Tr Origem' as TMov
-		From arqItTrans I
-			join arqTransfere	T on T.idPrimario=I.Transfere
-			join arqAlmoxari	A on A.idPrimario=T.AlmoxOr
-			join arqEstoque 	E on E.idPrimario=I.EstoqueOr
-			join arqInsumo    N on N.idPrimario=E.Insumo
+	Select M.DataSepara, C.Num, '0' as Item, M.Qtd, 6 as idTMov, 'Saída consulta' as TMov,
+			'Consulta' as Tipo
+		From arqCMedica M
+			join arqMedicamen	E on E.idPrimario=M.Medicamen
+			join arqConsulta	C on C.idPrimario=M.Consulta
 	Where " . substr(
-      filtrarPorIntervaloData( 'T.Data', $proc->dataIni, $parQSelecao->DATAFIM ) .
-      filtrarPorLig( 'E.Insumo', $proc->insumo ), 0, -4 ) .
-
-	" UNION ALL
-
-	Select T.Data, T.Num, I.Item, A.Almoxari, N.Insumo, I.Qtd, 1 as idTMov, 'Tr Destino' as TMov
-		From arqItTrans I
-			join arqTransfere	T on T.idPrimario=I.Transfere
-			join arqAlmoxari	A on A.idPrimario=T.AlmoxDt
-			join arqEstoque 	E on E.idPrimario=I.EstoqueDt
-			join arqInsumo    N on N.idPrimario=E.Insumo
-	Where " . substr(
-      filtrarPorIntervaloData( 'T.Data', $proc->dataIni, $parQSelecao->DATAFIM ) .
-      filtrarPorLig( 'E.Insumo', $proc->insumo ), 0, -4 ) .	
+      filtrarPorIntervaloData( 'M.DataSepara', $proc->dataIni, $proc->dataFim ) .
+		filtrarPorLig( 'C.Clinica', $proc->idClinica ) .
+      filtrarPorLig( 'M.Medicamen', $proc->insumo ), 0, -4 ) .	
 	
 	" Order by 1,2,3";
 
