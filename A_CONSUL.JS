@@ -1651,10 +1651,12 @@ Campo_arqConsulta_SaldoFPg.prototype.FiltroPai = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg.prototype.Obrigatorio = function( p_comMsg )
 {
+		if( ValPTrata - EntraTotal > 0 )
 	{
 		if( p_comMsg ) alert( "A forma de pagamento do saldo devedor é obrigatória" );
 		return( true );
 	}
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -1674,7 +1676,7 @@ Campo_arqConsulta_SaldoFPg.prototype.TrazOutrosDoPai = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg.prototype.Existencia = function()
 {
-	return( tem( PTrata_PTrata ) );
+	return( ( tem( PTrata_PTrata ) ) && (ValPTrata - EntraTotal) > 0 );
 }
 
 //-------------------------------------------------------------
@@ -1682,7 +1684,7 @@ Campo_arqConsulta_SaldoFPg.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg_FormaPg.prototype.Existencia = function()
 {
-	return( tem( PTrata_PTrata ) );
+	return( ( tem( PTrata_PTrata ) ) && (ValPTrata - EntraTotal) > 0 );
 }
 
 //-------------------------------------------------------------
@@ -1699,7 +1701,7 @@ SaldoFPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoParc.prototype.Existencia = function()
 {
-	return( tem( PTrata_PTrata ) );
+	return( tem( SaldoFPg_FormaPg ) );
 }
 
 //-------------------------------------------------------------
@@ -1771,7 +1773,7 @@ SaldoVal.EhCalculado = true;
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoObs.prototype.Existencia = function()
 {
-	return( tem( PTrata_PTrata ) );
+	return( tem( SaldoFPg_FormaPg ) );
 }
 
 //-------------------------------------------------------------
@@ -2240,14 +2242,16 @@ FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 Valor2.ExistenciasDependentes= [ FormaPg2,FormaPg2_FormaPg ];
 FormaPg2_FormaPg.ExistenciasDependentes= [ FormaPg2 ];
 PTrata_PTrata.ExistenciasDependentes= [ PTrata ];
-PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoFPg,SaldoFPg_FormaPg,SaldoParc,SaldoVal,SaldoObs,ContaPTra,ContaPTra_Transacao ];
+PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoFPg,SaldoFPg_FormaPg,SaldoVal,ContaPTra,ContaPTra_Transacao ];
 EntraFPg_FormaPg.ExistenciasDependentes= [ EntraFPg ];
 EntraFPg.ExistenciasDependentes= [ EntraVal,EntraObs ];
 EntraParc.ExistenciasDependentes= [ SdEntrFPg,SdEntrFPg_FormaPg,SdVenc1Par,SdCond,EntraValP,EntraTotP ];
 SdEntrFPg_FormaPg.ExistenciasDependentes= [ SdEntrFPg ];
 BoletoMin.ExistenciasDependentes= [ SaldoFPg ];
-EntraTotal.ExistenciasDependentes= [ SaldoFPg ];
+EntraTotal.ExistenciasDependentes= [ SaldoFPg,SaldoFPg_FormaPg ];
+ValPTrata.ExistenciasDependentes= [ SaldoFPg,SaldoFPg_FormaPg ];
 SaldoFPg_FormaPg.ExistenciasDependentes= [ SaldoFPg ];
+SaldoFPg.ExistenciasDependentes= [ SaldoParc,SaldoObs ];
 SaldoParc.ExistenciasDependentes= [ SaldoCond ];
 ContaCons_Transacao.ExistenciasDependentes= [ ContaCons ];
 ContaPTra_Transacao.ExistenciasDependentes= [ ContaPTra ];
