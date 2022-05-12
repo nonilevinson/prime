@@ -390,5 +390,15 @@ if( $op == 257 ) //* r_estoque_historico
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
+if( $op == 258 ) //* r_consulta_valor
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Tipo da consulta", TiAgenda ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
 //==================================================================================
 echo 	"</table>";

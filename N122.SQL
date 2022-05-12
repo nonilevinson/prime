@@ -3518,6 +3518,7 @@ insert into arqLanceOperacao values(200020,2,'Visualizar ação de email','',20,20
 insert into arqLanceOperacao values(200175,2,'Relatório da relação de consultas','',175,50,0,'');
 insert into arqLanceOperacao values(200203,2,'Relatório das agendas de retirada de medicação por dia','',203,50,0,'');
 insert into arqLanceOperacao values(200190,2,'Relatório de comissionamento do Call Center','',190,50,0,'');
+insert into arqLanceOperacao values(200258,2,'Relatório da relação de consultas com valores','',258,50,0,'');
 insert into arqLanceOperacao values(200170,2,'Relatório de consultas dispensadas por médicos','',170,50,0,'');
 insert into arqLanceOperacao values(200030,2,'Rotina para ver as operações do sistema','',30,null,0,'');
 insert into arqLanceOperacao values(200038,2,'Relatório avisos internos','',38,50,0,'');
