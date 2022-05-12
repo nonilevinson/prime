@@ -61,7 +61,7 @@ $proc->comSupervisor = sql_lerUmRegistro( $select )->LOGACESSO;
 
 $select = "Select L.Login, count(*) as Qtd
 	From arqLanceLogAcesso L
-	Where ( '" . $hoje . "' - L.Data ) = 1
+	Where datediff (day, L.Data, current_date) = 1
 		and ( L.Login not starting 'Noni' and L.Login not starting 'Kogut' and L.Login != 'null' )
 	group by 1";
 $reg = sql_lerRegistros( $select );
