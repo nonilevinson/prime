@@ -1463,8 +1463,6 @@ Campo_arqConsulta_EntraVal.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraParcE.prototype.Existencia = function()
 {
-console.warn('ehCartao= '+EntraFPg_Cartao);
-
 	return( EntraFPg_Cartao == 1 );
 }
 
