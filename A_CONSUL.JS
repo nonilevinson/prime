@@ -421,6 +421,17 @@ function Campo_arqConsulta_EntraVal()
 var EntraVal = new Campo_arqConsulta_EntraVal;
 
 //------------------------------------------------------------
+Campo_arqConsulta_EntraParcE.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_EntraParcE()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "EntraParcE", "EntraParcE", "EntraParcE", 2, "#z", false,"", "");
+}
+
+var EntraParcE = new Campo_arqConsulta_EntraParcE;
+
+//------------------------------------------------------------
 Campo_arqConsulta_EntraParc.prototype = new Lance_CampoNumerico;
 
 function Campo_arqConsulta_EntraParc()
@@ -1379,6 +1390,18 @@ Campo_arqConsulta_EntraFPg.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
+// Campos a mais que o ligado traz do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraFPg.prototype.TrazOutrosDoPai = function()
+{
+	var vetPai = [];
+			vetPai[0] = [ "Cartao",
+					"A.EntraFPg, arqFormaPg",
+					"0" ];
+		return( vetPai );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraFPg.prototype.Existencia = function()
@@ -1433,6 +1456,16 @@ Campo_arqConsulta_EntraVal.prototype.TemErro = function()
 Campo_arqConsulta_EntraVal.prototype.Existencia = function()
 {
 	return( tem( EntraFPg_FormaPg ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraParcE.prototype.Existencia = function()
+{
+console.warn('ehCartao= '+EntraFPg_Cartao);
+
+	return( EntraFPg_Cartao == 1 );
 }
 
 //-------------------------------------------------------------
@@ -2244,7 +2277,7 @@ FormaPg2_FormaPg.ExistenciasDependentes= [ FormaPg2 ];
 PTrata_PTrata.ExistenciasDependentes= [ PTrata ];
 PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoFPg,SaldoFPg_FormaPg,SaldoVal,ContaPTra,ContaPTra_Transacao ];
 EntraFPg_FormaPg.ExistenciasDependentes= [ EntraFPg ];
-EntraFPg.ExistenciasDependentes= [ EntraVal,EntraObs ];
+EntraFPg.ExistenciasDependentes= [ EntraVal,EntraParcE,EntraObs ];
 EntraParc.ExistenciasDependentes= [ SdEntrFPg,SdEntrFPg_FormaPg,SdVenc1Par,SdCond,EntraValP,EntraTotP ];
 SdEntrFPg_FormaPg.ExistenciasDependentes= [ SdEntrFPg ];
 BoletoMin.ExistenciasDependentes= [ SaldoFPg ];
@@ -2314,6 +2347,7 @@ AssesRet.CamposChave= [ AssesRet_Usuario ];
 g_arquivoAtual = "arqConsulta";
 var PTrata_Valor;
 var PTrata_MrgDesc;
+var EntraFPg_Cartao;
 var SdEntrFPg_Cartao;
 var SaldoFPg_Cartao;
 //------------------------------------------------------------
@@ -2326,7 +2360,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
+		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

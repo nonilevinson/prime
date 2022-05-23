@@ -657,6 +657,18 @@ class campo_arqConsulta_EntraFPg extends Lance_CampoLigado
 		parent::__construct( "EntraFPg", "EntraFPg", "EntraFPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = [];
+			$vetPai[]=
+				[ "Cartao", 
+					"A.EntraFPg, arqFormaPg",
+					"0" ];
+		return( $vetPai );
+	}
+
 }
 
 //======================================================
@@ -688,6 +700,19 @@ class campo_arqConsulta_EntraVal extends Lance_CampoNumerico
 	function __construct()
 	{
 		parent::__construct( "EntraVal", "EntraVal", "EntraVal", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo EntraParcE
+//======================================================
+
+class campo_arqConsulta_EntraParcE extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "EntraParcE", "EntraParcE", "EntraParcE", 2, "#z", "", "", 0, 0, false );
 	}
 
 }
@@ -1351,6 +1376,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_EntraFPg(),
 			new campo_arqConsulta_EntraFPg_FormaPg(),
 			new campo_arqConsulta_EntraVal(),
+			new campo_arqConsulta_EntraParcE(),
 			new campo_arqConsulta_EntraParc(),
 			new campo_arqConsulta_SdEntrFPg(),
 			new campo_arqConsulta_SdEntrFPg_FormaPg(),
@@ -1490,6 +1516,7 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ ValPTrata ];
 			$vetAux[] = [ EntraFPg_FormaPg ];
 			$vetAux[] = [ EntraVal ];
+			$vetAux[] = [ EntraParcE ];
 			$vetAux[] = [ EntraParc ];
 			$vetAux[] = [ SdEntrFPg_FormaPg ];
 			$vetAux[] = [ SdVenc1Par ];

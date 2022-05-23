@@ -78,7 +78,8 @@ CriarForms(
 	$this->Pedir( "Forma de pagamento",
 		[ "", EntraFPg,
 		[ brHtml(4) . "Valor ", EntraVal,
-		[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ),
+		[ brHtml(4) . "Parcelas ", EntraParcE,
+		[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ] ),
 
 	$this->Pedir( "Se dividiu",
 		[ "Parcelas ", EntraParc,
