@@ -15,6 +15,7 @@ function CriarParcela( $idConta, $p_vencimento, $p_valor, $p_formaPg, $p_histori
       From arqFormaPg F
       Where F.idPrimario = " . $p_formaPg;
    $umaFormaPg = sql_lerUmRegistro( $select );
+// if( $g_debugProcesso ) echo '<br><b>GR0 arqFormaPg S=</b> '.$select;
 
    if( $umaFormaPg->CARTAO ) //* se eh cartao calcula o liquido pela taxa e o vencimento por Dias
    {
