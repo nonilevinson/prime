@@ -33,7 +33,6 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 		$pdf = $this->PDF;
 
       $paciente   = $regA->PACIENTE;
-      $cidade     = $regA->CIDADE;
       $entraVal   = $regA->ENTRAVAL;
       $entraParc  = $regA->ENTRAPARC;
       $entraValP  = $regA->ENTRAVALP;
@@ -74,7 +73,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->PDF->Cell( $larg1, $altura, "Bairro:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg2, $altura, $regA->BAIRRO, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg3, $altura, "Cidade:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_DIR, VAZIO );
-      $this->PDF->Cell( $larg2, $altura, $cidade . "/" . $regA->UF, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg2, $altura, $regA->CIDADE . "/" . $regA->UF, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg3, $altura, "CEP:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_DIR, VAZIO );
       $this->PDF->Cell( $larg2, $altura, formatarCep( $regA->CEP ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
@@ -173,7 +172,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 
       $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->WriteTxt( "6- ASSINATURAS", 100, [ '', BOLD ] );
-		$this->WriteTxt( $cidade . ", " . maiuscula( formatarData( HOJE, 'dd de mmm de aaaa' ) ), 100 );
+		$this->WriteTxt( $regA->CIDADECLINICA . ", " . maiuscula( formatarData( HOJE, 'dd de mmm de aaaa' ) ), 100 );
 
       $largQuem = 17;
       $largSub  = 70;
@@ -204,7 +203,7 @@ $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade
       V.Descritor as EstCivil, P.Ende_Endereco as Endereco, B.Bairro, I.Cidade, upper( U.Descritor ) as UF,
       P.Ende_CEP as CEP, P.Nascimento, F.Profissao, I.DDD, P.Ende_Telefone as Telefone, P.NumCelular, P.Email,
       C.Data, A.Nome as Assessor, R.PTrata, R.Tempo, FE.FormaPg as EntraFPg, FS.FormaPg as SaldoFPg, C.EntraVal,
-      C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoObs, C.Num as NumConsulta,
+      C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoObs, C.Num as NumConsulta, CI.Cidade as CidadeClinica,
       C.SdVenc1Par, FD.FormaPg as SdEntrFPg,
       (C.ValPTrata - ( C.EntraVal + ( C.EntraParc * C.EntraValP  ) ) ) as SaldoValor
 	From arqConsulta C
@@ -212,6 +211,7 @@ $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade
       join arqPessoa           P on  P.idPrimario=C.Pessoa
       left join tabSexo        X on  X.idPrimario=P.Sexo
       left join tabEstCivil    V on  V.idPrimario=P.EstCivil
+      left join arqCidade     CI on CI.idPrimario=L.Ende_Cidade
       left join arqCidade      I on  I.idPrimario=P.Ende_Cidade
       left join tabUF          U on  U.idPrimario=I.UF
       left join arqPTrata      R on  R.idPrimario=C.PTrata
