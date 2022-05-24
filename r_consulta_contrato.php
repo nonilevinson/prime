@@ -109,11 +109,13 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 		$this->WriteTxt( "3- PREÇOS E CONDIÇÕES A PAGAR", 100, [ '', BOLD ] );
 
       //? início da entrada
-      $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias em 1 parcela de R$" .
+      $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias " .
+         ( $regA->ENTRAPARCE > 0 ? ": " : "em 1 parcela de R$" ) .
          $this->valorExtenso( $entraVal ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
       $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg1, $altura, "Forma de pagamento: " . $regA->ENTRAFPG,
+      $this->PDF->Cell( $larg1, $altura, "Forma de pagamento: " . $regA->ENTRAFPG .
+         ( $regA->ENTRAPARCE > 0 ? " em " . $regA->ENTRAPARCE . " parcelas" : "" ),
          SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
       if( $entraParc )
@@ -203,8 +205,8 @@ $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade
       V.Descritor as EstCivil, P.Ende_Endereco as Endereco, B.Bairro, I.Cidade, upper( U.Descritor ) as UF,
       P.Ende_CEP as CEP, P.Nascimento, F.Profissao, I.DDD, P.Ende_Telefone as Telefone, P.NumCelular, P.Email,
       C.Data, A.Nome as Assessor, R.PTrata, R.Tempo, FE.FormaPg as EntraFPg, FS.FormaPg as SaldoFPg, C.EntraVal,
-      C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoObs, C.Num as NumConsulta, CI.Cidade as CidadeClinica,
-      C.SdVenc1Par, FD.FormaPg as SdEntrFPg,
+      C.EntraParcE, C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoObs, C.Num as NumConsulta,
+      CI.Cidade as CidadeClinica, C.SdVenc1Par, FD.FormaPg as SdEntrFPg,
       (C.ValPTrata - ( C.EntraVal + ( C.EntraParc * C.EntraValP  ) ) ) as SaldoValor
 	From arqConsulta C
 		join arqClinica          L on  L.idPrimario=C.Clinica
