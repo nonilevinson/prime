@@ -494,7 +494,7 @@ Campo_arqPessoa_Desde.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 Campo_arqPessoa_QtoDesmar.prototype.PodeAlterar = function()
 {
-		if( PodeExecutarOpercao( 3 ) )
+		if( PodeExecutarOperacao( 3 ) )
 		return( true );
 	return( false );
 }
