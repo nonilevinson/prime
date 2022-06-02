@@ -145,6 +145,18 @@ function Campo_arqItemMov_CUnidade()
 
 var CUnidade = new Campo_arqItemMov_CUnidade;
 
+//-------------------------------------------------------------
+// Campos a mais que o ligado traz do pai
+//-------------------------------------------------------------
+Campo_arqItemMov_MovEstoque.prototype.TrazOutrosDoPai = function()
+{
+	var vetPai = [];
+			vetPai[0] = [ "Clinica",
+					"A.MovEstoque, arqMovEstoque",
+					"0" ];
+		return( vetPai );
+}
+
 MovEstoque.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
@@ -172,7 +184,7 @@ Item.TipoCampo |= CAMPO_CHAVE;
 Campo_arqItemMov_Lote.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
-			return( "A.Ativo = 1" );
+			return( "A.Ativo=1 and (Select M.Clinica From arqMovEstoque M where M.idPrimario="+MovEstoque+")=A.Clinica" );
 		return( "" );
 }
 
@@ -340,6 +352,7 @@ Lote_Medicamen.CamposChave= [ Lote_Medicamen_Medicamen ];
 //	Arquivo e seus campos
 //======================================================
 g_arquivoAtual = "arqItemMov";
+var MovEstoque_Clinica;
 //------------------------------------------------------------
 function ListaDeCampos_arqItemMov( p_prefixo )
 {

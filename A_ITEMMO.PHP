@@ -22,6 +22,18 @@ class campo_arqItemMov_MovEstoque extends Lance_CampoLigado
 		parent::__construct( "MovEstoque", "MovEstoque", "MovEstoque", EH_CHAVE, "arqMovEstoque", "arqMovEstoque.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = [];
+			$vetPai[]=
+				[ "Clinica", 
+					"A.MovEstoque, arqMovEstoque",
+					"0" ];
+		return( $vetPai );
+	}
+
 }
 
 //======================================================
