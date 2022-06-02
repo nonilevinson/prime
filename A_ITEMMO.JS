@@ -185,7 +185,7 @@ Campo_arqItemMov_Lote.prototype.FiltroPai = function()
 {
 		if( g_inserindo )
 			return( "A.Ativo=1 and (Select M.Clinica From arqMovEstoque M where M.idPrimario="+MovEstoque+")=A.Clinica" );
-		return( "" );
+			return( "(Select M.Clinica From arqMovEstoque M where M.idPrimario="+MovEstoque+")=A.Clinica" );
 }
 
 //-------------------------------------------------------------
