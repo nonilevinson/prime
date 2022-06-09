@@ -53,7 +53,7 @@ function CriarContaParcela( $p_ccor, $p_tPgRec, $p_idFornecedor, $p_historico, $
       "LinhaDig"   => '',
       "NomePdf"    => '',
       "CCor"       => $p_ccor,
-      "SubPlano"   => $p_subPlano,
+      "SubPlano"   => null,
       "DataPagto"  => $g_vencimento,
       "DataComp"   => $g_vencimento,
       "TFPagto"    => $p_tFPagto,

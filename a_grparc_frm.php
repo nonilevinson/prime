@@ -4,7 +4,7 @@ global $g_debugProcesso;
 $op = ultimaLigOpcao();
 
 //=================================================================================
-function umaParc( $p_num, $p_dia, $p_venc, $p_diaSemana, $p_est, $p_valor, $p_perc, $p_pg, $p_cc, $p_linha )
+function umaParc( $p_num, $p_dia, $p_venc, $p_diaSemana, $p_est, $p_valor, $p_perc, $p_pg, $p_linha )
 {
    global $g_arquivoAtual;
    return(
@@ -17,7 +17,6 @@ function umaParc( $p_num, $p_dia, $p_venc, $p_diaSemana, $p_est, $p_valor, $p_pe
          $g_arquivoAtual->PedirColunaZerando( "", $p_valor ) .
          $g_arquivoAtual->PedirColunaZerando( "", $p_perc ) .
          $g_arquivoAtual->PedirColunaZerando( "", $p_pg ) .
-         $g_arquivoAtual->PedirColuna( "", $p_cc ) .
          $g_arquivoAtual->PedirColunaZerando( "", $p_linha ) .
       '</tr>' );
 }
@@ -85,19 +84,19 @@ if( $op == 130 ) //* menu Finaneiro
    <br>
    <table class='tabFormulario'>",
       $this->Cabecalhos( '&nbsp;', 'Intervalo', 'Vencimento', 'Dia', 'Vencimento<br>Estimado?',
-         'Valor', '%', 'Pagamento', 'Plano de contas', 'Linha digitável' ),
-      umaParc(  1, Dia1,  Venc1,  Semana1,  Est1,  Valor1,  Perc1,  Pg1,  Cc1, Linha1 ),
-      umaParc(  2, Dia2,  Venc2,  Semana2,  Est2,  Valor2,  Perc2,  Pg2,  Cc2, Linha2 ),
-      umaParc(  3, Dia3,  Venc3,  Semana3,  Est3,  Valor3,  Perc3,  Pg3,  Cc3, Linha3 ),
-      umaParc(  4, Dia4,  Venc4,  Semana4,  Est4,  Valor4,  Perc4,  Pg4,  Cc4, Linha4 ),
-      umaParc(  5, Dia5,  Venc5,  Semana5,  Est5,  Valor5,  Perc5,  Pg5,  Cc5, Linha5 ),
-      umaParc(  6, Dia6,  Venc6,  Semana6,  Est6,  Valor6,  Perc6,  Pg6,  Cc6, Linha6 ),
-      umaParc(  7, Dia7,  Venc7,  Semana7,  Est7,  Valor7,  Perc7,  Pg7,  Cc7, Linha7 ),
-      umaParc(  8, Dia8,  Venc8,  Semana8,  Est8,  Valor8,  Perc8,  Pg8,  Cc8, Linha8 ),
-      umaParc(  9, Dia9,  Venc9,  Semana9,  Est9,  Valor9,  Perc9,  Pg9,  Cc9, Linha9 ),
-      umaParc( 10, Dia10, Venc10, Semana10, Est10, Valor10, Perc10, Pg10, Cc10, Linha10 ),
-      umaParc( 11, Dia11, Venc11, Semana11, Est11, Valor11, Perc11, Pg11, Cc11, Linha11 ),
-      umaParc( 12, Dia12, Venc12, Semana12, Est12, Valor12, Perc12, Pg12, Cc12, Linha12 ),
+         'Valor', '%', 'Pagamento', 'Linha digitável' ),
+      umaParc(  1, Dia1,  Venc1,  Semana1,  Est1,  Valor1,  Perc1,  Pg1,  Linha1 ),
+      umaParc(  2, Dia2,  Venc2,  Semana2,  Est2,  Valor2,  Perc2,  Pg2,  Linha2 ),
+      umaParc(  3, Dia3,  Venc3,  Semana3,  Est3,  Valor3,  Perc3,  Pg3,  Linha3 ),
+      umaParc(  4, Dia4,  Venc4,  Semana4,  Est4,  Valor4,  Perc4,  Pg4,  Linha4 ),
+      umaParc(  5, Dia5,  Venc5,  Semana5,  Est5,  Valor5,  Perc5,  Pg5,  Linha5 ),
+      umaParc(  6, Dia6,  Venc6,  Semana6,  Est6,  Valor6,  Perc6,  Pg6,  Linha6 ),
+      umaParc(  7, Dia7,  Venc7,  Semana7,  Est7,  Valor7,  Perc7,  Pg7,  Linha7 ),
+      umaParc(  8, Dia8,  Venc8,  Semana8,  Est8,  Valor8,  Perc8,  Pg8,  Linha8 ),
+      umaParc(  9, Dia9,  Venc9,  Semana9,  Est9,  Valor9,  Perc9,  Pg9,  Linha9 ),
+      umaParc( 10, Dia10, Venc10, Semana10, Est10, Valor10, Perc10, Pg10, Linha10 ),
+      umaParc( 11, Dia11, Venc11, Semana11, Est11, Valor11, Perc11, Pg11, Linha11 ),
+      umaParc( 12, Dia12, Venc12, Semana12, Est12, Valor12, Perc12, Pg12, Linha12 ),
       $this->NaoPedir( 'TotValor' ),
    "</table>";
 

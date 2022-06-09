@@ -16,12 +16,22 @@ if( GrupoAtualEm() )
 	$this->Pedir( "Email de log de acesso para supervisores",
 		[ "Diário? ", LogAcesso,
 		[ brHtml(4) . "Semanal? ", LogAcessoS ] ] ),
+	$this->Pedir( "Caixa da Recepção",
+		[ "Plano de contas ", SubPlaRRec_Plano ] ),
+	$this->Pedir( " ",
+		[ "SubPlano de contas ", SubPlaRRec_Codigo,
+		[ "", SubPlaRRec ] ] ),
+	$this->Pedir( "Caixa do Assessor",
+		[ "Plano de contas ", SubPlaRAss_Plano ] ),
+	$this->Pedir( " ",
+		[ "SubPlano de contas ", SubPlaRAss_Codigo,
+		[ "", SubPlaRAss ] ] ),
 	$this->Pular1Linha(2);
 }
 else
 {
 	echo
-	$this->NaoPedirVarios( CPF, LogAcesso, LogAcessoS, Qtd, Qtd2 );
+	$this->NaoPedirVarios( CPF, LogAcesso, LogAcessoS, Qtd, Qtd2, SubPlaRRec, SubPlaRAss );
 }
 
 echo
@@ -53,16 +63,6 @@ CriarForms(
 		[ "", RecorDia, " (deixe zero, se não quiser usar a rotina automática)" ] ),
 	$this->Pedir( "Fornecedor<br>para aporte",
 		[ "", FornRec, "<br>(será sugerido nas rotinas de entrada de caixa)" ] ),
-	$this->Pedir( "Caixa da Recepção",
-		[ "Plano de contas ", SubPlaRRec_Plano ] ),
-	$this->Pedir( " ",
-		[ "SubPlano de contas ", SubPlaRRec_Codigo,
-		[ "", SubPlaRRec ] ] ),
-	$this->Pedir( "Caixa do Assessor",
-		[ "Plano de contas ", SubPlaRAss_Plano ] ),
-	$this->Pedir( " ",
-		[ "SubPlano de contas ", SubPlaRAss_Codigo,
-		[ "", SubPlaRAss ] ] ),
 "</table>",
 
 "<table id='E' class='tabFormulario' style='display:none'>",

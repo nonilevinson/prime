@@ -13,7 +13,8 @@ if( in_array( $op, [176,180] ) ) //* 176: criar saída Recepção | 180: Assessor
    $this->Pedir( "Data" ),
    $this->PedirZerando( "Valor" ),
    $this->PedirZerando( "Fornecedor" ),
-   $this->PedirZerando( "Histórico ", Historico ),
+   $this->PedirZerando( "Histórico ", Historico );
+/*
    $this->Pedir( "Plano de contas",
       [ "", SubPlano_Plano_CodPlano,
       [ brHtml(2), SubPlano_Plano_Plano,
@@ -22,6 +23,7 @@ if( in_array( $op, [176,180] ) ) //* 176: criar saída Recepção | 180: Assessor
       [ "", SubPlano_Codigo,
       [ brHtml(2), SubPlano_Nome,
       [ "", SubPlano ] ] ] );
+*/
 }
 
 if( in_array( $op, [177,181] ) ) //* 177: criar entrada Recepção | 181: Assessor

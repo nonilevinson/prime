@@ -74,9 +74,12 @@ $hoje     = formatarData( HOJE, 'aaaa/mm/dd' );
 $compete    = dataAno( $hoje ) . "/" . dataMes( $hoje ) . "/01";
 $idConsulta = navegouDe( 'arqConsulta' );
 
+/*
 $select = "Select X.SubPlaRAss
    From cnfXConfig X";
 $g_idSubPlano = sql_lerUmRegistro( $select )->SUBPLARASS;
+*/
+$g_idSubPlano = null;
 
 $select = "Select C.Num as NumConsulta, C.Clinica as idClinica, P.idPrimario as idPessoa,
       C.Prontuario, T.PTrata, C.EntraParc, C.SaldoParc, C.EntraFPg, C.SdEntrFPG, C.SaldoFPg,

@@ -26,25 +26,25 @@ switch( ultimaLigOpcao() )
    case 176: //* saída recepção
       $tPgRec   = 1;
       $cCor     = selectCCor( 3 );
-      $subPlano = $parQCaixa->SUBPLARREC;
+      $subPlano = null; //$parQCaixa->SUBPLARREC;
       break;
 
    case 177: //* entrada recepção
       $tPgRec   = 2;
       $cCor     = selectCCor( 3 );
-      $subPlano = $umXConfig->SUBPLARREC;
+      $subPlano = null; //$umXConfig->SUBPLARREC;
       break;
 
    case 180: //* saída assessor
       $tPgRec   = 1;
       $cCor     = selectCCor( 2 );
-      $subPlano = $umXConfig->SUBPLARASS;
+      $subPlano = null; //$umXConfig->SUBPLARASS;
       break;
 
    case 181: //* entrada assessor
       $tPgRec   = 2;
       $cCor     = selectCCor( 2 );
-      $subPlano = $umXConfig->SUBPLARASS;
+      $subPlano = null; //$umXConfig->SUBPLARASS;
       break;
 }
 // if( $g_debugProcesso ) echo '<br><b>GR0 cCor S=</b> '.$cCor.' <b>subPlano=</b> '.$subPlano;

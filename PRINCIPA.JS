@@ -40,7 +40,7 @@ var Menu_4_4 = [ 1,"Outros","","u",161,"","",1,"","6", "", "", "", "", "", "", "
 var Menu_4_4_1 = [ 1,"Bancos","","B",59,"","",1,"","1","a_banco","arqBanco","Folhear","","?","","", "","", 0,32,[],[19]];
 var Menu_4_4_2 = [ 1,"Contas correntes","","t",72,"","",1,"","1","a_ccor","arqCCor","Folhear","","?","FilTodos","", "","", 0,32,[],[20]];
 var Menu_4_4_3 = [ 1,"Formas de pagamento de Consultas","","o",147,"","",1,"","1","a_formap","arqFormaPg","Folhear","","?","","", "","", 0,32,[],[44]];
-var Menu_4_4_4 = [ 1,"Plano de contas","","l",128,"","",1,"","1","a_plano","arqPlano","Folhear","","?","","", "","", 0,32,[],[27]];
+var Menu_4_4_4 = [ 1,"Plano de contas NAO","","l",128,"","",false,"","1","a_plano","arqPlano","Folhear","","?","","", "","", 0,32,[],[27]];
 var Menu_4_5 = [ 1,"Gerar conta e parcela","","G",130,"","",1,"","1", "a_grparc", "parGeraParc", "Alterar", "", "", "", "", "5^^^p_conta_parcela_gerar^^^^^^^^^^^^^^^^^^", "", 0,33,[130],[]];
 var Menu_4_6 = [ 1,"Gerar transferências entre contas","","f",237,"","",1,"","1", "a_geratr", "parGeraTransf", "Alterar", "", "", "", "", "5^^^p_conta_transferencia^^^^^^^^^^^^^^^^^^", "", 0,33,[237],[]];
 var Menu_5 = [ 1,"Emails","","E",42,"","",cnfConfig["EMAIL"] == 1 || GrupoAtualEm(),"","6", "", "", "", "", "", "", "", "", "", 6, 14,[53,234,169,242,167,168,55,47,71,52,54,48,49],[10,12,8,9] ];

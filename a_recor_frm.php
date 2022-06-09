@@ -19,6 +19,7 @@ echo
       [ brHtml(4) . "Estimado? ", Estimado ] ] ),
    $this->Pedir( "Cobrança", TFCobra ),
    $this->Pedir( "Histórico", Historico ),
+/*
    $this->Pedir( "Plano de contas",
       [ "", SubPlano_Plano_CodPlano,
       [ brHtml(2), SubPlano_Plano_Plano,
@@ -27,5 +28,6 @@ echo
       [ "", SubPlano_Codigo,
       [ brHtml(2), SubPlano_Nome,
       [ "", SubPlano ] ] ] ),
+*/
    $this->Pedir( "Ativa?", Ativo ),
 "</table>";

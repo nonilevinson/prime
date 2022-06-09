@@ -131,7 +131,7 @@ if( $recorDia == $diaHoje || $recorDia > $ultDia || ultimaLigOpcaoEm( 162 ) )
          "LinhaDig"    => '',
          "NomePdf"     => "",
          "CCor"        => null,
-         "SubPlano"    => $umaRecorrente->SUBPLANO,
+         "SubPlano"    => null,
          "DataPagto"   => null,
          "DataComp"    => null,
          "TFPagto"     => null,

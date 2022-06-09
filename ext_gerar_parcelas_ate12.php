@@ -26,8 +26,7 @@ function criarParcela( $p_idConta )
 				$valorEst   = ValorOuZero( $parGeraParc->ESTIMADO );
 				$idTFCobra  = ValorOuNull( $parGeraParc->TFCOBRA, "", false );
 				$idFormaPg  = null;
-				$subPlano   = "CC" . $i;
-				$idSubPlano = ValorOuNull( $parGeraParc->$idSubPlano, "", false );
+				$idSubPlano = null; //ValorOuNull( $parGeraParc->$idSubPlano, "", false );
 				$linhaI     = "LINHA" . $i;
 				$linha      = $parGeraParc->$linhaI != '' ? $parGeraParc->$linhaI : '';
 				break;

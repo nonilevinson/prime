@@ -14,6 +14,7 @@ echo
 	$this->Cabecalhos( [ "Dados do débito", "FormCab alinhaMeio", "3" ] ),
 	$this->Pedir( "Fornecedor", ForneDB ),
 	$this->Pedir( "Conta corrente", CCorDB ),
+/*
    $this->Pedir( "Plano de contas",
       [ "", SubPlaDB_Plano_CodPlano,
       [ brHtml(2), SubPlaDB_Plano_Plano,
@@ -22,6 +23,7 @@ echo
       [ "", SubPlaDB_Codigo,
       [ brHtml(2), SubPlaDB_Nome,
       [ "", SubPlaDB ] ] ] ),
+*/
 	$this->Pedir( "Histórico", HistDB ),
 	$this->Pedir( "Formas: Cobrança",
 		[ "", TFCobraDB,
@@ -33,6 +35,7 @@ echo
 	$this->Cabecalhos( [ "Dados do crédito", "FormCab alinhaMeio", "3" ] ),
 	$this->Pedir( "Fornecedor", ForneCR ),
 	$this->Pedir( "Conta corrente", CCorCR ),
+/*
    $this->Pedir( "Plano de contas",
       [ "", SubPlaCR_Plano_CodPlano,
       [ brHtml(2), SubPlaCR_Plano_Plano,
@@ -41,7 +44,7 @@ echo
       [ "", SubPlaCR_Codigo,
       [ brHtml(2), SubPlaCR_Nome,
       [ "", SubPlaCR ] ] ] ),
-
+*/
 	$this->Pedir( "Histórico", HistCR ),
 	$this->Pedir( "Formas: Cobrança",
 		[ "", TFCobraCR,
