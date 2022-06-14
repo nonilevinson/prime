@@ -238,7 +238,7 @@ class campo_arqCMedica_QtdEntreg extends Lance_CampoNumerico
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Qtd<br>Entregue" );
+			return( "Qtd Entregue/<br>Separado" );
 	}
 
 }

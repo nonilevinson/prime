@@ -360,7 +360,7 @@ Campo_arqCMedica_QtdEntreg.prototype.PodeAlterar = function()
 //-------------------------------------------------------------
 Campo_arqCMedica_QtdEntreg.prototype.Cabecalho = function()
 {
-		return( "Qtd<br>Entregue" );
+		return( "Qtd Entregue/<br>Separado" );
 }
 
 //-------------------------------------------------------------

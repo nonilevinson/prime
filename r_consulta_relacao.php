@@ -18,7 +18,7 @@ class RelConsulta extends Relatorios
          [ "Tipo",	      32, ALINHA_ESQ ],
          [ "Hora",         12, ALINHA_CEN ],
          [ "Paciente",     83, ALINHA_ESQ ],
-         [ "Celular",	   27, ALINHA_CEN ], 
+         [ "Celular",	   27, ALINHA_CEN ],
          [ "Prontuário",   25, ALINHA_CEN ],
          [ "Call Center",  30, ALINHA_ESQ ] );
 
@@ -42,14 +42,14 @@ class RelConsulta extends Relatorios
 	function Total()
 	{
 		global $g_debugProcesso, $parQSelecao;
-		
+
 		if( !$parQSelecao->CLINICA )
 		{
 			$this->MarcarPosicao( 'TOTAL GERAL' );
 			$this->PeQuebra( 'TOTAL GERAL' );
 		}
-      
-      $this->deveriaFecharLinhas = 0; 
+
+      $this->deveriaFecharLinhas = 0;
 	}
 
 	//------------------------------------------------------------------------
@@ -73,16 +73,16 @@ class RelConsulta extends Relatorios
 	function PeQuebraPorClinica()
 	{
 		global $g_debugProcesso, $parQSelecao;
-		
+
    	$this->PeQuebra( "TOTAL DE " . $this->quebraClinica );
 		$this->PularLinha( 4 );
 	}
-   
+
 	//------------------------------------------------------------------------
 	function Basico()
 	{
 		$regA = &$this->regAtual;
-      
+
       $this->valores = [
          formatarNum( $regA->NUMCONSULTA ),
          $regA->TIAGENDA,
@@ -90,11 +90,10 @@ class RelConsulta extends Relatorios
          cadEsq( $regA->NOME, 40 ),
          formatarStr( $regA->NUMCELULAR, '(nn) n.nnnn.nnnn' ),
          $regA->PRONTUARIO,
-			cadEsq( $regA->CALLCENTER, 14 )
-			 ];
+			cadEsq( $regA->CALLCENTER, 14 ) ];
 
       $this->ImprimirValorColunas();
-      
+
 		$this->AcumularTotal( "totConsultas", 1 );
 	}
 }
@@ -112,6 +111,7 @@ $filtro = substr(
    filtrarPorIntervaloData( 'C.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
    filtrarPorLig( "C.CallCenter", $parQSelecao->CALLCENTER ) .
 	filtrarPorLig( "C.TiAgenda", $parQSelecao->TIAGENDA ) .
+	filtrarPorLig( "C.TStCon", $parQSelecao->TSTCON ) .
 	filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 );
 
 $select = "Select L.Clinica, C.Num as NumConsulta, T.TiAgenda, C.Hora, P.Nome, P.Prontuario,

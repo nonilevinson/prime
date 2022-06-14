@@ -269,6 +269,7 @@ if( $op == 175 ) //* r_consulta_relacao
 	echo
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Tipo da consulta", TiAgenda ),
+	$this->Pedir( "Status da consulta", TStCon ),
 	$this->Pedir( "Call Center", CallCenter ),
 	$this->Pedir( "Entre",
 		[ "", DataIni,
@@ -294,7 +295,7 @@ if( $op == 200 ) //* selecao arqAgRet
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
-	$this->Pedir( "Status", TStAgRet ),
+	$this->Pedir( "Status", AgRet ),
 	$this->Pedir( "Consulta" ),
 	$this->Pedir( "Assessor" );
 }
