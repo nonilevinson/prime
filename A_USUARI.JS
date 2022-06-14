@@ -200,6 +200,17 @@ Usuario.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
+Campo_arqUsuario_Nome.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O nome do usuário é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
 Campo_arqUsuario_Senha.prototype.Obrigatorio = function( p_comMsg )
 {
 	{

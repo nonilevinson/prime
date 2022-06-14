@@ -392,4 +392,12 @@ class arqCMedica extends Lance_Arquivo
 		return( 'Medicação da consulta' );
 	}
 
+	//-------------------------------------------------------------
+	// Visões do Arquivo: NavMedica 
+	//-------------------------------------------------------------
+	function NavMedica()
+	{
+	return( "" . filtrarNavMedica() . "" );
+	}
+
 }

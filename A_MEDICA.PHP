@@ -185,7 +185,6 @@ class arqMedicamen extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ Medicamen ];
 			$vetAux[] = [ Unidade_Unidade ];
-			$vetAux[] = [ Estoque ];
 			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}

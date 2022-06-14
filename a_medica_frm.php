@@ -16,8 +16,7 @@ echo
    else
    {
       echo
-      $this->NaoPedirVarios( TrgItLote, TrgCMLote ),
-      $this->Pedir( "Estoque" );
+      $this->NaoPedirVarios( TrgItLote, TrgCMLote, Estoque );
    }
    
    echo
