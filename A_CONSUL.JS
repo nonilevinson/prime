@@ -14,6 +14,28 @@ function Campo_arqConsulta_Num()
 var Num = new Campo_arqConsulta_Num;
 
 //------------------------------------------------------------
+Campo_arqConsulta_TiConsulta.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_TiConsulta()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "TiConsulta", "TiConsulta", "TiConsulta", "arqTiConsulta", "a_ticons", null, "",60);
+}
+
+var TiConsulta = new Campo_arqConsulta_TiConsulta;
+
+//------------------------------------------------------------
+Campo_arqConsulta_TiConsulta_TiConsulta.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_TiConsulta_TiConsulta()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TiConsulta_TiConsulta", "TiConsulta_TiConsulta", "TiConsulta", TiConsulta, 15, "uxxxxxxxxxxxxxx", false);
+}
+
+var TiConsulta_TiConsulta = new Campo_arqConsulta_TiConsulta_TiConsulta;
+
+//------------------------------------------------------------
 Campo_arqConsulta_Clinica.prototype = new Lance_CampoHidden;
 
 function Campo_arqConsulta_Clinica()
@@ -868,6 +890,54 @@ Campo_arqConsulta_Num.prototype.Cabecalho = function()
 }
 
 Num.TipoCampo |= CAMPO_CHAVE;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TiConsulta.prototype.Sugeriu = function()
+{
+{
+		if( ultimaLigOpcaoEm( 109,110 ) )
+	return( this.AtribuiuSemCritica( 1 ) );
+}
+{
+		if( ultimaLigOpcaoEm( 265,266 ) )
+	return( this.AtribuiuSemCritica( 2 ) );
+}
+{
+		if( ultimaLigOpcaoEm( 267,268 ) )
+	return( this.AtribuiuSemCritica( 3 ) );
+}
+		return( true );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_TiConsulta.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O tipo da consulta é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TiConsulta.prototype.Cabecalho = function()
+{
+		return( "TiConsulta [0]" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TiConsulta_TiConsulta.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( TiConsulta.Obrigatorio( p_comMsg ) );
+}
+
+TiConsulta_TiConsulta.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -2132,6 +2202,14 @@ Campo_arqConsulta_ObsRet.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_arqConsulta_TiConsulta.prototype.ExistenciaEspecial = function()
+{
+	return( ( !TiConsulta_TiConsulta.Obrigatorio( false ) || tem(TiConsulta_TiConsulta) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_arqConsulta_Clinica.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Clinica_Clinica.Obrigatorio( false ) || tem(Clinica_Clinica) ) );
@@ -2261,6 +2339,7 @@ ValPTrata.CalculosDependentes= [ SaldoVal ];
 TrgQtdM.CalculosDependentes= [ Saldo ];
 TrgQtdMEnt.CalculosDependentes= [ Saldo ];
 Data.CalculosDependentes= [ DiaRet ];
+TiConsulta_TiConsulta.ExistenciasDependentes= [ TiConsulta ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
@@ -2293,6 +2372,7 @@ QuemAgRet.ExistenciasDependentes= [ QdoAgRet,DataRet ];
 DataRet.ExistenciasDependentes= [ DiaRet,HoraRet,TStAgRet,ObsRet ];
 TStAgRet.ExistenciasDependentes= [ AssesRet,AssesRet_Usuario ];
 AssesRet_Usuario.ExistenciasDependentes= [ AssesRet ];
+TiConsulta_TiConsulta.ErrosDependentes= [ TiConsulta ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 TiAgenda_TiAgenda.ErrosDependentes= [ TiAgenda ];
 Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
@@ -2311,6 +2391,7 @@ ContaCons_Transacao.ErrosDependentes= [ ContaCons ];
 ContaPTra_Transacao.ErrosDependentes= [ ContaPTra ];
 QuemAgRet_Usuario.ErrosDependentes= [ QuemAgRet ];
 AssesRet_Usuario.ErrosDependentes= [ AssesRet ];
+TiConsulta.CamposChave= [ TiConsulta_TiConsulta ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 Medico.CamposChave= [ Medico_Usuario ];
@@ -2358,7 +2439,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Num, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
+		[ Num, TiConsulta, TiConsulta_TiConsulta, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

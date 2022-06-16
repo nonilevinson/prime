@@ -47,6 +47,39 @@ class campo_arqConsulta_Num extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo TiConsulta
+//======================================================
+
+class campo_arqConsulta_TiConsulta extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TiConsulta", "TiConsulta", "TiConsulta", 0, "arqTiConsulta", "arqTiConsulta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "TiConsulta [0]" );
+	}
+
+}
+
+//======================================================
+//	Campo TiConsulta_TiConsulta
+//======================================================
+
+class campo_arqConsulta_TiConsulta_TiConsulta extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "TiConsulta_TiConsulta", "TiConsulta_TiConsulta", "TiConsulta", 15, "xxxxxxxxxxxxxxx", EH_CHAVE, "TiConsulta", false );
+	}
+
+}
+
+//======================================================
 //	Campo Clinica
 //======================================================
 
@@ -1339,6 +1372,8 @@ function listaCampos_arqConsulta( $p_prefixo )
 		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqConsulta_Num(),
+			new campo_arqConsulta_TiConsulta(),
+			new campo_arqConsulta_TiConsulta_TiConsulta(),
 			new campo_arqConsulta_Clinica(),
 			new campo_arqConsulta_Clinica_Clinica(),
 			new campo_arqConsulta_TStCon(),
@@ -1449,9 +1484,16 @@ class arqConsulta extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ Num ];
+		if( GrupoAtualEm() )
+ {
+			$vetAux[] = [ TiConsulta_TiConsulta ];
+ }
 			$vetAux[] = [ Clinica_Clinica ];
 			$vetAux[] = [ TStCon_Descritor ];
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ TiAgenda_TiAgenda ];
+ }
 			$vetAux[] = [ Data ];
 			$vetAux[] = [ Hora ];
 			$vetAux[] = [ HoraChega ];
@@ -1461,19 +1503,46 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ Medico_Usuario ];
 			$vetAux[] = [ Assessor_Usuario ];
 			$vetAux[] = [ CallCenter_Usuario ];
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ TMotivo_Descritor ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ Cortesia ];
-			$vetAux[] = [ Valor ];
-			$vetAux[] = [ FormaPg_FormaPg ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ Valor2 ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ FormaPg2_FormaPg ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ ValPTrata ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ Saldo ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ DataRet ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ DiaRet ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ HoraRet ];
-			$vetAux[] = [ TStAgRet_Descritor ];
+ }
+		if( ultimaLigOpcaoEm( 109,110 ) )
+ {
 			$vetAux[] = [ AssesRet_Usuario ];
+ }
 		return( $vetAux );
 	}
 
@@ -1482,7 +1551,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( [ [ Clinica ], [ TStCon ], [ TStCon_Chave ], [ TStCon_Descritor ], [ TiAgenda ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ TMotivo ], [ TMotivo_Chave ], [ TMotivo_Descritor ], [ FormaPg ], [ FormaPg2 ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ], [ TStAgRet ], [ TStAgRet_Chave ], [ TStAgRet_Descritor ], [ AssesRet ] ] );
+		return( [ [ Clinica ], [ TStCon ], [ TStCon_Chave ], [ TStCon_Descritor ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -1493,6 +1562,7 @@ class arqConsulta extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ Num ];
+			$vetAux[] = [ TiConsulta_TiConsulta ];
 			$vetAux[] = [ Clinica_Clinica ];
 			$vetAux[] = [ TStCon_Descritor ];
 			$vetAux[] = [ TiAgenda_TiAgenda ];
@@ -1568,7 +1638,13 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function NomeCompleto()
 	{
-		return( 'Consultas' );
+		if( ultimaLigOpcaoEm( 109,110 ) )
+		return( 'Consultas de Tratamento' );
+		if( ultimaLigOpcaoEm( 265,266 ) )
+		return( 'Consultas de Nutricionista' );
+		if( ultimaLigOpcaoEm( 267,268 ) )
+		return( 'Consultas de Psicólogo' );
+		return( parent::NomeCompleto() );
 	}
 
 	//-------------------------------------------------------------

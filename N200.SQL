@@ -2111,37 +2111,20 @@ commit;
 
 
 /************************************************************
-	Arquivo LogEmail  
+	Arquivo TiConsulta
 ************************************************************/
 
-CREATE TABLE arqLogEmail
+CREATE TABLE arqTiConsulta
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	TITULO ligadoComArquivo, /* Ligado com o Arquivo AcaoEmail */
-	/*  3*/	DATA DATE, /* Máscara = 4ano */
-	/*  4*/	HORA TIME, /* Máscara = Seg */
-	/*  5*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/*  6*/	ENVIADOS INTEGER, /* Máscara = N */
-	/*  7*/	NENVIADOS INTEGER, /* Máscara = N */
-	/*  8*/	/* TOTAL */
-	/*  9*/	LIDOS NUMERIC(18,0), /* Máscara = N */
-	/* 10*/	/* PERCLIDOS */
-	/* 11*/	EMAILREMET VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/* 12*/	HORAINI TIME, /* Máscara = Seg */
-	/* 13*/	HORAFIM TIME, /* Máscara = Seg */
-	/* 14*/	HORAREENV TIME, /* Máscara = Seg */
-	/* 15*/	ENVIOU campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 16*/	OPCAO NUMERIC(18,0), /* Máscara = N */
-	/* 17*/	CLIENTE ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	CONSTRAINT arqLogEmail_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqLogEmail_UK UNIQUE ( Titulo, Data, Hora )
+	/*  2*/	TICONSULTA VARCHAR( 15 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqTiConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqTiConsulta_UK UNIQUE ( TiConsulta )
 );
 commit;
 
-CREATE DESC INDEX arqLogEmail_IdPrimario_Desc ON arqLogEmail (IDPRIMARIO);
-commit;
-
-CREATE DESC INDEX arqLogEmail_PDataDesc ON arqLogEmail(Data);
+CREATE DESC INDEX arqTiConsulta_IdPrimario_Desc ON arqTiConsulta (IDPRIMARIO);
 commit;
 
 
@@ -2153,59 +2136,60 @@ CREATE TABLE arqConsulta
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	NUM NUMERIC(18,0), /* Máscara = N */
-	/*  3*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
-	/*  4*/	TSTCON ligadoComTabela, /* Ligado com a Tabela TStCon */
-	/*  5*/	TIAGENDA ligadoComArquivo, /* Ligado com o Arquivo TiAgenda */
-	/*  6*/	DATA DATE, /* Máscara = 4ano */
-	/*  7*/	HORA TIME, /* Máscara = Hhmm */
-	/*  8*/	HORACHEGA TIME, /* Máscara = Hhmm */
-	/*  9*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/* 10*/	/* PRONTUARIO */
-	/* 11*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 12*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 13*/	CALLCENTER ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 14*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 15*/	TMOTIVO ligadoComTabela, /* Ligado com a Tabela TMotivo */
-	/* 16*/	CORTESIA campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 17*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 18*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 19*/	VALOR2 NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 20*/	FORMAPG2 ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 21*/	PTRATA ligadoComArquivo, /* Ligado com o Arquivo PTrata */
-	/* 22*/	VALPTRATA NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 23*/	ENTRAFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 24*/	ENTRAVAL NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 25*/	ENTRAPARCE SMALLINT, /* Máscara = N */
-	/* 26*/	ENTRAPARC SMALLINT, /* Máscara = N */
-	/* 27*/	SDENTRFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 28*/	SDVENC1PAR DATE, /* Máscara = 4ano */
-	/* 29*/	SDCOND SMALLINT, /* Máscara = N */
-	/* 30*/	ENTRAVALP NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 31*/	/* ENTRATOTP */
-	/* 32*/	/* ENTRATOTAL */
-	/* 33*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 34*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/* 35*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 36*/	SALDOPARC SMALLINT, /* Máscara = N */
-	/* 37*/	SALDOCOND SMALLINT, /* Máscara = N */
-	/* 38*/	/* SALDOVAL */
-	/* 39*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/* 40*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 41*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 42*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 43*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 44*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 45*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
-	/* 46*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
-	/* 47*/	/* SALDO */
-	/* 48*/	QUEMAGRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 49*/	QDOAGRET DATE, /* Máscara = 4ano */
-	/* 50*/	DATARET DATE, /* Máscara = 4ano */
-	/* 51*/	/* DIARET */
-	/* 52*/	HORARET TIME, /* Máscara = Hhmm */
-	/* 53*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
-	/* 54*/	ASSESRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 55*/	OBSRET BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/*  3*/	TICONSULTA ligadoComArquivo, /* Ligado com o Arquivo TiConsulta */
+	/*  4*/	CLINICA ligadoComArquivo, /* Ligado com o Arquivo Clinica */
+	/*  5*/	TSTCON ligadoComTabela, /* Ligado com a Tabela TStCon */
+	/*  6*/	TIAGENDA ligadoComArquivo, /* Ligado com o Arquivo TiAgenda */
+	/*  7*/	DATA DATE, /* Máscara = 4ano */
+	/*  8*/	HORA TIME, /* Máscara = Hhmm */
+	/*  9*/	HORACHEGA TIME, /* Máscara = Hhmm */
+	/* 10*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/* 11*/	/* PRONTUARIO */
+	/* 12*/	MEDICO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 13*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 14*/	CALLCENTER ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 15*/	MEDICAATUA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 16*/	TMOTIVO ligadoComTabela, /* Ligado com a Tabela TMotivo */
+	/* 17*/	CORTESIA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 18*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 19*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 20*/	VALOR2 NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 21*/	FORMAPG2 ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 22*/	PTRATA ligadoComArquivo, /* Ligado com o Arquivo PTrata */
+	/* 23*/	VALPTRATA NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 24*/	ENTRAFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 25*/	ENTRAVAL NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 26*/	ENTRAPARCE SMALLINT, /* Máscara = N */
+	/* 27*/	ENTRAPARC SMALLINT, /* Máscara = N */
+	/* 28*/	SDENTRFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 29*/	SDVENC1PAR DATE, /* Máscara = 4ano */
+	/* 30*/	SDCOND SMALLINT, /* Máscara = N */
+	/* 31*/	ENTRAVALP NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 32*/	/* ENTRATOTP */
+	/* 33*/	/* ENTRATOTAL */
+	/* 34*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 35*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 36*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 37*/	SALDOPARC SMALLINT, /* Máscara = N */
+	/* 38*/	SALDOCOND SMALLINT, /* Máscara = N */
+	/* 39*/	/* SALDOVAL */
+	/* 40*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 41*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 42*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 43*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 44*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 45*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 46*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
+	/* 47*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
+	/* 48*/	/* SALDO */
+	/* 49*/	QUEMAGRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 50*/	QDOAGRET DATE, /* Máscara = 4ano */
+	/* 51*/	DATARET DATE, /* Máscara = 4ano */
+	/* 52*/	/* DIARET */
+	/* 53*/	HORARET TIME, /* Máscara = Hhmm */
+	/* 54*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
+	/* 55*/	ASSESRET ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 56*/	OBSRET BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2436,24 +2420,37 @@ commit;
 
 
 /************************************************************
-	Arquivo ItLogEmail
+	Arquivo LogEmail  
 ************************************************************/
 
-CREATE TABLE arqItLogEmail
+CREATE TABLE arqLogEmail
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	LOGEMAIL ligadoComArquivo, /* Ligado com o Arquivo LogEmail */
-	/*  3*/	CLIENTE ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
-	/*  4*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
-	/*  5*/	ENVIADO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	LIDO DATE, /* Máscara = 4ano */
-	/*  7*/	LINKEMP DATE, /* Máscara = 4ano */
-	/*  8*/	LINKKM DATE, /* Máscara = 4ano */
-	CONSTRAINT arqItLogEmail_PK PRIMARY KEY ( IDPRIMARIO )
+	/*  2*/	TITULO ligadoComArquivo, /* Ligado com o Arquivo AcaoEmail */
+	/*  3*/	DATA DATE, /* Máscara = 4ano */
+	/*  4*/	HORA TIME, /* Máscara = Seg */
+	/*  5*/	USUARIO ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/*  6*/	ENVIADOS INTEGER, /* Máscara = N */
+	/*  7*/	NENVIADOS INTEGER, /* Máscara = N */
+	/*  8*/	/* TOTAL */
+	/*  9*/	LIDOS NUMERIC(18,0), /* Máscara = N */
+	/* 10*/	/* PERCLIDOS */
+	/* 11*/	EMAILREMET VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
+	/* 12*/	HORAINI TIME, /* Máscara = Seg */
+	/* 13*/	HORAFIM TIME, /* Máscara = Seg */
+	/* 14*/	HORAREENV TIME, /* Máscara = Seg */
+	/* 15*/	ENVIOU campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 16*/	OPCAO NUMERIC(18,0), /* Máscara = N */
+	/* 17*/	CLIENTE ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	CONSTRAINT arqLogEmail_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqLogEmail_UK UNIQUE ( Titulo, Data, Hora )
 );
 commit;
 
-CREATE DESC INDEX arqItLogEmail_IdPrimario_Desc ON arqItLogEmail (IDPRIMARIO);
+CREATE DESC INDEX arqLogEmail_IdPrimario_Desc ON arqLogEmail (IDPRIMARIO);
+commit;
+
+CREATE DESC INDEX arqLogEmail_PDataDesc ON arqLogEmail(Data);
 commit;
 
 
@@ -2912,6 +2909,28 @@ commit;
 
 
 /************************************************************
+	Arquivo ItLogEmail
+************************************************************/
+
+CREATE TABLE arqItLogEmail
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	LOGEMAIL ligadoComArquivo, /* Ligado com o Arquivo LogEmail */
+	/*  3*/	CLIENTE ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  4*/	EMAIL VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = X */
+	/*  5*/	ENVIADO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	LIDO DATE, /* Máscara = 4ano */
+	/*  7*/	LINKEMP DATE, /* Máscara = 4ano */
+	/*  8*/	LINKKM DATE, /* Máscara = 4ano */
+	CONSTRAINT arqItLogEmail_PK PRIMARY KEY ( IDPRIMARIO )
+);
+commit;
+
+CREATE DESC INDEX arqItLogEmail_IdPrimario_Desc ON arqItLogEmail (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -2963,7 +2982,7 @@ ALTER TABLE arqConta ALTER NOME POSITION 7;
 ALTER TABLE arqConta ADD SALDO NUMERIC( 11, 2 ) computed by ( TrgValLiq - TrgPago ); 
 ALTER TABLE arqConta ALTER SALDO POSITION 14;
 ALTER TABLE arqConsulta ADD PRONTUARIO VARCHAR( 9 ) computed by ( ( COALESCE( ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqConsulta.Pessoa )  ), '' ) ) ); 
-ALTER TABLE arqConsulta ALTER PRONTUARIO POSITION 10;
+ALTER TABLE arqConsulta ALTER PRONTUARIO POSITION 11;
 ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
 	WHEN( DataFim is null ) THEN( 1 )
 	WHEN( current_date between DataIni and DataFim ) THEN( 1 )
@@ -2971,14 +2990,14 @@ ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
 	END  ); 
 ALTER TABLE arqClinica ALTER ATIVO POSITION 17;
 ALTER TABLE arqConsulta ADD ENTRATOTP NUMERIC( 8, 2 ) computed by ( EntraParc * EntraValP ); 
-ALTER TABLE arqConsulta ALTER ENTRATOTP POSITION 31;
+ALTER TABLE arqConsulta ALTER ENTRATOTP POSITION 32;
 ALTER TABLE arqConsulta ADD ENTRATOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP ); 
-ALTER TABLE arqConsulta ALTER ENTRATOTAL POSITION 32;
+ALTER TABLE arqConsulta ALTER ENTRATOTAL POSITION 33;
 ALTER TABLE arqConsulta ADD SALDOVAL NUMERIC( 8, 2 ) computed by ( CASE WHEN ( PTrata is not null ) THEN ( CASE
 	WHEN( SaldoParc > 0 ) THEN( ( ValPTrata - EntraVal - ( EntraParc * EntraValP ) ) / SaldoParc )
 	ELSE ( 0 )
 	END  ) ELSE ( 0 ) END ); 
-ALTER TABLE arqConsulta ALTER SALDOVAL POSITION 38;
+ALTER TABLE arqConsulta ALTER SALDOVAL POSITION 39;
 ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
 	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqRecorrente.Pessoa )  ), '' ) ) )
 	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqRecorrente.Fornecedor )  ), '' ) ) )
@@ -3016,7 +3035,7 @@ ALTER TABLE arqItemMov ALTER CUNIDADE POSITION 8;
 ALTER TABLE arqCMedica ADD SALDO NUMERIC(18,0) computed by ( Qtd - QtdEntreg ); 
 ALTER TABLE arqCMedica ALTER SALDO POSITION 9;
 ALTER TABLE arqConsulta ADD SALDO NUMERIC(18,0) computed by ( TrgQtdM - TrgQtdMEnt ); 
-ALTER TABLE arqConsulta ALTER SALDO POSITION 47;
+ALTER TABLE arqConsulta ALTER SALDO POSITION 48;
 ALTER TABLE arqConsulta ADD DIARET VARCHAR( 15 ) computed by ( CASE WHEN ( DataRet is not null ) THEN ( CASE
 	WHEN( extract( weekday from Data ) = 0 ) THEN( 'DOMINGO' )
 	WHEN( extract( weekday from Data ) = 1 ) THEN( 'SEGUNDA-FEIRA' )
@@ -3026,7 +3045,7 @@ ALTER TABLE arqConsulta ADD DIARET VARCHAR( 15 ) computed by ( CASE WHEN ( DataR
 	WHEN( extract( weekday from Data ) = 5 ) THEN( 'SEXTA-FEIRA' )
 	ELSE ( 'SÁBADO' )
 	END  ) ELSE ( '' ) END ); 
-ALTER TABLE arqConsulta ALTER DIARET POSITION 51;
+ALTER TABLE arqConsulta ALTER DIARET POSITION 52;
 commit;
 
 
@@ -3275,27 +3294,28 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.TSTCON, A2.CHAVE as TStCon_CHAVE, A2.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A3.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A4.NOME as PESSOA_NOME, A4.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A5.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A6.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A7.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A8.CHAVE as TMotivo_CHAVE, A8.DESCRITOR as TMotivo_DESCRITOR, A0.CORTESIA, A0.VALOR, A0.FORMAPG, A9.FORMAPG as FORMAPG_FORMAPG, A0.VALOR2, A0.FORMAPG2, A10.FORMAPG as FORMAPG2_FORMAPG, A0.PTRATA, A11.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A12.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARCE, A0.ENTRAPARC, A0.SDENTRFPG, A13.FORMAPG as SDENTRFPG_FORMAPG, A0.SDVENC1PAR, A0.SDCOND, A0.ENTRAVALP, A0.ENTRATOTP, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOFPG, A14.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOPARC, A0.SALDOCOND, A0.SALDOVAL, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A15.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A16.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.QUEMAGRET, A17.USUARIO as QUEMAGRET_USUARIO, A0.QDOAGRET, A0.DATARET, A0.DIARET, A0.HORARET, A0.TSTAGRET, A18.CHAVE as TStAgRet_CHAVE, A18.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESRET, A19.USUARIO as ASSESRET_USUARIO, A0.OBSRET
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.TICONSULTA, A1.TICONSULTA as TICONSULTA_TICONSULTA, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.TSTCON, A3.CHAVE as TStCon_CHAVE, A3.DESCRITOR as TStCon_DESCRITOR, A0.TIAGENDA, A4.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A5.NOME as PESSOA_NOME, A5.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A6.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A7.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A8.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A9.CHAVE as TMotivo_CHAVE, A9.DESCRITOR as TMotivo_DESCRITOR, A0.CORTESIA, A0.VALOR, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.VALOR2, A0.FORMAPG2, A11.FORMAPG as FORMAPG2_FORMAPG, A0.PTRATA, A12.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A13.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARCE, A0.ENTRAPARC, A0.SDENTRFPG, A14.FORMAPG as SDENTRFPG_FORMAPG, A0.SDVENC1PAR, A0.SDCOND, A0.ENTRAVALP, A0.ENTRATOTP, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOFPG, A15.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOPARC, A0.SALDOCOND, A0.SALDOVAL, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A16.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A17.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.QUEMAGRET, A18.USUARIO as QUEMAGRET_USUARIO, A0.QDOAGRET, A0.DATARET, A0.DIARET, A0.HORARET, A0.TSTAGRET, A19.CHAVE as TStAgRet_CHAVE, A19.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESRET, A20.USUARIO as ASSESRET_USUARIO, A0.OBSRET
 	FROM arqConsulta A0
-	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
-	left join tabTStCon A2 on A2.IDPRIMARIO=A0.TSTCON
-	left join arqTiAgenda A3 on A3.IDPRIMARIO = A0.TIAGENDA
-	left join arqPessoa A4 on A4.IDPRIMARIO = A0.PESSOA
-	left join arqUsuario A5 on A5.IDPRIMARIO = A0.MEDICO
-	left join arqUsuario A6 on A6.IDPRIMARIO = A0.ASSESSOR
-	left join arqUsuario A7 on A7.IDPRIMARIO = A0.CALLCENTER
-	left join tabTMotivo A8 on A8.IDPRIMARIO=A0.TMOTIVO
-	left join arqFormaPg A9 on A9.IDPRIMARIO = A0.FORMAPG
-	left join arqFormaPg A10 on A10.IDPRIMARIO = A0.FORMAPG2
-	left join arqPTrata A11 on A11.IDPRIMARIO = A0.PTRATA
-	left join arqFormaPg A12 on A12.IDPRIMARIO = A0.ENTRAFPG
-	left join arqFormaPg A13 on A13.IDPRIMARIO = A0.SDENTRFPG
-	left join arqFormaPg A14 on A14.IDPRIMARIO = A0.SALDOFPG
-	left join arqConta A15 on A15.IDPRIMARIO = A0.CONTACONS
-	left join arqConta A16 on A16.IDPRIMARIO = A0.CONTAPTRA
-	left join arqUsuario A17 on A17.IDPRIMARIO = A0.QUEMAGRET
-	left join tabTStAgRet A18 on A18.IDPRIMARIO=A0.TSTAGRET
-	left join arqUsuario A19 on A19.IDPRIMARIO = A0.ASSESRET;
+	left join arqTiConsulta A1 on A1.IDPRIMARIO = A0.TICONSULTA
+	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA
+	left join tabTStCon A3 on A3.IDPRIMARIO=A0.TSTCON
+	left join arqTiAgenda A4 on A4.IDPRIMARIO = A0.TIAGENDA
+	left join arqPessoa A5 on A5.IDPRIMARIO = A0.PESSOA
+	left join arqUsuario A6 on A6.IDPRIMARIO = A0.MEDICO
+	left join arqUsuario A7 on A7.IDPRIMARIO = A0.ASSESSOR
+	left join arqUsuario A8 on A8.IDPRIMARIO = A0.CALLCENTER
+	left join tabTMotivo A9 on A9.IDPRIMARIO=A0.TMOTIVO
+	left join arqFormaPg A10 on A10.IDPRIMARIO = A0.FORMAPG
+	left join arqFormaPg A11 on A11.IDPRIMARIO = A0.FORMAPG2
+	left join arqPTrata A12 on A12.IDPRIMARIO = A0.PTRATA
+	left join arqFormaPg A13 on A13.IDPRIMARIO = A0.ENTRAFPG
+	left join arqFormaPg A14 on A14.IDPRIMARIO = A0.SDENTRFPG
+	left join arqFormaPg A15 on A15.IDPRIMARIO = A0.SALDOFPG
+	left join arqConta A16 on A16.IDPRIMARIO = A0.CONTACONS
+	left join arqConta A17 on A17.IDPRIMARIO = A0.CONTAPTRA
+	left join arqUsuario A18 on A18.IDPRIMARIO = A0.QUEMAGRET
+	left join tabTStAgRet A19 on A19.IDPRIMARIO=A0.TSTAGRET
+	left join arqUsuario A20 on A20.IDPRIMARIO = A0.ASSESRET;
 commit;
 
 RECREATE VIEW V_arqPlantao AS 
@@ -3418,6 +3438,11 @@ RECREATE VIEW V_arqUsuCCor AS
 	left join arqCCor A2 on A2.IDPRIMARIO = A0.CCOR;
 commit;
 
+RECREATE VIEW V_arqTiConsulta AS 
+	SELECT A0.IDPRIMARIO, A0.TICONSULTA, A0.ATIVO
+	FROM arqTiConsulta A0;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -3510,6 +3535,7 @@ insert into arqLanceOperacao values(100055,1,'Cadastro de lotes de medicamentos'
 insert into arqLanceOperacao values(100056,1,'Cadastro de movimentos de estoque','arqMovEstoque',56,2,0,'');
 insert into arqLanceOperacao values(100057,1,'Cadastro de itens de movimento de estoque','arqItemMov',57,2,0,'');
 insert into arqLanceOperacao values(100059,1,'Cadastro da relação entre usuários e contas correntes','arqUsuCCor',59,90,0,'');
+insert into arqLanceOperacao values(100060,1,'Cadastro de tipos de consultas','arqTiConsulta',60,99,1,'');
 insert into arqLanceOperacao values(200193,2,'Rotina para excluir permissões de grupos de acesso','',193,null,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
@@ -3648,6 +3674,7 @@ ALTER TABLE arqParcela ADD CONSTRAINT arqParcela_FK_FormaPg FOREIGN KEY ( FORMAP
 ALTER TABLE arqConta ADD CONSTRAINT arqConta_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqUsuCli ADD CONSTRAINT arqUsuCli_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqUsuCli ADD CONSTRAINT arqUsuCli_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TiConsulta FOREIGN KEY ( TICONSULTA ) REFERENCES arqTiConsulta ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqHoraBloq ADD CONSTRAINT arqHoraBloq_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqDuracao ADD CONSTRAINT arqDuracao_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
@@ -4928,6 +4955,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'AssesRet', OLD.AssesRet, NEW.AssesRet );
 	execute procedure set_log( 12, NEW.idPrimario, 'ObsRet', substring( OLD.ObsRet from 1 for 255 ), substring( NEW.ObsRet from 1 for 255 ) );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
+		( NEW.TiConsulta is distinct from OLD.TiConsulta )  OR 
 		( NEW.BoletoMin is distinct from OLD.BoletoMin )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
 end

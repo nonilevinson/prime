@@ -173,7 +173,7 @@ if( $op == 95 ) //* selecao Hoje arqParcela
 		[ brHtml(1) . "e ", DataFim1 ] ] );
 }
 
-if( $op == 110 ) //* selecao arqConsulta
+if( $op == 110 ) //* selecao arqConsulta Tratamento
 {
 	echo
 	$this->Cabecalhos( [ "Consultas e Retiradas", 'FormCab alinhaMeio', '2' ] ),
@@ -400,6 +400,20 @@ if( $op == 258 ) //* r_consulta_valor
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Tipo da consulta", TiAgenda ),
 	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
+if( in_array($op, [265,266,267,268] ) ) //* selecao arqConsulta Nutricionista e Psicólogo
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
+	$this->Pedir( "Médico", Medico ),
+	$this->Pedir( "Consultas entre",
 		[ "", DataIni,
 		[ brHtml(1) . "e ", DataFim ] ] );
 }

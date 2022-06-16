@@ -19,14 +19,7 @@ class campo_arqTiConsulta_TiConsulta extends Lance_CampoCadeia
 {
 	function __construct()
 	{
-		parent::__construct( "TiConsulta", "TiConsulta", "TiConsulta", 20, "xxxxxxxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
-	}
-
-	//--------------------------------------------------
-	function CabecalhoCampo()
-	{
-		global $g_regAtual;
-			return( "Tipo" );
+		parent::__construct( "TiConsulta", "TiConsulta", "TiConsulta", 15, "xxxxxxxxxxxxxxx", EH_CHAVE, 0, false );
 	}
 
 }
@@ -61,85 +54,6 @@ class campo_arqTiConsulta_Ativo extends Lance_CampoLogico
 }
 
 //======================================================
-//	Campo AgTopo
-//======================================================
-
-class campo_arqTiConsulta_AgTopo extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "AgTopo", "AgTopo", "AgTopo", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( AgendaTopo == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
-	}
-
-}
-
-//======================================================
-//	Campo AgForm
-//======================================================
-
-class campo_arqTiConsulta_AgForm extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "AgForm", "AgForm", "AgForm", "", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo Pagamento
-//======================================================
-
-class campo_arqTiConsulta_Pagamento extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "Pagamento", "Pagamento", "Pagamento", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( $g_regAtual->PAGAMENTO == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
-	}
-
-}
-
-//======================================================
-//	Campo Midia
-//======================================================
-
-class campo_arqTiConsulta_Midia extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "Midia", "Midia", "Midia", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( $g_regAtual->MIDIA == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
-	}
-
-}
-
-//======================================================
 //	Arquivo arqTiConsulta
 //======================================================
 function listaCampos_arqTiConsulta( $p_prefixo )
@@ -148,14 +62,10 @@ function listaCampos_arqTiConsulta( $p_prefixo )
 	$prefixoAnt = $g_prefixo;
 	$g_prefixo .= $p_prefixo;
 	$lista = array_merge(
-		array(
+		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqTiConsulta_TiConsulta(),
-			new campo_arqTiConsulta_Ativo(),
-			new campo_arqTiConsulta_AgTopo(),
-			new campo_arqTiConsulta_AgForm(),
-			new campo_arqTiConsulta_Pagamento(),
-			new campo_arqTiConsulta_Midia() )
+			new campo_arqTiConsulta_Ativo() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -170,8 +80,9 @@ class arqTiConsulta extends Lance_Arquivo
 			"arqTiConsulta",  // Nome Interno do arquivo
 			"a_ticons",  // Nome deste arquivo Php que contém o arquivo
 			"TiConsulta",  // Nome do arquivo acentuado-se
-			listaCampos_arqTiConsulta( "" ), 47
+			listaCampos_arqTiConsulta( "" ), 60
 		);
+		$this->temLog = false;
 	}
 
 	//-------------------------------------------------------------
@@ -179,7 +90,7 @@ class arqTiConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ChaveUnica()
 	{
-		return( array( TiConsulta) );
+		return( [ TiConsulta ] );
 	}
 
 	//-------------------------------------------------------------
@@ -188,13 +99,9 @@ class arqTiConsulta extends Lance_Arquivo
 	function Folheamento()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( TiConsulta ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( AgTopo ) );
-			array_push( $vetAux, array( AgForm ) );
-			array_push( $vetAux, array( Pagamento ) );
-			array_push( $vetAux, array( Midia ) );
+		$vetAux = [];
+			$vetAux[] = [ TiConsulta ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -204,13 +111,9 @@ class arqTiConsulta extends Lance_Arquivo
 	function Exportacao()
 	{
 		global $g_acaoAtual;
-		$vetAux = array();
-			array_push( $vetAux, array( TiConsulta ) );
-			array_push( $vetAux, array( Ativo ) );
-			array_push( $vetAux, array( AgTopo ) );
-			array_push( $vetAux, array( AgForm ) );
-			array_push( $vetAux, array( Pagamento ) );
-			array_push( $vetAux, array( Midia ) );
+		$vetAux = [];
+			$vetAux[] = [ TiConsulta ];
+			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
 
@@ -219,8 +122,7 @@ class arqTiConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function NomeCompleto()
 	{
-		return( 'Tipos de consulta' );
+		return( 'Tipos de consultas' );
 	}
 
 }
-?>
