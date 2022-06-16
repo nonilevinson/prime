@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 require_once( 'ext_relatorios_colunares.php' );
 
@@ -83,7 +83,7 @@ class RelEstoque extends Relatorios
 //------------------------------------------------------------------------
 //	Processamento do relatório
 //------------------------------------------------------------------------
-global $parQSelecao;
+global $g_debugProcesso, $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
 $proc = new RelEstoque( RETRATO, A4, "Estoque_Posicao.pdf", "", true );
@@ -97,7 +97,7 @@ $select = "Select M.Medicamen, L.TrgItMov, L.TrgCMedica, C.Clinica, U.Unidade
 		join arqClinica	C on C.idPrimario=L.Clinica
 		join arqMedicamen	M on M.idPrimario=L.Medicamen
 		join arqUnidade	U on U.idPrimario=M.Unidade " .
-   ( $filtro ? "Where " . $filtro : "" ) .
-   " Order by M.Medicamen, C.Clinica";
+   ( $filtro ? "Where " . $filtro : "" ) . "
+   Order by M.Medicamen, C.Clinica";
 
 $proc->Processar( $select );

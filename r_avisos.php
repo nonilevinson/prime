@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 require_once( LANCE_PHP_ABSOLUTO . 'lance_relatorio_pdf_livre.php' );
 

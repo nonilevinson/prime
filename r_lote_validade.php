@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 require_once( 'ext_relatorios_colunares.php' );
 

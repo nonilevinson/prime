@@ -45,10 +45,11 @@ class RelEstoque extends Relatorios
       $g_ehPrimeiro = true;
       $g_saldo = 0;
 
-      $select = "Select (Mov.QtdMov - Mov.QtdCMedica) as SaldoIni
+      //* saldo inicial
+		$select = "Select (Mov.QtdMov - Mov.QtdCMedica) as SaldoIni
 			From(
 				Select sum( iif( I.Tmov = 2, I.Qtd, -I.Qtd ) ) as QtdMov,
-					(Select sum( C.Qtd ) as QtdCMedica
+					(Select coalesce( sum(C.QTD), 0 ) as QtdCMedica
 					From arqCMedica C
 					Where C.Medicamen = " . $this->idMedicamen . " and C.DataSepara < '" . $this->dataIni . "')
 				From arqItemMov I
