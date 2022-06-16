@@ -65,7 +65,7 @@ class RelEstoque extends Relatorios
 		global $g_debugProcesso;
 		$regA = &$this->regAtual;
 
-		$estoque = $regA->TRGITMOV - $regA->TRGTRASAI + $regA->TRGTRAENT;
+		$estoque = $regA->TRGITMOV - $regA->TRGCMEDICA;
 // if( $g_debugProcesso ) echo '<br><b>GR0 estoque S=</b> '.$estoque;
 
 		if( $estoque != 0 )

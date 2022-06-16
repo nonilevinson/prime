@@ -339,14 +339,10 @@ if( $op == 225 ) //* r_estoque_posicao
 {
 	echo
 	$this->Pedir( "Clínica", Clinica ),
-	$this->Pedir( "Medicamento", Medicamen );
-	
-	if( GrupoAtualEm() )
-	{
-		echo
-		$this->Pular1Linha(2),
-		$this->Pedir( "Data", DataIni );
-	}
+$this->Pedir( "Medicamento", Medicamen ),
+	$this->Pular1Linha(2),
+	$this->Pedir( "Data",
+		[ "", DataIni, "<br>(se quiser a posição para o dia de hoje, não precisa informar a data)" ] );
 }
 
 if( $op == 226 ) //* r_lote_validade

@@ -9,7 +9,9 @@ class RelEstoque extends Relatorios
 	{
 		global $parQSelecao;
 
-		$this->tituloRelatorio = [ 'Relatório de posição de estoque', ' ' ];
+		$this->tituloRelatorio = [ 'Relatório de posição de estoque ',
+         "Em " . formatarData( $this->dataIni ),
+         ' ' ];
 
 		$this->DefinirCabColunas(
 			[ "Medicamento",	90, ALINHA_ESQ ],
@@ -64,8 +66,30 @@ class RelEstoque extends Relatorios
 	{
 		global $g_debugProcesso;
 		$regA = &$this->regAtual;
+      
+      $idMedicamen = $regA->IDMEDICAMEN;
+      $idClinica   = $regA->IDCLINICA;
 
-		$estoque = $regA->TRGITMOV - $regA->TRGTRASAI + $regA->TRGTRAENT;
+      $select = "Select coalesce( sum( I.QtdCalc), 0) as TrgItMov
+         From arqItemMov I
+            join arqMovEstoque   M on M.idPrimario=I.MovEstoque
+            join arqLote         L on L.idPrimario=I.Lote
+         Where M.Data <= '" . $this->dataIni . "' and
+            M.Clinica = " . $idClinica . " and 
+            L.Medicamen = " . $idMedicamen;
+      $umItemMov = sql_lerUmRegistro( $select );
+// if( $g_debugProcesso ) echo '<br><b>GR0 Medicamn=</b> '.$regA->MEDICAMEN.' <b>arqItemMov S=</b> '.$select.'<br><b>TrgItMov=</b> '.$umItemMov->TRGITMOV;
+
+      $select = "Select coalesce( sum( C.QtdEntreg ), 0) as TrgQtdEntreg
+         From arqCMedica C
+            join arqConsulta U on U.idPrimario=C.Consulta
+         Where C.DataSepara <= '" . $this->dataIni . "' and
+            U.Clinica = " . $idClinica . " and 
+            C.Medicamen = " . $idMedicamen;
+      $umCMedica = sql_lerUmRegistro( $select );
+// if( $g_debugProcesso ) echo '<br><b>GR0 Medicamn=</b> '.$regA->MEDICAMEN.' <b>arqCMedica S=</b> '.$select.'<br><b>TrgQtdEntreg=</b> '.$umCMedica->TRGQTDENTREG;
+            
+		$estoque = $umItemMov->TRGITMOV - $umCMedica->TRGQTDENTREG;
 // if( $g_debugProcesso ) echo '<br><b>GR0 estoque S=</b> '.$estoque;
 
 		if( $estoque != 0 )
@@ -88,12 +112,14 @@ $parQSelecao = lerParametro( "parQSelecao" );
 if( $g_debugProcesso ) echo '<br><b>GR0 entrou no r_estoque_posicao_data.php</b>';
 
 $proc = new RelEstoque( RETRATO, A4, "Estoque_Posicao.pdf", "", true );
+$proc->dataIni = $parQSelecao->DATAINI;
 
 $filtro = substr(
    filtrarPorLig( 'L.Clinica', $parQSelecao->CLINICA ) .
    filtrarPorLig( 'L.Medicamen', $parQSelecao->MEDICAMEN ), 0,-4);
 
-$select = "Select M.Medicamen, L.TrgItMov, L.TrgCMedica, C.Clinica, U.Unidade
+//* o distinct é porque se já tem um lote, não preciso trazer todos e preciso do arqLote para filtrar por clínica
+$select = "Select distinct M.idPrimario as idMedicamen, M.Medicamen, C.idPrimario as idClinica, C.Clinica, U.Unidade
 	From arqLote L
 		join arqClinica	C on C.idPrimario=L.Clinica
 		join arqMedicamen	M on M.idPrimario=L.Medicamen
