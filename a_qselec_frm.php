@@ -340,6 +340,13 @@ if( $op == 225 ) //* r_estoque_posicao
 	echo
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Medicamento", Medicamen );
+	
+	if( GrupoAtualEm() )
+	{
+		echo
+		$this->Pular1Linha(2),
+		$this->Pedir( "Data", DataIni );
+	}
 }
 
 if( $op == 226 ) //* r_lote_validade

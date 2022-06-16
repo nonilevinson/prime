@@ -85,7 +85,7 @@ class RelEstoque extends Relatorios
 //------------------------------------------------------------------------
 global $g_debugProcesso, $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
-if( $g_debugProcesso ) echo '<br><b>GR0 entrou no r_estoque_posicao.php</b>';
+if( $g_debugProcesso ) echo '<br><b>GR0 entrou no r_estoque_posicao_data.php</b>';
 
 $proc = new RelEstoque( RETRATO, A4, "Estoque_Posicao.pdf", "", true );
 
