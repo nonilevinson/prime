@@ -98,14 +98,30 @@ class campo_arqPTrata_ValMinimo extends Lance_CampoNumerico
 }
 
 //======================================================
-//	Campo Descricao
+//	Campo Complemen
 //======================================================
 
-class campo_arqPTrata_Descricao extends Lance_CampoTexto
+class campo_arqPTrata_Complemen extends Lance_CampoLogico
 {
 	function __construct()
 	{
-		parent::__construct( "Descricao", "Descricao", "Descricao", 20,90, false, true );
+		parent::__construct( "Complemen", "Complemen", "Complemen", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->COMPLEMEN == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Complementar?" );
 	}
 
 }
@@ -168,7 +184,7 @@ function listaCampos_arqPTrata( $p_prefixo )
 			new campo_arqPTrata_Valor(),
 			new campo_arqPTrata_MrgDesc(),
 			new campo_arqPTrata_ValMinimo(),
-			new campo_arqPTrata_Descricao(),
+			new campo_arqPTrata_Complemen(),
 			new campo_arqPTrata_Ativo(),
 			new campo_arqPTrata_Tempo() ]
 	);
@@ -208,6 +224,7 @@ class arqPTrata extends Lance_Arquivo
 			$vetAux[] = [ Valor ];
 			$vetAux[] = [ MrgDesc ];
 			$vetAux[] = [ ValMinimo ];
+			$vetAux[] = [ Complemen ];
 			$vetAux[] = [ Ativo ];
 		return( $vetAux );
 	}
@@ -224,7 +241,7 @@ class arqPTrata extends Lance_Arquivo
 			$vetAux[] = [ Valor ];
 			$vetAux[] = [ MrgDesc ];
 			$vetAux[] = [ ValMinimo ];
-			$vetAux[] = [ Descricao ];
+			$vetAux[] = [ Complemen ];
 			$vetAux[] = [ Ativo ];
 			$vetAux[] = [ Tempo ];
 		return( $vetAux );

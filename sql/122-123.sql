@@ -321,3 +321,75 @@ alter MAXAGENDA position 19,
 alter SIGLA position 20;
 commit;
 
+--*	Arquivo PTrata    
+--* campo Complemen para saber se oferecem as consultas de nutricionista e psicólogo
+--* baseado nele o campo Quantos em arqPessoa liberará o paciente para agendar ou não uma dessas consultas
+drop trigger arqPTrata_log;
+drop view v_arqPTrata;
+commit;
+
+ALTER TABLE arqPTrata drop Descricao;
+commit;
+
+ALTER TABLE arqPTrata
+add /*  7*/	COMPLEMEN campoLogico; /* Lógico: 0=Não 1=Sim */
+commit;
+
+update arqPTrata set Complemen=0;
+update arqPTrata set Complemen=1 where idPrimario in( 1,5,6 );
+commit;
+
+RECREATE VIEW V_arqPTrata AS 
+	SELECT A0.IDPRIMARIO, A0.PTRATA, A0.APELIDO, A0.VALOR, A0.MRGDESC, A0.VALMINIMO, A0.COMPLEMEN, A0.ATIVO, A0.TEMPO
+	FROM arqPTrata A0;
+commit;
+
+/************************************************************
+	Trigger para Log de arqPTrata
+************************************************************/
+
+set term ^;
+
+recreate trigger arqPTrata_LOG for arqPTrata
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.PTrata,'' );
+else
+	valorChave = coalesce( NEW.PTrata,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100032 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'PTrata', OLD.PTrata, NEW.PTrata );
+	execute procedure set_log( 12, NEW.idPrimario, 'Apelido', OLD.Apelido, NEW.Apelido );
+	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'MrgDesc', OLD.MrgDesc, NEW.MrgDesc );
+	execute procedure set_log( 12, NEW.idPrimario, 'Complemen', OLD.Complemen, NEW.Complemen );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Tempo', OLD.Tempo, NEW.Tempo );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqPTrata
+alter IDPRIMARIO position 1,
+alter PTRATA position 2,
+alter APELIDO position 3,
+alter VALOR position 4,
+alter MRGDESC position 5,
+alter VALMINIMO position 6,
+alter COMPLEMEN position 7,
+alter ATIVO position 8,
+alter TEMPO position 9;
+commit;

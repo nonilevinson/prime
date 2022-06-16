@@ -1913,7 +1913,7 @@ CREATE TABLE arqPTrata
 	/*  4*/	VALOR NUMERIC( 8, 2 ), /* Máscara = N */
 	/*  5*/	MRGDESC NUMERIC( 4, 2 ), /* Máscara = N */
 	/*  6*/	/* VALMINIMO */
-	/*  7*/	DESCRICAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
+	/*  7*/	COMPLEMEN campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  8*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  9*/	TEMPO VARCHAR( 10 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqPTrata_PK PRIMARY KEY ( IDPRIMARIO ),
@@ -3241,7 +3241,7 @@ RECREATE VIEW V_arqClinica AS
 commit;
 
 RECREATE VIEW V_arqPTrata AS 
-	SELECT A0.IDPRIMARIO, A0.PTRATA, A0.APELIDO, A0.VALOR, A0.MRGDESC, A0.VALMINIMO, A0.DESCRICAO, A0.ATIVO, A0.TEMPO
+	SELECT A0.IDPRIMARIO, A0.PTRATA, A0.APELIDO, A0.VALOR, A0.MRGDESC, A0.VALMINIMO, A0.COMPLEMEN, A0.ATIVO, A0.TEMPO
 	FROM arqPTrata A0;
 commit;
 
@@ -4648,7 +4648,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Apelido', OLD.Apelido, NEW.Apelido );
 	execute procedure set_log( 12, NEW.idPrimario, 'Valor', OLD.Valor, NEW.Valor );
 	execute procedure set_log( 12, NEW.idPrimario, 'MrgDesc', OLD.MrgDesc, NEW.MrgDesc );
-	execute procedure set_log( 12, NEW.idPrimario, 'Descricao', substring( OLD.Descricao from 1 for 255 ), substring( NEW.Descricao from 1 for 255 ) );
+	execute procedure set_log( 12, NEW.idPrimario, 'Complemen', OLD.Complemen, NEW.Complemen );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 	execute procedure set_log( 12, NEW.idPrimario, 'Tempo', OLD.Tempo, NEW.Tempo );
 end

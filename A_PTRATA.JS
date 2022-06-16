@@ -58,15 +58,15 @@ function Campo_arqPTrata_ValMinimo()
 var ValMinimo = new Campo_arqPTrata_ValMinimo;
 
 //------------------------------------------------------------
-Campo_arqPTrata_Descricao.prototype = new Lance_CampoTexto;
+Campo_arqPTrata_Complemen.prototype = new Lance_CampoLogico;
 
-function Campo_arqPTrata_Descricao()
+function Campo_arqPTrata_Complemen()
 {
-	this.superClass = Lance_CampoTexto;
-	this.superClass( "Descricao", "Descricao", "Descricao", true);
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "Complemen", "Complemen", "Complemen");
 }
 
-var Descricao = new Campo_arqPTrata_Descricao;
+var Complemen = new Campo_arqPTrata_Complemen;
 
 //------------------------------------------------------------
 Campo_arqPTrata_Ativo.prototype = new Lance_CampoLogico;
@@ -150,6 +150,24 @@ ValMinimo.EhCalculado = true;
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
+Campo_arqPTrata_Complemen.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqPTrata_Complemen.prototype.Cabecalho = function()
+{
+		return( "Complementar?" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
 Campo_arqPTrata_Ativo.prototype.Sugeriu = function()
 {
 {
@@ -197,7 +215,7 @@ function ListaDeCampos_arqPTrata( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ PTrata, Apelido, Valor, MrgDesc, ValMinimo, Descricao, Ativo, Tempo ]	);
+		[ PTrata, Apelido, Valor, MrgDesc, ValMinimo, Complemen, Ativo, Tempo ]	);
 	IniciarDependencias_arqPTrata();
 	g_prefixo = l_prefixo;
 	return( l_lista );

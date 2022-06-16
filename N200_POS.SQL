@@ -528,7 +528,7 @@ alter APELIDO position 3,
 alter VALOR position 4,
 alter MRGDESC position 5,
 alter VALMINIMO position 6,
-alter DESCRICAO position 7,
+alter COMPLEMEN position 7,
 alter ATIVO position 8,
 alter TEMPO position 9;
 commit;
