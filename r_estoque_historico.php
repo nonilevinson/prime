@@ -105,7 +105,8 @@ class RelEstoque extends Relatorios
 		global $g_debugProcesso, $g_saldoIni, $g_ehPrimeiro, $g_saldo;
       $regA = &$this->regAtual;
 
-      $qtdCal = $regA->IDTMOV == 2 ? $regA->QTD : -$regA->QTD;
+      $item  = $regA->ITEM;
+		$qtdCal = $regA->IDTMOV == 2 ? $regA->QTD : -$regA->QTD;
 
 		if( $g_ehPrimeiro )
          $g_saldo = $g_saldo + $g_saldoIni + $qtdCal;
@@ -113,7 +114,7 @@ class RelEstoque extends Relatorios
          $g_saldo = $g_saldo + $qtdCal;
 // if( $g_debugProcesso ) echo '<br><b>GR0 SALDO=</b> '.$g_saldo;
 
-      $this->valores[ 3 ] = formatarNum( $regA->ITEM );
+      $item > 0 ? $this->valores[ 3 ] =  formatarNum( $item ) : "";
       $this->valores[ 4 ] = $regA->TMOV;
       $this->valores[ 5 ] = formatarNum( $qtdCal, 2, 0, 0, ')' );
       $this->valores[ 6 ] = formatarNum( $g_saldo, 2, 0, 0, ')' );
@@ -145,7 +146,7 @@ $select = "Select M.Data, M.Num, I.Item, I.Qtd, T.idPrimario as idTMov, T.Descri
 	Where " . substr(
       filtrarPorIntervaloData( 'M.Data', $proc->dataIni, $proc->dataFim ) .
       filtrarPorLig( 'M.Clinica', $proc->idClinica ) .
-		filtrarPorLig( 'L.Medicamen', $proc->insumo ), 0, -4 ) .
+		filtrarPorLig( 'L.Medicamen', $proc->idMedicamen ), 0, -4 ) .
 
 	" UNION ALL
 
@@ -157,7 +158,7 @@ $select = "Select M.Data, M.Num, I.Item, I.Qtd, T.idPrimario as idTMov, T.Descri
 	Where " . substr(
       filtrarPorIntervaloData( 'M.DataSepara', $proc->dataIni, $proc->dataFim ) .
 		filtrarPorLig( 'C.Clinica', $proc->idClinica ) .
-      filtrarPorLig( 'M.Medicamen', $proc->insumo ), 0, -4 ) .
+      filtrarPorLig( 'M.Medicamen', $proc->idMedicamen ), 0, -4 ) .
 
 	" Order by 1,2,3";
 

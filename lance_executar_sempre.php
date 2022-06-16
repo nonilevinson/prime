@@ -48,14 +48,14 @@ if( $regUsuCCor )
 }
 else //* NÃO TEM ESPECÍFICO MONTA VETOR VAZIO
 	define( 'SQL_VETIDCCOR', "" );
-
+/*
 if( $g_debugProcesso )
 {
 	echo '<br><b>GR0 lance_executar_sempre vetIdClinica Size=</b> '.sizeof( $vetIdClinica ).
 		' <b>VETIDCLINICA=</b> '.SQL_VETIDCLINICA.' | <b>vetIdCCor Size=</b> '.
 		sizeof( $vetIdCCor ).' <b>VETIDCLINICA=</b> '.SQL_VETIDCCOR;
 }
-
+*/
 //=============================================================================================
 //* sobre desmarcações
 $select = "Select X.QtasDesmar
