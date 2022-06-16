@@ -73,5 +73,6 @@ g_idOperacao = 60;
 
 if( parent.navegacao ) {
 var Menu_1 = [ 1,"Consultas","","C",261,"","",1,"","1","a_consul","arqConsulta","Folhear","TiConsulta","?","","", "","", 0,9,[],[39]];
-parent.navegacao.MenuPrincQtdOpcoes=1;
+var Menu_2 = [ 1,"Clínicas","","l",269,"","",1,"","1","a_clini","arqClinica","Folhear","TiConsulta","?","","", "","", 0,9,[],[31]];
+parent.navegacao.MenuPrincQtdOpcoes=2;
 }

@@ -220,3 +220,104 @@ alter ASSESRET position 55,
 alter OBSRET position 56;
 commit;
 
+--*	Arquivo Clinica   
+--* Criando o TiConsulta. Na migração passei as existentes para Tratamento (id=1)
+
+drop trigger arqClinica_log;
+drop view v_arqClinica;
+commit;
+
+ALTER TABLE arqClinica
+add /* 15*/	TICONSULTA ligadoComArquivo; /* Ligado com o Arquivo TiConsulta */
+commit;
+
+ALTER TABLE arqClinica ADD CONSTRAINT arqClinica_FK_TiConsulta FOREIGN KEY ( TICONSULTA ) REFERENCES arqTiConsulta ON DELETE NO ACTION ON UPDATE CASCADE;
+commit;
+
+update arqClinica set TiConsulta=1;
+commit;
+
+RECREATE VIEW V_arqClinica AS 
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.TICONSULTA, A4.TICONSULTA as TICONSULTA_TICONSULTA, A0.DATAINI, A0.DATAFIM, A0.ATIVO, A0.MAXAGENDA, A0.SIGLA
+	FROM arqClinica A0
+	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
+	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
+	left join tabUF A3 on A3.IDPRIMARIO=A2.UF
+	left join arqTiConsulta A4 on A4.IDPRIMARIO = A0.TICONSULTA;
+commit;
+
+/************************************************************
+	Trigger para Log de arqClinica
+************************************************************/
+
+set term ^;
+
+recreate trigger arqClinica_LOG for arqClinica
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.Clinica,'' );
+else
+	valorChave = coalesce( NEW.Clinica,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100031 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Razao', OLD.Razao, NEW.Razao );
+	execute procedure set_log( 12, NEW.idPrimario, 'Email', OLD.Email, NEW.Email );
+	execute procedure set_log( 12, NEW.idPrimario, 'CNPJ', OLD.CNPJ, NEW.CNPJ );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_CEP', OLD.Ende_CEP, NEW.Ende_CEP );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Endereco', OLD.Ende_Endereco, NEW.Ende_Endereco );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Bairro', OLD.Ende_Bairro, NEW.Ende_Bairro );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Cidade', OLD.Ende_Cidade, NEW.Ende_Cidade );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Telefone', OLD.Ende_Telefone, NEW.Ende_Telefone );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_DDDCelular', OLD.Ende_DDDCelular, NEW.Ende_DDDCelular );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Celular', OLD.Ende_Celular, NEW.Ende_Celular );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ende_WhatsApp', OLD.Ende_WhatsApp, NEW.Ende_WhatsApp );
+	execute procedure set_log( 12, NEW.idPrimario, 'TiConsulta', OLD.TiConsulta, NEW.TiConsulta );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataIni', OLD.DataIni, NEW.DataIni );
+	execute procedure set_log( 12, NEW.idPrimario, 'DataFim', OLD.DataFim, NEW.DataFim );
+	execute procedure set_log( 12, NEW.idPrimario, 'MaxAgenda', OLD.MaxAgenda, NEW.MaxAgenda );
+	execute procedure set_log( 12, NEW.idPrimario, 'Sigla', OLD.Sigla, NEW.Sigla );
+end
+end^
+
+set term ;^
+
+commit;
+
+INSERT INTO ARQCLINICA (IDPRIMARIO, CLINICA, RAZAO, EMAIL, CNPJ, ENDE_CEP, ENDE_ENDERECO, ENDE_BAIRRO, ENDE_CIDADE, ENDE_TELEFONE, ENDE_DDDCELULAR, ENDE_CELULAR, ENDE_WHATSAPP, DATAINI, DATAFIM, MAXAGENDA, SIGLA, TICONSULTA) VALUES (10, 'NUTRICIONISTA', '', '', '', '', '', NULL, NULL, '', 0, '', 0, '2022-06-16', NULL, 60, 'NU', 2);
+INSERT INTO ARQCLINICA (IDPRIMARIO, CLINICA, RAZAO, EMAIL, CNPJ, ENDE_CEP, ENDE_ENDERECO, ENDE_BAIRRO, ENDE_CIDADE, ENDE_TELEFONE, ENDE_DDDCELULAR, ENDE_CELULAR, ENDE_WHATSAPP, DATAINI, DATAFIM, MAXAGENDA, SIGLA, TICONSULTA) VALUES (11, 'PSICÓLOGO', '', '', '', '', '', NULL, NULL, '', 0, '', 0, '2022-06-16', NULL, 60, 'PSI', 3);
+COMMIT WORK;
+
+ALTER TABLE arqClinica
+alter IDPRIMARIO position 1,
+alter CLINICA position 2,
+alter RAZAO position 3,
+alter EMAIL position 4,
+alter CNPJ position 5,
+alter ENDE_CEP position 6,
+alter ENDE_ENDERECO position 7,
+alter ENDE_BAIRRO position 8,
+alter ENDE_CIDADE position 9,
+alter ENDE_DDD position 10,
+alter ENDE_TELEFONE position 11,
+alter ENDE_DDDCELULAR position 12,
+alter ENDE_CELULAR position 13,
+alter ENDE_WHATSAPP position 14,
+alter TICONSULTA position 15,
+alter DATAINI position 16,
+alter DATAFIM position 17,
+alter ATIVO position 18,
+alter MAXAGENDA position 19,
+alter SIGLA position 20;
+commit;
+

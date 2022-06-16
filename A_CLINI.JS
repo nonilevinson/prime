@@ -51,6 +51,28 @@ var CNPJ = new Campo_arqClinica_CNPJ;
 IniciarPrefixos_domEndereco( "Ende_" );
 
 //------------------------------------------------------------
+Campo_arqClinica_TiConsulta.prototype = new Lance_CampoHidden;
+
+function Campo_arqClinica_TiConsulta()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "TiConsulta", "TiConsulta", "TiConsulta", "arqTiConsulta", "a_ticons", null, "",60);
+}
+
+var TiConsulta = new Campo_arqClinica_TiConsulta;
+
+//------------------------------------------------------------
+Campo_arqClinica_TiConsulta_TiConsulta.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqClinica_TiConsulta_TiConsulta()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TiConsulta_TiConsulta", "TiConsulta_TiConsulta", "TiConsulta", TiConsulta, 15, "uxxxxxxxxxxxxxx", false);
+}
+
+var TiConsulta_TiConsulta = new Campo_arqClinica_TiConsulta_TiConsulta;
+
+//------------------------------------------------------------
 Campo_arqClinica_DataIni.prototype = new Lance_CampoData;
 
 function Campo_arqClinica_DataIni()
@@ -143,6 +165,34 @@ Campo_arqClinica_CNPJ.prototype.TemErro = function()
 //-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
+Campo_arqClinica_TiConsulta.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O tipo de consulta é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqClinica_TiConsulta.prototype.Cabecalho = function()
+{
+		return( "Tipo Consulta" );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqClinica_TiConsulta_TiConsulta.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( TiConsulta.Obrigatorio( p_comMsg ) );
+}
+
+TiConsulta_TiConsulta.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
 Campo_arqClinica_DataIni.prototype.Obrigatorio = function( p_comMsg )
 {
 	{
@@ -213,11 +263,22 @@ Campo_arqClinica_Sigla.prototype.Obrigatorio = function( p_comMsg )
 	}
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqClinica_TiConsulta.prototype.ExistenciaEspecial = function()
+{
+	return( ( !TiConsulta_TiConsulta.Obrigatorio( false ) || tem(TiConsulta_TiConsulta) ) );
+}
+
 function IniciarDependencias_arqClinica()
 {
 DataFim.CalculosDependentes= [ Ativo ];
 DataIni.CalculosDependentes= [ Ativo ];
+TiConsulta_TiConsulta.ExistenciasDependentes= [ TiConsulta ];
+TiConsulta_TiConsulta.ErrosDependentes= [ TiConsulta ];
 DataIni.ErrosDependentes= [ DataFim ];
+TiConsulta.CamposChave= [ TiConsulta_TiConsulta ];
 }
 
 
@@ -237,7 +298,7 @@ function ListaDeCampos_arqClinica( p_prefixo )
 
 		[ Clinica, Razao, Email, CNPJ ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ DataIni, DataFim, Ativo, MaxAgenda, Sigla ]	);
+		[ TiConsulta, TiConsulta_TiConsulta, DataIni, DataFim, Ativo, MaxAgenda, Sigla ]	);
 	IniciarDependencias_arqClinica();
 	g_prefixo = l_prefixo;
 	return( l_lista );

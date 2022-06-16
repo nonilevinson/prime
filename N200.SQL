@@ -1709,20 +1709,20 @@ commit;
 
 
 /************************************************************
-	Arquivo Template  
+	Arquivo TiConsulta
 ************************************************************/
 
-CREATE TABLE arqTemplate
+CREATE TABLE arqTiConsulta
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	TEMPLATE BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	CONSTRAINT arqTemplate_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqTemplate_UK UNIQUE ( Nome )
+	/*  2*/	TICONSULTA VARCHAR( 15 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqTiConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqTiConsulta_UK UNIQUE ( TiConsulta )
 );
 commit;
 
-CREATE DESC INDEX arqTemplate_IdPrimario_Desc ON arqTemplate (IDPRIMARIO);
+CREATE DESC INDEX arqTiConsulta_IdPrimario_Desc ON arqTiConsulta (IDPRIMARIO);
 commit;
 
 
@@ -1767,11 +1767,12 @@ CREATE TABLE arqClinica
 	/* 12*/	ENDE_DDDCELULAR SMALLINT, /* Máscara = N */
 	/* 13*/	ENDE_CELULAR VARCHAR( 9 ) COLLATE PT_BR, /* Máscara = n.nnnn.nnnn */
 	/* 14*/	ENDE_WHATSAPP campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 15*/	DATAINI DATE, /* Máscara = 4ano */
-	/* 16*/	DATAFIM DATE, /* Máscara = 4ano */
-	/* 17*/	/* ATIVO */
-	/* 18*/	MAXAGENDA INTEGER, /* Máscara = N */
-	/* 19*/	SIGLA VARCHAR( 3 ) COLLATE PT_BR, /* Máscara = M */
+	/* 15*/	TICONSULTA ligadoComArquivo, /* Ligado com o Arquivo TiConsulta */
+	/* 16*/	DATAINI DATE, /* Máscara = 4ano */
+	/* 17*/	DATAFIM DATE, /* Máscara = 4ano */
+	/* 18*/	/* ATIVO */
+	/* 19*/	MAXAGENDA INTEGER, /* Máscara = N */
+	/* 20*/	SIGLA VARCHAR( 3 ) COLLATE PT_BR, /* Máscara = M */
 	CONSTRAINT arqClinica_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqClinica_UK UNIQUE ( Clinica )
 );
@@ -1883,32 +1884,20 @@ commit;
 
 
 /************************************************************
-	Arquivo AcaoEmail 
+	Arquivo Template  
 ************************************************************/
 
-CREATE TABLE arqAcaoEmail
+CREATE TABLE arqTemplate
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	TITULO VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	VERSAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = X */
-	/*  4*/	TIPOACAO ligadoComTabela, /* Ligado com a Tabela TipoAcao */
-	/*  5*/	TEMPLATE ligadoComArquivo, /* Ligado com o Arquivo Template */
-	/*  6*/	PADRAOACAO ligadoComTabela, /* Ligado com a Tabela PadraoAcao */
-	/*  7*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  8*/	ARQUIVO VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/*  9*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( lower( 'AcaoEmail/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
-	/* 10*/	HTML BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
-	/* 11*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 12*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( lower( 'AcaoEmail/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
-	/* 13*/	LINK VARCHAR( 200 ) COLLATE PT_BR, /* Máscara = X */
-	/* 14*/	IMAGEMALT VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
-	/* 15*/	QTDTESTE SMALLINT, /* Máscara = N */
-	CONSTRAINT arqAcaoEmail_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqAcaoEmail_UK UNIQUE ( Titulo, Versao )
+	/*  2*/	NOME VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	/*  3*/	TEMPLATE BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	CONSTRAINT arqTemplate_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqTemplate_UK UNIQUE ( Nome )
 );
 commit;
 
-CREATE DESC INDEX arqAcaoEmail_IdPrimario_Desc ON arqAcaoEmail (IDPRIMARIO);
+CREATE DESC INDEX arqTemplate_IdPrimario_Desc ON arqTemplate (IDPRIMARIO);
 commit;
 
 
@@ -2111,20 +2100,32 @@ commit;
 
 
 /************************************************************
-	Arquivo TiConsulta
+	Arquivo AcaoEmail 
 ************************************************************/
 
-CREATE TABLE arqTiConsulta
+CREATE TABLE arqAcaoEmail
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	TICONSULTA VARCHAR( 15 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	CONSTRAINT arqTiConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqTiConsulta_UK UNIQUE ( TiConsulta )
+	/*  2*/	TITULO VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	VERSAO VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = X */
+	/*  4*/	TIPOACAO ligadoComTabela, /* Ligado com a Tabela TipoAcao */
+	/*  5*/	TEMPLATE ligadoComArquivo, /* Ligado com o Arquivo Template */
+	/*  6*/	PADRAOACAO ligadoComTabela, /* Ligado com a Tabela PadraoAcao */
+	/*  7*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  8*/	ARQUIVO VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
+	/*  9*/	ARQUIVO_ARQUIVO VARCHAR(128) computed by ( lower( 'AcaoEmail/' || CASE WHEN ( ARQUIVO IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQUIVO.' || ARQUIVO ) END ) ),
+	/* 10*/	HTML BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara = Edit */
+	/* 11*/	IMAGEM campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
+	/* 12*/	IMAGEM_ARQUIVO  VARCHAR(128)computed by ( lower( 'AcaoEmail/' || CASE WHEN ( IMAGEM IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_IMAGEM.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=IMAGEM) ) END ) ),
+	/* 13*/	LINK VARCHAR( 200 ) COLLATE PT_BR, /* Máscara = X */
+	/* 14*/	IMAGEMALT VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
+	/* 15*/	QTDTESTE SMALLINT, /* Máscara = N */
+	CONSTRAINT arqAcaoEmail_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqAcaoEmail_UK UNIQUE ( Titulo, Versao )
 );
 commit;
 
-CREATE DESC INDEX arqTiConsulta_IdPrimario_Desc ON arqTiConsulta (IDPRIMARIO);
+CREATE DESC INDEX arqAcaoEmail_IdPrimario_Desc ON arqAcaoEmail (IDPRIMARIO);
 commit;
 
 
@@ -2988,7 +2989,7 @@ ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
 	WHEN( current_date between DataIni and DataFim ) THEN( 1 )
 	ELSE ( 0 )
 	END  ); 
-ALTER TABLE arqClinica ALTER ATIVO POSITION 17;
+ALTER TABLE arqClinica ALTER ATIVO POSITION 18;
 ALTER TABLE arqConsulta ADD ENTRATOTP NUMERIC( 8, 2 ) computed by ( EntraParc * EntraValP ); 
 ALTER TABLE arqConsulta ALTER ENTRATOTP POSITION 32;
 ALTER TABLE arqConsulta ADD ENTRATOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP ); 
@@ -3231,11 +3232,12 @@ RECREATE VIEW V_arqMidia AS
 commit;
 
 RECREATE VIEW V_arqClinica AS 
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.DATAINI, A0.DATAFIM, A0.ATIVO, A0.MAXAGENDA, A0.SIGLA
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A0.RAZAO, A0.EMAIL, A0.CNPJ, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.TICONSULTA, A4.TICONSULTA as TICONSULTA_TICONSULTA, A0.DATAINI, A0.DATAFIM, A0.ATIVO, A0.MAXAGENDA, A0.SIGLA
 	FROM arqClinica A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
-	left join tabUF A3 on A3.IDPRIMARIO=A2.UF;
+	left join tabUF A3 on A3.IDPRIMARIO=A2.UF
+	left join arqTiConsulta A4 on A4.IDPRIMARIO = A0.TICONSULTA;
 commit;
 
 RECREATE VIEW V_arqPTrata AS 
@@ -3661,6 +3663,7 @@ ALTER TABLE arqCCor ADD CONSTRAINT arqCCor_FK_TPix4 FOREIGN KEY ( TPIX4 ) REFERE
 ALTER TABLE arqCCor ADD CONSTRAINT arqCCor_FK_TPix5 FOREIGN KEY ( TPIX5 ) REFERENCES tabTPix ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqPlano ADD CONSTRAINT arqPlano_FK_TPgRec FOREIGN KEY ( TPGREC ) REFERENCES tabTPgRec ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqSubPlano ADD CONSTRAINT arqSubPlano_FK_Plano FOREIGN KEY ( PLANO ) REFERENCES arqPlano ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqClinica ADD CONSTRAINT arqClinica_FK_TiConsulta FOREIGN KEY ( TICONSULTA ) REFERENCES arqTiConsulta ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConta ADD CONSTRAINT arqConta_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqConta ADD CONSTRAINT arqConta_FK_TPgRec FOREIGN KEY ( TPGREC ) REFERENCES tabTPgRec ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqConta ADD CONSTRAINT arqConta_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE NO ACTION ON UPDATE CASCADE;
@@ -4605,6 +4608,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_DDDCelular', OLD.Ende_DDDCelular, NEW.Ende_DDDCelular );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_Celular', OLD.Ende_Celular, NEW.Ende_Celular );
 	execute procedure set_log( 12, NEW.idPrimario, 'Ende_WhatsApp', OLD.Ende_WhatsApp, NEW.Ende_WhatsApp );
+	execute procedure set_log( 12, NEW.idPrimario, 'TiConsulta', OLD.TiConsulta, NEW.TiConsulta );
 	execute procedure set_log( 12, NEW.idPrimario, 'DataIni', OLD.DataIni, NEW.DataIni );
 	execute procedure set_log( 12, NEW.idPrimario, 'DataFim', OLD.DataFim, NEW.DataFim );
 	execute procedure set_log( 12, NEW.idPrimario, 'MaxAgenda', OLD.MaxAgenda, NEW.MaxAgenda );

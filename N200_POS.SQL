@@ -508,11 +508,12 @@ alter ENDE_TELEFONE position 11,
 alter ENDE_DDDCELULAR position 12,
 alter ENDE_CELULAR position 13,
 alter ENDE_WHATSAPP position 14,
-alter DATAINI position 15,
-alter DATAFIM position 16,
-alter ATIVO position 17,
-alter MAXAGENDA position 18,
-alter SIGLA position 19;
+alter TICONSULTA position 15,
+alter DATAINI position 16,
+alter DATAFIM position 17,
+alter ATIVO position 18,
+alter MAXAGENDA position 19,
+alter SIGLA position 20;
 commit;
 
 

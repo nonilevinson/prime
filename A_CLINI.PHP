@@ -72,6 +72,39 @@ class campo_arqClinica_CNPJ extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo TiConsulta
+//======================================================
+
+class campo_arqClinica_TiConsulta extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TiConsulta", "TiConsulta", "TiConsulta", 0, "arqTiConsulta", "arqTiConsulta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Tipo Consulta" );
+	}
+
+}
+
+//======================================================
+//	Campo TiConsulta_TiConsulta
+//======================================================
+
+class campo_arqClinica_TiConsulta_TiConsulta extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "TiConsulta_TiConsulta", "TiConsulta_TiConsulta", "TiConsulta", 15, "xxxxxxxxxxxxxxx", EH_CHAVE, "TiConsulta", false );
+	}
+
+}
+
+//======================================================
 //	Campo DataIni
 //======================================================
 
@@ -169,6 +202,8 @@ function listaCampos_arqClinica( $p_prefixo )
 			new campo_arqClinica_CNPJ() ],
 		listaCampos_domEndereco( "Ende_" ),
 		[ 
+			new campo_arqClinica_TiConsulta(),
+			new campo_arqClinica_TiConsulta_TiConsulta(),
 			new campo_arqClinica_DataIni(),
 			new campo_arqClinica_DataFim(),
 			new campo_arqClinica_Ativo(),
@@ -208,8 +243,17 @@ class arqClinica extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ Clinica ];
+			$vetAux[] = [ TiConsulta_TiConsulta ];
 			$vetAux[] = [ Ativo ];
 		return( $vetAux );
+	}
+
+	//-------------------------------------------------------------
+	// Complemento para os Campos Folheaveis do Arquivo
+	//-------------------------------------------------------------
+	function ComplementoFolheamento()
+	{
+		return( [ [ TiConsulta ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -233,6 +277,7 @@ class arqClinica extends Lance_Arquivo
 			$vetAux[] = [ Ende_DDDCelular ];
 			$vetAux[] = [ Ende_Celular ];
 			$vetAux[] = [ Ende_WhatsApp ];
+			$vetAux[] = [ TiConsulta_TiConsulta ];
 			$vetAux[] = [ DataIni ];
 			$vetAux[] = [ DataFim ];
 			$vetAux[] = [ Ativo ];
