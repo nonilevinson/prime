@@ -1663,4 +1663,12 @@ class arqConsulta extends Lance_Arquivo
 	return( "" . filtrarSelecao() . "" );
 	}
 
+	//-------------------------------------------------------------
+	// Visões do Arquivo: EhComplem 
+	//-------------------------------------------------------------
+	function EhComplem()
+	{
+	return( "" . ehComplemen() . "" );
+	}
+
 }

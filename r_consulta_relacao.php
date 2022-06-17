@@ -16,6 +16,7 @@ class RelConsulta extends Relatorios
       $this->DefinirCabColunas(
          [ "Nº", 	         18, ALINHA_CEN ],
          [ "Tipo",	      32, ALINHA_ESQ ],
+			[ "Data",         19, ALINHA_CEN ],
          [ "Hora",         12, ALINHA_CEN ],
          [ "Paciente",     83, ALINHA_ESQ ],
          [ "Celular",	   27, ALINHA_CEN ],
@@ -86,7 +87,8 @@ class RelConsulta extends Relatorios
       $this->valores = [
          formatarNum( $regA->NUMCONSULTA ),
          $regA->TIAGENDA,
-         formatarHora( $regA->HORA, 'hh:mm' ),
+         formatarData( $regA->DATA ),
+			formatarHora( $regA->HORA, 'hh:mm' ),
          cadEsq( $regA->NOME, 40 ),
          formatarStr( $regA->NUMCELULAR, '(nn) n.nnnn.nnnn' ),
          $regA->PRONTUARIO,
@@ -104,9 +106,16 @@ class RelConsulta extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelConsulta( RETRATO, A4, 'Consultas_Relacao.pdf', '', true, .89 );
+$proc = new RelConsulta( RETRATO, A4, 'Consultas_Relacao.pdf', '', true, .82 );
 
-$filtro = substr(
+switch( $parQSelecao->TSIMNAO )
+{
+	case 0: $compareceram = ""; break;
+	case 1: $compareceram = "C.TStCon = 10 and "; break;
+	case 2: $compareceram = "C.TStCon in( 7,8 ) and "; break;
+}
+
+$filtro = substr( $compareceram .
    ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
    filtrarPorIntervaloData( 'C.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
    filtrarPorLig( "C.CallCenter", $parQSelecao->CALLCENTER ) .
@@ -115,13 +124,13 @@ $filtro = substr(
 	filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 );
 
 $select = "Select L.Clinica, C.Num as NumConsulta, T.TiAgenda, C.Hora, P.Nome, P.Prontuario,
-      P.NumCelular, U.Nome as CallCenter
+      P.NumCelular, U.Nome as CallCenter, C.Data
 	From arqConsulta C
       join arqClinica   	L on L.idPrimario=C.Clinica
       join arqTiAgenda  	T on T.idPrimario=C.TiAgenda
       join arqPessoa    	P on P.idPrimario=C.Pessoa
 		left join arqUsuario	U on U.idPrimario=C.CallCenter
 	Where " . $filtro . "
-	Order by L.Clinica, C.Hora";
+	Order by L.Clinica, C.Data, C.Hora";
 
 $proc->Processar( $select );

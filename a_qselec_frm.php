@@ -269,6 +269,8 @@ if( $op == 175 ) //* r_consulta_relacao
 	echo
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Tipo da consulta", TiAgenda ),
+	$this->Pedir( "Compareceram?",
+		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou)</b>" ] ),
 	$this->Pedir( "Status da consulta", TStCon ),
 	$this->Pedir( "Call Center", CallCenter ),
 	$this->Pedir( "Entre",
@@ -399,6 +401,9 @@ if( $op == 258 ) //* r_consulta_valor
 	echo
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Tipo da consulta", TiAgenda ),
+	$this->Pedir( "Compareceram?",
+		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou)</b>" ] ),
+	$this->Pedir( "Status da consulta", TStCon ),
 	$this->Pedir( "Entre",
 		[ "", DataIni,
 		[ brHtml(1) . "e ", DataFim ] ] );

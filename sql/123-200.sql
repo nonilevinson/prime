@@ -393,3 +393,96 @@ alter COMPLEMEN position 7,
 alter ATIVO position 8,
 alter TEMPO position 9;
 commit;
+
+/************************************************************
+	Arquivo AgRet     >> nada a ver com as consultas complementares
+************************************************************/
+drop trigger arqAgRet_log;
+drop view v_arqAgRet;
+commit;
+
+ALTER TABLE arqAgRet drop Prontuario, drop Nome, drop NumCelular;
+commit;
+
+ALTER TABLE arqAgRet
+add /*  7*/	PESSOA ligadoComArquivo; /* Ligado com o Arquivo Pessoa */
+commit;
+
+ALTER TABLE arqAgRet ADD PRONTUARIO VARCHAR( 9 ) computed by ( CASE
+	WHEN( Consulta > 0 ) THEN( ( COALESCE( ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) )
+	ELSE ( ( COALESCE( ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqAgRet.Pessoa )  ), '' ) ) )
+	END  ); 
+ALTER TABLE arqAgRet ADD NOME VARCHAR( 60 ) computed by ( CASE
+	WHEN( Consulta > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) )
+	ELSE ( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqAgRet.Pessoa )  ), '' ) ) )
+	END  ); 
+ALTER TABLE arqAgRet ADD NUMCELULAR VARCHAR( 11 ) computed by ( CASE
+	WHEN( Consulta > 0 ) THEN( ( COALESCE( ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) )
+	ELSE ( ( COALESCE( ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqAgRet.Pessoa )  ), '' ) ) )
+	END  ); 
+commit;
+
+ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE NO ACTION ON UPDATE CASCADE;
+commit;
+
+RECREATE VIEW V_arqAgRet AS 
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.DIA, A0.HORA, A0.CONSULTA, A2.NUM as CONSULTA_NUM, A0.PESSOA, A3.NOME as PESSOA_NOME, A3.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.NOME, A0.NUMCELULAR, A0.TSTAGRET, A4.CHAVE as TStAgRet_CHAVE, A4.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESSOR, A5.USUARIO as ASSESSOR_USUARIO, A0.OBS
+	FROM arqAgRet A0
+	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
+	left join arqConsulta A2 on A2.IDPRIMARIO = A0.CONSULTA
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
+	left join tabTStAgRet A4 on A4.IDPRIMARIO=A0.TSTAGRET
+	left join arqUsuario A5 on A5.IDPRIMARIO = A0.ASSESSOR;
+commit;
+
+/************************************************************
+	Trigger para Log de arqAgRet
+************************************************************/
+
+set term ^;
+
+recreate trigger arqAgRet_LOG for arqAgRet
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+select coalesce( Clinica_Clinica, ' ' ) || '-' || coalesce( Data, ' ' ) || '-' || coalesce( Hora, ' ' ) from v_arqAgRet where idPrimario=( case when(deleting) then (OLD.idPrimario) else (NEW.idPrimario) end ) into :valorChave;
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100053 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'Clinica', OLD.Clinica, NEW.Clinica );
+	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
+	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
+	execute procedure set_log( 12, NEW.idPrimario, 'Consulta', OLD.Consulta, NEW.Consulta );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
+	execute procedure set_log( 12, NEW.idPrimario, 'TStAgRet', OLD.TStAgRet, NEW.TStAgRet );
+	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
+	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
+end
+end^
+
+set term ;^
+
+commit;
+
+ALTER TABLE arqAgRet
+alter IDPRIMARIO position 1,
+alter CLINICA position 2,
+alter DATA position 3,
+alter DIA position 4,
+alter HORA position 5,
+alter CONSULTA position 6,
+alter PESSOA position 7,
+alter PRONTUARIO position 8,
+alter NOME position 9,
+alter NUMCELULAR position 10,
+alter TSTAGRET position 11,
+alter ASSESSOR position 12,
+alter OBS position 13;
+commit;

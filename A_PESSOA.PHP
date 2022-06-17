@@ -368,6 +368,26 @@ class campo_arqPessoa_Midia_Midia extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo QtasComple
+//======================================================
+
+class campo_arqPessoa_QtasComple extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "QtasComple", "QtasComple", "QtasComple", 3, "##z", "", "", EH_TOTALIZADO, 0, false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "QtasComple [0]" );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqPessoa
 //======================================================
 function listaCampos_arqPessoa( $p_prefixo )
@@ -405,7 +425,8 @@ function listaCampos_arqPessoa( $p_prefixo )
 			new campo_arqPessoa_Desde(),
 			new campo_arqPessoa_QtoDesmar(),
 			new campo_arqPessoa_Midia(),
-			new campo_arqPessoa_Midia_Midia() ]
+			new campo_arqPessoa_Midia_Midia(),
+			new campo_arqPessoa_QtasComple() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -450,6 +471,10 @@ class arqPessoa extends Lance_Arquivo
  {
 			$vetAux[] = [ QtoDesmar ];
  }
+		if( GrupoAtualEm() )
+ {
+			$vetAux[] = [ QtasComple ];
+ }
 		return( $vetAux );
 	}
 
@@ -490,6 +515,7 @@ class arqPessoa extends Lance_Arquivo
 			$vetAux[] = [ Desde ];
 			$vetAux[] = [ QtoDesmar ];
 			$vetAux[] = [ Midia_Midia ];
+			$vetAux[] = [ QtasComple ];
 		return( $vetAux );
 	}
 

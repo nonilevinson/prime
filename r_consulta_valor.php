@@ -118,11 +118,19 @@ $parQSelecao = lerParametro( "parQSelecao" );
 
 $proc = new RelConsulta( RETRATO, A4, 'Consultas_Relacao.pdf', '', true, .85 );
 
-$filtro = substr(
+switch( $parQSelecao->TSIMNAO )
+{
+	case 0: $compareceram = ""; break;
+	case 1: $compareceram = "C.TStCon = 10 and "; break;
+	case 2: $compareceram = "C.TStCon in( 7,8 ) and "; break;
+}
+
+$filtro = substr( $compareceram .
    ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
    filtrarPorIntervaloData( 'C.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
    filtrarPorLig( "C.CallCenter", $parQSelecao->CALLCENTER ) .
 	filtrarPorLig( "C.TiAgenda", $parQSelecao->TIAGENDA ) .
+	filtrarPorLig( "C.TStCon", $parQSelecao->TSTCON ) .
 	filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 );
 
 $select = "Select L.Clinica, C.Num as NumConsulta, T.TiAgenda, P.Nome, P.Prontuario, P.NumCelular,

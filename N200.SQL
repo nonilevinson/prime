@@ -1818,6 +1818,7 @@ CREATE TABLE arqPessoa
 	/* 28*/	DESDE DATE, /* Máscara = 4ano */
 	/* 29*/	QTODESMAR SMALLINT, /* Máscara = N */
 	/* 30*/	MIDIA ligadoComArquivo, /* Ligado com o Arquivo Midia */
+	/* 31*/	QTASCOMPLE INTEGER, /* Máscara = N */
 	CONSTRAINT arqPessoa_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqPessoa_UK UNIQUE ( Nome, NumCelular )
 );
@@ -2787,12 +2788,13 @@ CREATE TABLE arqAgRet
 	/*  4*/	/* DIA */
 	/*  5*/	HORA TIME, /* Máscara = Hhmm */
 	/*  6*/	CONSULTA ligadoComArquivo, /* Ligado com o Arquivo Consulta */
-	/*  7*/	/* PRONTUARIO */
-	/*  8*/	/* NOME */
-	/*  9*/	/* NUMCELULAR */
-	/* 10*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
-	/* 11*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
-	/* 12*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/*  7*/	PESSOA ligadoComArquivo, /* Ligado com o Arquivo Pessoa */
+	/*  8*/	/* PRONTUARIO */
+	/*  9*/	/* NOME */
+	/* 10*/	/* NUMCELULAR */
+	/* 11*/	TSTAGRET ligadoComTabela, /* Ligado com a Tabela TStAgRet */
+	/* 12*/	ASSESSOR ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 13*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
 	CONSTRAINT arqAgRet_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqAgRet_UK UNIQUE ( Clinica, Data, Hora )
 );
@@ -3016,12 +3018,21 @@ ALTER TABLE arqAgRet ADD DIA VARCHAR( 15 ) computed by ( CASE
 	ELSE ( 'SÁBADO' )
 	END  ); 
 ALTER TABLE arqAgRet ALTER DIA POSITION 4;
-ALTER TABLE arqAgRet ADD PRONTUARIO VARCHAR( 9 ) computed by ( ( COALESCE( ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) ); 
-ALTER TABLE arqAgRet ALTER PRONTUARIO POSITION 7;
-ALTER TABLE arqAgRet ADD NOME VARCHAR( 60 ) computed by ( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) ); 
-ALTER TABLE arqAgRet ALTER NOME POSITION 8;
-ALTER TABLE arqAgRet ADD NUMCELULAR VARCHAR( 11 ) computed by ( ( COALESCE( ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) ); 
-ALTER TABLE arqAgRet ALTER NUMCELULAR POSITION 9;
+ALTER TABLE arqAgRet ADD PRONTUARIO VARCHAR( 9 ) computed by ( CASE
+	WHEN( Consulta > 0 ) THEN( ( COALESCE( ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) )
+	ELSE ( ( COALESCE( ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqAgRet.Pessoa )  ), '' ) ) )
+	END  ); 
+ALTER TABLE arqAgRet ALTER PRONTUARIO POSITION 8;
+ALTER TABLE arqAgRet ADD NOME VARCHAR( 60 ) computed by ( CASE
+	WHEN( Consulta > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) )
+	ELSE ( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqAgRet.Pessoa )  ), '' ) ) )
+	END  ); 
+ALTER TABLE arqAgRet ALTER NOME POSITION 9;
+ALTER TABLE arqAgRet ADD NUMCELULAR VARCHAR( 11 ) computed by ( CASE
+	WHEN( Consulta > 0 ) THEN( ( COALESCE( ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( arqAgRet.Consulta ) ), 0 ) )  ), '' ) ) )
+	ELSE ( ( COALESCE( ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqAgRet.Pessoa )  ), '' ) ) )
+	END  ); 
+ALTER TABLE arqAgRet ALTER NUMCELULAR POSITION 10;
 ALTER TABLE arqCMedica ADD UNIDADECAL VARCHAR( 10 ) computed by ( (Select U.Unidade From arqMedicamen M join arqUnidade U on U.idPrimario=M.Unidade Where M.idPrimario=arqCMedica.Medicamen) ); 
 ALTER TABLE arqCMedica ALTER UNIDADECAL POSITION 4;
 ALTER TABLE arqLote ADD ESTOQUE NUMERIC(18,0) computed by ( TrgItMov - TrgCMedica ); 
@@ -3078,7 +3089,7 @@ RECREATE VIEW V_arqUsuario AS
 commit;
 
 RECREATE VIEW V_arqPessoa AS 
-	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.NUMCELULAR, A0.PRONTUARIO, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.NASCIMENTO, A0.IDADE, A0.SEXO, A4.CHAVE as Sexo_CHAVE, A4.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A5.CHAVE as EstCivil_CHAVE, A5.DESCRITOR as EstCivil_DESCRITOR, A0.PROFISSAO, A6.PROFISSAO as PROFISSAO_PROFISSAO, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR, A0.MIDIA, A7.MIDIA as MIDIA_MIDIA
+	SELECT A0.IDPRIMARIO, A0.NOME, A0.APELIDO, A0.NUMCELULAR, A0.PRONTUARIO, A0.ENDE_CEP, A0.ENDE_ENDERECO, A0.ENDE_BAIRRO, A1.BAIRRO as ENDE_BAIRRO_BAIRRO, A0.ENDE_CIDADE, A2.UF as ENDE_CIDADE_UF, A3.CHAVE as ENDE_CIDADE_UF_CHAVE, A3.DESCRITOR as ENDE_CIDADE_UF_DESCRITOR, A2.CIDADE as ENDE_CIDADE_CIDADE, A0.ENDE_DDD, A0.ENDE_TELEFONE, A0.ENDE_DDDCELULAR, A0.ENDE_CELULAR, A0.ENDE_WHATSAPP, A0.NASCIMENTO, A0.IDADE, A0.SEXO, A4.CHAVE as Sexo_CHAVE, A4.DESCRITOR as Sexo_DESCRITOR, A0.ESTCIVIL, A5.CHAVE as EstCivil_CHAVE, A5.DESCRITOR as EstCivil_DESCRITOR, A0.PROFISSAO, A6.PROFISSAO as PROFISSAO_PROFISSAO, A0.CPF, A0.IDENTIDADE, A0.ORGAO, A0.EMISSAO, A0.EMAIL, A0.RECEMAIL, A0.ATIVO, A0.OBS, A0.DESDE, A0.QTODESMAR, A0.MIDIA, A7.MIDIA as MIDIA_MIDIA, A0.QTASCOMPLE
 	FROM arqPessoa A0
 	left join arqBairro A1 on A1.IDPRIMARIO = A0.ENDE_BAIRRO
 	left join arqCidade A2 on A2.IDPRIMARIO = A0.ENDE_CIDADE
@@ -3392,12 +3403,13 @@ RECREATE VIEW V_arqMedicamen AS
 commit;
 
 RECREATE VIEW V_arqAgRet AS 
-	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.DIA, A0.HORA, A0.CONSULTA, A2.NUM as CONSULTA_NUM, A0.PRONTUARIO, A0.NOME, A0.NUMCELULAR, A0.TSTAGRET, A3.CHAVE as TStAgRet_CHAVE, A3.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESSOR, A4.USUARIO as ASSESSOR_USUARIO, A0.OBS
+	SELECT A0.IDPRIMARIO, A0.CLINICA, A1.CLINICA as CLINICA_CLINICA, A0.DATA, A0.DIA, A0.HORA, A0.CONSULTA, A2.NUM as CONSULTA_NUM, A0.PESSOA, A3.NOME as PESSOA_NOME, A3.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.NOME, A0.NUMCELULAR, A0.TSTAGRET, A4.CHAVE as TStAgRet_CHAVE, A4.DESCRITOR as TStAgRet_DESCRITOR, A0.ASSESSOR, A5.USUARIO as ASSESSOR_USUARIO, A0.OBS
 	FROM arqAgRet A0
 	left join arqClinica A1 on A1.IDPRIMARIO = A0.CLINICA
 	left join arqConsulta A2 on A2.IDPRIMARIO = A0.CONSULTA
-	left join tabTStAgRet A3 on A3.IDPRIMARIO=A0.TSTAGRET
-	left join arqUsuario A4 on A4.IDPRIMARIO = A0.ASSESSOR;
+	left join arqPessoa A3 on A3.IDPRIMARIO = A0.PESSOA
+	left join tabTStAgRet A4 on A4.IDPRIMARIO=A0.TSTAGRET
+	left join arqUsuario A5 on A5.IDPRIMARIO = A0.ASSESSOR;
 commit;
 
 RECREATE VIEW V_arqCMedica AS 
@@ -3718,6 +3730,7 @@ ALTER TABLE arqFxComCall ADD CONSTRAINT arqFxComCall_FK_ComCall FOREIGN KEY ( CO
 ALTER TABLE arqMedicamen ADD CONSTRAINT arqMedicamen_FK_Unidade FOREIGN KEY ( UNIDADE ) REFERENCES arqUnidade ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Consulta FOREIGN KEY ( CONSULTA ) REFERENCES arqConsulta ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Pessoa FOREIGN KEY ( PESSOA ) REFERENCES arqPessoa ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_TStAgRet FOREIGN KEY ( TSTAGRET ) REFERENCES tabTStAgRet ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqAgRet ADD CONSTRAINT arqAgRet_FK_Assessor FOREIGN KEY ( ASSESSOR ) REFERENCES arqUsuario ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Consulta FOREIGN KEY ( CONSULTA ) REFERENCES arqConsulta ON DELETE CASCADE ON UPDATE CASCADE;
@@ -5321,6 +5334,7 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Data', OLD.Data, NEW.Data );
 	execute procedure set_log( 12, NEW.idPrimario, 'Hora', OLD.Hora, NEW.Hora );
 	execute procedure set_log( 12, NEW.idPrimario, 'Consulta', OLD.Consulta, NEW.Consulta );
+	execute procedure set_log( 12, NEW.idPrimario, 'Pessoa', OLD.Pessoa, NEW.Pessoa );
 	execute procedure set_log( 12, NEW.idPrimario, 'TStAgRet', OLD.TStAgRet, NEW.TStAgRet );
 	execute procedure set_log( 12, NEW.idPrimario, 'Assessor', OLD.Assessor, NEW.Assessor );
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
@@ -5860,6 +5874,32 @@ end
 if( updating or deleting ) then begin
 update arqConsulta set arqConsulta.TrgQtdMEnt = arqConsulta.TrgQtdMEnt - 
 OLD.QtdEntreg where arqConsulta.IDPRIMARIO = OLD.Consulta;
+end
+end^
+
+set term ;^
+commit;
+
+
+/************************************************************
+	Trigger para arqConsulta: Quantos - atua em arqPessoa.QtasComple
+************************************************************/
+
+set term ^;
+
+recreate trigger arqPessoa_QtasComple for arqConsulta
+active after Insert or Update or Delete
+as
+begin
+if( updating or inserting ) then begin
+update arqPessoa set arqPessoa.QtasComple = arqPessoa.QtasComple + 
+1
+ where arqPessoa.IDPRIMARIO = NEW.Pessoa;
+end
+if( updating or deleting ) then begin
+update arqPessoa set arqPessoa.QtasComple = arqPessoa.QtasComple - 
+1
+ where arqPessoa.IDPRIMARIO = OLD.Pessoa;
 end
 end^
 

@@ -116,6 +116,13 @@ class campo_arqAgRet_Consulta extends Lance_CampoLigado
 		parent::__construct( "Consulta", "Consulta", "Consulta", 0, "arqConsulta", "arqConsulta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Consulta" );
+	}
+
 }
 
 //======================================================
@@ -144,11 +151,59 @@ class campo_arqAgRet_Consulta_Num extends Lance_CampoNumerico
 		return( parent::Estilo() );
 	}
 
+}
+
+//======================================================
+//	Campo Pessoa
+//======================================================
+
+class campo_arqAgRet_Pessoa extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Pessoa", "Pessoa", "Pessoa", 0, "arqPessoa", "arqPessoa.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Pessoa_Nome
+//======================================================
+
+class campo_arqAgRet_Pessoa_Nome extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Pessoa_Nome", "Pessoa_Nome", "Nome", 60, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Pessoa", false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->PESSOA_QTODESMAR >= G_QTASDESMAR )
+			return( "VermelhoFundoEsq" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo Pessoa_NumCelular
+//======================================================
+
+class campo_arqAgRet_Pessoa_NumCelular extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", 11, "(##) #.####.####", EH_CHAVE, "Pessoa", false );
+	}
+
 	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "N°" );
+			return( "Celular" );
 	}
 
 }
@@ -301,6 +356,9 @@ function listaCampos_arqAgRet( $p_prefixo )
 			new campo_arqAgRet_Hora(),
 			new campo_arqAgRet_Consulta(),
 			new campo_arqAgRet_Consulta_Num(),
+			new campo_arqAgRet_Pessoa(),
+			new campo_arqAgRet_Pessoa_Nome(),
+			new campo_arqAgRet_Pessoa_NumCelular(),
 			new campo_arqAgRet_Prontuario(),
 			new campo_arqAgRet_Nome(),
 			new campo_arqAgRet_NumCelular(),
@@ -376,6 +434,8 @@ class arqAgRet extends Lance_Arquivo
 			$vetAux[] = [ Dia ];
 			$vetAux[] = [ Hora ];
 			$vetAux[] = [ Consulta_Num ];
+			$vetAux[] = [ Pessoa_Nome ];
+			$vetAux[] = [ Pessoa_NumCelular ];
 			$vetAux[] = [ Prontuario ];
 			$vetAux[] = [ Nome ];
 			$vetAux[] = [ NumCelular ];

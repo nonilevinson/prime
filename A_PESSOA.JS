@@ -292,6 +292,17 @@ function Campo_arqPessoa_Midia_Midia()
 
 var Midia_Midia = new Campo_arqPessoa_Midia_Midia;
 
+//------------------------------------------------------------
+Campo_arqPessoa_QtasComple.prototype = new Lance_CampoNumerico;
+
+function Campo_arqPessoa_QtasComple()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "QtasComple", "QtasComple", "QtasComple", 3, "##z", true,"", "");
+}
+
+var QtasComple = new Campo_arqPessoa_QtasComple;
+
 //-------------------------------------------------------------
 // Pós Campo
 //-------------------------------------------------------------
@@ -389,7 +400,7 @@ Campo_arqPessoa_CPF.prototype.TemErro = function()
 		alert( "CPF inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -418,7 +429,7 @@ Campo_arqPessoa_Email.prototype.TemErro = function()
 		alert( "Email inválido" );
 		return( true );
 	}
-	return( Lance_CampoCadeiaLigado.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -527,6 +538,16 @@ Campo_arqPessoa_Midia_Midia.prototype.ObrigatorioEspecial = function( p_comMsg )
 
 Midia_Midia.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqPessoa_QtasComple.prototype.Cabecalho = function()
+{
+		return( "QtasComple [0]" );
+}
+
+QtasComple.EhCalculado = true;
+QtasComple.EhTotalizado = true;
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqPessoa_Profissao.prototype.ExistenciaEspecial = function()
@@ -572,7 +593,7 @@ function ListaDeCampos_arqPessoa( p_prefixo )
 
 		[ Nome, Apelido, NumCelular, Prontuario ], 
 		ListaDeCampos_domEndereco( "Ende_" ), 
-		[ Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar, Midia, Midia_Midia ]	);
+		[ Nascimento, Idade, Sexo, Sexo_Chave, Sexo_Descritor, EstCivil, EstCivil_Chave, EstCivil_Descritor, Profissao, Profissao_Profissao, CPF, Identidade, Orgao, Emissao, Email, RecEmail, Ativo, Obs, Desde, QtoDesmar, Midia, Midia_Midia, QtasComple ]	);
 	IniciarDependencias_arqPessoa();
 	g_prefixo = l_prefixo;
 	return( l_lista );
@@ -582,13 +603,14 @@ g_arquivoCampos = ListaDeCampos_arqPessoa( '' );
 g_idOperacao = 7;
 
 if( parent.navegacao ) {
-var Menu_1 = [ 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,15,[],[39]];
-var Menu_2 = [ 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,15,[],[33]];
-var Menu_3 = [ 1,"Recorrentes","","R",155,"","",1,"","1","a_recor","arqRecorrente","Folhear","Pessoa","?","","", "","", 0,15,[],[46]];
-var Menu_4 = [ 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,15,[],[21]];
-var Menu_5 = [ 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 15,[],[12,13] ];
+var Menu_1 = [ 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,22,[],[39]];
+var Menu_2 = [ 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,22,[],[33]];
+var Menu_3 = [ 1,"Ag Retirada s/Consulta","","A",270,"","",1,"","1","a_agret","arqAgRet","Folhear","Pessoa","?","","", "","", 0,22,[],[53]];
+var Menu_4 = [ 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,22,[],[21]];
+var Menu_5 = [ 1,"Emails","","E",50,"","",cnfConfig["EMAIL"] == 1,"","6", "", "", "", "", "", "", "", "", "", 2, 22,[],[12,13] ];
 var Menu_5_1 = [ 1,"Programado","","P",26,"","",1,"","1","a_logema","arqLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[12]];
 var Menu_5_2 = [ 1,"Recebeu","","R",25,"","",1,"","1","a_itloge","arqItLogEmail","Folhear","Cliente","?","","", "","", 0,10,[],[13]];
-var Menu_6 = [ 1,"Excluir Relação","","x",253,"","",1,"temMarcados()","5","p_pessoa_excluir","","","","","","", "","", 0,15,[253],[]];
-parent.navegacao.MenuPrincQtdOpcoes=6;
+var Menu_6 = [ 1,"Excluir Relação","","x",253,"","",1,"temMarcados()","5","p_pessoa_excluir","","","","","","", "","", 0,22,[253],[]];
+var Menu_7 = [ 1,"Recorrentes NAO","","R",155,"","",false,"","1","a_recor","arqRecorrente","Folhear","Pessoa","?","","", "","", 0,22,[],[46]];
+parent.navegacao.MenuPrincQtdOpcoes=7;
 }

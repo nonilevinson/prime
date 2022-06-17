@@ -80,6 +80,39 @@ function Campo_arqAgRet_Consulta_Num()
 var Consulta_Num = new Campo_arqAgRet_Consulta_Num;
 
 //------------------------------------------------------------
+Campo_arqAgRet_Pessoa.prototype = new Lance_CampoHidden;
+
+function Campo_arqAgRet_Pessoa()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "Pessoa", "Pessoa", "Pessoa", "arqPessoa", "a_pessoa", null, "",7);
+}
+
+var Pessoa = new Campo_arqAgRet_Pessoa;
+
+//------------------------------------------------------------
+Campo_arqAgRet_Pessoa_Nome.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqAgRet_Pessoa_Nome()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Pessoa_Nome", "Pessoa_Nome", "Nome", Pessoa, 60, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var Pessoa_Nome = new Campo_arqAgRet_Pessoa_Nome;
+
+//------------------------------------------------------------
+Campo_arqAgRet_Pessoa_NumCelular.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqAgRet_Pessoa_NumCelular()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "Pessoa_NumCelular", "Pessoa_NumCelular", "NumCelular", Pessoa, 11, "(##) #.####.####", true);
+}
+
+var Pessoa_NumCelular = new Campo_arqAgRet_Pessoa_NumCelular;
+
+//------------------------------------------------------------
 Campo_arqAgRet_Prontuario.prototype = new Lance_CampoCadeia;
 
 function Campo_arqAgRet_Prontuario()
@@ -179,6 +212,16 @@ function Campo_arqAgRet_Obs()
 var Obs = new Campo_arqAgRet_Obs;
 
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqAgRet_Clinica.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1 and A.TiConsulta = 1" );
+			return( "A.TiConsulta = 1" );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqAgRet_Clinica.prototype.Obrigatorio = function( p_comMsg )
@@ -251,14 +294,11 @@ Campo_arqAgRet_Hora.prototype.Obrigatorio = function( p_comMsg )
 
 Hora.TipoCampo |= CAMPO_CHAVE;
 //-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
+// Cabeçalho para o campo
 //-------------------------------------------------------------
-Campo_arqAgRet_Consulta.prototype.Obrigatorio = function( p_comMsg )
+Campo_arqAgRet_Consulta.prototype.Cabecalho = function()
 {
-	{
-		if( p_comMsg ) alert( "A consulta é obrigatória" );
-		return( true );
-	}
+		return( "Consulta" );
 }
 
 //-------------------------------------------------------------
@@ -271,16 +311,81 @@ Campo_arqAgRet_Consulta_Num.prototype.ObrigatorioEspecial = function( p_comMsg )
 
 Consulta_Num.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqAgRet_Pessoa.prototype.TemErro = function()
+{
+		if( !tem( Consulta_Num ) && !tem( Pessoa_NumCelular ) )
+	{
+		alert( "Informe uma consulta ou um paciente" );
+		return( true );
+	}
+	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqAgRet_Pessoa.prototype.Existencia = function()
+{
+	return( !tem( Consulta_Num ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqAgRet_Pessoa_Nome.prototype.Existencia = function()
+{
+	return( !tem( Consulta_Num ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqAgRet_Pessoa_NumCelular.prototype.Existencia = function()
+{
+	return( !tem( Consulta_Num ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqAgRet_Pessoa_Nome.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Pessoa.Obrigatorio( p_comMsg ) );
+}
+
+Pessoa_Nome.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqAgRet_Pessoa_NumCelular.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( Pessoa.Obrigatorio( p_comMsg ) );
+}
+
+Pessoa_NumCelular.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
 // Expressão para cálculo do valor do campo
 //-------------------------------------------------------------
 Campo_arqAgRet_Prontuario.prototype.Calculou = function()
 {
 {
+		if( Consulta > 0 )
 {
 	if( !Consulta.ValorFoiPreenchido() )
 		this.Atribuiu( "" );
 	else
 		g_strConexao += " ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( " + Consulta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "Prontuario" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
+{
+{
+	if( !Pessoa.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Prontuario FROM arqPessoa WHERE arqPessoa.IdPrimario=( " + Pessoa + " )  )" + LANCE_SEPARADOR + this.Prefixo + "Prontuario" + LANCE_FIM_PARAMETRO;
 	return( true );
 }
 }
@@ -301,11 +406,21 @@ Prontuario.EhCalculado = true;
 Campo_arqAgRet_Nome.prototype.Calculou = function()
 {
 {
+		if( Consulta > 0 )
 {
 	if( !Consulta.ValorFoiPreenchido() )
 		this.Atribuiu( "" );
 	else
 		g_strConexao += " ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( " + Consulta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "Nome" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
+{
+{
+	if( !Pessoa.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( " + Pessoa + " )  )" + LANCE_SEPARADOR + this.Prefixo + "Nome" + LANCE_FIM_PARAMETRO;
 	return( true );
 }
 }
@@ -318,11 +433,21 @@ Nome.EhCalculado = true;
 Campo_arqAgRet_NumCelular.prototype.Calculou = function()
 {
 {
+		if( Consulta > 0 )
 {
 	if( !Consulta.ValorFoiPreenchido() )
 		this.Atribuiu( "" );
 	else
 		g_strConexao += " ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( COALESCE( ( SELECT Pessoa FROM arqConsulta WHERE arqConsulta.IdPrimario=( " + Consulta + " ) ), 0 ) )  )" + LANCE_SEPARADOR + this.Prefixo + "NumCelular" + LANCE_FIM_PARAMETRO;
+	return( true );
+}
+}
+{
+{
+	if( !Pessoa.ValorFoiPreenchido() )
+		this.Atribuiu( "" );
+	else
+		g_strConexao += " ( SELECT NumCelular FROM arqPessoa WHERE arqPessoa.IdPrimario=( " + Pessoa + " )  )" + LANCE_SEPARADOR + this.Prefixo + "NumCelular" + LANCE_FIM_PARAMETRO;
 	return( true );
 }
 }
@@ -418,6 +543,14 @@ Campo_arqAgRet_Consulta.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_arqAgRet_Pessoa.prototype.ExistenciaEspecial = function()
+{
+	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_NumCelular.Obrigatorio( false ) || tem(Pessoa_NumCelular) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_arqAgRet_Assessor.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Assessor_Usuario.Obrigatorio( false ) || tem(Assessor_Usuario) ) );
@@ -427,16 +560,23 @@ function IniciarDependencias_arqAgRet()
 {
 Data.CalculosDependentes= [ Dia ];
 Consulta.CalculosDependentes= [ Prontuario,Nome,NumCelular ];
+Pessoa.CalculosDependentes= [ Prontuario,Nome,NumCelular ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 Data.ExistenciasDependentes= [ Dia ];
 Consulta_Num.ExistenciasDependentes= [ Consulta ];
+Consulta.ExistenciasDependentes= [ Pessoa,Pessoa_Nome,Pessoa_NumCelular ];
+Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
+Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
 TStAgRet.ExistenciasDependentes= [ Assessor,Assessor_Usuario ];
 Assessor_Usuario.ExistenciasDependentes= [ Assessor ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 Consulta_Num.ErrosDependentes= [ Consulta ];
+Consulta.ErrosDependentes= [ Pessoa ];
+Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
 Assessor_Usuario.ErrosDependentes= [ Assessor ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 Consulta.CamposChave= [ Consulta_Num ];
+Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 Assessor.CamposChave= [ Assessor_Usuario ];
 }
 
@@ -455,7 +595,7 @@ function ListaDeCampos_arqAgRet( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Clinica, Clinica_Clinica, Data, Dia, Hora, Consulta, Consulta_Num, Prontuario, Nome, NumCelular, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Assessor, Assessor_Usuario, Obs ]	);
+		[ Clinica, Clinica_Clinica, Data, Dia, Hora, Consulta, Consulta_Num, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Nome, NumCelular, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Assessor, Assessor_Usuario, Obs ]	);
 	IniciarDependencias_arqAgRet();
 	g_prefixo = l_prefixo;
 	return( l_lista );
