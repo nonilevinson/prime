@@ -2449,14 +2449,14 @@ g_arquivoCampos = ListaDeCampos_arqConsulta( '' );
 g_idOperacao = 39;
 
 if( parent.navegacao ) {
-var Menu_1 = [ 1,"Medicação","","d",206,"","",1,"","1","a_cmedic","arqCMedica","Folhear","Consulta","?","","", "","", 0,24,[],[54]];
-var Menu_2 = [ 1,"Ag. Retirada","","t",197,"","",1,"","1","a_agret","arqAgRet","Folhear","Consulta","?","","", "","", 0,24,[],[53]];
-var Menu_3 = [ 1,"Gerar Receber Tratamento","","G",184,"","",1,"tem( PTrata ) && !tem( ContaPTra )","5","p_conta_parcela_gerar_tratamento","","","","","","", "","", 0,24,[184],[]];
-var Menu_4 = [ 1,"Contas","","o",240,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 24,[],[33,33] ];
+var Menu_1 = [ 1,"Medicação","","d",206,"","",ultimaLigOpcaoEm( 109,110,117 ),"","1","a_cmedic","arqCMedica","Folhear","Consulta","?","","", "","", 0,24,[],[54]];
+var Menu_2 = [ 1,"Ag. Retirada","","t",197,"","",ultimaLigOpcaoEm( 109,110,117 ),"","1","a_agret","arqAgRet","Folhear","Consulta","?","","", "","", 0,24,[],[53]];
+var Menu_3 = [ 1,"Gerar Receber Tratamento","","G",184,"","",ultimaLigOpcaoEm( 109,110,117 ),"tem( PTrata ) && !tem( ContaPTra )","5","p_conta_parcela_gerar_tratamento","","","","","","", "","", 0,24,[184],[]];
+var Menu_4 = [ 1,"Contas","","o",240,"","",ultimaLigOpcaoEm( 109,110,117 ),"","6", "", "", "", "", "", "", "", "", "", 2, 24,[],[33,33] ];
 var Menu_4_1 = [ 1,"Consulta","","u",239,"","",1,"","1","a_conta","arqConta","Folhear","","?","NavCons","", "","", 0,11,[],[33]];
 var Menu_4_2 = [ 1,"Tratamentos","","T",241,"","",1,"","1","a_conta","arqConta","Folhear","","?","NavPTrata","", "","", 0,11,[],[33]];
-var Menu_5 = [ 1,"Emitir Contrato","","m",191,"","",1,"","5","r_consulta_contrato","","","","","","", "","", 0,24,[191],[]];
-var Menu_6 = [ 1,"Avisar Agendar retirada","","A",249,"","",1,"temMarcados()","5","p_consulta_avisar_retirar","","","","","","", "","", 0,24,[249],[]];
-var Menu_7 = [ 1,"Informar Chegada [0]","","h",137,"","",GrupoAtualEm(),"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,24,[137],[]];
+var Menu_5 = [ 1,"Emitir Contrato","","m",191,"","",ultimaLigOpcaoEm( 109,110,117 ),"","5","r_consulta_contrato","","","","","","", "","", 0,24,[191],[]];
+var Menu_6 = [ 1,"Avisar Agendar retirada","","A",249,"","",ultimaLigOpcaoEm( 109,110,117 ),"temMarcados()","5","p_consulta_avisar_retirar","","","","","","", "","", 0,24,[249],[]];
+var Menu_7 = [ 1,"Informar Chegada","","h",137,"","",!ultimaLigOpcaoEm( 109,110,117 ),"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,24,[137],[]];
 parent.navegacao.MenuPrincQtdOpcoes=7;
 }

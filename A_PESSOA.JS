@@ -603,7 +603,10 @@ g_arquivoCampos = ListaDeCampos_arqPessoa( '' );
 g_idOperacao = 7;
 
 if( parent.navegacao ) {
-var Menu_1 = [ 1,"Consultas","","l",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","","", "","", 0,22,[],[39]];
+var Menu_1 = [ 1,"Consultas","","l",271,"","",1,"","6", "", "", "", "", "", "", "", "", "", 3, 22,[],[39,39,39] ];
+var Menu_1_1 = [ 1,"Tratamentos","","T",117,"","",1,"","1","a_consul","arqConsulta","Folhear","Pessoa","?","EhTrata","", "","", 0,13,[],[39]];
+var Menu_1_2 = [ 1,"Nutricionista","","N",272,"","",1,"","1","a_consul","arqConsulta","Folhear","","?","EhNutri","", "","", 0,13,[],[39]];
+var Menu_1_3 = [ 1,"Psicólogo","","P",273,"","",1,"","1","a_consul","arqConsulta","Folhear","","?","EhPsicolo","", "","", 0,13,[],[39]];
 var Menu_2 = [ 1,"Contas","","o",98,"","",1,"","1","a_conta","arqConta","Folhear","Pessoa","?","","", "","", 0,22,[],[33]];
 var Menu_3 = [ 1,"Ag Retirada s/Consulta","","A",270,"","",1,"","1","a_agret","arqAgRet","Folhear","Pessoa","?","","", "","", 0,22,[],[53]];
 var Menu_4 = [ 1,"Contatos","","C",75,"","",1,"","1","a_contpe","arqContPessoa","Folhear","Pessoa","?","","", "","", 0,22,[],[21]];

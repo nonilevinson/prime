@@ -11,7 +11,7 @@ echo
 		echo $this->NaoPedir( TiConsulta, 1 );
 
 //* form para TiConsulta = Tratamento
-if( ultimaLigOpcaoEm( 109,110 ) )
+if( ultimaLigOpcaoEm( 109,110,117 ) )
 {
 	if( $g_acaoAtual == INSERINDO )
 	{

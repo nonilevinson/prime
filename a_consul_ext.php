@@ -1,6 +1,6 @@
 <?php
 
-//==================================================================
+//-----------------------------------------------------------
 function sugereSdVenc1Par()
 {
 	sql_abrirBD( false );
@@ -21,7 +21,7 @@ function sugereSdVenc1Par()
 		javaScriptFim();
 }
 
-//==================================================================
+//-----------------------------------------------------------
 function sugereBoletoMin()
 {
 	sql_abrirBD( false );
@@ -41,7 +41,7 @@ function sugereBoletoMin()
 		javaScriptFim();
 }
 
-//===========================================================
+//-----------------------------------------------------------
 function filtrarSelecao()
 {
    $parQSelecao = lerParametro( 'parQSelecao' );
@@ -98,7 +98,7 @@ function filtrarSelecao()
    );
 }
 
-//===========================================================
+//-----------------------------------------------------------
 function filtrarTodas()
 {
    /* Tratamento:    109 Todas | 110 Seleção

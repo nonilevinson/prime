@@ -1,6 +1,6 @@
 
 /**********************************************
-	arqPessoa, campo idade
+	arqPessoa, campo Idade
 **********************************************/
 ##calcularIdade##
 ( cast(

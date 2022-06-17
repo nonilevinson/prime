@@ -1664,11 +1664,27 @@ class arqConsulta extends Lance_Arquivo
 	}
 
 	//-------------------------------------------------------------
-	// Visões do Arquivo: EhComplem 
+	// Visões do Arquivo: EhTrata   
 	//-------------------------------------------------------------
-	function EhComplem()
+	function EhTrata()
 	{
-	return( "" . ehComplemen() . "" );
+	return( "A.TiConsulta = 1" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: EhNutri   
+	//-------------------------------------------------------------
+	function EhNutri()
+	{
+	return( "A.TiConsulta = 2" );
+	}
+
+	//-------------------------------------------------------------
+	// Visões do Arquivo: EhPsicolo 
+	//-------------------------------------------------------------
+	function EhPsicolo()
+	{
+	return( "A.TiConsulta = 3" );
 	}
 
 }
