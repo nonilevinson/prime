@@ -43,6 +43,7 @@ echo
 		[ "", Ativo,
 		[ brHtml(4) . "Desde ", Desde,
 		[ brHtml(4) . "Prontuário ", Prontuario ] ] ] ),
+	( GrupoAtualEm() ? $this->Pedir( "QtasComple [0]", QtasComple ) : $this->NaoPedir( QtasComple ) ),
 "</table>",
 
 CriarForms(
