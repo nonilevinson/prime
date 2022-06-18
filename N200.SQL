@@ -2934,6 +2934,26 @@ commit;
 
 
 /************************************************************
+	Arquivo TStCon    
+************************************************************/
+
+CREATE TABLE arqTStCon
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	STATUS VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  4*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqTStCon_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqTStCon_UK UNIQUE ( Status )
+);
+commit;
+
+CREATE DESC INDEX arqTStCon_IdPrimario_Desc ON arqTStCon (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -3457,6 +3477,11 @@ RECREATE VIEW V_arqTiConsulta AS
 	FROM arqTiConsulta A0;
 commit;
 
+RECREATE VIEW V_arqTStCon AS 
+	SELECT A0.IDPRIMARIO, A0.STATUS, A0.COR, A0.FUNDO, A0.ATIVO
+	FROM arqTStCon A0;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -3550,6 +3575,7 @@ insert into arqLanceOperacao values(100056,1,'Cadastro de movimentos de estoque'
 insert into arqLanceOperacao values(100057,1,'Cadastro de itens de movimento de estoque','arqItemMov',57,2,0,'');
 insert into arqLanceOperacao values(100059,1,'Cadastro da relação entre usuários e contas correntes','arqUsuCCor',59,90,0,'');
 insert into arqLanceOperacao values(100060,1,'Cadastro de tipos de consultas','arqTiConsulta',60,99,1,'');
+insert into arqLanceOperacao values(100061,1,'Cadastro de status de consultas','arqTStCon',61,99,1,'');
 insert into arqLanceOperacao values(200193,2,'Rotina para excluir permissões de grupos de acesso','',193,null,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
@@ -3599,9 +3625,9 @@ insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa
 insert into arqLanceOperacao values(200180,2,'Rotina para criar Saída de caixa de Assesor','',180,10,0,'');
 insert into arqLanceOperacao values(200181,2,'Rotina para criar Entrada de caixa de Assesor','',181,10,0,'');
 insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
-insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'');
-insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'');
-insert into arqLanceOperacao values(200249,2,'Rotina para criar aviso de que pode agendar a retirada da medicação','',249,1,0,'');
+insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'ultimaLigOpcaoEm( 109,110,117 )');
+insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'ultimaLigOpcaoEm( 109,110,117 )');
+insert into arqLanceOperacao values(200249,2,'Rotina para criar aviso de que pode agendar a retirada da medicação','',249,1,0,'ultimaLigOpcaoEm( 109,110,117 )');
 insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200256,2,'Rotina para excluir pessoas que tenham histórico de atividades - relação','',256,null,0,'');
 insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
@@ -3613,7 +3639,7 @@ insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação pr
 insert into arqLanceOperacao values(200233,2,'Relatório das agendas de retirada de medicação por quem agendou','',233,50,0,'');
 insert into arqLanceOperacao values(200236,2,'Rotina para dividir uma parcela','',236,10,0,'');
 insert into arqLanceOperacao values(200237,2,'Rotina para criar transferências entre contas','',237,10,0,'');
-insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'GrupoAtualEm()');
+insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'!ultimaLigOpcaoEm( 109,110,117 )');
 insert into arqLanceOperacao values(200253,2,'Rotina para excluir pessoas que tenham histórico de atividades - relação','',253,90,0,'');
 insert into arqLanceOperacao values(200257,2,'Relatório de hístorico de estoque','',257,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');

@@ -8,6 +8,7 @@ execute procedure reindexartudo;
 commit;
 
 insert into arqLanceOperacao values(100060,1,'Cadastro de tipos de consultas','arqTiConsulta',60,99,1,'');
+insert into arqLanceOperacao values(100061,1,'Cadastro de status de consultas','arqTStCon',61,99,1,'');
 
 commit;
 
@@ -753,3 +754,40 @@ alter trigger arqItemMov_log active;
 alter trigger arqUsuCCor_log active;
 commit;
 
+--*	Arquivo TStCon    
+--* Criado para substituir a tabTStCon, que deixarei para excluir na próxima versão
+--* Criei os registros com os mesmos idPrimarios e nomes da tabTStCon
+--* Peguei as cores da API get_arqStatus.php
+
+CREATE TABLE arqTStCon
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	STATUS VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  4*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqTStCon_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqTStCon_UK UNIQUE ( Status )
+);
+commit;
+
+CREATE DESC INDEX arqTStCon_IdPrimario_Desc ON arqTStCon (IDPRIMARIO);
+commit;
+
+RECREATE VIEW V_arqTStCon AS 
+	SELECT A0.IDPRIMARIO, A0.STATUS, A0.COR, A0.FUNDO, A0.ATIVO
+	FROM arqTStCon A0;
+commit;
+
+INSERT INTO arqTStCon VALUES (  1, 'AGENDADO', '#ffffff', '#52a3ff', 1 );
+INSERT INTO arqTStCon VALUES (  2, 'RECEPÇÃO', '#ffffff', '#004499', 1 );
+INSERT INTO arqTStCon VALUES (  3, 'MÉDICO', '#ffffff', '#49b13a', 1 );
+INSERT INTO arqTStCon VALUES (  4, 'TESTE', '#ffffff', '#ec8f0d', 1 );
+INSERT INTO arqTStCon VALUES (  5, 'AG. ASSESSOR', '#ffffff', '#949394', 1 );
+INSERT INTO arqTStCon VALUES (  6, 'ASSESSOR', '#ffffff', '#a4bcd4', 1 );
+INSERT INTO arqTStCon VALUES (  7, 'ATENDIDO', '#ffffff', 'green', 1 );
+INSERT INTO arqTStCon VALUES (  8, 'LIBERADO', '#ffffff', 'red', 1 );
+INSERT INTO arqTStCon VALUES (  9, 'CLÍNICA DESMARCOU', '#ffffff', '#918600', 1 );
+INSERT INTO arqTStCon VALUES ( 10, 'PACIENTE DESMARCOU', '#ffffff', '#00ff88', 1 );
+INSERT INTO arqTStCon VALUES ( 11, 'MÉDICO DESMARCOU', '#ffffff', '#ff3388', 1 );
+commit;
