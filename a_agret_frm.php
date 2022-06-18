@@ -17,7 +17,7 @@ echo
    $this->Pedir( "Nome" ),
    $this->Pedir( "Celular", NumCelular ),
    $this->Pedir( "Status", TStAgRet ),
-   $this->Pedir( "Assessor",
+   $this->Pedir( "Responsável",
       [ "", Assessor, "<br>(obrigatório se um Status for informado)" ] ),
 "</table>
 <br>

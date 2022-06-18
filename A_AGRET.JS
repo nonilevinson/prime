@@ -473,20 +473,12 @@ Campo_arqAgRet_TStAgRet.prototype.Cabecalho = function()
 TStAgRet_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TStAgRet_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 //-------------------------------------------------------------
-// Fitro para selecionar registros do pai
-//-------------------------------------------------------------
-Campo_arqAgRet_Assessor.prototype.FiltroPai = function()
-{
-			return( ""+ vijAssessor() + "" );
-}
-
-//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqAgRet_Assessor.prototype.Obrigatorio = function( p_comMsg )
 {
 	{
-		if( p_comMsg ) alert( "O assessor é obrigatório" );
+		if( p_comMsg ) alert( "O responsável é obrigatório" );
 		return( true );
 	}
 }
