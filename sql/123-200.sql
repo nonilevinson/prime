@@ -640,6 +640,8 @@ commit;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_TStCon FOREIGN KEY ( TSTCON ) REFERENCES arqTStCon ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
+ALTER TABLE arqConsulta Drop CONSTRAINT arqConsulta_FK_TStCon;
+commit;
 update arqConsulta set TStCon=TStCon1;
 commit;
 
