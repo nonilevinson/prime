@@ -630,7 +630,20 @@ class campo_parQSelecao_TStCon extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "tabTStCon", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "arqTStCon", "idPrimario ASC ", LANCE_LIG_SELECAO, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo TStCon_Status
+//======================================================
+
+class campo_parQSelecao_TStCon_Status extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "TStCon_Status", "TStCon_Status", "Status", 20, "xxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "TStCon", false );
 	}
 
 }
@@ -1075,8 +1088,7 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new campo_parQSelecao_Clinica(),
 			new campo_parQSelecao_Clinica_Clinica(),
 			new campo_parQSelecao_TStCon(),
-			new Lance_CampoCadeia( "TStCon_Chave", "TStCon_Chave", "Chave", 2, "xx", EH_CHAVE, TStCon ),
-			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 18, "xxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
+			new campo_parQSelecao_TStCon_Status(),
 			new campo_parQSelecao_TMov(),
 			new Lance_CampoCadeia( "TMov_Chave", "TMov_Chave", "Chave", 1, "x", EH_CHAVE, TMov ),
 			new Lance_CampoCadeia( "TMov_Descritor", "TMov_Descritor", "Descritor", 19, "xxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TMov ),

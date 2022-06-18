@@ -11,6 +11,5 @@ g_arquivoAtual = "tabTStCon";
 g_arquivoCampos = [ Chave, Descritor ];
 
 if( parent.navegacao ) {
-var Menu_1 = [ 1,"Consulta","","C",134,"","",1,"","1","a_consul","arqConsulta","Folhear","TStCon","?","","", "","", 0,8,[],[39]];
-parent.navegacao.MenuPrincQtdOpcoes=1;
+parent.navegacao.MenuPrincQtdOpcoes=0;
 }

@@ -120,7 +120,7 @@ class campo_arqConsulta_TStCon extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "tabTStCon", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "arqTStCon", "idPrimario ASC ", LANCE_LIG_SELECAO, 1, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -157,6 +157,19 @@ class campo_arqConsulta_TStCon extends Lance_CampoLigado
 	{
 		global $g_regAtual;
 			return( "Status" );
+	}
+
+}
+
+//======================================================
+//	Campo TStCon_Status
+//======================================================
+
+class campo_arqConsulta_TStCon_Status extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "TStCon_Status", "TStCon_Status", "Status", 20, "xxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "TStCon", false );
 	}
 
 }
@@ -1377,8 +1390,7 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_Clinica(),
 			new campo_arqConsulta_Clinica_Clinica(),
 			new campo_arqConsulta_TStCon(),
-			new Lance_CampoCadeia( "TStCon_Chave", "TStCon_Chave", "Chave", 2, "xx", EH_CHAVE, TStCon ),
-			new Lance_CampoCadeia( "TStCon_Descritor", "TStCon_Descritor", "Descritor", 18, "xxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TStCon ),
+			new campo_arqConsulta_TStCon_Status(),
 			new campo_arqConsulta_TiAgenda(),
 			new campo_arqConsulta_TiAgenda_TiAgenda(),
 			new campo_arqConsulta_Data(),
@@ -1489,7 +1501,7 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ TiConsulta_TiConsulta ];
  }
 			$vetAux[] = [ Clinica_Clinica ];
-			$vetAux[] = [ TStCon_Descritor ];
+			$vetAux[] = [ TStCon_Status ];
 		if( ultimaLigOpcaoEm( 109,110 ) )
  {
 			$vetAux[] = [ TiAgenda_TiAgenda ];
@@ -1551,7 +1563,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( [ [ Clinica ], [ TStCon ], [ TStCon_Chave ], [ TStCon_Descritor ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ] ] );
+		return( [ [ Clinica ], [ TStCon ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -1564,7 +1576,7 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ Num ];
 			$vetAux[] = [ TiConsulta_TiConsulta ];
 			$vetAux[] = [ Clinica_Clinica ];
-			$vetAux[] = [ TStCon_Descritor ];
+			$vetAux[] = [ TStCon_Status ];
 			$vetAux[] = [ TiAgenda_TiAgenda ];
 			$vetAux[] = [ Data ];
 			$vetAux[] = [ Hora ];

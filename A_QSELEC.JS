@@ -514,32 +514,21 @@ Campo_parQSelecao_TStCon.prototype = new Lance_CampoLigado;
 function Campo_parQSelecao_TStCon()
 {
 	this.superClass = Lance_CampoLigado;
-	this.superClass( "TStCon", "TStCon", "TStCon", "tabTStCon", "t_tstcon", null, "",0);
+	this.superClass( "TStCon", "TStCon", "TStCon", "arqTStCon", "a_tstcon", null, "idPrimario ASC ",61);
 }
 
 var TStCon = new Campo_parQSelecao_TStCon;
 
 //------------------------------------------------------------
-Campo_parQSelecao_TStCon_Chave.prototype = new Lance_CampoCadeiaLigado;
+Campo_parQSelecao_TStCon_Status.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_parQSelecao_TStCon_Chave()
+function Campo_parQSelecao_TStCon_Status()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Chave", "TStCon_Chave", "TStCon", TStCon, 2, "uu", false);
+	this.superClass( "TStCon_Status", "TStCon_Status", "Status", TStCon, 20, "uxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var TStCon_Chave = new Campo_parQSelecao_TStCon_Chave;
-
-//------------------------------------------------------------
-Campo_parQSelecao_TStCon_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_parQSelecao_TStCon_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 18, "xxxxxxxxxxxxxxxxxx", false);
-}
-
-var TStCon_Descritor = new Campo_parQSelecao_TStCon_Descritor;
+var TStCon_Status = new Campo_parQSelecao_TStCon_Status;
 
 //------------------------------------------------------------
 Campo_parQSelecao_TMov.prototype = new Lance_CampoLigado;
@@ -1457,8 +1446,15 @@ Campo_parQSelecao_Clinica_Clinica.prototype.ObrigatorioEspecial = function( p_co
 }
 
 Clinica_Clinica.TipoCampo |= CAMPO_CHAVE_PAI;
-TStCon_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TStCon_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_parQSelecao_TStCon_Status.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( TStCon.Obrigatorio( p_comMsg ) );
+}
+
+TStCon_Status.TipoCampo |= CAMPO_CHAVE_PAI;
 TMov_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
 TMov_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
 TPgRec_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
@@ -1801,6 +1797,7 @@ Gran9.ErrosDependentes= [ Gran9Fim ];
 Real6.ErrosDependentes= [ Real6Fim ];
 Senha1.ErrosDependentes= [ Senha2 ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
+TStCon_Status.ErrosDependentes= [ TStCon ];
 SubPlano_Plano_CodPlano.ErrosDependentes= [ SubPlano_Plano ];
 SubPlano_Codigo.ErrosDependentes= [ SubPlano ];
 CCor_Nome.ErrosDependentes= [ CCor ];
@@ -1845,7 +1842,7 @@ function ListaDeCampos_parQSelecao( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Medicamen, Medicamen_Medicamen, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, TCMedica, TCMedica_Chave, TCMedica_Descritor, TiAgenda, TiAgenda_TiAgenda ]	);
+		[ Usuario, Usuario_Usuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, StatusLog, StatusLog_Chave, StatusLog_Descritor, Cliente, Cliente_Nome, Cliente_NumCelular, Fornecedor, Fornecedor_Nome, EmailRemet, EmailRemet_Email, AcaoEmail, AcaoEmail_Titulo, AcaoEmail_Versao, TSimNao, TSimNao_Chave, TSimNao_Descritor, Cadeia30, Cadeia100, Logico1, DataIni, DataFim, DataIni1, DataFim1, MesIni, MesFim, HoraIni, HoraFim, Gran6, Gran6Fim, Gran9, Gran9Fim, Gran13, Real6, Real6Fim, Senha1, Senha2, Clinica, Clinica_Clinica, TStCon, TStCon_Status, TMov, TMov_Chave, TMov_Descritor, TPgRec, TPgRec_Chave, TPgRec_Descritor, SubPlano, SubPlano_Plano, SubPlano_Plano_CodPlano, SubPlano_Plano_Plano, SubPlano_Codigo, SubPlano_Nome, TData, TData_Chave, TData_Descritor, CCor, CCor_Nome, TFCobra, TFCobra_Chave, TFCobra_Descritor, TFPagto, TFPagto_Chave, TFPagto_Descritor, Consulta, Consulta_Num, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, Medicamen, Medicamen_Medicamen, Lote, Lote_Medicamen, Lote_Medicamen_Medicamen, Lote_Lote, TCMedica, TCMedica_Chave, TCMedica_Descritor, TiAgenda, TiAgenda_TiAgenda ]	);
 	IniciarDependencias_parQSelecao();
 	g_prefixo = l_prefixo;
 	return( l_lista );

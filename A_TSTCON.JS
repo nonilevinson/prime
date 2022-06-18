@@ -94,5 +94,6 @@ g_arquivoCampos = ListaDeCampos_arqTStCon( '' );
 g_idOperacao = 61;
 
 if( parent.navegacao ) {
-parent.navegacao.MenuPrincQtdOpcoes=0;
+var Menu_1 = [ 1,"Consultas","","C",275,"","",1,"","1","a_consul","arqConsulta","Folhear","TStCon","?","","", "","", 0,9,[],[39]];
+parent.navegacao.MenuPrincQtdOpcoes=1;
 }

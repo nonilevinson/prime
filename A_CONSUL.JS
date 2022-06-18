@@ -63,32 +63,21 @@ Campo_arqConsulta_TStCon.prototype = new Lance_CampoLigado;
 function Campo_arqConsulta_TStCon()
 {
 	this.superClass = Lance_CampoLigado;
-	this.superClass( "TStCon", "TStCon", "TStCon", "tabTStCon", "t_tstcon", null, "",0);
+	this.superClass( "TStCon", "TStCon", "TStCon", "arqTStCon", "a_tstcon", null, "idPrimario ASC ",61);
 }
 
 var TStCon = new Campo_arqConsulta_TStCon;
 
 //------------------------------------------------------------
-Campo_arqConsulta_TStCon_Chave.prototype = new Lance_CampoCadeiaLigado;
+Campo_arqConsulta_TStCon_Status.prototype = new Lance_CampoCadeiaLigado;
 
-function Campo_arqConsulta_TStCon_Chave()
+function Campo_arqConsulta_TStCon_Status()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Chave", "TStCon_Chave", "TStCon", TStCon, 2, "uu", false);
+	this.superClass( "TStCon_Status", "TStCon_Status", "Status", TStCon, 20, "uxxxxxxxxxxxxxxxxxxx", false);
 }
 
-var TStCon_Chave = new Campo_arqConsulta_TStCon_Chave;
-
-//------------------------------------------------------------
-Campo_arqConsulta_TStCon_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqConsulta_TStCon_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Descritor", "TStCon_Descritor", "TStCon", TStCon, 18, "xxxxxxxxxxxxxxxxxx", false);
-}
-
-var TStCon_Descritor = new Campo_arqConsulta_TStCon_Descritor;
+var TStCon_Status = new Campo_arqConsulta_TStCon_Status;
 
 //------------------------------------------------------------
 Campo_arqConsulta_TiAgenda.prototype = new Lance_CampoLigado;
@@ -997,8 +986,15 @@ Campo_arqConsulta_TStCon.prototype.Cabecalho = function()
 		return( "Status" );
 }
 
-TStCon_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TStCon_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_TStCon_Status.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( TStCon.Obrigatorio( p_comMsg ) );
+}
+
+TStCon_Status.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
@@ -2374,6 +2370,7 @@ TStAgRet.ExistenciasDependentes= [ AssesRet,AssesRet_Usuario ];
 AssesRet_Usuario.ExistenciasDependentes= [ AssesRet ];
 TiConsulta_TiConsulta.ErrosDependentes= [ TiConsulta ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
+TStCon_Status.ErrosDependentes= [ TStCon ];
 TiAgenda_TiAgenda.ErrosDependentes= [ TiAgenda ];
 Pessoa_NumCelular.ErrosDependentes= [ Pessoa ];
 Medico_Usuario.ErrosDependentes= [ Medico ];
@@ -2439,7 +2436,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Num, TiConsulta, TiConsulta_TiConsulta, Clinica, Clinica_Clinica, TStCon, TStCon_Chave, TStCon_Descritor, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
+		[ Num, TiConsulta, TiConsulta_TiConsulta, Clinica, Clinica_Clinica, TStCon, TStCon_Status, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );
