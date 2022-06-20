@@ -12,7 +12,6 @@ insert into arqLanceOperacao values(100061,1,'Cadastro de status de consultas','
 
 commit;
 
-
 --* Arquivo TiConsulta
 --* Preferi criar como arquivo somente para GR0 do que como tabela. No futuro de precisarmos configurar coisas, bastará criar campos
 --* No Portal da Agenda, o AK poderá ordenar os botões das Clínicas por TiConsulta e nome/sigla da clínica

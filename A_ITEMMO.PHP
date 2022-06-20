@@ -317,7 +317,7 @@ class arqItemMov extends Lance_Arquivo
 	{
 		switch( $p_tecla )
 		{
-			case _GRAVAR: return( MovAberto() == '' );
+			case _GRAVAR: return( MovAberto() == '' && ultimaLigOpcaoEm( 211 ) );
 		}
 		return( parent::AcionarBotao( $p_tecla ) );
 	}
