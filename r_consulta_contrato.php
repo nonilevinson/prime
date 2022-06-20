@@ -110,7 +110,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 		$this->WriteTxt( "3- PREÇOS E CONDIÇÕES A PAGAR", 100, [ '', BOLD ] );
 
       //? início da entrada
-      $this->PDF->Cell( $larg4, $altura, "Valor do tratamento: R$" . $this->valorExtenso( $valPTrata ),
+      $this->PDF->Cell( $larg4, $altura, "Valor total do tratamento: R$" . $this->valorExtenso( $valPTrata ),
          SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );         
       $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias " .
          ( $regA->ENTRAPARCE > 0 ? ": " : "em 1 parcela de R$" ) .
