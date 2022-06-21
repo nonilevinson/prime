@@ -2008,9 +2008,10 @@ CREATE TABLE arqTiAgenda
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	TIAGENDA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  4*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	PAGAMENTO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	MIDIA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	COMPLEMEN campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	PAGAMENTO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  7*/	MIDIA campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTiAgenda_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTiAgenda_UK UNIQUE ( TiAgenda )
 );
@@ -3372,7 +3373,7 @@ RECREATE VIEW V_arqFornecedor AS
 commit;
 
 RECREATE VIEW V_arqTiAgenda AS 
-	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ATIVO, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
+	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ATIVO, A0.COMPLEMEN, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
 	FROM arqTiAgenda A0;
 commit;
 

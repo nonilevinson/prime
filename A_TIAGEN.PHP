@@ -55,7 +55,36 @@ class campo_arqTiAgenda_Ativo extends Lance_CampoLogico
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
-			return( "Ativo?" );
+			return( "Tratamento?" );
+	}
+
+}
+
+//======================================================
+//	Campo Complemen
+//======================================================
+
+class campo_arqTiAgenda_Complemen extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "Complemen", "Complemen", "Complemen", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->COMPLEMEN == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Complementar?" );
 	}
 
 }
@@ -146,6 +175,7 @@ function listaCampos_arqTiAgenda( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqTiAgenda_TiAgenda(),
 			new campo_arqTiAgenda_Ativo(),
+			new campo_arqTiAgenda_Complemen(),
 			new campo_arqTiAgenda_DobroTempo(),
 			new campo_arqTiAgenda_Pagamento(),
 			new campo_arqTiAgenda_Midia() ]
@@ -185,6 +215,7 @@ class arqTiAgenda extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ TiAgenda ];
 			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ Complemen ];
 			$vetAux[] = [ DobroTempo ];
 			$vetAux[] = [ Pagamento ];
 			$vetAux[] = [ Midia ];
@@ -200,6 +231,7 @@ class arqTiAgenda extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ TiAgenda ];
 			$vetAux[] = [ Ativo ];
+			$vetAux[] = [ Complemen ];
 			$vetAux[] = [ DobroTempo ];
 			$vetAux[] = [ Pagamento ];
 			$vetAux[] = [ Midia ];

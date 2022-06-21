@@ -182,7 +182,18 @@ class campo_arqConsulta_TiAgenda extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "TiAgenda", "TiAgenda", "TiAgenda", 0, "arqTiAgenda", "arqTiAgenda.IdPrimario DESC", LANCE_LIG_SELECAO, 1, 0, false );
+		parent::__construct( "TiAgenda", "TiAgenda", "TiAgenda", 0, "arqTiAgenda", "arqTiAgenda.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function FiltroPai()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->TICONSULTA == 1 )
+			return( "A.Ativo = 1" );
+		if( $g_regAtual->TICONSULTA > 1 )
+			return( "A.Complemen = 1" );
+		return( "" );
 	}
 
 	//--------------------------------------------------

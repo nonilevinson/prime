@@ -134,6 +134,10 @@ INSERT INTO ARQCLINICA (IDPRIMARIO, CLINICA, RAZAO, EMAIL, CNPJ, ENDE_CEP, ENDE_
 INSERT INTO ARQCLINICA (IDPRIMARIO, CLINICA, RAZAO, EMAIL, CNPJ, ENDE_CEP, ENDE_ENDERECO, ENDE_BAIRRO, ENDE_CIDADE, ENDE_TELEFONE, ENDE_DDDCELULAR, ENDE_CELULAR, ENDE_WHATSAPP, DATAINI, DATAFIM, MAXAGENDA, SIGLA, TICONSULTA) VALUES (11, 'PSICÓLOGO', '', '', '', '', '', NULL, NULL, '', 0, '', 0, '2022-06-16', NULL, 60, 'PSI', 3);
 COMMIT WORK;
 
+INSERT INTO ARQDURACAO (IDPRIMARIO, CLINICA, INICIO, HORAINI, HORAFIM, CONSSAB, CONSDOM, DURACAO) VALUES (47697, 11, '2022-05-29', '08:00:00', '19:00:00', 0, 0, 15);
+INSERT INTO ARQDURACAO (IDPRIMARIO, CLINICA, INICIO, HORAINI, HORAFIM, CONSSAB, CONSDOM, DURACAO) VALUES (47699, 10, '2022-05-29', '08:00:00', '20:00:00', 0, 0, 15);
+COMMIT WORK;
+
 ALTER TABLE arqClinica
 alter IDPRIMARIO position 1,
 alter CLINICA position 2,
@@ -809,4 +813,33 @@ alter HORARET position 53,
 alter TSTAGRET position 54,
 alter ASSESRET position 55,
 alter OBSRET position 56;
+commit;
+
+/************************************************************
+	Arquivo TiAgenda  
+************************************************************/
+drop view v_arqTiAgenda;
+commit;
+
+ALTER TABLE arqTiAgenda
+add /*  4*/	COMPLEMEN campoLogico; /* Lógico: 0=Não 1=Sim */
+commit;
+
+update arqTiAgenda set Complemen=0;
+update arqTiAgenda set Complemen=1 Where idPrimario=1;
+commit;
+
+RECREATE VIEW V_arqTiAgenda AS 
+	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ATIVO, A0.COMPLEMEN, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
+	FROM arqTiAgenda A0;
+commit;
+
+ALTER TABLE arqTiAgenda
+alter IDPRIMARIO position 1,
+alter TIAGENDA position 2,
+alter ATIVO position 3,
+alter COMPLEMEN position 4,
+alter DOBROTEMPO position 5,
+alter PAGAMENTO position 6,
+alter MIDIA position 7;
 commit;

@@ -80,11 +80,11 @@ function Campo_arqConsulta_TStCon_Status()
 var TStCon_Status = new Campo_arqConsulta_TStCon_Status;
 
 //------------------------------------------------------------
-Campo_arqConsulta_TiAgenda.prototype = new Lance_CampoLigado;
+Campo_arqConsulta_TiAgenda.prototype = new Lance_CampoHidden;
 
 function Campo_arqConsulta_TiAgenda()
 {
-	this.superClass = Lance_CampoLigado;
+	this.superClass = Lance_CampoHidden;
 	this.superClass( "TiAgenda", "TiAgenda", "TiAgenda", "arqTiAgenda", "a_tiagen", null, "",43);
 }
 
@@ -1000,9 +1000,22 @@ TStCon_Status.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqConsulta_TiAgenda.prototype.FiltroPai = function()
 {
-		if( g_inserindo )
+		if( TiConsulta == 1 )
 			return( "A.Ativo = 1" );
+		if( TiConsulta > 1 )
+			return( "A.Complemen = 1" );
 		return( "" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_TiAgenda.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O tipo é obrigatório" );
+		return( true );
+	}
 }
 
 //-------------------------------------------------------------
@@ -2214,6 +2227,14 @@ Campo_arqConsulta_Clinica.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_arqConsulta_TiAgenda.prototype.ExistenciaEspecial = function()
+{
+	return( ( !TiAgenda_TiAgenda.Obrigatorio( false ) || tem(TiAgenda_TiAgenda) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_arqConsulta_Pessoa.prototype.ExistenciaEspecial = function()
 {
 	return( ( !Pessoa_Nome.Obrigatorio( false ) || tem(Pessoa_Nome) ) && ( !Pessoa_NumCelular.Obrigatorio( false ) || tem(Pessoa_NumCelular) ) );
@@ -2337,6 +2358,7 @@ TrgQtdMEnt.CalculosDependentes= [ Saldo ];
 Data.CalculosDependentes= [ DiaRet ];
 TiConsulta_TiConsulta.ExistenciasDependentes= [ TiConsulta ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
+TiAgenda_TiAgenda.ExistenciasDependentes= [ TiAgenda ];
 Pessoa_Nome.ExistenciasDependentes= [ Pessoa ];
 Pessoa_NumCelular.ExistenciasDependentes= [ Pessoa ];
 Medico_Usuario.ExistenciasDependentes= [ Medico ];
@@ -2390,6 +2412,7 @@ QuemAgRet_Usuario.ErrosDependentes= [ QuemAgRet ];
 AssesRet_Usuario.ErrosDependentes= [ AssesRet ];
 TiConsulta.CamposChave= [ TiConsulta_TiConsulta ];
 Clinica.CamposChave= [ Clinica_Clinica ];
+TiAgenda.CamposChave= [ TiAgenda_TiAgenda ];
 Pessoa.CamposChave= [ Pessoa_Nome,Pessoa_NumCelular ];
 Medico.CamposChave= [ Medico_Usuario ];
 Assessor.CamposChave= [ Assessor_Usuario ];

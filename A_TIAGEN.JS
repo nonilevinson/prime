@@ -25,6 +25,17 @@ function Campo_arqTiAgenda_Ativo()
 var Ativo = new Campo_arqTiAgenda_Ativo;
 
 //------------------------------------------------------------
+Campo_arqTiAgenda_Complemen.prototype = new Lance_CampoLogico;
+
+function Campo_arqTiAgenda_Complemen()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "Complemen", "Complemen", "Complemen");
+}
+
+var Complemen = new Campo_arqTiAgenda_Complemen;
+
+//------------------------------------------------------------
 Campo_arqTiAgenda_DobroTempo.prototype = new Lance_CampoLogico;
 
 function Campo_arqTiAgenda_DobroTempo()
@@ -81,7 +92,25 @@ Campo_arqTiAgenda_Ativo.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 Campo_arqTiAgenda_Ativo.prototype.Cabecalho = function()
 {
-		return( "Ativo?" );
+		return( "Tratamento?" );
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTiAgenda_Complemen.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqTiAgenda_Complemen.prototype.Cabecalho = function()
+{
+		return( "Complementar?" );
 }
 
 //-------------------------------------------------------------
@@ -141,7 +170,7 @@ function ListaDeCampos_arqTiAgenda( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ TiAgenda, Ativo, DobroTempo, Pagamento, Midia ]	);
+		[ TiAgenda, Ativo, Complemen, DobroTempo, Pagamento, Midia ]	);
 	IniciarDependencias_arqTiAgenda();
 	g_prefixo = l_prefixo;
 	return( l_lista );

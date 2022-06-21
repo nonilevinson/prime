@@ -164,7 +164,9 @@ else //* para nutricionista ou psicologo
          [ " h" . brHtml(3) . "Chegada ", HoraChega, " h",'','','','FormCalculado' ] ] ], '', '','', 'FormCalculado' ] );
 
    echo
-	$this->Pedir( "Status", TStCon ),
+	$this->Pedir( "Status",
+		[ "", TStCon,
+		[ brHtml(4) . "Tipo ", TiAgenda ] ] ),
 	$this->Pedir( "Clínica", Clinica ),
    $this->Pedir( "Paciente", Pessoa_Nome ),
    $this->Pedir( " ",

@@ -3,7 +3,8 @@
 echo
 "<table class='tabFormulario'>",
 	$this->Pedir( "Tipo", TiAgenda ),
-   $this->Pedir( "Ativo?", Ativo ),
+   $this->Pedir( "Tratamento?", Ativo ),
+   $this->Pedir( "Complementar?", Complemen ),
    $this->Pedir( "Dobro?",
       [ "", DobroTempo, " (usa o dobro do tempo da conuslta?)" ] ),
    $this->Pedir( "Campos editáveis",
