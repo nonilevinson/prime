@@ -147,16 +147,19 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       //? fim da entrada
 
       //? início do saldo do tratamento
-      $this->PDF->Cell( $larg2, $altura - 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg4, $altura, "Saldo devedor em " . $saldoParc . " parcelas de R$" .
-         $this->valorExtenso( $saldoVal ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+      if( $saldoParc > 0 )
+      {
+         $this->PDF->Cell( $larg2, $altura - 2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+         $this->PDF->Cell( $larg4, $altura, "Saldo devedor em " . $saldoParc . " parcelas de R$" .
+            $this->valorExtenso( $saldoVal ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
-      $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-      $this->PDF->Cell( $larg4, $altura, "Forma de pagamento: " . $regA->SALDOFPG,
-         SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-      //? fim do saldo do tratamento
-      //* fim de preços e condições
-
+         $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+         $this->PDF->Cell( $larg4, $altura, "Forma de pagamento: " . $regA->SALDOFPG,
+            SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+         //? fim do saldo do tratamento
+         //* fim de preços e condições
+      }
+      
       //* início do recibo
       $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->WriteTxt( "4- RECIBO", 100, [ '', BOLD ] );
