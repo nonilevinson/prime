@@ -3629,9 +3629,10 @@ insert into arqLanceOperacao values(200177,2,'Rotina para criar Entrada de caixa
 insert into arqLanceOperacao values(200180,2,'Rotina para criar Saída de caixa de Assesor','',180,10,0,'');
 insert into arqLanceOperacao values(200181,2,'Rotina para criar Entrada de caixa de Assesor','',181,10,0,'');
 insert into arqLanceOperacao values(200189,2,'Rotina para copiar Comissão do Call Center','',189,1,0,'');
-insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'ultimaLigOpcaoEm( 109,110,117 )');
-insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'ultimaLigOpcaoEm( 109,110,117 )');
-insert into arqLanceOperacao values(200249,2,'Rotina para criar aviso de que pode agendar a retirada da medicação','',249,1,0,'ultimaLigOpcaoEm( 109,110,117 )');
+insert into arqLanceOperacao values(200184,2,'Rotina para criar o a receber de tratamento de uma consulta','',184,10,0,'ultimaLigOpcaoEm( 109,110,117,276 )');
+insert into arqLanceOperacao values(200191,2,'Relatório do contrato de uma consulta','',191,50,0,'ultimaLigOpcaoEm( 109,110,117,276 )');
+insert into arqLanceOperacao values(200277,2,'Relatório da observação de uma consulta','',277,50,0,'ultimaLigOpcaoEm( 265,266,267,268,276 )');
+insert into arqLanceOperacao values(200249,2,'Rotina para criar aviso de que pode agendar a retirada da medicação','',249,1,0,'ultimaLigOpcaoEm( 109,110,117,276 )');
 insert into arqLanceOperacao values(200156,2,'Rotina para informar que o paciente chegou','',156,null,0,'');
 insert into arqLanceOperacao values(200256,2,'Rotina para excluir pessoas que tenham histórico de atividades - relação','',256,null,0,'');
 insert into arqLanceOperacao values(200220,2,'Rotina para fechar um movimento de estoque','',220,2,0,'');
@@ -3643,7 +3644,7 @@ insert into arqLanceOperacao values(200230,2,'Relatório resumido de medicação pr
 insert into arqLanceOperacao values(200233,2,'Relatório das agendas de retirada de medicação por quem agendou','',233,50,0,'');
 insert into arqLanceOperacao values(200236,2,'Rotina para dividir uma parcela','',236,10,0,'');
 insert into arqLanceOperacao values(200237,2,'Rotina para criar transferências entre contas','',237,10,0,'');
-insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'!ultimaLigOpcaoEm( 109,110,117 )');
+insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200253,2,'Rotina para excluir pessoas que tenham histórico de atividades - relação','',253,90,0,'');
 insert into arqLanceOperacao values(200257,2,'Relatório de hístorico de estoque','',257,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');

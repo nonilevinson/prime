@@ -10,6 +10,7 @@ commit;
 insert into arqLanceOperacao values(100060,1,'Cadastro de tipos de consultas','arqTiConsulta',60,99,1,'');
 insert into arqLanceOperacao values(100061,1,'Cadastro de status de consultas','arqTStCon',61,99,1,'');
 
+insert into arqLanceOperacao values(200277,2,'Relatório da observação de uma consulta','',277,50,0,'ultimaLigOpcaoEm( 265,266,267,268,276 )');
 commit;
 
 --* Arquivo TiConsulta
