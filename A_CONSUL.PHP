@@ -58,6 +58,19 @@ class campo_arqConsulta_TiConsulta extends Lance_CampoLigado
 	}
 
 	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->TICONSULTA == 1 )
+			return( "Tratamento" );
+		if( $g_regAtual->TICONSULTA == 2 )
+			return( "Nutricionista" );
+		if( $g_regAtual->TICONSULTA == 3 )
+			return( "Psicologo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
@@ -1574,7 +1587,7 @@ class arqConsulta extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function ComplementoFolheamento()
 	{
-		return( [ [ Clinica ], [ TStCon ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ] ] );
+		return( [ [ TiConsulta ], [ Clinica ], [ TStCon ], [ TiAgenda ], [ Pessoa ], [ Medico ], [ Assessor ], [ CallCenter ], [ PTrata ], [ BoletoMin ], [ ContaCons ], [ ContaPTra ], [ TrgQtdM ], [ TrgQtdMEnt ] ] );
 	}
 
 	//-------------------------------------------------------------

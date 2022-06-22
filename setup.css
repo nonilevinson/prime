@@ -92,11 +92,25 @@
 .FonteAzul{
 	color					: #000044;
 }
+.Tratamento{
+	color:#ffffff;
+	background-color: #004499;
+	text-align: left;
+}
+.Nutricionista{
+	color:#ffffff;
+	background-color: #49b13a;
+	text-align: left;
+}
+.Psicologo{
+	color:#ffffff;
+	background-color: #949394;
+	text-align: left;
+}
 .StRecepcao{
 	color:#ffffff;
 	background-color: #004499;
 	text-align: left;
-	/* font-weight:bold */
 }
 .StAgendado{
 	color:#ffffff;
@@ -108,31 +122,26 @@
 	color:#ffffff;
 	background-color: #004499;
 	text-align: left;
-	/* font-weight:bold */
 }
 .StMedico{
 	color:#ffffff;
 	background-color: #49b13a;
 	text-align: left;
-	/* font-weight:bold */
 }
 .StTeste{
 	color:#ffffff;
 	background-color: #ec8f0d;
 	text-align: left;
-	/* font-weight:bold */
 }
 .StAgAssessor{
 	color:#ffffff;
 	background-color: #949394;
 	text-align: left;
-	/* font-weight:bold */
 }
 .StAssessor{
 	color:#ffffff;
 	background-color: #a4bcd4;
 	text-align: left;
-	/* font-weight:bold */
 }
 .StAtendido{
 	color:#ffffff;

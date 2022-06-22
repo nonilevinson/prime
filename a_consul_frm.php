@@ -174,10 +174,9 @@ else //* para nutricionista ou psicologo
       [ "", Pessoa,
 		[ brHtml(4) . "Prontuário ", Prontuario ] ] ] ),
    $this->Pedir( "Médico", Medico ),
-   $this->Pedir( "Assessor" ),
 	$this->Pedir( "Call center", CallCenter ),
 
-	$this->NaoPedirVarios( TiAgenda, Cortesia, Valor, FormaPg, Valor2, FormaPg2, ContaCons,
+	$this->NaoPedirVarios( Assessor, Cortesia, Valor, FormaPg, Valor2, FormaPg2, ContaCons,
 		TMotivo, MedicaAtua, PTrata, ValPTrata, ContaPTra, EntraFPg, EntraVal, EntraParcE, BoletoMin,
 		EntraParc, SdEntrFPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, EntraObs, SaldoFPg,
 		SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet,
