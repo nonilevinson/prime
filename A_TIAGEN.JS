@@ -14,6 +14,17 @@ function Campo_arqTiAgenda_TiAgenda()
 var TiAgenda = new Campo_arqTiAgenda_TiAgenda;
 
 //------------------------------------------------------------
+Campo_arqTiAgenda_Ordem.prototype = new Lance_CampoNumerico;
+
+function Campo_arqTiAgenda_Ordem()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "Ordem", "Ordem", "Ordem", 2, "#z", false,"", "");
+}
+
+var Ordem = new Campo_arqTiAgenda_Ordem;
+
+//------------------------------------------------------------
 Campo_arqTiAgenda_Ativo.prototype = new Lance_CampoLogico;
 
 function Campo_arqTiAgenda_Ativo()
@@ -77,6 +88,17 @@ Campo_arqTiAgenda_TiAgenda.prototype.Cabecalho = function()
 }
 
 TiAgenda.TipoCampo |= CAMPO_CHAVE;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqTiAgenda_Ordem.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A ordem é obrigatória" );
+		return( true );
+	}
+}
+
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
@@ -170,7 +192,7 @@ function ListaDeCampos_arqTiAgenda( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ TiAgenda, Ativo, Complemen, DobroTempo, Pagamento, Midia ]	);
+		[ TiAgenda, Ordem, Ativo, Complemen, DobroTempo, Pagamento, Midia ]	);
 	IniciarDependencias_arqTiAgenda();
 	g_prefixo = l_prefixo;
 	return( l_lista );

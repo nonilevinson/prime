@@ -25,6 +25,19 @@ class campo_arqTStCon_Status extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Ordem
+//======================================================
+
+class campo_arqTStCon_Ordem extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Ordem", "Ordem", "Ordem", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Cor
 //======================================================
 
@@ -91,6 +104,7 @@ function listaCampos_arqTStCon( $p_prefixo )
 		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqTStCon_Status(),
+			new campo_arqTStCon_Ordem(),
 			new campo_arqTStCon_Cor(),
 			new campo_arqTStCon_Fundo(),
 			new campo_arqTStCon_Ativo() ]
@@ -129,6 +143,7 @@ class arqTStCon extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ Status ];
+			$vetAux[] = [ Ordem ];
 			$vetAux[] = [ Cor ];
 			$vetAux[] = [ Fundo ];
 			$vetAux[] = [ Ativo ];
@@ -143,6 +158,7 @@ class arqTStCon extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ Status ];
+			$vetAux[] = [ Ordem ];
 			$vetAux[] = [ Cor ];
 			$vetAux[] = [ Fundo ];
 			$vetAux[] = [ Ativo ];

@@ -603,9 +603,10 @@ CREATE TABLE arqTStCon
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	STATUS VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/*  4*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  3*/	ORDEM SMALLINT, /* Máscara = N */
+	/*  4*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  5*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTStCon_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTStCon_UK UNIQUE ( Status )
 );
@@ -615,7 +616,7 @@ CREATE DESC INDEX arqTStCon_IdPrimario_Desc ON arqTStCon (IDPRIMARIO);
 commit;
 
 RECREATE VIEW V_arqTStCon AS 
-	SELECT A0.IDPRIMARIO, A0.STATUS, A0.COR, A0.FUNDO, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.STATUS, A0.ORDEM, A0.COR, A0.FUNDO, A0.ATIVO
 	FROM arqTStCon A0;
 commit;
 
@@ -823,24 +824,27 @@ drop view v_arqTiAgenda;
 commit;
 
 ALTER TABLE arqTiAgenda
+add /*  3*/	ORDEM SMALLINT, /* Máscara = N */
 add /*  4*/	COMPLEMEN campoLogico; /* Lógico: 0=Não 1=Sim */
 commit;
 
+update arqTiAgenda set Ordem=idPrimario;
 update arqTiAgenda set Complemen=0;
 update arqTiAgenda set Complemen=1 Where idPrimario=1;
 commit;
 
 RECREATE VIEW V_arqTiAgenda AS 
-	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ATIVO, A0.COMPLEMEN, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
+	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ORDEM, A0.ATIVO, A0.COMPLEMEN, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
 	FROM arqTiAgenda A0;
 commit;
 
 ALTER TABLE arqTiAgenda
 alter IDPRIMARIO position 1,
 alter TIAGENDA position 2,
-alter ATIVO position 3,
-alter COMPLEMEN position 4,
-alter DOBROTEMPO position 5,
-alter PAGAMENTO position 6,
-alter MIDIA position 7;
+alter ORDEM position 3,
+alter ATIVO position 4,
+alter COMPLEMEN position 5,
+alter DOBROTEMPO position 6,
+alter PAGAMENTO position 7,
+alter MIDIA position 8;
 commit;

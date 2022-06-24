@@ -32,6 +32,19 @@ class campo_arqTiAgenda_TiAgenda extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Ordem
+//======================================================
+
+class campo_arqTiAgenda_Ordem extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "Ordem", "Ordem", "Ordem", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Ativo
 //======================================================
 
@@ -174,6 +187,7 @@ function listaCampos_arqTiAgenda( $p_prefixo )
 		[
 			new Lance_CampoIdPrimario(),
 			new campo_arqTiAgenda_TiAgenda(),
+			new campo_arqTiAgenda_Ordem(),
 			new campo_arqTiAgenda_Ativo(),
 			new campo_arqTiAgenda_Complemen(),
 			new campo_arqTiAgenda_DobroTempo(),
@@ -214,6 +228,7 @@ class arqTiAgenda extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ TiAgenda ];
+			$vetAux[] = [ Ordem ];
 			$vetAux[] = [ Ativo ];
 			$vetAux[] = [ Complemen ];
 			$vetAux[] = [ DobroTempo ];
@@ -230,6 +245,7 @@ class arqTiAgenda extends Lance_Arquivo
 		global $g_acaoAtual;
 		$vetAux = [];
 			$vetAux[] = [ TiAgenda ];
+			$vetAux[] = [ Ordem ];
 			$vetAux[] = [ Ativo ];
 			$vetAux[] = [ Complemen ];
 			$vetAux[] = [ DobroTempo ];

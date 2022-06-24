@@ -2007,11 +2007,12 @@ CREATE TABLE arqTiAgenda
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	TIAGENDA VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
-	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  4*/	COMPLEMEN campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	PAGAMENTO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  7*/	MIDIA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  3*/	ORDEM SMALLINT, /* Máscara = N */
+	/*  4*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	COMPLEMEN campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  7*/	PAGAMENTO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  8*/	MIDIA campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTiAgenda_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTiAgenda_UK UNIQUE ( TiAgenda )
 );
@@ -2139,9 +2140,10 @@ CREATE TABLE arqTStCon
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	STATUS VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
-	/*  3*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/*  4*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/*  5*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  3*/	ORDEM SMALLINT, /* Máscara = N */
+	/*  4*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  5*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTStCon_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTStCon_UK UNIQUE ( Status )
 );
@@ -3373,7 +3375,7 @@ RECREATE VIEW V_arqFornecedor AS
 commit;
 
 RECREATE VIEW V_arqTiAgenda AS 
-	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ATIVO, A0.COMPLEMEN, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
+	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ORDEM, A0.ATIVO, A0.COMPLEMEN, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
 	FROM arqTiAgenda A0;
 commit;
 
@@ -3482,7 +3484,7 @@ RECREATE VIEW V_arqTiConsulta AS
 commit;
 
 RECREATE VIEW V_arqTStCon AS 
-	SELECT A0.IDPRIMARIO, A0.STATUS, A0.COR, A0.FUNDO, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.STATUS, A0.ORDEM, A0.COR, A0.FUNDO, A0.ATIVO
 	FROM arqTStCon A0;
 commit;
 
