@@ -8,8 +8,19 @@ sql_abrirBD( OperacaoAtual() );
 $assunto = "AGENDAMENTO - RETIRADA DE MEDICAÇÕES";
 $texto   = $assunto . "<br>";
 
-echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** PARAR SE Marcar duas clínicas ***</p>';
+$select = "Select distinct C.Clinica
+   From " . FromMarcados( "arqConsulta", "C" ) ."
+   Where " . WhereMarcados();
+$regConsulta = sql_lerRegistros( $select );
+$sizeRegConsulta = sizeof( $regConsulta );
+if( $g_debugProcesso ) echo '<br><b>GR0 arqConsulta S=</b> '.$select.'<br><b>size=</b> '.$sizeRegConsulta;
 
+if( $sizeRegConsulta > 1 )
+{
+   tecleAlgoVolta( 'Você marcou consultas de mais de uma clínica.\nMarque consultas de somente uma clínica e refaça a rotina', true );
+   sql_fecharBD();
+   return;
+}
 
 $select = "Select C.Num, P.Nome, P.NumCelular, P.Prontuario, C.Clinica as idClinica
    From " . FromMarcados( "arqConsulta", "C" ) ."
@@ -29,7 +40,7 @@ foreach( $regConsulta as $umaConsulta )
 //criarAviso( $p_assunto, $p_prioridade, $p_texto, $p_campo='', $p_idClinica=null, $p_idUsuario=null, $p_idGrupo='' )
 criarAviso( $assunto, 2, $texto, '', $regConsulta[0]->IDCLINICA, null, 'AvRetira' );
 
-$teste = true;
+$teste = false;
 if( $teste )
    echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE - Criou o Aviso ***</p>';
 else

@@ -9,7 +9,7 @@ function criarParaGrupo( $p_idAvisos, $p_idGrupo=null, $p_idUsuario=null )
 		"idPrimario" => sql_forcarNumerico( sql_NumeroUnico() ),
 		"Avisos"     => $p_idAvisos,
 		"Grupo"      => $p_idGrupo,
-		"Usuario"    => $p_idUsuario ],1,true,false );
+		"Usuario"    => $p_idUsuario ] );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ function criarAviso( $p_assunto, $p_prioridade, $p_texto, $p_campo='', $p_idClin
 	$idClinica  = $p_idClinica;
 	$idUsuario  = $p_idUsuario;
 	$campoGrupo = $p_campoGrupo;
-if( $g_debugProcesso ) echo '<br><b>GR0 idClinica=</b> '.$idClinica.' <b>idUsuario=</b> '.$idUsuario.' <b>campoGrupo=</b> '.$campoGrupo;
+// if( $g_debugProcesso ) echo '<br><b>GR0 idClinica=</b> '.$idClinica.' <b>idUsuario=</b> '.$idUsuario.' <b>campoGrupo=</b> '.$campoGrupo;
 
 	$select = "Select coalesce( max( Numero ), 0 ) + 1 as ProxAviso
 			From arqAvisos";
@@ -38,7 +38,7 @@ if( $g_debugProcesso ) echo '<br><b>GR0 idClinica=</b> '.$idClinica.' <b>idUsuar
 		"Assunto"    => $p_assunto,
 		"Prioridade" => $p_prioridade,
 		"Texto"      => $p_texto,
-		"AvisoPai"   => null ],1,true,false );
+		"AvisoPai"   => null ] );
 
 	if( $campoGrupo != '' && !$idClinica )
 	{
@@ -59,14 +59,27 @@ if( $g_debugProcesso ) echo '<br><b>GR0 idClinica=</b> '.$idClinica.' <b>idUsuar
 	}
 	elseif( $campoGrupo != '' && $idClinica )
 	{
-		$select = "Select U.idPrimario
+		include_once( 'lance_executar_sempre.php' );		
+		
+		$select = "Select U.idPrimario, U.Usuario
 			From arqUsuCli S
 				join arqUsuario	U on U.idPrimario=S.Usuario
-				join arqGrpo		G on G.idPrimario=U.Grupo
+				join arqGrupo		G on G.idPrimario=U.Grupo
 				join arqClinica	C on C.idPrimario=S.Clinica
-			Where G." . $campoGrupo . " = 1 and C.idPrimario in " . SQL_VETIDCLINICA;
+			Where C.idPrimario = " . $idClinica . " and G." . $campoGrupo . " = 1
+			
+			UNION ALL
+			
+			Select U.idPrimario, U.Usuario
+				From arqUsuario U
+					join arqGrupo		G on G.idPrimario=U.Grupo
+				Where G." . $campoGrupo . " = 1 and
+				(Select count(*)
+					From arqUsuCli S
+					Where S.Usuario = U.idPrimario) = 0
+			";
 		$regUsuCli =sql_lerRegistros( $select );
-if( $g_debugProcesso ) echo '<br><b>GR0 ext_aviso_criar TEM p_campoGrupo e TEM idClinica arqGrupo S=</b> '.$select;
+// if( $g_debugProcesso ) echo '<br><b>GR0 ext_aviso_criar TEM p_campoGrupo e TEM idClinica<br>arqGrupo S=</b> '.$select;
 
 		foreach( $regUsuCli as $umUsuario )
 			criarParaGrupo( $idAvisos, null, $umUsuario->IDPRIMARIO );
