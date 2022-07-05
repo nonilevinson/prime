@@ -105,16 +105,20 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       $this->writeLn();
       $this->writeLn();
 
+      //function ImageResize( $p_nomeImg, $p_maxH=0, $p_maxW=0, $p_largFolha=0 )
+      list( $novoW, $novoH, $wOriginal, $hOriginal, $posX ) = imageResize( $regA->ASSINATURA, 50, 30, 0 );
+// if( $g_debugProcesso ) echo '<br><b>GR0 novoW=</b> '.$novoW.' <b>novoH=</b> '.$novoH;
+// if( $g_debugProcesso ) echo '<br><b>GR0 OriW=</b> '.$wOriginal.' <b>OriH=</b> '.$hOriginal;
+
       //* dados do médico
       $y = $pdf->GetY();
       $largLogo = 30;
-      $pdf->Image( $regA->ASSINATURA, 15, $y, $largLogo );
+      $pdf->Image( $regA->ASSINATURA, 15, $y, $novoW, $novoH );
 
       //* para que a assinatura nunca sobreponha o nome do médico
-      $yDepois = $y + $largLogo * .5;
+      $yDepois = $y + $novoH;
       $pdf->SetY( $yDepois );
 
-      $this->writeLn();
       $this->PDF->Cell( $larg1, $altura, "Médico: " . $regA->MEDICO, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $larg1, $altura, "CRM: " . $regA->CRM, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 	}
