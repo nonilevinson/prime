@@ -178,6 +178,17 @@ function Campo_arqUsuario_EmCMediSep()
 
 var EmCMediSep = new Campo_arqUsuario_EmCMediSep;
 
+//------------------------------------------------------------
+Campo_arqUsuario_Assinatura.prototype = new Lance_CampoImagem;
+
+function Campo_arqUsuario_Assinatura()
+{
+	this.superClass = Lance_CampoImagem;
+	this.superClass( "Assinatura", "Assinatura", "Assinatura");
+}
+
+var Assinatura = new Campo_arqUsuario_Assinatura;
+
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -229,7 +240,7 @@ Campo_arqUsuario_Senha.prototype.TemErro = function()
 		alert( "Senha fraca!" );
 		return( true );
 	}
-	return( Lance_CampoLogico.prototype.TemErro.call( this ) );
+	return( Lance_CampoImagem.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -294,7 +305,7 @@ Campo_arqUsuario_Email.prototype.TemErro = function()
 		alert( "Email inválido" );
 		return( true );
 	}
-	return( Lance_CampoLogico.prototype.TemErro.call( this ) );
+	return( Lance_CampoImagem.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -465,7 +476,7 @@ function ListaDeCampos_arqUsuario( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Usuario, Nome, Senha, Grupo, Grupo_Grupo, Versao, Email, CRM, PodeAgenda, Ativo, Nascimento, Foto, EmailAces, EmailAcesS, EmailFinan, EmCMediSep ]	);
+		[ Usuario, Nome, Senha, Grupo, Grupo_Grupo, Versao, Email, CRM, PodeAgenda, Ativo, Nascimento, Foto, EmailAces, EmailAcesS, EmailFinan, EmCMediSep, Assinatura ]	);
 	IniciarDependencias_arqUsuario();
 	g_prefixo = l_prefixo;
 	return( l_lista );

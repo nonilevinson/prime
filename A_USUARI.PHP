@@ -259,6 +259,19 @@ class campo_arqUsuario_EmCMediSep extends Lance_CampoLogico
 }
 
 //======================================================
+//	Campo Assinatura
+//======================================================
+
+class campo_arqUsuario_Assinatura extends Lance_CampoImagem
+{
+	function __construct()
+	{
+		parent::__construct( "Assinatura", "Assinatura", "Assinatura", 200,200, "sem_imagem", false );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqUsuario
 //======================================================
 function listaCampos_arqUsuario( $p_prefixo )
@@ -285,7 +298,9 @@ function listaCampos_arqUsuario( $p_prefixo )
 			new campo_arqUsuario_EmailAces(),
 			new campo_arqUsuario_EmailAcesS(),
 			new campo_arqUsuario_EmailFinan(),
-			new campo_arqUsuario_EmCMediSep() ]
+			new campo_arqUsuario_EmCMediSep(),
+			new campo_arqUsuario_Assinatura(),
+			new Lance_CampoCadeia( "Assinatura_Arquivo", "Assinatura_Arquivo", "Descritor", 0, "", EH_DESCRITOR, Assinatura ) ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -357,6 +372,7 @@ class arqUsuario extends Lance_Arquivo
 			$vetAux[] = [ EmailAcesS ];
 			$vetAux[] = [ EmailFinan ];
 			$vetAux[] = [ EmCMediSep ];
+			$vetAux[] = [ Assinatura ];
 		return( $vetAux );
 	}
 

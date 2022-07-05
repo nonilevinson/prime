@@ -68,7 +68,7 @@ function criarAviso( $p_assunto, $p_prioridade, $p_texto, $p_campo='', $p_idClin
 				join arqClinica	C on C.idPrimario=S.Clinica
 			Where C.idPrimario = " . $idClinica . " and G." . $campoGrupo . " = 1
 			
-			UNION ALL
+			UNION
 			
 			Select U.idPrimario, U.Usuario
 				From arqUsuario U

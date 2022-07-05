@@ -2071,6 +2071,8 @@ CREATE TABLE arqUsuario
 	/* 15*/	EMAILACESS campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 16*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 17*/	EMCMEDISEP campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 18*/	ASSINATURA campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
+	/* 19*/	ASSINATURA_ARQUIVO  VARCHAR(128)computed by ( lower( 'Usuario/' || CASE WHEN ( ASSINATURA IS NULL ) THEN ( 'sem_imagem' ) ELSE ( IDPRIMARIO || '_ASSINATURA.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=ASSINATURA) ) END ) ),
 	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
 );
@@ -3108,10 +3110,11 @@ RECREATE VIEW V_arqGrupo AS
 commit;
 
 RECREATE VIEW V_arqUsuario AS 
-	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS, A0.EMAILFINAN, A0.EMCMEDISEP
+	SELECT A0.IDPRIMARIO, A0.USUARIO, A0.NOME, A0.SENHA, A0.GRUPO, A1.GRUPO as GRUPO_GRUPO, A0.VERSAO, A0.EMAIL, A0.CRM, A0.PODEAGENDA, A0.ATIVO, A0.NASCIMENTO, A0.FOTO, A2.CHAVE as Foto_CHAVE, A2.DESCRITOR as Foto_DESCRITOR, A0.FOTO_ARQUIVO, A0.EMAILACES, A0.EMAILACESS, A0.EMAILFINAN, A0.EMCMEDISEP, A0.ASSINATURA, A3.CHAVE as Assinatura_CHAVE, A3.DESCRITOR as Assinatura_DESCRITOR, A0.ASSINATURA_ARQUIVO
 	FROM arqUsuario A0
 	left join arqGrupo A1 on A1.IDPRIMARIO = A0.GRUPO
-	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.FOTO;
+	left join tabLanceTipoImg A2 on A2.IDPRIMARIO = A0.FOTO
+	left join tabLanceTipoImg A3 on A3.IDPRIMARIO = A0.ASSINATURA;
 commit;
 
 RECREATE VIEW V_arqPessoa AS 
@@ -3924,7 +3927,8 @@ else begin
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
 		( NEW.Senha is distinct from OLD.Senha )  OR 
 		( NEW.Versao is distinct from OLD.Versao )  OR 
-		( NEW.Foto is distinct from OLD.Foto )  ) ) then
+		( NEW.Foto is distinct from OLD.Foto )  OR 
+		( NEW.Assinatura is distinct from OLD.Assinatura )  ) ) then
 	execute procedure set_log( 16, NEW.idPrimario, null, null, null );
 end
 end^
