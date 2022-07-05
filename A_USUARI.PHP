@@ -266,7 +266,7 @@ class campo_arqUsuario_Assinatura extends Lance_CampoImagem
 {
 	function __construct()
 	{
-		parent::__construct( "Assinatura", "Assinatura", "Assinatura", 200,200, "sem_imagem", false );
+		parent::__construct( "Assinatura", "Assinatura", "Assinatura", 200,200, "sem_imagem.gif", false );
 	}
 
 }

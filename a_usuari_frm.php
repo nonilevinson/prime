@@ -41,6 +41,10 @@ echo
 "</table>
 <br>
 <table class='tabFormulario'>",
-	$this->Cabecalhos( [ "Foto", "FormCab alinhaMeio", "2" ] ),
-	$this->Pedir( "", [ "", Foto, "", "FormValor alinhaMeio", "2" ] ),
+	$this->Cabecalhos( 
+		[ "Foto", "FormCab alinhaMeio", ],
+		[ "Assinatura (para os médicos)", "FormCab alinhaMeio", ] ),
+	$this->Pedir( "", 
+		[ "", Foto, "", "FormValor alinhaMeio" ],
+		[ "", Assinatura, "", "FormValor alinhaMeio" ] ),
 "</table>";
