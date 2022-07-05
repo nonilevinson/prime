@@ -8,6 +8,9 @@ sql_abrirBD( OperacaoAtual() );
 $assunto = "AGENDAMENTO - RETIRADA DE MEDICAÇÕES";
 $texto   = $assunto . "<br>";
 
+echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** PARAR SE Marcar duas clínicas ***</p>';
+
+
 $select = "Select C.Num, P.Nome, P.NumCelular, P.Prontuario, C.Clinica as idClinica
    From " . FromMarcados( "arqConsulta", "C" ) ."
       join arqPessoa P on P.idPrimario=C.Pessoa
@@ -23,10 +26,10 @@ foreach( $regConsulta as $umaConsulta )
       " - " . $umaConsulta->PRONTUARIO . " - " . formatarStr( $umaConsulta->NUMCELULAR, '(nn) n.nnnn.nnnn' );
 }
 
-//function criarAviso( $p_assunto, $p_prioridade, $p_texto, $p_campo='', $p_idUsuario=null, $p_idGrupo='' )
-criarAviso( $assunto, 2, $texto, '', null, 'AvRetira' );
+//criarAviso( $p_assunto, $p_prioridade, $p_texto, $p_campo='', $p_idClinica=null, $p_idUsuario=null, $p_idGrupo='' )
+criarAviso( $assunto, 2, $texto, '', $regConsulta[0]->IDCLINICA, null, 'AvRetira' );
 
-$teste = false;
+$teste = true;
 if( $teste )
    echo '<p style="text-align: center; font-weight: bold; font-size:24px">*** EM TESTE - Criou o Aviso ***</p>';
 else

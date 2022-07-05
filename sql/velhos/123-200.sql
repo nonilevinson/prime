@@ -487,7 +487,6 @@ alter trigger arqUsuCli_log inactive;
 alter trigger arqProfissao_log inactive;
 alter trigger arqHoraBloq_log inactive;
 alter trigger arqDuracao_log inactive;
-alter trigger arqConsulta_log inactive;
 alter trigger arqPlantao_log inactive;
 alter trigger arqFornecedor_log inactive;
 alter trigger arqFormaPg_log inactive;
@@ -576,7 +575,6 @@ alter trigger arqUsuCli_log active;
 alter trigger arqProfissao_log active;
 alter trigger arqHoraBloq_log active;
 alter trigger arqDuracao_log active;
-alter trigger arqConsulta_log active;
 alter trigger arqPlantao_log active;
 alter trigger arqFornecedor_log active;
 alter trigger arqFormaPg_log active;
@@ -620,21 +618,24 @@ RECREATE VIEW V_arqTStCon AS
 	FROM arqTStCon A0;
 commit;
 
-INSERT INTO arqTStCon VALUES (  1, 'AGENDADO', '#ffffff', '#52a3ff', 1 );
-INSERT INTO arqTStCon VALUES (  2, 'RECEPÇÃO', '#ffffff', '#004499', 1 );
-INSERT INTO arqTStCon VALUES (  3, 'MÉDICO', '#ffffff', '#49b13a', 1 );
-INSERT INTO arqTStCon VALUES (  4, 'TESTE', '#ffffff', '#ec8f0d', 1 );
-INSERT INTO arqTStCon VALUES (  5, 'AG. ASSESSOR', '#ffffff', '#949394', 1 );
-INSERT INTO arqTStCon VALUES (  6, 'ASSESSOR', '#ffffff', '#a4bcd4', 1 );
-INSERT INTO arqTStCon VALUES (  7, 'ATENDIDO', '#ffffff', 'green', 1 );
-INSERT INTO arqTStCon VALUES (  8, 'LIBERADO', '#ffffff', 'red', 1 );
-INSERT INTO arqTStCon VALUES (  9, 'CLÍNICA DESMARCOU', '#ffffff', '#918600', 1 );
-INSERT INTO arqTStCon VALUES ( 10, 'PACIENTE DESMARCOU', '#ffffff', '#00ff88', 1 );
-INSERT INTO arqTStCon VALUES ( 11, 'MÉDICO DESMARCOU', '#ffffff', '#ff3388', 1 );
+INSERT INTO arqTStCon VALUES (  1, 'AGENDADO', 1, '#ffffff', '#52a3ff', 1 );
+INSERT INTO arqTStCon VALUES (  2, 'RECEPÇÃO', 2, '#ffffff', '#004499', 1 );
+INSERT INTO arqTStCon VALUES (  3, 'MÉDICO', 3, '#ffffff', '#49b13a', 1 );
+INSERT INTO arqTStCon VALUES (  4, 'TESTE', 4, '#ffffff', '#ec8f0d', 1 );
+INSERT INTO arqTStCon VALUES (  5, 'AG. ASSESSOR', 5, '#ffffff', '#949394', 1 );
+INSERT INTO arqTStCon VALUES (  6, 'ASSESSOR', 6, '#ffffff', '#a4bcd4', 1 );
+INSERT INTO arqTStCon VALUES (  7, 'ATENDIDO', 7, '#ffffff', 'green', 1 );
+INSERT INTO arqTStCon VALUES (  8, 'LIBERADO', 8, '#ffffff', 'red', 1 );
+INSERT INTO arqTStCon VALUES (  9, 'CLÍNICA DESMARCOU', 9, '#ffffff', '#918600', 1 );
+INSERT INTO arqTStCon VALUES ( 10, 'PACIENTE DESMARCOU', 10, '#ffffff', '#00ff88', 1 );
+INSERT INTO arqTStCon VALUES ( 11, 'MÉDICO DESMARCOU', 11, '#ffffff', '#ff3388', 1 );
 commit;
 
 --*	Arquivo Consulta  
 --* Trocar do campo TStCon LIG com tabela para LIG com arquivo
+ALTER TABLE arqConsulta Drop CONSTRAINT arqConsulta_FK_TStCon;
+commit;
+
 ALTER TABLE arqConsulta alter TStCon to TStCon1;
 commit;
 
