@@ -65,9 +65,6 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 	[ brHtml(4) . "Saldo ", Saldo ] ] ] ),
 	"</table>",
 	
-	//* 06/07/2022 Eles não estão usando esses campos já que criamos o arqAgRet
-	$this->NaoPedirVarios( QuemAgRet, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, AssesRet, ObsRet ),
-
 	CriarForms(
 		[ 'Observações', 'O', true ],
 		[ 'Atual', 'A', true ],
@@ -129,30 +126,6 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 		$this->Cabecalhos( [ "Transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
 		$this->Pedir( "Medicação<br>Recomendada", Medicacao ),
 	"</table>";
-/*
-	"<table id='R' class='tabFormulario' style='display:none'>",
-		$this->Pedir( "Medicação",
-			[ "Quantidades: Prescrita ", TrgQtdM,
-			[ brHtml(4) . "Separada/Entregue ", TrgQtdMEnt,
-			[ brHtml(4) . "Saldo ", Saldo ] ] ] ),
-		$this->Pular1Linha(2),
-		$this->Cabecalhos( [ "Os campos abaixo somente são editáveis se houver uma
-			quantidade de medicação prescrita e o saldo for zero", 'FormCab alinhaMeio', '2' ] ),
-		$this->Pedir( "Agendado por",
-			[ "", QuemAgRet,
-			[ brHtml(1) . "em ", QdoAgRet ] ] ),
-		$this->Pedir( "Data",
-			[ "", DataRet,
-			[ " ", DiaRet,
-			[ brHtml(4) . "Hora ", HoraRet ] ] ] ),
-		$this->Pedir( "Status", TStAgRet ),
-		$this->Pedir( "Assessor",
-			[ "", AssesRet, "<br>(obrigatório se um Status for informado)" ] ),
-		$this->Pular1Linha(2),
-		$this->Cabecalhos( [ "Observações da retirada", 'FormCab alinhaMeio', '2' ] ),
-		$this->Pedir( "", [ "", ObsRet, '', 'FormValor alinhaMeio', '2' ] ),
-	"</table>";
-*/
 }
 else //* para nutricionista ou psicologo
 {

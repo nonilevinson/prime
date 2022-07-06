@@ -728,138 +728,6 @@ function Campo_arqConsulta_Saldo()
 
 var Saldo = new Campo_arqConsulta_Saldo;
 
-//------------------------------------------------------------
-Campo_arqConsulta_QuemAgRet.prototype = new Lance_CampoHidden;
-
-function Campo_arqConsulta_QuemAgRet()
-{
-	this.superClass = Lance_CampoHidden;
-	this.superClass( "QuemAgRet", "QuemAgRet", "QuemAgRet", "arqUsuario", "a_usuari", null, "",5);
-}
-
-var QuemAgRet = new Campo_arqConsulta_QuemAgRet;
-
-//------------------------------------------------------------
-Campo_arqConsulta_QuemAgRet_Usuario.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqConsulta_QuemAgRet_Usuario()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "QuemAgRet_Usuario", "QuemAgRet_Usuario", "Usuario", QuemAgRet, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
-}
-
-var QuemAgRet_Usuario = new Campo_arqConsulta_QuemAgRet_Usuario;
-
-//------------------------------------------------------------
-Campo_arqConsulta_QdoAgRet.prototype = new Lance_CampoData;
-
-function Campo_arqConsulta_QdoAgRet()
-{
-	this.superClass = Lance_CampoData;
-	this.superClass( "QdoAgRet", "QdoAgRet", "QdoAgRet", 8, "dd/mm/aaaa", true);
-}
-
-var QdoAgRet = new Campo_arqConsulta_QdoAgRet;
-
-//------------------------------------------------------------
-Campo_arqConsulta_DataRet.prototype = new Lance_CampoData;
-
-function Campo_arqConsulta_DataRet()
-{
-	this.superClass = Lance_CampoData;
-	this.superClass( "DataRet", "DataRet", "DataRet", 8, "dd/mm/aaaa", true);
-}
-
-var DataRet = new Campo_arqConsulta_DataRet;
-
-//------------------------------------------------------------
-Campo_arqConsulta_DiaRet.prototype = new Lance_CampoCadeia;
-
-function Campo_arqConsulta_DiaRet()
-{
-	this.superClass = Lance_CampoCadeia;
-	this.superClass( "DiaRet", "DiaRet", "DiaRet", 15, "uuuuuuuuuuuuuuu", false);
-}
-
-var DiaRet = new Campo_arqConsulta_DiaRet;
-
-//------------------------------------------------------------
-Campo_arqConsulta_HoraRet.prototype = new Lance_CampoHora;
-
-function Campo_arqConsulta_HoraRet()
-{
-	this.superClass = Lance_CampoHora;
-	this.superClass( "HoraRet", "HoraRet", "HoraRet", 4, "hh:mm", true);
-}
-
-var HoraRet = new Campo_arqConsulta_HoraRet;
-
-//------------------------------------------------------------
-Campo_arqConsulta_TStAgRet.prototype = new Lance_CampoLigado;
-
-function Campo_arqConsulta_TStAgRet()
-{
-	this.superClass = Lance_CampoLigado;
-	this.superClass( "TStAgRet", "TStAgRet", "TStAgRet", "tabTStAgRet", "t_tstagr", null, "",0);
-}
-
-var TStAgRet = new Campo_arqConsulta_TStAgRet;
-
-//------------------------------------------------------------
-Campo_arqConsulta_TStAgRet_Chave.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqConsulta_TStAgRet_Chave()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStAgRet_Chave", "TStAgRet_Chave", "TStAgRet", TStAgRet, 1, "u", false);
-}
-
-var TStAgRet_Chave = new Campo_arqConsulta_TStAgRet_Chave;
-
-//------------------------------------------------------------
-Campo_arqConsulta_TStAgRet_Descritor.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqConsulta_TStAgRet_Descritor()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStAgRet_Descritor", "TStAgRet_Descritor", "TStAgRet", TStAgRet, 11, "xxxxxxxxxxx", false);
-}
-
-var TStAgRet_Descritor = new Campo_arqConsulta_TStAgRet_Descritor;
-
-//------------------------------------------------------------
-Campo_arqConsulta_AssesRet.prototype = new Lance_CampoHidden;
-
-function Campo_arqConsulta_AssesRet()
-{
-	this.superClass = Lance_CampoHidden;
-	this.superClass( "AssesRet", "AssesRet", "AssesRet", "arqUsuario", "a_usuari", null, "",5);
-}
-
-var AssesRet = new Campo_arqConsulta_AssesRet;
-
-//------------------------------------------------------------
-Campo_arqConsulta_AssesRet_Usuario.prototype = new Lance_CampoCadeiaLigado;
-
-function Campo_arqConsulta_AssesRet_Usuario()
-{
-	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "AssesRet_Usuario", "AssesRet_Usuario", "Usuario", AssesRet, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
-}
-
-var AssesRet_Usuario = new Campo_arqConsulta_AssesRet_Usuario;
-
-//------------------------------------------------------------
-Campo_arqConsulta_ObsRet.prototype = new Lance_CampoTexto;
-
-function Campo_arqConsulta_ObsRet()
-{
-	this.superClass = Lance_CampoTexto;
-	this.superClass( "ObsRet", "ObsRet", "ObsRet", false);
-}
-
-var ObsRet = new Campo_arqConsulta_ObsRet;
-
 //-------------------------------------------------------------
 // Campo pode ser alterado?
 //-------------------------------------------------------------
@@ -1428,7 +1296,7 @@ Campo_arqConsulta_ValPTrata.prototype.TemErro = function()
 		alert( "Valor inválido! Está abaixo da margem de desconto permitida" );
 		return( true );
 	}
-	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1526,7 +1394,7 @@ Campo_arqConsulta_EntraVal.prototype.TemErro = function()
 		alert( "Valor inválido" );
 		return( true );
 	}
-	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
+	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1996,219 +1864,6 @@ Campo_arqConsulta_Saldo.prototype.Cabecalho = function()
 
 Saldo.EhCalculado = true;
 //-------------------------------------------------------------
-// Fitro para selecionar registros do pai
-//-------------------------------------------------------------
-Campo_arqConsulta_QuemAgRet.prototype.FiltroPai = function()
-{
-			return( "" + vijCallCenter() + "" );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_QuemAgRet.prototype.Existencia = function()
-{
-	return( TrgQtdM > 0 && Saldo == 0 );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_QuemAgRet_Usuario.prototype.Existencia = function()
-{
-	return( TrgQtdM > 0 && Saldo == 0 );
-}
-
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_QuemAgRet_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( QuemAgRet.Obrigatorio( p_comMsg ) );
-}
-
-QuemAgRet_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqConsulta_QdoAgRet.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "A data de quando o agendamento de retirada foi feito é obrigatória" );
-		return( true );
-	}
-}
-
-//-------------------------------------------------------------
-// Condição de erro do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_QdoAgRet.prototype.TemErro = function()
-{
-		if( tem(this) && ( quantosDias( QdoAgRet, HOJE ) > 0 ) )
-	{
-		alert( "Data inválida" );
-		return( true );
-	}
-	return( Lance_CampoTexto.prototype.TemErro.call( this ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_QdoAgRet.prototype.Existencia = function()
-{
-	return( tem( QuemAgRet_Usuario ) );
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqConsulta_DataRet.prototype.Cabecalho = function()
-{
-		return( "Agenda<br>Retirada" );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_DataRet.prototype.Existencia = function()
-{
-	return( tem( QuemAgRet_Usuario ) );
-}
-
-//-------------------------------------------------------------
-// Expressão para cálculo do valor do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_DiaRet.prototype.Calculou = function()
-{
-{
-	return( this.Atribuiu( diaDaSemanaExtenso( Data ) ) );
-}
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqConsulta_DiaRet.prototype.Cabecalho = function()
-{
-		return( "Dia Semana" );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_DiaRet.prototype.Existencia = function()
-{
-	return( tem( DataRet ) );
-}
-
-DiaRet.EhCalculado = true;
-//-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqConsulta_HoraRet.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "A hora é obrigatória" );
-		return( true );
-	}
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqConsulta_HoraRet.prototype.Cabecalho = function()
-{
-		return( "Hora<br>Retirada" );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_HoraRet.prototype.Existencia = function()
-{
-	return( tem( DataRet ) );
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqConsulta_TStAgRet.prototype.Cabecalho = function()
-{
-		return( "Status<br>Retirada" );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_TStAgRet.prototype.Existencia = function()
-{
-	return( tem( DataRet ) );
-}
-
-TStAgRet_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
-TStAgRet_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
-//-------------------------------------------------------------
-// Fitro para selecionar registros do pai
-//-------------------------------------------------------------
-Campo_arqConsulta_AssesRet.prototype.FiltroPai = function()
-{
-			return( "" + vijAssessor() + "" );
-}
-
-//-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqConsulta_AssesRet.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "O assessor é obrigatório" );
-		return( true );
-	}
-}
-
-//-------------------------------------------------------------
-// Cabeçalho para o campo
-//-------------------------------------------------------------
-Campo_arqConsulta_AssesRet.prototype.Cabecalho = function()
-{
-		return( "Assessor<br>Retirada" );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_AssesRet.prototype.Existencia = function()
-{
-	return( tem( TStAgRet ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_AssesRet_Usuario.prototype.Existencia = function()
-{
-	return( tem( TStAgRet ) );
-}
-
-//-------------------------------------------------------------
-// Condição Especial de Obrigatoriedade do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_AssesRet_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
-{
-	return( AssesRet.Obrigatorio( p_comMsg ) );
-}
-
-AssesRet_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_ObsRet.prototype.Existencia = function()
-{
-	return( tem( DataRet ) );
-}
-
-//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_TiConsulta.prototype.ExistenciaEspecial = function()
@@ -2328,22 +1983,6 @@ Campo_arqConsulta_ContaPTra.prototype.ExistenciaEspecial = function()
 	return( ( !ContaPTra_Transacao.Obrigatorio( false ) || tem(ContaPTra_Transacao) ) );
 }
 
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_QuemAgRet.prototype.ExistenciaEspecial = function()
-{
-	return( ( !QuemAgRet_Usuario.Obrigatorio( false ) || tem(QuemAgRet_Usuario) ) );
-}
-
-//-------------------------------------------------------------
-// Condição de Existência Especial do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_AssesRet.prototype.ExistenciaEspecial = function()
-{
-	return( ( !AssesRet_Usuario.Obrigatorio( false ) || tem(AssesRet_Usuario) ) );
-}
-
 function IniciarDependencias_arqConsulta()
 {
 Pessoa.CalculosDependentes= [ Prontuario ];
@@ -2355,7 +1994,6 @@ SaldoParc.CalculosDependentes= [ SaldoVal ];
 ValPTrata.CalculosDependentes= [ SaldoVal ];
 TrgQtdM.CalculosDependentes= [ Saldo ];
 TrgQtdMEnt.CalculosDependentes= [ Saldo ];
-Data.CalculosDependentes= [ DiaRet ];
 TiConsulta_TiConsulta.ExistenciasDependentes= [ TiConsulta ];
 Clinica_Clinica.ExistenciasDependentes= [ Clinica ];
 TiAgenda_TiAgenda.ExistenciasDependentes= [ TiAgenda ];
@@ -2383,13 +2021,6 @@ SaldoFPg.ExistenciasDependentes= [ SaldoParc,SaldoObs ];
 SaldoParc.ExistenciasDependentes= [ SaldoCond ];
 ContaCons_Transacao.ExistenciasDependentes= [ ContaCons ];
 ContaPTra_Transacao.ExistenciasDependentes= [ ContaPTra ];
-TrgQtdM.ExistenciasDependentes= [ QuemAgRet,QuemAgRet_Usuario ];
-Saldo.ExistenciasDependentes= [ QuemAgRet,QuemAgRet_Usuario ];
-QuemAgRet_Usuario.ExistenciasDependentes= [ QuemAgRet ];
-QuemAgRet.ExistenciasDependentes= [ QdoAgRet,DataRet ];
-DataRet.ExistenciasDependentes= [ DiaRet,HoraRet,TStAgRet,ObsRet ];
-TStAgRet.ExistenciasDependentes= [ AssesRet,AssesRet_Usuario ];
-AssesRet_Usuario.ExistenciasDependentes= [ AssesRet ];
 TiConsulta_TiConsulta.ErrosDependentes= [ TiConsulta ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 TStCon_Status.ErrosDependentes= [ TStCon ];
@@ -2408,8 +2039,6 @@ SdEntrFPg_FormaPg.ErrosDependentes= [ SdEntrFPg ];
 SaldoFPg_FormaPg.ErrosDependentes= [ SaldoFPg ];
 ContaCons_Transacao.ErrosDependentes= [ ContaCons ];
 ContaPTra_Transacao.ErrosDependentes= [ ContaPTra ];
-QuemAgRet_Usuario.ErrosDependentes= [ QuemAgRet ];
-AssesRet_Usuario.ErrosDependentes= [ AssesRet ];
 TiConsulta.CamposChave= [ TiConsulta_TiConsulta ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 TiAgenda.CamposChave= [ TiAgenda_TiAgenda ];
@@ -2425,8 +2054,6 @@ SdEntrFPg.CamposChave= [ SdEntrFPg_FormaPg ];
 SaldoFPg.CamposChave= [ SaldoFPg_FormaPg ];
 ContaCons.CamposChave= [ ContaCons_Transacao ];
 ContaPTra.CamposChave= [ ContaPTra_Transacao ];
-QuemAgRet.CamposChave= [ QuemAgRet_Usuario ];
-AssesRet.CamposChave= [ AssesRet_Usuario ];
 }
 	//=========================================================================
 	function AcionaTecla( p_tecla )
@@ -2459,7 +2086,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Num, TiConsulta, TiConsulta_TiConsulta, Clinica, Clinica_Clinica, TStCon, TStCon_Status, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet, QuemAgRet_Usuario, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, TStAgRet_Chave, TStAgRet_Descritor, AssesRet, AssesRet_Usuario, ObsRet ]	);
+		[ Num, TiConsulta, TiConsulta_TiConsulta, Clinica, Clinica_Clinica, TStCon, TStCon_Status, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraParc, SdEntrFPg, SdEntrFPg_FormaPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );
