@@ -11,7 +11,7 @@ echo
 		echo $this->NaoPedir( TiConsulta, 1 );
 
 //* form para TiConsulta = Tratamento
-if( ultimaLigOpcaoEm( 109,110,117 ) )
+if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 {
 	if( $g_acaoAtual == INSERINDO )
 	{
@@ -25,12 +25,14 @@ if( ultimaLigOpcaoEm( 109,110,117 ) )
 
 	}
 	else
+	{
 		echo $this->Pedir( "Consulta Nº",
          [ '', Num,
          [ brHtml(4) . "Data ", Data,
          [ brHtml(4) . "Hora ", Hora,
          [ " h" . brHtml(3) . "Chegada ", HoraChega, " h",'','','','FormCalculado' ] ] ], '', '','', 'FormCalculado' ] );
-
+	}
+	
    echo
 	$this->Pedir( "Status",
 		[ "", TStCon,
@@ -55,93 +57,102 @@ if( ultimaLigOpcaoEm( 109,110,117 ) )
 		[ brHtml(4) . "Forma de pagamento ", FormaPg2 ] ] ),
 	$this->Pedir( " ",
 		[ "Conta ", ContaCons, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ),
-"</table>",
-
-CriarForms(
-	[ 'Observações', 'O', true ],
-	[ 'Atual', 'A', true ],
-	[ 'Conduta', 'C', true ],
-	[ 'Medicação', 'M', true ],
-	[ 'Retirada', 'R', true ] ),
-
-"<table id='O' class='tabFormulario' style='display:none'>",
-	$this->Cabecalhos( [ "Observações", 'FormCab alinhaMeio', '2' ] ),
-	$this->Pedir( "", [ "", Obs, '', 'FormValor alinhaMeio', '2' ] ),
-"</table>",
-
-"<table id='A' class='tabFormulario' style='display:none'>",
-	$this->Pedir( "Motivo", TMotivo ),
-	$this->Pedir( "Medicação<br>atual", MedicaAtua ),
-"</table>",
-
-//* inicio Conduta
-"<table id='C' class='tabFormulario' style='display:none'>",
-	$this->Cabecalhos( [ "Tratamento", 'FormCab alinhaEsq', '2' ] ),
-	$this->Pedir( "Plano de tratamento", PTrata ),
-	$this->Pedir( "Valor do tratamento",
-		[ "", ValPTrata,
-		[ brHtml(4) . "Conta ", ContaPTra, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ] ),
-
-	$this->Cabecalhos( [ "Entrada", "FormCabPrime FundoAzul alinhaEsq", "2" ] ),
-	$this->Pedir( "Forma de pagamento",
-		[ "", EntraFPg,
-		[ brHtml(4) . "Valor ", EntraVal,
-		[ brHtml(4) . "Parcelas ", EntraParcE,
-		[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ] ),
-
-	$this->Pedir( "Se dividiu",
-		[ "Parcelas ", EntraParc,
-		[ brHtml(4) . "Forma de pagamento ", SdEntrFPg,
-		[ brHtml(4) . "1º vencimento ", SdVenc1Par,
-		[ brHtml(4) . "Condição ", SdCond, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)"  ] ] ] ] ),
-	$this->Pedir( " ",
-		[ "Valor das parcelas ", EntraValP,
-		[ brHtml(4) . "Total ", EntraTotP,
-		[ brHtml(4) . "Total da Entrada ", EntraTotal ] ] ] ),
-
-	$this->Pedir( "Observações", EntraObs ),
-
-	$this->Cabecalhos( [ "Saldo", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),
-	$this->Pedir( "Forma de pagamento",
-		[ "", SaldoFPg,
-		[ brHtml(4) . "Parcelas ", SaldoParc,
-		[ brHtml(4) . "Condição ", SaldoCond,
-		[ brHtml(4) . "Valor das parcelas ", SaldoVal, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)" ] ] ] ] ),
-	$this->Pedir( "Observações", SaldoObs ),
-
+	
 	$this->Pular1Linha(2),
-	$this->Cabecalhos( [ "Conduta - transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
-	$this->Pedir( "Conduta" ),
-"</table>",
-//* fim Conduta
-
-"<table id='M' class='tabFormulario' style='display:none'>",
-	$this->Cabecalhos( [ "Transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
-	$this->Pedir( "Medicação<br>Recomendada", Medicacao ),
-"</table>",
-
-"<table id='R' class='tabFormulario' style='display:none'>",
 	$this->Pedir( "Medicação",
-		[ "Quantidades: Prescrita ", TrgQtdM,
-		[ brHtml(4) . "Separada/Entregue ", TrgQtdMEnt,
-		[ brHtml(4) . "Saldo ", Saldo ] ] ] ),
-	$this->Pular1Linha(2),
-   $this->Cabecalhos( [ "Os campos abaixo somente são editáveis se houver uma
-		quantidade de medicação prescrita e o saldo for zero", 'FormCab alinhaMeio', '2' ] ),
-	$this->Pedir( "Agendado por",
-		[ "", QuemAgRet,
-		[ brHtml(1) . "em ", QdoAgRet ] ] ),
-	$this->Pedir( "Data",
-      [ "", DataRet,
-      [ " ", DiaRet,
-      [ brHtml(4) . "Hora ", HoraRet ] ] ] ),
-   $this->Pedir( "Status", TStAgRet ),
-   $this->Pedir( "Assessor",
-      [ "", AssesRet, "<br>(obrigatório se um Status for informado)" ] ),
-	$this->Pular1Linha(2),
-	$this->Cabecalhos( [ "Observações da retirada", 'FormCab alinhaMeio', '2' ] ),
-	$this->Pedir( "", [ "", ObsRet, '', 'FormValor alinhaMeio', '2' ] ),
-"</table>";
+	[ "Quantidades: Prescrita ", TrgQtdM,
+	[ brHtml(4) . "Separada/Entregue ", TrgQtdMEnt,
+	[ brHtml(4) . "Saldo ", Saldo ] ] ] ),
+	"</table>",
+	
+	//* 06/07/2022 Eles não estão usando esses campos já que criamos o arqAgRet
+	$this->NaoPedirVarios( QuemAgRet, QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, AssesRet, ObsRet ),
+
+	CriarForms(
+		[ 'Observações', 'O', true ],
+		[ 'Atual', 'A', true ],
+		[ 'Conduta', 'C', true ],
+		[ 'Medicação', 'M', true ] ),
+
+	"<table id='O' class='tabFormulario' style='display:none'>",
+		$this->Cabecalhos( [ "Observações", 'FormCab alinhaMeio', '2' ] ),
+		$this->Pedir( "", [ "", Obs, '', 'FormValor alinhaMeio', '2' ] ),
+	"</table>",
+
+	"<table id='A' class='tabFormulario' style='display:none'>",
+		$this->Pedir( "Motivo", TMotivo ),
+		$this->Pedir( "Medicação<br>atual", MedicaAtua ),
+	"</table>",
+
+	//* inicio Conduta
+	"<table id='C' class='tabFormulario' style='display:none'>",
+		$this->Cabecalhos( [ "Tratamento", 'FormCab alinhaEsq', '2' ] ),
+		$this->Pedir( "Plano de tratamento", PTrata ),
+		$this->Pedir( "Valor do tratamento",
+			[ "", ValPTrata,
+			[ brHtml(4) . "Conta ", ContaPTra, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ] ),
+
+		$this->Cabecalhos( [ "Entrada", "FormCabPrime FundoAzul alinhaEsq", "2" ] ),
+		$this->Pedir( "Forma de pagamento",
+			[ "", EntraFPg,
+			[ brHtml(4) . "Valor ", EntraVal,
+			[ brHtml(4) . "Parcelas ", EntraParcE,
+			[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ] ),
+
+		$this->Pedir( "Se dividiu",
+			[ "Parcelas ", EntraParc,
+			[ brHtml(4) . "Forma de pagamento ", SdEntrFPg,
+			[ brHtml(4) . "1º vencimento ", SdVenc1Par,
+			[ brHtml(4) . "Condição ", SdCond, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)"  ] ] ] ] ),
+		$this->Pedir( " ",
+			[ "Valor das parcelas ", EntraValP,
+			[ brHtml(4) . "Total ", EntraTotP,
+			[ brHtml(4) . "Total da Entrada ", EntraTotal ] ] ] ),
+
+		$this->Pedir( "Observações", EntraObs ),
+
+		$this->Cabecalhos( [ "Saldo", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),
+		$this->Pedir( "Forma de pagamento",
+			[ "", SaldoFPg,
+			[ brHtml(4) . "Parcelas ", SaldoParc,
+			[ brHtml(4) . "Condição ", SaldoCond,
+			[ brHtml(4) . "Valor das parcelas ", SaldoVal, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)" ] ] ] ] ),
+		$this->Pedir( "Observações", SaldoObs ),
+
+		$this->Pular1Linha(2),
+		$this->Cabecalhos( [ "Conduta - transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
+		$this->Pedir( "Conduta" ),
+	"</table>",
+	//* fim Conduta
+
+	"<table id='M' class='tabFormulario' style='display:none'>",
+		$this->Cabecalhos( [ "Transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
+		$this->Pedir( "Medicação<br>Recomendada", Medicacao ),
+	"</table>";
+/*
+	"<table id='R' class='tabFormulario' style='display:none'>",
+		$this->Pedir( "Medicação",
+			[ "Quantidades: Prescrita ", TrgQtdM,
+			[ brHtml(4) . "Separada/Entregue ", TrgQtdMEnt,
+			[ brHtml(4) . "Saldo ", Saldo ] ] ] ),
+		$this->Pular1Linha(2),
+		$this->Cabecalhos( [ "Os campos abaixo somente são editáveis se houver uma
+			quantidade de medicação prescrita e o saldo for zero", 'FormCab alinhaMeio', '2' ] ),
+		$this->Pedir( "Agendado por",
+			[ "", QuemAgRet,
+			[ brHtml(1) . "em ", QdoAgRet ] ] ),
+		$this->Pedir( "Data",
+			[ "", DataRet,
+			[ " ", DiaRet,
+			[ brHtml(4) . "Hora ", HoraRet ] ] ] ),
+		$this->Pedir( "Status", TStAgRet ),
+		$this->Pedir( "Assessor",
+			[ "", AssesRet, "<br>(obrigatório se um Status for informado)" ] ),
+		$this->Pular1Linha(2),
+		$this->Cabecalhos( [ "Observações da retirada", 'FormCab alinhaMeio', '2' ] ),
+		$this->Pedir( "", [ "", ObsRet, '', 'FormValor alinhaMeio', '2' ] ),
+	"</table>";
+*/
 }
 else //* para nutricionista ou psicologo
 {

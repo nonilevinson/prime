@@ -117,6 +117,13 @@ class campo_arqAgRet_Consulta extends Lance_CampoLigado
 	}
 
 	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+			return( "ValorAzulNegrito" );
+	}
+
+	//--------------------------------------------------
 	function CabecalhoCampo()
 	{
 		global $g_regAtual;
@@ -134,21 +141,6 @@ class campo_arqAgRet_Consulta_Num extends Lance_CampoNumerico
 	function __construct()
 	{
 		parent::__construct( "Consulta_Num", "Consulta_Num", "Num", 6, "###.##z", "", "", EH_CHAVE, "Consulta", false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( !tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET != 3 && ($g_regAtual->CONSULTA_TRGQTDM > 0 && $g_regAtual->CONSULTA_TRGQTDM == $g_regAtual->CONSULTA_TRGQTDMENT) )
-			return( "VerdeFundoDir" );
-		if( tem( $g_regAtual->CONSULTA_DATARET ) && !tem( $g_regAtual->CONSULTA_TSTAGRET ) )
-			return( "StAgendado" );
-		if( tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET == 1 )
-			return( "StRecepcao" );
-		if( tem( $g_regAtual->CONSULTA_DATARET ) && $g_regAtual->CONSULTA_TSTAGRET == 2 )
-			return( "StAssessor" );
-		return( parent::Estilo() );
 	}
 
 }

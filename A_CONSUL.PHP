@@ -26,7 +26,7 @@ class campo_arqConsulta_Num extends Lance_CampoNumerico
 	function Estilo()
 	{
 		global $g_regAtual;
-		if( !tem( $g_regAtual->DATARET ) && $g_regAtual->TSTAGRET != 3 && ($g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM == $g_regAtual->TRGQTDMENT) )
+		if( $g_regAtual->TSTAGRET != 3 && ($g_regAtual->TRGQTDM > 0 && $g_regAtual->TRGQTDM == $g_regAtual->TRGQTDMENT) )
 			return( "VerdeFundoDir" );
 		if( tem( $g_regAtual->DATARET ) && !tem( $g_regAtual->TSTAGRET ) )
 			return( "StAgendado" );
