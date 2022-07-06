@@ -7,7 +7,7 @@ commit;
 execute procedure reindexartudo;
 commit;
 
-insert into arqLanceOperacao values(200278,2,'Relat[orio de consultas com medicação separada e sem agenda de retirada','',278,50,0,'');
+insert into arqLanceOperacao values(200278,2,'Relatório de consultas com medicação separada e sem retirada','',278,50,0,'');
 commit;
 
 /************************************************************

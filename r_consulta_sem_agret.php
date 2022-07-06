@@ -2,41 +2,27 @@
 
 require_once( 'ext_relatorios_colunares.php' );
 
-class RelParcela extends Relatorios
+class RelConsulta extends Relatorios
 {
 	//------------------------------------------------------------------------
 	function DefinirRelatorio()
 	{
 		global $parQSelecao;
 
-		$this->tituloRelatorio = [ "Medicação prescrita",
+		$this->tituloRelatorio = [ "Consultas com medicação separada e sem a retirada",
 			$this->TituloData( "Consultas", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ),
 			' ' ];
 
       $this->DefinirCabColunas(
-         [ "Medicamento",      60, ALINHA_ESQ ],
-         [ "Qtd\nPrescrita",   20, ALINHA_DIR ],
-         [ "Unidade",          20, ALINHA_ESQ ],
-         [ "Qtd\nSeparada",    20, ALINHA_DIR ],
-         [ "Qtd\nSaldo",	    20, ALINHA_DIR ] );
+         [ "Consulta",      20, ALINHA_CEN ],
+         [ "Paciente",     120, ALINHA_ESQ ],
+         [ "Prontuário",    20, ALINHA_CEN ],
+         [ "Data\nAgenda",  19, ALINHA_CEN ] );
 
       $this->DefinirQuebras(
-         [ 'QuebraPorClinica',  SIM, NAO, SIM ],
-         [ 'QuebraPorConsulta', SIM, NAO, SIM ] );
+         [ 'QuebraPorClinica',  SIM, NAO, SIM ] );
 
-		$this->DefinirTotais( "totQtd", "totQtdEntreg" );
-
-		$select = "Select M.Medicamen, U.Unidade
-			From arqMedicamen M
-            join arqUnidade U on U.idPrimario=M.Unidade
-			Order by M.Medicamen";
-		$this->regMedicam = sql_lerRegistros( $select );
-
-		foreach( $this->regMedicam as $umaMedicamen )
-      {
-			$this->DefinirTotais( "totQ" . $umaMedicamen->MEDICAMEN );
-			$this->DefinirTotais( "totE" . $umaMedicamen->MEDICAMEN );
-      }
+		$this->DefinirTotais( "totQtd" );
 
 		$this->cabPaginaTemCabColunas = false;
 		$this->DefinirAlturas();
@@ -44,39 +30,11 @@ class RelParcela extends Relatorios
 	}
 
 	//------------------------------------------------------------------------
-	function PeQuebra( $p_cabTotal, $p_totalizacao=false )
+	function PeQuebra( $p_cabTotal )
 	{
-      if( $p_totalizacao )
-      {
-         $this->ImprimirTotalEmUmaColuna( "Totalização de " . $p_cabTotal );
-
-         foreach( $this->regMedicam as $umaMedicamen )
-         {
-            if( $this->ValorTotal( "totQ" . $umaMedicamen->MEDICAMEN ) > 0 )
-            {
-               $totQ = $this->ValorTotal( "totQ" . $umaMedicamen->MEDICAMEN );
-               $totE = $this->ValorTotal( "totE" . $umaMedicamen->MEDICAMEN );
-               $totS = $totQ - $totE;
-
-               $this->valores[ 0 ] = $umaMedicamen->MEDICAMEN;
-               $this->valores[ 1 ] = formatarNum( $totQ );
-               $this->valores[ 2 ] = $umaMedicamen->UNIDADE;
-               $this->valores[ 3 ] = formatarNum( $totE, 0, 0, 0, ')' );
-               $this->valores[ 4 ] = formatarNum( $totS, 0, 0, 0, ')' );
-               $this->ImprimirValorColunas();
-            }
-         }
-      }
-
-      $qtd       = $this->ValorTotal( "totQtd" );
-      $qtdEntreg = $this->ValorTotal( "totQtdEntreg" );
-      $saldo     = $qtd - $qtdEntreg;
-
-      $this->valores[ 0 ] = $p_cabTotal;
-      $this->valores[ 1 ] = formatarNum( $qtd );
-      $this->valores[ 3 ] = formatarNum( $qtdEntreg, 0, 0, 0, ')' );
-      $this->valores[ 4 ] = formatarNum( $saldo, 0, 0, 0, ')' );
-      $this->ImprimirTotalColunas();
+      $qtd = $this->ValorTotal( "totQtd" );
+      $this->ImprimirTotalEmUmaColuna( $p_cabTotal . " com " . formatarNum( $qtd ) . " consulta" .
+         ( $qtd > 1 ? "s" : "" ) );
 	}
 
 	//------------------------------------------------------------------------
@@ -89,6 +47,11 @@ class RelParcela extends Relatorios
 			$this->MarcarPosicao( 'Total Geral' );
 			$this->PeQuebra( 'Total Geral', true );
 		}
+      
+      $this->WriteHtml( "<br>Obs.: Todas as consultas listadas já tem a medicação separada.<br>
+         Se a data da agenda estiver em branco é porque ainda não agendaram com o pacinete e " .
+         "tendo uma data e esta for passada, quer dizer que o paciente não veio pegar a medicação" );
+      $this->writeLn();      
 	}
 
 	//------------------------------------------------------------------------
@@ -105,6 +68,7 @@ class RelParcela extends Relatorios
 		$regA = &$this->regAtual;
 		$this->quebraClinica = $regA->CLINICA;
 		$this->CabQuebra( $this->quebraClinica );
+      $this->ImprimirCabColunas();
 	}
 
 	//------------------------------------------------------------------------
@@ -116,52 +80,20 @@ class RelParcela extends Relatorios
 	}
 
 	//------------------------------------------------------------------------
-	//	Quebra por Consulta
-	//------------------------------------------------------------------------
-	function QuebraPorConsulta()
-	{
-		return( $this->regAtual->NUMCONSULTA );
-	}
-
-	//------------------------------------------------------------------------
-	function CabQuebraPorConsulta()
-	{
-		$regA = &$this->regAtual;
-		$this->quebraConsulta = "Consulta: " . $regA->NUMCONSULTA;
-		$this->CabQuebra( $this->quebraConsulta . " - " . $regA->NOME . " - " . $regA->PRONTUARIO );
-      $this->ImprimirCabColunas();
-	}
-
-	//------------------------------------------------------------------------
-	function PeQuebraPorConsulta()
-	{
-		$regA = &$this->regAtual;
-		$this->PeQuebra( $this->quebraConsulta, false );
-	}
-
-	//------------------------------------------------------------------------
 	function Basico()
 	{
 		$regA = &$this->regAtual;
-      $medicamen = $regA->MEDICAMEN;
-      $qtd       = $regA->QTD;
-      $qtdEntreg = $regA->QTDENTREG;
-      $saldo     = $qtd - $qtdEntreg;
 
       $this->valores = [
-         $medicamen,
-         formatarNum( $qtd ),
-         $regA->UNIDADE,
-         formatarNum( $qtdEntreg, 0, 0, 0, ')' ),
-         formatarNum( $saldo, 0, 0, 0, ')' )
+         formatarNum( $regA->NUMCONSULTA ),
+         cadEsq( $regA->NOME, 58 ),
+         $regA->PRONTUARIO,
+         formatarData( $regA->DATAAGRET )
       ];
 
       $this->ImprimirValorColunas();
 
-		$this->AcumularTotal( "totQ" . $medicamen, $qtd );
-		$this->AcumularTotal( "totE" . $medicamen, $qtdEntreg );
-      $this->AcumularTotal( "totQtd", $qtd );
-		$this->AcumularTotal( "totQtdEntreg", $qtdEntreg );
+		$this->AcumularTotal( "totQtd", 1 );
 	}
 }
 
@@ -171,27 +103,30 @@ class RelParcela extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelParcela( RETRATO, A4, 'Medicacao_Prescrita.pdf', '', true );
+$proc = new RelConsulta( RETRATO, A4, 'Consultas_Sem_Retirada.pdf', '', true );
 
-switch( $parQSelecao->TSIMNAO )
-{
-   case 0: $saldo = ""; break;
-   case 1: $saldo = "M.Qtd = M.QtdEntreg and "; break;
-   case 2: $saldo = "M.Qtd != M.QtdEntreg and "; break;
-}
-
-$select = "Select L.Clinica, C.Num as NumConsulta, E.Medicamen, M.Qtd, M.QtdEntreg,
-      P.Nome, P.Prontuario, U.Unidade
-   From arqCMedica M
-      join arqMedicamen E on E.idPrimario=M.Medicamen
-      join arqUnidade   U on U.idPrimario=E.Unidade
-      join arqConsulta  C on C.idPrimario=M.Consulta
+$select = "Select L.Clinica, C.Num as NumConsulta, P.Nome, P.Prontuario,
+      ( Select A.Data
+         From ArqAgRet A
+         Where A.Consulta = C.iDPrimario and (A.TStAgRet != 3 or A.TStAgRet is null)
+      ) as DataAgRet
+   From arqConsulta C
       join arqClinica   L on L.idPrimario=C.Clinica
       join arqPessoa    P on P.idPrimario=C.Pessoa
-   Where " . substr( $saldo .
+   Where " .
       ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
       filtrarPorIntervaloData( 'C.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
-      filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 ) . "
+      filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ) . "
+      C.TrgQtdM > 0 and C.Saldo = 0
+      and
+      ( not exists( Select A.Data
+         From arqAgRet A
+         Where A.Consulta = C.idPrimario )
+         or
+         exists( Select A.Data
+         From arqAgRet A
+         Where A.Consulta = C.idPrimario and ( A.TStAgRet != 3 or A.TStAgRet is null ) )
+      )
    Order by L.Clinica, C.Num";
 
 $proc->Processar( $select );
