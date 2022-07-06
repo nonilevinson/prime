@@ -3,6 +3,7 @@
 $op = ultimaLigOpcao();
 
 echo 	"<table class='tabFormulario'>";
+//--------------------------------------------------------------
 
 if( $op == 19 ) //* envio de teste de ação de email
 {
@@ -425,5 +426,14 @@ if( in_array($op, [266,268] ) ) //* selecao arqConsulta Nutricionista e Psicólog
 	$this->Pedir( "Médico", Medico );
 }
 
-//==================================================================================
+if( $op == 278 ) //* r_consulta_sem_agret
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Consultas entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
+//--------------------------------------------------------------
 echo 	"</table>";
