@@ -2072,7 +2072,7 @@ CREATE TABLE arqUsuario
 	/* 16*/	EMAILFINAN campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 17*/	EMCMEDISEP campoLogico, /* Lógico: 0=Não 1=Sim */
 	/* 18*/	ASSINATURA campoImagem, /* Imagem = Ligado com a Tabela LanceTipoImg */
-	/* 19*/	ASSINATURA_ARQUIVO  VARCHAR(128)computed by ( lower( 'Usuario/' || CASE WHEN ( ASSINATURA IS NULL ) THEN ( 'sem_imagem' ) ELSE ( IDPRIMARIO || '_ASSINATURA.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=ASSINATURA) ) END ) ),
+	/* 19*/	ASSINATURA_ARQUIVO  VARCHAR(128)computed by ( lower( 'Usuario/' || CASE WHEN ( ASSINATURA IS NULL ) THEN ( 'sem_imagem.gif' ) ELSE ( IDPRIMARIO || '_ASSINATURA.' || (select TI.CHAVE from tabLanceTipoImg TI where TI.IDPRIMARIO=ASSINATURA) ) END ) ),
 	CONSTRAINT arqUsuario_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqUsuario_UK UNIQUE ( Usuario )
 );

@@ -125,7 +125,7 @@ function filtrarTodas()
    }
    
    return(
-	   ( SQL_VETIDCLINICA ? substr( 'A.Clinica in ' . SQL_VETIDCLINICA . ' and ', 0, -4 ) : '' ) . "
+	   ( SQL_VETIDCLINICA ? 'A.Clinica in ' . SQL_VETIDCLINICA . ' and ' : '' ) . "
       A.TiConsulta = " . $tiConsulta
    );
 }
