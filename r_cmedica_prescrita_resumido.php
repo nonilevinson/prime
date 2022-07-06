@@ -157,7 +157,7 @@ switch( $parQSelecao->TSIMNAO )
    case 2: $saldo = "M.Qtd != M.QtdEntreg and "; break;
 }
 
-$select = "Select L.Clinica, E.Medicamen, M.Qtd, M.QtdEntreg, U.Unidade
+$select = "Select L.Clinica, E.Medicamen, U.Unidade, sum( M.Qtd ) as Qtd, sum( M.QtdEntreg ) as QtdEntreg
    From arqCMedica M
       join arqMedicamen E on E.idPrimario=M.Medicamen
       join arqUnidade   U on U.idPrimario=E.Unidade
@@ -167,6 +167,6 @@ $select = "Select L.Clinica, E.Medicamen, M.Qtd, M.QtdEntreg, U.Unidade
       ( SQL_VETIDCLINICA ? "C.Clinica in " . SQL_VETIDCLINICA . ' and ': '' ) .
       filtrarPorIntervaloData( 'C.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
       filtrarPorLig( 'C.Clinica', $parQSelecao->CLINICA ), 0, -4 ) . "
-   Order by L.Clinica";
+   Group by 1,2,3";
 
 $proc->Processar( $select );
