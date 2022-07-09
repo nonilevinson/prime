@@ -1031,6 +1031,39 @@ class campo_parQSelecao_TiAgenda_TiAgenda extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo Midia
+//======================================================
+
+class campo_parQSelecao_Midia extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "Midia", "Midia", "Midia", 0, "arqMidia", "arqMidia.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo Midia_Midia
+//======================================================
+
+class campo_parQSelecao_Midia_Midia extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "Midia_Midia", "Midia_Midia", "Midia", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "Midia", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Mídia" );
+	}
+
+}
+
+//======================================================
 //	Arquivo parQSelecao
 //======================================================
 function listaCampos_parQSelecao( $p_prefixo )
@@ -1127,7 +1160,9 @@ function listaCampos_parQSelecao( $p_prefixo )
 			new Lance_CampoCadeia( "TCMedica_Chave", "TCMedica_Chave", "Chave", 1, "x", EH_CHAVE, TCMedica ),
 			new Lance_CampoCadeia( "TCMedica_Descritor", "TCMedica_Descritor", "Descritor", 34, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_DESCRITOR, TCMedica ),
 			new campo_parQSelecao_TiAgenda(),
-			new campo_parQSelecao_TiAgenda_TiAgenda() ]
+			new campo_parQSelecao_TiAgenda_TiAgenda(),
+			new campo_parQSelecao_Midia(),
+			new campo_parQSelecao_Midia_Midia() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );

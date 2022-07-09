@@ -435,5 +435,14 @@ if( $op == 278 ) //* r_consulta_sem_agret
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
+if( $op == 279 ) //* r_midia_pessoa
+{
+	echo
+	$this->Pedir( "Mídia", Midia ),
+	$this->Pedir( "Pacientes desde",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
 //--------------------------------------------------------------
 echo 	"</table>";

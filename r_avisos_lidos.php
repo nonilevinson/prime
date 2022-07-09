@@ -3,24 +3,23 @@
 require_once( 'ext_relatorios_colunares.php' );
 
 class RelAvisos extends Relatorios
-{	
+{
 	//------------------------------------------------------------------------
 	function DefinirRelatorio()
 	{
-
 		$this->tituloRelatorio = [ 'Relatório de avisos lidos', ' ' ];
 
 		$this->DefinirCabColunas(
 			[ 'Nome',				60, ALINHA_ESQ ],
 			[ 'Data da leitura',	50, ALINHA_CEN ] );
-						
-		$this->DefinirQuebras( 
+
+		$this->DefinirQuebras(
 			[ 'QuebraPorAviso', SIM, NAO, SIM ] );
 
 		$this->cabPaginaTemCabColunas = false;
 		$this->DefinirAlturas();
 	}
-	
+
 	//------------------------------------------------------------------------
 	//	Quebra por Aviso
 	//------------------------------------------------------------------------
@@ -28,24 +27,24 @@ class RelAvisos extends Relatorios
 	{
 		return( $this->regAtual->NUMERO );
 	}
-		
+
 	//------------------------------------------------------------------------
 	function CabQuebraPorAviso()
 	{
 		$regA = &$this->regAtual;
-		$this->Aviso = 'Aviso '. cad0( $regA->NUMERO, 6 ) . ' de ' . 
+		$this->Aviso = 'Aviso '. cad0( $regA->NUMERO, 6 ) . ' de ' .
 			formatarData( $regA->DATAAVISO ) . ' - ' . cadEsq( $regA->ASSUNTO, 30 );
 		$this->CabQuebra( $this->Aviso );
 		$this->ImprimirCabColunas();
 	}
-			
+
 	//------------------------------------------------------------------------
 	function PeQuebraPorAviso()
 	{
 		$this->FecharLinhas();
 		$this->PularLinha( 2 );
 	}
-	
+
 	//------------------------------------------------------------------------
 	//	Evento Básico
 	//------------------------------------------------------------------------
@@ -56,7 +55,7 @@ class RelAvisos extends Relatorios
 		$this->valores = [
 			$regA->NOME,
 			formatarData( $regA->DATA ) ];
-					
+
 		$this->ImprimirValorColunas();
 	}
 }
@@ -77,8 +76,8 @@ $filtro = substr(
 
 $select = "Select L.Data, A.Numero, A.Data as DataAviso, A.Assunto, U.Nome
 	From arqLido L
-		inner join arqAvisos		A on A.idPrimario=L.Avisos
-		inner join arqUsuario	U on U.idPrimario=L.Usuario ".
+		join arqAvisos		A on A.idPrimario=L.Avisos
+		join arqUsuario	U on U.idPrimario=L.Usuario ".
 	( $filtro ? ( 'Where ' . $filtro ) : '' ) .
 	"Order by A.Numero, U.Nome";
 
