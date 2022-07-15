@@ -124,7 +124,7 @@ $select = "with
 			Where P.Midia = " . $parQSelecao->MIDIA . "
 			Order by P.Nome )
 	
-	Select P.Nome, C.Data, L.Clinica, P.Midia, P.Prontuario, P.Desde
+	Select P.Midia, L.Clinica, C.Data, P.Nome, P.Prontuario, P.Desde
 	From arqConsulta C
 		join arqClinica L on L.idPrimario=C.Clinica
 		join P on 1=1
@@ -135,19 +135,20 @@ $select = "with
 */
 
 $select = "with
-	C as ( Select L.Clinica, C.Data
+	C as ( Select L.Clinica, C.Data, C.Num, C.idPrimario as idConsulta
 		From arqConsulta C
 			join arqClinica 	L on L.idPrimario=C.Clinica
 			join arqPessoa 	P on P.idPrimario=C.Pessoa
 	Where " . substr(
 		( $parQSelecao->MIDIA ? "P.Midia = " . $parQSelecao->MIDIA . " and " : "" ) .
 		filtrarPorIntervaloData( "C.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ), 0, -4 ) ."
-	rows 1 )
+	Order by P.Nome, C.Data )
 	
-	Select P.Prontuario, P.Nome, P.Desde, M.Midia, C.Clinica, C.Data
+	Select M.Midia, C.Clinica, C.Num, C.Data, P.Nome, P.Prontuario, P.Desde
 		From arqPessoa P
-			join arqMidia M on M.idPrimario=P.Midia
-			join C on 1=1
+			join arqMidia 		M on M.idPrimario=P.Midia
+			join arqConsulta	O on O.Pessoa=P.idPrimario
+			join C on C.idConsulta=O.idPrimario
 		Where " .
 			( $parQSelecao->MIDIA ? "P.Midia = " . $parQSelecao->MIDIA . " and " : "" ) . "
 			P.Midia is not null
