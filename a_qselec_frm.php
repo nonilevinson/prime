@@ -439,7 +439,8 @@ if( $op == 279 ) //* r_midia_pessoa
 {
 	echo
 	$this->Pedir( "Mídia", Midia ),
-	$this->Pedir( "Pacientes desde",
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Consultas entre",
 		[ "", DataIni,
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
