@@ -32,7 +32,10 @@ class RelMidia extends Relatorios
 	//------------------------------------------------------------------------
 	function PeQuebra( $p_cabTotal )
 	{
-		$this->ImprimirTotalEmUmaColuna( $p_cabTotal . " com " . $this->FormatarTotal( "totQtd" ) . " pacientes" );
+		$totQtd = $this->ValorTotal( "totQtd" );
+		
+		$this->ImprimirTotalEmUmaColuna( $p_cabTotal . " com " . formatarNum( $totQtd ) .
+			" paciente" . ( $totQtd > 1 ? "s" : "" ) );
 	}
 
 	//------------------------------------------------------------------------
@@ -62,7 +65,7 @@ class RelMidia extends Relatorios
 	function PeQuebraPorMidia()
 	{
 		$this->PeQuebra( $this->midia );
-		$this->PularLinha( 4 );
+		$this->PularLinha( 8 );
 	}
 
 	//------------------------------------------------------------------------
@@ -96,6 +99,7 @@ class RelMidia extends Relatorios
 	{
 		$regA = &$this->regAtual;
 
+		// $select = "Select 
 		$this->valores = [
 			$regA->PRONTUARIO,
          $regA->NOME,
@@ -105,7 +109,6 @@ class RelMidia extends Relatorios
 		$this->ImprimirValorColunas();
 
       $this->AcumularTotal( "totQtd", 1 );
-
 	}
 }
 
@@ -116,42 +119,22 @@ global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
 $proc = new RelMidia( RETRATO, A4, 'Midias_Pacientes.pdf', '', true );
-/*
-$select = "with
-	p as ( Select P.Prontuario, P.Nome, P.Desde, M.Midia
-			From arqPessoa P
-				join arqMidia M on M.idPrimario=P.Midia
-			Where P.Midia = " . $parQSelecao->MIDIA . "
-			Order by P.Nome )
-	
-	Select P.Midia, L.Clinica, C.Data, P.Nome, P.Prontuario, P.Desde
-	From arqConsulta C
-		join arqClinica L on L.idPrimario=C.Clinica
-		join P on 1=1
-	Where " . 
-		filtrarPorIntervaloData( "C.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) ."
-		C.Pessoa = P.idPessoa
-	Order by P.Midia, L.Clinica, P.Nome, C.Data";
-*/
 
-$select = "with
-	C as ( Select L.Clinica, C.Data, C.Num, C.idPrimario as idConsulta
-		From arqConsulta C
+$select = "Select distinct M.Midia, L.Clinica, P.Nome, P.Prontuario, P.Desde,
+		(Select C1.Data
+		From arqConsulta C1
+		Where " .
+			filtrarPorIntervaloData( "C1.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) . "
+			C1.Pessoa = P.idPrimario			
+			rows 1 )
+	From arqConsulta C
 			join arqClinica 	L on L.idPrimario=C.Clinica
 			join arqPessoa 	P on P.idPrimario=C.Pessoa
-	Where " . substr(
-		( $parQSelecao->MIDIA ? "P.Midia = " . $parQSelecao->MIDIA . " and " : "" ) .
-		filtrarPorIntervaloData( "C.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ), 0, -4 ) ."
-	Order by P.Nome, C.Data )
-	
-	Select M.Midia, C.Clinica, C.Num, C.Data, P.Nome, P.Prontuario, P.Desde
-		From arqPessoa P
 			join arqMidia 		M on M.idPrimario=P.Midia
-			join arqConsulta	O on O.Pessoa=P.idPrimario
-			join C on C.idConsulta=O.idPrimario
-		Where " .
+		Where " .			
+			filtrarPorIntervaloData( "C.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
 			( $parQSelecao->MIDIA ? "P.Midia = " . $parQSelecao->MIDIA . " and " : "" ) . "
 			P.Midia is not null
-		Order by M.Midia, C.Clinica, P.Nome";		
+		Order by M.Midia, C.Clinica, C.Data, P.Nome";
 
 $proc->Processar( $select );
