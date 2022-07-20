@@ -14,16 +14,18 @@ class RelMidia extends Relatorios
          ' ' ];
 
 		$this->DefinirCabColunas(
-			[ 'Prontuário',    18, ALINHA_CEN ],
+			[ 'Prontuário',	 18, ALINHA_CEN ],
 			[ 'Nome',			130, ALINHA_ESQ ],
 			[ 'Desde',	       20, ALINHA_CEN ],
-			[ 'Consulta',      20, ALINHA_CEN ] );
+			[ 'Consulta',      20, ALINHA_CEN ],
+			[ 'Valor',      	 20, ALINHA_DIR ]
+		);
 
 		$this->DefinirQuebras(
 			[ 'QuebraPorMidia', 		SIM, NAO, SIM ],
 			[ 'QuebraPorClinica',	SIM, NAO, SIM ] );
 
-      $this->DefinirTotais( "totQtd" );
+      $this->DefinirTotais( "totQtd", "totValor" );
 
 		$this->cabPaginaTemCabColunas = false;
 		$this->DefinirAlturas();
@@ -34,8 +36,11 @@ class RelMidia extends Relatorios
 	{
 		$totQtd = $this->ValorTotal( "totQtd" );
 		
-		$this->ImprimirTotalEmUmaColuna( $p_cabTotal . " com " . formatarNum( $totQtd ) .
-			" paciente" . ( $totQtd > 1 ? "s" : "" ) );
+		$this->JuntarColunas( [0,3] );
+		$this->valores[ 0 ] = $p_cabTotal . " com " . formatarNum( $totQtd ) . " paciente" . ( $totQtd > 1 ? "s" : "" );
+		$this->valores[ 4 ] = $this->FormatarTotal( "totValor", [ 2, '', '', ')' ] );
+		$this->ImprimirTotalColunas();
+		$this->RestaurarColunas();
 	}
 
 	//------------------------------------------------------------------------
@@ -98,17 +103,20 @@ class RelMidia extends Relatorios
 	function Basico()
 	{
 		$regA = &$this->regAtual;
+		$valor = $regA->VALOR;
 
-		// $select = "Select 
 		$this->valores = [
 			$regA->PRONTUARIO,
          $regA->NOME,
          formatarData( $regA->DESDE ),
-         formatarData( $regA->DATA ) ];
+         formatarData( $regA->DATA ),
+			formatarValor( $valor )
+		];
 
 		$this->ImprimirValorColunas();
 
       $this->AcumularTotal( "totQtd", 1 );
+      $this->AcumularTotal( "totValor", $valor );
 	}
 }
 
@@ -118,9 +126,10 @@ class RelMidia extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelMidia( RETRATO, A4, 'Midias_Pacientes.pdf', '', true );
+$proc = new RelMidia( RETRATO, A4, 'Midias_Pacientes.pdf', '', true, .95 );
 
 $select = "Select distinct M.Midia, L.Clinica, P.Nome, P.Prontuario, P.Desde,
+		(C.Valor + C.Valor2) as Valor,
 		(Select C1.Data
 		From arqConsulta C1
 		Where " .
