@@ -142,6 +142,7 @@ $select = "Select distinct M.Midia, L.Clinica, P.Nome, P.Prontuario, P.Desde,
 			join arqMidia 		M on M.idPrimario=P.Midia
 		Where " .			
 			filtrarPorIntervaloData( "C.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
+			filtrarPorLig( "C.Clinica", $parQSelecao->CLINICA ) .
 			( $parQSelecao->MIDIA ? "P.Midia = " . $parQSelecao->MIDIA . " and " : "" ) . "
 			P.Midia is not null
 		Order by M.Midia, C.Clinica, C.Data, P.Nome";
