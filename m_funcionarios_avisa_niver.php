@@ -105,7 +105,7 @@ $select = "Select U.Usuario, U.Email
 	From arqUsuario U
 	Where U.Grupo is not null and U.Ativo = 1 and U.Nascimento is not null and
 		extract( day from U.Nascimento ) = extract( day from '" . $proc->hoje . "' ) and
-		extract( month from U.Nascimento ) = extract( month from '" . $proc->hoje . "' ) and
+		extract( month from U.Nascimento ) = extract( month from '" . $proc->hoje . "' )
 	Order by U.Usuario";
 
 $proc->Processar( $select );
