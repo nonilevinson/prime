@@ -15,19 +15,22 @@ class RelMidia extends Relatorios
 
 		$this->DefinirCabColunas(
 			[ 'Prontuário',	 18, ALINHA_CEN ],
-			[ 'Nome',			130, ALINHA_ESQ ],
-			[ 'Desde',	       20, ALINHA_CEN ],
-			[ 'Consulta',      20, ALINHA_CEN ],
-			[ 'Valor',      	 20, ALINHA_DIR ]
+			[ 'Nome',			110, ALINHA_ESQ ],
+			[ 'Desde',	       19, ALINHA_CEN ],
+			[ 'Consulta',      19, ALINHA_CEN ],
+			[ 'Valor',      	 16, ALINHA_DIR ],
+			[ 'Tratamento',  	 20, ALINHA_DIR ],
+			[ 'Total',      	 20, ALINHA_DIR ]
 		);
 
 		$this->DefinirQuebras(
 			[ 'QuebraPorMidia', 		SIM, NAO, SIM ],
 			[ 'QuebraPorClinica',	SIM, NAO, SIM ] );
 
-      $this->DefinirTotais( "totQtd", "totValor" );
+      $this->DefinirTotais( "totQtd", "totValor", "totValPTrata", "totTotal" );
 
 		$this->cabPaginaTemCabColunas = false;
+		$this->comCodigoRel           = false;
 		$this->DefinirAlturas();
 	}
 
@@ -39,6 +42,8 @@ class RelMidia extends Relatorios
 		$this->JuntarColunas( [0,3] );
 		$this->valores[ 0 ] = $p_cabTotal . " com " . formatarNum( $totQtd ) . " paciente" . ( $totQtd > 1 ? "s" : "" );
 		$this->valores[ 4 ] = $this->FormatarTotal( "totValor", [ 2, '', '', ')' ] );
+		$this->valores[ 5 ] = $this->FormatarTotal( "totValPTrata", [ 2, '', '', ')' ] );
+		$this->valores[ 6 ] = $this->FormatarTotal( "totTotal", [ 2, '', '', ')' ] );
 		$this->ImprimirTotalColunas();
 		$this->RestaurarColunas();
 	}
@@ -103,20 +108,26 @@ class RelMidia extends Relatorios
 	function Basico()
 	{
 		$regA = &$this->regAtual;
-		$valor = $regA->VALOR;
+		$valor     = $regA->VALOR;
+		$valPTrata = $regA->VALPTRATA;
+		$total     = $valor + $valPTrata;
 
 		$this->valores = [
 			$regA->PRONTUARIO,
-         $regA->NOME,
+         cadEsq( $regA->NOME, 52 ),
          formatarData( $regA->DESDE ),
          formatarData( $regA->DATA ),
-			formatarValor( $valor )
+			formatarValor( $valor ),
+			formatarValor( $valPTrata ),
+			formatarValor( $total )
 		];
 
 		$this->ImprimirValorColunas();
 
       $this->AcumularTotal( "totQtd", 1 );
       $this->AcumularTotal( "totValor", $valor );
+      $this->AcumularTotal( "totValPTrata", $valPTrata );
+      $this->AcumularTotal( "totTotal", $total );
 	}
 }
 
@@ -126,10 +137,10 @@ class RelMidia extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelMidia( RETRATO, A4, 'Midias_Pacientes.pdf', '', true, .95 );
+$proc = new RelMidia( RETRATO, A4, 'Midias_Pacientes.pdf', '', true, .92 );
 
 $select = "Select distinct M.Midia, L.Clinica, P.Nome, P.Prontuario, P.Desde,
-		(C.Valor + C.Valor2) as Valor,
+		(C.Valor + C.Valor2) as Valor, C.ValPTrata,
 		(Select C1.Data
 		From arqConsulta C1
 		Where " .
