@@ -139,6 +139,13 @@ $parQSelecao = lerParametro( "parQSelecao" );
 
 $proc = new RelMidia( RETRATO, A4, 'Midias_Pacientes.pdf', '', true, .92 );
 
+switch( $parQSelecao->TSIMNAO )
+{
+	case 0: $compareceram = ""; break;
+	case 1: $compareceram = "C.TStCon = 10 and "; break;
+	case 2: $compareceram = "C.TStCon in( 7,8 ) and "; break;
+}
+
 $select = "Select distinct M.Midia, L.Clinica, P.Nome, P.Prontuario, P.Desde,
 		(C.Valor + C.Valor2) as Valor, C.ValPTrata,
 		(Select C1.Data
@@ -151,11 +158,12 @@ $select = "Select distinct M.Midia, L.Clinica, P.Nome, P.Prontuario, P.Desde,
 			join arqClinica 	L on L.idPrimario=C.Clinica
 			join arqPessoa 	P on P.idPrimario=C.Pessoa
 			join arqMidia 		M on M.idPrimario=P.Midia
-		Where " .			
+		Where " . substr(  $compareceram .
 			filtrarPorIntervaloData( "C.Data", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
+			( $parQSelecao->MIDIA ? "P.Midia = " . $parQSelecao->MIDIA . " and " : "P.Midia is not null and" ) .
 			filtrarPorLig( "C.Clinica", $parQSelecao->CLINICA ) .
-			( $parQSelecao->MIDIA ? "P.Midia = " . $parQSelecao->MIDIA . " and " : "" ) . "
-			P.Midia is not null
+			filtrarPorLig( "C.TStCon", $parQSelecao->TSTCON ) .
+			filtrarPorLig( "P.Midia", $parQSelecao->MIDIA ), 0, -4 ) . "
 		Order by M.Midia, C.Clinica, C.Data, P.Nome";
 
 $proc->Processar( $select );

@@ -271,9 +271,11 @@ if( $op == 175 ) //* r_consulta_relacao
 	echo
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Tipo da consulta", TiAgenda ),
+	$this->Pular1Linha(2),
 	$this->Pedir( "Compareceram?",
 		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou)</b>" ] ),
 	$this->Pedir( "Status da consulta", TStCon ),
+	$this->Pular1Linha(2),
 	$this->Pedir( "Call Center", CallCenter ),
 	$this->Pedir( "Entre",
 		[ "", DataIni,
@@ -442,7 +444,11 @@ if( $op == 279 ) //* r_midia_pessoa
 	$this->Pedir( "Clínica", Clinica ),
 	$this->Pedir( "Consultas entre",
 		[ "", DataIni,
-		[ brHtml(1) . "e ", DataFim ] ] );
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pular1Linha(2),
+	$this->Pedir( "Compareceram?",
+		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou)</b>" ] ),
+	$this->Pedir( "Status da consulta", TStCon );
 }
 
 //--------------------------------------------------------------
