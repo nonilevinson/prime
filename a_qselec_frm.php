@@ -451,5 +451,19 @@ if( $op == 279 ) //* r_midia_pessoa
 	$this->Pedir( "Status da consulta", TStCon );
 }
 
+if( $op == 281 ) //* r_assessor_pessoa
+{
+	echo
+	$this->Pedir( "Assessor" ),
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Consultas entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] ),
+	$this->Pular1Linha(2),
+	$this->Pedir( "Compareceram?",
+		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou)</b>" ] ),
+	$this->Pedir( "Status da consulta", TStCon );
+}
+
 //--------------------------------------------------------------
 echo 	"</table>";

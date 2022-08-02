@@ -3572,7 +3572,8 @@ insert into arqLanceOperacao values(200019,2,'Rotina para envio de teste de ação
 insert into arqLanceOperacao values(200020,2,'Visualizar ação de email','',20,20,0,'');
 insert into arqLanceOperacao values(200175,2,'Relatório da relação de consultas','',175,50,0,'');
 insert into arqLanceOperacao values(200203,2,'Relatório das agendas de retirada de medicação por dia','',203,50,0,'');
-insert into arqLanceOperacao values(200279,2,'Relatório de pacientes por mídia','',279,50,0,'');
+insert into arqLanceOperacao values(200281,2,'Relatório de pacientes por assessor','',281,50,0,'');
+insert into arqLanceOperacao values(200280,2,'Relatório de lotes por validade','',280,null,0,'');
 insert into arqLanceOperacao values(200190,2,'Relatório de comissionamento do Call Center','',190,50,0,'');
 insert into arqLanceOperacao values(200258,2,'Relatório da relação de consultas com valores','',258,50,0,'');
 insert into arqLanceOperacao values(200170,2,'Relatório de consultas dispensadas por médicos','',170,50,0,'');
@@ -3633,6 +3634,7 @@ insert into arqLanceOperacao values(200137,2,'Rotina para informar que o pacient
 insert into arqLanceOperacao values(200253,2,'Rotina para excluir pessoas que tenham histórico de atividades - relação','',253,90,0,'');
 insert into arqLanceOperacao values(200257,2,'Relatório de hístorico de estoque','',257,50,0,'');
 insert into arqLanceOperacao values(200278,2,'Relatório de consultas com medicação separada e sem retirada','',278,50,0,'');
+insert into arqLanceOperacao values(200279,2,'Relatório de pacientes por mídia','',279,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
