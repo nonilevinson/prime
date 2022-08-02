@@ -1464,34 +1464,6 @@ commit;
 
 
 /************************************************************
-	TABELA tabTStCon
-************************************************************/
-
-CREATE TABLE tabTStCon
-(
-	IDPRIMARIO chavePrimariaTab,
-	CHAVE VARCHAR( 2 ) COLLATE PT_BR,
-	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
-	CONSTRAINT tabTStCon_PK PRIMARY KEY( IDPRIMARIO ),
-	CONSTRAINT tabTStCon_UK UNIQUE( CHAVE )
-);
-commit;
-
-INSERT INTO tabTStCon VALUES ( 1, '1', 'AGENDADO' );
-INSERT INTO tabTStCon VALUES ( 2, '2', 'RECEPÇÃO' );
-INSERT INTO tabTStCon VALUES ( 3, '3', 'MÉDICO' );
-INSERT INTO tabTStCon VALUES ( 4, '4', 'TESTE' );
-INSERT INTO tabTStCon VALUES ( 5, '5', 'AG. ASSESSOR' );
-INSERT INTO tabTStCon VALUES ( 6, '6', 'ASSESSOR' );
-INSERT INTO tabTStCon VALUES ( 7, '7', 'ATENDIDO' );
-INSERT INTO tabTStCon VALUES ( 8, '8', 'LIBERADO' );
-INSERT INTO tabTStCon VALUES ( 9, '9', 'CLÍNICA DESMARCOU' );
-INSERT INTO tabTStCon VALUES ( 10, '10', 'PACIENTE DESMARCOU' );
-INSERT INTO tabTStCon VALUES ( 11, '11', 'MÉDICO DESMARCOU' );
-commit;
-
-
-/************************************************************
 	TABELA tabTDiaSem
 ************************************************************/
 
