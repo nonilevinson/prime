@@ -25,6 +25,39 @@ function Campo_arqTStCon_Ordem()
 var Ordem = new Campo_arqTStCon_Ordem;
 
 //------------------------------------------------------------
+Campo_arqTStCon_TClinica.prototype = new Lance_CampoLigado;
+
+function Campo_arqTStCon_TClinica()
+{
+	this.superClass = Lance_CampoLigado;
+	this.superClass( "TClinica", "TClinica", "TClinica", "tabTClinica", "t_tclini", null, "",0);
+}
+
+var TClinica = new Campo_arqTStCon_TClinica;
+
+//------------------------------------------------------------
+Campo_arqTStCon_TClinica_Chave.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqTStCon_TClinica_Chave()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TClinica_Chave", "TClinica_Chave", "TClinica", TClinica, 1, "u", false);
+}
+
+var TClinica_Chave = new Campo_arqTStCon_TClinica_Chave;
+
+//------------------------------------------------------------
+Campo_arqTStCon_TClinica_Descritor.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqTStCon_TClinica_Descritor()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "TClinica_Descritor", "TClinica_Descritor", "TClinica", TClinica, 12, "xxxxxxxxxxxx", false);
+}
+
+var TClinica_Descritor = new Campo_arqTStCon_TClinica_Descritor;
+
+//------------------------------------------------------------
 Campo_arqTStCon_Legenda.prototype = new Lance_CampoLogico;
 
 function Campo_arqTStCon_Legenda()
@@ -34,6 +67,50 @@ function Campo_arqTStCon_Legenda()
 }
 
 var Legenda = new Campo_arqTStCon_Legenda;
+
+//------------------------------------------------------------
+Campo_arqTStCon_HoraChe.prototype = new Lance_CampoLogico;
+
+function Campo_arqTStCon_HoraChe()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "HoraChe", "HoraChe", "HoraChe");
+}
+
+var HoraChe = new Campo_arqTStCon_HoraChe;
+
+//------------------------------------------------------------
+Campo_arqTStCon_EhDesmarca.prototype = new Lance_CampoLogico;
+
+function Campo_arqTStCon_EhDesmarca()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "EhDesmarca", "EhDesmarca", "EhDesmarca");
+}
+
+var EhDesmarca = new Campo_arqTStCon_EhDesmarca;
+
+//------------------------------------------------------------
+Campo_arqTStCon_ValorObr.prototype = new Lance_CampoLogico;
+
+function Campo_arqTStCon_ValorObr()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "ValorObr", "ValorObr", "ValorObr");
+}
+
+var ValorObr = new Campo_arqTStCon_ValorObr;
+
+//------------------------------------------------------------
+Campo_arqTStCon_ProntuObr.prototype = new Lance_CampoLogico;
+
+function Campo_arqTStCon_ProntuObr()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "ProntuObr", "ProntuObr", "ProntuObr");
+}
+
+var ProntuObr = new Campo_arqTStCon_ProntuObr;
 
 //------------------------------------------------------------
 Campo_arqTStCon_Cor.prototype = new Lance_CampoCadeia;
@@ -81,11 +158,56 @@ Campo_arqTStCon_Ordem.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
-// Cabeçalho para o campo
+// Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
-Campo_arqTStCon_Legenda.prototype.Cabecalho = function()
+Campo_arqTStCon_TClinica.prototype.Obrigatorio = function( p_comMsg )
 {
-		return( "Legenda?" );
+	{
+		if( p_comMsg ) alert( "O tipo da clínica é obrigatorio" );
+		return( true );
+	}
+}
+
+TClinica_Chave.TipoCampo |= CAMPO_CHAVE_PAI;
+TClinica_Descritor.TipoCampo |= CAMPO_DESCRITOR_PAI;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTStCon_HoraChe.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTStCon_EhDesmarca.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTStCon_ValorObr.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTStCon_ProntuObr.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
 }
 
 //-------------------------------------------------------------
@@ -125,7 +247,7 @@ function ListaDeCampos_arqTStCon( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Status, Ordem, Legenda, Cor, Fundo, Ativo ]	);
+		[ Status, Ordem, TClinica, TClinica_Chave, TClinica_Descritor, Legenda, HoraChe, EhDesmarca, ValorObr, ProntuObr, Cor, Fundo, Ativo ]	);
 	IniciarDependencias_arqTStCon();
 	g_prefixo = l_prefixo;
 	return( l_lista );

@@ -38,6 +38,19 @@ class campo_arqTStCon_Ordem extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo TClinica
+//======================================================
+
+class campo_arqTStCon_TClinica extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "TClinica", "TClinica", "TClinica", 0, "tabTClinica", "idPrimario", LANCE_LIG_SELECAO, 2, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo Legenda
 //======================================================
 
@@ -57,11 +70,92 @@ class campo_arqTStCon_Legenda extends Lance_CampoLogico
 		return( parent::Estilo() );
 	}
 
+}
+
+//======================================================
+//	Campo HoraChe
+//======================================================
+
+class campo_arqTStCon_HoraChe extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "HoraChe", "HoraChe", "HoraChe", "", 0, 0, false );
+	}
+
 	//--------------------------------------------------
-	function CabecalhoCampo()
+	function Estilo()
 	{
 		global $g_regAtual;
-			return( "Legenda?" );
+		if( $g_regAtual->HORACHE == 0 )
+			return( "CorInativo" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo EhDesmarca
+//======================================================
+
+class campo_arqTStCon_EhDesmarca extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "EhDesmarca", "EhDesmarca", "EhDesmarca", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->EHDESMARCA == 0 )
+			return( "CorInativo" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo ValorObr
+//======================================================
+
+class campo_arqTStCon_ValorObr extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "ValorObr", "ValorObr", "ValorObr", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->VALOROBR == 0 )
+			return( "CorInativo" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo ProntuObr
+//======================================================
+
+class campo_arqTStCon_ProntuObr extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "ProntuObr", "ProntuObr", "ProntuObr", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->PRONTUOBR == 0 )
+			return( "CorInativo" );
+		return( parent::Estilo() );
 	}
 
 }
@@ -134,7 +228,14 @@ function listaCampos_arqTStCon( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqTStCon_Status(),
 			new campo_arqTStCon_Ordem(),
+			new campo_arqTStCon_TClinica(),
+			new Lance_CampoCadeia( "TClinica_Chave", "TClinica_Chave", "Chave", 1, "x", EH_CHAVE, TClinica ),
+			new Lance_CampoCadeia( "TClinica_Descritor", "TClinica_Descritor", "Descritor", 12, "xxxxxxxxxxxx", EH_DESCRITOR, TClinica ),
 			new campo_arqTStCon_Legenda(),
+			new campo_arqTStCon_HoraChe(),
+			new campo_arqTStCon_EhDesmarca(),
+			new campo_arqTStCon_ValorObr(),
+			new campo_arqTStCon_ProntuObr(),
 			new campo_arqTStCon_Cor(),
 			new campo_arqTStCon_Fundo(),
 			new campo_arqTStCon_Ativo() ]
@@ -174,11 +275,24 @@ class arqTStCon extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ Status ];
 			$vetAux[] = [ Ordem ];
+			$vetAux[] = [ TClinica_Descritor ];
 			$vetAux[] = [ Legenda ];
+			$vetAux[] = [ HoraChe ];
+			$vetAux[] = [ EhDesmarca ];
+			$vetAux[] = [ ValorObr ];
+			$vetAux[] = [ ProntuObr ];
 			$vetAux[] = [ Cor ];
 			$vetAux[] = [ Fundo ];
 			$vetAux[] = [ Ativo ];
 		return( $vetAux );
+	}
+
+	//-------------------------------------------------------------
+	// Complemento para os Campos Folheaveis do Arquivo
+	//-------------------------------------------------------------
+	function ComplementoFolheamento()
+	{
+		return( [ [ TClinica ], [ TClinica_Chave ], [ TClinica_Descritor ] ] );
 	}
 
 	//-------------------------------------------------------------
@@ -190,7 +304,12 @@ class arqTStCon extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ Status ];
 			$vetAux[] = [ Ordem ];
+			$vetAux[] = [ TClinica_Descritor ];
 			$vetAux[] = [ Legenda ];
+			$vetAux[] = [ HoraChe ];
+			$vetAux[] = [ EhDesmarca ];
+			$vetAux[] = [ ValorObr ];
+			$vetAux[] = [ ProntuObr ];
 			$vetAux[] = [ Cor ];
 			$vetAux[] = [ Fundo ];
 			$vetAux[] = [ Ativo ];

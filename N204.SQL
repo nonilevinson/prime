@@ -1609,6 +1609,26 @@ commit;
 
 
 /************************************************************
+	TABELA tabTClinica
+************************************************************/
+
+CREATE TABLE tabTClinica
+(
+	IDPRIMARIO chavePrimariaTab,
+	CHAVE VARCHAR( 1 ) COLLATE PT_BR,
+	DESCRITOR VARCHAR( 75 ) COLLATE PT_BR,
+	CONSTRAINT tabTClinica_PK PRIMARY KEY( IDPRIMARIO ),
+	CONSTRAINT tabTClinica_UK UNIQUE( CHAVE )
+);
+commit;
+
+INSERT INTO tabTClinica VALUES ( 1, '1', 'Normal' );
+INSERT INTO tabTClinica VALUES ( 2, '2', 'Complementar' );
+INSERT INTO tabTClinica VALUES ( 3, '3', 'Ambos' );
+commit;
+
+
+/************************************************************
 	Arquivo Bairro    
 ************************************************************/
 
@@ -2115,10 +2135,15 @@ CREATE TABLE arqTStCon
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	STATUS VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	ORDEM SMALLINT, /* Máscara = N */
-	/*  4*/	LEGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  5*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/*  6*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/*  7*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	TCLINICA ligadoComTabela, /* Ligado com a Tabela TClinica */
+	/*  5*/	LEGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	HORACHE campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  7*/	EHDESMARCA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  8*/	VALOROBR campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  9*/	PRONTUOBR campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 10*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/* 11*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/* 12*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTStCon_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTStCon_UK UNIQUE ( Status )
 );
@@ -3439,8 +3464,9 @@ RECREATE VIEW V_arqTiConsulta AS
 commit;
 
 RECREATE VIEW V_arqTStCon AS 
-	SELECT A0.IDPRIMARIO, A0.STATUS, A0.ORDEM, A0.LEGENDA, A0.COR, A0.FUNDO, A0.ATIVO
-	FROM arqTStCon A0;
+	SELECT A0.IDPRIMARIO, A0.STATUS, A0.ORDEM, A0.TCLINICA, A1.CHAVE as TClinica_CHAVE, A1.DESCRITOR as TClinica_DESCRITOR, A0.LEGENDA, A0.HORACHE, A0.EHDESMARCA, A0.VALOROBR, A0.PRONTUOBR, A0.COR, A0.FUNDO, A0.ATIVO
+	FROM arqTStCon A0
+	left join tabTClinica A1 on A1.IDPRIMARIO=A0.TCLINICA;
 commit;
 
 
@@ -3739,6 +3765,7 @@ ALTER TABLE arqCMedica ADD CONSTRAINT arqCMedica_FK_Lote FOREIGN KEY ( LOTE ) RE
 ALTER TABLE arqHoraBloq ADD CONSTRAINT arqHoraBloq_FK_Medico FOREIGN KEY ( MEDICO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqUsuCCor ADD CONSTRAINT arqUsuCCor_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqUsuCCor ADD CONSTRAINT arqUsuCCor_FK_CCor FOREIGN KEY ( CCOR ) REFERENCES arqCCor ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE arqTStCon ADD CONSTRAINT arqTStCon_FK_TClinica FOREIGN KEY ( TCLINICA ) REFERENCES tabTClinica ON DELETE SET NULL ON UPDATE CASCADE;
 commit;
 
 
