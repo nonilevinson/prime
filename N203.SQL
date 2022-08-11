@@ -2113,7 +2113,7 @@ commit;
 CREATE TABLE arqTStCon
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	STATUS VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = I */
+	/*  2*/	STATUS VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	ORDEM SMALLINT, /* Máscara = N */
 	/*  4*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
 	/*  5*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
@@ -2126,7 +2126,7 @@ commit;
 CREATE DESC INDEX arqTStCon_IdPrimario_Desc ON arqTStCon (IDPRIMARIO);
 commit;
 
-CREATE ASC  INDEX arqTStCon_PorId ON arqTStCon(idPrimario);
+CREATE ASC  INDEX arqTStCon_PorOrdem ON arqTStCon(Ordem);
 commit;
 
 

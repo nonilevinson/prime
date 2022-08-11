@@ -1,5 +1,5 @@
 --*
---* 2.02 para 2.03
+--* 2.02 para 2.03a
 
 --* 02/08/2022 passei eles para o p_indexatua.php
 	/*
@@ -13,11 +13,8 @@
 	commit;
 	*/
 
-insert into arqLanceOperacao values(200281,2,'Relatório de pacientes por assessor','',281,50,0,'');
-commit;
-
 /************************************************************
 	TABELA tabTStCon
 ************************************************************/
-drop TABLE tabTStCon;
+CREATE ASC  INDEX arqTStCon_PorOrdem ON arqTStCon(Ordem);
 commit;

@@ -166,11 +166,11 @@ class arqTStCon extends Lance_Arquivo
 	}
 
 	//-------------------------------------------------------------
-	// Ordenações do Arquivo: PorId     
+	// Ordenações do Arquivo: PorOrdem  
 	//-------------------------------------------------------------
-	function PorId()
+	function PorOrdem()
 	{
-	return( "idPrimario ASC" );
+	return( "Ordem ASC" );
 	}
 
 	//-------------------------------------------------------------
@@ -178,7 +178,7 @@ class arqTStCon extends Lance_Arquivo
 	//-------------------------------------------------------------
 	function OrdemPadrao()
 	{
-	return( "PorId" );
+	return( "PorOrdem" );
 	}
 
 	//-------------------------------------------------------------

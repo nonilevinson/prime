@@ -8,7 +8,7 @@ Campo_arqTStCon_Status.prototype = new Lance_CampoCadeia;
 function Campo_arqTStCon_Status()
 {
 	this.superClass = Lance_CampoCadeia;
-	this.superClass( "Status", "Status", "Status", 20, "uxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "Status", "Status", "Status", 20, "uuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var Status = new Campo_arqTStCon_Status;
