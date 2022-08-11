@@ -38,6 +38,35 @@ class campo_arqTStCon_Ordem extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo Legenda
+//======================================================
+
+class campo_arqTStCon_Legenda extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "Legenda", "Legenda", "Legenda", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->LEGENDA == 0 )
+			return( "CorInativo" );
+		return( parent::Estilo() );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Legenda?" );
+	}
+
+}
+
+//======================================================
 //	Campo Cor
 //======================================================
 
@@ -105,6 +134,7 @@ function listaCampos_arqTStCon( $p_prefixo )
 			new Lance_CampoIdPrimario(),
 			new campo_arqTStCon_Status(),
 			new campo_arqTStCon_Ordem(),
+			new campo_arqTStCon_Legenda(),
 			new campo_arqTStCon_Cor(),
 			new campo_arqTStCon_Fundo(),
 			new campo_arqTStCon_Ativo() ]
@@ -144,6 +174,7 @@ class arqTStCon extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ Status ];
 			$vetAux[] = [ Ordem ];
+			$vetAux[] = [ Legenda ];
 			$vetAux[] = [ Cor ];
 			$vetAux[] = [ Fundo ];
 			$vetAux[] = [ Ativo ];
@@ -159,6 +190,7 @@ class arqTStCon extends Lance_Arquivo
 		$vetAux = [];
 			$vetAux[] = [ Status ];
 			$vetAux[] = [ Ordem ];
+			$vetAux[] = [ Legenda ];
 			$vetAux[] = [ Cor ];
 			$vetAux[] = [ Fundo ];
 			$vetAux[] = [ Ativo ];

@@ -25,6 +25,17 @@ function Campo_arqTStCon_Ordem()
 var Ordem = new Campo_arqTStCon_Ordem;
 
 //------------------------------------------------------------
+Campo_arqTStCon_Legenda.prototype = new Lance_CampoLogico;
+
+function Campo_arqTStCon_Legenda()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "Legenda", "Legenda", "Legenda");
+}
+
+var Legenda = new Campo_arqTStCon_Legenda;
+
+//------------------------------------------------------------
 Campo_arqTStCon_Cor.prototype = new Lance_CampoCadeia;
 
 function Campo_arqTStCon_Cor()
@@ -70,6 +81,14 @@ Campo_arqTStCon_Ordem.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
+// Cabeçalho para o campo
+//-------------------------------------------------------------
+Campo_arqTStCon_Legenda.prototype.Cabecalho = function()
+{
+		return( "Legenda?" );
+}
+
+//-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_arqTStCon_Ativo.prototype.Sugeriu = function()
@@ -106,7 +125,7 @@ function ListaDeCampos_arqTStCon( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Status, Ordem, Cor, Fundo, Ativo ]	);
+		[ Status, Ordem, Legenda, Cor, Fundo, Ativo ]	);
 	IniciarDependencias_arqTStCon();
 	g_prefixo = l_prefixo;
 	return( l_lista );

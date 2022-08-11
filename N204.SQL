@@ -2115,9 +2115,10 @@ CREATE TABLE arqTStCon
 	/*  1*/	IDPRIMARIO chavePrimaria,
 	/*  2*/	STATUS VARCHAR( 20 ) COLLATE PT_BR, /* Máscara = M */
 	/*  3*/	ORDEM SMALLINT, /* Máscara = N */
-	/*  4*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/*  5*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/*  6*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  4*/	LEGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  5*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  6*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/*  7*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTStCon_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTStCon_UK UNIQUE ( Status )
 );
@@ -3438,7 +3439,7 @@ RECREATE VIEW V_arqTiConsulta AS
 commit;
 
 RECREATE VIEW V_arqTStCon AS 
-	SELECT A0.IDPRIMARIO, A0.STATUS, A0.ORDEM, A0.COR, A0.FUNDO, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.STATUS, A0.ORDEM, A0.LEGENDA, A0.COR, A0.FUNDO, A0.ATIVO
 	FROM arqTStCon A0;
 commit;
 
