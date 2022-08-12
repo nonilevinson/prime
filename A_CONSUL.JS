@@ -63,7 +63,7 @@ Campo_arqConsulta_TStCon.prototype = new Lance_CampoLigado;
 function Campo_arqConsulta_TStCon()
 {
 	this.superClass = Lance_CampoLigado;
-	this.superClass( "TStCon", "TStCon", "TStCon", "arqTStCon", "a_tstcon", null, "idPrimario ASC ",61);
+	this.superClass( "TStCon", "TStCon", "TStCon", "arqTStCon", "a_tstcon", null, "Ordem ASC ",61);
 }
 
 var TStCon = new Campo_arqConsulta_TStCon;
@@ -74,7 +74,7 @@ Campo_arqConsulta_TStCon_Status.prototype = new Lance_CampoCadeiaLigado;
 function Campo_arqConsulta_TStCon_Status()
 {
 	this.superClass = Lance_CampoCadeiaLigado;
-	this.superClass( "TStCon_Status", "TStCon_Status", "Status", TStCon, 20, "uxxxxxxxxxxxxxxxxxxx", false);
+	this.superClass( "TStCon_Status", "TStCon_Status", "Status", TStCon, 20, "uuuuuuuuuuuuuuuuuuuu", false);
 }
 
 var TStCon_Status = new Campo_arqConsulta_TStCon_Status;

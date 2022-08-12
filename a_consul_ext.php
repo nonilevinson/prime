@@ -4,7 +4,7 @@
 function sugereSdVenc1Par()
 {
 	sql_abrirBD( false );
-   
+
    $select = "Select X.DiasSdEntr
 		From cnfXConfig X";
 	$umXConfig = sql_lerUmRegistro( $select );
@@ -12,7 +12,7 @@ function sugereSdVenc1Par()
 // echo '<br><b>cnfXConfig S=</b> '.$select.'<br><b>sdVenc1Par=</b> '.$sdVenc1Par;
 
    sql_fecharBD();
-   
+
 	echo
 		javaScriptIni(),
 		'with( parent ) {
@@ -25,14 +25,14 @@ function sugereSdVenc1Par()
 function sugereBoletoMin()
 {
 	sql_abrirBD( false );
-   
+
    $select = "Select X.BoletoMin
 		From cnfXConfig X";
 	$umXConfig = sql_lerUmRegistro( $select );
 // echo '<br><b>cnfXConfig S=</b> '.$select;
 
    sql_fecharBD();
-   
+
 	echo
 		javaScriptIni(),
 		'with( parent ) {
@@ -49,20 +49,20 @@ function filtrarSelecao()
    switch( $parQSelecao->TCMEDICA )
    {
       case 1: //* nada separado
-         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdMEnt = 0 ) and "; 
-         break; 
-         
+         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdMEnt = 0 ) and ";
+         break;
+
       case 2: /// parcialmente separado;
-         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdMEnt > 0 and A.TrgQtdM > A.TrgQtdMEnt ) and "; 
-         break; 
-      
+         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdMEnt > 0 and A.TrgQtdM > A.TrgQtdMEnt ) and ";
+         break;
+
       case 3: /// Totalmente separado e não entregue;
-         $tCMedica = "( (A.TstAgRet is null or A.TstAgRet < 3) and A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and "; 
-         break; 
-      
+         $tCMedica = "( (A.TstAgRet is null or A.TstAgRet < 3) and A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
+         break;
+
       case 4: /// Totalmente separado e entregue;
-         $tCMedica = "( A.TstAgRet = 3 and A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and "; 
-         break;       
+         $tCMedica = "( A.TstAgRet = 3 and A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
+         break;
    }
 
    switch( ultimaLigOpcao() )
@@ -89,11 +89,7 @@ function filtrarSelecao()
       filtrarPorLig( "A.TStCon", $parQSelecao->TSTCON ) .
       filtrarPorLig( "A.Clinica", $parQSelecao->CLINICA ) .
       filtrarPorLig( "A.Medico", $parQSelecao->MEDICO ) .
-      filtrarPorLig( "A.Pessoa", $parQSelecao->PESSOA ) .      
-      filtrarPorIntervaloData( "A.DataRet", $parQSelecao->DATAINI1, $parQSelecao->DATAFIM1 ) .
-      filtrarPorIntervalo( 'A.HoraRet', $parQSelecao->HORAINI, $parQSelecao->HORAFIM, "'" ) .
-      filtrarPorLig( "A.TStAgRet", $parQSelecao->TSTAGRET ) .
-      filtrarPorLig( "A.AssesRet", $parQSelecao->ASSESSOR ) . "
+      filtrarPorLig( "A.Pessoa", $parQSelecao->PESSOA ) . "
       A.TiConsulta = " . $tiConsulta
    );
 }
@@ -105,7 +101,7 @@ function filtrarTodas()
       Nutricionista: 265 Todas | 266 Seleção
       Psicólogo:     267 Todas | 268 Seleção
    */
-   
+
    switch( ultimaLigOpcao() )
    {
       case 109:
@@ -123,7 +119,7 @@ function filtrarTodas()
          $tiConsulta = 3;
          break;
    }
-   
+
    return(
 	   ( SQL_VETIDCLINICA ? 'A.Clinica in ' . SQL_VETIDCLINICA . ' and ' : '' ) . "
       A.TiConsulta = " . $tiConsulta

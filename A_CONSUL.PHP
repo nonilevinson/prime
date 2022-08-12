@@ -133,7 +133,7 @@ class campo_arqConsulta_TStCon extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "arqTStCon", "idPrimario ASC ", LANCE_LIG_SELECAO, 1, 0, false );
+		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "arqTStCon", "Ordem ASC ", LANCE_LIG_SELECAO, 1, 0, false );
 	}
 
 	//--------------------------------------------------
@@ -162,6 +162,8 @@ class campo_arqConsulta_TStCon extends Lance_CampoLigado
 			return( "StPacienteDesmarcou" );
 		if( $g_regAtual->TSTCON == 11 )
 			return( "StMedicoDesmarcou" );
+		if( $g_regAtual->TSTCON == 12 )
+			return( "StFaltou" );
 		return( parent::Estilo() );
 	}
 

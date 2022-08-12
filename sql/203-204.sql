@@ -79,7 +79,7 @@ update arqTStCon set ProntuObr=1 Where idPrimario in( 2,3,4,5,6,7,8 );
 commit;
 
 INSERT INTO ARQTSTCON (IDPRIMARIO, STATUS, ORDEM, TCLINICA, LEGENDA, HORACHE, EHDESMARCA, COR, FUNDO, ATIVO) 
-	VALUES (gen_id( GENIDPRIMARIO, 1 ), 'FALTOU', 9, 3, 1, 0, 1, '#ffffff', '#ff4500', 1);
+	VALUES (12, 'FALTOU', 9, 3, 1, 0, 1, '#ffffff', '#ff4500', 1);
 COMMIT WORK;
 
 RECREATE VIEW V_arqTStCon AS 

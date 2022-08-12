@@ -162,7 +162,7 @@
 	/* font-weight:bold */
 }
 .StPacienteDesmarcou{
-	color:#ffffff;
+	color:#000000;
 	background-color: #00ff88;
 	text-align: left;
 	/* font-weight:bold */
@@ -172,6 +172,11 @@
 	background-color: #ff3388;
 	text-align: left;
 	/* font-weight:bold */
+}
+.StFaltou{
+	color:#ffffff;
+	background-color: #ff4500;
+	text-align: left;
 }
 .Excelente{
 	color:#ffffff;
