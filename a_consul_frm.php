@@ -90,13 +90,13 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 			[ brHtml(4) . "Conta ", ContaPTra, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ] ),
 
 		$this->Cabecalhos( [ "Entrada - pago no pós consulta", "FormCabPrime FundoAzul alinhaEsq", "2" ] ),
-
-		$this->NaoPedirVarios( SdVenc1Par, SdCond, SaldoCond ),
 		$this->Pedir( "Forma de pagamento",
 			[ "", EntraFPg,
 			[ brHtml(4) . "Valor ", EntraVal,
 			[ brHtml(4) . "Parcelas ", EntraParcE,
 			[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ] ),
+
+		$this->NaoPedirVarios( SdVenc1Par, SdCond ),
 		
 		$this->Pedir( "Se dividiu",
 			[ "Parcelas ", EntraParc,
@@ -112,7 +112,8 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 		$this->Pedir( "Forma de pagamento",
 			[ "", SaldoFPg,
 			[ brHtml(4) . "Parcelas ", SaldoParc,
-			[ brHtml(4) . "Valor das parcelas ", SaldoVal, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)" ] ] ] ),
+			[ brHtml(4) . "Condição ", SaldoCond,
+			[ brHtml(4) . "Valor das parcelas ", SaldoVal, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)" ] ] ] ] ),
 		$this->Pedir( "Observações", SaldoObs ),
 
 		$this->Pular1Linha(2),

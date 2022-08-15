@@ -140,7 +140,7 @@ $proc = new RelMidia( RETRATO, A4, 'Assessores_Pacientes.pdf', '', true, .92 );
 switch( $parQSelecao->TSIMNAO )
 {
 	case 0: $compareceram = ""; break;
-	case 1: $compareceram = "C.TStCon = 10 and "; break;
+	case 1: $compareceram = "C.TStCon in( 10,12 ) and "; break;
 	case 2: $compareceram = "C.TStCon in( 7,8 ) and "; break;
 }
 

@@ -433,7 +433,7 @@ if( $op == 279 ) //* r_midia_pessoa
 		[ brHtml(1) . "e ", DataFim ] ] ),
 	$this->Pular1Linha(2),
 	$this->Pedir( "Compareceram?",
-		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou)</b>" ] ),
+		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou e Faltou)</b>" ] ),
 	$this->Pedir( "Status da consulta", TStCon );
 }
 
@@ -447,7 +447,7 @@ if( $op == 281 ) //* r_assessor_pessoa
 		[ brHtml(1) . "e ", DataFim ] ] ),
 	$this->Pular1Linha(2),
 	$this->Pedir( "Compareceram?",
-		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou)</b>" ] ),
+		[ "", TSimNao, "<br><b>(Sim: Atendido e Liberado; Não: Paciente desmarcou e Faltou)</b>" ] ),
 	$this->Pedir( "Status da consulta", TStCon );
 }
 
