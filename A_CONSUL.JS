@@ -1492,10 +1492,12 @@ SdEntrFPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
 Campo_arqConsulta_SdVenc1Par.prototype.Obrigatorio = function( p_comMsg )
 {
+		if( false )
 	{
 		if( p_comMsg ) alert( "O vencimento da primeira parcela do saldo da entrada é obrigatório" );
 		return( true );
 	}
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -1533,10 +1535,12 @@ Campo_arqConsulta_SdCond.prototype.PodeAlterar = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_SdCond.prototype.Obrigatorio = function( p_comMsg )
 {
+		if( false )
 	{
 		if( p_comMsg ) alert( "A condição é obrigatória" );
 		return( true );
 	}
+	return( false );
 }
 
 //-------------------------------------------------------------
@@ -2096,15 +2100,15 @@ g_arquivoCampos = ListaDeCampos_arqConsulta( '' );
 g_idOperacao = 39;
 
 if( parent.navegacao ) {
-var Menu_1 = [ 1,"Medicação","","d",206,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"","1","a_cmedic","arqCMedica","Folhear","Consulta","?","","", "","", 0,24,[],[54]];
-var Menu_2 = [ 1,"Ag. Retirada","","t",197,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"","1","a_agret","arqAgRet","Folhear","Consulta","?","","", "","", 0,24,[],[53]];
-var Menu_3 = [ 1,"Gerar Receber Tratamento","","G",184,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"tem( PTrata ) && !tem( ContaPTra )","5","p_conta_parcela_gerar_tratamento","","","","","","", "","", 0,24,[184],[]];
-var Menu_4 = [ 1,"Contas","","o",240,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"","6", "", "", "", "", "", "", "", "", "", 2, 24,[],[33,33] ];
+var Menu_1 = [ 1,"Medicação","","d",206,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"","1","a_cmedic","arqCMedica","Folhear","Consulta","?","","", "","", 0,28,[],[54]];
+var Menu_2 = [ 1,"Ag. Retirada","","t",197,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"","1","a_agret","arqAgRet","Folhear","Consulta","?","","", "","", 0,28,[],[53]];
+var Menu_3 = [ 1,"Gerar Receber Tratamento NAO","","G",184,"","",false /* ultimaLigOpcaoEm( 109,110,117,276 ) */,"tem( PTrata ) && !tem( ContaPTra )","5","p_conta_parcela_gerar_tratamento","","","","","","", "","", 0,28,[184],[]];
+var Menu_4 = [ 1,"Contas","","o",240,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"","6", "", "", "", "", "", "", "", "", "", 2, 28,[],[33,33] ];
 var Menu_4_1 = [ 1,"Consulta","","u",239,"","",1,"","1","a_conta","arqConta","Folhear","","?","NavCons","", "","", 0,11,[],[33]];
 var Menu_4_2 = [ 1,"Tratamentos","","T",241,"","",1,"","1","a_conta","arqConta","Folhear","","?","NavPTrata","", "","", 0,11,[],[33]];
-var Menu_5 = [ 1,"Emitir Contrato","","m",191,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"","5","r_consulta_contrato","","","","","","", "","", 0,24,[191],[]];
-var Menu_6 = [ 1,"Emitir Observações","","b",277,"","",ultimaLigOpcaoEm( 265,266,267,268,276 ),"","5","r_consulta_obs","","","","","","", "","", 0,24,[277],[]];
-var Menu_7 = [ 1,"Avisar Agendar retirada","","A",249,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"temMarcados()","5","p_consulta_avisar_retirar","","","","","","", "","", 0,24,[249],[]];
-var Menu_8 = [ 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,24,[137],[]];
+var Menu_5 = [ 1,"Emitir Contrato","","m",191,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"","5","r_consulta_contrato","","","","","","", "","", 0,28,[191],[]];
+var Menu_6 = [ 1,"Emitir Observações","","b",277,"","",ultimaLigOpcaoEm( 265,266,267,268,276 ),"","5","r_consulta_obs","","","","","","", "","", 0,28,[277],[]];
+var Menu_7 = [ 1,"Avisar Agendar retirada","","A",249,"","",ultimaLigOpcaoEm( 109,110,117,276 ),"temMarcados()","5","p_consulta_avisar_retirar","","","","","","", "","", 0,28,[249],[]];
+var Menu_8 = [ 1,"Informar Chegada","","h",137,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_consulta_alterar^^^^^^^^^^^^^^^^^^", "", 0,28,[137],[]];
 parent.navegacao.MenuPrincQtdOpcoes=8;
 }

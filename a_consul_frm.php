@@ -89,18 +89,23 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 			[ "", ValPTrata,
 			[ brHtml(4) . "Conta ", ContaPTra, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ] ),
 
-		$this->Cabecalhos( [ "Entrada", "FormCabPrime FundoAzul alinhaEsq", "2" ] ),
+		$this->Cabecalhos( [ "Entrada - pago no pós consulta", "FormCabPrime FundoAzul alinhaEsq", "2" ] ),
 		$this->Pedir( "Forma de pagamento",
 			[ "", EntraFPg,
 			[ brHtml(4) . "Valor ", EntraVal,
 			[ brHtml(4) . "Parcelas ", EntraParcE,
 			[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ] ),
-
+/*
 		$this->Pedir( "Se dividiu",
 			[ "Parcelas ", EntraParc,
 			[ brHtml(4) . "Forma de pagamento ", SdEntrFPg,
 			[ brHtml(4) . "1º vencimento ", SdVenc1Par,
 			[ brHtml(4) . "Condição ", SdCond, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)"  ] ] ] ] ),
+*/
+		$this->NaoPedirVarios( SdVenc1Par, SdCond ),
+		$this->Pedir( "Se dividiu",
+			[ "Parcelas ", EntraParc,
+			[ brHtml(4) . "Forma de pagamento ", SdEntrFPg ] ] ),
 		$this->Pedir( " ",
 			[ "Valor das parcelas ", EntraValP,
 			[ brHtml(4) . "Total ", EntraTotP,
@@ -108,7 +113,7 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 
 		$this->Pedir( "Observações", EntraObs ),
 
-		$this->Cabecalhos( [ "Saldo", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),
+		$this->Cabecalhos( [ "Saldo - a pagar na retirada da medicação", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),
 		$this->Pedir( "Forma de pagamento",
 			[ "", SaldoFPg,
 			[ brHtml(4) . "Parcelas ", SaldoParc,

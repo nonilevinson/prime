@@ -112,7 +112,11 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       //? início da entrada
       $this->PDF->Cell( $larg4, $altura, "Valor total do tratamento: R$" . $this->valorExtenso( $valPTrata ),
          SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );         
-      $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias " .
+      
+      $this->PDF->Cell( $larg4, $altura, "Entrada / Intermediárias", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+
+      $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+      $this->PDF->Cell( $larg1, $altura, "Entrada " .
          ( $regA->ENTRAPARCE > 0 ? ": " : "em 1 parcela de R$" ) .
          $this->valorExtenso( $entraVal ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
@@ -124,7 +128,7 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       if( $entraParc )
       {
          $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-         $this->PDF->Cell( $larg2, $altura, "Saldo da entrada em " . $entraParc . " parcela" .
+         $this->PDF->Cell( $larg2, $altura, "Intermediárias em " . $entraParc . " parcela" .
             ( $entraParc == 1 ? "" : "s" ) . " de R$ " . $this->valorExtenso( $entraValP ),
             SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
@@ -133,10 +137,11 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
             SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
          $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+/*
          $this->PDF->Cell( $larg1, $altura, "Vencimento" .
             ( $entraParc == 1 ? ": " : " da primeira parcela: " ) . formatarData( $regA->SDVENC1PAR ),
             SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-
+*/
          if( $entraObs )
          {
             $this->PDF->Cell( $larg5, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
@@ -161,15 +166,17 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
       }
       
       //* início do recibo
+      $valorPago = $entraVal + $entraSaldo;
+      
       $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->WriteTxt( "4- RECIBO", 100, [ '', BOLD ] );
       $this->PDF->Cell( $larg1, $altura, "Recebemos do CONTRATANTE a importância de R$ " .
-         $this->valorExtenso( $entraVal ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-
+         $this->valorExtenso( $valorPago ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+/*
       if( $entraParc )
          $this->PDF->Cell( $larg1, $altura, "Saldo da entrada de R$ " .
             $this->valorExtenso( $entraSaldo ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
-
+*/
       if( $entraObs )
          $this->PDF->Cell( $larg1, $altura, "Observações: " . $entraObs, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       //* fim do recibo
@@ -180,21 +187,22 @@ class RelConsulta extends Lance_RelatorioPDF_Livre
 
       $this->PDF->Cell( $larg2, $altura2, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->WriteTxt( "6- ASSINATURAS", 100, [ '', BOLD ] );
+      $this->WriteTxt( "Assessor responsável: " . $regA->ASSESSOR, 100 );
 		$this->WriteTxt( $regA->CIDADECLINICA . ", " . maiuscula( formatarData( HOJE, 'dd de mmm de aaaa' ) ), 100 );
 
-      $largQuem = 17;
+      $largQuem = 14;
       $largSub  = 70;
 
       $this->PDF->Cell( $larg2, $altura2 + 5, "", SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->PDF->Cell( $largQuem, $altura,  "Paciente:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->PDF->Cell( $largSub, $altura,  repete( '_', 35 ), SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->PDF->Cell( $largQuem, $altura,  "Assessor:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->PDF->Cell( $largSub, $altura,  repete( '_', 35 ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largQuem, $altura,  "Clínica:", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largSub, $altura,  repete( '_', 47 ), SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 
       $this->PDF->Cell( $largQuem, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->PDF->Cell( $largSub, $altura, " " . $paciente, SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
       $this->PDF->Cell( $largQuem, $altura, "", SEM_BORDA, NAO_PULA_LINHA, ALINHA_ESQ, VAZIO );
-		$this->PDF->Cell( $largSub, $altura, " " . $regA->ASSESSOR, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
+		$this->PDF->Cell( $largSub, $altura, " " . $regA->RAZAO, SEM_BORDA, PULA_LINHA, ALINHA_ESQ, VAZIO );
 		$this->Writeln();
 	}
 }
@@ -212,7 +220,7 @@ $select = "Select L.Sigla, P.Prontuario, P.Nome as Paciente, P.CPF, P.Identidade
       P.Ende_CEP as CEP, P.Nascimento, F.Profissao, I.DDD, P.Ende_Telefone as Telefone, P.NumCelular, P.Email,
       C.Data, A.Nome as Assessor, R.PTrata, R.Tempo, FE.FormaPg as EntraFPg, FS.FormaPg as SaldoFPg, C.EntraVal,
       C.EntraParcE, C.EntraParc, C.EntraValP, C.EntraObs, C.SaldoParc, C.SaldoObs, C.Num as NumConsulta,
-      CI.Cidade as CidadeClinica, C.SdVenc1Par, FD.FormaPg as SdEntrFPg, C.ValPTrata,
+      CI.Cidade as CidadeClinica, C.SdVenc1Par, FD.FormaPg as SdEntrFPg, C.ValPTrata, L.Razao,
       (C.ValPTrata - ( C.EntraVal + ( C.EntraParc * C.EntraValP  ) ) ) as SaldoValor
 	From arqConsulta C
 		join arqClinica          L on  L.idPrimario=C.Clinica
