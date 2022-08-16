@@ -10,6 +10,8 @@ sql_abrirBD( false );
    sql_executarComando( 'delete from ARQLANCELOGACESSO where datediff(year, Data, current_date) > 5;' );
    sql_commit();
    sql_executarComando( 'execute procedure reindexartudo;' );
+   sql_commit();
+   
    sql_executarComando( "update arqPessoa set Prontuario='' where Prontuario is null;" );
    sql_commit();
 //* Fim
