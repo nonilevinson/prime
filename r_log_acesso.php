@@ -15,13 +15,12 @@ class RelLog extends Relatorios
 				' ' ];
 
 		$this->DefinirCabColunas(
-			[ "Hora",    	 14, ALINHA_CEN ],
+			[ "Hora",    	 15, ALINHA_CEN ],
 			[ 'IP', 		  	 27, ALINHA_CEN ],
 			[ "Status", 	 55, ALINHA_ESQ ],
-			[ "O Que",   	130, ALINHA_ESQ ],
-			[ "Chave", 		 45, ALINHA_ESQ ],
+			[ "O Que",   	135, ALINHA_ESQ ],
 			[ "idPrimario", 25, ALINHA_DIR ],
-			[ "Campo",		 30, ALINHA_ESQ ]
+			[ "Campo",		 20, ALINHA_ESQ ]
 			);
 
 		$this->DefinirQuebras(
@@ -93,7 +92,6 @@ class RelLog extends Relatorios
 			$regA->IP,
 			$regA->STATUS,
 			$regA->OPERACAO . $barra . $obs,
-			$regA->QUEM,
 			$acesso . $regA->IDQUEM,
 			$regA->CAMPO
 		];
@@ -103,11 +101,18 @@ class RelLog extends Relatorios
 		$rotina = $regA->ROTINA;
 		if( $rotina )
 		{
-			$this->JuntarColunas( [0,2], [3,6] );
+			$this->JuntarColunas( [0,1], [2,2,ALINHA_DIR], [3,5] );
+			$this->valores[2] = 'Rotina';
 			$this->valores[3] = $rotina;
 			$this->ImprimirValorColunas();
 			$this->RestaurarColunas();
 		}
+
+		$this->JuntarColunas( [0,1], [2,2,ALINHA_DIR], [3,5] );
+		$this->valores[2] = 'Chave';
+		$this->valores[3] = $regA->QUEM;
+		$this->ImprimirValorColunas();
+		$this->RestaurarColunas();
 	}
 }
 
@@ -117,7 +122,7 @@ class RelLog extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelLog( PAISAGEM, A4, 'Log_Sistema.pdf', '', true, .87 );
+$proc = new RelLog( PAISAGEM, A4, 'Log_Sistema.pdf', '', true );
 
 $statusLog = '';
 
