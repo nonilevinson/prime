@@ -30,7 +30,7 @@ class Relatorios extends Lance_RelatorioPDF_Colunar
 	//------------------------------------------------------------------------
 	function TituloData( $p_titulo, $p_dataIni, $p_dataFim=null )
 	{
-		return( $p_titulo . ( $p_titulo ? " e" : "E" ) . "ntre " . formatarData( $p_dataIni ) . " e " . 
+		return( $p_titulo . ( $p_titulo ? " e" : "E" ) . "ntre " . formatarData( $p_dataIni ) . " e " .
 			( $p_dataFim
 				? formatarData( $p_dataFim )
 				: "sem um final estipulado" )
@@ -46,9 +46,9 @@ class Relatorios extends Lance_RelatorioPDF_Colunar
 			From v_arqCCor C
 			Where C.idPrimario = " . $p_idCCOr;
 		$umCCor = sql_lerUmRegistro( $select );
-		
-		return( "Conta corrente do " . $umCCor->NUMBANCO . " " . $umCCor->BANCO . 
-			" Ag. " . $umCCor->AGENCIA . " cc " . $umCCor->CONTA 
+
+		return( "Conta corrente do " . $umCCor->NUMBANCO . " " . $umCCor->BANCO .
+			" Ag. " . $umCCor->AGENCIA . " cc " . $umCCor->CONTA
 		);
 	}
 }

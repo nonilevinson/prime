@@ -10,25 +10,26 @@ class RelLog extends Relatorios
 		global $parQSelecao;
 
 		$this->tituloRelatorio = [ 'Log de acesso',
-			( $parQSelecao->DATAINI ? 'entre ' . formatarData( $parQSelecao->DATAINI ) . ' e ' .
-				formatarData( $parQSelecao->DATAFIM ) : '' ),
+			$this->TituloData( '', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ),
 			( $parQSelecao->NUM11INI ? "Idprimario do registro: " . $parQSelecao->NUM11INI : "" ),
 				' ' ];
 
 		$this->DefinirCabColunas(
-			[ "Hora",    	 15, ALINHA_CEN ],
-			[ "Status", 	 20, ALINHA_ESQ ],
-			[ "O Que",   	100, ALINHA_ESQ ],
+			[ "Hora",    	 14, ALINHA_CEN ],
+			[ 'IP', 		  	 27, ALINHA_CEN ],
+			[ "Status", 	 55, ALINHA_ESQ ],
+			[ "O Que",   	130, ALINHA_ESQ ],
 			[ "Chave", 		 45, ALINHA_ESQ ],
-			[ "idPrimario", 45, ALINHA_DIR ],
-			[ 'IP', 		  	 27, ALINHA_CEN ] );
+			[ "idPrimario", 25, ALINHA_DIR ],
+			[ "Campo",		 30, ALINHA_ESQ ]
+			);
 
 		$this->DefinirQuebras(
 			[ 'QuebraPorUsuario',	SIM, NAO, SIM ],
 			[ 'QuebraPorData',		SIM, NAO, SIM ] );
 
 		$this->cabPaginaTemCabColunas = false;
-
+		$this->comCodigoRel           = false;
 		$this->DefinirAlturas();
 	}
 
@@ -83,28 +84,30 @@ class RelLog extends Relatorios
 	function Basico()
 	{
 		$regA   = &$this->regAtual;
-		$acesso = $regA->ACESSO == "(Master)" ? "MASTER => " : "";
 		$barra  = $regA->OPERACAO && $regA->OBSERVACAO ? " / " : "";
 		$obs    = $regA->OBSERVACAO ? $regA->OBSERVACAO : "";
-
-		switch( $regA->STATUS )
-		{
-			case 11: $status = "Acesso"; break;
-			case 12: $status = "Alteração"; break;
-			case 13: $status = "Inclusão"; break;
-			case 14: $status = "Exclusão"; break;
-			case 15: $status = "Processamento"; break;
-		}
+		$acesso = $regA->ACESSO == "(Master)" ? "MASTER => " : "";
 
 		$this->valores = [
-			formatarHora( $regA->HORA, "hh:mm" ),
-			$status,
+			formatarHora( $regA->HORA, "hh:mm:ss" ),
+			$regA->IP,
+			$regA->STATUS,
 			$regA->OPERACAO . $barra . $obs,
 			$regA->QUEM,
 			$acesso . $regA->IDQUEM,
-			$regA->IP ];
+			$regA->CAMPO
+		];
 
 		$this->ImprimirValorColunas();
+
+		$rotina = $regA->ROTINA;
+		if( $rotina )
+		{
+			$this->JuntarColunas( [0,2], [3,6] );
+			$this->valores[3] = $rotina;
+			$this->ImprimirValorColunas();
+			$this->RestaurarColunas();
+		}
 	}
 }
 
@@ -114,7 +117,7 @@ class RelLog extends Relatorios
 global $parQSelecao;
 $parQSelecao = lerParametro( "parQSelecao" );
 
-$proc = new RelLog( RETRATO, A4, 'Log_Acesso.pdf', '', true, .8 );
+$proc = new RelLog( PAISAGEM, A4, 'Log_Sistema.pdf', '', true, .87 );
 
 $statusLog = '';
 
@@ -129,12 +132,11 @@ switch( $parQSelecao->STATUSLOG )
 
 $trecho = $parQSelecao->TRECHO ? "L.Quem containing '" . $parQSelecao->TRECHO . "' and " : "" ;
 
-$select = "Select L.Login, L.Data, L.Hora, L.Status, L.Quem, L.idQuem, L.Observacao, L.IP,
-		L.Usuario, L.Acesso, O.Operacao
-	From arqLanceLogAcesso L
-		left join arqLanceOperacao	O on O.idPrimario=L.Operacao
+$select = "Select L.Login, L.Data, L.Hora, L.Status_Descritor as Status, L.Observacao, L.Quem, L.idQuem,
+		L.IP, L.Acesso, L.Campo, L.Antes, L.Depois, L.OperProc_Operacao as Rotina, L.Operacao_Operacao as Operacao
+	From v_arqLanceLogAcesso L
 	Where " . $trecho . $statusLog .
-		filtrarPorNum( "L.idquem", $parQSelecao->GRAN13 ) .
+		filtrarPorNum( "L.idQuem", $parQSelecao->GRAN13 ) .
 		filtrarPorLig( 'L.Usuario', $parQSelecao->USUARIO ) .
 		filtrarPorIntervaloData( 'L.Data', $parQSelecao->DATAINI, $parQSelecao->DATAFIM ) .
 		filtrarPorIntervalo( 'L.Hora', $parQSelecao->HORAINI, $parQSelecao->HORAFIM, "'" ) .
