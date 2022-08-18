@@ -6,6 +6,8 @@ echo
    $this->Pedir( "Ordem" ),
    $this->Pedir( "Dobro?",
       [ "", DobroTempo, " (usa o dobro do tempo da conuslta?)" ] ),
+   $this->Pedir( "Primeira?",
+      [ "", PrimAgenda, " (é a primeira opção na Agenda?)" ] ),
    
    $this->Pular1Linha(2),
    $this->Pedir( "Tratamento?",

@@ -95,28 +95,6 @@ class campo_arqTStCon_HoraChe extends Lance_CampoLogico
 }
 
 //======================================================
-//	Campo EhDesmarca
-//======================================================
-
-class campo_arqTStCon_EhDesmarca extends Lance_CampoLogico
-{
-	function __construct()
-	{
-		parent::__construct( "EhDesmarca", "EhDesmarca", "EhDesmarca", "", 0, 0, false );
-	}
-
-	//--------------------------------------------------
-	function Estilo()
-	{
-		global $g_regAtual;
-		if( $g_regAtual->EHDESMARCA == 0 )
-			return( "CorInativo" );
-		return( parent::Estilo() );
-	}
-
-}
-
-//======================================================
 //	Campo ValorObr
 //======================================================
 
@@ -155,6 +133,72 @@ class campo_arqTStCon_ProntuObr extends Lance_CampoLogico
 		global $g_regAtual;
 		if( $g_regAtual->PRONTUOBR == 0 )
 			return( "CorInativo" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo EhDesmarca
+//======================================================
+
+class campo_arqTStCon_EhDesmarca extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "EhDesmarca", "EhDesmarca", "EhDesmarca", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->EHDESMARCA == 0 )
+			return( "CorInativo" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo EhDesmaPac
+//======================================================
+
+class campo_arqTStCon_EhDesmaPac extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "EhDesmaPac", "EhDesmaPac", "EhDesmaPac", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->EHDESMAPAC == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
+//	Campo EhFaltou
+//======================================================
+
+class campo_arqTStCon_EhFaltou extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "EhFaltou", "EhFaltou", "EhFaltou", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->EHFALTOU == 1 )
+			return( "CorAtivo" );
 		return( parent::Estilo() );
 	}
 
@@ -233,9 +277,11 @@ function listaCampos_arqTStCon( $p_prefixo )
 			new Lance_CampoCadeia( "TClinica_Descritor", "TClinica_Descritor", "Descritor", 12, "xxxxxxxxxxxx", EH_DESCRITOR, TClinica ),
 			new campo_arqTStCon_Legenda(),
 			new campo_arqTStCon_HoraChe(),
-			new campo_arqTStCon_EhDesmarca(),
 			new campo_arqTStCon_ValorObr(),
 			new campo_arqTStCon_ProntuObr(),
+			new campo_arqTStCon_EhDesmarca(),
+			new campo_arqTStCon_EhDesmaPac(),
+			new campo_arqTStCon_EhFaltou(),
 			new campo_arqTStCon_Cor(),
 			new campo_arqTStCon_Fundo(),
 			new campo_arqTStCon_Ativo() ]
@@ -278,9 +324,11 @@ class arqTStCon extends Lance_Arquivo
 			$vetAux[] = [ TClinica_Descritor ];
 			$vetAux[] = [ Legenda ];
 			$vetAux[] = [ HoraChe ];
-			$vetAux[] = [ EhDesmarca ];
 			$vetAux[] = [ ValorObr ];
 			$vetAux[] = [ ProntuObr ];
+			$vetAux[] = [ EhDesmarca ];
+			$vetAux[] = [ EhDesmaPac ];
+			$vetAux[] = [ EhFaltou ];
 			$vetAux[] = [ Cor ];
 			$vetAux[] = [ Fundo ];
 			$vetAux[] = [ Ativo ];
@@ -307,9 +355,11 @@ class arqTStCon extends Lance_Arquivo
 			$vetAux[] = [ TClinica_Descritor ];
 			$vetAux[] = [ Legenda ];
 			$vetAux[] = [ HoraChe ];
-			$vetAux[] = [ EhDesmarca ];
 			$vetAux[] = [ ValorObr ];
 			$vetAux[] = [ ProntuObr ];
+			$vetAux[] = [ EhDesmarca ];
+			$vetAux[] = [ EhDesmaPac ];
+			$vetAux[] = [ EhFaltou ];
 			$vetAux[] = [ Cor ];
 			$vetAux[] = [ Fundo ];
 			$vetAux[] = [ Ativo ];

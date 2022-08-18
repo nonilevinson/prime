@@ -2005,6 +2005,7 @@ CREATE TABLE arqTiAgenda
 	/*  6*/	DOBROTEMPO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  7*/	PAGAMENTO campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  8*/	MIDIA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  9*/	PRIMAGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTiAgenda_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTiAgenda_UK UNIQUE ( TiAgenda )
 );
@@ -2138,12 +2139,14 @@ CREATE TABLE arqTStCon
 	/*  4*/	TCLINICA ligadoComTabela, /* Ligado com a Tabela TClinica */
 	/*  5*/	LEGENDA campoLogico, /* Lógico: 0=Não 1=Sim */
 	/*  6*/	HORACHE campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  7*/	EHDESMARCA campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  8*/	VALOROBR campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  9*/	PRONTUOBR campoLogico, /* Lógico: 0=Não 1=Sim */
-	/* 10*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/* 11*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
-	/* 12*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  7*/	VALOROBR campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  8*/	PRONTUOBR campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  9*/	EHDESMARCA campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 10*/	EHDESMAPAC campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 11*/	EHFALTOU campoLogico, /* Lógico: 0=Não 1=Sim */
+	/* 12*/	COR VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/* 13*/	FUNDO VARCHAR( 7 ) COLLATE PT_BR, /* Máscara = X */
+	/* 14*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
 	CONSTRAINT arqTStCon_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqTStCon_UK UNIQUE ( Status )
 );
@@ -3355,7 +3358,7 @@ RECREATE VIEW V_arqFornecedor AS
 commit;
 
 RECREATE VIEW V_arqTiAgenda AS 
-	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ORDEM, A0.ATIVO, A0.COMPLEMEN, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA
+	SELECT A0.IDPRIMARIO, A0.TIAGENDA, A0.ORDEM, A0.ATIVO, A0.COMPLEMEN, A0.DOBROTEMPO, A0.PAGAMENTO, A0.MIDIA, A0.PRIMAGENDA
 	FROM arqTiAgenda A0;
 commit;
 
@@ -3464,7 +3467,7 @@ RECREATE VIEW V_arqTiConsulta AS
 commit;
 
 RECREATE VIEW V_arqTStCon AS 
-	SELECT A0.IDPRIMARIO, A0.STATUS, A0.ORDEM, A0.TCLINICA, A1.CHAVE as TClinica_CHAVE, A1.DESCRITOR as TClinica_DESCRITOR, A0.LEGENDA, A0.HORACHE, A0.EHDESMARCA, A0.VALOROBR, A0.PRONTUOBR, A0.COR, A0.FUNDO, A0.ATIVO
+	SELECT A0.IDPRIMARIO, A0.STATUS, A0.ORDEM, A0.TCLINICA, A1.CHAVE as TClinica_CHAVE, A1.DESCRITOR as TClinica_DESCRITOR, A0.LEGENDA, A0.HORACHE, A0.VALOROBR, A0.PRONTUOBR, A0.EHDESMARCA, A0.EHDESMAPAC, A0.EHFALTOU, A0.COR, A0.FUNDO, A0.ATIVO
 	FROM arqTStCon A0
 	left join tabTClinica A1 on A1.IDPRIMARIO=A0.TCLINICA;
 commit;
@@ -3569,6 +3572,7 @@ insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de gr
 insert into arqLanceOperacao values(200011,2,'Rotina para excluir permissões de grupos de acesso','',11,90,0,'');
 insert into arqLanceOperacao values(200019,2,'Rotina para envio de teste de ação de email','',19,20,0,'');
 insert into arqLanceOperacao values(200020,2,'Visualizar ação de email','',20,20,0,'');
+insert into arqLanceOperacao values(200283,2,'Relatório de extrato de consultas','',283,50,0,'');
 insert into arqLanceOperacao values(200175,2,'Relatório da relação de consultas','',175,50,0,'');
 insert into arqLanceOperacao values(200203,2,'Relatório das agendas de retirada de medicação por dia','',203,50,0,'');
 insert into arqLanceOperacao values(200281,2,'Relatório de pacientes por assessor','',281,50,0,'');

@@ -80,17 +80,6 @@ function Campo_arqTStCon_HoraChe()
 var HoraChe = new Campo_arqTStCon_HoraChe;
 
 //------------------------------------------------------------
-Campo_arqTStCon_EhDesmarca.prototype = new Lance_CampoLogico;
-
-function Campo_arqTStCon_EhDesmarca()
-{
-	this.superClass = Lance_CampoLogico;
-	this.superClass( "EhDesmarca", "EhDesmarca", "EhDesmarca");
-}
-
-var EhDesmarca = new Campo_arqTStCon_EhDesmarca;
-
-//------------------------------------------------------------
 Campo_arqTStCon_ValorObr.prototype = new Lance_CampoLogico;
 
 function Campo_arqTStCon_ValorObr()
@@ -111,6 +100,39 @@ function Campo_arqTStCon_ProntuObr()
 }
 
 var ProntuObr = new Campo_arqTStCon_ProntuObr;
+
+//------------------------------------------------------------
+Campo_arqTStCon_EhDesmarca.prototype = new Lance_CampoLogico;
+
+function Campo_arqTStCon_EhDesmarca()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "EhDesmarca", "EhDesmarca", "EhDesmarca");
+}
+
+var EhDesmarca = new Campo_arqTStCon_EhDesmarca;
+
+//------------------------------------------------------------
+Campo_arqTStCon_EhDesmaPac.prototype = new Lance_CampoLogico;
+
+function Campo_arqTStCon_EhDesmaPac()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "EhDesmaPac", "EhDesmaPac", "EhDesmaPac");
+}
+
+var EhDesmaPac = new Campo_arqTStCon_EhDesmaPac;
+
+//------------------------------------------------------------
+Campo_arqTStCon_EhFaltou.prototype = new Lance_CampoLogico;
+
+function Campo_arqTStCon_EhFaltou()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "EhFaltou", "EhFaltou", "EhFaltou");
+}
+
+var EhFaltou = new Campo_arqTStCon_EhFaltou;
 
 //------------------------------------------------------------
 Campo_arqTStCon_Cor.prototype = new Lance_CampoCadeia;
@@ -183,16 +205,6 @@ Campo_arqTStCon_HoraChe.prototype.Sugeriu = function()
 //-------------------------------------------------------------
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
-Campo_arqTStCon_EhDesmarca.prototype.Sugeriu = function()
-{
-{
-	return( this.AtribuiuSemCritica( 0 ) );
-}
-}
-
-//-------------------------------------------------------------
-// Expressão para valor inicial do campo
-//-------------------------------------------------------------
 Campo_arqTStCon_ValorObr.prototype.Sugeriu = function()
 {
 {
@@ -204,6 +216,36 @@ Campo_arqTStCon_ValorObr.prototype.Sugeriu = function()
 // Expressão para valor inicial do campo
 //-------------------------------------------------------------
 Campo_arqTStCon_ProntuObr.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTStCon_EhDesmarca.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTStCon_EhDesmaPac.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTStCon_EhFaltou.prototype.Sugeriu = function()
 {
 {
 	return( this.AtribuiuSemCritica( 0 ) );
@@ -247,7 +289,7 @@ function ListaDeCampos_arqTStCon( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Status, Ordem, TClinica, TClinica_Chave, TClinica_Descritor, Legenda, HoraChe, EhDesmarca, ValorObr, ProntuObr, Cor, Fundo, Ativo ]	);
+		[ Status, Ordem, TClinica, TClinica_Chave, TClinica_Descritor, Legenda, HoraChe, ValorObr, ProntuObr, EhDesmarca, EhDesmaPac, EhFaltou, Cor, Fundo, Ativo ]	);
 	IniciarDependencias_arqTStCon();
 	g_prefixo = l_prefixo;
 	return( l_lista );

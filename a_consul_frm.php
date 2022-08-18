@@ -163,8 +163,7 @@ else //* para nutricionista ou psicologo
 	$this->NaoPedirVarios( Assessor, Cortesia, Valor, FormaPg, Valor2, FormaPg2, ContaCons,
 		TMotivo, MedicaAtua, PTrata, ValPTrata, ContaPTra, EntraFPg, EntraVal, EntraParcE, BoletoMin,
 		EntraParc, SdEntrFPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, EntraObs, SaldoFPg,
-		SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, TrgQtdM, TrgQtdMEnt, Saldo, QuemAgRet,
-		QdoAgRet, DataRet, DiaRet, HoraRet, TStAgRet, AssesRet, ObsRet ),
+		SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, TrgQtdM, TrgQtdMEnt, Saldo ),
 "</table>",
 
 CriarForms(

@@ -176,6 +176,28 @@ class campo_arqTiAgenda_Midia extends Lance_CampoLogico
 }
 
 //======================================================
+//	Campo PrimAgenda
+//======================================================
+
+class campo_arqTiAgenda_PrimAgenda extends Lance_CampoLogico
+{
+	function __construct()
+	{
+		parent::__construct( "PrimAgenda", "PrimAgenda", "PrimAgenda", "", 0, 0, false );
+	}
+
+	//--------------------------------------------------
+	function Estilo()
+	{
+		global $g_regAtual;
+		if( $g_regAtual->PRIMAGENDA == 1 )
+			return( "CorAtivo" );
+		return( parent::Estilo() );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqTiAgenda
 //======================================================
 function listaCampos_arqTiAgenda( $p_prefixo )
@@ -192,7 +214,8 @@ function listaCampos_arqTiAgenda( $p_prefixo )
 			new campo_arqTiAgenda_Complemen(),
 			new campo_arqTiAgenda_DobroTempo(),
 			new campo_arqTiAgenda_Pagamento(),
-			new campo_arqTiAgenda_Midia() ]
+			new campo_arqTiAgenda_Midia(),
+			new campo_arqTiAgenda_PrimAgenda() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -234,6 +257,7 @@ class arqTiAgenda extends Lance_Arquivo
 			$vetAux[] = [ DobroTempo ];
 			$vetAux[] = [ Pagamento ];
 			$vetAux[] = [ Midia ];
+			$vetAux[] = [ PrimAgenda ];
 		return( $vetAux );
 	}
 
@@ -251,6 +275,7 @@ class arqTiAgenda extends Lance_Arquivo
 			$vetAux[] = [ DobroTempo ];
 			$vetAux[] = [ Pagamento ];
 			$vetAux[] = [ Midia ];
+			$vetAux[] = [ PrimAgenda ];
 		return( $vetAux );
 	}
 

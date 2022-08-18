@@ -79,6 +79,17 @@ function Campo_arqTiAgenda_Midia()
 
 var Midia = new Campo_arqTiAgenda_Midia;
 
+//------------------------------------------------------------
+Campo_arqTiAgenda_PrimAgenda.prototype = new Lance_CampoLogico;
+
+function Campo_arqTiAgenda_PrimAgenda()
+{
+	this.superClass = Lance_CampoLogico;
+	this.superClass( "PrimAgenda", "PrimAgenda", "PrimAgenda");
+}
+
+var PrimAgenda = new Campo_arqTiAgenda_PrimAgenda;
+
 //-------------------------------------------------------------
 // Cabeçalho para o campo
 //-------------------------------------------------------------
@@ -173,6 +184,16 @@ Campo_arqTiAgenda_Midia.prototype.Sugeriu = function()
 }
 }
 
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqTiAgenda_PrimAgenda.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( 0 ) );
+}
+}
+
 function IniciarDependencias_arqTiAgenda()
 {
 }
@@ -192,7 +213,7 @@ function ListaDeCampos_arqTiAgenda( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ TiAgenda, Ordem, Ativo, Complemen, DobroTempo, Pagamento, Midia ]	);
+		[ TiAgenda, Ordem, Ativo, Complemen, DobroTempo, Pagamento, Midia, PrimAgenda ]	);
 	IniciarDependencias_arqTiAgenda();
 	g_prefixo = l_prefixo;
 	return( l_lista );

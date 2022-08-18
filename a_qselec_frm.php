@@ -451,5 +451,20 @@ if( $op == 281 ) //* r_assessor_pessoa
 	$this->Pedir( "Status da consulta", TStCon );
 }
 
+if( $op == 283 ) //* r_consulta_extrato
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Paciente", Cliente_Nome ),
+	$this->Pedir( " ",
+		[ "Celular ", Cliente_NumCelular,
+		[ "", Cliente ] ] ),
+	$this->Pedir( "Tipo da consulta", TiAgenda ),
+	$this->Pedir( "Status da consulta", TStCon ),
+	$this->Pedir( "Entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
 //--------------------------------------------------------------
 echo 	"</table>";

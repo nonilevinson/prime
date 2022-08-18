@@ -630,7 +630,7 @@ class campo_parQSelecao_TStCon extends Lance_CampoLigado
 {
 	function __construct()
 	{
-		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "arqTStCon", "idPrimario ASC ", LANCE_LIG_SELECAO, 1, 0, false );
+		parent::__construct( "TStCon", "TStCon", "TStCon", 0, "arqTStCon", "Ordem ASC ", LANCE_LIG_SELECAO, 1, 0, false );
 	}
 
 }
