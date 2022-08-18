@@ -222,8 +222,11 @@ echo "<br>INSERT INTO arqItLogEmail VALUES ( " . $idItemLogEmail. ", " . $this->
 //if( $g_debugProcesso ) echo '<br>this->idEmailRemetente= '.$this->idEmailRemetente.'<br>';
 				
 			if( !$regEmailRemet->EMAIL )
+			{
+				sql_fecharBD();
 				return;
-
+			}
+			
 			$this->regEmailRemetente = $regEmailRemet;
 
 			$select = "Select a.idPrimario as idAcaoAtual, A.PadraoAcao as idPadraoAcao,
