@@ -3399,7 +3399,7 @@ commit;
 
 RECREATE VIEW V_arqUnidade AS 
 	SELECT A0.IDPRIMARIO, A0.UNIDADE, A0.ATIVO
-	FROM arqUnidade A0;
+	FROM arqUnidade A0;p
 commit;
 
 RECREATE VIEW V_arqMedicamen AS 
