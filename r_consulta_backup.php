@@ -9,7 +9,7 @@ class RelConsulta extends Relatorios
 	{
 		global $parQSelecao;
 
-		$this->tituloRelatorio = [ "Relação de consultas",
+		$this->tituloRelatorio = [ "Relação de backup de medicação",
 			$this->TituloData( "", $parQSelecao->DATAINI, $parQSelecao->DATAFIM ),
 			' ' ];
 
