@@ -89,31 +89,34 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 			[ "", ValPTrata,
 			[ brHtml(4) . "Conta ", ContaPTra, " (o sistema preencherá esse campo)", '','','','FormCalculado' ] ] ),
 
+		//* Entrada
 		$this->Cabecalhos( [ "Entrada - pago no pós consulta", "FormCabPrime FundoAzul alinhaEsq", "2" ] ),
-		$this->Pedir( "Forma de pagamento",
-			[ "", EntraFPg,
-			[ brHtml(4) . "Valor ", EntraVal,
+		$this->Pedir( "Valor",
+			[ "Valor ", EntraVal,		
+			[ brHtml(4) . "Forma de pagamento ", EntraFPg,
 			[ brHtml(4) . "Parcelas ", EntraParcE,
 			[ brHtml(4) . "Mínimo ", BoletoMin, ' (para Saldo por boleto)','','','','FormCalculado' ] ] ] ] ),
 
-		$this->NaoPedirVarios( SdVenc1Par, SdCond ),
-		
-		$this->Pedir( "Se dividiu",
-			[ "Parcelas ", EntraParc,
-			[ brHtml(4) . "Forma de pagamento ", SdEntrFPg ] ] ),
+		//* se dividiu a entrada
 		$this->Pedir( " ",
-			[ "Valor das parcelas ", EntraValP,
-			[ brHtml(4) . "Total ", EntraTotP,
-			[ brHtml(4) . "Total da Entrada ", EntraTotal ] ] ] ),
+			[ "Se dividiu a entrada", "", "", "FormCabPrime FundoAzul alinhaEsq" ] ),
+		$this->Pedir( " ",
+			[ "Valor ", EntraTotP,
+			[ brHtml(4) . "Forma de pagamento ", SdEntrFPg,
+			[ brHtml(4) . "Parcelas ", EntraParc ] ] ] ),
+		$this->Pedir( " ",
+			[ "Total ", EntraTotal, "(da Entrada)" ] ),
 
 		$this->Pedir( "Observações", EntraObs ),
+		
+		//* Intermediárias
+		$this->Cabecalhos( [ "Intermediárias - pago no pós consulta", "FormCabPrime FundoLJ alinhaEsq", "2" ] ),
 
 		$this->Cabecalhos( [ "Saldo - a pagar na retirada da medicação", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),
 		$this->Pedir( "Forma de pagamento",
 			[ "", SaldoFPg,
 			[ brHtml(4) . "Parcelas ", SaldoParc,
-			[ brHtml(4) . "Condição ", SaldoCond,
-			[ brHtml(4) . "Valor das parcelas ", SaldoVal, "<br>(Condição deve ser usada, quando não for Cartão e se for mais de uma parcela. Será o intervalo entre elas)" ] ] ] ] ),
+			[ brHtml(4) . "Condição ", SaldoCond ] ] ] ),
 		$this->Pedir( "Observações", SaldoObs ),
 
 		$this->Pular1Linha(2),
@@ -162,8 +165,8 @@ else //* para nutricionista ou psicologo
 
 	$this->NaoPedirVarios( Assessor, Cortesia, Valor, FormaPg, Valor2, FormaPg2, ContaCons,
 		TMotivo, MedicaAtua, PTrata, ValPTrata, ContaPTra, EntraFPg, EntraVal, EntraParcE, BoletoMin,
-		EntraParc, SdEntrFPg, SdVenc1Par, SdCond, EntraValP, EntraTotP, EntraTotal, EntraObs, SaldoFPg,
-		SaldoParc, SaldoCond, SaldoVal, SaldoObs, Conduta, Medicacao, TrgQtdM, TrgQtdMEnt, Saldo ),
+		EntraParc, SdEntrFPg, EntraValP, EntraTotP, EntraTotal, EntraObs, SaldoFPg,
+		SaldoParc, SaldoCond, SaldoObs, Conduta, Medicacao, TrgQtdM, TrgQtdMEnt, Saldo ),
 "</table>",
 
 CriarForms(

@@ -1,6 +1,8 @@
 <?php
 
 //-----------------------------------------------------------
+//* 22/08/2022 na 2.06 campo foi excluído
+/*
 function sugereSdVenc1Par()
 {
 	sql_abrirBD( false );
@@ -20,7 +22,7 @@ function sugereSdVenc1Par()
 		}',
 		javaScriptFim();
 }
-
+*/
 //-----------------------------------------------------------
 function sugereBoletoMin()
 {

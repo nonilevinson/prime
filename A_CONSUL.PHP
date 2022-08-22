@@ -790,14 +790,14 @@ class campo_arqConsulta_EntraParcE extends Lance_CampoNumerico
 }
 
 //======================================================
-//	Campo EntraParc
+//	Campo EntraTotP
 //======================================================
 
-class campo_arqConsulta_EntraParc extends Lance_CampoNumerico
+class campo_arqConsulta_EntraTotP extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "EntraParc", "EntraParc", "EntraParc", 2, "#z", "", "", 0, 0, false );
+		parent::__construct( "EntraTotP", "EntraTotP", "EntraTotP", 8, "###.##z,zz", "", "", 0, 0, false );
 	}
 
 }
@@ -848,53 +848,14 @@ class campo_arqConsulta_SdEntrFPg_FormaPg extends Lance_CampoCadeia
 }
 
 //======================================================
-//	Campo SdVenc1Par
+//	Campo EntraParc
 //======================================================
 
-class campo_arqConsulta_SdVenc1Par extends Lance_CampoData
+class campo_arqConsulta_EntraParc extends Lance_CampoNumerico
 {
 	function __construct()
 	{
-		parent::__construct( "SdVenc1Par", "SdVenc1Par", "SdVenc1Par", 8, "dd/mm/aaaa", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo SdCond
-//======================================================
-
-class campo_arqConsulta_SdCond extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "SdCond", "SdCond", "SdCond", 2, "#z", "", "", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo EntraValP
-//======================================================
-
-class campo_arqConsulta_EntraValP extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "EntraValP", "EntraValP", "EntraValP", 8, "###.##z,zz", "", "", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo EntraTotP
-//======================================================
-
-class campo_arqConsulta_EntraTotP extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "EntraTotP", "EntraTotP", "EntraTotP", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
+		parent::__construct( "EntraParc", "EntraParc", "EntraParc", 2, "#z", "", "", 0, 0, false );
 	}
 
 }
@@ -1005,19 +966,6 @@ class campo_arqConsulta_SaldoCond extends Lance_CampoNumerico
 	function __construct()
 	{
 		parent::__construct( "SaldoCond", "SaldoCond", "SaldoCond", 2, "#z", "", "", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo SaldoVal
-//======================================================
-
-class campo_arqConsulta_SaldoVal extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "SaldoVal", "SaldoVal", "SaldoVal", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
 	}
 
 }
@@ -1252,13 +1200,10 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_EntraFPg_FormaPg(),
 			new campo_arqConsulta_EntraVal(),
 			new campo_arqConsulta_EntraParcE(),
-			new campo_arqConsulta_EntraParc(),
+			new campo_arqConsulta_EntraTotP(),
 			new campo_arqConsulta_SdEntrFPg(),
 			new campo_arqConsulta_SdEntrFPg_FormaPg(),
-			new campo_arqConsulta_SdVenc1Par(),
-			new campo_arqConsulta_SdCond(),
-			new campo_arqConsulta_EntraValP(),
-			new campo_arqConsulta_EntraTotP(),
+			new campo_arqConsulta_EntraParc(),
 			new campo_arqConsulta_EntraTotal(),
 			new campo_arqConsulta_BoletoMin(),
 			new campo_arqConsulta_EntraObs(),
@@ -1266,7 +1211,6 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_SaldoFPg_FormaPg(),
 			new campo_arqConsulta_SaldoParc(),
 			new campo_arqConsulta_SaldoCond(),
-			new campo_arqConsulta_SaldoVal(),
 			new campo_arqConsulta_SaldoObs(),
 			new campo_arqConsulta_Conduta(),
 			new campo_arqConsulta_Medicacao(),
@@ -1399,19 +1343,15 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ EntraFPg_FormaPg ];
 			$vetAux[] = [ EntraVal ];
 			$vetAux[] = [ EntraParcE ];
-			$vetAux[] = [ EntraParc ];
-			$vetAux[] = [ SdEntrFPg_FormaPg ];
-			$vetAux[] = [ SdVenc1Par ];
-			$vetAux[] = [ SdCond ];
-			$vetAux[] = [ EntraValP ];
 			$vetAux[] = [ EntraTotP ];
+			$vetAux[] = [ SdEntrFPg_FormaPg ];
+			$vetAux[] = [ EntraParc ];
 			$vetAux[] = [ EntraTotal ];
 			$vetAux[] = [ BoletoMin ];
 			$vetAux[] = [ EntraObs ];
 			$vetAux[] = [ SaldoFPg_FormaPg ];
 			$vetAux[] = [ SaldoParc ];
 			$vetAux[] = [ SaldoCond ];
-			$vetAux[] = [ SaldoVal ];
 			$vetAux[] = [ SaldoObs ];
 			$vetAux[] = [ Conduta ];
 			$vetAux[] = [ Medicacao ];

@@ -2446,28 +2446,24 @@ CREATE TABLE arqConsulta
 	/* 24*/	ENTRAFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
 	/* 25*/	ENTRAVAL NUMERIC( 8, 2 ), /* Máscara = N */
 	/* 26*/	ENTRAPARCE SMALLINT, /* Máscara = N */
-	/* 27*/	ENTRAPARC SMALLINT, /* Máscara = N */
+	/* 27*/	ENTRATOTP NUMERIC( 8, 2 ), /* Máscara = N */
 	/* 28*/	SDENTRFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 29*/	SDVENC1PAR DATE, /* Máscara = 4ano */
-	/* 30*/	SDCOND SMALLINT, /* Máscara = N */
-	/* 31*/	ENTRAVALP NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 32*/	/* ENTRATOTP */
-	/* 33*/	/* ENTRATOTAL */
-	/* 34*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
-	/* 35*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/* 36*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 37*/	SALDOPARC SMALLINT, /* Máscara = N */
-	/* 38*/	SALDOCOND SMALLINT, /* Máscara = N */
-	/* 39*/	/* SALDOVAL */
-	/* 40*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/* 41*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 42*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 43*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 44*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 45*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 46*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
-	/* 47*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
-	/* 48*/	/* SALDO */
+	/* 29*/	ENTRAPARC SMALLINT, /* Máscara = N */
+	/* 30*/	/* ENTRATOTAL */
+	/* 31*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 32*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 33*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 34*/	SALDOPARC SMALLINT, /* Máscara = N */
+	/* 35*/	SALDOCOND SMALLINT, /* Máscara = N */
+	/* 36*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 37*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 38*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 39*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 40*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 41*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 42*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
+	/* 43*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
+	/* 44*/	/* SALDO */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -3013,15 +3009,8 @@ ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
 	ELSE ( 0 )
 	END  ); 
 ALTER TABLE arqClinica ALTER ATIVO POSITION 18;
-ALTER TABLE arqConsulta ADD ENTRATOTP NUMERIC( 8, 2 ) computed by ( EntraParc * EntraValP ); 
-ALTER TABLE arqConsulta ALTER ENTRATOTP POSITION 32;
 ALTER TABLE arqConsulta ADD ENTRATOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP ); 
-ALTER TABLE arqConsulta ALTER ENTRATOTAL POSITION 33;
-ALTER TABLE arqConsulta ADD SALDOVAL NUMERIC( 8, 2 ) computed by ( CASE WHEN ( PTrata is not null ) THEN ( CASE
-	WHEN( SaldoParc > 0 ) THEN( ( ValPTrata - EntraVal - ( EntraParc * EntraValP ) ) / SaldoParc )
-	ELSE ( 0 )
-	END  ) ELSE ( 0 ) END ); 
-ALTER TABLE arqConsulta ALTER SALDOVAL POSITION 39;
+ALTER TABLE arqConsulta ALTER ENTRATOTAL POSITION 30;
 ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
 	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqRecorrente.Pessoa )  ), '' ) ) )
 	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqRecorrente.Fornecedor )  ), '' ) ) )
@@ -3068,7 +3057,7 @@ ALTER TABLE arqItemMov ALTER CUNIDADE POSITION 8;
 ALTER TABLE arqCMedica ADD SALDO NUMERIC(18,0) computed by ( Qtd - QtdEntreg ); 
 ALTER TABLE arqCMedica ALTER SALDO POSITION 9;
 ALTER TABLE arqConsulta ADD SALDO NUMERIC(18,0) computed by ( TrgQtdM - TrgQtdMEnt ); 
-ALTER TABLE arqConsulta ALTER SALDO POSITION 48;
+ALTER TABLE arqConsulta ALTER SALDO POSITION 44;
 commit;
 
 
@@ -3319,7 +3308,7 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.TICONSULTA, A1.TICONSULTA as TICONSULTA_TICONSULTA, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.TSTCON, A3.STATUS as TSTCON_STATUS, A0.TIAGENDA, A4.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A5.NOME as PESSOA_NOME, A5.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A6.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A7.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A8.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A9.CHAVE as TMotivo_CHAVE, A9.DESCRITOR as TMotivo_DESCRITOR, A0.CORTESIA, A0.VALOR, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.VALOR2, A0.FORMAPG2, A11.FORMAPG as FORMAPG2_FORMAPG, A0.PTRATA, A12.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A13.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARCE, A0.ENTRAPARC, A0.SDENTRFPG, A14.FORMAPG as SDENTRFPG_FORMAPG, A0.SDVENC1PAR, A0.SDCOND, A0.ENTRAVALP, A0.ENTRATOTP, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOFPG, A15.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOPARC, A0.SALDOCOND, A0.SALDOVAL, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A16.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A17.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.TICONSULTA, A1.TICONSULTA as TICONSULTA_TICONSULTA, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.TSTCON, A3.STATUS as TSTCON_STATUS, A0.TIAGENDA, A4.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A5.NOME as PESSOA_NOME, A5.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A6.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A7.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A8.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A9.CHAVE as TMotivo_CHAVE, A9.DESCRITOR as TMotivo_DESCRITOR, A0.CORTESIA, A0.VALOR, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.VALOR2, A0.FORMAPG2, A11.FORMAPG as FORMAPG2_FORMAPG, A0.PTRATA, A12.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A13.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARCE, A0.ENTRATOTP, A0.SDENTRFPG, A14.FORMAPG as SDENTRFPG_FORMAPG, A0.ENTRAPARC, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOFPG, A15.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOPARC, A0.SALDOCOND, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A16.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A17.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO
 	FROM arqConsulta A0
 	left join arqTiConsulta A1 on A1.IDPRIMARIO = A0.TICONSULTA
 	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA
@@ -4970,11 +4959,9 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'EntraFPg', OLD.EntraFPg, NEW.EntraFPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'EntraVal', OLD.EntraVal, NEW.EntraVal );
 	execute procedure set_log( 12, NEW.idPrimario, 'EntraParcE', OLD.EntraParcE, NEW.EntraParcE );
-	execute procedure set_log( 12, NEW.idPrimario, 'EntraParc', OLD.EntraParc, NEW.EntraParc );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraTotP', OLD.EntraTotP, NEW.EntraTotP );
 	execute procedure set_log( 12, NEW.idPrimario, 'SdEntrFPg', OLD.SdEntrFPg, NEW.SdEntrFPg );
-	execute procedure set_log( 12, NEW.idPrimario, 'SdVenc1Par', OLD.SdVenc1Par, NEW.SdVenc1Par );
-	execute procedure set_log( 12, NEW.idPrimario, 'SdCond', OLD.SdCond, NEW.SdCond );
-	execute procedure set_log( 12, NEW.idPrimario, 'EntraValP', OLD.EntraValP, NEW.EntraValP );
+	execute procedure set_log( 12, NEW.idPrimario, 'EntraParc', OLD.EntraParc, NEW.EntraParc );
 	execute procedure set_log( 12, NEW.idPrimario, 'EntraObs', OLD.EntraObs, NEW.EntraObs );
 	execute procedure set_log( 12, NEW.idPrimario, 'SaldoFPg', OLD.SaldoFPg, NEW.SaldoFPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'SaldoParc', OLD.SaldoParc, NEW.SaldoParc );
