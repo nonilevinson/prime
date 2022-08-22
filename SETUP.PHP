@@ -13,7 +13,7 @@
 
 	$setup["BANCO"] = [
 		"TIPO"				=> "firebird",	// Tipo
-		"NOME"				=> "dado205.fdb",	// Nome
+		"NOME"				=> "dado206.fdb",	// Nome
 		"LOGINLOCAL"		=> "SYSDBA",	// Login Local
 		"SENHALOCAL"		=> "masterkey",	// Senha
 		"CAMINHOLOCAL"		=> "",	// Caminho
@@ -30,6 +30,7 @@
 		[ 'Usuários', 'arqUsuario', 'Usuario', 'Senha', 'Grupo', '', 'Ativo', 'Email', 'Versao', 'principa' ]	];
 
 	$versoes = [
+		"2.06"	=> "23/08/2022",
 		"2.05"	=> "18/08/2022",
 		"2.04"	=> "12/08/2022",
 		"2.03"	=> "03/08/2022",
