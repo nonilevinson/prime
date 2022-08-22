@@ -520,6 +520,127 @@ function Campo_arqConsulta_EntraObs()
 var EntraObs = new Campo_arqConsulta_EntraObs;
 
 //------------------------------------------------------------
+Campo_arqConsulta_I1Valor.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_I1Valor()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "I1Valor", "I1Valor", "I1Valor", 8, "###.##z,zz", true,"", "");
+}
+
+var I1Valor = new Campo_arqConsulta_I1Valor;
+
+//------------------------------------------------------------
+Campo_arqConsulta_I1FPg.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_I1FPg()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "I1FPg", "I1FPg", "I1FPg", "arqFormaPg", "a_formap", null, "",44);
+}
+
+var I1FPg = new Campo_arqConsulta_I1FPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_I1FPg_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_I1FPg_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "I1FPg_FormaPg", "I1FPg_FormaPg", "FormaPg", I1FPg, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var I1FPg_FormaPg = new Campo_arqConsulta_I1FPg_FormaPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_I1Parc.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_I1Parc()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "I1Parc", "I1Parc", "I1Parc", 2, "#z", false,"", "");
+}
+
+var I1Parc = new Campo_arqConsulta_I1Parc;
+
+//------------------------------------------------------------
+Campo_arqConsulta_I2Valor.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_I2Valor()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "I2Valor", "I2Valor", "I2Valor", 8, "###.##z,zz", true,"", "");
+}
+
+var I2Valor = new Campo_arqConsulta_I2Valor;
+
+//------------------------------------------------------------
+Campo_arqConsulta_I2FPg.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_I2FPg()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "I2FPg", "I2FPg", "I2FPg", "arqFormaPg", "a_formap", null, "",44);
+}
+
+var I2FPg = new Campo_arqConsulta_I2FPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_I2FPg_FormaPg.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_I2FPg_FormaPg()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "I2FPg_FormaPg", "I2FPg_FormaPg", "FormaPg", I2FPg, 30, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var I2FPg_FormaPg = new Campo_arqConsulta_I2FPg_FormaPg;
+
+//------------------------------------------------------------
+Campo_arqConsulta_I2Parc.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_I2Parc()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "I2Parc", "I2Parc", "I2Parc", 2, "#z", false,"", "");
+}
+
+var I2Parc = new Campo_arqConsulta_I2Parc;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SubTotal.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_SubTotal()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "SubTotal", "SubTotal", "SubTotal", 8, "###.##z,zz", true,"", "");
+}
+
+var SubTotal = new Campo_arqConsulta_SubTotal;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SubSaldo.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_SubSaldo()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "SubSaldo", "SubSaldo", "SubSaldo", 8, "###.##z,zz", true,"", "");
+}
+
+var SubSaldo = new Campo_arqConsulta_SubSaldo;
+
+//------------------------------------------------------------
+Campo_arqConsulta_SaldoValor.prototype = new Lance_CampoNumerico;
+
+function Campo_arqConsulta_SaldoValor()
+{
+	this.superClass = Lance_CampoNumerico;
+	this.superClass( "SaldoValor", "SaldoValor", "SaldoValor", 8, "###.##z,zz", true,"", "");
+}
+
+var SaldoValor = new Campo_arqConsulta_SaldoValor;
+
+//------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg.prototype = new Lance_CampoHidden;
 
 function Campo_arqConsulta_SaldoFPg()
@@ -551,17 +672,6 @@ function Campo_arqConsulta_SaldoParc()
 }
 
 var SaldoParc = new Campo_arqConsulta_SaldoParc;
-
-//------------------------------------------------------------
-Campo_arqConsulta_SaldoCond.prototype = new Lance_CampoNumerico;
-
-function Campo_arqConsulta_SaldoCond()
-{
-	this.superClass = Lance_CampoNumerico;
-	this.superClass( "SaldoCond", "SaldoCond", "SaldoCond", 2, "#z", false,"", "");
-}
-
-var SaldoCond = new Campo_arqConsulta_SaldoCond;
 
 //------------------------------------------------------------
 Campo_arqConsulta_SaldoObs.prototype = new Lance_CampoCadeia;
@@ -683,6 +793,72 @@ function Campo_arqConsulta_Saldo()
 }
 
 var Saldo = new Campo_arqConsulta_Saldo;
+
+//------------------------------------------------------------
+Campo_arqConsulta_BkpData.prototype = new Lance_CampoData;
+
+function Campo_arqConsulta_BkpData()
+{
+	this.superClass = Lance_CampoData;
+	this.superClass( "BkpData", "BkpData", "BkpData", 8, "dd/mm/aaaa", true);
+}
+
+var BkpData = new Campo_arqConsulta_BkpData;
+
+//------------------------------------------------------------
+Campo_arqConsulta_BkpAssess.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_BkpAssess()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "BkpAssess", "BkpAssess", "BkpAssess", "arqUsuario", "a_usuari", null, "",5);
+}
+
+var BkpAssess = new Campo_arqConsulta_BkpAssess;
+
+//------------------------------------------------------------
+Campo_arqConsulta_BkpAssess_Usuario.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_BkpAssess_Usuario()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "BkpAssess_Usuario", "BkpAssess_Usuario", "Usuario", BkpAssess, 40, "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu", false);
+}
+
+var BkpAssess_Usuario = new Campo_arqConsulta_BkpAssess_Usuario;
+
+//------------------------------------------------------------
+Campo_arqConsulta_BkpMotivo.prototype = new Lance_CampoHidden;
+
+function Campo_arqConsulta_BkpMotivo()
+{
+	this.superClass = Lance_CampoHidden;
+	this.superClass( "BkpMotivo", "BkpMotivo", "BkpMotivo", "arqBkpMotivo", "a_bkpmot", null, "",62);
+}
+
+var BkpMotivo = new Campo_arqConsulta_BkpMotivo;
+
+//------------------------------------------------------------
+Campo_arqConsulta_BkpMotivo_BkpMotivo.prototype = new Lance_CampoCadeiaLigado;
+
+function Campo_arqConsulta_BkpMotivo_BkpMotivo()
+{
+	this.superClass = Lance_CampoCadeiaLigado;
+	this.superClass( "BkpMotivo_BkpMotivo", "BkpMotivo_BkpMotivo", "BkpMotivo", BkpMotivo, 50, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var BkpMotivo_BkpMotivo = new Campo_arqConsulta_BkpMotivo_BkpMotivo;
+
+//------------------------------------------------------------
+Campo_arqConsulta_BkpObs.prototype = new Lance_CampoCadeia;
+
+function Campo_arqConsulta_BkpObs()
+{
+	this.superClass = Lance_CampoCadeia;
+	this.superClass( "BkpObs", "BkpObs", "BkpObs", 80, "uxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", false);
+}
+
+var BkpObs = new Campo_arqConsulta_BkpObs;
 
 //-------------------------------------------------------------
 // Campo pode ser alterado?
@@ -1252,7 +1428,7 @@ Campo_arqConsulta_ValPTrata.prototype.TemErro = function()
 		alert( "Valor inválido! Está abaixo da margem de desconto permitida" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1350,7 +1526,7 @@ Campo_arqConsulta_EntraVal.prototype.TemErro = function()
 		alert( "Valor inválido" );
 		return( true );
 	}
-	return( Lance_CampoNumerico.prototype.TemErro.call( this ) );
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
 }
 
 //-------------------------------------------------------------
@@ -1479,6 +1655,210 @@ Campo_arqConsulta_EntraObs.prototype.Existencia = function()
 //-------------------------------------------------------------
 // Fitro para selecionar registros do pai
 //-------------------------------------------------------------
+Campo_arqConsulta_I1FPg.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1 and A.PodeEntra = 1" );
+			return( "A.PodeEntra = 1" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_I1FPg.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A forma de pagamento é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Campos a mais que o ligado traz do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_I1FPg.prototype.TrazOutrosDoPai = function()
+{
+	var vetPai = [];
+			vetPai[0] = [ "Cartao",
+					"A.I1FPg, arqFormaPg",
+					"0" ];
+		return( vetPai );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I1FPg.prototype.Existencia = function()
+{
+	return( tem( I1Valor ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I1FPg_FormaPg.prototype.Existencia = function()
+{
+	return( tem( I1Valor ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I1FPg_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( I1FPg.Obrigatorio( p_comMsg ) );
+}
+
+I1FPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I1Parc.prototype.Existencia = function()
+{
+	return( I1FPg_Cartao == 1 );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I2Valor.prototype.Existencia = function()
+{
+	return( ValPTrata > ( EntraVal + EntraTotP + I1Valor ) );
+}
+
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_I2FPg.prototype.FiltroPai = function()
+{
+		if( g_inserindo )
+			return( "A.Ativo = 1 and A.PodeEntra = 1" );
+			return( "A.PodeEntra = 1" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_I2FPg.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "A forma de pagamento é obrigatória" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Campos a mais que o ligado traz do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_I2FPg.prototype.TrazOutrosDoPai = function()
+{
+	var vetPai = [];
+			vetPai[0] = [ "Cartao",
+					"A.I2FPg, arqFormaPg",
+					"0" ];
+		return( vetPai );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I2FPg.prototype.Existencia = function()
+{
+	return( tem( I2Valor ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I2FPg_FormaPg.prototype.Existencia = function()
+{
+	return( tem( I2Valor ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I2FPg_FormaPg.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( I2FPg.Obrigatorio( p_comMsg ) );
+}
+
+I2FPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I2Parc.prototype.Existencia = function()
+{
+	return( I2FPg_Cartao == 1 );
+}
+
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SubTotal.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( EntraVal + EntraTotP +I1Valor + I2Valor ) );
+}
+}
+
+SubTotal.EhCalculado = true;
+//-------------------------------------------------------------
+// Expressão para cálculo do valor do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SubSaldo.prototype.Calculou = function()
+{
+{
+	return( this.Atribuiu( ValPTrata - SubTotal ) );
+}
+}
+
+SubSaldo.EhCalculado = true;
+//-------------------------------------------------------------
+// Expressão para valor inicial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoValor.prototype.Sugeriu = function()
+{
+{
+	return( this.AtribuiuSemCritica( SubSaldo ) );
+}
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoValor.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O valor do saldo a pagar é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de erro do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoValor.prototype.TemErro = function()
+{
+		if( tem(this) && ( SaldoValor * 1.00 != SubSaldo * 1.00 ) )
+	{
+		alert( "Valor inválido" );
+		return( true );
+	}
+	return( Lance_CampoCadeia.prototype.TemErro.call( this ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_SaldoValor.prototype.Existencia = function()
+{
+	return( ( tem( PTrata_PTrata ) ) && SubSaldo > 0 );
+}
+
+//-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg.prototype.FiltroPai = function()
 {
 		if( BoletoMin > EntraTotal )
@@ -1491,12 +1871,10 @@ Campo_arqConsulta_SaldoFPg.prototype.FiltroPai = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( ValPTrata - EntraTotal > 0 )
 	{
 		if( p_comMsg ) alert( "A forma de pagamento do saldo devedor é obrigatória" );
 		return( true );
 	}
-	return( false );
 }
 
 //-------------------------------------------------------------
@@ -1516,7 +1894,7 @@ Campo_arqConsulta_SaldoFPg.prototype.TrazOutrosDoPai = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg.prototype.Existencia = function()
 {
-	return( ( tem( PTrata_PTrata ) ) && (ValPTrata - EntraTotal) > 0 );
+	return( tem( SaldoValor ) );
 }
 
 //-------------------------------------------------------------
@@ -1524,7 +1902,7 @@ Campo_arqConsulta_SaldoFPg.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg_FormaPg.prototype.Existencia = function()
 {
-	return( ( tem( PTrata_PTrata ) ) && (ValPTrata - EntraTotal) > 0 );
+	return( tem( SaldoValor ) );
 }
 
 //-------------------------------------------------------------
@@ -1542,47 +1920,6 @@ SaldoFPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
 Campo_arqConsulta_SaldoParc.prototype.Existencia = function()
 {
 	return( tem( SaldoFPg_FormaPg ) );
-}
-
-//-------------------------------------------------------------
-// Pré Campo
-//-------------------------------------------------------------
-Campo_arqConsulta_SaldoCond.prototype.PreCampo = function()
-{
-		if( SaldoFPg_Cartao == 1 )
-	{
-		alt( SaldoCond, 1 );
-	}
-	return( true );
-}
-
-//-------------------------------------------------------------
-// Campo pode ser alterado?
-//-------------------------------------------------------------
-Campo_arqConsulta_SaldoCond.prototype.PodeAlterar = function()
-{
-		if( SaldoFPg_Cartao == 0 )
-		return( true );
-	return( false );
-}
-
-//-------------------------------------------------------------
-// Preenchimento do campo é obrigatório?
-//-------------------------------------------------------------
-Campo_arqConsulta_SaldoCond.prototype.Obrigatorio = function( p_comMsg )
-{
-	{
-		if( p_comMsg ) alert( "A condição é obrigatória" );
-		return( true );
-	}
-}
-
-//-------------------------------------------------------------
-// Condição de Existência do campo
-//-------------------------------------------------------------
-Campo_arqConsulta_SaldoCond.prototype.Existencia = function()
-{
-	return( SaldoParc > 1 );
 }
 
 //-------------------------------------------------------------
@@ -1703,6 +2040,94 @@ Campo_arqConsulta_Saldo.prototype.Cabecalho = function()
 
 Saldo.EhCalculado = true;
 //-------------------------------------------------------------
+// Fitro para selecionar registros do pai
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpAssess.prototype.FiltroPai = function()
+{
+			return( "" + vijAssessor() + "" );
+}
+
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpAssess.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O assesssor que fez o backup é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpAssess.prototype.Existencia = function()
+{
+	return( tem( BkpData ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpAssess_Usuario.prototype.Existencia = function()
+{
+	return( tem( BkpData ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpAssess_Usuario.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( BkpAssess.Obrigatorio( p_comMsg ) );
+}
+
+BkpAssess_Usuario.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Preenchimento do campo é obrigatório?
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpMotivo.prototype.Obrigatorio = function( p_comMsg )
+{
+	{
+		if( p_comMsg ) alert( "O motivo é obrigatório" );
+		return( true );
+	}
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpMotivo.prototype.Existencia = function()
+{
+	return( tem( BkpData ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpMotivo_BkpMotivo.prototype.Existencia = function()
+{
+	return( tem( BkpData ) );
+}
+
+//-------------------------------------------------------------
+// Condição Especial de Obrigatoriedade do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpMotivo_BkpMotivo.prototype.ObrigatorioEspecial = function( p_comMsg )
+{
+	return( BkpMotivo.Obrigatorio( p_comMsg ) );
+}
+
+BkpMotivo_BkpMotivo.TipoCampo |= CAMPO_CHAVE_PAI;
+//-------------------------------------------------------------
+// Condição de Existência do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpObs.prototype.Existencia = function()
+{
+	return( tem( BkpData ) );
+}
+
+//-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
 Campo_arqConsulta_TiConsulta.prototype.ExistenciaEspecial = function()
@@ -1801,6 +2226,22 @@ Campo_arqConsulta_SdEntrFPg.prototype.ExistenciaEspecial = function()
 //-------------------------------------------------------------
 // Condição de Existência Especial do campo
 //-------------------------------------------------------------
+Campo_arqConsulta_I1FPg.prototype.ExistenciaEspecial = function()
+{
+	return( ( !I1FPg_FormaPg.Obrigatorio( false ) || tem(I1FPg_FormaPg) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_I2FPg.prototype.ExistenciaEspecial = function()
+{
+	return( ( !I2FPg_FormaPg.Obrigatorio( false ) || tem(I2FPg_FormaPg) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
 Campo_arqConsulta_SaldoFPg.prototype.ExistenciaEspecial = function()
 {
 	return( ( !SaldoFPg_FormaPg.Obrigatorio( false ) || tem(SaldoFPg_FormaPg) ) );
@@ -1822,11 +2263,31 @@ Campo_arqConsulta_ContaPTra.prototype.ExistenciaEspecial = function()
 	return( ( !ContaPTra_Transacao.Obrigatorio( false ) || tem(ContaPTra_Transacao) ) );
 }
 
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpAssess.prototype.ExistenciaEspecial = function()
+{
+	return( ( !BkpAssess_Usuario.Obrigatorio( false ) || tem(BkpAssess_Usuario) ) );
+}
+
+//-------------------------------------------------------------
+// Condição de Existência Especial do campo
+//-------------------------------------------------------------
+Campo_arqConsulta_BkpMotivo.prototype.ExistenciaEspecial = function()
+{
+	return( ( !BkpMotivo_BkpMotivo.Obrigatorio( false ) || tem(BkpMotivo_BkpMotivo) ) );
+}
+
 function IniciarDependencias_arqConsulta()
 {
 Pessoa.CalculosDependentes= [ Prontuario ];
-EntraVal.CalculosDependentes= [ EntraTotal ];
-EntraTotP.CalculosDependentes= [ EntraTotal ];
+EntraVal.CalculosDependentes= [ EntraTotal,SubTotal ];
+EntraTotP.CalculosDependentes= [ EntraTotal,SubTotal ];
+I1Valor.CalculosDependentes= [ SubTotal ];
+I2Valor.CalculosDependentes= [ SubTotal ];
+ValPTrata.CalculosDependentes= [ SubSaldo ];
+SubTotal.CalculosDependentes= [ SubSaldo ];
 TrgQtdM.CalculosDependentes= [ Saldo ];
 TrgQtdMEnt.CalculosDependentes= [ Saldo ];
 TiConsulta_TiConsulta.ExistenciasDependentes= [ TiConsulta ];
@@ -1843,19 +2304,30 @@ FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 Valor2.ExistenciasDependentes= [ FormaPg2,FormaPg2_FormaPg ];
 FormaPg2_FormaPg.ExistenciasDependentes= [ FormaPg2 ];
 PTrata_PTrata.ExistenciasDependentes= [ PTrata ];
-PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoFPg,SaldoFPg_FormaPg,ContaPTra,ContaPTra_Transacao ];
+PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoValor,ContaPTra,ContaPTra_Transacao ];
 EntraFPg_FormaPg.ExistenciasDependentes= [ EntraFPg ];
 EntraFPg.ExistenciasDependentes= [ EntraVal,EntraParcE,EntraObs ];
-EntraTotP.ExistenciasDependentes= [ SdEntrFPg,SdEntrFPg_FormaPg,EntraParc ];
+EntraTotP.ExistenciasDependentes= [ SdEntrFPg,SdEntrFPg_FormaPg,EntraParc,I2Valor ];
 SdEntrFPg_FormaPg.ExistenciasDependentes= [ SdEntrFPg ];
+I1Valor.ExistenciasDependentes= [ I1FPg,I1FPg_FormaPg,I2Valor ];
+I1FPg_FormaPg.ExistenciasDependentes= [ I1FPg ];
+I1FPg.ExistenciasDependentes= [ I1Parc ];
+ValPTrata.ExistenciasDependentes= [ I2Valor ];
+EntraVal.ExistenciasDependentes= [ I2Valor ];
+I2Valor.ExistenciasDependentes= [ I2FPg,I2FPg_FormaPg ];
+I2FPg_FormaPg.ExistenciasDependentes= [ I2FPg ];
+I2FPg.ExistenciasDependentes= [ I2Parc ];
+SubSaldo.ExistenciasDependentes= [ SaldoValor ];
 BoletoMin.ExistenciasDependentes= [ SaldoFPg ];
-EntraTotal.ExistenciasDependentes= [ SaldoFPg,SaldoFPg_FormaPg ];
-ValPTrata.ExistenciasDependentes= [ SaldoFPg,SaldoFPg_FormaPg ];
+EntraTotal.ExistenciasDependentes= [ SaldoFPg ];
+SaldoValor.ExistenciasDependentes= [ SaldoFPg,SaldoFPg_FormaPg ];
 SaldoFPg_FormaPg.ExistenciasDependentes= [ SaldoFPg ];
 SaldoFPg.ExistenciasDependentes= [ SaldoParc,SaldoObs ];
-SaldoParc.ExistenciasDependentes= [ SaldoCond ];
 ContaCons_Transacao.ExistenciasDependentes= [ ContaCons ];
 ContaPTra_Transacao.ExistenciasDependentes= [ ContaPTra ];
+BkpData.ExistenciasDependentes= [ BkpAssess,BkpAssess_Usuario,BkpMotivo,BkpMotivo_BkpMotivo,BkpObs ];
+BkpAssess_Usuario.ExistenciasDependentes= [ BkpAssess ];
+BkpMotivo_BkpMotivo.ExistenciasDependentes= [ BkpMotivo ];
 TiConsulta_TiConsulta.ErrosDependentes= [ TiConsulta ];
 Clinica_Clinica.ErrosDependentes= [ Clinica ];
 TStCon_Status.ErrosDependentes= [ TStCon ];
@@ -1871,9 +2343,14 @@ PTrata.ErrosDependentes= [ ValPTrata ];
 EntraFPg_FormaPg.ErrosDependentes= [ EntraFPg ];
 ValPTrata.ErrosDependentes= [ EntraVal ];
 SdEntrFPg_FormaPg.ErrosDependentes= [ SdEntrFPg ];
+I1FPg_FormaPg.ErrosDependentes= [ I1FPg ];
+I2FPg_FormaPg.ErrosDependentes= [ I2FPg ];
+SubSaldo.ErrosDependentes= [ SaldoValor ];
 SaldoFPg_FormaPg.ErrosDependentes= [ SaldoFPg ];
 ContaCons_Transacao.ErrosDependentes= [ ContaCons ];
 ContaPTra_Transacao.ErrosDependentes= [ ContaPTra ];
+BkpAssess_Usuario.ErrosDependentes= [ BkpAssess ];
+BkpMotivo_BkpMotivo.ErrosDependentes= [ BkpMotivo ];
 TiConsulta.CamposChave= [ TiConsulta_TiConsulta ];
 Clinica.CamposChave= [ Clinica_Clinica ];
 TiAgenda.CamposChave= [ TiAgenda_TiAgenda ];
@@ -1886,9 +2363,13 @@ FormaPg2.CamposChave= [ FormaPg2_FormaPg ];
 PTrata.CamposChave= [ PTrata_PTrata ];
 EntraFPg.CamposChave= [ EntraFPg_FormaPg ];
 SdEntrFPg.CamposChave= [ SdEntrFPg_FormaPg ];
+I1FPg.CamposChave= [ I1FPg_FormaPg ];
+I2FPg.CamposChave= [ I2FPg_FormaPg ];
 SaldoFPg.CamposChave= [ SaldoFPg_FormaPg ];
 ContaCons.CamposChave= [ ContaCons_Transacao ];
 ContaPTra.CamposChave= [ ContaPTra_Transacao ];
+BkpAssess.CamposChave= [ BkpAssess_Usuario ];
+BkpMotivo.CamposChave= [ BkpMotivo_BkpMotivo ];
 }
 	//=========================================================================
 	function AcionaTecla( p_tecla )
@@ -1910,6 +2391,8 @@ var PTrata_Valor;
 var PTrata_MrgDesc;
 var EntraFPg_Cartao;
 var SdEntrFPg_Cartao;
+var I1FPg_Cartao;
+var I2FPg_Cartao;
 var SaldoFPg_Cartao;
 //------------------------------------------------------------
 function ListaDeCampos_arqConsulta( p_prefixo )
@@ -1921,7 +2404,7 @@ function ListaDeCampos_arqConsulta( p_prefixo )
 	var l_lista = []
 	l_lista = l_lista.concat(
 
-		[ Num, TiConsulta, TiConsulta_TiConsulta, Clinica, Clinica_Clinica, TStCon, TStCon_Status, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraTotP, SdEntrFPg, SdEntrFPg_FormaPg, EntraParc, EntraTotal, BoletoMin, EntraObs, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoCond, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo ]	);
+		[ Num, TiConsulta, TiConsulta_TiConsulta, Clinica, Clinica_Clinica, TStCon, TStCon_Status, TiAgenda, TiAgenda_TiAgenda, Data, Hora, HoraChega, Pessoa, Pessoa_Nome, Pessoa_NumCelular, Prontuario, Medico, Medico_Usuario, Assessor, Assessor_Usuario, CallCenter, CallCenter_Usuario, MedicaAtua, TMotivo, TMotivo_Chave, TMotivo_Descritor, Cortesia, Valor, FormaPg, FormaPg_FormaPg, Valor2, FormaPg2, FormaPg2_FormaPg, PTrata, PTrata_PTrata, ValPTrata, EntraFPg, EntraFPg_FormaPg, EntraVal, EntraParcE, EntraTotP, SdEntrFPg, SdEntrFPg_FormaPg, EntraParc, EntraTotal, BoletoMin, EntraObs, I1Valor, I1FPg, I1FPg_FormaPg, I1Parc, I2Valor, I2FPg, I2FPg_FormaPg, I2Parc, SubTotal, SubSaldo, SaldoValor, SaldoFPg, SaldoFPg_FormaPg, SaldoParc, SaldoObs, Conduta, Medicacao, Obs, ContaCons, ContaCons_Transacao, ContaPTra, ContaPTra_Transacao, TrgQtdM, TrgQtdMEnt, Saldo, BkpData, BkpAssess, BkpAssess_Usuario, BkpMotivo, BkpMotivo_BkpMotivo, BkpObs ]	);
 	IniciarDependencias_arqConsulta();
 	g_prefixo = l_prefixo;
 	return( l_lista );

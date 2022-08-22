@@ -900,6 +900,187 @@ class campo_arqConsulta_EntraObs extends Lance_CampoCadeia
 }
 
 //======================================================
+//	Campo I1Valor
+//======================================================
+
+class campo_arqConsulta_I1Valor extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "I1Valor", "I1Valor", "I1Valor", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo I1FPg
+//======================================================
+
+class campo_arqConsulta_I1FPg extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "I1FPg", "I1FPg", "I1FPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = [];
+			$vetPai[]=
+				[ "Cartao", 
+					"A.I1FPg, arqFormaPg",
+					"0" ];
+		return( $vetPai );
+	}
+
+}
+
+//======================================================
+//	Campo I1FPg_FormaPg
+//======================================================
+
+class campo_arqConsulta_I1FPg_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "I1FPg_FormaPg", "I1FPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "I1FPg", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
+	}
+
+}
+
+//======================================================
+//	Campo I1Parc
+//======================================================
+
+class campo_arqConsulta_I1Parc extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "I1Parc", "I1Parc", "I1Parc", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo I2Valor
+//======================================================
+
+class campo_arqConsulta_I2Valor extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "I2Valor", "I2Valor", "I2Valor", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo I2FPg
+//======================================================
+
+class campo_arqConsulta_I2FPg extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "I2FPg", "I2FPg", "I2FPg", 0, "arqFormaPg", "arqFormaPg.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = [];
+			$vetPai[]=
+				[ "Cartao", 
+					"A.I2FPg, arqFormaPg",
+					"0" ];
+		return( $vetPai );
+	}
+
+}
+
+//======================================================
+//	Campo I2FPg_FormaPg
+//======================================================
+
+class campo_arqConsulta_I2FPg_FormaPg extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "I2FPg_FormaPg", "I2FPg_FormaPg", "FormaPg", 30, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "I2FPg", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Forma" );
+	}
+
+}
+
+//======================================================
+//	Campo I2Parc
+//======================================================
+
+class campo_arqConsulta_I2Parc extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "I2Parc", "I2Parc", "I2Parc", 2, "#z", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SubTotal
+//======================================================
+
+class campo_arqConsulta_SubTotal extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SubTotal", "SubTotal", "SubTotal", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SubSaldo
+//======================================================
+
+class campo_arqConsulta_SubSaldo extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SubSaldo", "SubSaldo", "SubSaldo", 8, "###.##z,zz", "", "", EH_CALCULADO, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo SaldoValor
+//======================================================
+
+class campo_arqConsulta_SaldoValor extends Lance_CampoNumerico
+{
+	function __construct()
+	{
+		parent::__construct( "SaldoValor", "SaldoValor", "SaldoValor", 8, "###.##z,zz", "", "", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Campo SaldoFPg
 //======================================================
 
@@ -953,19 +1134,6 @@ class campo_arqConsulta_SaldoParc extends Lance_CampoNumerico
 	function __construct()
 	{
 		parent::__construct( "SaldoParc", "SaldoParc", "SaldoParc", 2, "#z", "", "", 0, 0, false );
-	}
-
-}
-
-//======================================================
-//	Campo SaldoCond
-//======================================================
-
-class campo_arqConsulta_SaldoCond extends Lance_CampoNumerico
-{
-	function __construct()
-	{
-		parent::__construct( "SaldoCond", "SaldoCond", "SaldoCond", 2, "#z", "", "", 0, 0, false );
 	}
 
 }
@@ -1150,6 +1318,98 @@ class campo_arqConsulta_Saldo extends Lance_CampoNumerico
 }
 
 //======================================================
+//	Campo BkpData
+//======================================================
+
+class campo_arqConsulta_BkpData extends Lance_CampoData
+{
+	function __construct()
+	{
+		parent::__construct( "BkpData", "BkpData", "BkpData", 8, "dd/mm/aaaa", 0, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo BkpAssess
+//======================================================
+
+class campo_arqConsulta_BkpAssess extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "BkpAssess", "BkpAssess", "BkpAssess", 0, "arqUsuario", "arqUsuario.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo BkpAssess_Usuario
+//======================================================
+
+class campo_arqConsulta_BkpAssess_Usuario extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "BkpAssess_Usuario", "BkpAssess_Usuario", "Usuario", 40, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "BkpAssess", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Usuário" );
+	}
+
+}
+
+//======================================================
+//	Campo BkpMotivo
+//======================================================
+
+class campo_arqConsulta_BkpMotivo extends Lance_CampoLigado
+{
+	function __construct()
+	{
+		parent::__construct( "BkpMotivo", "BkpMotivo", "BkpMotivo", 0, "arqBkpMotivo", "arqBkpMotivo.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
+	}
+
+}
+
+//======================================================
+//	Campo BkpMotivo_BkpMotivo
+//======================================================
+
+class campo_arqConsulta_BkpMotivo_BkpMotivo extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "BkpMotivo_BkpMotivo", "BkpMotivo_BkpMotivo", "BkpMotivo", 50, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", EH_CHAVE, "BkpMotivo", false );
+	}
+
+	//--------------------------------------------------
+	function CabecalhoCampo()
+	{
+		global $g_regAtual;
+			return( "Motivo" );
+	}
+
+}
+
+//======================================================
+//	Campo BkpObs
+//======================================================
+
+class campo_arqConsulta_BkpObs extends Lance_CampoCadeia
+{
+	function __construct()
+	{
+		parent::__construct( "BkpObs", "BkpObs", "BkpObs", 80, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", 0, 0, false );
+	}
+
+}
+
+//======================================================
 //	Arquivo arqConsulta
 //======================================================
 function listaCampos_arqConsulta( $p_prefixo )
@@ -1207,10 +1467,20 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_EntraTotal(),
 			new campo_arqConsulta_BoletoMin(),
 			new campo_arqConsulta_EntraObs(),
+			new campo_arqConsulta_I1Valor(),
+			new campo_arqConsulta_I1FPg(),
+			new campo_arqConsulta_I1FPg_FormaPg(),
+			new campo_arqConsulta_I1Parc(),
+			new campo_arqConsulta_I2Valor(),
+			new campo_arqConsulta_I2FPg(),
+			new campo_arqConsulta_I2FPg_FormaPg(),
+			new campo_arqConsulta_I2Parc(),
+			new campo_arqConsulta_SubTotal(),
+			new campo_arqConsulta_SubSaldo(),
+			new campo_arqConsulta_SaldoValor(),
 			new campo_arqConsulta_SaldoFPg(),
 			new campo_arqConsulta_SaldoFPg_FormaPg(),
 			new campo_arqConsulta_SaldoParc(),
-			new campo_arqConsulta_SaldoCond(),
 			new campo_arqConsulta_SaldoObs(),
 			new campo_arqConsulta_Conduta(),
 			new campo_arqConsulta_Medicacao(),
@@ -1221,7 +1491,13 @@ function listaCampos_arqConsulta( $p_prefixo )
 			new campo_arqConsulta_ContaPTra_Transacao(),
 			new campo_arqConsulta_TrgQtdM(),
 			new campo_arqConsulta_TrgQtdMEnt(),
-			new campo_arqConsulta_Saldo() ]
+			new campo_arqConsulta_Saldo(),
+			new campo_arqConsulta_BkpData(),
+			new campo_arqConsulta_BkpAssess(),
+			new campo_arqConsulta_BkpAssess_Usuario(),
+			new campo_arqConsulta_BkpMotivo(),
+			new campo_arqConsulta_BkpMotivo_BkpMotivo(),
+			new campo_arqConsulta_BkpObs() ]
 	);
 	$g_prefixo = $prefixoAnt;
 	return( $lista );
@@ -1349,9 +1625,17 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ EntraTotal ];
 			$vetAux[] = [ BoletoMin ];
 			$vetAux[] = [ EntraObs ];
+			$vetAux[] = [ I1Valor ];
+			$vetAux[] = [ I1FPg_FormaPg ];
+			$vetAux[] = [ I1Parc ];
+			$vetAux[] = [ I2Valor ];
+			$vetAux[] = [ I2FPg_FormaPg ];
+			$vetAux[] = [ I2Parc ];
+			$vetAux[] = [ SubTotal ];
+			$vetAux[] = [ SubSaldo ];
+			$vetAux[] = [ SaldoValor ];
 			$vetAux[] = [ SaldoFPg_FormaPg ];
 			$vetAux[] = [ SaldoParc ];
-			$vetAux[] = [ SaldoCond ];
 			$vetAux[] = [ SaldoObs ];
 			$vetAux[] = [ Conduta ];
 			$vetAux[] = [ Medicacao ];
@@ -1361,6 +1645,10 @@ class arqConsulta extends Lance_Arquivo
 			$vetAux[] = [ TrgQtdM ];
 			$vetAux[] = [ TrgQtdMEnt ];
 			$vetAux[] = [ Saldo ];
+			$vetAux[] = [ BkpData ];
+			$vetAux[] = [ BkpAssess_Usuario ];
+			$vetAux[] = [ BkpMotivo_BkpMotivo ];
+			$vetAux[] = [ BkpObs ];
 		return( $vetAux );
 	}
 

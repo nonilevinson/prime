@@ -26,7 +26,7 @@ var Menu_2_5_5 = [ 1,"Comissões Call Center","","l",188,"","",1,"","1","a_comcal
 var Menu_2_5_6 = [ 1,"Modelos de documentos","","M",66,"","",cnfConfig["DOCMOD"] == 1,"","1","a_docmod","arqDocMod","Folhear","","?","","", "","", 0,21,[],[22]];
 var Menu_2_5_7 = [ 1,"Gerar plantões","","G",151,"","",1,"","1", "a_grplan", "parGeraPlant", "Alterar", "", "", "", "", "5^^^p_plantao_gerar^^^^^^^^^^^^^^^^^^", "", 0,21,[151],[]];
 var Menu_2_6 = [ 1,"Pessoas [0]","","P",15,"","",GrupoAtualEm(),"","1","a_pessoa","arqPessoa","Folhear","","?","","", "","", 0,15,[],[7]];
-var Menu_3 = [ 1,"Estoque","","q",193,"","",1,"","6", "", "", "", "", "", "", "", "", "", 4, 14,[],[52,55,55,56,56,51] ];
+var Menu_3 = [ 1,"Estoque","","q",193,"","",1,"","6", "", "", "", "", "", "", "", "", "", 5, 14,[],[52,55,55,56,56,51,62] ];
 var Menu_3_1 = [ 1,"Medicamentos","","t",195,"","",1,"","1","a_medica","arqMedicamen","Folhear","","?","","", "","", 0,21,[],[52]];
 var Menu_3_2 = [ 1,"Lotes","","L",247,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 21,[],[55,55] ];
 var Menu_3_2_1 = [ 1,"Todos","","T",215,"","",1,"","1","a_lote","arqLote","Folhear","","?","FilTodos","", "","", 0,7,[],[55]];
@@ -35,6 +35,7 @@ var Menu_3_3 = [ 1,"Movimentos de estoque","","M",218,"","",1,"","6", "", "", ""
 var Menu_3_3_1 = [ 1,"Todos","","T",216,"","",1,"","1","a_movest","arqMovEstoque","Folhear","","?","FilTodos","", "","", 0,7,[],[56]];
 var Menu_3_3_2 = [ 1,"Seleção","","S",217,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "1^^^a_movest^^^arqMovEstoque^^^Folhear^^^^^^?^^^FilSel^^^", "", 0,7,[],[56]];
 var Menu_3_4 = [ 1,"Unidades de medida","","U",192,"","",1,"","1","a_unidad","arqUnidade","Folhear","","?","","", "","", 0,21,[],[51]];
+var Menu_3_5 = [ 1,"Motivos de backup","","k",286,"","",1,"","1","a_bkpmot","arqBkpMotivo","Folhear","","?","","", "","", 0,21,[],[62]];
 var Menu_4 = [ 1,"Financeiro","","F",90,"","",1,"","6", "", "", "", "", "", "", "", "", "", 6, 14,[130,237],[33,33,34,34,34,46,19,20,44,27] ];
 var Menu_4_1 = [ 1,"Contas","","C",125,"","",1,"","6", "", "", "", "", "", "", "", "", "", 2, 33,[],[33,33] ];
 var Menu_4_1_1 = [ 1,"Todas","","T",91,"","",1,"","1","a_conta","arqConta","Folhear","","?","FilTodas","", "","", 0,7,[],[33]];

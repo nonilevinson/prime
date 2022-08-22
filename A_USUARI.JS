@@ -504,5 +504,6 @@ var Menu_5_2 = [ 1,"Avisos lidos","","v",33,"","",1,"","1","a_lido","arqLido","F
 var Menu_5_3 = [ 1,"Para grupo","","P",35,"","",1,"","1","a_paragr","arqParaGrupo","Folhear","Usuario","?","","", "","", 0,14,[],[15]];
 var Menu_6 = [ 1,"Emails enviou","","E",23,"","",cnfConfig["EMAIL"] == 1,"","1","a_logema","arqLogEmail","Folhear","Usuario","?","","", "","", 0,13,[],[12]];
 var Menu_7 = [ 1,"Alterar senha","","h",68,"","",1,"","1", "a_qselec", "parQSelecao", "Alterar", "", "", "", "", "5^^^p_usuario_senha^^^^^^^^^^^^^^^^^^", "", 0,13,[68],[]];
-parent.navegacao.MenuPrincQtdOpcoes=7;
+var Menu_8 = [ 1,"Backup","","k",287,"","",1,"","1","a_consul","arqConsulta","Folhear","BkpAssess","?","","", "","", 0,13,[],[39]];
+parent.navegacao.MenuPrincQtdOpcoes=8;
 }

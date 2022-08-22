@@ -69,7 +69,8 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 		[ 'Observações', 'O', true ],
 		[ 'Atual', 'A', true ],
 		[ 'Conduta', 'C', true ],
-		[ 'Medicação', 'M', true ] ),
+		[ 'Medicação', 'M', true ],
+		[ 'Backup', 'k', true ] ),
 
 	"<table id='O' class='tabFormulario' style='display:none'>",
 		$this->Cabecalhos( [ "Observações", 'FormCab alinhaMeio', '2' ] ),
@@ -106,17 +107,27 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 			[ brHtml(4) . "Parcelas ", EntraParc ] ] ] ),
 		$this->Pedir( " ",
 			[ "Total ", EntraTotal, "(da Entrada)" ] ),
-
 		$this->Pedir( "Observações", EntraObs ),
 		
 		//* Intermediárias
-		$this->Cabecalhos( [ "Intermediárias - pago no pós consulta", "FormCabPrime FundoLJ alinhaEsq", "2" ] ),
+		$this->Cabecalhos( [ "Intermediárias", "FormCabPrime FundoLJ alinhaEsq", "2" ] ),
+		$this->Pedir( "Primeira",
+			[ "Valor ", I1Valor,
+			[ brHtml(4) . "Forma de pagamento ", I1FPg,
+			[ brHtml(4) . "Parcelas ", I1Parc ] ] ] ),
+		$this->Pedir( "Segunda",
+			[ "Valor ", I2Valor,
+			[ brHtml(4) . "Forma de pagamento ", I2FPg,
+			[ brHtml(4) . "Parcelas ", I2Parc ] ] ] ),
 
 		$this->Cabecalhos( [ "Saldo - a pagar na retirada da medicação", "FormCabPrime FundoVerde alinhaEsq", "2" ] ),
-		$this->Pedir( "Forma de pagamento",
-			[ "", SaldoFPg,
-			[ brHtml(4) . "Parcelas ", SaldoParc,
-			[ brHtml(4) . "Condição ", SaldoCond ] ] ] ),
+		$this->Pedir( "Subtotal",
+			[ "", SubTotal,
+			[ brHtml(4) . "Saldo ", SubSaldo ] ] ),
+		$this->Pedir( "Valor",
+			[ "", SaldoValor,
+			[ brHtml(4) . "Forma de pagamento ", SaldoFPg,
+			[ brHtml(4) . "Parcelas ", SaldoParc ] ] ] ),
 		$this->Pedir( "Observações", SaldoObs ),
 
 		$this->Pular1Linha(2),
@@ -128,6 +139,13 @@ if( ultimaLigOpcaoEm( 109,110,117,276 ) )
 	"<table id='M' class='tabFormulario' style='display:none'>",
 		$this->Cabecalhos( [ "Transcreva o que o médico escreveu na ficha do paciente", 'FormCab alinhaMeio', '2' ] ),
 		$this->Pedir( "Medicação<br>Recomendada", Medicacao ),
+	"</table>",
+	
+	"<table id='k' class='tabFormulario' style='display:none'>",
+		$this->Pedir( "Data", BkpData ),
+		$this->Pedir( "Assessor", BkpAssess ),
+		$this->Pedir( "Motivo", BkpMotivo ),
+		$this->Pedir( "Observação", BkpObs ),
 	"</table>";
 }
 else //* para nutricionista ou psicologo
@@ -163,10 +181,10 @@ else //* para nutricionista ou psicologo
    $this->Pedir( "Médico", Medico ),
 	$this->Pedir( "Call center", CallCenter ),
 
-	$this->NaoPedirVarios( Assessor, Cortesia, Valor, FormaPg, Valor2, FormaPg2, ContaCons,
-		TMotivo, MedicaAtua, PTrata, ValPTrata, ContaPTra, EntraFPg, EntraVal, EntraParcE, BoletoMin,
-		EntraParc, SdEntrFPg, EntraValP, EntraTotP, EntraTotal, EntraObs, SaldoFPg,
-		SaldoParc, SaldoCond, SaldoObs, Conduta, Medicacao, TrgQtdM, TrgQtdMEnt, Saldo ),
+	$this->NaoPedirVarios( Assessor, Cortesia, Valor, FormaPg, Valor2, FormaPg2, ContaCons, TMotivo, MedicaAtua,
+		PTrata, ValPTrata, ContaPTra, EntraFPg, EntraVal, EntraParcE, BoletoMin, EntraParc, SdEntrFPg, EntraValP,
+		EntraTotP, EntraTotal, EntraObs, SaldoFPg, SaldoParc, SaldoObs, Conduta, Medicacao, TrgQtdM, TrgQtdMEnt,
+		Saldo, I1Valor, I1FPg, I1Parc, I2Valor, I2FPg, I2Parc, BkpData, BkpAssess, BkpMotivo, BkpObs ),
 "</table>",
 
 CriarForms(

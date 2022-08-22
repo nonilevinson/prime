@@ -2160,21 +2160,20 @@ commit;
 
 
 /************************************************************
-	Arquivo SubPlano  
+	Arquivo BkpMotivo 
 ************************************************************/
 
-CREATE TABLE arqSubPlano
+CREATE TABLE arqBkpMotivo
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	PLANO ligadoComArquivo, /* Ligado com o Arquivo Plano */
-	/*  3*/	CODIGO VARCHAR( 6 ) COLLATE PT_BR, /* Máscara = nn.nn.nn */
-	/*  4*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
-	CONSTRAINT arqSubPlano_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqSubPlano_UK UNIQUE ( Plano, Codigo )
+	/*  2*/	BKPMOTIVO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqBkpMotivo_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqBkpMotivo_UK UNIQUE ( BkpMotivo )
 );
 commit;
 
-CREATE DESC INDEX arqSubPlano_IdPrimario_Desc ON arqSubPlano (IDPRIMARIO);
+CREATE DESC INDEX arqBkpMotivo_IdPrimario_Desc ON arqBkpMotivo (IDPRIMARIO);
 commit;
 
 
@@ -2452,18 +2451,30 @@ CREATE TABLE arqConsulta
 	/* 30*/	/* ENTRATOTAL */
 	/* 31*/	BOLETOMIN NUMERIC( 8, 2 ), /* Máscara = N */
 	/* 32*/	ENTRAOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/* 33*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 34*/	SALDOPARC SMALLINT, /* Máscara = N */
-	/* 35*/	SALDOCOND SMALLINT, /* Máscara = N */
-	/* 36*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
-	/* 37*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 38*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 39*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
-	/* 40*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 41*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/* 42*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
-	/* 43*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
-	/* 44*/	/* SALDO */
+	/* 33*/	I1VALOR NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 34*/	I1FPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 35*/	I1PARC SMALLINT, /* Máscara = N */
+	/* 36*/	I2VALOR NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 37*/	I2FPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 38*/	I2PARC SMALLINT, /* Máscara = N */
+	/* 39*/	/* SUBTOTAL */
+	/* 40*/	/* SUBSALDO */
+	/* 41*/	SALDOVALOR NUMERIC( 8, 2 ), /* Máscara = N */
+	/* 42*/	SALDOFPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 43*/	SALDOPARC SMALLINT, /* Máscara = N */
+	/* 44*/	SALDOOBS VARCHAR( 100 ) COLLATE PT_BR, /* Máscara = M */
+	/* 45*/	CONDUTA BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 46*/	MEDICACAO BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 47*/	OBS BLOB SUB_TYPE 1 COLLATE PT_BR, /* Máscara =  */
+	/* 48*/	CONTACONS ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 49*/	CONTAPTRA ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/* 50*/	TRGQTDM NUMERIC(18,0), /* Máscara = N */
+	/* 51*/	TRGQTDMENT NUMERIC(18,0), /* Máscara = N */
+	/* 52*/	/* SALDO */
+	/* 53*/	BKPDATA DATE, /* Máscara = 4ano */
+	/* 54*/	BKPASSESS ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+	/* 55*/	BKPMOTIVO ligadoComArquivo, /* Ligado com o Arquivo BkpMotivo */
+	/* 56*/	BKPOBS VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = I */
 	CONSTRAINT arqConsulta_PK PRIMARY KEY ( IDPRIMARIO ),
 	CONSTRAINT arqConsulta_UK UNIQUE ( Num )
 );
@@ -2474,44 +2485,21 @@ commit;
 
 
 /************************************************************
-	Arquivo Parcela   
+	Arquivo SubPlano  
 ************************************************************/
 
-CREATE TABLE arqParcela
+CREATE TABLE arqSubPlano
 (
 	/*  1*/	IDPRIMARIO chavePrimaria,
-	/*  2*/	CONTA ligadoComArquivo, /* Ligado com o Arquivo Conta */
-	/*  3*/	PARCELA SMALLINT, /* Máscara = N */
-	/*  4*/	VENCIMENTO DATE, /* Máscara = 4ano */
-	/*  5*/	VENCEST campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  6*/	VALOR NUMERIC( 11, 2 ), /* Máscara = N */
-	/*  7*/	VALORLIQ NUMERIC( 11, 2 ), /* Máscara = N */
-	/*  8*/	ESTIMADO campoLogico, /* Lógico: 0=Não 1=Sim */
-	/*  9*/	TFCOBRA ligadoComTabela, /* Ligado com a Tabela TFCobra */
-	/* 10*/	EMISSAO DATE, /* Máscara = 4ano */
-	/* 11*/	/* NUMBOLETO */
-	/* 12*/	LINHADIG VARCHAR( 54 ) COLLATE PT_BR, /* Máscara = X */
-	/* 13*/	NOMEPDF VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
-	/* 14*/	CCOR ligadoComArquivo, /* Ligado com o Arquivo CCor */
-	/* 15*/	SUBPLANO ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
-	/* 16*/	DATAPAGTO DATE, /* Máscara = 4ano */
-	/* 17*/	DATACOMP DATE, /* Máscara = 4ano */
-	/* 18*/	TFPAGTO ligadoComTabela, /* Ligado com a Tabela TFPagto */
-	/* 19*/	TDETPG ligadoComTabela, /* Ligado com a Tabela TDetPg */
-	/* 20*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
-	/* 21*/	CHEQUE NUMERIC(18,0), /* Máscara = Z */
-	/* 22*/	ARQ1 VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
-	/* 23*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
-	/* 24*/	STRETORNO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
-	/* 25*/	REMESSA NUMERIC(18,0), /* Máscara = N */
-	/* 26*/	DATAREM DATE, /* Máscara = 4ano */
-	/* 27*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
-	CONSTRAINT arqParcela_PK PRIMARY KEY ( IDPRIMARIO ),
-	CONSTRAINT arqParcela_UK UNIQUE ( Conta, Parcela )
+	/*  2*/	PLANO ligadoComArquivo, /* Ligado com o Arquivo Plano */
+	/*  3*/	CODIGO VARCHAR( 6 ) COLLATE PT_BR, /* Máscara = nn.nn.nn */
+	/*  4*/	NOME VARCHAR( 30 ) COLLATE PT_BR, /* Máscara = M */
+	CONSTRAINT arqSubPlano_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqSubPlano_UK UNIQUE ( Plano, Codigo )
 );
 commit;
 
-CREATE DESC INDEX arqParcela_IdPrimario_Desc ON arqParcela (IDPRIMARIO);
+CREATE DESC INDEX arqSubPlano_IdPrimario_Desc ON arqSubPlano (IDPRIMARIO);
 commit;
 
 
@@ -2951,6 +2939,48 @@ commit;
 
 
 /************************************************************
+	Arquivo Parcela   
+************************************************************/
+
+CREATE TABLE arqParcela
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	CONTA ligadoComArquivo, /* Ligado com o Arquivo Conta */
+	/*  3*/	PARCELA SMALLINT, /* Máscara = N */
+	/*  4*/	VENCIMENTO DATE, /* Máscara = 4ano */
+	/*  5*/	VENCEST campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  6*/	VALOR NUMERIC( 11, 2 ), /* Máscara = N */
+	/*  7*/	VALORLIQ NUMERIC( 11, 2 ), /* Máscara = N */
+	/*  8*/	ESTIMADO campoLogico, /* Lógico: 0=Não 1=Sim */
+	/*  9*/	TFCOBRA ligadoComTabela, /* Ligado com a Tabela TFCobra */
+	/* 10*/	EMISSAO DATE, /* Máscara = 4ano */
+	/* 11*/	/* NUMBOLETO */
+	/* 12*/	LINHADIG VARCHAR( 54 ) COLLATE PT_BR, /* Máscara = X */
+	/* 13*/	NOMEPDF VARCHAR( 80 ) COLLATE PT_BR, /* Máscara = X */
+	/* 14*/	CCOR ligadoComArquivo, /* Ligado com o Arquivo CCor */
+	/* 15*/	SUBPLANO ligadoComArquivo, /* Ligado com o Arquivo SubPlano */
+	/* 16*/	DATAPAGTO DATE, /* Máscara = 4ano */
+	/* 17*/	DATACOMP DATE, /* Máscara = 4ano */
+	/* 18*/	TFPAGTO ligadoComTabela, /* Ligado com a Tabela TFPagto */
+	/* 19*/	TDETPG ligadoComTabela, /* Ligado com a Tabela TDetPg */
+	/* 20*/	FORMAPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+	/* 21*/	CHEQUE NUMERIC(18,0), /* Máscara = Z */
+	/* 22*/	ARQ1 VARCHAR( 10 ), /* Arquivo = nome da extensão do mesmo */
+	/* 23*/	ARQ1_ARQUIVO VARCHAR(128) computed by ( lower( 'Parcela/' || CASE WHEN ( ARQ1 IS NULL ) THEN ( '' ) ELSE ( IDPRIMARIO || '_ARQ1.' || ARQ1 ) END ) ),
+	/* 24*/	STRETORNO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = X */
+	/* 25*/	REMESSA NUMERIC(18,0), /* Máscara = N */
+	/* 26*/	DATAREM DATE, /* Máscara = 4ano */
+	/* 27*/	HISTORICO VARCHAR( 60 ) COLLATE PT_BR, /* Máscara = M */
+	CONSTRAINT arqParcela_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqParcela_UK UNIQUE ( Conta, Parcela )
+);
+commit;
+
+CREATE DESC INDEX arqParcela_IdPrimario_Desc ON arqParcela (IDPRIMARIO);
+commit;
+
+
+/************************************************************
 	CAMPOS CALCULADOS
 ************************************************************/
 
@@ -3011,6 +3041,10 @@ ALTER TABLE arqClinica ADD ATIVO SMALLINT computed by ( CASE
 ALTER TABLE arqClinica ALTER ATIVO POSITION 18;
 ALTER TABLE arqConsulta ADD ENTRATOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP ); 
 ALTER TABLE arqConsulta ALTER ENTRATOTAL POSITION 30;
+ALTER TABLE arqConsulta ADD SUBTOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP +I1Valor + I2Valor ); 
+ALTER TABLE arqConsulta ALTER SUBTOTAL POSITION 39;
+ALTER TABLE arqConsulta ADD SUBSALDO NUMERIC( 8, 2 ) computed by ( ValPTrata - SubTotal ); 
+ALTER TABLE arqConsulta ALTER SUBSALDO POSITION 40;
 ALTER TABLE arqRecorrente ADD NOME VARCHAR( 60 ) computed by ( CASE
 	WHEN( Pessoa > 0 ) THEN( ( COALESCE( ( SELECT Nome FROM arqPessoa WHERE arqPessoa.IdPrimario=( arqRecorrente.Pessoa )  ), '' ) ) )
 	ELSE ( ( COALESCE( ( SELECT Nome FROM arqFornecedor WHERE arqFornecedor.IdPrimario=( arqRecorrente.Fornecedor )  ), '' ) ) )
@@ -3057,7 +3091,7 @@ ALTER TABLE arqItemMov ALTER CUNIDADE POSITION 8;
 ALTER TABLE arqCMedica ADD SALDO NUMERIC(18,0) computed by ( Qtd - QtdEntreg ); 
 ALTER TABLE arqCMedica ALTER SALDO POSITION 9;
 ALTER TABLE arqConsulta ADD SALDO NUMERIC(18,0) computed by ( TrgQtdM - TrgQtdMEnt ); 
-ALTER TABLE arqConsulta ALTER SALDO POSITION 44;
+ALTER TABLE arqConsulta ALTER SALDO POSITION 52;
 commit;
 
 
@@ -3308,7 +3342,7 @@ RECREATE VIEW V_arqDuracao AS
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.TICONSULTA, A1.TICONSULTA as TICONSULTA_TICONSULTA, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.TSTCON, A3.STATUS as TSTCON_STATUS, A0.TIAGENDA, A4.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A5.NOME as PESSOA_NOME, A5.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A6.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A7.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A8.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A9.CHAVE as TMotivo_CHAVE, A9.DESCRITOR as TMotivo_DESCRITOR, A0.CORTESIA, A0.VALOR, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.VALOR2, A0.FORMAPG2, A11.FORMAPG as FORMAPG2_FORMAPG, A0.PTRATA, A12.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A13.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARCE, A0.ENTRATOTP, A0.SDENTRFPG, A14.FORMAPG as SDENTRFPG_FORMAPG, A0.ENTRAPARC, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOFPG, A15.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOPARC, A0.SALDOCOND, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A16.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A17.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.TICONSULTA, A1.TICONSULTA as TICONSULTA_TICONSULTA, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.TSTCON, A3.STATUS as TSTCON_STATUS, A0.TIAGENDA, A4.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A5.NOME as PESSOA_NOME, A5.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A6.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A7.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A8.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A9.CHAVE as TMotivo_CHAVE, A9.DESCRITOR as TMotivo_DESCRITOR, A0.CORTESIA, A0.VALOR, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.VALOR2, A0.FORMAPG2, A11.FORMAPG as FORMAPG2_FORMAPG, A0.PTRATA, A12.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A13.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARCE, A0.ENTRATOTP, A0.SDENTRFPG, A14.FORMAPG as SDENTRFPG_FORMAPG, A0.ENTRAPARC, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.I1VALOR, A0.I1FPG, A15.FORMAPG as I1FPG_FORMAPG, A0.I1PARC, A0.I2VALOR, A0.I2FPG, A16.FORMAPG as I2FPG_FORMAPG, A0.I2PARC, A0.SUBTOTAL, A0.SUBSALDO, A0.SALDOVALOR, A0.SALDOFPG, A17.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOPARC, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A18.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A19.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.BKPDATA, A0.BKPASSESS, A20.USUARIO as BKPASSESS_USUARIO, A0.BKPMOTIVO, A21.BKPMOTIVO as BKPMOTIVO_BKPMOTIVO, A0.BKPOBS
 	FROM arqConsulta A0
 	left join arqTiConsulta A1 on A1.IDPRIMARIO = A0.TICONSULTA
 	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA
@@ -3324,9 +3358,13 @@ RECREATE VIEW V_arqConsulta AS
 	left join arqPTrata A12 on A12.IDPRIMARIO = A0.PTRATA
 	left join arqFormaPg A13 on A13.IDPRIMARIO = A0.ENTRAFPG
 	left join arqFormaPg A14 on A14.IDPRIMARIO = A0.SDENTRFPG
-	left join arqFormaPg A15 on A15.IDPRIMARIO = A0.SALDOFPG
-	left join arqConta A16 on A16.IDPRIMARIO = A0.CONTACONS
-	left join arqConta A17 on A17.IDPRIMARIO = A0.CONTAPTRA;
+	left join arqFormaPg A15 on A15.IDPRIMARIO = A0.I1FPG
+	left join arqFormaPg A16 on A16.IDPRIMARIO = A0.I2FPG
+	left join arqFormaPg A17 on A17.IDPRIMARIO = A0.SALDOFPG
+	left join arqConta A18 on A18.IDPRIMARIO = A0.CONTACONS
+	left join arqConta A19 on A19.IDPRIMARIO = A0.CONTAPTRA
+	left join arqUsuario A20 on A20.IDPRIMARIO = A0.BKPASSESS
+	left join arqBkpMotivo A21 on A21.IDPRIMARIO = A0.BKPMOTIVO;
 commit;
 
 RECREATE VIEW V_arqPlantao AS 
@@ -3461,6 +3499,11 @@ RECREATE VIEW V_arqTStCon AS
 	left join tabTClinica A1 on A1.IDPRIMARIO=A0.TCLINICA;
 commit;
 
+RECREATE VIEW V_arqBkpMotivo AS 
+	SELECT A0.IDPRIMARIO, A0.BKPMOTIVO, A0.ATIVO
+	FROM arqBkpMotivo A0;
+commit;
+
 
 /************************************************************
 	ARQUIVO DE PERMISSÕES
@@ -3555,6 +3598,7 @@ insert into arqLanceOperacao values(100057,1,'Cadastro de itens de movimento de 
 insert into arqLanceOperacao values(100059,1,'Cadastro da relação entre usuários e contas correntes','arqUsuCCor',59,90,0,'');
 insert into arqLanceOperacao values(100060,1,'Cadastro de tipos de consultas','arqTiConsulta',60,99,1,'');
 insert into arqLanceOperacao values(100061,1,'Cadastro de status de consultas','arqTStCon',61,99,1,'');
+insert into arqLanceOperacao values(100062,1,'Cadastro de motivos de backup de medicação','arqBkpMotivo',62,2,0,'');
 insert into arqLanceOperacao values(200193,2,'Rotina para excluir permissões de grupos de acesso','',193,null,0,'');
 insert into arqLanceOperacao values(200009,2,'Rotina para criar ou alterar permissões de grupos de acesso','',9,90,0,'');
 insert into arqLanceOperacao values(200010,2,'Rotina para copiar permisões de grupos de acesso','',10,90,0,'');
@@ -3721,6 +3765,8 @@ ALTER TABLE arqPlantao ADD CONSTRAINT arqPlantao_FK_Usuario FOREIGN KEY ( USUARI
 ALTER TABLE arqFornecedor ADD CONSTRAINT arqFornecedor_FK_TPFPJ FOREIGN KEY ( TPFPJ ) REFERENCES tabTPFPJ ON DELETE SET NULL ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_EntraFPg FOREIGN KEY ( ENTRAFPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_SdEntrFPg FOREIGN KEY ( SDENTRFPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_I1FPg FOREIGN KEY ( I1FPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_I2FPg FOREIGN KEY ( I2FPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_SaldoFPg FOREIGN KEY ( SALDOFPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Clinica FOREIGN KEY ( CLINICA ) REFERENCES arqClinica ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqRecorrente ADD CONSTRAINT arqRecorrente_FK_Fornecedor FOREIGN KEY ( FORNECEDOR ) REFERENCES arqFornecedor ON DELETE CASCADE ON UPDATE CASCADE;
@@ -3759,6 +3805,8 @@ ALTER TABLE arqHoraBloq ADD CONSTRAINT arqHoraBloq_FK_Medico FOREIGN KEY ( MEDIC
 ALTER TABLE arqUsuCCor ADD CONSTRAINT arqUsuCCor_FK_Usuario FOREIGN KEY ( USUARIO ) REFERENCES arqUsuario ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqUsuCCor ADD CONSTRAINT arqUsuCCor_FK_CCor FOREIGN KEY ( CCOR ) REFERENCES arqCCor ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE arqTStCon ADD CONSTRAINT arqTStCon_FK_TClinica FOREIGN KEY ( TCLINICA ) REFERENCES tabTClinica ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_BkpAssess FOREIGN KEY ( BKPASSESS ) REFERENCES arqUsuario ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_BkpMotivo FOREIGN KEY ( BKPMOTIVO ) REFERENCES arqBkpMotivo ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 
@@ -4963,15 +5011,25 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'SdEntrFPg', OLD.SdEntrFPg, NEW.SdEntrFPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'EntraParc', OLD.EntraParc, NEW.EntraParc );
 	execute procedure set_log( 12, NEW.idPrimario, 'EntraObs', OLD.EntraObs, NEW.EntraObs );
+	execute procedure set_log( 12, NEW.idPrimario, 'I1Valor', OLD.I1Valor, NEW.I1Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'I1FPg', OLD.I1FPg, NEW.I1FPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'I1Parc', OLD.I1Parc, NEW.I1Parc );
+	execute procedure set_log( 12, NEW.idPrimario, 'I2Valor', OLD.I2Valor, NEW.I2Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'I2FPg', OLD.I2FPg, NEW.I2FPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'I2Parc', OLD.I2Parc, NEW.I2Parc );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoValor', OLD.SaldoValor, NEW.SaldoValor );
 	execute procedure set_log( 12, NEW.idPrimario, 'SaldoFPg', OLD.SaldoFPg, NEW.SaldoFPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'SaldoParc', OLD.SaldoParc, NEW.SaldoParc );
-	execute procedure set_log( 12, NEW.idPrimario, 'SaldoCond', OLD.SaldoCond, NEW.SaldoCond );
 	execute procedure set_log( 12, NEW.idPrimario, 'SaldoObs', OLD.SaldoObs, NEW.SaldoObs );
 	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'ContaCons', OLD.ContaCons, NEW.ContaCons );
 	execute procedure set_log( 12, NEW.idPrimario, 'ContaPTra', OLD.ContaPTra, NEW.ContaPTra );
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpData', OLD.BkpData, NEW.BkpData );
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpAssess', OLD.BkpAssess, NEW.BkpAssess );
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpMotivo', OLD.BkpMotivo, NEW.BkpMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpObs', OLD.BkpObs, NEW.BkpObs );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
 		( NEW.TiConsulta is distinct from OLD.TiConsulta )  OR 
 		( NEW.BoletoMin is distinct from OLD.BoletoMin )  ) ) then
@@ -5510,6 +5568,39 @@ if( deleting ) then
 else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'Usuario', OLD.Usuario, NEW.Usuario );
 	execute procedure set_log( 12, NEW.idPrimario, 'CCor', OLD.CCor, NEW.CCor );
+end
+end^
+
+set term ;^
+
+commit;
+
+/************************************************************
+	Trigger para Log de arqBkpMotivo
+************************************************************/
+
+set term ^;
+
+recreate trigger arqBkpMotivo_LOG for arqBkpMotivo
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.BkpMotivo,'' );
+else
+	valorChave = coalesce( NEW.BkpMotivo,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100062 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpMotivo', OLD.BkpMotivo, NEW.BkpMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
 end
 end^
 

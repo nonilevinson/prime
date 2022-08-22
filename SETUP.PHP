@@ -64,9 +64,9 @@
 
 	$vetDependencia = [
 		[ "a_fornec", "a_endere" ],
-		[ "a_clini", "a_endere" ],
+		[ "a_xconfi", "a_endere" ],
 		[ "a_pessoa", "a_endere" ],
-		[ "a_xconfi", "a_endere" ] ];
+		[ "a_clini", "a_endere" ] ];
 
 include_once( SISTEMA_DIR_ABSOLUTO . 'cores.php' );
 include_once( CLIENTE_DIR_ABSOLUTO . 'cores.php' );

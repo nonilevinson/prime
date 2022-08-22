@@ -692,18 +692,30 @@ alter ENTRAPARC position 29,
 alter ENTRATOTAL position 30,
 alter BOLETOMIN position 31,
 alter ENTRAOBS position 32,
-alter SALDOFPG position 33,
-alter SALDOPARC position 34,
-alter SALDOCOND position 35,
-alter SALDOOBS position 36,
-alter CONDUTA position 37,
-alter MEDICACAO position 38,
-alter OBS position 39,
-alter CONTACONS position 40,
-alter CONTAPTRA position 41,
-alter TRGQTDM position 42,
-alter TRGQTDMENT position 43,
-alter SALDO position 44;
+alter I1VALOR position 33,
+alter I1FPG position 34,
+alter I1PARC position 35,
+alter I2VALOR position 36,
+alter I2FPG position 37,
+alter I2PARC position 38,
+alter SUBTOTAL position 39,
+alter SUBSALDO position 40,
+alter SALDOVALOR position 41,
+alter SALDOFPG position 42,
+alter SALDOPARC position 43,
+alter SALDOOBS position 44,
+alter CONDUTA position 45,
+alter MEDICACAO position 46,
+alter OBS position 47,
+alter CONTACONS position 48,
+alter CONTAPTRA position 49,
+alter TRGQTDM position 50,
+alter TRGQTDMENT position 51,
+alter SALDO position 52,
+alter BKPDATA position 53,
+alter BKPASSESS position 54,
+alter BKPMOTIVO position 55,
+alter BKPOBS position 56;
 commit;
 
 
@@ -1005,5 +1017,16 @@ alter EHFALTOU position 11,
 alter COR position 12,
 alter FUNDO position 13,
 alter ATIVO position 14;
+commit;
+
+
+/************************************************************
+	Arquivo BkpMotivo 
+************************************************************/
+
+ALTER TABLE arqBkpMotivo
+alter IDPRIMARIO position 1,
+alter BKPMOTIVO position 2,
+alter ATIVO position 3;
 commit;
 

@@ -1,29 +1,6 @@
 <?php
 
 //-----------------------------------------------------------
-//* 22/08/2022 na 2.06 campo foi excluído
-/*
-function sugereSdVenc1Par()
-{
-	sql_abrirBD( false );
-
-   $select = "Select X.DiasSdEntr
-		From cnfXConfig X";
-	$umXConfig = sql_lerUmRegistro( $select );
-   $sdVenc1Par = formatarData( incDia( HOJE, $umXConfig->DIASSDENTR ), 'aaaa/mm/dd' );
-// echo '<br><b>cnfXConfig S=</b> '.$select.'<br><b>sdVenc1Par=</b> '.$sdVenc1Par;
-
-   sql_fecharBD();
-
-	echo
-		javaScriptIni(),
-		'with( parent ) {
-			alt( SdVenc1Par, \'' . $sdVenc1Par . '\' );
-		}',
-		javaScriptFim();
-}
-*/
-//-----------------------------------------------------------
 function sugereBoletoMin()
 {
 	sql_abrirBD( false );

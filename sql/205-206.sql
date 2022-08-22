@@ -1,13 +1,94 @@
 --*
 --* 2.05 para 2.06
 
+insert into arqLanceOperacao values(100062,1,'Cadastro de motivos de backup de medicação','arqBkpMotivo',62,2,0,'');
+commit;
+
+/************************************************************
+	Arquivo BkpMotivo 
+************************************************************/
+
+CREATE TABLE arqBkpMotivo
+(
+	/*  1*/	IDPRIMARIO chavePrimaria,
+	/*  2*/	BKPMOTIVO VARCHAR( 50 ) COLLATE PT_BR, /* Máscara = I */
+	/*  3*/	ATIVO campoLogico, /* Lógico: 0=Não 1=Sim */
+	CONSTRAINT arqBkpMotivo_PK PRIMARY KEY ( IDPRIMARIO ),
+	CONSTRAINT arqBkpMotivo_UK UNIQUE ( BkpMotivo )
+);
+commit;
+
+CREATE DESC INDEX arqBkpMotivo_IdPrimario_Desc ON arqBkpMotivo (IDPRIMARIO);
+commit;
+
+RECREATE VIEW V_arqBkpMotivo AS 
+	SELECT A0.IDPRIMARIO, A0.BKPMOTIVO, A0.ATIVO
+	FROM arqBkpMotivo A0;
+commit;
+
+/************************************************************
+	Trigger para Log de arqBkpMotivo
+************************************************************/
+
+set term ^;
+
+recreate trigger arqBkpMotivo_LOG for arqBkpMotivo
+active after Insert or Delete or Update
+position 999
+as
+	declare variable valorChave varchar(1000);
+begin
+if( deleting ) then
+	valorChave = coalesce( OLD.BkpMotivo,'' );
+else
+	valorChave = coalesce( NEW.BkpMotivo,'' );
+rdb$set_context( 'USER_SESSION', 'IDOPERACAO', 100062 );
+rdb$set_context( 'USER_SESSION', 'VALORCHAVE', substring( valorChave from 1 for 255 ) );
+if( inserting ) then
+	execute procedure set_log( 13, NEW.idPrimario, null, null, null ); 
+else
+if( deleting ) then
+	execute procedure set_log( 14, OLD.idPrimario, null, null, null ); 
+else begin
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpMotivo', OLD.BkpMotivo, NEW.BkpMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'Ativo', OLD.Ativo, NEW.Ativo );
+end
+end^
+
+set term ;^
+
+commit;
+
+INSERT INTO ARQBKPMOTIVO (IDPRIMARIO, BKPMOTIVO, ATIVO) VALUES (2, 'Cliente faltou', 1);
+INSERT INTO ARQBKPMOTIVO (IDPRIMARIO, BKPMOTIVO, ATIVO) VALUES (1, 'Cliente informou que desistiu do tratamento', 1);
+COMMIT WORK;
+
 /************************************************************
 	Arquivo Consulta  
 
+	Alterados:
+	- EntraTotP > calculado para digitado
+	
 	Excluídos:
 	- SdVenc1Par > digitado
 	- SdCond > digitado
+	- SaldoCond > digitado
+	
+	Excluídos que não precisamos mexer na API:
 	- SaldoVal > calculado
+	
+	Criados:
+	- I1Valor > digitado
+	- I1FPg > ligado
+	- I1Parc > digitado
+	- I2Valor > digitado
+	- I2FPg > ligado
+	- I2Parc > digitado
+	- SaldoValor > digitado
+	
+	Criados que não precisam entrar na API
+	- SubTotal >> calculado
+	- SubSaldo >> calculado
 
 ************************************************************/
 drop trigger arqConsulta_log;
@@ -22,19 +103,61 @@ ALTER TABLE arqConsulta
 add ENTRATOTP NUMERIC( 8, 2 );
 commit;
 
-update arqConsulta set EntraTotP=EntraParc * EntraValP;
+update arqConsulta set EntraTotP = EntraParc * EntraValP;
 commit;
-
 
 ALTER TABLE arqConsulta ADD ENTRATOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP ); 
 commit;
 
+ALTER TABLE arqConsulta
+add /* 39*/	SALDOVALOR NUMERIC( 8, 2 ); /* Máscara = N */
+commit;
+
+update arqConsulta set SaldoValor = SaldoParc * SaldoVal;
+commit;
+
 --* drop eterno
-ALTER TABLE arqConsulta drop SdVenc1Par, drop SdCond, drop SaldoVal, drop EntraValP;
+ALTER TABLE arqConsulta drop SdVenc1Par, drop SdCond, drop SaldoVal, drop EntraValP, drop SaldoCond;
+commit;
+
+ALTER TABLE arqConsulta
+add /* 33*/	I1VALOR NUMERIC( 8, 2 ), /* Máscara = N */
+add /* 34*/	I1FPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+add /* 35*/	I1PARC SMALLINT, /* Máscara = N */
+add /* 36*/	I2VALOR NUMERIC( 8, 2 ), /* Máscara = N */
+add /* 37*/	I2FPG ligadoComArquivo, /* Ligado com o Arquivo FormaPg */
+add /* 38*/	I2PARC SMALLINT; /* Máscara = N */
+commit;
+
+update arqConsulta set I1Valor=0, I1Parc=0, I2Valor=0, I2Parc=0;
+commit;
+
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_I1FPg FOREIGN KEY ( I1FPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_I2FPg FOREIGN KEY ( I2FPG ) REFERENCES arqFormaPg ON DELETE NO ACTION ON UPDATE CASCADE;
+commit;
+
+ALTER TABLE arqConsulta ADD SUBTOTAL NUMERIC( 8, 2 ) computed by ( EntraVal + EntraTotP +I1Valor + I2Valor ); 
+ALTER TABLE arqConsulta ADD SUBSALDO NUMERIC( 8, 2 ) computed by ( ValPTrata - SubTotal ); 
+commit;
+
+--? daqui para cima já rodei e tudo certo
+
+ALTER TABLE arqConsulta
+add /* 53*/	BKPDATA DATE, /* Máscara = 4ano */
+add /* 54*/	BKPASSESS ligadoComArquivo, /* Ligado com o Arquivo Usuario */
+add /* 55*/	BKPMOTIVO ligadoComArquivo, /* Ligado com o Arquivo BkpMotivo */
+add /* 56*/	BKPOBS VARCHAR( 80 ) COLLATE PT_BR; /* Máscara = I */
+commit;
+
+update arqConsulta set BkpObs='';
+commit;
+
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_BkpAssess FOREIGN KEY ( BKPASSESS ) REFERENCES arqUsuario ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE arqConsulta ADD CONSTRAINT arqConsulta_FK_BkpMotivo FOREIGN KEY ( BKPMOTIVO ) REFERENCES arqBkpMotivo ON DELETE NO ACTION ON UPDATE CASCADE;
 commit;
 
 RECREATE VIEW V_arqConsulta AS 
-	SELECT A0.IDPRIMARIO, A0.NUM, A0.TICONSULTA, A1.TICONSULTA as TICONSULTA_TICONSULTA, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.TSTCON, A3.STATUS as TSTCON_STATUS, A0.TIAGENDA, A4.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A5.NOME as PESSOA_NOME, A5.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A6.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A7.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A8.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A9.CHAVE as TMotivo_CHAVE, A9.DESCRITOR as TMotivo_DESCRITOR, A0.CORTESIA, A0.VALOR, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.VALOR2, A0.FORMAPG2, A11.FORMAPG as FORMAPG2_FORMAPG, A0.PTRATA, A12.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A13.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARCE, A0.ENTRATOTP, A0.SDENTRFPG, A14.FORMAPG as SDENTRFPG_FORMAPG, A0.ENTRAPARC, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.SALDOFPG, A15.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOPARC, A0.SALDOCOND, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A16.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A17.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO
+	SELECT A0.IDPRIMARIO, A0.NUM, A0.TICONSULTA, A1.TICONSULTA as TICONSULTA_TICONSULTA, A0.CLINICA, A2.CLINICA as CLINICA_CLINICA, A0.TSTCON, A3.STATUS as TSTCON_STATUS, A0.TIAGENDA, A4.TIAGENDA as TIAGENDA_TIAGENDA, A0.DATA, A0.HORA, A0.HORACHEGA, A0.PESSOA, A5.NOME as PESSOA_NOME, A5.NUMCELULAR as PESSOA_NUMCELULAR, A0.PRONTUARIO, A0.MEDICO, A6.USUARIO as MEDICO_USUARIO, A0.ASSESSOR, A7.USUARIO as ASSESSOR_USUARIO, A0.CALLCENTER, A8.USUARIO as CALLCENTER_USUARIO, A0.MEDICAATUA, A0.TMOTIVO, A9.CHAVE as TMotivo_CHAVE, A9.DESCRITOR as TMotivo_DESCRITOR, A0.CORTESIA, A0.VALOR, A0.FORMAPG, A10.FORMAPG as FORMAPG_FORMAPG, A0.VALOR2, A0.FORMAPG2, A11.FORMAPG as FORMAPG2_FORMAPG, A0.PTRATA, A12.PTRATA as PTRATA_PTRATA, A0.VALPTRATA, A0.ENTRAFPG, A13.FORMAPG as ENTRAFPG_FORMAPG, A0.ENTRAVAL, A0.ENTRAPARCE, A0.ENTRATOTP, A0.SDENTRFPG, A14.FORMAPG as SDENTRFPG_FORMAPG, A0.ENTRAPARC, A0.ENTRATOTAL, A0.BOLETOMIN, A0.ENTRAOBS, A0.I1VALOR, A0.I1FPG, A15.FORMAPG as I1FPG_FORMAPG, A0.I1PARC, A0.I2VALOR, A0.I2FPG, A16.FORMAPG as I2FPG_FORMAPG, A0.I2PARC, A0.SUBTOTAL, A0.SUBSALDO, A0.SALDOVALOR, A0.SALDOFPG, A17.FORMAPG as SALDOFPG_FORMAPG, A0.SALDOPARC, A0.SALDOOBS, A0.CONDUTA, A0.MEDICACAO, A0.OBS, A0.CONTACONS, A18.TRANSACAO as CONTACONS_TRANSACAO, A0.CONTAPTRA, A19.TRANSACAO as CONTAPTRA_TRANSACAO, A0.TRGQTDM, A0.TRGQTDMENT, A0.SALDO, A0.BKPDATA, A0.BKPASSESS, A20.USUARIO as BKPASSESS_USUARIO, A0.BKPMOTIVO, A21.BKPMOTIVO as BKPMOTIVO_BKPMOTIVO, A0.BKPOBS
 	FROM arqConsulta A0
 	left join arqTiConsulta A1 on A1.IDPRIMARIO = A0.TICONSULTA
 	left join arqClinica A2 on A2.IDPRIMARIO = A0.CLINICA
@@ -50,9 +173,13 @@ RECREATE VIEW V_arqConsulta AS
 	left join arqPTrata A12 on A12.IDPRIMARIO = A0.PTRATA
 	left join arqFormaPg A13 on A13.IDPRIMARIO = A0.ENTRAFPG
 	left join arqFormaPg A14 on A14.IDPRIMARIO = A0.SDENTRFPG
-	left join arqFormaPg A15 on A15.IDPRIMARIO = A0.SALDOFPG
-	left join arqConta A16 on A16.IDPRIMARIO = A0.CONTACONS
-	left join arqConta A17 on A17.IDPRIMARIO = A0.CONTAPTRA;
+	left join arqFormaPg A15 on A15.IDPRIMARIO = A0.I1FPG
+	left join arqFormaPg A16 on A16.IDPRIMARIO = A0.I2FPG
+	left join arqFormaPg A17 on A17.IDPRIMARIO = A0.SALDOFPG
+	left join arqConta A18 on A18.IDPRIMARIO = A0.CONTACONS
+	left join arqConta A19 on A19.IDPRIMARIO = A0.CONTAPTRA
+	left join arqUsuario A20 on A20.IDPRIMARIO = A0.BKPASSESS
+	left join arqBkpMotivo A21 on A21.IDPRIMARIO = A0.BKPMOTIVO;
 commit;
 
 /************************************************************
@@ -106,15 +233,25 @@ else begin
 	execute procedure set_log( 12, NEW.idPrimario, 'SdEntrFPg', OLD.SdEntrFPg, NEW.SdEntrFPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'EntraParc', OLD.EntraParc, NEW.EntraParc );
 	execute procedure set_log( 12, NEW.idPrimario, 'EntraObs', OLD.EntraObs, NEW.EntraObs );
+	execute procedure set_log( 12, NEW.idPrimario, 'I1Valor', OLD.I1Valor, NEW.I1Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'I1FPg', OLD.I1FPg, NEW.I1FPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'I1Parc', OLD.I1Parc, NEW.I1Parc );
+	execute procedure set_log( 12, NEW.idPrimario, 'I2Valor', OLD.I2Valor, NEW.I2Valor );
+	execute procedure set_log( 12, NEW.idPrimario, 'I2FPg', OLD.I2FPg, NEW.I2FPg );
+	execute procedure set_log( 12, NEW.idPrimario, 'I2Parc', OLD.I2Parc, NEW.I2Parc );
+	execute procedure set_log( 12, NEW.idPrimario, 'SaldoValor', OLD.SaldoValor, NEW.SaldoValor );
 	execute procedure set_log( 12, NEW.idPrimario, 'SaldoFPg', OLD.SaldoFPg, NEW.SaldoFPg );
 	execute procedure set_log( 12, NEW.idPrimario, 'SaldoParc', OLD.SaldoParc, NEW.SaldoParc );
-	execute procedure set_log( 12, NEW.idPrimario, 'SaldoCond', OLD.SaldoCond, NEW.SaldoCond );
 	execute procedure set_log( 12, NEW.idPrimario, 'SaldoObs', OLD.SaldoObs, NEW.SaldoObs );
 	execute procedure set_log( 12, NEW.idPrimario, 'Conduta', substring( OLD.Conduta from 1 for 255 ), substring( NEW.Conduta from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Medicacao', substring( OLD.Medicacao from 1 for 255 ), substring( NEW.Medicacao from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'Obs', substring( OLD.Obs from 1 for 255 ), substring( NEW.Obs from 1 for 255 ) );
 	execute procedure set_log( 12, NEW.idPrimario, 'ContaCons', OLD.ContaCons, NEW.ContaCons );
 	execute procedure set_log( 12, NEW.idPrimario, 'ContaPTra', OLD.ContaPTra, NEW.ContaPTra );
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpData', OLD.BkpData, NEW.BkpData );
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpAssess', OLD.BkpAssess, NEW.BkpAssess );
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpMotivo', OLD.BkpMotivo, NEW.BkpMotivo );
+	execute procedure set_log( 12, NEW.idPrimario, 'BkpObs', OLD.BkpObs, NEW.BkpObs );
 	if( ( RDB$GET_CONTEXT( 'USER_SESSION', 'FEITO' ) = 0 ) and (
 		( NEW.TiConsulta is distinct from OLD.TiConsulta )  OR 
 		( NEW.BoletoMin is distinct from OLD.BoletoMin )  ) ) then
@@ -159,16 +296,28 @@ alter ENTRAPARC position 29,
 alter ENTRATOTAL position 30,
 alter BOLETOMIN position 31,
 alter ENTRAOBS position 32,
-alter SALDOFPG position 33,
-alter SALDOPARC position 34,
-alter SALDOCOND position 35,
-alter SALDOOBS position 36,
-alter CONDUTA position 37,
-alter MEDICACAO position 38,
-alter OBS position 39,
-alter CONTACONS position 40,
-alter CONTAPTRA position 41,
-alter TRGQTDM position 42,
-alter TRGQTDMENT position 43,
-alter SALDO position 44;
+alter I1VALOR position 33,
+alter I1FPG position 34,
+alter I1PARC position 35,
+alter I2VALOR position 36,
+alter I2FPG position 37,
+alter I2PARC position 38,
+alter SUBTOTAL position 39,
+alter SUBSALDO position 40,
+alter SALDOVALOR position 41,
+alter SALDOFPG position 42,
+alter SALDOPARC position 43,
+alter SALDOOBS position 44,
+alter CONDUTA position 45,
+alter MEDICACAO position 46,
+alter OBS position 47,
+alter CONTACONS position 48,
+alter CONTAPTRA position 49,
+alter TRGQTDM position 50,
+alter TRGQTDMENT position 51,
+alter SALDO position 52,
+alter BKPDATA position 53,
+alter BKPASSESS position 54,
+alter BKPMOTIVO position 55,
+alter BKPOBS position 56;
 commit;
