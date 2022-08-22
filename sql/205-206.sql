@@ -2,6 +2,7 @@
 --* 2.05 para 2.06
 
 insert into arqLanceOperacao values(100062,1,'Cadastro de motivos de backup de medicação','arqBkpMotivo',62,2,0,'');
+insert into arqLanceOperacao values(200289,2,'Relatório de backup de medicação de consultas','',289,50,0,'');
 commit;
 
 /************************************************************

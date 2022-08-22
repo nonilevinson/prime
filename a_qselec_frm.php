@@ -466,5 +466,15 @@ if( $op == 283 ) //* r_consulta_extrato
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
+if( $op == 289 ) //* r_consulta_backup
+{
+	echo
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Assessor" ),
+	$this->Pedir( "Backup entre",
+		[ "", DataIni,
+		[ brHtml(1) . "e ", DataFim ] ] );
+}
+
 //--------------------------------------------------------------
 echo 	"</table>";

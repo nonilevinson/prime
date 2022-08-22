@@ -3671,6 +3671,7 @@ insert into arqLanceOperacao values(200253,2,'Rotina para excluir pessoas que te
 insert into arqLanceOperacao values(200257,2,'Relatório de hístorico de estoque','',257,50,0,'');
 insert into arqLanceOperacao values(200278,2,'Relatório de consultas com medicação separada e sem retirada','',278,50,0,'');
 insert into arqLanceOperacao values(200279,2,'Relatório de pacientes por mídia','',279,50,0,'');
+insert into arqLanceOperacao values(200289,2,'Relatório de backup de medicação de consultas','',289,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
 insert into arqLanceOperacao values(300003,3,'Pode alterar o campo de quantas desmarcações um paciente efetuou?','',3,1,0,'');
