@@ -272,9 +272,12 @@ Campo_arqCMedica_Qtd.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqCMedica_Lote.prototype.FiltroPai = function()
 {
-		if( g_inserindo || QtdEntreg == 0 )
+			return( "" + vijLote() + "" );
+		if( false /*g_inserindo || QtdEntreg == 0*/ )
 			return( "A.Ativo = 1 and A.Estoque > 0" );
+		if( false )
 			return( "A.Estoque > 0" );
+		return( "" );
 }
 
 //-------------------------------------------------------------
