@@ -37,14 +37,14 @@ class RelLog extends Relatorios
 	//------------------------------------------------------------------------
 	function QuebraPorUsuario()
 	{
-		return( $this->regAtual->LOGIN );
+		return( maiuscula( $this->regAtual->LOGIN ) );
 	}
 
 	//------------------------------------------------------------------------
 	function CabQuebraPorUsuario()
 	{
 		$regA = $this->regAtual;
-		$this->quebraUsuario = $regA->LOGIN ;
+		$this->quebraUsuario = maiuscula( $regA->LOGIN );
 		$this->CabQuebra( $this->quebraUsuario, $regA->LOGIN );
 	}
 
