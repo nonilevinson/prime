@@ -36,11 +36,11 @@ function filtrarSelecao()
          break;
 
       case 3: /// Totalmente separado e não entregue;
-         $tCMedica = "( (A.TstAgRet is null or A.TstAgRet < 3) and A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
+         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
          break;
 
       case 4: /// Totalmente separado e entregue;
-         $tCMedica = "( A.TstAgRet = 3 and A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
+         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
          break;
    }
 
