@@ -74,6 +74,7 @@ COMMIT WORK;
 	- SdVenc1Par > digitado
 	- SdCond > digitado
 	- SaldoCond > digitado
+	- EntraValP > digitado
 	
 	Excluídos que não precisamos mexer na API:
 	- SaldoVal > calculado
