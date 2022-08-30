@@ -4,7 +4,7 @@ set_time_limit( MAX_TEMPO_EXECUCAO );
 
 require_once( LANCE_PHP_ABSOLUTO . 'lance_enviar_emails_html.php' );
 
-//* Da tabela 
+//* Da tabela
 define( ANIVERSARIO_CLIENTE,	"1" );
 
 class EmailPadrao extends Lance_EnviarEmails_HTML
@@ -21,7 +21,7 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 		$this->reenvioEmail			= false;	// true = estou reenviando algum email programado que deu problema
 		$this->opcaoEmail       	= 0;		// ultimaLigOpcao() do email que está sendo executado, para gravar no logEmail, se precisar reenviar
 	}
-	
+
 	//------------------------------------------------------------------------
 	function Inicio()
 	{
@@ -48,12 +48,13 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 		{
 			if( !$this->ConectouSMTP( false, $this->regEmailRemetente ) )
 				return( false );
+
 //if( $g_debugProcesso ) echo '<br><br><b>GRO this->emailTeste=</b> '.$this->emailTeste.' this->idEmailProgramado= '.$this->idEmailProgramado;
 			if( !$this->emailTeste )
 			{
 				if( !$this->idEmailProgramado )
 				{
-					// INSERT NO ARQLOGEMAIL
+					//* INSERT NO ARQLOGEMAIL
 					$this->idEmailProgramado = sql_idPrimario();
 					$g_idLogEmail = $this->idEmailProgramado;
 
@@ -74,7 +75,7 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 					sql_commit();
 				}
 
-				$insert = "Insert into arqItLogEmail VALUES ( ?, " . $this->idEmailProgramado . 
+				$insert = "Insert into arqItLogEmail VALUES ( ?, " . $this->idEmailProgramado .
 					", ?, ?, ?, null, null, null )";
 				$this->insertItLog = ibase_prepare( $insert );
 			}
@@ -109,10 +110,10 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 				{
 					//* UPDATE NO ARQLOGEMAIL
 					$agoraFim = AGORA();
-					$update = "Update arqLogEmail set Enviados=" . ( $this->qtdOk ? $this->qtdOk : "0") . 
-							", NEnviados=" . ( $this->qtdErro ? $this->qtdErro : "0" ) . 
-							", EmailRemet = '" . $this->regEmailRemetente->EMAIL . 
-							"', HoraFim = '" . $agoraFim . 
+					$update = "Update arqLogEmail set Enviados=" . ( $this->qtdOk ? $this->qtdOk : "0") .
+							", NEnviados=" . ( $this->qtdErro ? $this->qtdErro : "0" ) .
+							", EmailRemet = '" . $this->regEmailRemetente->EMAIL .
+							"', HoraFim = '" . $agoraFim .
 							( $this->reenvioEmail ? "', HoraReenv = '" . $agoraFim . "'" : "'" ) .
 						" Where idPrimario=" . $this->idEmailProgramado;
 //if( $g_debugProcesso ) echo '<br> UPDATE LOGEMAIL = ' . $update;
@@ -121,7 +122,7 @@ class EmailPadrao extends Lance_EnviarEmails_HTML
 				}
 			}
 		}
-if( $g_debugProcesso ) echo '<br><br> FIM ÀS '.formatarHora( AGORA(), 'hh:mm' );		
+if( $g_debugProcesso ) echo '<br><br> FIM ÀS '.formatarHora( AGORA(), 'hh:mm' );
 		if( $this->envioAutomatico )
 			$this->idEmailProgramado= 0;
 	}
@@ -138,12 +139,12 @@ if( $g_debugProcesso ) echo '<br><br> FIM ÀS '.formatarHora( AGORA(), 'hh:mm' );
 	// Evento Básico
 	//------------------------------------------------------------------------
 	function Basico()
-	{	
+	{
 		global $g_debugProcesso, $g_idPadraoAcao, $g_visualizar;
 		$regA = &$this->regAtual;
-		
+
 		$idItemLogEmail = sql_idPrimario();
-		
+
 		//* envia destinatario
 $teste = false;
 		if( $teste )
@@ -152,11 +153,11 @@ $teste = false;
 			$ok = 1;
 		}
 		else
-			$ok = $this->Enviar1Email( $idItemLogEmail, tiraBr($regA->EMAIL), $regA->APELIDO, $regA->SEXO ); 
+			$ok = $this->Enviar1Email( $idItemLogEmail, tiraBr($regA->EMAIL), $regA->APELIDO, $regA->SEXO );
 if( $g_debugProcesso ) echo '<br>ext_email BASICO APELIDO= '.$regA->APELIDO.' EMAIL= '.$regA->EMAIL.' ok= '.$ok.' > '.simNao($ok).'<br>';
 
 		/* echo na tela DOS do server, quando envio por uma task
-			o $this->comMensagem fica TRUE quando é para dar mensagens na tela do usario final 
+			o $this->comMensagem fica TRUE quando é para dar mensagens na tela do usario final
 			logo, quando é FALSE, é porque é de chamada de BAT */
 		if( $this->echoPrompt && ( !$this->comMensagem && !$this->emailTeste && !$g_visualizar ) )
 			echo $this->indRegAtual, "/", $this->qtdRegistros, " - ", $regA->EMAIL, " - ", simNao( $ok ), "\n";
@@ -166,11 +167,11 @@ if( $g_debugProcesso ) echo '<br>ext_email BASICO APELIDO= '.$regA->APELIDO.' EM
 			$this->EmailParaQuem();
 /*
 $ok=1;
-echo "<br>INSERT INTO arqItLogEmail VALUES ( " . $idItemLogEmail. ", " . $this->idEmailProgramado . 
+echo "<br>INSERT INTO arqItLogEmail VALUES ( " . $idItemLogEmail. ", " . $this->idEmailProgramado .
 	", ".$this->idCliente.", '".$regA->EMAIL."', ".$ok.", null, null, null )";
 */
-			ibase_execute( $this->insertItLog, $idItemLogEmail, $this->idCliente, $regA->EMAIL, $ok );			
-			sql_commit();			
+			ibase_execute( $this->insertItLog, $idItemLogEmail, $this->idCliente, $regA->EMAIL, $ok );
+			sql_commit();
 		}
 	}
 
@@ -187,7 +188,7 @@ echo "<br>INSERT INTO arqItLogEmail VALUES ( " . $idItemLogEmail. ", " . $this->
 		$g_idPadraoAcao = $p_idPadraoAcao;
 		$g_horaIni = AGORA();
 
-		if( $this->idEmailProgramado ) 
+		if( $this->idEmailProgramado )
 			$this->envioAutomatico = true;
 
 		sql_abrirBD( false );
@@ -197,8 +198,8 @@ echo "<br>INSERT INTO arqItLogEmail VALUES ( " . $idItemLogEmail. ", " . $this->
 
 		if( $g_idPadraoAcao )
 		{
-			$select = "Select idPrimario 
-				From arqAcaoEmail 
+			$select = "Select idPrimario
+				From arqAcaoEmail
 				Where Ativo = 1 and PadraoAcao = " . $g_idPadraoAcao;
 			$this->idAcaoEnviar = sql_lerUmRegistro( $select )->IDPRIMARIO;
 //if( $g_debugProcesso ) echo '<br><b>g_idPadraoAcao >> EMAIL SEL=</b> '.$select.' <b>this->idAcaoEnviar=</b> '.$this->idAcaoEnviar;
@@ -206,32 +207,32 @@ echo "<br>INSERT INTO arqItLogEmail VALUES ( " . $idItemLogEmail. ", " . $this->
 		else
 			$this->idAcaoEnviar = $p_idAcaoEnviar;
 //if( $g_debugProcesso ) echo '<br><b>p_idAcaoEnviar=</b> '.$p_idAcaoEnviar.' <b>this->idAcaoEnviar=</b> '.$this->idAcaoEnviar;
-		
+
 		if( $this->idAcaoEnviar )
 		{
-			$select = "Select idPrimario as idEmailRemet, Email, NomeEmail 
-				From arqEmailRemet 
+			$select = "Select idPrimario as idEmailRemet, Email, NomeEmail
+				From arqEmailRemet
 				Where Padrao = 1";
 			$regEmailRemet = sql_lerUmRegistro( $select );
 
-			$this->idEmailRemetente = $this->envioAutomatico 
-				? $regEmailRemet->IDEMAILREMET 
+			$this->idEmailRemetente = $this->envioAutomatico
+				? $regEmailRemet->IDEMAILREMET
 				: $parQSelecao->EMAILREMET;
 //if( $g_debugProcesso ) echo "<br>REMETENTE = ",$regEmailRemet->EMAIL, "<br>", $select.'<br>';
 //if( $g_debugProcesso ) echo '<br>envioAutomatico= '.simNao($this->envioAutomatico).' idEmailProgramado= '.$this->idEmailProgramado.' EREMET= '.$parQSelecao->EREMET;
 //if( $g_debugProcesso ) echo '<br>this->idEmailRemetente= '.$this->idEmailRemetente.'<br>';
-				
+
 			if( !$regEmailRemet->EMAIL )
 			{
 				sql_fecharBD();
 				return;
 			}
-			
+
 			$this->regEmailRemetente = $regEmailRemet;
 
 			$select = "Select a.idPrimario as idAcaoAtual, A.PadraoAcao as idPadraoAcao,
 					T.Chave as PadraoAcao, A.Titulo
-				From arqAcaoEmail A 
+				From arqAcaoEmail A
 					left join tabPadraoAcao T on T.idPrimario=A.PadraoAcao
 				Where " .
 					( $p_idAcaoEnviar ? "A.idPrimario = " . $p_idAcaoEnviar : '' ) .
@@ -239,21 +240,21 @@ echo "<br>INSERT INTO arqItLogEmail VALUES ( " . $idItemLogEmail. ", " . $this->
 					( $g_idPadraoAcao ? "A.PadraoAcao = " . $g_idPadraoAcao : '' ) .
 					" and A.Ativo = 1";
 			$regAcoesEnviar = sql_lerRegistros( $select );
-//if( $g_debugProcesso ) echo '<br>ACAOEMAIL S= '.$select;			
+//if( $g_debugProcesso ) echo '<br>ACAOEMAIL S= '.$select;
 			foreach( $regAcoesEnviar as $umaAcaoEnviar )
 			{
 				$this->acaoAtual = $umaAcaoEnviar;
 
-				$this->PrepararEmailPadrao( 
-					$umaAcaoEnviar->IDACAOATUAL, 
-					"Select A.idPrimario, A.Arquivo, A.Arquivo_Arquivo, 
-							case when( A.TipoAcao = 2 ) then ( A.HTML ) else ( '' ) end as HTML, 
+				$this->PrepararEmailPadrao(
+					$umaAcaoEnviar->IDACAOATUAL,
+					"Select A.idPrimario, A.Arquivo, A.Arquivo_Arquivo,
+							case when( A.TipoAcao = 2 ) then ( A.HTML ) else ( '' ) end as HTML,
 							A.Titulo, A.Imagem_Arquivo, A.ImagemAlt as Imagem_Alt, T.Template, A.Link
 						From arqAcaoEmail A
 							left join arqTemplate 	T on T.idPrimario=A.Template
 						Where A.Ativo = 1 and A.idPrimario = " . $umaAcaoEnviar->IDACAOATUAL,
 					"Select C.NumImg, C.Imagem_Arquivo, C.Link, C.Nome as Imagem_Alt
-						From arqImagemCRM C 
+						From arqImagemCRM C
 						Where C.AcaoEmail = " . $umaAcaoEnviar->IDACAOATUAL,
 					$regEmailRemet->EMAIL, $regEmailRemet->NOMEEMAIL );
 //if( $g_debugProcesso ) echo '<br>IDACAO= '.$umaAcaoEnviar->IDACAOATUAL;
@@ -261,9 +262,9 @@ echo "<br>INSERT INTO arqItLogEmail VALUES ( " . $idItemLogEmail. ", " . $this->
 
 //if( $g_debugProcesso ) echo "<br>PROCESSAR ACAO= <b>",$umaAcaoEnviar->TITULO,"</b><br>", str_replace( '?', $umaEmpresa->IDEMPRESAATUAL, $p_select ) . ' ||<<';
 				$this->Processar( $p_select, false, true );
-			}			
+			}
 		}
-		
+
 		sql_fecharBD();
 	}
 }
