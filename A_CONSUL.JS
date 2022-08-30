@@ -1506,6 +1506,18 @@ Campo_arqConsulta_EntraFPg_FormaPg.prototype.ObrigatorioEspecial = function( p_c
 
 EntraFPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
 //-------------------------------------------------------------
+// Pós Campo
+//-------------------------------------------------------------
+Campo_arqConsulta_EntraVal.prototype.PosCampo = function()
+{
+		if( BoletoMin == 0 )
+	{
+		sugereBoletoMin()
+	}
+	return( true );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraVal.prototype.Obrigatorio = function( p_comMsg )
@@ -1603,18 +1615,6 @@ Campo_arqConsulta_SdEntrFPg_FormaPg.prototype.ObrigatorioEspecial = function( p_
 }
 
 SdEntrFPg_FormaPg.TipoCampo |= CAMPO_CHAVE_PAI;
-//-------------------------------------------------------------
-// Pós Campo
-//-------------------------------------------------------------
-Campo_arqConsulta_EntraParc.prototype.PosCampo = function()
-{
-		if( BoletoMin == 0 )
-	{
-		sugereBoletoMin()
-	}
-	return( true );
-}
-
 //-------------------------------------------------------------
 // Condição de Existência do campo
 //-------------------------------------------------------------
