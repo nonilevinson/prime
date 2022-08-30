@@ -5985,7 +5985,7 @@ active after Insert or Update or Delete
 as
 declare variable v1 SMALLINT;
 begin
-if( updating or inserting ) then begin
+if( ( updating and NEW.PTrata != OLD.PTrata ) or inserting ) then begin
 Select P.Complemen From arqPtrata P Where P.idPrimario= NEW.PTrata into :v1;
 if( ( :v1 = 1 ) ) then begin
 update arqPessoa set arqPessoa.QtasComple = arqPessoa.QtasComple + 

@@ -1723,7 +1723,7 @@ Campo_arqConsulta_I1Parc.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_I2Valor.prototype.Existencia = function()
 {
-	return( ValPTrata > ( EntraVal + EntraTotP + I1Valor ) );
+	return( tem( I1Valor ) && ( ValPTrata > ( EntraVal + EntraTotP + I1Valor ) ) );
 }
 
 //-------------------------------------------------------------
