@@ -5993,7 +5993,7 @@ update arqPessoa set arqPessoa.QtasComple = arqPessoa.QtasComple +
  where arqPessoa.IDPRIMARIO = NEW.Pessoa;
 end
 end
-if( updating or deleting ) then begin
+if( deleting ) then begin
 Select P.Complemen From arqPtrata P Where P.idPrimario= OLD.PTrata into :v1;
 if( ( :v1 = 1 ) ) then begin
 update arqPessoa set arqPessoa.QtasComple = arqPessoa.QtasComple - 

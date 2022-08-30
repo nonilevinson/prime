@@ -1485,7 +1485,7 @@ Campo_arqConsulta_EntraFPg.prototype.TrazOutrosDoPai = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraFPg.prototype.Existencia = function()
 {
-	return( tem( PTrata_PTrata ) );
+	return( tem( EntraVal ) );
 }
 
 //-------------------------------------------------------------
@@ -1493,7 +1493,7 @@ Campo_arqConsulta_EntraFPg.prototype.Existencia = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraFPg_FormaPg.prototype.Existencia = function()
 {
-	return( tem( PTrata_PTrata ) );
+	return( tem( EntraVal ) );
 }
 
 //-------------------------------------------------------------
@@ -1534,7 +1534,7 @@ Campo_arqConsulta_EntraVal.prototype.TemErro = function()
 //-------------------------------------------------------------
 Campo_arqConsulta_EntraVal.prototype.Existencia = function()
 {
-	return( tem( EntraFPg_FormaPg ) );
+	return( tem( PTrata_PTrata ) );
 }
 
 //-------------------------------------------------------------
@@ -2304,16 +2304,16 @@ FormaPg_FormaPg.ExistenciasDependentes= [ FormaPg ];
 Valor2.ExistenciasDependentes= [ FormaPg2,FormaPg2_FormaPg ];
 FormaPg2_FormaPg.ExistenciasDependentes= [ FormaPg2 ];
 PTrata_PTrata.ExistenciasDependentes= [ PTrata ];
-PTrata.ExistenciasDependentes= [ ValPTrata,EntraFPg,EntraFPg_FormaPg,SaldoValor,ContaPTra,ContaPTra_Transacao ];
+PTrata.ExistenciasDependentes= [ ValPTrata,EntraVal,SaldoValor,ContaPTra,ContaPTra_Transacao ];
+EntraVal.ExistenciasDependentes= [ EntraFPg,EntraFPg_FormaPg,I2Valor ];
 EntraFPg_FormaPg.ExistenciasDependentes= [ EntraFPg ];
-EntraFPg.ExistenciasDependentes= [ EntraVal,EntraParcE,EntraObs ];
+EntraFPg.ExistenciasDependentes= [ EntraParcE,EntraObs ];
 EntraTotP.ExistenciasDependentes= [ SdEntrFPg,SdEntrFPg_FormaPg,EntraParc,I2Valor ];
 SdEntrFPg_FormaPg.ExistenciasDependentes= [ SdEntrFPg ];
 I1Valor.ExistenciasDependentes= [ I1FPg,I1FPg_FormaPg,I2Valor ];
 I1FPg_FormaPg.ExistenciasDependentes= [ I1FPg ];
 I1FPg.ExistenciasDependentes= [ I1Parc ];
 ValPTrata.ExistenciasDependentes= [ I2Valor ];
-EntraVal.ExistenciasDependentes= [ I2Valor ];
 I2Valor.ExistenciasDependentes= [ I2FPg,I2FPg_FormaPg ];
 I2FPg_FormaPg.ExistenciasDependentes= [ I2FPg ];
 I2FPg.ExistenciasDependentes= [ I2Parc ];
