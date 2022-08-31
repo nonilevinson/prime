@@ -36,11 +36,34 @@ function filtrarSelecao()
          break;
 
       case 3: /// Totalmente separado e não entregue;
-         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
+         $tCMedica = "
+            ( 
+                  exists( 
+                  Select G.idPrimario
+                  From arqagret G
+                  Where G.Consulta = A.idPrimario and ( G.TStAgRet <> 3 or G.TStAgRet is null )
+                  order by G.Data desc 
+                  rows 1 )
+               or
+                  not exists( 
+                  Select G.idPrimario
+                  From arqagret G
+                  Where G.Consulta = A.idPrimario
+                  order by G.Data desc 
+                  rows 1 )
+            ) and         
+            ( A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
          break;
 
       case 4: /// Totalmente separado e entregue;
-         $tCMedica = "( A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
+         $tCMedica = "exists(
+               Select G.idPrimario
+               From arqagret G
+               Where G.Consulta = A.idPrimario and G.TStAgRet = 3
+               Order by G.Data desc 
+               rows 1
+               ) and       
+         ( A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
          break;
    }
 
