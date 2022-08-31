@@ -168,6 +168,18 @@ Campo_arqCMedica_Consulta.prototype.Obrigatorio = function( p_comMsg )
 }
 
 //-------------------------------------------------------------
+// Campos a mais que o ligado traz do pai
+//-------------------------------------------------------------
+Campo_arqCMedica_Consulta.prototype.TrazOutrosDoPai = function()
+{
+	var vetPai = [];
+			vetPai[0] = [ "Clinica",
+					"A.Consulta, arqConsulta",
+					"0" ];
+		return( vetPai );
+}
+
+//-------------------------------------------------------------
 // Condição Especial de Obrigatoriedade do campo
 //-------------------------------------------------------------
 Campo_arqCMedica_Consulta_Num.prototype.ObrigatorioEspecial = function( p_comMsg )
@@ -249,6 +261,19 @@ Campo_arqCMedica_UnidadeCal.prototype.Cabecalho = function()
 
 UnidadeCal.EhCalculado = true;
 //-------------------------------------------------------------
+// Pós Campo
+//-------------------------------------------------------------
+Campo_arqCMedica_Qtd.prototype.PosCampo = function()
+{
+		if( g_inserindo )
+	{
+		alt( Lote_Medicamen_Medicamen, Medicamen_Medicamen );
+		alt( Lote_Medicamen, Medicamen );
+	}
+	return( true );
+}
+
+//-------------------------------------------------------------
 // Preenchimento do campo é obrigatório?
 //-------------------------------------------------------------
 Campo_arqCMedica_Qtd.prototype.Obrigatorio = function( p_comMsg )
@@ -272,12 +297,7 @@ Campo_arqCMedica_Qtd.prototype.Cabecalho = function()
 //-------------------------------------------------------------
 Campo_arqCMedica_Lote.prototype.FiltroPai = function()
 {
-			return( "" + vijLote() + "" );
-		if( false /*g_inserindo || QtdEntreg == 0*/ )
-			return( "A.Ativo = 1 and A.Estoque > 0" );
-		if( false )
-			return( "A.Estoque > 0" );
-		return( "" );
+			return( "" + vijLote( Consulta_Clinica ) + "" );
 }
 
 //-------------------------------------------------------------
@@ -285,7 +305,7 @@ Campo_arqCMedica_Lote.prototype.FiltroPai = function()
 //-------------------------------------------------------------
 Campo_arqCMedica_Lote.prototype.PreCampo = function()
 {
-		if( g_inserindo )
+		if( false /*g_inserindo*/ )
 	{
 		alt( Lote_Medicamen_Medicamen, Medicamen_Medicamen );
 		alt( Lote_Medicamen, Medicamen );
@@ -438,8 +458,8 @@ Campo_arqCMedica_Lote_Medicamen.prototype.ExistenciaEspecial = function()
 function IniciarDependencias_arqCMedica()
 {
 Medicamen.CalculosDependentes= [ UnidadeCal ];
-QtdEntreg.CalculosDependentes= [ Lote,Saldo ];
 Qtd.CalculosDependentes= [ Saldo ];
+QtdEntreg.CalculosDependentes= [ Saldo ];
 Consulta_Num.ExistenciasDependentes= [ Consulta ];
 Medicamen_Medicamen.ExistenciasDependentes= [ Medicamen ];
 Lote_Medicamen.ExistenciasDependentes= [ Lote ];
@@ -461,6 +481,7 @@ Lote_Medicamen.CamposChave= [ Lote_Medicamen_Medicamen ];
 //	Arquivo e seus campos
 //======================================================
 g_arquivoAtual = "arqCMedica";
+var Consulta_Clinica;
 var Medicamen_Unidade;
 //------------------------------------------------------------
 function ListaDeCampos_arqCMedica( p_prefixo )

@@ -1,9 +1,4 @@
 <?php
-//--------------------------------------------------
-function vijLote( $p_idClinica, $p_idPrimario )
-{
-   return( "A.Clinica = " . $p_idClinica );   
-}
 
 //--------------------------------------------------
 function filtrarNavMedica()

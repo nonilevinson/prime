@@ -22,6 +22,18 @@ class campo_arqCMedica_Consulta extends Lance_CampoLigado
 		parent::__construct( "Consulta", "Consulta", "Consulta", 0, "arqConsulta", "arqConsulta.IdPrimario DESC", LANCE_LIG_NAVEGARPAI, 1, 0, false );
 	}
 
+	//--------------------------------------------------
+	function PegaPai()
+	{
+		global $g_regAtual;
+		$vetPai = [];
+			$vetPai[]=
+				[ "Clinica", 
+					"A.Consulta, arqConsulta",
+					"0" ];
+		return( $vetPai );
+	}
+
 }
 
 //======================================================
