@@ -287,7 +287,7 @@ if( $op == 200 ) //* selecao arqAgRet
 	$this->Pedir( " ",
 		[ "Celular ", Cliente_NumCelular,
 		[ "", Cliente ] ] ),
-	$this->Pedir( "Status", AgRet ),
+	$this->Pedir( "Status", TStAgRet ),
 	$this->Pedir( "Consulta" ),
 	$this->Pedir( "Assessor" );
 }

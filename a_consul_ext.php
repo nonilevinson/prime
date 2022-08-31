@@ -42,15 +42,13 @@ function filtrarSelecao()
                   Select G.idPrimario
                   From arqagret G
                   Where G.Consulta = A.idPrimario and ( G.TStAgRet <> 3 or G.TStAgRet is null )
-                  order by G.Data desc 
-                  rows 1 )
+                  order by G.Data desc )
                or
                   not exists( 
                   Select G.idPrimario
                   From arqagret G
                   Where G.Consulta = A.idPrimario
-                  order by G.Data desc 
-                  rows 1 )
+                  order by G.Data desc )
             ) and         
             ( A.TrgQtdM > 0 and A.TrgQtdM = A.TrgQtdMEnt ) and ";
          break;
