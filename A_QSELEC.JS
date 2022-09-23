@@ -1159,7 +1159,7 @@ Campo_parQSelecao_Cadeia100.prototype.Obrigatorio = function( p_comMsg )
 //-------------------------------------------------------------
 Campo_parQSelecao_DataIni.prototype.Obrigatorio = function( p_comMsg )
 {
-		if( ultimaLigOpcaoEm( 53,155,170,175,203,223,230,233,257,278,279,283,289 ) )
+		if( ultimaLigOpcaoEm( 53,155,170,175,203,223,230,233,257,278,279,283,289,290 ) )
 	{
 		if( p_comMsg ) alert( "A data é obrigatória" );
 		return( true );

@@ -476,5 +476,11 @@ if( $op == 289 ) //* r_consulta_backup
 		[ brHtml(1) . "e ", DataFim ] ] );
 }
 
+if( $op == 290 ) //* r_consulta_agendadas
+{
+	echo
+	$this->Pedir( "Data do agendamento", DataIni );
+}
+
 //--------------------------------------------------------------
 echo 	"</table>";

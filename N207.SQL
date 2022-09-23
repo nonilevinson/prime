@@ -3612,7 +3612,7 @@ insert into arqLanceOperacao values(200281,2,'Relatório de pacientes por assesso
 insert into arqLanceOperacao values(200280,2,'Relatório de lotes por validade','',280,null,0,'');
 insert into arqLanceOperacao values(200190,2,'Relatório de comissionamento do Call Center','',190,50,0,'');
 insert into arqLanceOperacao values(200258,2,'Relatório da relação de consultas com valores','',258,50,0,'');
-insert into arqLanceOperacao values(200170,2,'Relatório de consultas dispensadas por médicos','',170,50,0,'');
+insert into arqLanceOperacao values(200290,2,'Relatório de agendamento futuros a partir de uma data','',290,50,0,'');
 insert into arqLanceOperacao values(200030,2,'Rotina para ver as operações do sistema','',30,null,0,'');
 insert into arqLanceOperacao values(200038,2,'Relatório avisos internos','',38,50,0,'');
 insert into arqLanceOperacao values(200039,2,'Relatório de avisos internos lidos','',39,50,0,'');
@@ -3669,8 +3669,9 @@ insert into arqLanceOperacao values(200237,2,'Rotina para criar transferências e
 insert into arqLanceOperacao values(200137,2,'Rotina para informar que o paciente chegou','',137,1,0,'');
 insert into arqLanceOperacao values(200253,2,'Rotina para excluir pessoas que tenham histórico de atividades - relação','',253,90,0,'');
 insert into arqLanceOperacao values(200257,2,'Relatório de hístorico de estoque','',257,50,0,'');
-insert into arqLanceOperacao values(200278,2,'Relatório de consultas com medicação separada e sem retirada','',278,50,0,'');
+insert into arqLanceOperacao values(200170,2,'Relatório de consultas dispensadas por médicos','',170,50,0,'');
 insert into arqLanceOperacao values(200279,2,'Relatório de pacientes por mídia','',279,50,0,'');
+insert into arqLanceOperacao values(200278,2,'Relatório de consultas com medicação separada e sem retirada','',278,50,0,'');
 insert into arqLanceOperacao values(200289,2,'Relatório de backup de medicação de consultas','',289,50,0,'');
 insert into arqLanceOperacao values(300001,3,'Pode ver todos os avisos internos?','',1,85,0,'');
 insert into arqLanceOperacao values(300002,3,'Pode alterar campos de login?','',2,90,0,'');
@@ -5985,7 +5986,7 @@ active after Insert or Update or Delete
 as
 declare variable v1 SMALLINT;
 begin
-if( ( updating and NEW.PTrata != OLD.PTrata ) or inserting ) then begin
+if( updating or inserting ) then begin
 Select P.Complemen From arqPtrata P Where P.idPrimario= NEW.PTrata into :v1;
 if( ( :v1 = 1 ) ) then begin
 update arqPessoa set arqPessoa.QtasComple = arqPessoa.QtasComple + 
@@ -5993,7 +5994,7 @@ update arqPessoa set arqPessoa.QtasComple = arqPessoa.QtasComple +
  where arqPessoa.IDPRIMARIO = NEW.Pessoa;
 end
 end
-if( deleting ) then begin
+if( updating or deleting ) then begin
 Select P.Complemen From arqPtrata P Where P.idPrimario= OLD.PTrata into :v1;
 if( ( :v1 = 1 ) ) then begin
 update arqPessoa set arqPessoa.QtasComple = arqPessoa.QtasComple - 
