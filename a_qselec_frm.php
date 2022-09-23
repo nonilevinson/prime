@@ -479,7 +479,10 @@ if( $op == 289 ) //* r_consulta_backup
 if( $op == 290 ) //* r_consulta_agendadas
 {
 	echo
-	$this->Pedir( "Data do agendamento", DataIni );
+	$this->Pedir( "Data do agendamento",
+		[ "", DataIni, " (obrigatória)" ] ),
+	$this->Pedir( "Clínica", Clinica ),
+	$this->Pedir( "Call Center", CallCenter );		
 }
 
 //--------------------------------------------------------------
