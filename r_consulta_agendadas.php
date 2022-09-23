@@ -133,4 +133,10 @@ $select = "Select L.Clinica, C.Num as NumConsulta, T.TiAgenda, C.Hora, P.Nome, P
 	Where " . $filtro . "
 	Order by L.Clinica, C.Data, C.Hora";
 
+$select = "Select L.Data, L.Login ,l.Operacao ,L.Quem as Consulta ,L.idQuem as idConsulta
+   From arqLanceLogAcesso L
+   Where L.Status=13 and L.Operacao=100039 and L.Data = '" . $parQSelecao->DATAINI . "'
+   Order by L.data, L.Login"
+
+
 $proc->Processar( $select );
